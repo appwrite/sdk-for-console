@@ -1256,7 +1256,7 @@ export namespace Models {
          */
         continent: string;
         /**
-         * True if country is part of the Europian Union.
+         * True if country is part of the European Union.
          */
         eu: boolean;
         /**
@@ -1970,7 +1970,7 @@ export namespace Models {
          */
         name: string;
         /**
-         * Platform type. Possible values are: web, flutter-ios, flutter-android, ios, android, and unity.
+         * Platform type. Possible values are: web, flutter-web, flutter-ios, flutter-android, ios, android, and unity.
          */
         type: string;
         /**
