@@ -1,4 +1,4 @@
-import { Client, Databases } from "@appwrite.io/appwrite";
+import { Client, Databases } from "@appwrite.io/console";
 
 const client = new Client();
 
