@@ -19,13 +19,13 @@ Appwrite is an open-source backend as a service server that abstract and simplif
 To install via [NPM](https://www.npmjs.com/):
 
 ```bash
-npm install appwrite --save
+npm install @appwrite.io/appwrite --save
 ```
 
 If you're using a bundler (like [Rollup](https://rollupjs.org/) or [webpack](https://webpack.js.org/)), you can import the Appwrite module when you need it:
 
 ```js
-import { Client, Account } from "appwrite";
+import { Client, Account } from "@appwrite.io/appwrite";
 ```
 
 ### CDN
@@ -33,7 +33,7 @@ import { Client, Account } from "appwrite";
 To install with a CDN (content delivery network) add the following scripts to the bottom of your <body> tag, but before you use any Appwrite services:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/appwrite@0.0.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/@appwrite.io/appwrite@0.0.1"></script>
 ```
 
 
