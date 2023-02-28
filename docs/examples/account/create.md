@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = account.create('[USER_ID]', 'email@example.com', 'password');
+const promise = account.create('[USER_ID]', 'email@example.com', '');
 
 promise.then(function (response) {
     console.log(response); // Success

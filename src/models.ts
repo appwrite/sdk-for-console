@@ -1721,6 +1721,14 @@ export namespace Models {
          */
         authSessionsLimit: number;
         /**
+         * Max allowed passwords in the history list per user. Max passwords limit allowed in history is 20. Use 0 for disabling password history.
+         */
+        authPasswordHistory: number;
+        /**
+         * Whether or not to check user&#039;s password against most commonly used passwords.
+         */
+        authPasswordDictionary: boolean;
+        /**
          * List of Providers.
          */
         providers: Provider[];

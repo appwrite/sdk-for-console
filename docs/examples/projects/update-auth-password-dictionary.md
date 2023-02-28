@@ -1,15 +1,15 @@
-import { Client, Users } from "@appwrite.io/console";
+import { Client, Projects } from "@appwrite.io/console";
 
 const client = new Client();
 
-const users = new Users(client);
+const projects = new Projects(client);
 
 client
     .setEndpoint('https://[HOSTNAME_OR_IP]/v1') // Your API Endpoint
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = users.updatePassword('[USER_ID]', '');
+const promise = projects.updateAuthPasswordDictionary('[PROJECT_ID]', false);
 
 promise.then(function (response) {
     console.log(response); // Success

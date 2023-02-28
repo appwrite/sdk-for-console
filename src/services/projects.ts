@@ -354,6 +354,68 @@ export class Projects extends Service {
         }
 
         /**
+         * Update authentication password disctionary status. Use this endpoint to enable or disable the dicitonary check for user password
+         *
+         *
+         * @param {string} projectId
+         * @param {boolean} enabled
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateAuthPasswordDictionary(projectId: string, enabled: boolean): Promise<Models.Project> {
+            if (typeof projectId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "projectId"');
+            }
+
+            if (typeof enabled === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "enabled"');
+            }
+
+            let path = '/projects/{projectId}/auth/password-dictionary'.replace('{projectId}', projectId);
+            let payload: Payload = {};
+
+            if (typeof enabled !== 'undefined') {
+                payload['enabled'] = enabled;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
+         * Update authentication password history. Use this endpoint to set the number of password history to save and 0 to disable password history.
+         *
+         *
+         * @param {string} projectId
+         * @param {number} limit
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateAuthPasswordHistory(projectId: string, limit: number): Promise<Models.Project> {
+            if (typeof projectId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "projectId"');
+            }
+
+            if (typeof limit === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "limit"');
+            }
+
+            let path = '/projects/{projectId}/auth/password-history'.replace('{projectId}', projectId);
+            let payload: Payload = {};
+
+            if (typeof limit !== 'undefined') {
+                payload['limit'] = limit;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
          * Update Project auth method status. Use this endpoint to enable or disable a given auth method for this project.
          *
          *

@@ -227,37 +227,41 @@ export class Teams extends Service {
         /**
          * Create Team Membership
          *
-         * Invite a new member to join your team. If initiated from the client SDK, an
-         * email with a link to join the team will be sent to the member's email
-         * address and an account will be created for them should they not be signed
-         * up already. If initiated from server-side SDKs, the new member will
-         * automatically be added to the team.
+         * Invite a new member to join your team. Provide an ID for existing users, or
+         * invite unregistered users using an email or phone number. If initiated from
+         * a Client SDK, Appwrite will send an email or sms with a link to join the
+         * team to the invited user, and an account will be created for them if one
+         * doesn't exist. If initiated from a Server SDK, the new member will be added
+         * automatically to the team.
          * 
-         * Use the 'url' parameter to redirect the user from the invitation email back
-         * to your app. When the user is redirected, use the [Update Team Membership
+         * You only need to provide one of a user ID, email, or phone number. Appwrite
+         * will prioritize accepting the user ID > email > phone number if you provide
+         * more than one of these parameters.
+         * 
+         * Use the `url` parameter to redirect the user from the invitation email to
+         * your app. After the user is redirected, use the [Update Team Membership
          * Status](/docs/client/teams#teamsUpdateMembershipStatus) endpoint to allow
          * the user to accept the invitation to the team. 
          * 
          * Please note that to avoid a [Redirect
          * Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
-         * the only valid redirect URL's are the once from domains you have set when
-         * adding your platforms in the console interface.
+         * Appwrite will accept the only redirect URLs under the domains you have
+         * added as a platform on the Appwrite Console.
+         * 
          *
          * @param {string} teamId
-         * @param {string} email
          * @param {string[]} roles
          * @param {string} url
+         * @param {string} email
+         * @param {string} userId
+         * @param {string} phone
          * @param {string} name
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async createMembership(teamId: string, email: string, roles: string[], url: string, name?: string): Promise<Models.Membership> {
+        async createMembership(teamId: string, roles: string[], url: string, email?: string, userId?: string, phone?: string, name?: string): Promise<Models.Membership> {
             if (typeof teamId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "teamId"');
-            }
-
-            if (typeof email === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "email"');
             }
 
             if (typeof roles === 'undefined') {
@@ -273,6 +277,14 @@ export class Teams extends Service {
 
             if (typeof email !== 'undefined') {
                 payload['email'] = email;
+            }
+
+            if (typeof userId !== 'undefined') {
+                payload['userId'] = userId;
+            }
+
+            if (typeof phone !== 'undefined') {
+                payload['phone'] = phone;
             }
 
             if (typeof roles !== 'undefined') {
