@@ -1,15 +1,15 @@
-import { Client, Functions } from "@appwrite.io/console";
+import { Client, Databases } from "@appwrite.io/console";
 
 const client = new Client();
 
-const functions = new Functions(client);
+const databases = new Databases(client);
 
 client
     .setEndpoint('https://[HOSTNAME_OR_IP]/v1') // Your API Endpoint
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = functions.update('[FUNCTION_ID]', '[NAME]');
+const promise = databases.updateEmailAttribute('[DATABASE_ID]', '[COLLECTION_ID]', '', false, 'email@example.com');
 
 promise.then(function (response) {
     console.log(response); // Success

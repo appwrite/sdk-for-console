@@ -119,7 +119,7 @@ export namespace Models {
     /**
      * Teams List
      */
-    export type TeamList = {
+    export type TeamList<Preferences extends Models.Preferences> = {
         /**
          * Total number of teams documents that matched your query.
          */
@@ -127,7 +127,7 @@ export namespace Models {
         /**
          * List of teams.
          */
-        teams: Team[];
+        teams: Team<Preferences>[];
     }
     /**
      * Memberships List
@@ -1369,7 +1369,7 @@ export namespace Models {
     /**
      * Team
      */
-    export type Team = {
+    export type Team<Preferences extends Models.Preferences> = {
         /**
          * Team ID.
          */
@@ -1390,6 +1390,10 @@ export namespace Models {
          * Total number of team members.
          */
         total: number;
+        /**
+         * Team preferences as a key-value object
+         */
+        prefs: Preferences;
     }
     /**
      * Membership

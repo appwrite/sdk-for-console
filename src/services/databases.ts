@@ -461,6 +461,56 @@ export class Databases extends Service {
         }
 
         /**
+         * Update Boolean Attribute
+         *
+         *
+         * @param {string} databaseId
+         * @param {string} collectionId
+         * @param {string} key
+         * @param {boolean} required
+         * @param {boolean} xdefault
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateBooleanAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault: boolean): Promise<Models.AttributeBoolean> {
+            if (typeof databaseId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "databaseId"');
+            }
+
+            if (typeof collectionId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "collectionId"');
+            }
+
+            if (typeof key === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "key"');
+            }
+
+            if (typeof required === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "required"');
+            }
+
+            if (typeof xdefault === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "xdefault"');
+            }
+
+            let path = '/databases/{databaseId}/collections/{collectionId}/attributes/boolean/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+            let payload: Payload = {};
+
+            if (typeof required !== 'undefined') {
+                payload['required'] = required;
+            }
+
+            if (typeof xdefault !== 'undefined') {
+                payload['default'] = xdefault;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
          * Create DateTime Attribute
          *
          *
@@ -511,6 +561,56 @@ export class Databases extends Service {
 
             const uri = new URL(this.client.config.endpoint + path);
             return await this.client.call('post', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
+         * Update DateTime Attribute
+         *
+         *
+         * @param {string} databaseId
+         * @param {string} collectionId
+         * @param {string} key
+         * @param {boolean} required
+         * @param {string} xdefault
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateDatetimeAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault: string): Promise<Models.AttributeDatetime> {
+            if (typeof databaseId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "databaseId"');
+            }
+
+            if (typeof collectionId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "collectionId"');
+            }
+
+            if (typeof key === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "key"');
+            }
+
+            if (typeof required === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "required"');
+            }
+
+            if (typeof xdefault === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "xdefault"');
+            }
+
+            let path = '/databases/{databaseId}/collections/{collectionId}/attributes/datetime/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+            let payload: Payload = {};
+
+            if (typeof required !== 'undefined') {
+                payload['required'] = required;
+            }
+
+            if (typeof xdefault !== 'undefined') {
+                payload['default'] = xdefault;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
                 'content-type': 'application/json',
             }, payload);
         }
@@ -568,6 +668,59 @@ export class Databases extends Service {
 
             const uri = new URL(this.client.config.endpoint + path);
             return await this.client.call('post', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
+         * Update Email Attribute
+         *
+         * Update an email attribute. Changing the `default` value will not update
+         * already existing documents.
+         * 
+         *
+         * @param {string} databaseId
+         * @param {string} collectionId
+         * @param {string} key
+         * @param {boolean} required
+         * @param {string} xdefault
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateEmailAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault: string): Promise<Models.AttributeEmail> {
+            if (typeof databaseId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "databaseId"');
+            }
+
+            if (typeof collectionId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "collectionId"');
+            }
+
+            if (typeof key === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "key"');
+            }
+
+            if (typeof required === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "required"');
+            }
+
+            if (typeof xdefault === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "xdefault"');
+            }
+
+            let path = '/databases/{databaseId}/collections/{collectionId}/attributes/email/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+            let payload: Payload = {};
+
+            if (typeof required !== 'undefined') {
+                payload['required'] = required;
+            }
+
+            if (typeof xdefault !== 'undefined') {
+                payload['default'] = xdefault;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
                 'content-type': 'application/json',
             }, payload);
         }
@@ -632,6 +785,68 @@ export class Databases extends Service {
 
             const uri = new URL(this.client.config.endpoint + path);
             return await this.client.call('post', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
+         * Update Enum Attribute
+         *
+         * Update an enum attribute. Changing the `default` value will not update
+         * already existing documents.
+         * 
+         *
+         * @param {string} databaseId
+         * @param {string} collectionId
+         * @param {string} key
+         * @param {string[]} elements
+         * @param {boolean} required
+         * @param {string} xdefault
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateEnumAttribute(databaseId: string, collectionId: string, key: string, elements: string[], required: boolean, xdefault: string): Promise<Models.AttributeEnum> {
+            if (typeof databaseId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "databaseId"');
+            }
+
+            if (typeof collectionId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "collectionId"');
+            }
+
+            if (typeof key === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "key"');
+            }
+
+            if (typeof elements === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "elements"');
+            }
+
+            if (typeof required === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "required"');
+            }
+
+            if (typeof xdefault === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "xdefault"');
+            }
+
+            let path = '/databases/{databaseId}/collections/{collectionId}/attributes/enum/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+            let payload: Payload = {};
+
+            if (typeof elements !== 'undefined') {
+                payload['elements'] = elements;
+            }
+
+            if (typeof required !== 'undefined') {
+                payload['required'] = required;
+            }
+
+            if (typeof xdefault !== 'undefined') {
+                payload['default'] = xdefault;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
                 'content-type': 'application/json',
             }, payload);
         }
@@ -705,6 +920,77 @@ export class Databases extends Service {
         }
 
         /**
+         * Update Float Attribute
+         *
+         * Update a float attribute. Changing the `default` value will not update
+         * already existing documents.
+         * 
+         *
+         * @param {string} databaseId
+         * @param {string} collectionId
+         * @param {string} key
+         * @param {boolean} required
+         * @param {number} min
+         * @param {number} max
+         * @param {number} xdefault
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateFloatAttribute(databaseId: string, collectionId: string, key: string, required: boolean, min: number, max: number, xdefault: number): Promise<Models.AttributeFloat> {
+            if (typeof databaseId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "databaseId"');
+            }
+
+            if (typeof collectionId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "collectionId"');
+            }
+
+            if (typeof key === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "key"');
+            }
+
+            if (typeof required === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "required"');
+            }
+
+            if (typeof min === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "min"');
+            }
+
+            if (typeof max === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "max"');
+            }
+
+            if (typeof xdefault === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "xdefault"');
+            }
+
+            let path = '/databases/{databaseId}/collections/{collectionId}/attributes/float/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+            let payload: Payload = {};
+
+            if (typeof required !== 'undefined') {
+                payload['required'] = required;
+            }
+
+            if (typeof min !== 'undefined') {
+                payload['min'] = min;
+            }
+
+            if (typeof max !== 'undefined') {
+                payload['max'] = max;
+            }
+
+            if (typeof xdefault !== 'undefined') {
+                payload['default'] = xdefault;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
          * Create Integer Attribute
          *
          * Create an integer attribute. Optionally, minimum and maximum values can be
@@ -773,6 +1059,77 @@ export class Databases extends Service {
         }
 
         /**
+         * Update Integer Attribute
+         *
+         * Update an integer attribute. Changing the `default` value will not update
+         * already existing documents.
+         * 
+         *
+         * @param {string} databaseId
+         * @param {string} collectionId
+         * @param {string} key
+         * @param {boolean} required
+         * @param {number} min
+         * @param {number} max
+         * @param {number} xdefault
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateIntegerAttribute(databaseId: string, collectionId: string, key: string, required: boolean, min: number, max: number, xdefault: number): Promise<Models.AttributeInteger> {
+            if (typeof databaseId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "databaseId"');
+            }
+
+            if (typeof collectionId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "collectionId"');
+            }
+
+            if (typeof key === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "key"');
+            }
+
+            if (typeof required === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "required"');
+            }
+
+            if (typeof min === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "min"');
+            }
+
+            if (typeof max === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "max"');
+            }
+
+            if (typeof xdefault === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "xdefault"');
+            }
+
+            let path = '/databases/{databaseId}/collections/{collectionId}/attributes/integer/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+            let payload: Payload = {};
+
+            if (typeof required !== 'undefined') {
+                payload['required'] = required;
+            }
+
+            if (typeof min !== 'undefined') {
+                payload['min'] = min;
+            }
+
+            if (typeof max !== 'undefined') {
+                payload['max'] = max;
+            }
+
+            if (typeof xdefault !== 'undefined') {
+                payload['default'] = xdefault;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
          * Create IP Address Attribute
          *
          * Create IP address attribute.
@@ -825,6 +1182,59 @@ export class Databases extends Service {
 
             const uri = new URL(this.client.config.endpoint + path);
             return await this.client.call('post', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
+         * Update IP Address Attribute
+         *
+         * Update an ip attribute. Changing the `default` value will not update
+         * already existing documents.
+         * 
+         *
+         * @param {string} databaseId
+         * @param {string} collectionId
+         * @param {string} key
+         * @param {boolean} required
+         * @param {string} xdefault
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateIpAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault: string): Promise<Models.AttributeIp> {
+            if (typeof databaseId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "databaseId"');
+            }
+
+            if (typeof collectionId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "collectionId"');
+            }
+
+            if (typeof key === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "key"');
+            }
+
+            if (typeof required === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "required"');
+            }
+
+            if (typeof xdefault === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "xdefault"');
+            }
+
+            let path = '/databases/{databaseId}/collections/{collectionId}/attributes/ip/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+            let payload: Payload = {};
+
+            if (typeof required !== 'undefined') {
+                payload['required'] = required;
+            }
+
+            if (typeof xdefault !== 'undefined') {
+                payload['default'] = xdefault;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
                 'content-type': 'application/json',
             }, payload);
         }
@@ -896,6 +1306,59 @@ export class Databases extends Service {
         }
 
         /**
+         * Update String Attribute
+         *
+         * Update a string attribute. Changing the `default` value will not update
+         * already existing documents.
+         * 
+         *
+         * @param {string} databaseId
+         * @param {string} collectionId
+         * @param {string} key
+         * @param {boolean} required
+         * @param {string} xdefault
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateStringAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault: string): Promise<Models.AttributeString> {
+            if (typeof databaseId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "databaseId"');
+            }
+
+            if (typeof collectionId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "collectionId"');
+            }
+
+            if (typeof key === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "key"');
+            }
+
+            if (typeof required === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "required"');
+            }
+
+            if (typeof xdefault === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "xdefault"');
+            }
+
+            let path = '/databases/{databaseId}/collections/{collectionId}/attributes/string/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+            let payload: Payload = {};
+
+            if (typeof required !== 'undefined') {
+                payload['required'] = required;
+            }
+
+            if (typeof xdefault !== 'undefined') {
+                payload['default'] = xdefault;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
          * Create URL Attribute
          *
          * Create a URL attribute.
@@ -948,6 +1411,59 @@ export class Databases extends Service {
 
             const uri = new URL(this.client.config.endpoint + path);
             return await this.client.call('post', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
+         * Update URL Attribute
+         *
+         * Update an url attribute. Changing the `default` value will not update
+         * already existing documents.
+         * 
+         *
+         * @param {string} databaseId
+         * @param {string} collectionId
+         * @param {string} key
+         * @param {boolean} required
+         * @param {string} xdefault
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateUrlAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault: string): Promise<Models.AttributeUrl> {
+            if (typeof databaseId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "databaseId"');
+            }
+
+            if (typeof collectionId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "collectionId"');
+            }
+
+            if (typeof key === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "key"');
+            }
+
+            if (typeof required === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "required"');
+            }
+
+            if (typeof xdefault === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "xdefault"');
+            }
+
+            let path = '/databases/{databaseId}/collections/{collectionId}/attributes/url/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+            let payload: Payload = {};
+
+            if (typeof required !== 'undefined') {
+                payload['required'] = required;
+            }
+
+            if (typeof xdefault !== 'undefined') {
+                payload['default'] = xdefault;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
                 'content-type': 'application/json',
             }, payload);
         }
