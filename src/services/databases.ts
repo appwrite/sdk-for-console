@@ -472,7 +472,7 @@ export class Databases extends Service {
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async updateBooleanAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault: boolean): Promise<Models.AttributeBoolean> {
+        async updateBooleanAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: boolean): Promise<Models.AttributeBoolean> {
             if (typeof databaseId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "databaseId"');
             }
@@ -577,7 +577,7 @@ export class Databases extends Service {
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async updateDatetimeAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault: string): Promise<Models.AttributeDatetime> {
+        async updateDatetimeAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string): Promise<Models.AttributeDatetime> {
             if (typeof databaseId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "databaseId"');
             }
@@ -687,7 +687,7 @@ export class Databases extends Service {
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async updateEmailAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault: string): Promise<Models.AttributeEmail> {
+        async updateEmailAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string): Promise<Models.AttributeEmail> {
             if (typeof databaseId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "databaseId"');
             }
@@ -805,7 +805,7 @@ export class Databases extends Service {
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async updateEnumAttribute(databaseId: string, collectionId: string, key: string, elements: string[], required: boolean, xdefault: string): Promise<Models.AttributeEnum> {
+        async updateEnumAttribute(databaseId: string, collectionId: string, key: string, elements: string[], required: boolean, xdefault?: string): Promise<Models.AttributeEnum> {
             if (typeof databaseId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "databaseId"');
             }
@@ -936,7 +936,7 @@ export class Databases extends Service {
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async updateFloatAttribute(databaseId: string, collectionId: string, key: string, required: boolean, min: number, max: number, xdefault: number): Promise<Models.AttributeFloat> {
+        async updateFloatAttribute(databaseId: string, collectionId: string, key: string, required: boolean, min: number, max: number, xdefault?: number): Promise<Models.AttributeFloat> {
             if (typeof databaseId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "databaseId"');
             }
@@ -1075,7 +1075,7 @@ export class Databases extends Service {
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async updateIntegerAttribute(databaseId: string, collectionId: string, key: string, required: boolean, min: number, max: number, xdefault: number): Promise<Models.AttributeInteger> {
+        async updateIntegerAttribute(databaseId: string, collectionId: string, key: string, required: boolean, min: number, max: number, xdefault?: number): Promise<Models.AttributeInteger> {
             if (typeof databaseId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "databaseId"');
             }
@@ -1201,7 +1201,7 @@ export class Databases extends Service {
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async updateIpAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault: string): Promise<Models.AttributeIp> {
+        async updateIpAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string): Promise<Models.AttributeIp> {
             if (typeof databaseId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "databaseId"');
             }
@@ -1388,7 +1388,7 @@ export class Databases extends Service {
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async updateStringAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault: string): Promise<Models.AttributeString> {
+        async updateStringAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string): Promise<Models.AttributeString> {
             if (typeof databaseId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "databaseId"');
             }
@@ -1498,7 +1498,7 @@ export class Databases extends Service {
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async updateUrlAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault: string): Promise<Models.AttributeUrl> {
+        async updateUrlAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string): Promise<Models.AttributeUrl> {
             if (typeof databaseId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "databaseId"');
             }
