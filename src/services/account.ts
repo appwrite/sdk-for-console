@@ -211,7 +211,7 @@ export class Account extends Service {
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async updatePassword<Preferences extends Models.Preferences>(password: string, oldPassword?: string): Promise<Models.Account<Preferences>> {
+        async updatePassword<Preferences extends Models.Preferences>(password: string, oldPassword?: string): Promise<Models.User<Preferences>> {
             if (typeof password === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "password"');
             }
@@ -493,7 +493,7 @@ export class Account extends Service {
          * password combination. This route will create a new session for the user.
          * 
          * A user is limited to 10 active sessions at a time by default. [Learn more
-         * about session limits](/docs/authentication#limits).
+         * about session limits](/docs/authentication-security#limits).
          *
          * @param {string} email
          * @param {string} password
@@ -542,7 +542,7 @@ export class Account extends Service {
          * your Appwrite instance by default.
          * 
          * A user is limited to 10 active sessions at a time by default. [Learn more
-         * about session limits](/docs/authentication#limits).
+         * about session limits](/docs/authentication-security#limits).
          *
          * @param {string} userId
          * @param {string} email
@@ -642,7 +642,7 @@ export class Account extends Service {
          * user.
          * 
          * A user is limited to 10 active sessions at a time by default. [Learn more
-         * about session limits](/docs/authentication#limits).
+         * about session limits](/docs/authentication-security#limits).
          * 
          *
          * @param {string} provider
@@ -697,7 +697,7 @@ export class Account extends Service {
          * is valid for 15 minutes.
          * 
          * A user is limited to 10 active sessions at a time by default. [Learn more
-         * about session limits](/docs/authentication#limits).
+         * about session limits](/docs/authentication-security#limits).
          *
          * @param {string} userId
          * @param {string} phone
@@ -855,7 +855,7 @@ export class Account extends Service {
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async updateStatus<Preferences extends Models.Preferences>(): Promise<Models.Account<Preferences>> {
+        async updateStatus<Preferences extends Models.Preferences>(): Promise<Models.User<Preferences>> {
             let path = '/account/status';
             let payload: Payload = {};
 

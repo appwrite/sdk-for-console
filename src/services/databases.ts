@@ -1240,6 +1240,74 @@ export class Databases extends Service {
         }
 
         /**
+         * Create Relationship Attribute
+         *
+         * Create relationship attribute. [Learn more about relationship
+         * attributes](docs/databases-relationships#relationship-attributes).
+         * 
+         *
+         * @param {string} databaseId
+         * @param {string} collectionId
+         * @param {string} relatedCollectionId
+         * @param {string} type
+         * @param {boolean} twoWay
+         * @param {string} key
+         * @param {string} twoWayKey
+         * @param {string} onDelete
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async createRelationshipAttribute(databaseId: string, collectionId: string, relatedCollectionId: string, type: string, twoWay?: boolean, key?: string, twoWayKey?: string, onDelete?: string): Promise<Models.AttributeRelationship> {
+            if (typeof databaseId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "databaseId"');
+            }
+
+            if (typeof collectionId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "collectionId"');
+            }
+
+            if (typeof relatedCollectionId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "relatedCollectionId"');
+            }
+
+            if (typeof type === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "type"');
+            }
+
+            let path = '/databases/{databaseId}/collections/{collectionId}/attributes/relationship'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+            let payload: Payload = {};
+
+            if (typeof relatedCollectionId !== 'undefined') {
+                payload['relatedCollectionId'] = relatedCollectionId;
+            }
+
+            if (typeof type !== 'undefined') {
+                payload['type'] = type;
+            }
+
+            if (typeof twoWay !== 'undefined') {
+                payload['twoWay'] = twoWay;
+            }
+
+            if (typeof key !== 'undefined') {
+                payload['key'] = key;
+            }
+
+            if (typeof twoWayKey !== 'undefined') {
+                payload['twoWayKey'] = twoWayKey;
+            }
+
+            if (typeof onDelete !== 'undefined') {
+                payload['onDelete'] = onDelete;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('post', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
          * Create String Attribute
          *
          * Create a string attribute.
@@ -1533,6 +1601,46 @@ export class Databases extends Service {
         }
 
         /**
+         * Update Relationship Attribute
+         *
+         * Update relationship attribute. [Learn more about relationship
+         * attributes](docs/databases-relationships#relationship-attributes).
+         * 
+         *
+         * @param {string} databaseId
+         * @param {string} collectionId
+         * @param {string} key
+         * @param {string} onDelete
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateRelationshipAttribute(databaseId: string, collectionId: string, key: string, onDelete?: string): Promise<Models.AttributeRelationship> {
+            if (typeof databaseId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "databaseId"');
+            }
+
+            if (typeof collectionId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "collectionId"');
+            }
+
+            if (typeof key === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "key"');
+            }
+
+            let path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}/relationship'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+            let payload: Payload = {};
+
+            if (typeof onDelete !== 'undefined') {
+                payload['onDelete'] = onDelete;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
          * List Documents
          *
          * Get a list of all the user's documents in a given collection. You can use
@@ -1629,10 +1737,11 @@ export class Databases extends Service {
          * @param {string} databaseId
          * @param {string} collectionId
          * @param {string} documentId
+         * @param {string[]} queries
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async getDocument<Document extends Models.Document>(databaseId: string, collectionId: string, documentId: string): Promise<Document> {
+        async getDocument<Document extends Models.Document>(databaseId: string, collectionId: string, documentId: string, queries?: string[]): Promise<Document> {
             if (typeof databaseId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "databaseId"');
             }
@@ -1647,6 +1756,10 @@ export class Databases extends Service {
 
             let path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
             let payload: Payload = {};
+
+            if (typeof queries !== 'undefined') {
+                payload['queries'] = queries;
+            }
 
             const uri = new URL(this.client.config.endpoint + path);
             return await this.client.call('get', uri, {
