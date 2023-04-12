@@ -2545,4 +2545,25 @@ export namespace Models {
          */
         buckets: Metric[];
     }
+    /**
+     * Console Variables
+     */
+    export type ConsoleVariables = {
+        /**
+         * CNAME target for your Appwrite custom domains.
+         */
+        _APP_DOMAIN_TARGET: string;
+        /**
+         * Maximum file size allowed for file upload in bytes.
+         */
+        _APP_STORAGE_LIMIT: number;
+        /**
+         * Maximum file size allowed for deployment in bytes.
+         */
+        _APP_FUNCTIONS_SIZE_LIMIT: number;
+        /**
+         * Defines if usage stats are enabled. This value is set to &#039;enabled&#039; by default, to disable the usage stats set the value to &#039;disabled&#039;.
+         */
+        _APP_USAGE_STATS: string;
+    }
 }
