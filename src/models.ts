@@ -338,6 +338,19 @@ export namespace Models {
         variables: Variable[];
     }
     /**
+     * Locale codes list
+     */
+    export type LocaleCodeList = {
+        /**
+         * Total number of localeCodes documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of localeCodes.
+         */
+        localeCodes: LocaleCode[];
+    }
+    /**
      * Database
      */
     export type Database = {
@@ -1261,6 +1274,19 @@ export namespace Models {
         currency: string;
     }
     /**
+     * LocaleCode
+     */
+    export type LocaleCode = {
+        /**
+         * Locale codes in [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+         */
+        code: string;
+        /**
+         * Locale name
+         */
+        name: string;
+    }
+    /**
      * File
      */
     export type File = {
@@ -1748,6 +1774,34 @@ export namespace Models {
          * List of Domains.
          */
         domains: Domain[];
+        /**
+         * Status for custom SMTP
+         */
+        smtpEnabled: boolean;
+        /**
+         * SMTP sender email
+         */
+        smtpSender: string;
+        /**
+         * SMTP server host name
+         */
+        smtpHost: string;
+        /**
+         * SMTP server port
+         */
+        smtpPort: number;
+        /**
+         * SMTP server username
+         */
+        smtpUsername: string;
+        /**
+         * SMTP server password
+         */
+        smtpPassword: string;
+        /**
+         * SMTP server secure protocol
+         */
+        smtpSecure: string;
         /**
          * Email/Password auth method status
          */
@@ -2544,5 +2598,76 @@ export namespace Models {
          * Aggregated stats for number of buckets.
          */
         buckets: Metric[];
+    }
+    /**
+     * SmsTemplate
+     */
+    export type SmsTemplate = {
+        /**
+         * Template type
+         */
+        type: string;
+        /**
+         * Template locale
+         */
+        locale: string;
+        /**
+         * Template message
+         */
+        message: string;
+    }
+    /**
+     * EmailTemplate
+     */
+    export type EmailTemplate = {
+        /**
+         * Template type
+         */
+        type: string;
+        /**
+         * Template locale
+         */
+        locale: string;
+        /**
+         * Template message
+         */
+        message: string;
+        /**
+         * Name of the sender
+         */
+        senderName: string;
+        /**
+         * Email of the sender
+         */
+        senderEmail: string;
+        /**
+         * Reply to email address
+         */
+        replyTo: string;
+        /**
+         * Email subject
+         */
+        subject: string;
+    }
+    /**
+     * Console Variables
+     */
+    export type ConsoleVariables = {
+        /**
+         * CNAME target for your Appwrite custom domains.
+         */
+        _APP_DOMAIN_TARGET: string;
+        /**
+         * Maximum file size allowed for file upload in bytes.
+         */
+        _APP_STORAGE_LIMIT: number;
+        /**
+         * Maximum file size allowed for deployment in bytes.
+         */
+        _APP_FUNCTIONS_SIZE_LIMIT: number;
+        /**
+         * Defines if usage stats are enabled. This value is set to &#039;enabled&#039; by default, to disable the usage stats set the value to &#039;disabled&#039;.
+         */
+        _APP_USAGE_STATS: string;
     }
 }

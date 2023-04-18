@@ -1025,6 +1025,265 @@ export class Projects extends Service {
         }
 
         /**
+         * Update SMTP configuration
+         *
+         *
+         * @param {string} projectId
+         * @param {boolean} enabled
+         * @param {string} sender
+         * @param {string} host
+         * @param {number} port
+         * @param {string} username
+         * @param {string} password
+         * @param {string} secure
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateSmtpConfiguration(projectId: string, enabled: boolean, sender: string, host: string, port: number, username: string, password: string, secure?: string): Promise<Models.Project> {
+            if (typeof projectId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "projectId"');
+            }
+
+            if (typeof enabled === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "enabled"');
+            }
+
+            if (typeof sender === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "sender"');
+            }
+
+            if (typeof host === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "host"');
+            }
+
+            if (typeof port === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "port"');
+            }
+
+            if (typeof username === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "username"');
+            }
+
+            if (typeof password === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "password"');
+            }
+
+            let path = '/projects/{projectId}/smtp'.replace('{projectId}', projectId);
+            let payload: Payload = {};
+
+            if (typeof enabled !== 'undefined') {
+                payload['enabled'] = enabled;
+            }
+
+            if (typeof sender !== 'undefined') {
+                payload['sender'] = sender;
+            }
+
+            if (typeof host !== 'undefined') {
+                payload['host'] = host;
+            }
+
+            if (typeof port !== 'undefined') {
+                payload['port'] = port;
+            }
+
+            if (typeof username !== 'undefined') {
+                payload['username'] = username;
+            }
+
+            if (typeof password !== 'undefined') {
+                payload['password'] = password;
+            }
+
+            if (typeof secure !== 'undefined') {
+                payload['secure'] = secure;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
+         * Get custom email template
+         *
+         *
+         * @param {string} projectId
+         * @param {string} type
+         * @param {string} locale
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async getEmailTemplate(projectId: string, type: string, locale: string): Promise<Models.EmailTemplate> {
+            if (typeof projectId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "projectId"');
+            }
+
+            if (typeof type === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "type"');
+            }
+
+            if (typeof locale === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "locale"');
+            }
+
+            let path = '/projects/{projectId}/templates/email/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
+            let payload: Payload = {};
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('get', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
+         * Update custom email templates
+         *
+         *
+         * @param {string} projectId
+         * @param {string} type
+         * @param {string} locale
+         * @param {string} senderName
+         * @param {string} senderEmail
+         * @param {string} subject
+         * @param {string} message
+         * @param {string} replyTo
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateEmailTemplate(projectId: string, type: string, locale: string, senderName: string, senderEmail: string, subject: string, message: string, replyTo?: string): Promise<Models.Project> {
+            if (typeof projectId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "projectId"');
+            }
+
+            if (typeof type === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "type"');
+            }
+
+            if (typeof locale === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "locale"');
+            }
+
+            if (typeof senderName === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "senderName"');
+            }
+
+            if (typeof senderEmail === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "senderEmail"');
+            }
+
+            if (typeof subject === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "subject"');
+            }
+
+            if (typeof message === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "message"');
+            }
+
+            let path = '/projects/{projectId}/templates/email/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
+            let payload: Payload = {};
+
+            if (typeof senderName !== 'undefined') {
+                payload['senderName'] = senderName;
+            }
+
+            if (typeof senderEmail !== 'undefined') {
+                payload['senderEmail'] = senderEmail;
+            }
+
+            if (typeof subject !== 'undefined') {
+                payload['subject'] = subject;
+            }
+
+            if (typeof message !== 'undefined') {
+                payload['message'] = message;
+            }
+
+            if (typeof replyTo !== 'undefined') {
+                payload['replyTo'] = replyTo;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
+         * Get custom SMS template
+         *
+         *
+         * @param {string} projectId
+         * @param {string} type
+         * @param {string} locale
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async getSmsTemplate(projectId: string, type: string, locale: string): Promise<Models.SmsTemplate> {
+            if (typeof projectId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "projectId"');
+            }
+
+            if (typeof type === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "type"');
+            }
+
+            if (typeof locale === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "locale"');
+            }
+
+            let path = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
+            let payload: Payload = {};
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('get', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
+         * Update custom SMS template
+         *
+         *
+         * @param {string} projectId
+         * @param {string} type
+         * @param {string} locale
+         * @param {string} message
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async updateSmsTemplate(projectId: string, type: string, locale: string, message: string): Promise<Models.SmsTemplate> {
+            if (typeof projectId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "projectId"');
+            }
+
+            if (typeof type === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "type"');
+            }
+
+            if (typeof locale === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "locale"');
+            }
+
+            if (typeof message === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "message"');
+            }
+
+            let path = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
+            let payload: Payload = {};
+
+            if (typeof message !== 'undefined') {
+                payload['message'] = message;
+            }
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('patch', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
          * Get usage stats for a project
          *
          *

@@ -34,6 +34,25 @@ export class Locale extends Service {
         }
 
         /**
+         * List Locale Codes
+         *
+         * List of all locale codes in [ISO
+         * 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes).
+         *
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async listCodes(): Promise<Models.LocaleCodeList> {
+            let path = '/locale/codes';
+            let payload: Payload = {};
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('get', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
          * List Continents
          *
          * List of all continents. You can use the locale header to get the data in a
