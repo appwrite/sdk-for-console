@@ -1,7 +1,7 @@
 # Appwrite Console SDK
 
 ![License](https://img.shields.io/github/license/appwrite/sdk-for-console.svg?style=flat-square)
-![Version](https://img.shields.io/badge/api%20version-1.3.0-blue.svg?style=flat-square)
+![Version](https://img.shields.io/badge/api%20version-1.3.2-blue.svg?style=flat-square)
 [![Build Status](https://img.shields.io/travis/com/appwrite/sdk-generator?style=flat-square)](https://travis-ci.com/appwrite/sdk-generator)
 [![Twitter Account](https://img.shields.io/twitter/follow/appwrite?color=00acee&label=twitter&style=flat-square)](https://twitter.com/appwrite)
 [![Discord](https://img.shields.io/discord/564160730845151244?label=discord&style=flat-square)](https://appwrite.io/discord)
@@ -33,7 +33,7 @@ import { Client, Account } from "@appwrite.io/console";
 To install with a CDN (content delivery network) add the following scripts to the bottom of your <body> tag, but before you use any Appwrite services:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@appwrite.io/console@0.1.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/@appwrite.io/console@0.1.1"></script>
 ```
 
 
@@ -96,10 +96,10 @@ account.create(ID.unique(), 'me@example.com', 'password', 'Jane Doe')
 
 ### Learn more
 You can use the following resources to learn more and get help
-- 🚀 [Getting Started Tutorial](https://appwrite.io/docs/getting-started-for-flutter)
+- 🚀 [Getting Started Tutorial](https://appwrite.io/docs/getting-started-for-web)
 - 📜 [Appwrite Docs](https://appwrite.io/docs)
 - 💬 [Discord Community](https://appwrite.io/discord)
-- 🚂 [Appwrite Flutter Playground](https://github.com/appwrite/playground-for-flutter)
+- 🚂 [Appwrite Web Playground](https://github.com/appwrite/playground-for-web)
 
 
 ## Contribution

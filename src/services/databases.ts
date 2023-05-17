@@ -1243,7 +1243,7 @@ export class Databases extends Service {
          * Create Relationship Attribute
          *
          * Create relationship attribute. [Learn more about relationship
-         * attributes](docs/databases-relationships#relationship-attributes).
+         * attributes](/docs/databases-relationships#relationship-attributes).
          * 
          *
          * @param {string} databaseId
@@ -1604,7 +1604,7 @@ export class Databases extends Service {
          * Update Relationship Attribute
          *
          * Update relationship attribute. [Learn more about relationship
-         * attributes](docs/databases-relationships#relationship-attributes).
+         * attributes](/docs/databases-relationships#relationship-attributes).
          * 
          *
          * @param {string} databaseId
