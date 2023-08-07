@@ -7,6 +7,7 @@ export { Functions } from './services/functions';
 export { Graphql } from './services/graphql';
 export { Health } from './services/health';
 export { Locale } from './services/locale';
+export { Project } from './services/project';
 export { Projects } from './services/projects';
 export { Storage } from './services/storage';
 export { Teams } from './services/teams';

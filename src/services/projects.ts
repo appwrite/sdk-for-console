@@ -1025,33 +1025,6 @@ export class Projects extends Service {
         }
 
         /**
-         * Get usage stats for a project
-         *
-         *
-         * @param {string} projectId
-         * @param {string} range
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async getUsage(projectId: string, range?: string): Promise<Models.UsageProject> {
-            if (typeof projectId === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "projectId"');
-            }
-
-            let path = '/projects/{projectId}/usage'.replace('{projectId}', projectId);
-            let payload: Payload = {};
-
-            if (typeof range !== 'undefined') {
-                payload['range'] = range;
-            }
-
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
-
-        /**
          * List Webhooks
          *
          *
