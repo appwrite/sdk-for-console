@@ -49,7 +49,7 @@ export class Health extends Service {
         /**
          * Get Cache
          *
-         * Check the Appwrite in-memory cache server is up and connection is
+         * Check the Appwrite in-memory cache servers are up and connection is
          * successful.
          *
          * @throws {AppwriteException}
@@ -68,13 +68,50 @@ export class Health extends Service {
         /**
          * Get DB
          *
-         * Check the Appwrite database server is up and connection is successful.
+         * Check the Appwrite database servers are up and connection is successful.
          *
          * @throws {AppwriteException}
          * @returns {Promise}
          */
         async getDB(): Promise<Models.HealthStatus> {
             let path = '/health/db';
+            let payload: Payload = {};
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('get', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
+         * Get PubSub
+         *
+         * Check the Appwrite pub-sub servers are up and connection is successful.
+         *
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async getPubSub(): Promise<Models.HealthStatus> {
+            let path = '/health/pubsub';
+            let payload: Payload = {};
+
+            const uri = new URL(this.client.config.endpoint + path);
+            return await this.client.call('get', uri, {
+                'content-type': 'application/json',
+            }, payload);
+        }
+
+        /**
+         * Get Queue
+         *
+         * Check the Appwrite queue messaging servers are up and connection is
+         * successful.
+         *
+         * @throws {AppwriteException}
+         * @returns {Promise}
+         */
+        async getQueue(): Promise<Models.HealthStatus> {
+            let path = '/health/queue';
             let payload: Payload = {};
 
             const uri = new URL(this.client.config.endpoint + path);

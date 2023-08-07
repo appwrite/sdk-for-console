@@ -539,20 +539,15 @@ export class Users extends Service {
          *
          *
          * @param {string} range
-         * @param {string} provider
          * @throws {AppwriteException}
          * @returns {Promise}
          */
-        async getUsage(range?: string, provider?: string): Promise<Models.UsageUsers> {
+        async getUsage(range?: string): Promise<Models.UsageUsers> {
             let path = '/users/usage';
             let payload: Payload = {};
 
             if (typeof range !== 'undefined') {
                 payload['range'] = range;
-            }
-
-            if (typeof provider !== 'undefined') {
-                payload['provider'] = provider;
             }
 
             const uri = new URL(this.client.config.endpoint + path);

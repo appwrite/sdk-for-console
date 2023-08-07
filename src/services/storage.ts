@@ -663,7 +663,7 @@ export class Storage extends Service {
         }
 
         /**
-         * Get usage stats for a storage bucket
+         * Get usage stats for storage bucket
          *
          *
          * @param {string} bucketId
