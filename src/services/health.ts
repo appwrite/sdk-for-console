@@ -10,230 +10,230 @@ export class Health extends Service {
         super(client);
      }
 
-        /**
-         * Get HTTP
-         *
-         * Check the Appwrite HTTP server is up and responsive.
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async get(): Promise<Models.HealthStatus> {
-            let path = '/health';
-            let payload: Payload = {};
+    /**
+     * Get HTTP
+     *
+     * Check the Appwrite HTTP server is up and responsive.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async get(): Promise<Models.HealthStatus> {
+        let path = '/health';
+        let payload: Payload = {};
 
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
+        const uri = new URL(this.client.config.endpoint + path);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
 
-        /**
-         * Get Antivirus
-         *
-         * Check the Appwrite Antivirus server is up and connection is successful.
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async getAntivirus(): Promise<Models.HealthAntivirus> {
-            let path = '/health/anti-virus';
-            let payload: Payload = {};
+    /**
+     * Get Antivirus
+     *
+     * Check the Appwrite Antivirus server is up and connection is successful.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getAntivirus(): Promise<Models.HealthAntivirus> {
+        let path = '/health/anti-virus';
+        let payload: Payload = {};
 
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
+        const uri = new URL(this.client.config.endpoint + path);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
 
-        /**
-         * Get Cache
-         *
-         * Check the Appwrite in-memory cache servers are up and connection is
-         * successful.
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async getCache(): Promise<Models.HealthStatus> {
-            let path = '/health/cache';
-            let payload: Payload = {};
+    /**
+     * Get Cache
+     *
+     * Check the Appwrite in-memory cache servers are up and connection is
+     * successful.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getCache(): Promise<Models.HealthStatus> {
+        let path = '/health/cache';
+        let payload: Payload = {};
 
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
+        const uri = new URL(this.client.config.endpoint + path);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
 
-        /**
-         * Get DB
-         *
-         * Check the Appwrite database servers are up and connection is successful.
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async getDB(): Promise<Models.HealthStatus> {
-            let path = '/health/db';
-            let payload: Payload = {};
+    /**
+     * Get DB
+     *
+     * Check the Appwrite database servers are up and connection is successful.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getDB(): Promise<Models.HealthStatus> {
+        let path = '/health/db';
+        let payload: Payload = {};
 
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
+        const uri = new URL(this.client.config.endpoint + path);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
 
-        /**
-         * Get PubSub
-         *
-         * Check the Appwrite pub-sub servers are up and connection is successful.
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async getPubSub(): Promise<Models.HealthStatus> {
-            let path = '/health/pubsub';
-            let payload: Payload = {};
+    /**
+     * Get PubSub
+     *
+     * Check the Appwrite pub-sub servers are up and connection is successful.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getPubSub(): Promise<Models.HealthStatus> {
+        let path = '/health/pubsub';
+        let payload: Payload = {};
 
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
+        const uri = new URL(this.client.config.endpoint + path);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
 
-        /**
-         * Get Queue
-         *
-         * Check the Appwrite queue messaging servers are up and connection is
-         * successful.
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async getQueue(): Promise<Models.HealthStatus> {
-            let path = '/health/queue';
-            let payload: Payload = {};
+    /**
+     * Get Queue
+     *
+     * Check the Appwrite queue messaging servers are up and connection is
+     * successful.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getQueue(): Promise<Models.HealthStatus> {
+        let path = '/health/queue';
+        let payload: Payload = {};
 
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
+        const uri = new URL(this.client.config.endpoint + path);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
 
-        /**
-         * Get Certificates Queue
-         *
-         * Get the number of certificates that are waiting to be issued against
-         * [Letsencrypt](https://letsencrypt.org/) in the Appwrite internal queue
-         * server.
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async getQueueCertificates(): Promise<Models.HealthQueue> {
-            let path = '/health/queue/certificates';
-            let payload: Payload = {};
+    /**
+     * Get Certificates Queue
+     *
+     * Get the number of certificates that are waiting to be issued against
+     * [Letsencrypt](https://letsencrypt.org/) in the Appwrite internal queue
+     * server.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getQueueCertificates(): Promise<Models.HealthQueue> {
+        let path = '/health/queue/certificates';
+        let payload: Payload = {};
 
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
+        const uri = new URL(this.client.config.endpoint + path);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
 
-        /**
-         * Get Functions Queue
-         *
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async getQueueFunctions(): Promise<Models.HealthQueue> {
-            let path = '/health/queue/functions';
-            let payload: Payload = {};
+    /**
+     * Get Functions Queue
+     *
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getQueueFunctions(): Promise<Models.HealthQueue> {
+        let path = '/health/queue/functions';
+        let payload: Payload = {};
 
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
+        const uri = new URL(this.client.config.endpoint + path);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
 
-        /**
-         * Get Logs Queue
-         *
-         * Get the number of logs that are waiting to be processed in the Appwrite
-         * internal queue server.
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async getQueueLogs(): Promise<Models.HealthQueue> {
-            let path = '/health/queue/logs';
-            let payload: Payload = {};
+    /**
+     * Get Logs Queue
+     *
+     * Get the number of logs that are waiting to be processed in the Appwrite
+     * internal queue server.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getQueueLogs(): Promise<Models.HealthQueue> {
+        let path = '/health/queue/logs';
+        let payload: Payload = {};
 
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
+        const uri = new URL(this.client.config.endpoint + path);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
 
-        /**
-         * Get Webhooks Queue
-         *
-         * Get the number of webhooks that are waiting to be processed in the Appwrite
-         * internal queue server.
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async getQueueWebhooks(): Promise<Models.HealthQueue> {
-            let path = '/health/queue/webhooks';
-            let payload: Payload = {};
+    /**
+     * Get Webhooks Queue
+     *
+     * Get the number of webhooks that are waiting to be processed in the Appwrite
+     * internal queue server.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getQueueWebhooks(): Promise<Models.HealthQueue> {
+        let path = '/health/queue/webhooks';
+        let payload: Payload = {};
 
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
+        const uri = new URL(this.client.config.endpoint + path);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
 
-        /**
-         * Get Local Storage
-         *
-         * Check the Appwrite local storage device is up and connection is successful.
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async getStorageLocal(): Promise<Models.HealthStatus> {
-            let path = '/health/storage/local';
-            let payload: Payload = {};
+    /**
+     * Get Local Storage
+     *
+     * Check the Appwrite local storage device is up and connection is successful.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getStorageLocal(): Promise<Models.HealthStatus> {
+        let path = '/health/storage/local';
+        let payload: Payload = {};
 
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
+        const uri = new URL(this.client.config.endpoint + path);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
 
-        /**
-         * Get Time
-         *
-         * Check the Appwrite server time is synced with Google remote NTP server. We
-         * use this technology to smoothly handle leap seconds with no disruptive
-         * events. The [Network Time
-         * Protocol](https://en.wikipedia.org/wiki/Network_Time_Protocol) (NTP) is
-         * used by hundreds of millions of computers and devices to synchronize their
-         * clocks over the Internet. If your computer sets its own clock, it likely
-         * uses NTP.
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async getTime(): Promise<Models.HealthTime> {
-            let path = '/health/time';
-            let payload: Payload = {};
+    /**
+     * Get Time
+     *
+     * Check the Appwrite server time is synced with Google remote NTP server. We
+     * use this technology to smoothly handle leap seconds with no disruptive
+     * events. The [Network Time
+     * Protocol](https://en.wikipedia.org/wiki/Network_Time_Protocol) (NTP) is
+     * used by hundreds of millions of computers and devices to synchronize their
+     * clocks over the Internet. If your computer sets its own clock, it likely
+     * uses NTP.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getTime(): Promise<Models.HealthTime> {
+        let path = '/health/time';
+        let payload: Payload = {};
 
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
+        const uri = new URL(this.client.config.endpoint + path);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
 };
