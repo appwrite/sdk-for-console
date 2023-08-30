@@ -10,21 +10,21 @@ export class Console extends Service {
         super(client);
      }
 
-        /**
-         * Get Variables
-         *
-         * Get all Environment Variables that are relevant for the console.
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise}
-         */
-        async variables(): Promise<Models.ConsoleVariables> {
-            let path = '/console/variables';
-            let payload: Payload = {};
+    /**
+     * Get Variables
+     *
+     * Get all Environment Variables that are relevant for the console.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async variables(): Promise<Models.ConsoleVariables> {
+        const apiPath = '/console/variables';
+        const payload: Payload = {};
 
-            const uri = new URL(this.client.config.endpoint + path);
-            return await this.client.call('get', uri, {
-                'content-type': 'application/json',
-            }, payload);
-        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
 };

@@ -5,11 +5,11 @@ const client = new Client();
 const projects = new Projects(client);
 
 client
-    .setEndpoint('https://[HOSTNAME_OR_IP]/v1') // Your API Endpoint
+    .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = projects.deleteDomain('[PROJECT_ID]', '[DOMAIN_ID]');
+const promise = projects.getSmsTemplate('[PROJECT_ID]', 'verification', 'af');
 
 promise.then(function (response) {
     console.log(response); // Success
