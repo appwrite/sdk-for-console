@@ -342,7 +342,7 @@ export class Storage extends Service {
         let id = undefined;
         let response = undefined;
 
-        const headers: { [header: string]: string } = {
+        const apiHeaders: { [header: string]: string } = {
             'content-type': 'multipart/form-data',
         }
 
@@ -350,7 +350,7 @@ export class Storage extends Service {
         const totalCounters = Math.ceil(size / Service.CHUNK_SIZE);
         if(fileId != 'unique()') {
             try {
-                response = await this.client.call('GET', new URL(this.client.config.endpoint + apiPath + '/' + fileId), headers);
+                response = await this.client.call('GET', new URL(this.client.config.endpoint + apiPath + '/' + fileId), apiHeaders);
                 counter = response.chunksUploaded;
             } catch(e) {
             }
@@ -360,16 +360,16 @@ export class Storage extends Service {
             const start = (counter * Service.CHUNK_SIZE);
             const end = Math.min((((counter * Service.CHUNK_SIZE) + Service.CHUNK_SIZE) - 1), size);
 
-            headers['content-range'] = 'bytes ' + start + '-' + end + '/' + size
+            apiHeaders['content-range'] = 'bytes ' + start + '-' + end + '/' + size
 
             if (id) {
-                headers['x-appwrite-id'] = id;
+                apiHeaders['x-appwrite-id'] = id;
             }
 
             const stream = file.slice(start, end + 1);
             payload['file'] = new File([stream], file.name);
 
-            response = await this.client.call('post', uri, headers, payload);
+            response = await this.client.call('post', uri, apiHeaders, payload);
 
             if (!id) {
                 id = response['$id'];
@@ -378,7 +378,7 @@ export class Storage extends Service {
             if (onProgress) {
                 onProgress({
                     $id: response.$id,
-                    progress: Math.min((counter + 1) * Service.CHUNK_SIZE - 1, size) / size * 100,
+                    progress: Math.min((counter + 1) * Service.CHUNK_SIZE, size) / size * 100,
                     sizeUploaded: end,
                     chunksTotal: response.chunksTotal,
                     chunksUploaded: response.chunksUploaded
