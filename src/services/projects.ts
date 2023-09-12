@@ -5,10 +5,10 @@ import type { UploadProgress, Payload } from '../client';
 
 export class Projects extends Service {
 
-     constructor(client: Client)
-     {
+    constructor(client: Client) 
+    {
         super(client);
-     }
+    }
 
     /**
      * List Projects
@@ -274,6 +274,37 @@ export class Projects extends Service {
 
         if (typeof duration !== 'undefined') {
             payload['duration'] = duration;
+        }
+
+        const uri = new URL(this.client.config.endpoint + path);
+        return await this.client.call('patch', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Update Project JWT Expiration Duration
+     *
+     *
+     * @param {string} projectId
+     * @param {number} jwtExpiration
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async updateJwtExpiration(projectId: string, jwtExpiration: number): Promise<Models.Project> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        if (typeof jwtExpiration === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "jwtExpiration"');
+        }
+
+        const path = `/projects/${projectId}/auth/jwt-expiration`;
+        const payload: Payload = {};
+
+        if (typeof jwtExpiration !== 'undefined') {
+            payload['jwtExpiration'] = jwtExpiration;
         }
 
         const uri = new URL(this.client.config.endpoint + path);
