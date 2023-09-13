@@ -4,7 +4,7 @@ import { Models } from './models';
 import { Service } from './service';
 
 type Payload = {
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 type Headers = {
