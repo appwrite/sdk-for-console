@@ -6,9 +6,9 @@ import type { UploadProgress, Payload } from '../client';
 export class Projects extends Service {
 
     constructor(client: Client) 
-    {
+     {
         super(client);
-    }
+     }
 
     /**
      * List Projects
