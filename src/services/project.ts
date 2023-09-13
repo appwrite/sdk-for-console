@@ -5,10 +5,10 @@ import type { UploadProgress, Payload } from '../client';
 
 export class Project extends Service {
 
-     constructor(client: Client)
-     {
+    constructor(client: Client)
+    {
         super(client);
-     }
+    }
 
     /**
      * Get usage stats for a project
