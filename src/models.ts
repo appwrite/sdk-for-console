@@ -2147,6 +2147,10 @@ export namespace Models {
          */
         authDuration: number;
         /**
+         * JWT expiration duration in seconds.
+         */
+        jwtExpiration: number;
+        /**
          * Max users allowed. 0 is unlimited.
          */
         authLimit: number;
