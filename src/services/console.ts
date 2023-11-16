@@ -11,7 +11,7 @@ export class Console extends Service {
      }
 
     /**
-     * Get Variables
+     * Get variables
      *
      * Get all Environment Variables that are relevant for the console.
      *

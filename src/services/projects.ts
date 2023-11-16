@@ -11,7 +11,7 @@ export class Projects extends Service {
      }
 
     /**
-     * List Projects
+     * List projects
      *
      *
      * @param {string[]} queries
@@ -38,7 +38,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Create Project
+     * Create project
      *
      *
      * @param {string} projectId
@@ -132,7 +132,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Get Project
+     * Get project
      *
      *
      * @param {string} projectId
@@ -154,7 +154,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Update Project
+     * Update project
      *
      *
      * @param {string} projectId
@@ -230,7 +230,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Delete Project
+     * Delete project
      *
      *
      * @param {string} projectId
@@ -252,7 +252,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Update Project Authentication Duration
+     * Update project authentication duration
      *
      *
      * @param {string} projectId
@@ -283,7 +283,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Update Project users limit
+     * Update project users limit
      *
      *
      * @param {string} projectId
@@ -314,7 +314,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Update Project user sessions limit
+     * Update project user sessions limit
      *
      *
      * @param {string} projectId
@@ -438,7 +438,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Update Project auth method status. Use this endpoint to enable or disable a given auth method for this project.
+     * Update project auth method status. Use this endpoint to enable or disable a given auth method for this project.
      *
      *
      * @param {string} projectId
@@ -474,7 +474,7 @@ export class Projects extends Service {
     }
 
     /**
-     * List Keys
+     * List keys
      *
      *
      * @param {string} projectId
@@ -496,7 +496,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Create Key
+     * Create key
      *
      *
      * @param {string} projectId
@@ -541,7 +541,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Get Key
+     * Get key
      *
      *
      * @param {string} projectId
@@ -568,7 +568,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Update Key
+     * Update key
      *
      *
      * @param {string} projectId
@@ -618,7 +618,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Delete Key
+     * Delete key
      *
      *
      * @param {string} projectId
@@ -645,7 +645,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Update Project OAuth2
+     * Update project OAuth2
      *
      *
      * @param {string} projectId
@@ -691,7 +691,7 @@ export class Projects extends Service {
     }
 
     /**
-     * List Platforms
+     * List platforms
      *
      *
      * @param {string} projectId
@@ -713,7 +713,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Create Platform
+     * Create platform
      *
      *
      * @param {string} projectId
@@ -768,7 +768,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Get Platform
+     * Get platform
      *
      *
      * @param {string} projectId
@@ -795,7 +795,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Update Platform
+     * Update platform
      *
      *
      * @param {string} projectId
@@ -846,7 +846,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Delete Platform
+     * Delete platform
      *
      *
      * @param {string} projectId
@@ -1307,7 +1307,7 @@ export class Projects extends Service {
     }
 
     /**
-     * List Webhooks
+     * List webhooks
      *
      *
      * @param {string} projectId
@@ -1329,7 +1329,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Create Webhook
+     * Create webhook
      *
      *
      * @param {string} projectId
@@ -1397,7 +1397,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Get Webhook
+     * Get webhook
      *
      *
      * @param {string} projectId
@@ -1424,7 +1424,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Update Webhook
+     * Update webhook
      *
      *
      * @param {string} projectId
@@ -1497,7 +1497,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Delete Webhook
+     * Delete webhook
      *
      *
      * @param {string} projectId
@@ -1524,7 +1524,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Update Webhook Signature Key
+     * Update webhook signature key
      *
      *
      * @param {string} projectId
