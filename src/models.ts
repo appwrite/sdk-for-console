@@ -2578,356 +2578,268 @@ export namespace Models {
      */
     export type UsageDatabases = {
         /**
-         * The time range of the usage stats.
+         * Time range of the usage stats.
          */
         range: string;
         /**
-         * Aggregated stats for total number of documents.
+         * Total aggregated number of databases.
          */
-        databasesCount: Metric[];
+        databasesTotal: number;
         /**
-         * Aggregated stats for total number of documents.
+         * Total aggregated number  of collections.
          */
-        documentsCount: Metric[];
+        collectionsTotal: number;
         /**
-         * Aggregated stats for total number of collections.
+         * Total aggregated number of documents.
          */
-        collectionsCount: Metric[];
+        documentsTotal: number;
         /**
-         * Aggregated stats for documents created.
+         * Aggregated number of databases per period.
          */
-        databasesCreate: Metric[];
+        databases: Metric[];
         /**
-         * Aggregated stats for documents read.
+         * Aggregated number of collections per period.
          */
-        databasesRead: Metric[];
+        collections: Metric[];
         /**
-         * Aggregated stats for documents updated.
+         * Aggregated number of documents per period.
          */
-        databasesUpdate: Metric[];
-        /**
-         * Aggregated stats for total number of collections.
-         */
-        databasesDelete: Metric[];
-        /**
-         * Aggregated stats for documents created.
-         */
-        documentsCreate: Metric[];
-        /**
-         * Aggregated stats for documents read.
-         */
-        documentsRead: Metric[];
-        /**
-         * Aggregated stats for documents updated.
-         */
-        documentsUpdate: Metric[];
-        /**
-         * Aggregated stats for documents deleted.
-         */
-        documentsDelete: Metric[];
-        /**
-         * Aggregated stats for collections created.
-         */
-        collectionsCreate: Metric[];
-        /**
-         * Aggregated stats for collections read.
-         */
-        collectionsRead: Metric[];
-        /**
-         * Aggregated stats for collections updated.
-         */
-        collectionsUpdate: Metric[];
-        /**
-         * Aggregated stats for collections delete.
-         */
-        collectionsDelete: Metric[];
+        documents: Metric[];
     }
     /**
      * UsageDatabase
      */
     export type UsageDatabase = {
         /**
-         * The time range of the usage stats.
+         * Time range of the usage stats.
          */
         range: string;
         /**
-         * Aggregated stats for total number of documents.
+         * Total aggregated number of collections.
          */
-        documentsCount: Metric[];
+        collectionsTotal: number;
         /**
-         * Aggregated stats for total number of collections.
+         * Total aggregated number of documents.
          */
-        collectionsCount: Metric[];
+        documentsTotal: number;
         /**
-         * Aggregated stats for documents created.
+         * Aggregated  number of collections per period.
          */
-        documentsCreate: Metric[];
+        collections: Metric[];
         /**
-         * Aggregated stats for documents read.
+         * Aggregated  number of documents per period.
          */
-        documentsRead: Metric[];
-        /**
-         * Aggregated stats for documents updated.
-         */
-        documentsUpdate: Metric[];
-        /**
-         * Aggregated stats for documents deleted.
-         */
-        documentsDelete: Metric[];
-        /**
-         * Aggregated stats for collections created.
-         */
-        collectionsCreate: Metric[];
-        /**
-         * Aggregated stats for collections read.
-         */
-        collectionsRead: Metric[];
-        /**
-         * Aggregated stats for collections updated.
-         */
-        collectionsUpdate: Metric[];
-        /**
-         * Aggregated stats for collections delete.
-         */
-        collectionsDelete: Metric[];
+        documents: Metric[];
     }
     /**
      * UsageCollection
      */
     export type UsageCollection = {
         /**
-         * The time range of the usage stats.
+         * Time range of the usage stats.
          */
         range: string;
         /**
-         * Aggregated stats for total number of documents.
+         * Total aggregated number of of documents.
          */
-        documentsCount: Metric[];
+        documentsTotal: number;
         /**
-         * Aggregated stats for documents created.
+         * Aggregated  number of documents per period.
          */
-        documentsCreate: Metric[];
-        /**
-         * Aggregated stats for documents read.
-         */
-        documentsRead: Metric[];
-        /**
-         * Aggregated stats for documents updated.
-         */
-        documentsUpdate: Metric[];
-        /**
-         * Aggregated stats for documents deleted.
-         */
-        documentsDelete: Metric[];
+        documents: Metric[];
     }
     /**
      * UsageUsers
      */
     export type UsageUsers = {
         /**
-         * The time range of the usage stats.
+         * Time range of the usage stats.
          */
         range: string;
         /**
-         * Aggregated stats for total number of users.
+         * Total aggregated number of statistics of users.
          */
-        usersCount: Metric[];
+        usersTotal: number;
         /**
-         * Aggregated stats for users created.
+         * Total aggregated number of active sessions.
          */
-        usersCreate: Metric[];
+        sessionsTotal: number;
         /**
-         * Aggregated stats for users read.
+         * Aggregated number of users per period.
          */
-        usersRead: Metric[];
+        users: Metric[];
         /**
-         * Aggregated stats for users updated.
+         * Aggregated number of active sessions  per period.
          */
-        usersUpdate: Metric[];
-        /**
-         * Aggregated stats for users deleted.
-         */
-        usersDelete: Metric[];
-        /**
-         * Aggregated stats for sessions created.
-         */
-        sessionsCreate: Metric[];
-        /**
-         * Aggregated stats for sessions created for a provider ( email, anonymous or oauth2 ).
-         */
-        sessionsProviderCreate: Metric[];
-        /**
-         * Aggregated stats for sessions deleted.
-         */
-        sessionsDelete: Metric[];
+        sessions: Metric[];
     }
     /**
      * StorageUsage
      */
     export type UsageStorage = {
         /**
-         * The time range of the usage stats.
+         * Time range of the usage stats.
          */
         range: string;
         /**
-         * Aggregated stats for the occupied storage size (in bytes).
+         * Total aggregated number of buckets
+         */
+        bucketsTotal: number;
+        /**
+         * Total aggregated number of files.
+         */
+        filesTotal: number;
+        /**
+         * Total aggregated number of files storage (in bytes).
+         */
+        filesStorageTotal: number;
+        /**
+         * Aggregated number of buckets per period.
+         */
+        buckets: Metric[];
+        /**
+         * Aggregated number of files per period.
+         */
+        files: Metric[];
+        /**
+         * Aggregated number of files storage (in bytes) per period .
          */
         storage: Metric[];
-        /**
-         * Aggregated stats for total number of files.
-         */
-        filesCount: Metric[];
-        /**
-         * Aggregated stats for total number of buckets.
-         */
-        bucketsCount: Metric[];
-        /**
-         * Aggregated stats for buckets created.
-         */
-        bucketsCreate: Metric[];
-        /**
-         * Aggregated stats for buckets read.
-         */
-        bucketsRead: Metric[];
-        /**
-         * Aggregated stats for buckets updated.
-         */
-        bucketsUpdate: Metric[];
-        /**
-         * Aggregated stats for buckets deleted.
-         */
-        bucketsDelete: Metric[];
-        /**
-         * Aggregated stats for files created.
-         */
-        filesCreate: Metric[];
-        /**
-         * Aggregated stats for files read.
-         */
-        filesRead: Metric[];
-        /**
-         * Aggregated stats for files updated.
-         */
-        filesUpdate: Metric[];
-        /**
-         * Aggregated stats for files deleted.
-         */
-        filesDelete: Metric[];
     }
     /**
      * UsageBuckets
      */
     export type UsageBuckets = {
         /**
-         * The time range of the usage stats.
+         * Time range of the usage stats.
          */
         range: string;
         /**
-         * Aggregated stats for total number of files in this bucket.
+         * Total aggregated number of bucket files.
          */
-        filesCount: Metric[];
+        filesTotal: number;
         /**
-         * Aggregated stats for total storage of files in this bucket.
+         * Total aggregated number of bucket files storage (in bytes).
          */
-        filesStorage: Metric[];
+        filesStorageTotal: number;
         /**
-         * Aggregated stats for files created.
+         * Aggregated  number of bucket files per period.
          */
-        filesCreate: Metric[];
+        files: Metric[];
         /**
-         * Aggregated stats for files read.
+         * Aggregated  number of bucket storage files (in bytes) per period.
          */
-        filesRead: Metric[];
-        /**
-         * Aggregated stats for files updated.
-         */
-        filesUpdate: Metric[];
-        /**
-         * Aggregated stats for files deleted.
-         */
-        filesDelete: Metric[];
+        storage: Metric[];
     }
     /**
      * UsageFunctions
      */
     export type UsageFunctions = {
         /**
-         * The time range of the usage stats.
+         * Time range of the usage stats.
          */
         range: string;
         /**
-         * Aggregated stats for number of function executions.
+         * Total aggregated number of functions.
          */
-        executionsTotal: Metric[];
+        functionsTotal: number;
         /**
-         * Aggregated stats for function execution failures.
+         * Total aggregated number of functions deployments.
          */
-        executionsFailure: Metric[];
+        deploymentsTotal: number;
         /**
-         * Aggregated stats for function execution successes.
+         * Total aggregated sum of functions deployment storage.
          */
-        executionsSuccess: Metric[];
+        deploymentsStorageTotal: number;
         /**
-         * Aggregated stats for function execution duration.
+         * Total aggregated number of functions build.
          */
-        executionsTime: Metric[];
+        buildsTotal: number;
         /**
-         * Aggregated stats for number of function builds.
+         * total aggregated sum of functions build storage.
          */
-        buildsTotal: Metric[];
+        buildsStorageTotal: number;
         /**
-         * Aggregated stats for function build failures.
+         * Total aggregated sum of functions build compute time.
          */
-        buildsFailure: Metric[];
+        buildsTimeTotal: number;
         /**
-         * Aggregated stats for function build successes.
+         * Total  aggregated number of functions execution.
          */
-        buildsSuccess: Metric[];
+        executionsTotal: number;
         /**
-         * Aggregated stats for function build duration.
+         * Total aggregated sum of functions  execution compute time.
+         */
+        executionsTimeTotal: number;
+        /**
+         * Aggregated number of functions per period.
+         */
+        functions: Metric[];
+        /**
+         * Aggregated number of functions deployment per period.
+         */
+        deployments: Metric[];
+        /**
+         * Aggregated number of  functions deployment storage per period.
+         */
+        deploymentsStorage: Metric[];
+        /**
+         * Aggregated number of functions build per period.
+         */
+        builds: Metric[];
+        /**
+         * Aggregated sum of functions build storage per period.
+         */
+        buildsStorage: Metric[];
+        /**
+         * Aggregated sum of  functions build compute time per period.
          */
         buildsTime: Metric[];
+        /**
+         * Aggregated number of  functions execution per period.
+         */
+        executions: Metric[];
+        /**
+         * Aggregated number of functions execution compute time per period.
+         */
+        executionsTime: Metric[];
     }
     /**
      * UsageProject
      */
     export type UsageProject = {
         /**
-         * The time range of the usage stats.
+         * Total aggregated number of function executions.
          */
-        range: string;
+        executionsTotal: number;
         /**
-         * Aggregated stats for number of requests.
+         * Total aggregated  number of documents.
          */
-        requests: Metric[];
+        documentsTotal: number;
         /**
-         * Aggregated stats for consumed bandwidth.
+         * Total aggregated number of databases.
          */
-        network: Metric[];
+        databasesTotal: number;
         /**
-         * Aggregated stats for function executions.
+         * Total aggregated number of users.
          */
-        executions: Metric[];
+        usersTotal: number;
         /**
-         * Aggregated stats for number of documents.
+         * Total aggregated sum of files storage size (in bytes).
          */
-        documents: Metric[];
+        filesStorageTotal: number;
         /**
-         * Aggregated stats for number of databases.
+         * Total aggregated number of buckets.
          */
-        databases: Metric[];
+        bucketsTotal: number;
         /**
-         * Aggregated stats for number of users.
+         * Aggregated  number of requests per period.
          */
-        users: Metric[];
+        requests: string[];
         /**
-         * Aggregated stats for the occupied storage size (in bytes).
+         * Aggregated number of consumed bandwidth per period.
          */
-        storage: Metric[];
-        /**
-         * Aggregated stats for number of buckets.
-         */
-        buckets: Metric[];
+        network: string[];
     }
     /**
      * Headers

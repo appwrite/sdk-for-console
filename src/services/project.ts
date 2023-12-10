@@ -14,16 +14,34 @@ export class Project extends Service {
      * Get usage stats for a project
      *
      *
-     * @param {string} range
+     * @param {string} startDate
+     * @param {string} endDate
+     * @param {string} period
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getUsage(range?: string): Promise<Models.UsageProject> {
+    async getUsage(startDate: string, endDate: string, period?: string): Promise<Models.UsageProject> {
+        if (typeof startDate === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "startDate"');
+        }
+
+        if (typeof endDate === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "endDate"');
+        }
+
         const apiPath = '/project/usage';
         const payload: Payload = {};
 
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
+        if (typeof startDate !== 'undefined') {
+            payload['startDate'] = startDate;
+        }
+
+        if (typeof endDate !== 'undefined') {
+            payload['endDate'] = endDate;
+        }
+
+        if (typeof period !== 'undefined') {
+            payload['period'] = period;
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);

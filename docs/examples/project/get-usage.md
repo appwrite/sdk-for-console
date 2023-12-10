@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = project.getUsage();
+const promise = project.getUsage('', '');
 
 promise.then(function (response) {
     console.log(response); // Success
