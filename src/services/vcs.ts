@@ -24,14 +24,14 @@ export class Vcs extends Service {
             throw new AppwriteException('Missing required parameter: "installationId"');
         }
 
-        let path = '/vcs/github/installations/{installationId}/providerRepositories'.replace('{installationId}', installationId);
-        let payload: Payload = {};
+        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories'.replace('{installationId}', installationId);
+        const payload: Payload = {};
 
         if (typeof search !== 'undefined') {
             payload['search'] = search;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -60,8 +60,8 @@ export class Vcs extends Service {
             throw new AppwriteException('Missing required parameter: "xprivate"');
         }
 
-        let path = '/vcs/github/installations/{installationId}/providerRepositories'.replace('{installationId}', installationId);
-        let payload: Payload = {};
+        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories'.replace('{installationId}', installationId);
+        const payload: Payload = {};
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -71,7 +71,7 @@ export class Vcs extends Service {
             payload['private'] = xprivate;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -95,10 +95,10 @@ export class Vcs extends Service {
             throw new AppwriteException('Missing required parameter: "providerRepositoryId"');
         }
 
-        let path = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}'.replace('{installationId}', installationId).replace('{providerRepositoryId}', providerRepositoryId);
-        let payload: Payload = {};
+        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}'.replace('{installationId}', installationId).replace('{providerRepositoryId}', providerRepositoryId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -122,10 +122,10 @@ export class Vcs extends Service {
             throw new AppwriteException('Missing required parameter: "providerRepositoryId"');
         }
 
-        let path = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}/branches'.replace('{installationId}', installationId).replace('{providerRepositoryId}', providerRepositoryId);
-        let payload: Payload = {};
+        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}/branches'.replace('{installationId}', installationId).replace('{providerRepositoryId}', providerRepositoryId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -150,14 +150,14 @@ export class Vcs extends Service {
             throw new AppwriteException('Missing required parameter: "providerRepositoryId"');
         }
 
-        let path = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}/detection'.replace('{installationId}', installationId).replace('{providerRepositoryId}', providerRepositoryId);
-        let payload: Payload = {};
+        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}/detection'.replace('{installationId}', installationId).replace('{providerRepositoryId}', providerRepositoryId);
+        const payload: Payload = {};
 
         if (typeof providerRootDirectory !== 'undefined') {
             payload['providerRootDirectory'] = providerRootDirectory;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -186,14 +186,14 @@ export class Vcs extends Service {
             throw new AppwriteException('Missing required parameter: "providerPullRequestId"');
         }
 
-        let path = '/vcs/github/installations/{installationId}/repositories/{repositoryId}'.replace('{installationId}', installationId).replace('{repositoryId}', repositoryId);
-        let payload: Payload = {};
+        const apiPath = '/vcs/github/installations/{installationId}/repositories/{repositoryId}'.replace('{installationId}', installationId).replace('{repositoryId}', repositoryId);
+        const payload: Payload = {};
 
         if (typeof providerPullRequestId !== 'undefined') {
             payload['providerPullRequestId'] = providerPullRequestId;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -209,8 +209,8 @@ export class Vcs extends Service {
      * @returns {Promise}
     */
     async listInstallations(queries?: string[], search?: string): Promise<Models.InstallationList> {
-        let path = '/vcs/installations';
-        let payload: Payload = {};
+        const apiPath = '/vcs/installations';
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -220,7 +220,7 @@ export class Vcs extends Service {
             payload['search'] = search;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -239,10 +239,10 @@ export class Vcs extends Service {
             throw new AppwriteException('Missing required parameter: "installationId"');
         }
 
-        let path = '/vcs/installations/{installationId}'.replace('{installationId}', installationId);
-        let payload: Payload = {};
+        const apiPath = '/vcs/installations/{installationId}'.replace('{installationId}', installationId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -261,10 +261,10 @@ export class Vcs extends Service {
             throw new AppwriteException('Missing required parameter: "installationId"');
         }
 
-        let path = '/vcs/installations/{installationId}'.replace('{installationId}', installationId);
-        let payload: Payload = {};
+        const apiPath = '/vcs/installations/{installationId}'.replace('{installationId}', installationId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);

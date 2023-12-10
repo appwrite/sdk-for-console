@@ -23,14 +23,14 @@ export class Assistant extends Service {
             throw new AppwriteException('Missing required parameter: "prompt"');
         }
 
-        let path = '/console/assistant';
-        let payload: Payload = {};
+        const apiPath = '/console/assistant';
+        const payload: Payload = {};
 
         if (typeof prompt !== 'undefined') {
             payload['prompt'] = prompt;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);

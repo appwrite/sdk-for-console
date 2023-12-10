@@ -11,12 +11,13 @@ export class Avatars extends Service {
      }
 
     /**
-     * Get Browser Icon
+     * Get browser icon
      *
      * You can use this endpoint to show different browser icons to your users.
      * The code argument receives the browser code as it appears in your user [GET
-     * /account/sessions](/docs/client/account#accountGetSessions) endpoint. Use
-     * width, height and quality arguments to change the output settings.
+     * /account/sessions](https://appwrite.io/docs/references/cloud/client-web/account#getSessions)
+     * endpoint. Use width, height and quality arguments to change the output
+     * settings.
      * 
      * When one dimension is specified and the other is 0, the image is scaled
      * with preserved aspect ratio. If both dimensions are 0, the API provides an
@@ -35,8 +36,8 @@ export class Avatars extends Service {
             throw new AppwriteException('Missing required parameter: "code"');
         }
 
-        let path = '/avatars/browsers/{code}'.replace('{code}', code);
-        let payload: Payload = {};
+        const apiPath = '/avatars/browsers/{code}'.replace('{code}', code);
+        const payload: Payload = {};
 
         if (typeof width !== 'undefined') {
             payload['width'] = width;
@@ -50,7 +51,7 @@ export class Avatars extends Service {
             payload['quality'] = quality;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         payload['project'] = this.client.config.project;
 
 
@@ -61,7 +62,7 @@ export class Avatars extends Service {
     }
 
     /**
-     * Get Credit Card Icon
+     * Get credit card icon
      *
      * The credit card endpoint will return you the icon of the credit card
      * provider you need. Use width, height and quality arguments to change the
@@ -85,8 +86,8 @@ export class Avatars extends Service {
             throw new AppwriteException('Missing required parameter: "code"');
         }
 
-        let path = '/avatars/credit-cards/{code}'.replace('{code}', code);
-        let payload: Payload = {};
+        const apiPath = '/avatars/credit-cards/{code}'.replace('{code}', code);
+        const payload: Payload = {};
 
         if (typeof width !== 'undefined') {
             payload['width'] = width;
@@ -100,7 +101,7 @@ export class Avatars extends Service {
             payload['quality'] = quality;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         payload['project'] = this.client.config.project;
 
 
@@ -111,7 +112,7 @@ export class Avatars extends Service {
     }
 
     /**
-     * Get Favicon
+     * Get favicon
      *
      * Use this endpoint to fetch the favorite icon (AKA favicon) of any remote
      * website URL.
@@ -126,14 +127,14 @@ export class Avatars extends Service {
             throw new AppwriteException('Missing required parameter: "url"');
         }
 
-        let path = '/avatars/favicon';
-        let payload: Payload = {};
+        const apiPath = '/avatars/favicon';
+        const payload: Payload = {};
 
         if (typeof url !== 'undefined') {
             payload['url'] = url;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         payload['project'] = this.client.config.project;
 
 
@@ -144,12 +145,12 @@ export class Avatars extends Service {
     }
 
     /**
-     * Get Country Flag
+     * Get country flag
      *
      * You can use this endpoint to show different country flags icons to your
      * users. The code argument receives the 2 letter country code. Use width,
      * height and quality arguments to change the output settings. Country codes
-     * follow the [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1) standard.
+     * follow the [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1) standard.
      * 
      * When one dimension is specified and the other is 0, the image is scaled
      * with preserved aspect ratio. If both dimensions are 0, the API provides an
@@ -169,8 +170,8 @@ export class Avatars extends Service {
             throw new AppwriteException('Missing required parameter: "code"');
         }
 
-        let path = '/avatars/flags/{code}'.replace('{code}', code);
-        let payload: Payload = {};
+        const apiPath = '/avatars/flags/{code}'.replace('{code}', code);
+        const payload: Payload = {};
 
         if (typeof width !== 'undefined') {
             payload['width'] = width;
@@ -184,7 +185,7 @@ export class Avatars extends Service {
             payload['quality'] = quality;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         payload['project'] = this.client.config.project;
 
 
@@ -195,7 +196,7 @@ export class Avatars extends Service {
     }
 
     /**
-     * Get Image from URL
+     * Get image from URL
      *
      * Use this endpoint to fetch a remote image URL and crop it to any image size
      * you want. This endpoint is very useful if you need to crop and display
@@ -219,8 +220,8 @@ export class Avatars extends Service {
             throw new AppwriteException('Missing required parameter: "url"');
         }
 
-        let path = '/avatars/image';
-        let payload: Payload = {};
+        const apiPath = '/avatars/image';
+        const payload: Payload = {};
 
         if (typeof url !== 'undefined') {
             payload['url'] = url;
@@ -234,7 +235,7 @@ export class Avatars extends Service {
             payload['height'] = height;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         payload['project'] = this.client.config.project;
 
 
@@ -245,7 +246,7 @@ export class Avatars extends Service {
     }
 
     /**
-     * Get User Initials
+     * Get user initials
      *
      * Use this endpoint to show your user initials avatar icon on your website or
      * app. By default, this route will try to print your logged-in user name or
@@ -272,8 +273,8 @@ export class Avatars extends Service {
      * @returns {URL}
     */
     getInitials(name?: string, width?: number, height?: number, background?: string): URL {
-        let path = '/avatars/initials';
-        let payload: Payload = {};
+        const apiPath = '/avatars/initials';
+        const payload: Payload = {};
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -291,7 +292,7 @@ export class Avatars extends Service {
             payload['background'] = background;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         payload['project'] = this.client.config.project;
 
 
@@ -302,7 +303,7 @@ export class Avatars extends Service {
     }
 
     /**
-     * Get QR Code
+     * Get QR code
      *
      * Converts a given plain text to a QR code image. You can use the query
      * parameters to change the size and style of the resulting image.
@@ -320,8 +321,8 @@ export class Avatars extends Service {
             throw new AppwriteException('Missing required parameter: "text"');
         }
 
-        let path = '/avatars/qr';
-        let payload: Payload = {};
+        const apiPath = '/avatars/qr';
+        const payload: Payload = {};
 
         if (typeof text !== 'undefined') {
             payload['text'] = text;
@@ -339,7 +340,7 @@ export class Avatars extends Service {
             payload['download'] = download;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         payload['project'] = this.client.config.project;
 
 

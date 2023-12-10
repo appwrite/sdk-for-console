@@ -22,8 +22,8 @@ export class Proxy extends Service {
      * @returns {Promise}
     */
     async listRules(queries?: string[], search?: string): Promise<Models.ProxyRuleList> {
-        let path = '/proxy/rules';
-        let payload: Payload = {};
+        const apiPath = '/proxy/rules';
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -33,7 +33,7 @@ export class Proxy extends Service {
             payload['search'] = search;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -59,8 +59,8 @@ export class Proxy extends Service {
             throw new AppwriteException('Missing required parameter: "resourceType"');
         }
 
-        let path = '/proxy/rules';
-        let payload: Payload = {};
+        const apiPath = '/proxy/rules';
+        const payload: Payload = {};
 
         if (typeof domain !== 'undefined') {
             payload['domain'] = domain;
@@ -74,7 +74,7 @@ export class Proxy extends Service {
             payload['resourceId'] = resourceId;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -94,10 +94,10 @@ export class Proxy extends Service {
             throw new AppwriteException('Missing required parameter: "ruleId"');
         }
 
-        let path = '/proxy/rules/{ruleId}'.replace('{ruleId}', ruleId);
-        let payload: Payload = {};
+        const apiPath = '/proxy/rules/{ruleId}'.replace('{ruleId}', ruleId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -117,10 +117,10 @@ export class Proxy extends Service {
             throw new AppwriteException('Missing required parameter: "ruleId"');
         }
 
-        let path = '/proxy/rules/{ruleId}'.replace('{ruleId}', ruleId);
-        let payload: Payload = {};
+        const apiPath = '/proxy/rules/{ruleId}'.replace('{ruleId}', ruleId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -139,10 +139,10 @@ export class Proxy extends Service {
             throw new AppwriteException('Missing required parameter: "ruleId"');
         }
 
-        let path = '/proxy/rules/{ruleId}/verification'.replace('{ruleId}', ruleId);
-        let payload: Payload = {};
+        const apiPath = '/proxy/rules/{ruleId}/verification'.replace('{ruleId}', ruleId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);

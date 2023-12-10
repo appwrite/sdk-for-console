@@ -14,19 +14,37 @@ export class Project extends Service {
      * Get usage stats for a project
      *
      *
-     * @param {string} range
+     * @param {string} startDate
+     * @param {string} endDate
+     * @param {string} period
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getUsage(range?: string): Promise<Models.UsageProject> {
-        let path = '/project/usage';
-        let payload: Payload = {};
-
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
+    async getUsage(startDate: string, endDate: string, period?: string): Promise<Models.UsageProject> {
+        if (typeof startDate === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "startDate"');
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        if (typeof endDate === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "endDate"');
+        }
+
+        const apiPath = '/project/usage';
+        const payload: Payload = {};
+
+        if (typeof startDate !== 'undefined') {
+            payload['startDate'] = startDate;
+        }
+
+        if (typeof endDate !== 'undefined') {
+            payload['endDate'] = endDate;
+        }
+
+        if (typeof period !== 'undefined') {
+            payload['period'] = period;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -42,10 +60,10 @@ export class Project extends Service {
      * @returns {Promise}
     */
     async listVariables(): Promise<Models.VariableList> {
-        let path = '/project/variables';
-        let payload: Payload = {};
+        const apiPath = '/project/variables';
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -71,8 +89,8 @@ export class Project extends Service {
             throw new AppwriteException('Missing required parameter: "value"');
         }
 
-        let path = '/project/variables';
-        let payload: Payload = {};
+        const apiPath = '/project/variables';
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -82,7 +100,7 @@ export class Project extends Service {
             payload['value'] = value;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -102,10 +120,10 @@ export class Project extends Service {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
 
-        let path = '/project/variables/{variableId}'.replace('{variableId}', variableId);
-        let payload: Payload = {};
+        const apiPath = '/project/variables/{variableId}'.replace('{variableId}', variableId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -132,8 +150,8 @@ export class Project extends Service {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        let path = '/project/variables/{variableId}'.replace('{variableId}', variableId);
-        let payload: Payload = {};
+        const apiPath = '/project/variables/{variableId}'.replace('{variableId}', variableId);
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -143,7 +161,7 @@ export class Project extends Service {
             payload['value'] = value;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('put', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -163,10 +181,10 @@ export class Project extends Service {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
 
-        let path = '/project/variables/{variableId}'.replace('{variableId}', variableId);
-        let payload: Payload = {};
+        const apiPath = '/project/variables/{variableId}'.replace('{variableId}', variableId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);

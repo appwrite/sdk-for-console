@@ -11,7 +11,7 @@ export class Databases extends Service {
      }
 
     /**
-     * List Databases
+     * List databases
      *
      * Get a list of all databases from the current Appwrite project. You can use
      * the search parameter to filter your results.
@@ -22,8 +22,8 @@ export class Databases extends Service {
      * @returns {Promise}
     */
     async list(queries?: string[], search?: string): Promise<Models.DatabaseList> {
-        let path = '/databases';
-        let payload: Payload = {};
+        const apiPath = '/databases';
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -33,14 +33,14 @@ export class Databases extends Service {
             payload['search'] = search;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Database
+     * Create database
      *
      * Create a new Database.
      * 
@@ -60,8 +60,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        let path = '/databases';
-        let payload: Payload = {};
+        const apiPath = '/databases';
+        const payload: Payload = {};
 
         if (typeof databaseId !== 'undefined') {
             payload['databaseId'] = databaseId;
@@ -75,7 +75,7 @@ export class Databases extends Service {
             payload['enabled'] = enabled;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -90,21 +90,21 @@ export class Databases extends Service {
      * @returns {Promise}
     */
     async getUsage(range?: string): Promise<Models.UsageDatabases> {
-        let path = '/databases/usage';
-        let payload: Payload = {};
+        const apiPath = '/databases/usage';
+        const payload: Payload = {};
 
         if (typeof range !== 'undefined') {
             payload['range'] = range;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Database
+     * Get database
      *
      * Get a database by its unique ID. This endpoint response returns a JSON
      * object with the database metadata.
@@ -118,17 +118,17 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        let path = '/databases/{databaseId}'.replace('{databaseId}', databaseId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}'.replace('{databaseId}', databaseId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Database
+     * Update database
      *
      * Update a database by its unique ID.
      *
@@ -147,8 +147,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        let path = '/databases/{databaseId}'.replace('{databaseId}', databaseId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}'.replace('{databaseId}', databaseId);
+        const payload: Payload = {};
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -158,14 +158,14 @@ export class Databases extends Service {
             payload['enabled'] = enabled;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('put', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Delete Database
+     * Delete database
      *
      * Delete a database by its unique ID. Only API keys with with databases.write
      * scope can delete a database.
@@ -179,17 +179,17 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        let path = '/databases/{databaseId}'.replace('{databaseId}', databaseId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}'.replace('{databaseId}', databaseId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Collections
+     * List collections
      *
      * Get a list of all collections that belong to the provided databaseId. You
      * can use the search parameter to filter your results.
@@ -205,8 +205,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        let path = '/databases/{databaseId}/collections'.replace('{databaseId}', databaseId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections'.replace('{databaseId}', databaseId);
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -216,19 +216,19 @@ export class Databases extends Service {
             payload['search'] = search;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Collection
+     * Create collection
      *
      * Create a new Collection. Before using this route, you should create a new
      * database resource using either a [server
-     * integration](/docs/server/databases#databasesCreateCollection) API or
-     * directly from your database console.
+     * integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
+     * API or directly from your database console.
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -252,8 +252,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        let path = '/databases/{databaseId}/collections'.replace('{databaseId}', databaseId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections'.replace('{databaseId}', databaseId);
+        const payload: Payload = {};
 
         if (typeof collectionId !== 'undefined') {
             payload['collectionId'] = collectionId;
@@ -275,14 +275,14 @@ export class Databases extends Service {
             payload['enabled'] = enabled;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Collection
+     * Get collection
      *
      * Get a collection by its unique ID. This endpoint response returns a JSON
      * object with the collection metadata.
@@ -301,17 +301,17 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Collection
+     * Update collection
      *
      * Update a collection by its unique ID.
      *
@@ -337,8 +337,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -356,14 +356,14 @@ export class Databases extends Service {
             payload['enabled'] = enabled;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('put', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Delete Collection
+     * Delete collection
      *
      * Delete a collection by its unique ID. Only users with write permissions
      * have access to delete this resource.
@@ -382,17 +382,17 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Attributes
+     * List attributes
      *
      *
      * @param {string} databaseId
@@ -410,21 +410,21 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Boolean Attribute
+     * Create boolean attribute
      *
      * Create a boolean attribute.
      * 
@@ -455,8 +455,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/boolean'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/boolean'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -474,14 +474,14 @@ export class Databases extends Service {
             payload['array'] = array;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Boolean Attribute
+     * Update boolean attribute
      *
      *
      * @param {string} databaseId
@@ -513,8 +513,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/boolean/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/boolean/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -524,14 +524,14 @@ export class Databases extends Service {
             payload['default'] = xdefault;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create DateTime Attribute
+     * Create datetime attribute
      *
      *
      * @param {string} databaseId
@@ -560,8 +560,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/datetime'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/datetime'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -579,14 +579,14 @@ export class Databases extends Service {
             payload['array'] = array;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update DateTime Attribute
+     * Update dateTime attribute
      *
      *
      * @param {string} databaseId
@@ -618,8 +618,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/datetime/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/datetime/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -629,14 +629,14 @@ export class Databases extends Service {
             payload['default'] = xdefault;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Email Attribute
+     * Create email attribute
      *
      * Create an email attribute.
      * 
@@ -667,8 +667,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/email'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/email'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -686,14 +686,14 @@ export class Databases extends Service {
             payload['array'] = array;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Email Attribute
+     * Update email attribute
      *
      * Update an email attribute. Changing the `default` value will not update
      * already existing documents.
@@ -728,8 +728,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/email/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/email/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -739,14 +739,14 @@ export class Databases extends Service {
             payload['default'] = xdefault;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Enum Attribute
+     * Create enum attribute
      *
      *
      * @param {string} databaseId
@@ -780,8 +780,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/enum'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/enum'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -803,14 +803,14 @@ export class Databases extends Service {
             payload['array'] = array;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Enum Attribute
+     * Update enum attribute
      *
      * Update an enum attribute. Changing the `default` value will not update
      * already existing documents.
@@ -850,8 +850,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/enum/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/enum/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
         if (typeof elements !== 'undefined') {
             payload['elements'] = elements;
@@ -865,14 +865,14 @@ export class Databases extends Service {
             payload['default'] = xdefault;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Float Attribute
+     * Create float attribute
      *
      * Create a float attribute. Optionally, minimum and maximum values can be
      * provided.
@@ -906,8 +906,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/float'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/float'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -933,14 +933,14 @@ export class Databases extends Service {
             payload['array'] = array;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Float Attribute
+     * Update float attribute
      *
      * Update a float attribute. Changing the `default` value will not update
      * already existing documents.
@@ -985,8 +985,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/float/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/float/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -1004,14 +1004,14 @@ export class Databases extends Service {
             payload['default'] = xdefault;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Integer Attribute
+     * Create integer attribute
      *
      * Create an integer attribute. Optionally, minimum and maximum values can be
      * provided.
@@ -1045,8 +1045,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/integer'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/integer'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -1072,14 +1072,14 @@ export class Databases extends Service {
             payload['array'] = array;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Integer Attribute
+     * Update integer attribute
      *
      * Update an integer attribute. Changing the `default` value will not update
      * already existing documents.
@@ -1124,8 +1124,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/integer/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/integer/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -1143,14 +1143,14 @@ export class Databases extends Service {
             payload['default'] = xdefault;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create IP Address Attribute
+     * Create IP address attribute
      *
      * Create IP address attribute.
      * 
@@ -1181,8 +1181,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/ip'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/ip'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -1200,14 +1200,14 @@ export class Databases extends Service {
             payload['array'] = array;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update IP Address Attribute
+     * Update IP address attribute
      *
      * Update an ip attribute. Changing the `default` value will not update
      * already existing documents.
@@ -1242,8 +1242,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/ip/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/ip/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -1253,17 +1253,17 @@ export class Databases extends Service {
             payload['default'] = xdefault;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Relationship Attribute
+     * Create relationship attribute
      *
      * Create relationship attribute. [Learn more about relationship
-     * attributes](/docs/databases-relationships#relationship-attributes).
+     * attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
      * 
      *
      * @param {string} databaseId
@@ -1294,8 +1294,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "type"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/relationship'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/relationship'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof relatedCollectionId !== 'undefined') {
             payload['relatedCollectionId'] = relatedCollectionId;
@@ -1321,14 +1321,14 @@ export class Databases extends Service {
             payload['onDelete'] = onDelete;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create String Attribute
+     * Create string attribute
      *
      * Create a string attribute.
      * 
@@ -1365,8 +1365,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/string'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/string'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -1392,14 +1392,14 @@ export class Databases extends Service {
             payload['encrypt'] = encrypt;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update String Attribute
+     * Update string attribute
      *
      * Update a string attribute. Changing the `default` value will not update
      * already existing documents.
@@ -1434,8 +1434,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/string/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/string/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -1445,14 +1445,14 @@ export class Databases extends Service {
             payload['default'] = xdefault;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create URL Attribute
+     * Create URL attribute
      *
      * Create a URL attribute.
      * 
@@ -1483,8 +1483,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/url'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/url'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -1502,14 +1502,14 @@ export class Databases extends Service {
             payload['array'] = array;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update URL Attribute
+     * Update URL attribute
      *
      * Update an url attribute. Changing the `default` value will not update
      * already existing documents.
@@ -1544,8 +1544,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/url/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/url/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -1555,14 +1555,14 @@ export class Databases extends Service {
             payload['default'] = xdefault;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Attribute
+     * Get attribute
      *
      *
      * @param {string} databaseId
@@ -1584,17 +1584,17 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Delete Attribute
+     * Delete attribute
      *
      *
      * @param {string} databaseId
@@ -1616,20 +1616,20 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Relationship Attribute
+     * Update relationship attribute
      *
      * Update relationship attribute. [Learn more about relationship
-     * attributes](/docs/databases-relationships#relationship-attributes).
+     * attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
      * 
      *
      * @param {string} databaseId
@@ -1652,21 +1652,21 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}/relationship'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}/relationship'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
         if (typeof onDelete !== 'undefined') {
             payload['onDelete'] = onDelete;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Documents
+     * List documents
      *
      * Get a list of all the user's documents in a given collection. You can use
      * the query params to filter your results.
@@ -1686,26 +1686,26 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Document
+     * Create document
      *
      * Create a new Document. Before using this route, you should create a new
      * collection resource using either a [server
-     * integration](/docs/server/databases#databasesCreateCollection) API or
-     * directly from your database console.
+     * integration](https://appwrite.io/docs/server/databases#databasesCreateCollection)
+     * API or directly from your database console.
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -1732,8 +1732,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "data"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof documentId !== 'undefined') {
             payload['documentId'] = documentId;
@@ -1747,14 +1747,14 @@ export class Databases extends Service {
             payload['permissions'] = permissions;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Document
+     * Get document
      *
      * Get a document by its unique ID. This endpoint response returns a JSON
      * object with the document data.
@@ -1779,21 +1779,21 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "documentId"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Document
+     * Update document
      *
      * Update a document by its unique ID. Using the patch method you can pass
      * only specific fields that will get updated.
@@ -1819,8 +1819,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "documentId"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const payload: Payload = {};
 
         if (typeof data !== 'undefined') {
             payload['data'] = data;
@@ -1830,14 +1830,14 @@ export class Databases extends Service {
             payload['permissions'] = permissions;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Delete Document
+     * Delete document
      *
      * Delete a document by its unique ID.
      *
@@ -1860,17 +1860,17 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "documentId"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Document Logs
+     * List document logs
      *
      * Get the document activity logs list by its unique ID.
      *
@@ -1894,21 +1894,21 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "documentId"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}/logs'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}/logs'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Indexes
+     * List indexes
      *
      *
      * @param {string} databaseId
@@ -1926,21 +1926,21 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/indexes'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/indexes'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Index
+     * Create index
      *
      *
      * @param {string} databaseId
@@ -1973,8 +1973,8 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "attributes"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/indexes'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/indexes'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -1992,14 +1992,14 @@ export class Databases extends Service {
             payload['orders'] = orders;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Index
+     * Get index
      *
      *
      * @param {string} databaseId
@@ -2021,17 +2021,17 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/indexes/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/indexes/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Delete Index
+     * Delete index
      *
      *
      * @param {string} databaseId
@@ -2053,17 +2053,17 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/indexes/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/indexes/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Collection Logs
+     * List collection logs
      *
      * Get the collection activity logs list by its unique ID.
      *
@@ -2082,14 +2082,14 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/logs'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/logs'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -2114,21 +2114,21 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        let path = '/databases/{databaseId}/collections/{collectionId}/usage'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/usage'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
 
         if (typeof range !== 'undefined') {
             payload['range'] = range;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Database Logs
+     * List database logs
      *
      * Get the database activity logs list by its unique ID.
      *
@@ -2142,14 +2142,14 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        let path = '/databases/{databaseId}/logs'.replace('{databaseId}', databaseId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/logs'.replace('{databaseId}', databaseId);
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -2169,14 +2169,14 @@ export class Databases extends Service {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        let path = '/databases/{databaseId}/usage'.replace('{databaseId}', databaseId);
-        let payload: Payload = {};
+        const apiPath = '/databases/{databaseId}/usage'.replace('{databaseId}', databaseId);
+        const payload: Payload = {};
 
         if (typeof range !== 'undefined') {
             payload['range'] = range;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);

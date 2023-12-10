@@ -20,8 +20,8 @@ export class Migrations extends Service {
      * @returns {Promise}
     */
     async list(queries?: string, search?: string): Promise<Models.MigrationList> {
-        let path = '/migrations';
-        let payload: Payload = {};
+        const apiPath = '/migrations';
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -31,7 +31,7 @@ export class Migrations extends Service {
             payload['search'] = search;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -65,8 +65,8 @@ export class Migrations extends Service {
             throw new AppwriteException('Missing required parameter: "apiKey"');
         }
 
-        let path = '/migrations/appwrite';
-        let payload: Payload = {};
+        const apiPath = '/migrations/appwrite';
+        const payload: Payload = {};
 
         if (typeof resources !== 'undefined') {
             payload['resources'] = resources;
@@ -84,7 +84,7 @@ export class Migrations extends Service {
             payload['apiKey'] = apiKey;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -118,8 +118,8 @@ export class Migrations extends Service {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        let path = '/migrations/appwrite/report';
-        let payload: Payload = {};
+        const apiPath = '/migrations/appwrite/report';
+        const payload: Payload = {};
 
         if (typeof resources !== 'undefined') {
             payload['resources'] = resources;
@@ -137,7 +137,7 @@ export class Migrations extends Service {
             payload['key'] = key;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -161,8 +161,8 @@ export class Migrations extends Service {
             throw new AppwriteException('Missing required parameter: "serviceAccount"');
         }
 
-        let path = '/migrations/firebase';
-        let payload: Payload = {};
+        const apiPath = '/migrations/firebase';
+        const payload: Payload = {};
 
         if (typeof resources !== 'undefined') {
             payload['resources'] = resources;
@@ -172,7 +172,7 @@ export class Migrations extends Service {
             payload['serviceAccount'] = serviceAccount;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -186,10 +186,10 @@ export class Migrations extends Service {
      * @returns {Promise}
     */
     async deleteFirebaseAuth(): Promise<{}> {
-        let path = '/migrations/firebase/deauthorize';
-        let payload: Payload = {};
+        const apiPath = '/migrations/firebase/deauthorize';
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -213,8 +213,8 @@ export class Migrations extends Service {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
 
-        let path = '/migrations/firebase/oauth';
-        let payload: Payload = {};
+        const apiPath = '/migrations/firebase/oauth';
+        const payload: Payload = {};
 
         if (typeof resources !== 'undefined') {
             payload['resources'] = resources;
@@ -224,7 +224,7 @@ export class Migrations extends Service {
             payload['projectId'] = projectId;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -238,10 +238,10 @@ export class Migrations extends Service {
      * @returns {Promise}
     */
     async listFirebaseProjects(): Promise<Models.FirebaseProjectList> {
-        let path = '/migrations/firebase/projects';
-        let payload: Payload = {};
+        const apiPath = '/migrations/firebase/projects';
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -265,8 +265,8 @@ export class Migrations extends Service {
             throw new AppwriteException('Missing required parameter: "serviceAccount"');
         }
 
-        let path = '/migrations/firebase/report';
-        let payload: Payload = {};
+        const apiPath = '/migrations/firebase/report';
+        const payload: Payload = {};
 
         if (typeof resources !== 'undefined') {
             payload['resources'] = resources;
@@ -276,7 +276,7 @@ export class Migrations extends Service {
             payload['serviceAccount'] = serviceAccount;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -300,8 +300,8 @@ export class Migrations extends Service {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
 
-        let path = '/migrations/firebase/report/oauth';
-        let payload: Payload = {};
+        const apiPath = '/migrations/firebase/report/oauth';
+        const payload: Payload = {};
 
         if (typeof resources !== 'undefined') {
             payload['resources'] = resources;
@@ -311,7 +311,7 @@ export class Migrations extends Service {
             payload['projectId'] = projectId;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -361,8 +361,8 @@ export class Migrations extends Service {
             throw new AppwriteException('Missing required parameter: "password"');
         }
 
-        let path = '/migrations/nhost';
-        let payload: Payload = {};
+        const apiPath = '/migrations/nhost';
+        const payload: Payload = {};
 
         if (typeof resources !== 'undefined') {
             payload['resources'] = resources;
@@ -396,7 +396,7 @@ export class Migrations extends Service {
             payload['port'] = port;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -446,8 +446,8 @@ export class Migrations extends Service {
             throw new AppwriteException('Missing required parameter: "password"');
         }
 
-        let path = '/migrations/nhost/report';
-        let payload: Payload = {};
+        const apiPath = '/migrations/nhost/report';
+        const payload: Payload = {};
 
         if (typeof resources !== 'undefined') {
             payload['resources'] = resources;
@@ -481,7 +481,7 @@ export class Migrations extends Service {
             payload['port'] = port;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -526,8 +526,8 @@ export class Migrations extends Service {
             throw new AppwriteException('Missing required parameter: "password"');
         }
 
-        let path = '/migrations/supabase';
-        let payload: Payload = {};
+        const apiPath = '/migrations/supabase';
+        const payload: Payload = {};
 
         if (typeof resources !== 'undefined') {
             payload['resources'] = resources;
@@ -557,7 +557,7 @@ export class Migrations extends Service {
             payload['port'] = port;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -602,8 +602,8 @@ export class Migrations extends Service {
             throw new AppwriteException('Missing required parameter: "password"');
         }
 
-        let path = '/migrations/supabase/report';
-        let payload: Payload = {};
+        const apiPath = '/migrations/supabase/report';
+        const payload: Payload = {};
 
         if (typeof resources !== 'undefined') {
             payload['resources'] = resources;
@@ -633,7 +633,7 @@ export class Migrations extends Service {
             payload['port'] = port;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -652,10 +652,10 @@ export class Migrations extends Service {
             throw new AppwriteException('Missing required parameter: "migrationId"');
         }
 
-        let path = '/migrations/{migrationId}'.replace('{migrationId}', migrationId);
-        let payload: Payload = {};
+        const apiPath = '/migrations/{migrationId}'.replace('{migrationId}', migrationId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -674,10 +674,10 @@ export class Migrations extends Service {
             throw new AppwriteException('Missing required parameter: "migrationId"');
         }
 
-        let path = '/migrations/{migrationId}'.replace('{migrationId}', migrationId);
-        let payload: Payload = {};
+        const apiPath = '/migrations/{migrationId}'.replace('{migrationId}', migrationId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -696,10 +696,10 @@ export class Migrations extends Service {
             throw new AppwriteException('Missing required parameter: "migrationId"');
         }
 
-        let path = '/migrations/{migrationId}'.replace('{migrationId}', migrationId);
-        let payload: Payload = {};
+        const apiPath = '/migrations/{migrationId}'.replace('{migrationId}', migrationId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);

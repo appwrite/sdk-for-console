@@ -11,7 +11,7 @@ export class Locale extends Service {
      }
 
     /**
-     * Get User Locale
+     * Get user locale
      *
      * Get the current user location based on IP. Returns an object with user
      * country code, country name, continent name, continent code, ip address and
@@ -24,10 +24,10 @@ export class Locale extends Service {
      * @returns {Promise}
     */
     async get(): Promise<Models.Locale> {
-        let path = '/locale';
-        let payload: Payload = {};
+        const apiPath = '/locale';
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -43,17 +43,17 @@ export class Locale extends Service {
      * @returns {Promise}
     */
     async listCodes(): Promise<Models.LocaleCodeList> {
-        let path = '/locale/codes';
-        let payload: Payload = {};
+        const apiPath = '/locale/codes';
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Continents
+     * List continents
      *
      * List of all continents. You can use the locale header to get the data in a
      * supported language.
@@ -62,17 +62,17 @@ export class Locale extends Service {
      * @returns {Promise}
     */
     async listContinents(): Promise<Models.ContinentList> {
-        let path = '/locale/continents';
-        let payload: Payload = {};
+        const apiPath = '/locale/continents';
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Countries
+     * List countries
      *
      * List of all countries. You can use the locale header to get the data in a
      * supported language.
@@ -81,17 +81,17 @@ export class Locale extends Service {
      * @returns {Promise}
     */
     async listCountries(): Promise<Models.CountryList> {
-        let path = '/locale/countries';
-        let payload: Payload = {};
+        const apiPath = '/locale/countries';
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List EU Countries
+     * List EU countries
      *
      * List of all countries that are currently members of the EU. You can use the
      * locale header to get the data in a supported language.
@@ -100,17 +100,17 @@ export class Locale extends Service {
      * @returns {Promise}
     */
     async listCountriesEU(): Promise<Models.CountryList> {
-        let path = '/locale/countries/eu';
-        let payload: Payload = {};
+        const apiPath = '/locale/countries/eu';
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Countries Phone Codes
+     * List countries phone codes
      *
      * List of all countries phone codes. You can use the locale header to get the
      * data in a supported language.
@@ -119,17 +119,17 @@ export class Locale extends Service {
      * @returns {Promise}
     */
     async listCountriesPhones(): Promise<Models.PhoneList> {
-        let path = '/locale/countries/phones';
-        let payload: Payload = {};
+        const apiPath = '/locale/countries/phones';
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Currencies
+     * List currencies
      *
      * List of all currencies, including currency symbol, name, plural, and
      * decimal digits for all major and minor currencies. You can use the locale
@@ -139,17 +139,17 @@ export class Locale extends Service {
      * @returns {Promise}
     */
     async listCurrencies(): Promise<Models.CurrencyList> {
-        let path = '/locale/currencies';
-        let payload: Payload = {};
+        const apiPath = '/locale/currencies';
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Languages
+     * List languages
      *
      * List of all languages classified by ISO 639-1 including 2-letter code, name
      * in English, and name in the respective language.
@@ -158,10 +158,10 @@ export class Locale extends Service {
      * @returns {Promise}
     */
     async listLanguages(): Promise<Models.LanguageList> {
-        let path = '/locale/languages';
-        let payload: Payload = {};
+        const apiPath = '/locale/languages';
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);

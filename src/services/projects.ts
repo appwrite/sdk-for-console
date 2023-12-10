@@ -11,7 +11,7 @@ export class Projects extends Service {
      }
 
     /**
-     * List Projects
+     * List projects
      *
      *
      * @param {string[]} queries
@@ -20,8 +20,8 @@ export class Projects extends Service {
      * @returns {Promise}
     */
     async list(queries?: string[], search?: string): Promise<Models.ProjectList> {
-        let path = '/projects';
-        let payload: Payload = {};
+        const apiPath = '/projects';
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -31,14 +31,14 @@ export class Projects extends Service {
             payload['search'] = search;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Project
+     * Create project
      *
      *
      * @param {string} projectId
@@ -70,8 +70,8 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
-        let path = '/projects';
-        let payload: Payload = {};
+        const apiPath = '/projects';
+        const payload: Payload = {};
 
         if (typeof projectId !== 'undefined') {
             payload['projectId'] = projectId;
@@ -125,14 +125,14 @@ export class Projects extends Service {
             payload['legalTaxId'] = legalTaxId;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Project
+     * Get project
      *
      *
      * @param {string} projectId
@@ -144,17 +144,17 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
 
-        let path = '/projects/{projectId}'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Project
+     * Update project
      *
      *
      * @param {string} projectId
@@ -180,8 +180,8 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        let path = '/projects/{projectId}'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -223,14 +223,14 @@ export class Projects extends Service {
             payload['legalTaxId'] = legalTaxId;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Delete Project
+     * Delete project
      *
      *
      * @param {string} projectId
@@ -242,17 +242,17 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
 
-        let path = '/projects/{projectId}'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Project Authentication Duration
+     * Update project authentication duration
      *
      *
      * @param {string} projectId
@@ -269,21 +269,21 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "duration"');
         }
 
-        let path = '/projects/{projectId}/auth/duration'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/auth/duration'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof duration !== 'undefined') {
             payload['duration'] = duration;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Project users limit
+     * Update project users limit
      *
      *
      * @param {string} projectId
@@ -300,21 +300,21 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "limit"');
         }
 
-        let path = '/projects/{projectId}/auth/limit'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/auth/limit'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof limit !== 'undefined') {
             payload['limit'] = limit;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Project user sessions limit
+     * Update project user sessions limit
      *
      *
      * @param {string} projectId
@@ -331,14 +331,14 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "limit"');
         }
 
-        let path = '/projects/{projectId}/auth/max-sessions'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/auth/max-sessions'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof limit !== 'undefined') {
             payload['limit'] = limit;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -362,14 +362,14 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "enabled"');
         }
 
-        let path = '/projects/{projectId}/auth/password-dictionary'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/auth/password-dictionary'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -393,14 +393,14 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "limit"');
         }
 
-        let path = '/projects/{projectId}/auth/password-history'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/auth/password-history'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof limit !== 'undefined') {
             payload['limit'] = limit;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -424,21 +424,21 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "enabled"');
         }
 
-        let path = '/projects/{projectId}/auth/personal-data'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/auth/personal-data'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Project auth method status. Use this endpoint to enable or disable a given auth method for this project.
+     * Update project auth method status. Use this endpoint to enable or disable a given auth method for this project.
      *
      *
      * @param {string} projectId
@@ -460,21 +460,21 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "status"');
         }
 
-        let path = '/projects/{projectId}/auth/{method}'.replace('{projectId}', projectId).replace('{method}', method);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/auth/{method}'.replace('{projectId}', projectId).replace('{method}', method);
+        const payload: Payload = {};
 
         if (typeof status !== 'undefined') {
             payload['status'] = status;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Keys
+     * List keys
      *
      *
      * @param {string} projectId
@@ -486,17 +486,17 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
 
-        let path = '/projects/{projectId}/keys'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/keys'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Key
+     * Create key
      *
      *
      * @param {string} projectId
@@ -519,8 +519,8 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "scopes"');
         }
 
-        let path = '/projects/{projectId}/keys'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/keys'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -534,14 +534,14 @@ export class Projects extends Service {
             payload['expire'] = expire;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Key
+     * Get key
      *
      *
      * @param {string} projectId
@@ -558,17 +558,17 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
 
-        let path = '/projects/{projectId}/keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Key
+     * Update key
      *
      *
      * @param {string} projectId
@@ -596,8 +596,8 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "scopes"');
         }
 
-        let path = '/projects/{projectId}/keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
+        const payload: Payload = {};
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -611,14 +611,14 @@ export class Projects extends Service {
             payload['expire'] = expire;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('put', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Delete Key
+     * Delete key
      *
      *
      * @param {string} projectId
@@ -635,17 +635,17 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
 
-        let path = '/projects/{projectId}/keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Project OAuth2
+     * Update project OAuth2
      *
      *
      * @param {string} projectId
@@ -665,8 +665,8 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "provider"');
         }
 
-        let path = '/projects/{projectId}/oauth2'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/oauth2'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof provider !== 'undefined') {
             payload['provider'] = provider;
@@ -684,14 +684,14 @@ export class Projects extends Service {
             payload['enabled'] = enabled;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Platforms
+     * List platforms
      *
      *
      * @param {string} projectId
@@ -703,17 +703,17 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
 
-        let path = '/projects/{projectId}/platforms'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/platforms'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Platform
+     * Create platform
      *
      *
      * @param {string} projectId
@@ -738,8 +738,8 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        let path = '/projects/{projectId}/platforms'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/platforms'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof type !== 'undefined') {
             payload['type'] = type;
@@ -761,14 +761,14 @@ export class Projects extends Service {
             payload['hostname'] = hostname;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Platform
+     * Get platform
      *
      *
      * @param {string} projectId
@@ -785,17 +785,17 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "platformId"');
         }
 
-        let path = '/projects/{projectId}/platforms/{platformId}'.replace('{projectId}', projectId).replace('{platformId}', platformId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/platforms/{platformId}'.replace('{projectId}', projectId).replace('{platformId}', platformId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Platform
+     * Update platform
      *
      *
      * @param {string} projectId
@@ -820,8 +820,8 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        let path = '/projects/{projectId}/platforms/{platformId}'.replace('{projectId}', projectId).replace('{platformId}', platformId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/platforms/{platformId}'.replace('{projectId}', projectId).replace('{platformId}', platformId);
+        const payload: Payload = {};
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -839,14 +839,14 @@ export class Projects extends Service {
             payload['hostname'] = hostname;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('put', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Delete Platform
+     * Delete platform
      *
      *
      * @param {string} projectId
@@ -863,10 +863,10 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "platformId"');
         }
 
-        let path = '/projects/{projectId}/platforms/{platformId}'.replace('{projectId}', projectId).replace('{platformId}', platformId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/platforms/{platformId}'.replace('{projectId}', projectId).replace('{platformId}', platformId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -895,8 +895,8 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "status"');
         }
 
-        let path = '/projects/{projectId}/service'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/service'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof service !== 'undefined') {
             payload['service'] = service;
@@ -906,7 +906,7 @@ export class Projects extends Service {
             payload['status'] = status;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -930,14 +930,14 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "status"');
         }
 
-        let path = '/projects/{projectId}/service/all'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/service/all'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof status !== 'undefined') {
             payload['status'] = status;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -969,8 +969,8 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "enabled"');
         }
 
-        let path = '/projects/{projectId}/smtp'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/smtp'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
@@ -1008,7 +1008,7 @@ export class Projects extends Service {
             payload['secure'] = secure;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -1032,14 +1032,14 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
-        let path = '/projects/{projectId}/team'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/team'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof teamId !== 'undefined') {
             payload['teamId'] = teamId;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -1068,10 +1068,10 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "locale"');
         }
 
-        let path = '/projects/{projectId}/templates/email/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/templates/email/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -1113,8 +1113,8 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "message"');
         }
 
-        let path = '/projects/{projectId}/templates/email/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/templates/email/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
+        const payload: Payload = {};
 
         if (typeof subject !== 'undefined') {
             payload['subject'] = subject;
@@ -1136,7 +1136,7 @@ export class Projects extends Service {
             payload['replyTo'] = replyTo;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -1165,10 +1165,10 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "locale"');
         }
 
-        let path = '/projects/{projectId}/templates/email/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/templates/email/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -1197,10 +1197,10 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "locale"');
         }
 
-        let path = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -1234,14 +1234,14 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "message"');
         }
 
-        let path = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
+        const payload: Payload = {};
 
         if (typeof message !== 'undefined') {
             payload['message'] = message;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -1270,44 +1270,17 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "locale"');
         }
 
-        let path = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get usage stats for a project
-     *
-     *
-     * @param {string} projectId
-     * @param {string} range
-     * @throws {AppwriteException}
-     * @returns {Promise}
-    */
-    async getUsage(projectId: string, range?: string): Promise<Models.UsageProject> {
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-
-        let path = '/projects/{projectId}/usage'.replace('{projectId}', projectId);
-        let payload: Payload = {};
-
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
-
-        const uri = new URL(this.client.config.endpoint + path);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
-    }
-
-    /**
-     * List Webhooks
+     * List webhooks
      *
      *
      * @param {string} projectId
@@ -1319,17 +1292,17 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
 
-        let path = '/projects/{projectId}/webhooks'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/webhooks'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Webhook
+     * Create webhook
      *
      *
      * @param {string} projectId
@@ -1363,8 +1336,8 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "security"');
         }
 
-        let path = '/projects/{projectId}/webhooks'.replace('{projectId}', projectId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/webhooks'.replace('{projectId}', projectId);
+        const payload: Payload = {};
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1390,14 +1363,14 @@ export class Projects extends Service {
             payload['httpPass'] = httpPass;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Webhook
+     * Get webhook
      *
      *
      * @param {string} projectId
@@ -1414,17 +1387,17 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "webhookId"');
         }
 
-        let path = '/projects/{projectId}/webhooks/{webhookId}'.replace('{projectId}', projectId).replace('{webhookId}', webhookId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/webhooks/{webhookId}'.replace('{projectId}', projectId).replace('{webhookId}', webhookId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Webhook
+     * Update webhook
      *
      *
      * @param {string} projectId
@@ -1463,8 +1436,8 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "security"');
         }
 
-        let path = '/projects/{projectId}/webhooks/{webhookId}'.replace('{projectId}', projectId).replace('{webhookId}', webhookId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/webhooks/{webhookId}'.replace('{projectId}', projectId).replace('{webhookId}', webhookId);
+        const payload: Payload = {};
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1490,14 +1463,14 @@ export class Projects extends Service {
             payload['httpPass'] = httpPass;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('put', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Delete Webhook
+     * Delete webhook
      *
      *
      * @param {string} projectId
@@ -1514,17 +1487,17 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "webhookId"');
         }
 
-        let path = '/projects/{projectId}/webhooks/{webhookId}'.replace('{projectId}', projectId).replace('{webhookId}', webhookId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/webhooks/{webhookId}'.replace('{projectId}', projectId).replace('{webhookId}', webhookId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Webhook Signature Key
+     * Update webhook signature key
      *
      *
      * @param {string} projectId
@@ -1541,10 +1514,10 @@ export class Projects extends Service {
             throw new AppwriteException('Missing required parameter: "webhookId"');
         }
 
-        let path = '/projects/{projectId}/webhooks/{webhookId}/signature'.replace('{projectId}', projectId).replace('{webhookId}', webhookId);
-        let payload: Payload = {};
+        const apiPath = '/projects/{projectId}/webhooks/{webhookId}/signature'.replace('{projectId}', projectId).replace('{webhookId}', webhookId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);

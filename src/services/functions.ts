@@ -11,7 +11,7 @@ export class Functions extends Service {
      }
 
     /**
-     * List Functions
+     * List functions
      *
      * Get a list of all the project's functions. You can use the query params to
      * filter your results.
@@ -22,8 +22,8 @@ export class Functions extends Service {
      * @returns {Promise}
     */
     async list(queries?: string[], search?: string): Promise<Models.FunctionList> {
-        let path = '/functions';
-        let payload: Payload = {};
+        const apiPath = '/functions';
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -33,18 +33,19 @@ export class Functions extends Service {
             payload['search'] = search;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Function
+     * Create function
      *
      * Create a new function. You can pass a list of
-     * [permissions](/docs/permissions) to allow different project users or team
-     * with access to execute the function using the client API.
+     * [permissions](https://appwrite.io/docs/permissions) to allow different
+     * project users or team with access to execute the function using the client
+     * API.
      *
      * @param {string} functionId
      * @param {string} name
@@ -82,8 +83,8 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "runtime"');
         }
 
-        let path = '/functions';
-        let payload: Payload = {};
+        const apiPath = '/functions';
+        const payload: Payload = {};
 
         if (typeof functionId !== 'undefined') {
             payload['functionId'] = functionId;
@@ -165,7 +166,7 @@ export class Functions extends Service {
             payload['templateBranch'] = templateBranch;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -180,17 +181,17 @@ export class Functions extends Service {
      * @returns {Promise}
     */
     async listRuntimes(): Promise<Models.RuntimeList> {
-        let path = '/functions/runtimes';
-        let payload: Payload = {};
+        const apiPath = '/functions/runtimes';
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Functions Usage
+     * Get functions usage
      *
      *
      * @param {string} range
@@ -198,21 +199,21 @@ export class Functions extends Service {
      * @returns {Promise}
     */
     async getUsage(range?: string): Promise<Models.UsageFunctions> {
-        let path = '/functions/usage';
-        let payload: Payload = {};
+        const apiPath = '/functions/usage';
+        const payload: Payload = {};
 
         if (typeof range !== 'undefined') {
             payload['range'] = range;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Function
+     * Get function
      *
      * Get a function by its unique ID.
      *
@@ -225,17 +226,17 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        let path = '/functions/{functionId}'.replace('{functionId}', functionId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}'.replace('{functionId}', functionId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Function
+     * Update function
      *
      * Update function by its unique ID.
      *
@@ -258,7 +259,7 @@ export class Functions extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async update(functionId: string, name: string, runtime: string, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string): Promise<Models.Function> {
+    async update(functionId: string, name: string, runtime?: string, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string): Promise<Models.Function> {
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
@@ -267,12 +268,8 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        if (typeof runtime === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "runtime"');
-        }
-
-        let path = '/functions/{functionId}'.replace('{functionId}', functionId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}'.replace('{functionId}', functionId);
+        const payload: Payload = {};
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -334,14 +331,14 @@ export class Functions extends Service {
             payload['providerRootDirectory'] = providerRootDirectory;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('put', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Delete Function
+     * Delete function
      *
      * Delete a function by its unique ID.
      *
@@ -354,17 +351,17 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        let path = '/functions/{functionId}'.replace('{functionId}', functionId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}'.replace('{functionId}', functionId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Deployments
+     * List deployments
      *
      * Get a list of all the project's code deployments. You can use the query
      * params to filter your results.
@@ -380,8 +377,8 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        let path = '/functions/{functionId}/deployments'.replace('{functionId}', functionId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/deployments'.replace('{functionId}', functionId);
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -391,14 +388,14 @@ export class Functions extends Service {
             payload['search'] = search;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Deployment
+     * Create deployment
      *
      * Create a new function code deployment. Use this endpoint to upload a new
      * version of your code function. To execute your newly uploaded code, you'll
@@ -407,7 +404,7 @@ export class Functions extends Service {
      * This endpoint accepts a tar.gz file compressed with your code. Make sure to
      * include any dependencies your code has within the compressed file. You can
      * learn more about code packaging in the [Appwrite Cloud Functions
-     * tutorial](/docs/functions).
+     * tutorial](https://appwrite.io/docs/functions).
      * 
      * Use the "command" param to set the entrypoint used to execute your code.
      *
@@ -432,8 +429,8 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "activate"');
         }
 
-        let path = '/functions/{functionId}/deployments'.replace('{functionId}', functionId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/deployments'.replace('{functionId}', functionId);
+        const payload: Payload = {};
 
         if (typeof entrypoint !== 'undefined') {
             payload['entrypoint'] = entrypoint;
@@ -451,7 +448,7 @@ export class Functions extends Service {
             payload['activate'] = activate;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
 
         if(!(code instanceof File)) {
             throw new AppwriteException('Parameter "code" has to be a File.');
@@ -461,55 +458,45 @@ export class Functions extends Service {
 
         if (size <= Service.CHUNK_SIZE) {
             return await this.client.call('post', uri, {
-
                 'content-type': 'multipart/form-data',
             }, payload);
         }
-        let id = undefined;
-        let response = undefined;
 
-        const headers: { [header: string]: string } = {
+        const apiHeaders: { [header: string]: string } = {
             'content-type': 'multipart/form-data',
         }
 
-        let counter = 0;
-        const totalCounters = Math.ceil(size / Service.CHUNK_SIZE);
+        let offset = 0;
+        let response = undefined;
 
-        for (counter; counter < totalCounters; counter++) {
-            const start = (counter * Service.CHUNK_SIZE);
-            const end = Math.min((((counter * Service.CHUNK_SIZE) + Service.CHUNK_SIZE) - 1), size);
+        while (offset < size) {
+            let end = Math.min(offset + Service.CHUNK_SIZE - 1, size - 1);
 
-            headers['content-range'] = 'bytes ' + start + '-' + end + '/' + size
-
-            if (id) {
-                headers['x-appwrite-id'] = id;
+            apiHeaders['content-range'] = 'bytes ' + offset + '-' + end + '/' + size;
+            if (response && response.$id) {
+                apiHeaders['x-appwrite-id'] = response.$id;
             }
 
-            const stream = code.slice(start, end + 1);
-            payload['code'] = new File([stream], code.name);
-
-            response = await this.client.call('post', uri, headers, payload);
-
-            if (!id) {
-                id = response['$id'];
-            }
+            const chunk = code.slice(offset, end + 1);
+            payload['code'] = new File([chunk], code.name);
+            response = await this.client.call('post', uri, apiHeaders, payload);
 
             if (onProgress) {
                 onProgress({
                     $id: response.$id,
-                    progress: Math.min((counter + 1) * Service.CHUNK_SIZE - 1, size) / size * 100,
-                    sizeUploaded: end,
+                    progress: (offset / size) * 100,
+                    sizeUploaded: offset,
                     chunksTotal: response.chunksTotal,
                     chunksUploaded: response.chunksUploaded
                 });
             }
+            offset += Service.CHUNK_SIZE;
         }
-
         return response;
     }
 
     /**
-     * Get Deployment
+     * Get deployment
      *
      * Get a code deployment by its unique ID.
      *
@@ -527,17 +514,17 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        let path = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Function Deployment
+     * Update function deployment
      *
      * Update the function code deployment ID using the unique function ID. Use
      * this endpoint to switch the code deployment that should be executed by the
@@ -557,17 +544,17 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        let path = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Delete Deployment
+     * Delete deployment
      *
      * Delete a code deployment by its unique ID.
      *
@@ -585,18 +572,20 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        let path = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Build
+     * Create build
      *
+     * Create a new build for an Appwrite Function deployment. This endpoint can
+     * be used to retry a failed build.
      *
      * @param {string} functionId
      * @param {string} deploymentId
@@ -617,10 +606,10 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "buildId"');
         }
 
-        let path = '/functions/{functionId}/deployments/{deploymentId}/builds/{buildId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId).replace('{buildId}', buildId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}/builds/{buildId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId).replace('{buildId}', buildId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
@@ -629,6 +618,8 @@ export class Functions extends Service {
     /**
      * Download Deployment
      *
+     * Get a Deployment's contents by its unique ID. This endpoint supports range
+     * requests for partial or streaming file download.
      *
      * @param {string} functionId
      * @param {string} deploymentId
@@ -644,10 +635,10 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        let path = '/functions/{functionId}/deployments/{deploymentId}/download'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}/download'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         payload['project'] = this.client.config.project;
 
 
@@ -658,7 +649,7 @@ export class Functions extends Service {
     }
 
     /**
-     * List Executions
+     * List executions
      *
      * Get a list of all the current user function execution logs. You can use the
      * query params to filter your results.
@@ -674,8 +665,8 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        let path = '/functions/{functionId}/executions'.replace('{functionId}', functionId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/executions'.replace('{functionId}', functionId);
+        const payload: Payload = {};
 
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -685,14 +676,14 @@ export class Functions extends Service {
             payload['search'] = search;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Execution
+     * Create execution
      *
      * Trigger a function execution. The returned object will return you the
      * current execution status. You can ping the `Get Execution` endpoint to get
@@ -702,19 +693,19 @@ export class Functions extends Service {
      * @param {string} functionId
      * @param {string} body
      * @param {boolean} async
-     * @param {string} path
+     * @param {string} xpath
      * @param {string} method
      * @param {object} headers
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createExecution(functionId: string, body?: string, async?: boolean, path?: string, method?: string, headers?: object): Promise<Models.Execution> {
+    async createExecution(functionId: string, body?: string, async?: boolean, xpath?: string, method?: string, headers?: object): Promise<Models.Execution> {
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        let _path = '/functions/{functionId}/executions'.replace('{functionId}', functionId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/executions'.replace('{functionId}', functionId);
+        const payload: Payload = {};
 
         if (typeof body !== 'undefined') {
             payload['body'] = body;
@@ -724,8 +715,8 @@ export class Functions extends Service {
             payload['async'] = async;
         }
 
-        if (typeof path !== 'undefined') {
-            payload['path'] = path;
+        if (typeof xpath !== 'undefined') {
+            payload['path'] = xpath;
         }
 
         if (typeof method !== 'undefined') {
@@ -736,14 +727,14 @@ export class Functions extends Service {
             payload['headers'] = headers;
         }
 
-        const uri = new URL(this.client.config.endpoint + _path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Execution
+     * Get execution
      *
      * Get a function execution log by its unique ID.
      *
@@ -761,17 +752,17 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "executionId"');
         }
 
-        let path = '/functions/{functionId}/executions/{executionId}'.replace('{functionId}', functionId).replace('{executionId}', executionId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/executions/{executionId}'.replace('{functionId}', functionId).replace('{executionId}', executionId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Function Usage
+     * Get function usage
      *
      *
      * @param {string} functionId
@@ -784,21 +775,21 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        let path = '/functions/{functionId}/usage'.replace('{functionId}', functionId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/usage'.replace('{functionId}', functionId);
+        const payload: Payload = {};
 
         if (typeof range !== 'undefined') {
             payload['range'] = range;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * List Variables
+     * List variables
      *
      * Get a list of all variables of a specific function.
      *
@@ -811,17 +802,17 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        let path = '/functions/{functionId}/variables'.replace('{functionId}', functionId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/variables'.replace('{functionId}', functionId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Create Variable
+     * Create variable
      *
      * Create a new function environment variable. These variables can be accessed
      * in the function at runtime as environment variables.
@@ -845,8 +836,8 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "value"');
         }
 
-        let path = '/functions/{functionId}/variables'.replace('{functionId}', functionId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/variables'.replace('{functionId}', functionId);
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -856,14 +847,14 @@ export class Functions extends Service {
             payload['value'] = value;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Get Variable
+     * Get variable
      *
      * Get a variable by its unique ID.
      *
@@ -881,17 +872,17 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
 
-        let path = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', functionId).replace('{variableId}', variableId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', functionId).replace('{variableId}', variableId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Update Variable
+     * Update variable
      *
      * Update variable by its unique ID.
      *
@@ -915,8 +906,8 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        let path = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', functionId).replace('{variableId}', variableId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', functionId).replace('{variableId}', variableId);
+        const payload: Payload = {};
 
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -926,14 +917,14 @@ export class Functions extends Service {
             payload['value'] = value;
         }
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('put', uri, {
             'content-type': 'application/json',
         }, payload);
     }
 
     /**
-     * Delete Variable
+     * Delete variable
      *
      * Delete a variable by its unique ID.
      *
@@ -951,10 +942,10 @@ export class Functions extends Service {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
 
-        let path = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', functionId).replace('{variableId}', variableId);
-        let payload: Payload = {};
+        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', functionId).replace('{variableId}', variableId);
+        const payload: Payload = {};
 
-        const uri = new URL(this.client.config.endpoint + path);
+        const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
