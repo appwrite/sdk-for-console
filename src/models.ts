@@ -2574,6 +2574,23 @@ export namespace Models {
         date: string;
     }
     /**
+     * Metric Breakdown
+     */
+    export type MetricBreakdown = {
+        /**
+         * Resource ID.
+         */
+        resourceId: string;
+        /**
+         * Resource name.
+         */
+        name: string;
+        /**
+         * The value of this metric at the timestamp.
+         */
+        value: number;
+    }
+    /**
      * UsageDatabases
      */
     export type UsageDatabases = {
@@ -2835,11 +2852,23 @@ export namespace Models {
         /**
          * Aggregated  number of requests per period.
          */
-        requests: string[];
+        requests: Metric[];
         /**
          * Aggregated number of consumed bandwidth per period.
          */
-        network: string[];
+        network: Metric[];
+        /**
+         * Aggregated number of users per period.
+         */
+        users: Metric[];
+        /**
+         * Aggregated breakdown in totals of executions by functions.
+         */
+        executionsBreakdown: MetricBreakdown[];
+        /**
+         * Aggregated breakdown in totals of usage by buckets.
+         */
+        bucketsBreakdown: MetricBreakdown[];
     }
     /**
      * Headers
