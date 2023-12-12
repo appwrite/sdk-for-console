@@ -2862,6 +2862,10 @@ export namespace Models {
          */
         users: Metric[];
         /**
+         * Aggregated number of executions per period.
+         */
+        executions: Metric[];
+        /**
          * Aggregated breakdown in totals of executions by functions.
          */
         executionsBreakdown: MetricBreakdown[];
