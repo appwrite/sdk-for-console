@@ -1187,6 +1187,10 @@ export namespace Models {
          */
         mfa: boolean;
         /**
+         * TOTP status.
+         */
+        totp: boolean;
+        /**
          * User preferences as a key-value object
          */
         prefs: Preferences;
