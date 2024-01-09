@@ -1183,6 +1183,10 @@ export namespace Models {
          */
         phoneVerification: boolean;
         /**
+         * Multi factor authentication status.
+         */
+        mfa: boolean;
+        /**
          * User preferences as a key-value object
          */
         prefs: Preferences;
