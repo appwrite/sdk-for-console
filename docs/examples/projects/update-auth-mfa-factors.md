@@ -1,15 +1,15 @@
-import { Client, Account } from "@appwrite.io/console";
+import { Client, Projects } from "@appwrite.io/console";
 
 const client = new Client();
 
-const account = new Account(client);
+const projects = new Projects(client);
 
 client
     .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = account.updateRecovery('[USER_ID]', '[SECRET]', '', '');
+const promise = projects.updateAuthMfaFactors('[PROJECT_ID]', 1);
 
 promise.then(function (response) {
     console.log(response); // Success

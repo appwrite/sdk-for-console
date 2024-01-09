@@ -85,24 +85,6 @@ export class Account extends Service {
     }
 
     /**
-     * Delete account
-     *
-     * Delete the currently logged in user.
-     *
-     * @throws {AppwriteException}
-     * @returns {Promise}
-    */
-    async delete(): Promise<{}> {
-        const apiPath = '/account';
-        const payload: Payload = {};
-
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('delete', uri, {
-            'content-type': 'application/json',
-        }, payload);
-    }
-
-    /**
      * Update email
      *
      * Update currently logged in user account email address. After changing user
@@ -233,6 +215,164 @@ export class Account extends Service {
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Update MFA
+     *
+     *
+     * @param {boolean} mfa
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async updateMFA<Preferences extends Models.Preferences>(mfa: boolean): Promise<Models.User<Preferences>> {
+        if (typeof mfa === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "mfa"');
+        }
+
+        const apiPath = '/account/mfa';
+        const payload: Payload = {};
+
+        if (typeof mfa !== 'undefined') {
+            payload['mfa'] = mfa;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('patch', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Create MFA Challenge
+     *
+     *
+     * @param {string} provider
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async createChallenge(provider: string): Promise<Models.MfaChallenge> {
+        if (typeof provider === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "provider"');
+        }
+
+        const apiPath = '/account/mfa/challenge';
+        const payload: Payload = {};
+
+        if (typeof provider !== 'undefined') {
+            payload['provider'] = provider;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('post', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Create MFA Challenge (confirmation)
+     *
+     *
+     * @param {string} challengeId
+     * @param {string} otp
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async updateChallenge(challengeId: string, otp: string): Promise<{}> {
+        if (typeof challengeId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "challengeId"');
+        }
+
+        if (typeof otp === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "otp"');
+        }
+
+        const apiPath = '/account/mfa/challenge';
+        const payload: Payload = {};
+
+        if (typeof challengeId !== 'undefined') {
+            payload['challengeId'] = challengeId;
+        }
+
+        if (typeof otp !== 'undefined') {
+            payload['otp'] = otp;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('put', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * List Providers
+     *
+     * Get the currently logged in user.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async listProviders(): Promise<Models.MfaProviders> {
+        const apiPath = '/account/mfa/providers';
+        const payload: Payload = {};
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Add Authenticator
+     *
+     *
+     * @param {string} provider
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async addAuthenticator(provider: string): Promise<Models.MfaProvider> {
+        if (typeof provider === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "provider"');
+        }
+
+        const apiPath = '/account/mfa/{provider}'.replace('{provider}', provider);
+        const payload: Payload = {};
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('post', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Verify Authenticator
+     *
+     *
+     * @param {string} provider
+     * @param {string} otp
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async verifyAuthenticator<Preferences extends Models.Preferences>(provider: string, otp: string): Promise<Models.User<Preferences>> {
+        if (typeof provider === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "provider"');
+        }
+
+        if (typeof otp === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "otp"');
+        }
+
+        const apiPath = '/account/mfa/{provider}'.replace('{provider}', provider);
+        const payload: Payload = {};
+
+        if (typeof otp !== 'undefined') {
+            payload['otp'] = otp;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('put', uri, {
             'content-type': 'application/json',
         }, payload);
     }

@@ -403,6 +403,71 @@ export namespace Models {
         localeCodes: LocaleCode[];
     }
     /**
+     * Provider list
+     */
+    export type ProviderList = {
+        /**
+         * Total number of providers documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of providers.
+         */
+        providers: Provider[];
+    }
+    /**
+     * Message list
+     */
+    export type MessageList = {
+        /**
+         * Total number of messages documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of messages.
+         */
+        messages: Message[];
+    }
+    /**
+     * Topic list
+     */
+    export type TopicList = {
+        /**
+         * Total number of topics documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of topics.
+         */
+        topics: Topic[];
+    }
+    /**
+     * Subscriber list
+     */
+    export type SubscriberList = {
+        /**
+         * Total number of subscribers documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of subscribers.
+         */
+        subscribers: Subscriber[];
+    }
+    /**
+     * Target list
+     */
+    export type TargetList = {
+        /**
+         * Total number of targets documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of targets.
+         */
+        targets: Target[];
+    }
+    /**
      * Migrations List
      */
     export type MigrationList = {
@@ -1122,6 +1187,10 @@ export namespace Models {
          */
         prefs: Preferences;
         /**
+         * A user-owned message receiver. A single user may have multiple e.g. emails, phones, and a browser. Each target is registered with a single provider.
+         */
+        targets: Target[];
+        /**
          * Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
          */
         accessedAt: string;
@@ -1339,6 +1408,10 @@ export namespace Models {
          * Returns true if this the current user session.
          */
         current: boolean;
+        /**
+         * Returns true if this the current user session.
+         */
+        factors: number;
     }
     /**
      * Identity
@@ -2106,9 +2179,9 @@ export namespace Models {
          */
         authPersonalDataCheck: boolean;
         /**
-         * List of Providers.
+         * List of Auth Providers.
          */
-        providers: Provider[];
+        oAuthProviders: AuthProvider[];
         /**
          * List of Platforms.
          */
@@ -2221,6 +2294,10 @@ export namespace Models {
          * GraphQL service status
          */
         serviceStatusForGraphql: boolean;
+        /**
+         * Messaging service status
+         */
+        serviceStatusForMessaging: boolean;
     }
     /**
      * Webhook
@@ -2309,15 +2386,15 @@ export namespace Models {
         sdks: string[];
     }
     /**
-     * Provider
+     * AuthProvider
      */
-    export type Provider = {
+    export type AuthProvider = {
         /**
-         * Provider.
+         * Auth Provider.
          */
         key: string;
         /**
-         * Provider name.
+         * Auth Provider name.
          */
         name: string;
         /**
@@ -2329,7 +2406,7 @@ export namespace Models {
          */
         secret: string;
         /**
-         * Provider is active and can be used to create session.
+         * Auth Provider is active and can be used to create session.
          */
         enabled: boolean;
     }
@@ -2574,370 +2651,360 @@ export namespace Models {
         date: string;
     }
     /**
-     * Metric Breakdown
-     */
-    export type MetricBreakdown = {
-        /**
-         * Resource ID.
-         */
-        resourceId: string;
-        /**
-         * Resource name.
-         */
-        name: string;
-        /**
-         * The value of this metric at the timestamp.
-         */
-        value: number;
-    }
-    /**
      * UsageDatabases
      */
     export type UsageDatabases = {
         /**
-         * Time range of the usage stats.
+         * The time range of the usage stats.
          */
         range: string;
         /**
-         * Total aggregated number of databases.
+         * Aggregated stats for total number of documents.
          */
-        databasesTotal: number;
+        databasesCount: Metric[];
         /**
-         * Total aggregated number  of collections.
+         * Aggregated stats for total number of documents.
          */
-        collectionsTotal: number;
+        documentsCount: Metric[];
         /**
-         * Total aggregated number of documents.
+         * Aggregated stats for total number of collections.
          */
-        documentsTotal: number;
+        collectionsCount: Metric[];
         /**
-         * Aggregated number of databases per period.
+         * Aggregated stats for documents created.
          */
-        databases: Metric[];
+        databasesCreate: Metric[];
         /**
-         * Aggregated number of collections per period.
+         * Aggregated stats for documents read.
          */
-        collections: Metric[];
+        databasesRead: Metric[];
         /**
-         * Aggregated number of documents per period.
+         * Aggregated stats for documents updated.
          */
-        documents: Metric[];
+        databasesUpdate: Metric[];
+        /**
+         * Aggregated stats for total number of collections.
+         */
+        databasesDelete: Metric[];
+        /**
+         * Aggregated stats for documents created.
+         */
+        documentsCreate: Metric[];
+        /**
+         * Aggregated stats for documents read.
+         */
+        documentsRead: Metric[];
+        /**
+         * Aggregated stats for documents updated.
+         */
+        documentsUpdate: Metric[];
+        /**
+         * Aggregated stats for documents deleted.
+         */
+        documentsDelete: Metric[];
+        /**
+         * Aggregated stats for collections created.
+         */
+        collectionsCreate: Metric[];
+        /**
+         * Aggregated stats for collections read.
+         */
+        collectionsRead: Metric[];
+        /**
+         * Aggregated stats for collections updated.
+         */
+        collectionsUpdate: Metric[];
+        /**
+         * Aggregated stats for collections delete.
+         */
+        collectionsDelete: Metric[];
     }
     /**
      * UsageDatabase
      */
     export type UsageDatabase = {
         /**
-         * Time range of the usage stats.
+         * The time range of the usage stats.
          */
         range: string;
         /**
-         * Total aggregated number of collections.
+         * Aggregated stats for total number of documents.
          */
-        collectionsTotal: number;
+        documentsCount: Metric[];
         /**
-         * Total aggregated number of documents.
+         * Aggregated stats for total number of collections.
          */
-        documentsTotal: number;
+        collectionsCount: Metric[];
         /**
-         * Aggregated  number of collections per period.
+         * Aggregated stats for documents created.
          */
-        collections: Metric[];
+        documentsCreate: Metric[];
         /**
-         * Aggregated  number of documents per period.
+         * Aggregated stats for documents read.
          */
-        documents: Metric[];
+        documentsRead: Metric[];
+        /**
+         * Aggregated stats for documents updated.
+         */
+        documentsUpdate: Metric[];
+        /**
+         * Aggregated stats for documents deleted.
+         */
+        documentsDelete: Metric[];
+        /**
+         * Aggregated stats for collections created.
+         */
+        collectionsCreate: Metric[];
+        /**
+         * Aggregated stats for collections read.
+         */
+        collectionsRead: Metric[];
+        /**
+         * Aggregated stats for collections updated.
+         */
+        collectionsUpdate: Metric[];
+        /**
+         * Aggregated stats for collections delete.
+         */
+        collectionsDelete: Metric[];
     }
     /**
      * UsageCollection
      */
     export type UsageCollection = {
         /**
-         * Time range of the usage stats.
+         * The time range of the usage stats.
          */
         range: string;
         /**
-         * Total aggregated number of of documents.
+         * Aggregated stats for total number of documents.
          */
-        documentsTotal: number;
+        documentsCount: Metric[];
         /**
-         * Aggregated  number of documents per period.
+         * Aggregated stats for documents created.
          */
-        documents: Metric[];
+        documentsCreate: Metric[];
+        /**
+         * Aggregated stats for documents read.
+         */
+        documentsRead: Metric[];
+        /**
+         * Aggregated stats for documents updated.
+         */
+        documentsUpdate: Metric[];
+        /**
+         * Aggregated stats for documents deleted.
+         */
+        documentsDelete: Metric[];
     }
     /**
      * UsageUsers
      */
     export type UsageUsers = {
         /**
-         * Time range of the usage stats.
+         * The time range of the usage stats.
          */
         range: string;
         /**
-         * Total aggregated number of statistics of users.
+         * Aggregated stats for total number of users.
          */
-        usersTotal: number;
+        usersCount: Metric[];
         /**
-         * Total aggregated number of active sessions.
+         * Aggregated stats for users created.
          */
-        sessionsTotal: number;
+        usersCreate: Metric[];
         /**
-         * Aggregated number of users per period.
+         * Aggregated stats for users read.
          */
-        users: Metric[];
+        usersRead: Metric[];
         /**
-         * Aggregated number of active sessions  per period.
+         * Aggregated stats for users updated.
          */
-        sessions: Metric[];
+        usersUpdate: Metric[];
+        /**
+         * Aggregated stats for users deleted.
+         */
+        usersDelete: Metric[];
+        /**
+         * Aggregated stats for sessions created.
+         */
+        sessionsCreate: Metric[];
+        /**
+         * Aggregated stats for sessions created for a provider ( email, anonymous or oauth2 ).
+         */
+        sessionsProviderCreate: Metric[];
+        /**
+         * Aggregated stats for sessions deleted.
+         */
+        sessionsDelete: Metric[];
     }
     /**
      * StorageUsage
      */
     export type UsageStorage = {
         /**
-         * Time range of the usage stats.
+         * The time range of the usage stats.
          */
         range: string;
         /**
-         * Total aggregated number of buckets
-         */
-        bucketsTotal: number;
-        /**
-         * Total aggregated number of files.
-         */
-        filesTotal: number;
-        /**
-         * Total aggregated number of files storage (in bytes).
-         */
-        filesStorageTotal: number;
-        /**
-         * Aggregated number of buckets per period.
-         */
-        buckets: Metric[];
-        /**
-         * Aggregated number of files per period.
-         */
-        files: Metric[];
-        /**
-         * Aggregated number of files storage (in bytes) per period .
+         * Aggregated stats for the occupied storage size (in bytes).
          */
         storage: Metric[];
+        /**
+         * Aggregated stats for total number of files.
+         */
+        filesCount: Metric[];
+        /**
+         * Aggregated stats for total number of buckets.
+         */
+        bucketsCount: Metric[];
+        /**
+         * Aggregated stats for buckets created.
+         */
+        bucketsCreate: Metric[];
+        /**
+         * Aggregated stats for buckets read.
+         */
+        bucketsRead: Metric[];
+        /**
+         * Aggregated stats for buckets updated.
+         */
+        bucketsUpdate: Metric[];
+        /**
+         * Aggregated stats for buckets deleted.
+         */
+        bucketsDelete: Metric[];
+        /**
+         * Aggregated stats for files created.
+         */
+        filesCreate: Metric[];
+        /**
+         * Aggregated stats for files read.
+         */
+        filesRead: Metric[];
+        /**
+         * Aggregated stats for files updated.
+         */
+        filesUpdate: Metric[];
+        /**
+         * Aggregated stats for files deleted.
+         */
+        filesDelete: Metric[];
     }
     /**
      * UsageBuckets
      */
     export type UsageBuckets = {
         /**
-         * Time range of the usage stats.
+         * The time range of the usage stats.
          */
         range: string;
         /**
-         * Total aggregated number of bucket files.
+         * Aggregated stats for total number of files in this bucket.
          */
-        filesTotal: number;
+        filesCount: Metric[];
         /**
-         * Total aggregated number of bucket files storage (in bytes).
+         * Aggregated stats for total storage of files in this bucket.
          */
-        filesStorageTotal: number;
+        filesStorage: Metric[];
         /**
-         * Aggregated  number of bucket files per period.
+         * Aggregated stats for files created.
          */
-        files: Metric[];
+        filesCreate: Metric[];
         /**
-         * Aggregated  number of bucket storage files (in bytes) per period.
+         * Aggregated stats for files read.
          */
-        storage: Metric[];
+        filesRead: Metric[];
+        /**
+         * Aggregated stats for files updated.
+         */
+        filesUpdate: Metric[];
+        /**
+         * Aggregated stats for files deleted.
+         */
+        filesDelete: Metric[];
     }
     /**
      * UsageFunctions
      */
     export type UsageFunctions = {
         /**
-         * Time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of functions.
-         */
-        functionsTotal: number;
-        /**
-         * Total aggregated number of functions deployments.
-         */
-        deploymentsTotal: number;
-        /**
-         * Total aggregated sum of functions deployment storage.
-         */
-        deploymentsStorageTotal: number;
-        /**
-         * Total aggregated number of functions build.
-         */
-        buildsTotal: number;
-        /**
-         * total aggregated sum of functions build storage.
-         */
-        buildsStorageTotal: number;
-        /**
-         * Total aggregated sum of functions build compute time.
-         */
-        buildsTimeTotal: number;
-        /**
-         * Total  aggregated number of functions execution.
-         */
-        executionsTotal: number;
-        /**
-         * Total aggregated sum of functions  execution compute time.
-         */
-        executionsTimeTotal: number;
-        /**
-         * Aggregated number of functions per period.
-         */
-        functions: Metric[];
-        /**
-         * Aggregated number of functions deployment per period.
-         */
-        deployments: Metric[];
-        /**
-         * Aggregated number of  functions deployment storage per period.
-         */
-        deploymentsStorage: Metric[];
-        /**
-         * Aggregated number of functions build per period.
-         */
-        builds: Metric[];
-        /**
-         * Aggregated sum of functions build storage per period.
-         */
-        buildsStorage: Metric[];
-        /**
-         * Aggregated sum of  functions build compute time per period.
-         */
-        buildsTime: Metric[];
-        /**
-         * Aggregated number of  functions execution per period.
-         */
-        executions: Metric[];
-        /**
-         * Aggregated number of functions execution compute time per period.
-         */
-        executionsTime: Metric[];
-    }
-    /**
-     * UsageFunction
-     */
-    export type UsageFunction = {
-        /**
          * The time range of the usage stats.
          */
         range: string;
         /**
-         * Total aggregated number of function deployments.
+         * Aggregated stats for number of function executions.
          */
-        deploymentsTotal: number;
+        executionsTotal: Metric[];
         /**
-         * Total aggregated sum of function deployments storage.
+         * Aggregated stats for function execution failures.
          */
-        deploymentsStorageTotal: number;
+        executionsFailure: Metric[];
         /**
-         * Total aggregated number of function builds.
+         * Aggregated stats for function execution successes.
          */
-        buildsTotal: number;
+        executionsSuccess: Metric[];
         /**
-         * total aggregated sum of function builds storage.
-         */
-        buildsStorageTotal: number;
-        /**
-         * Total aggregated sum of function builds compute time.
-         */
-        buildsTimeTotal: number;
-        /**
-         * Total  aggregated number of function executions.
-         */
-        executionsTotal: number;
-        /**
-         * Total aggregated sum of function  executions compute time.
-         */
-        executionsTimeTotal: number;
-        /**
-         * Aggregated number of function deployments per period.
-         */
-        deployments: Metric[];
-        /**
-         * Aggregated number of  function deployments storage per period.
-         */
-        deploymentsStorage: Metric[];
-        /**
-         * Aggregated number of function builds per period.
-         */
-        builds: Metric[];
-        /**
-         * Aggregated sum of function builds storage per period.
-         */
-        buildsStorage: Metric[];
-        /**
-         * Aggregated sum of function builds compute time per period.
-         */
-        buildsTime: Metric[];
-        /**
-         * Aggregated number of function executions per period.
-         */
-        executions: Metric[];
-        /**
-         * Aggregated number of function executions compute time per period.
+         * Aggregated stats for function execution duration.
          */
         executionsTime: Metric[];
+        /**
+         * Aggregated stats for number of function builds.
+         */
+        buildsTotal: Metric[];
+        /**
+         * Aggregated stats for function build failures.
+         */
+        buildsFailure: Metric[];
+        /**
+         * Aggregated stats for function build successes.
+         */
+        buildsSuccess: Metric[];
+        /**
+         * Aggregated stats for function build duration.
+         */
+        buildsTime: Metric[];
     }
     /**
      * UsageProject
      */
     export type UsageProject = {
         /**
-         * Total aggregated number of function executions.
+         * The time range of the usage stats.
          */
-        executionsTotal: number;
+        range: string;
         /**
-         * Total aggregated  number of documents.
-         */
-        documentsTotal: number;
-        /**
-         * Total aggregated number of databases.
-         */
-        databasesTotal: number;
-        /**
-         * Total aggregated number of users.
-         */
-        usersTotal: number;
-        /**
-         * Total aggregated sum of files storage size (in bytes).
-         */
-        filesStorageTotal: number;
-        /**
-         * Total aggregated number of buckets.
-         */
-        bucketsTotal: number;
-        /**
-         * Aggregated  number of requests per period.
+         * Aggregated stats for number of requests.
          */
         requests: Metric[];
         /**
-         * Aggregated number of consumed bandwidth per period.
+         * Aggregated stats for consumed bandwidth.
          */
         network: Metric[];
         /**
-         * Aggregated number of users per period.
-         */
-        users: Metric[];
-        /**
-         * Aggregated number of executions per period.
+         * Aggregated stats for function executions.
          */
         executions: Metric[];
         /**
-         * Aggregated breakdown in totals of executions by functions.
+         * Aggregated stats for number of documents.
          */
-        executionsBreakdown: MetricBreakdown[];
+        documents: Metric[];
         /**
-         * Aggregated breakdown in totals of usage by buckets.
+         * Aggregated stats for number of databases.
          */
-        bucketsBreakdown: MetricBreakdown[];
+        databases: Metric[];
+        /**
+         * Aggregated stats for number of users.
+         */
+        users: Metric[];
+        /**
+         * Aggregated stats for the occupied storage size (in bytes).
+         */
+        storage: Metric[];
+        /**
+         * Aggregated stats for number of buckets.
+         */
+        buckets: Metric[];
     }
     /**
      * Headers
@@ -3075,6 +3142,270 @@ export namespace Models {
          * Defines if AI assistant is enabled.
          */
         _APP_ASSISTANT_ENABLED: boolean;
+    }
+    /**
+     * MFA Challenge
+     */
+    export type MfaChallenge = {
+        /**
+         * Token ID.
+         */
+        $id: string;
+        /**
+         * Token creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * User ID.
+         */
+        userId: string;
+        /**
+         * Token expiration date in ISO 8601 format.
+         */
+        expire: string;
+    }
+    /**
+     * MFAProvider
+     */
+    export type MfaProvider = {
+        /**
+         * backup codes
+         */
+        backups: string[];
+        /**
+         * secret used for top auth
+         */
+        secret: string;
+        /**
+         * uri for otp app
+         */
+        uri: string;
+    }
+    /**
+     * MFAProviders
+     */
+    export type MfaProviders = {
+        /**
+         * TOTP
+         */
+        totp: boolean;
+        /**
+         * Phone
+         */
+        phone: boolean;
+        /**
+         * Email
+         */
+        email: boolean;
+    }
+    /**
+     * Provider
+     */
+    export type Provider = {
+        /**
+         * Provider ID.
+         */
+        $id: string;
+        /**
+         * Provider creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Provider update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * The name for the provider instance.
+         */
+        name: string;
+        /**
+         * The name of the provider service.
+         */
+        provider: string;
+        /**
+         * Is provider enabled?
+         */
+        enabled: boolean;
+        /**
+         * Type of provider.
+         */
+        type: string;
+        /**
+         * Provider credentials.
+         */
+        credentials: object;
+        /**
+         * Provider options.
+         */
+        options?: object;
+    }
+    /**
+     * Message
+     */
+    export type Message = {
+        /**
+         * Message ID.
+         */
+        $id: string;
+        /**
+         * Message creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Message update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Message provider type.
+         */
+        providerType: string;
+        /**
+         * Topic IDs set as recipients.
+         */
+        topics: string[];
+        /**
+         * User IDs set as recipients.
+         */
+        users: string[];
+        /**
+         * Target IDs set as recipients.
+         */
+        targets: string[];
+        /**
+         * The scheduled time for message.
+         */
+        scheduledAt?: string;
+        /**
+         * The time when the message was delivered.
+         */
+        deliveredAt?: string;
+        /**
+         * Delivery errors if any.
+         */
+        deliveryErrors?: string[];
+        /**
+         * Number of recipients the message was delivered to.
+         */
+        deliveredTotal: number;
+        /**
+         * Data of the message.
+         */
+        data: object;
+        /**
+         * Status of delivery.
+         */
+        status: string;
+        /**
+         * Message description.
+         */
+        description?: string;
+    }
+    /**
+     * Topic
+     */
+    export type Topic = {
+        /**
+         * Topic ID.
+         */
+        $id: string;
+        /**
+         * Topic creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Topic update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * The name of the topic.
+         */
+        name: string;
+        /**
+         * Total count of subscribers subscribed to topic.
+         */
+        total: number;
+        /**
+         * Description of the topic.
+         */
+        description?: string;
+    }
+    /**
+     * Subscriber
+     */
+    export type Subscriber = {
+        /**
+         * Subscriber ID.
+         */
+        $id: string;
+        /**
+         * Subscriber creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Subscriber update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Target ID.
+         */
+        targetId: string;
+        /**
+         * Target.
+         */
+        target: Target;
+        /**
+         * Topic ID.
+         */
+        userId: string;
+        /**
+         * User Name.
+         */
+        userName: string;
+        /**
+         * Topic ID.
+         */
+        topicId: string;
+        /**
+         * The target provider type. Can be one of the following: `email`, `sms` or `push`.
+         */
+        providerType: string;
+    }
+    /**
+     * Target
+     */
+    export type Target = {
+        /**
+         * Target ID.
+         */
+        $id: string;
+        /**
+         * Target creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Target update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Target Name.
+         */
+        name: string;
+        /**
+         * User ID.
+         */
+        userId: string;
+        /**
+         * Provider ID.
+         */
+        providerId?: string;
+        /**
+         * The target provider type. Can be one of the following: `email`, `sms` or `push`.
+         */
+        providerType: string;
+        /**
+         * The target identifier.
+         */
+        identifier: string;
     }
     /**
      * Migration

@@ -345,6 +345,37 @@ export class Projects extends Service {
     }
 
     /**
+     * Update Project user minimum sessions factors
+     *
+     *
+     * @param {string} projectId
+     * @param {number} factors
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async updateAuthMfaFactors(projectId: string, factors: number): Promise<Models.Project> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        if (typeof factors === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "factors"');
+        }
+
+        const apiPath = '/projects/{projectId}/auth/mfa/factors'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+
+        if (typeof factors !== 'undefined') {
+            payload['factors'] = factors;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('patch', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * Update authentication password dictionary status. Use this endpoint to enable or disable the dicitonary check for user password
      *
      *
@@ -1275,6 +1306,33 @@ export class Projects extends Service {
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Get usage stats for a project
+     *
+     *
+     * @param {string} projectId
+     * @param {string} range
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getUsage(projectId: string, range?: string): Promise<Models.UsageProject> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        const apiPath = '/projects/{projectId}/usage'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+
+        if (typeof range !== 'undefined') {
+            payload['range'] = range;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }

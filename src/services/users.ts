@@ -591,15 +591,20 @@ export class Users extends Service {
      *
      *
      * @param {string} range
+     * @param {string} provider
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getUsage(range?: string): Promise<Models.UsageUsers> {
+    async getUsage(range?: string, provider?: string): Promise<Models.UsageUsers> {
         const apiPath = '/users/usage';
         const payload: Payload = {};
 
         if (typeof range !== 'undefined') {
             payload['range'] = range;
+        }
+
+        if (typeof provider !== 'undefined') {
+            payload['provider'] = provider;
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1035,6 +1040,188 @@ export class Users extends Service {
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * List User Targets
+     *
+     *
+     * @param {string} userId
+     * @param {string} queries
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async listTargets(userId: string, queries?: string): Promise<Models.TargetList> {
+        if (typeof userId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+
+        const apiPath = '/users/{userId}/targets'.replace('{userId}', userId);
+        const payload: Payload = {};
+
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Create User Target
+     *
+     *
+     * @param {string} userId
+     * @param {string} targetId
+     * @param {string} providerType
+     * @param {string} identifier
+     * @param {string} providerId
+     * @param {string} name
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async createTarget(userId: string, targetId: string, providerType: string, identifier: string, providerId?: string, name?: string): Promise<Models.Target> {
+        if (typeof userId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+
+        if (typeof targetId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "targetId"');
+        }
+
+        if (typeof providerType === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "providerType"');
+        }
+
+        if (typeof identifier === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "identifier"');
+        }
+
+        const apiPath = '/users/{userId}/targets'.replace('{userId}', userId);
+        const payload: Payload = {};
+
+        if (typeof targetId !== 'undefined') {
+            payload['targetId'] = targetId;
+        }
+
+        if (typeof providerType !== 'undefined') {
+            payload['providerType'] = providerType;
+        }
+
+        if (typeof identifier !== 'undefined') {
+            payload['identifier'] = identifier;
+        }
+
+        if (typeof providerId !== 'undefined') {
+            payload['providerId'] = providerId;
+        }
+
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('post', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Get User Target
+     *
+     *
+     * @param {string} userId
+     * @param {string} targetId
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getTarget(userId: string, targetId: string): Promise<Models.Target> {
+        if (typeof userId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+
+        if (typeof targetId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "targetId"');
+        }
+
+        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', userId).replace('{targetId}', targetId);
+        const payload: Payload = {};
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Update User target
+     *
+     *
+     * @param {string} userId
+     * @param {string} targetId
+     * @param {string} identifier
+     * @param {string} providerId
+     * @param {string} name
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async updateTarget(userId: string, targetId: string, identifier?: string, providerId?: string, name?: string): Promise<Models.Target> {
+        if (typeof userId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+
+        if (typeof targetId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "targetId"');
+        }
+
+        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', userId).replace('{targetId}', targetId);
+        const payload: Payload = {};
+
+        if (typeof identifier !== 'undefined') {
+            payload['identifier'] = identifier;
+        }
+
+        if (typeof providerId !== 'undefined') {
+            payload['providerId'] = providerId;
+        }
+
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('patch', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Delete user target
+     *
+     *
+     * @param {string} userId
+     * @param {string} targetId
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async deleteTarget(userId: string, targetId: string): Promise<{}> {
+        if (typeof userId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+
+        if (typeof targetId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "targetId"');
+        }
+
+        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', userId).replace('{targetId}', targetId);
+        const payload: Payload = {};
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('delete', uri, {
             'content-type': 'application/json',
         }, payload);
     }

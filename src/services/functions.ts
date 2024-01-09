@@ -770,7 +770,7 @@ export class Functions extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getFunctionUsage(functionId: string, range?: string): Promise<Models.UsageFunction> {
+    async getFunctionUsage(functionId: string, range?: string): Promise<Models.UsageFunctions> {
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
