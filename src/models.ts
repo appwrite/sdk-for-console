@@ -2574,6 +2574,23 @@ export namespace Models {
         date: string;
     }
     /**
+     * Metric Breakdown
+     */
+    export type MetricBreakdown = {
+        /**
+         * Resource ID.
+         */
+        resourceId: string;
+        /**
+         * Resource name.
+         */
+        name: string;
+        /**
+         * The value of this metric at the timestamp.
+         */
+        value: number;
+    }
+    /**
      * UsageDatabases
      */
     export type UsageDatabases = {
@@ -2805,6 +2822,71 @@ export namespace Models {
         executionsTime: Metric[];
     }
     /**
+     * UsageFunction
+     */
+    export type UsageFunction = {
+        /**
+         * The time range of the usage stats.
+         */
+        range: string;
+        /**
+         * Total aggregated number of function deployments.
+         */
+        deploymentsTotal: number;
+        /**
+         * Total aggregated sum of function deployments storage.
+         */
+        deploymentsStorageTotal: number;
+        /**
+         * Total aggregated number of function builds.
+         */
+        buildsTotal: number;
+        /**
+         * total aggregated sum of function builds storage.
+         */
+        buildsStorageTotal: number;
+        /**
+         * Total aggregated sum of function builds compute time.
+         */
+        buildsTimeTotal: number;
+        /**
+         * Total  aggregated number of function executions.
+         */
+        executionsTotal: number;
+        /**
+         * Total aggregated sum of function  executions compute time.
+         */
+        executionsTimeTotal: number;
+        /**
+         * Aggregated number of function deployments per period.
+         */
+        deployments: Metric[];
+        /**
+         * Aggregated number of  function deployments storage per period.
+         */
+        deploymentsStorage: Metric[];
+        /**
+         * Aggregated number of function builds per period.
+         */
+        builds: Metric[];
+        /**
+         * Aggregated sum of function builds storage per period.
+         */
+        buildsStorage: Metric[];
+        /**
+         * Aggregated sum of function builds compute time per period.
+         */
+        buildsTime: Metric[];
+        /**
+         * Aggregated number of function executions per period.
+         */
+        executions: Metric[];
+        /**
+         * Aggregated number of function executions compute time per period.
+         */
+        executionsTime: Metric[];
+    }
+    /**
      * UsageProject
      */
     export type UsageProject = {
@@ -2835,11 +2917,27 @@ export namespace Models {
         /**
          * Aggregated  number of requests per period.
          */
-        requests: string[];
+        requests: Metric[];
         /**
          * Aggregated number of consumed bandwidth per period.
          */
-        network: string[];
+        network: Metric[];
+        /**
+         * Aggregated number of users per period.
+         */
+        users: Metric[];
+        /**
+         * Aggregated number of executions per period.
+         */
+        executions: Metric[];
+        /**
+         * Aggregated breakdown in totals of executions by functions.
+         */
+        executionsBreakdown: MetricBreakdown[];
+        /**
+         * Aggregated breakdown in totals of usage by buckets.
+         */
+        bucketsBreakdown: MetricBreakdown[];
     }
     /**
      * Headers

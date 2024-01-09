@@ -85,6 +85,24 @@ export class Account extends Service {
     }
 
     /**
+     * Delete account
+     *
+     * Delete the currently logged in user.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async delete(): Promise<{}> {
+        const apiPath = '/account';
+        const payload: Payload = {};
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('delete', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * Update email
      *
      * Update currently logged in user account email address. After changing user
