@@ -378,6 +378,37 @@ export class Account extends Service {
     }
 
     /**
+     * Delete Authenticator
+     *
+     *
+     * @param {string} provider
+     * @param {string} otp
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async deleteAuthenticator<Preferences extends Models.Preferences>(provider: string, otp: string): Promise<Models.User<Preferences>> {
+        if (typeof provider === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "provider"');
+        }
+
+        if (typeof otp === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "otp"');
+        }
+
+        const apiPath = '/account/mfa/{provider}'.replace('{provider}', provider);
+        const payload: Payload = {};
+
+        if (typeof otp !== 'undefined') {
+            payload['otp'] = otp;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('delete', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * Update name
      *
      * Update currently logged in user account name.
