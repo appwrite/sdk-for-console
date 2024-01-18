@@ -1734,6 +1734,10 @@ export namespace Models {
          */
         confirm: boolean;
         /**
+         * Multi factor authentication status, true if the user has MFA enabled or false otherwise.
+         */
+        mfa: boolean;
+        /**
          * User list of roles
          */
         roles: string[];
