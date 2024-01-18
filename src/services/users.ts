@@ -221,7 +221,7 @@ export class Users extends Service {
     }
 
     /**
-     * Delete Identity
+     * Delete identity
      *
      * Delete an identity by its unique ID.
      *
@@ -961,6 +961,34 @@ export class Users extends Service {
     }
 
     /**
+     * Create session
+     *
+     * Creates a session for a user. Returns an immediately usable session object.
+     * 
+     * If you want to generate a token for a custom authentication flow, use the
+     * [POST
+     * /users/{userId}/tokens](https://appwrite.io/docs/server/users#createToken)
+     * endpoint.
+     *
+     * @param {string} userId
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async createSession(userId: string): Promise<Models.Session> {
+        if (typeof userId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+
+        const apiPath = '/users/{userId}/sessions'.replace('{userId}', userId);
+        const payload: Payload = {};
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('post', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * Delete user sessions
      *
      * Delete all user's sessions by using the user's unique ID.
@@ -1222,6 +1250,43 @@ export class Users extends Service {
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Create token
+     *
+     * Returns a token with a secret key for creating a session. If the provided
+     * user ID has not be registered, a new user will be created. Use the returned
+     * user ID and secret and submit a request to the [PUT
+     * /account/sessions/custom](https://appwrite.io/docs/references/cloud/client-web/account#updateCustomSession)
+     * endpoint to complete the login process.
+     *
+     * @param {string} userId
+     * @param {number} length
+     * @param {number} expire
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async createToken(userId: string, length?: number, expire?: number): Promise<Models.Token> {
+        if (typeof userId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+
+        const apiPath = '/users/{userId}/tokens'.replace('{userId}', userId);
+        const payload: Payload = {};
+
+        if (typeof length !== 'undefined') {
+            payload['length'] = length;
+        }
+
+        if (typeof expire !== 'undefined') {
+            payload['expire'] = expire;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }

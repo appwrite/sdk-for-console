@@ -1420,6 +1420,10 @@ export namespace Models {
          * Returns true if this the current user session.
          */
         factors: number;
+        /**
+         * Secret used to authenticate the user. Only included if the request was made with an API key
+         */
+        secret: string;
     }
     /**
      * Identity
@@ -1490,6 +1494,10 @@ export namespace Models {
          * Token expiration date in ISO 8601 format.
          */
         expire: string;
+        /**
+         * Security phrase of a token. Empty if security phrase was not requested when creating a token. It includes randomly generated phrase which is also sent in the external resource such as email.
+         */
+        securityPhrase: string;
     }
     /**
      * JWT

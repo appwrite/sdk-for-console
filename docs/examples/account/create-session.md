@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = account.createPhoneSession('[USER_ID]', '+12065550100');
+const promise = account.createSession('[USER_ID]', '[SECRET]');
 
 promise.then(function (response) {
     console.log(response); // Success
