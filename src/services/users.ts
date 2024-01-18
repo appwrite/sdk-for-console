@@ -785,6 +785,73 @@ export class Users extends Service {
     }
 
     /**
+     * Update MFA
+     *
+     *
+     * @param {string} userId
+     * @param {boolean} mfa
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async updateMfa<Preferences extends Models.Preferences>(userId: string, mfa: boolean): Promise<Models.User<Preferences>> {
+        if (typeof userId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+
+        if (typeof mfa === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "mfa"');
+        }
+
+        const apiPath = '/users/{userId}/mfa'.replace('{userId}', userId);
+        const payload: Payload = {};
+
+        if (typeof mfa !== 'undefined') {
+            payload['mfa'] = mfa;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('patch', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Delete Authenticator
+     *
+     *
+     * @param {string} userId
+     * @param {string} provider
+     * @param {string} otp
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async deleteAuthenticator<Preferences extends Models.Preferences>(userId: string, provider: string, otp: string): Promise<Models.User<Preferences>> {
+        if (typeof userId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+
+        if (typeof provider === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "provider"');
+        }
+
+        if (typeof otp === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "otp"');
+        }
+
+        const apiPath = '/users/{userId}/mfa/{provider}'.replace('{userId}', userId).replace('{provider}', provider);
+        const payload: Payload = {};
+
+        if (typeof otp !== 'undefined') {
+            payload['otp'] = otp;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('delete', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * Update name
      *
      * Update the user name by its unique ID.
@@ -933,6 +1000,28 @@ export class Users extends Service {
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * List Providers
+     *
+     *
+     * @param {string} userId
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async listProviders(userId: string): Promise<Models.MfaProviders> {
+        if (typeof userId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+
+        const apiPath = '/users/{userId}/providers'.replace('{userId}', userId);
+        const payload: Payload = {};
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
             'content-type': 'application/json',
         }, payload);
     }
