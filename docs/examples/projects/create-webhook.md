@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = projects.createWebhook('[PROJECT_ID]', '[NAME]', [], 'https://example.com', false);
+const promise = projects.createWebhook('[PROJECT_ID]', '[NAME]', [], '', false);
 
 promise.then(function (response) {
     console.log(response); // Success

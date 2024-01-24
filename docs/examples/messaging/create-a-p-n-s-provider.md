@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = messaging.updateApnsProvider('[PROVIDER_ID]');
+const promise = messaging.createAPNSProvider('[PROVIDER_ID]', '[NAME]');
 
 promise.then(function (response) {
     console.log(response); // Success

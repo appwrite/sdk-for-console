@@ -56,7 +56,7 @@ export class Messaging extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createEmailMessage(messageId: string, subject: string, content: string, topics?: string[], users?: string[], targets?: string[], cc?: string[], bcc?: string[], description?: string, status?: string, html?: boolean, scheduledAt?: string): Promise<Models.Message> {
+    async createEmail(messageId: string, subject: string, content: string, topics?: string[], users?: string[], targets?: string[], cc?: string[], bcc?: string[], description?: string, status?: string, html?: boolean, scheduledAt?: string): Promise<Models.Message> {
         if (typeof messageId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "messageId"');
         }
@@ -226,7 +226,7 @@ export class Messaging extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createPushMessage(messageId: string, title: string, body: string, topics?: string[], users?: string[], targets?: string[], description?: string, data?: object, action?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: string, status?: string, scheduledAt?: string): Promise<Models.Message> {
+    async createPush(messageId: string, title: string, body: string, topics?: string[], users?: string[], targets?: string[], description?: string, data?: object, action?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: string, status?: string, scheduledAt?: string): Promise<Models.Message> {
         if (typeof messageId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "messageId"');
         }
@@ -424,7 +424,7 @@ export class Messaging extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createSMSMessage(messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], description?: string, status?: string, scheduledAt?: string): Promise<Models.Message> {
+    async createSMS(messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], description?: string, status?: string, scheduledAt?: string): Promise<Models.Message> {
         if (typeof messageId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "messageId"');
         }
@@ -581,6 +581,35 @@ export class Messaging extends Service {
     }
 
     /**
+     * List message targets
+     *
+     * List the targets associated with a message as set via the targets
+     * attribute.
+     *
+     * @param {string} messageId
+     * @param {string} queries
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async listTargets(messageId: string, queries?: string): Promise<Models.TargetList> {
+        if (typeof messageId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "messageId"');
+        }
+
+        const apiPath = '/messaging/messages/{messageId}/targets'.replace('{messageId}', messageId);
+        const payload: Payload = {};
+
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * List providers
      *
      *
@@ -621,7 +650,7 @@ export class Messaging extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createApnsProvider(providerId: string, name: string, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, enabled?: boolean): Promise<Models.Provider> {
+    async createAPNSProvider(providerId: string, name: string, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, enabled?: boolean): Promise<Models.Provider> {
         if (typeof providerId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "providerId"');
         }
@@ -681,7 +710,7 @@ export class Messaging extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateApnsProvider(providerId: string, name?: string, enabled?: boolean, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string): Promise<Models.Provider> {
+    async updateAPNSProvider(providerId: string, name?: string, enabled?: boolean, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string): Promise<Models.Provider> {
         if (typeof providerId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "providerId"');
         }
@@ -730,7 +759,7 @@ export class Messaging extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createFcmProvider(providerId: string, name: string, serviceAccountJSON?: object, enabled?: boolean): Promise<Models.Provider> {
+    async createFCMProvider(providerId: string, name: string, serviceAccountJSON?: object, enabled?: boolean): Promise<Models.Provider> {
         if (typeof providerId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "providerId"');
         }
@@ -775,7 +804,7 @@ export class Messaging extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateFcmProvider(providerId: string, name?: string, enabled?: boolean, serviceAccountJSON?: object): Promise<Models.Provider> {
+    async updateFCMProvider(providerId: string, name?: string, enabled?: boolean, serviceAccountJSON?: object): Promise<Models.Provider> {
         if (typeof providerId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "providerId"');
         }

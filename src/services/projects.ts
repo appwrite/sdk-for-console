@@ -975,7 +975,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Update SMTP configuration
+     * Update SMTP
      *
      *
      * @param {string} projectId
@@ -991,7 +991,7 @@ export class Projects extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateSmtpConfiguration(projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: string): Promise<Models.Project> {
+    async updateSmtp(projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: string): Promise<Models.Project> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1041,6 +1041,89 @@ export class Projects extends Service {
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('patch', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Create SMTP test
+     *
+     *
+     * @param {string} projectId
+     * @param {string[]} emails
+     * @param {string} senderName
+     * @param {string} senderEmail
+     * @param {string} host
+     * @param {string} replyTo
+     * @param {number} port
+     * @param {string} username
+     * @param {string} password
+     * @param {string} secure
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async createSmtpTest(projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: string): Promise<{}> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        if (typeof emails === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "emails"');
+        }
+
+        if (typeof senderName === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "senderName"');
+        }
+
+        if (typeof senderEmail === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "senderEmail"');
+        }
+
+        if (typeof host === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "host"');
+        }
+
+        const apiPath = '/projects/{projectId}/smtp/tests'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+
+        if (typeof emails !== 'undefined') {
+            payload['emails'] = emails;
+        }
+
+        if (typeof senderName !== 'undefined') {
+            payload['senderName'] = senderName;
+        }
+
+        if (typeof senderEmail !== 'undefined') {
+            payload['senderEmail'] = senderEmail;
+        }
+
+        if (typeof replyTo !== 'undefined') {
+            payload['replyTo'] = replyTo;
+        }
+
+        if (typeof host !== 'undefined') {
+            payload['host'] = host;
+        }
+
+        if (typeof port !== 'undefined') {
+            payload['port'] = port;
+        }
+
+        if (typeof username !== 'undefined') {
+            payload['username'] = username;
+        }
+
+        if (typeof password !== 'undefined') {
+            payload['password'] = password;
+        }
+
+        if (typeof secure !== 'undefined') {
+            payload['secure'] = secure;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('post', uri, {
             'content-type': 'application/json',
         }, payload);
     }
@@ -1311,33 +1394,6 @@ export class Projects extends Service {
     }
 
     /**
-     * Get usage stats for a project
-     *
-     *
-     * @param {string} projectId
-     * @param {string} range
-     * @throws {AppwriteException}
-     * @returns {Promise}
-    */
-    async getUsage(projectId: string, range?: string): Promise<Models.UsageProject> {
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-
-        const apiPath = '/projects/{projectId}/usage'.replace('{projectId}', projectId);
-        const payload: Payload = {};
-
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
-
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        return await this.client.call('get', uri, {
-            'content-type': 'application/json',
-        }, payload);
-    }
-
-    /**
      * List webhooks
      *
      *
@@ -1368,12 +1424,13 @@ export class Projects extends Service {
      * @param {string[]} events
      * @param {string} url
      * @param {boolean} security
+     * @param {boolean} enabled
      * @param {string} httpUser
      * @param {string} httpPass
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createWebhook(projectId: string, name: string, events: string[], url: string, security: boolean, httpUser?: string, httpPass?: string): Promise<Models.Webhook> {
+    async createWebhook(projectId: string, name: string, events: string[], url: string, security: boolean, enabled?: boolean, httpUser?: string, httpPass?: string): Promise<Models.Webhook> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1399,6 +1456,10 @@ export class Projects extends Service {
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
+        }
+
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
         }
 
         if (typeof events !== 'undefined') {
@@ -1464,12 +1525,13 @@ export class Projects extends Service {
      * @param {string[]} events
      * @param {string} url
      * @param {boolean} security
+     * @param {boolean} enabled
      * @param {string} httpUser
      * @param {string} httpPass
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateWebhook(projectId: string, webhookId: string, name: string, events: string[], url: string, security: boolean, httpUser?: string, httpPass?: string): Promise<Models.Webhook> {
+    async updateWebhook(projectId: string, webhookId: string, name: string, events: string[], url: string, security: boolean, enabled?: boolean, httpUser?: string, httpPass?: string): Promise<Models.Webhook> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1499,6 +1561,10 @@ export class Projects extends Service {
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
+        }
+
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
         }
 
         if (typeof events !== 'undefined') {

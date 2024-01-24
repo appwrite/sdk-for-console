@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = messaging.updateFcmProvider('[PROVIDER_ID]');
+const promise = messaging.createEmail('[MESSAGE_ID]', '[SUBJECT]', '[CONTENT]');
 
 promise.then(function (response) {
     console.log(response); // Success

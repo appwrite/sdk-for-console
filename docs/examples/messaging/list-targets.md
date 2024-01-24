@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = messaging.createSMSMessage('[MESSAGE_ID]', '[CONTENT]');
+const promise = messaging.listTargets('[MESSAGE_ID]');
 
 promise.then(function (response) {
     console.log(response); // Success

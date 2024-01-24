@@ -85,6 +85,24 @@ export class Account extends Service {
     }
 
     /**
+     * Delete account
+     *
+     * Delete the currently logged in user.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async delete(): Promise<{}> {
+        const apiPath = '/account';
+        const payload: Payload = {};
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('delete', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * Update email
      *
      * Update currently logged in user account email address. After changing user
@@ -923,11 +941,10 @@ export class Account extends Service {
     }
 
     /**
-     * Update OAuth session (refresh tokens)
+     * Update (or renew) a session
      *
-     * Access tokens have limited lifespan and expire to mitigate security risks.
-     * If session was created using an OAuth provider, this route can be used to
-     * "refresh" the access token.
+     * Extend session's expiry to increase it's lifespan. Extending a session is
+     * useful when session length is short such as 5 minutes.
      *
      * @param {string} sessionId
      * @throws {AppwriteException}
@@ -995,6 +1012,46 @@ export class Account extends Service {
     }
 
     /**
+     * Create Account&#039;s push target
+     *
+     *
+     * @param {string} targetId
+     * @param {string} identifier
+     * @param {string} providerId
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async createPushTarget(targetId: string, identifier: string, providerId?: string): Promise<Models.Target> {
+        if (typeof targetId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "targetId"');
+        }
+
+        if (typeof identifier === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "identifier"');
+        }
+
+        const apiPath = '/account/targets/push';
+        const payload: Payload = {};
+
+        if (typeof targetId !== 'undefined') {
+            payload['targetId'] = targetId;
+        }
+
+        if (typeof identifier !== 'undefined') {
+            payload['identifier'] = identifier;
+        }
+
+        if (typeof providerId !== 'undefined') {
+            payload['providerId'] = providerId;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('post', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * Update Account&#039;s push target
      *
      *
@@ -1026,6 +1083,56 @@ export class Account extends Service {
     }
 
     /**
+     * Create email token (OTP)
+     *
+     * Sends the user an email with a secret key for creating a session. If the
+     * provided user ID has not be registered, a new user will be created. Use the
+     * returned user ID and secret and submit a request to the [POST
+     * /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession)
+     * endpoint to complete the login process. The secret sent to the user's email
+     * is valid for 15 minutes.
+     * 
+     * A user is limited to 10 active sessions at a time by default. [Learn more
+     * about session
+     * limits](https://appwrite.io/docs/authentication-security#limits).
+     *
+     * @param {string} userId
+     * @param {string} email
+     * @param {boolean} securityPhrase
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async createEmailToken(userId: string, email: string, securityPhrase?: boolean): Promise<Models.Token> {
+        if (typeof userId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+
+        if (typeof email === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "email"');
+        }
+
+        const apiPath = '/account/tokens/email';
+        const payload: Payload = {};
+
+        if (typeof userId !== 'undefined') {
+            payload['userId'] = userId;
+        }
+
+        if (typeof email !== 'undefined') {
+            payload['email'] = email;
+        }
+
+        if (typeof securityPhrase !== 'undefined') {
+            payload['securityPhrase'] = securityPhrase;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('post', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * Create magic URL token
      *
      * Sends the user an email with a secret key for creating a session. If the
@@ -1033,8 +1140,8 @@ export class Account extends Service {
      * the user clicks the link in the email, the user is redirected back to the
      * URL you provided with the secret key and userId values attached to the URL
      * query string. Use the query string parameters to submit a request to the
-     * [PUT
-     * /account/sessions/magic-url](https://appwrite.io/docs/references/cloud/client-web/account#updateMagicURLSession)
+     * [POST
+     * /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession)
      * endpoint to complete the login process. The link sent to the user's email
      * address is valid for 1 hour. If you are on a mobile device you can leave
      * the URL parameter empty, so that the login completion will be handled by
@@ -1091,8 +1198,8 @@ export class Account extends Service {
      *
      * Sends the user an SMS with a secret key for creating a session. If the
      * provided user ID has not be registered, a new user will be created. Use the
-     * returned user ID and secret and submit a request to the [PUT
-     * /account/sessions/phone](https://appwrite.io/docs/references/cloud/client-web/account#updatePhoneSession)
+     * returned user ID and secret and submit a request to the [POST
+     * /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession)
      * endpoint to complete the login process. The secret sent to the user's phone
      * is valid for 15 minutes.
      * 
