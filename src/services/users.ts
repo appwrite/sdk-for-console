@@ -2,6 +2,11 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
+import { Query } from '../query';
+import { PasswordVersion } from '../enums/password-version';
+import { UserUsageRange } from '../enums/user-usage-range';
+import { AuthenticatorProvider } from '../enums/authenticator-provider';
+import { MessagingProviderType } from '../enums/messaging-provider-type';
 
 export class Users extends Service {
 
@@ -197,12 +202,12 @@ export class Users extends Service {
      *
      * Get identities for all users.
      *
-     * @param {string} queries
+     * @param {string[]} queries
      * @param {string} search
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async listIdentities(queries?: string, search?: string): Promise<Models.IdentityList> {
+    async listIdentities(queries?: string[], search?: string): Promise<Models.IdentityList> {
         const apiPath = '/users/identities';
         const payload: Payload = {};
 
@@ -539,12 +544,12 @@ export class Users extends Service {
      * @param {string} userId
      * @param {string} email
      * @param {string} password
-     * @param {string} passwordVersion
+     * @param {PasswordVersion} passwordVersion
      * @param {string} name
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createSHAUser<Preferences extends Models.Preferences>(userId: string, email: string, password: string, passwordVersion?: string, name?: string): Promise<Models.User<Preferences>> {
+    async createSHAUser<Preferences extends Models.Preferences>(userId: string, email: string, password: string, passwordVersion?: PasswordVersion, name?: string): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -590,11 +595,11 @@ export class Users extends Service {
      * Get usage stats for the users API
      *
      *
-     * @param {string} range
+     * @param {UserUsageRange} range
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getUsage(range?: string): Promise<Models.UsageUsers> {
+    async getUsage(range?: UserUsageRange): Promise<Models.UsageUsers> {
         const apiPath = '/users/usage';
         const payload: Payload = {};
 
@@ -815,12 +820,12 @@ export class Users extends Service {
      *
      *
      * @param {string} userId
-     * @param {string} provider
+     * @param {AuthenticatorProvider} provider
      * @param {string} otp
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async deleteAuthenticator<Preferences extends Models.Preferences>(userId: string, provider: string, otp: string): Promise<Models.User<Preferences>> {
+    async deleteAuthenticator<Preferences extends Models.Preferences>(userId: string, provider: AuthenticatorProvider, otp: string): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1161,11 +1166,11 @@ export class Users extends Service {
      *
      *
      * @param {string} userId
-     * @param {string} queries
+     * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async listTargets(userId: string, queries?: string): Promise<Models.TargetList> {
+    async listTargets(userId: string, queries?: string[]): Promise<Models.TargetList> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1189,14 +1194,14 @@ export class Users extends Service {
      *
      * @param {string} userId
      * @param {string} targetId
-     * @param {string} providerType
+     * @param {MessagingProviderType} providerType
      * @param {string} identifier
      * @param {string} providerId
      * @param {string} name
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createTarget(userId: string, targetId: string, providerType: string, identifier: string, providerId?: string, name?: string): Promise<Models.Target> {
+    async createTarget(userId: string, targetId: string, providerType: MessagingProviderType, identifier: string, providerId?: string, name?: string): Promise<Models.Target> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }

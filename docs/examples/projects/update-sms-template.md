@@ -1,4 +1,4 @@
-import { Client, Projects } from "@appwrite.io/console";
+import { Client, TemplateType,TemplateLocale, Projects } from "@appwrite.io/console";
 
 const client = new Client();
 
@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = projects.updateSmsTemplate('[PROJECT_ID]', 'verification', 'af', '[MESSAGE]');
+const promise = projects.updateSmsTemplate('[PROJECT_ID]', TemplateType.Verification, TemplateLocale.Af, '[MESSAGE]');
 
 promise.then(function (response) {
     console.log(response); // Success

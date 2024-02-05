@@ -2,6 +2,8 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
+import { Query } from '../query';
+import { ProjectUsageRange } from '../enums/project-usage-range';
 
 export class Project extends Service {
 
@@ -16,11 +18,11 @@ export class Project extends Service {
      *
      * @param {string} startDate
      * @param {string} endDate
-     * @param {string} period
+     * @param {ProjectUsageRange} period
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getUsage(startDate: string, endDate: string, period?: string): Promise<Models.UsageProject> {
+    async getUsage(startDate: string, endDate: string, period?: ProjectUsageRange): Promise<Models.UsageProject> {
         if (typeof startDate === 'undefined') {
             throw new AppwriteException('Missing required parameter: "startDate"');
         }

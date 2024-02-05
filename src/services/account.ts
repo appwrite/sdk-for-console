@@ -2,6 +2,10 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
+import { Query } from '../query';
+import { AuthenticatorProvider } from '../enums/authenticator-provider';
+import { AuthenticatorFactor } from '../enums/authenticator-factor';
+import { OAuthProvider } from '../enums/o-auth-provider';
 
 export class Account extends Service {
 
@@ -150,11 +154,11 @@ export class Account extends Service {
      *
      * Get the list of identities for the currently logged in user.
      *
-     * @param {string} queries
+     * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async listIdentities(queries?: string): Promise<Models.IdentityList> {
+    async listIdentities(queries?: string[]): Promise<Models.IdentityList> {
         const apiPath = '/account/identities';
         const payload: Payload = {};
 
@@ -267,11 +271,11 @@ export class Account extends Service {
      * Create MFA Challenge
      *
      *
-     * @param {string} provider
+     * @param {AuthenticatorProvider} provider
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createChallenge(provider: string): Promise<Models.MfaChallenge> {
+    async createChallenge(provider: AuthenticatorProvider): Promise<Models.MfaChallenge> {
         if (typeof provider === 'undefined') {
             throw new AppwriteException('Missing required parameter: "provider"');
         }
@@ -325,15 +329,15 @@ export class Account extends Service {
     }
 
     /**
-     * List Providers
+     * List Factors
      *
      * Get the currently logged in user.
      *
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async listProviders(): Promise<Models.MfaProviders> {
-        const apiPath = '/account/mfa/providers';
+    async listFactors(): Promise<Models.MfaProviders> {
+        const apiPath = '/account/mfa/factors';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -346,16 +350,16 @@ export class Account extends Service {
      * Add Authenticator
      *
      *
-     * @param {string} provider
+     * @param {AuthenticatorFactor} factor
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async addAuthenticator(provider: string): Promise<Models.MfaProvider> {
-        if (typeof provider === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "provider"');
+    async addAuthenticator(factor: AuthenticatorFactor): Promise<Models.MfaProvider> {
+        if (typeof factor === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "factor"');
         }
 
-        const apiPath = '/account/mfa/{provider}'.replace('{provider}', provider);
+        const apiPath = '/account/mfa/{factor}'.replace('{factor}', factor);
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -368,21 +372,21 @@ export class Account extends Service {
      * Verify Authenticator
      *
      *
-     * @param {string} provider
+     * @param {AuthenticatorFactor} factor
      * @param {string} otp
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async verifyAuthenticator<Preferences extends Models.Preferences>(provider: string, otp: string): Promise<Models.User<Preferences>> {
-        if (typeof provider === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "provider"');
+    async verifyAuthenticator<Preferences extends Models.Preferences>(factor: AuthenticatorFactor, otp: string): Promise<Models.User<Preferences>> {
+        if (typeof factor === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "factor"');
         }
 
         if (typeof otp === 'undefined') {
             throw new AppwriteException('Missing required parameter: "otp"');
         }
 
-        const apiPath = '/account/mfa/{provider}'.replace('{provider}', provider);
+        const apiPath = '/account/mfa/{factor}'.replace('{factor}', factor);
         const payload: Payload = {};
 
         if (typeof otp !== 'undefined') {
@@ -399,12 +403,12 @@ export class Account extends Service {
      * Delete Authenticator
      *
      *
-     * @param {string} provider
+     * @param {AuthenticatorProvider} provider
      * @param {string} otp
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async deleteAuthenticator<Preferences extends Models.Preferences>(provider: string, otp: string): Promise<Models.User<Preferences>> {
+    async deleteAuthenticator<Preferences extends Models.Preferences>(provider: AuthenticatorProvider, otp: string): Promise<Models.User<Preferences>> {
         if (typeof provider === 'undefined') {
             throw new AppwriteException('Missing required parameter: "provider"');
         }
@@ -832,7 +836,7 @@ export class Account extends Service {
      * limits](https://appwrite.io/docs/authentication-security#limits).
      * 
      *
-     * @param {string} provider
+     * @param {OAuthProvider} provider
      * @param {string} success
      * @param {string} failure
      * @param {boolean} token
@@ -840,7 +844,7 @@ export class Account extends Service {
      * @throws {AppwriteException}
      * @returns {void|string}
     */
-    createOAuth2Session(provider: string, success?: string, failure?: string, token?: boolean, scopes?: string[]): void | URL {
+    createOAuth2Session(provider: OAuthProvider, success?: string, failure?: string, token?: boolean, scopes?: string[]): void | URL {
         if (typeof provider === 'undefined') {
             throw new AppwriteException('Missing required parameter: "provider"');
         }
@@ -1012,7 +1016,7 @@ export class Account extends Service {
     }
 
     /**
-     * Create Account&#039;s push target
+     * Create a push target
      *
      *
      * @param {string} targetId
@@ -1052,7 +1056,7 @@ export class Account extends Service {
     }
 
     /**
-     * Update Account&#039;s push target
+     * Update a push target
      *
      *
      * @param {string} targetId
@@ -1083,6 +1087,28 @@ export class Account extends Service {
     }
 
     /**
+     * Delete a push target
+     *
+     *
+     * @param {string} targetId
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async deletePushTarget(targetId: string): Promise<{}> {
+        if (typeof targetId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "targetId"');
+        }
+
+        const apiPath = '/account/targets/{targetId}/push'.replace('{targetId}', targetId);
+        const payload: Payload = {};
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('delete', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * Create email token (OTP)
      *
      * Sends the user an email with a secret key for creating a session. If the
@@ -1098,11 +1124,11 @@ export class Account extends Service {
      *
      * @param {string} userId
      * @param {string} email
-     * @param {boolean} securityPhrase
+     * @param {boolean} phrase
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createEmailToken(userId: string, email: string, securityPhrase?: boolean): Promise<Models.Token> {
+    async createEmailToken(userId: string, email: string, phrase?: boolean): Promise<Models.Token> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1122,8 +1148,8 @@ export class Account extends Service {
             payload['email'] = email;
         }
 
-        if (typeof securityPhrase !== 'undefined') {
-            payload['securityPhrase'] = securityPhrase;
+        if (typeof phrase !== 'undefined') {
+            payload['phrase'] = phrase;
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1155,11 +1181,11 @@ export class Account extends Service {
      * @param {string} userId
      * @param {string} email
      * @param {string} url
-     * @param {boolean} securityPhrase
+     * @param {boolean} phrase
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createMagicURLToken(userId: string, email: string, url?: string, securityPhrase?: boolean): Promise<Models.Token> {
+    async createMagicURLToken(userId: string, email: string, url?: string, phrase?: boolean): Promise<Models.Token> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -1183,8 +1209,8 @@ export class Account extends Service {
             payload['url'] = url;
         }
 
-        if (typeof securityPhrase !== 'undefined') {
-            payload['securityPhrase'] = securityPhrase;
+        if (typeof phrase !== 'undefined') {
+            payload['phrase'] = phrase;
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);

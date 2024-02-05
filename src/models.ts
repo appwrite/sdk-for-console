@@ -1417,7 +1417,7 @@ export namespace Models {
          */
         current: boolean;
         /**
-         * Returns true if this the current user session.
+         * Returns a list of active session factors.
          */
         factors: number;
         /**
@@ -1497,7 +1497,7 @@ export namespace Models {
         /**
          * Security phrase of a token. Empty if security phrase was not requested when creating a token. It includes randomly generated phrase which is also sent in the external resource such as email.
          */
-        securityPhrase: string;
+        phrase: string;
     }
     /**
      * JWT
@@ -3215,15 +3215,15 @@ export namespace Models {
      */
     export type MfaProvider = {
         /**
-         * backup codes
+         * Backup codes.
          */
         backups: string[];
         /**
-         * secret used for top auth
+         * Secret token used for TOTP factor.
          */
         secret: string;
         /**
-         * uri for otp app
+         * URI for authenticator apps.
          */
         uri: string;
     }

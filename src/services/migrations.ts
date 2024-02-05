@@ -2,6 +2,7 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
+import { Query } from '../query';
 
 export class Migrations extends Service {
 
@@ -14,12 +15,12 @@ export class Migrations extends Service {
      * List Migrations
      *
      *
-     * @param {string} queries
+     * @param {string[]} queries
      * @param {string} search
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async list(queries?: string, search?: string): Promise<Models.MigrationList> {
+    async list(queries?: string[], search?: string): Promise<Models.MigrationList> {
         const apiPath = '/migrations';
         const payload: Payload = {};
 

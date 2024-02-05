@@ -1,4 +1,4 @@
-import { Client, Proxy } from "@appwrite.io/console";
+import { Client, , Proxy } from "@appwrite.io/console";
 
 const client = new Client();
 
@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = proxy.createRule('', 'api');
+const promise = proxy.createRule('', .Api);
 
 promise.then(function (response) {
     console.log(response); // Success

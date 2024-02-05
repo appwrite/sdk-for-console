@@ -1,4 +1,4 @@
-import { Client, Messaging } from "@appwrite.io/console";
+import { Client,  Messaging } from "@appwrite.io/console";
 
 const client = new Client();
 
@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = messaging.updatePushNotification('[MESSAGE_ID]');
+const promise = messaging.updateSMTPProvider('[PROVIDER_ID]');
 
 promise.then(function (response) {
     console.log(response); // Success
