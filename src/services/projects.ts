@@ -7,7 +7,7 @@ import { Region } from '../enums/region';
 import { AuthMethod } from '../enums/auth-method';
 import { OAuthProvider } from '../enums/o-auth-provider';
 import { PlatformType } from '../enums/platform-type';
-import { Service } from '../enums/service';
+import { APIService } from '../enums/a-p-i-service';
 import { SMTPSecure } from '../enums/s-m-t-p-secure';
 import { TemplateType } from '../enums/template-type';
 import { TemplateLocale } from '../enums/template-locale';
@@ -886,12 +886,12 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {Service} service
+     * @param {APIService} service
      * @param {boolean} status
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateServiceStatus(projectId: string, service: Service, status: boolean): Promise<Models.Project> {
+    async updateServiceStatus(projectId: string, service: APIService, status: boolean): Promise<Models.Project> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }

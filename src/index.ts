@@ -41,7 +41,7 @@ export { ProjectUsageRange } from './enums/project-usage-range';
 export { Region } from './enums/region';
 export { AuthMethod } from './enums/auth-method';
 export { PlatformType } from './enums/platform-type';
-export { Service } from './enums/service';
+export { APIService } from './enums/a-p-i-service';
 export { SMTPSecure } from './enums/s-m-t-p-secure';
 export { TemplateType } from './enums/template-type';
 export { TemplateLocale } from './enums/template-locale';
