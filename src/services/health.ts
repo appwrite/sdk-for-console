@@ -2,6 +2,8 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
+import { Query } from '../query';
+import { Name } from '../enums/name';
 
 export class Health extends Service {
 
@@ -251,12 +253,12 @@ export class Health extends Service {
      * Returns the amount of failed jobs in a given queue.
      * 
      *
-     * @param {string} name
+     * @param {Name} name
      * @param {number} threshold
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getFailedJobs(name: string, threshold?: number): Promise<Models.HealthQueue> {
+    async getFailedJobs(name: Name, threshold?: number): Promise<Models.HealthQueue> {
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }

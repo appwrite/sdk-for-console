@@ -2,6 +2,11 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
+import { Query } from '../query';
+import { Compression } from '../enums/compression';
+import { ImageGravity } from '../enums/image-gravity';
+import { ImageFormat } from '../enums/image-format';
+import { StorageUsageRange } from '../enums/storage-usage-range';
 
 export class Storage extends Service {
 
@@ -51,13 +56,13 @@ export class Storage extends Service {
      * @param {boolean} enabled
      * @param {number} maximumFileSize
      * @param {string[]} allowedFileExtensions
-     * @param {string} compression
+     * @param {Compression} compression
      * @param {boolean} encryption
      * @param {boolean} antivirus
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createBucket(bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: string, encryption?: boolean, antivirus?: boolean): Promise<Models.Bucket> {
+    async createBucket(bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: Compression, encryption?: boolean, antivirus?: boolean): Promise<Models.Bucket> {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -151,13 +156,13 @@ export class Storage extends Service {
      * @param {boolean} enabled
      * @param {number} maximumFileSize
      * @param {string[]} allowedFileExtensions
-     * @param {string} compression
+     * @param {Compression} compression
      * @param {boolean} encryption
      * @param {boolean} antivirus
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateBucket(bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: string, encryption?: boolean, antivirus?: boolean): Promise<Models.Bucket> {
+    async updateBucket(bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: Compression, encryption?: boolean, antivirus?: boolean): Promise<Models.Bucket> {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -523,7 +528,7 @@ export class Storage extends Service {
      * @param {string} fileId
      * @param {number} width
      * @param {number} height
-     * @param {string} gravity
+     * @param {ImageGravity} gravity
      * @param {number} quality
      * @param {number} borderWidth
      * @param {string} borderColor
@@ -531,11 +536,11 @@ export class Storage extends Service {
      * @param {number} opacity
      * @param {number} rotation
      * @param {string} background
-     * @param {string} output
+     * @param {ImageFormat} output
      * @throws {AppwriteException}
      * @returns {URL}
     */
-    getFilePreview(bucketId: string, fileId: string, width?: number, height?: number, gravity?: string, quality?: number, borderWidth?: number, borderColor?: string, borderRadius?: number, opacity?: number, rotation?: number, background?: string, output?: string): URL {
+    getFilePreview(bucketId: string, fileId: string, width?: number, height?: number, gravity?: ImageGravity, quality?: number, borderWidth?: number, borderColor?: string, borderRadius?: number, opacity?: number, rotation?: number, background?: string, output?: ImageFormat): URL {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -639,11 +644,11 @@ export class Storage extends Service {
      * Get usage stats for storage
      *
      *
-     * @param {string} range
+     * @param {StorageUsageRange} range
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getUsage(range?: string): Promise<Models.UsageStorage> {
+    async getUsage(range?: StorageUsageRange): Promise<Models.UsageStorage> {
         const apiPath = '/storage/usage';
         const payload: Payload = {};
 
@@ -662,11 +667,11 @@ export class Storage extends Service {
      *
      *
      * @param {string} bucketId
-     * @param {string} range
+     * @param {StorageUsageRange} range
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getBucketUsage(bucketId: string, range?: string): Promise<Models.UsageBuckets> {
+    async getBucketUsage(bucketId: string, range?: StorageUsageRange): Promise<Models.UsageBuckets> {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }

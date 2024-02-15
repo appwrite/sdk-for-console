@@ -2,6 +2,10 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
+import { Query } from '../query';
+import { Factor } from '../enums/factor';
+import { Type } from '../enums/type';
+import { OAuthProvider } from '../enums/o-auth-provider';
 
 export class Account extends Service {
 
@@ -267,11 +271,11 @@ export class Account extends Service {
      * Create 2FA Challenge
      *
      *
-     * @param {string} factor
+     * @param {Factor} factor
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async create2FAChallenge(factor: string): Promise<Models.MfaChallenge> {
+    async create2FAChallenge(factor: Factor): Promise<Models.MfaChallenge> {
         if (typeof factor === 'undefined') {
             throw new AppwriteException('Missing required parameter: "factor"');
         }
@@ -345,11 +349,11 @@ export class Account extends Service {
      * Add Authenticator
      *
      *
-     * @param {string} type
+     * @param {Type} type
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async addAuthenticator(type: string): Promise<Models.MfaType> {
+    async addAuthenticator(type: Type): Promise<Models.MfaType> {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
@@ -367,12 +371,12 @@ export class Account extends Service {
      * Verify Authenticator
      *
      *
-     * @param {string} type
+     * @param {Type} type
      * @param {string} otp
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async verifyAuthenticator<Preferences extends Models.Preferences>(type: string, otp: string): Promise<Models.User<Preferences>> {
+    async verifyAuthenticator<Preferences extends Models.Preferences>(type: Type, otp: string): Promise<Models.User<Preferences>> {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
@@ -398,12 +402,12 @@ export class Account extends Service {
      * Delete Authenticator
      *
      *
-     * @param {string} type
+     * @param {Type} type
      * @param {string} otp
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async deleteAuthenticator<Preferences extends Models.Preferences>(type: string, otp: string): Promise<Models.User<Preferences>> {
+    async deleteAuthenticator<Preferences extends Models.Preferences>(type: Type, otp: string): Promise<Models.User<Preferences>> {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
@@ -831,7 +835,7 @@ export class Account extends Service {
      * limits](https://appwrite.io/docs/authentication-security#limits).
      * 
      *
-     * @param {string} provider
+     * @param {OAuthProvider} provider
      * @param {string} success
      * @param {string} failure
      * @param {boolean} token
@@ -839,7 +843,7 @@ export class Account extends Service {
      * @throws {AppwriteException}
      * @returns {void|string}
     */
-    createOAuth2Session(provider: string, success?: string, failure?: string, token?: boolean, scopes?: string[]): void | URL {
+    createOAuth2Session(provider: OAuthProvider, success?: string, failure?: string, token?: boolean, scopes?: string[]): void | URL {
         if (typeof provider === 'undefined') {
             throw new AppwriteException('Missing required parameter: "provider"');
         }

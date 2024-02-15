@@ -1,4 +1,4 @@
-import { Client, Functions } from "@appwrite.io/console";
+import { Client, , Functions } from "@appwrite.io/console";
 
 const client = new Client();
 
@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = functions.create('[FUNCTION_ID]', '[NAME]', 'node-18.0');
+const promise = functions.create('[FUNCTION_ID]', '[NAME]', .Node180);
 
 promise.then(function (response) {
     console.log(response); // Success

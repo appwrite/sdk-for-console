@@ -1,4 +1,4 @@
-import { Client, Projects } from "@appwrite.io/console";
+import { Client, SMSTemplateType,SMSTemplateLocale, Projects } from "@appwrite.io/console";
 
 const client = new Client();
 
@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = projects.deleteSmsTemplate('[PROJECT_ID]', 'verification', 'af');
+const promise = projects.deleteSmsTemplate('[PROJECT_ID]', SMSTemplateType.Verification, SMSTemplateLocale.Af);
 
 promise.then(function (response) {
     console.log(response); // Success

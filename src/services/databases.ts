@@ -2,6 +2,11 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
+import { Query } from '../query';
+import { DatabaseUsageRange } from '../enums/database-usage-range';
+import { RelationshipType } from '../enums/relationship-type';
+import { RelationMutate } from '../enums/relation-mutate';
+import { IndexType } from '../enums/index-type';
 
 export class Databases extends Service {
 
@@ -85,11 +90,11 @@ export class Databases extends Service {
      * Get usage stats for the database
      *
      *
-     * @param {string} range
+     * @param {DatabaseUsageRange} range
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getUsage(range?: string): Promise<Models.UsageDatabases> {
+    async getUsage(range?: DatabaseUsageRange): Promise<Models.UsageDatabases> {
         const apiPath = '/databases/usage';
         const payload: Payload = {};
 
@@ -1269,15 +1274,15 @@ export class Databases extends Service {
      * @param {string} databaseId
      * @param {string} collectionId
      * @param {string} relatedCollectionId
-     * @param {string} type
+     * @param {RelationshipType} type
      * @param {boolean} twoWay
      * @param {string} key
      * @param {string} twoWayKey
-     * @param {string} onDelete
+     * @param {RelationMutate} onDelete
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createRelationshipAttribute(databaseId: string, collectionId: string, relatedCollectionId: string, type: string, twoWay?: boolean, key?: string, twoWayKey?: string, onDelete?: string): Promise<Models.AttributeRelationship> {
+    async createRelationshipAttribute(databaseId: string, collectionId: string, relatedCollectionId: string, type: RelationshipType, twoWay?: boolean, key?: string, twoWayKey?: string, onDelete?: RelationMutate): Promise<Models.AttributeRelationship> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1635,11 +1640,11 @@ export class Databases extends Service {
      * @param {string} databaseId
      * @param {string} collectionId
      * @param {string} key
-     * @param {string} onDelete
+     * @param {RelationMutate} onDelete
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateRelationshipAttribute(databaseId: string, collectionId: string, key: string, onDelete?: string): Promise<Models.AttributeRelationship> {
+    async updateRelationshipAttribute(databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate): Promise<Models.AttributeRelationship> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1946,13 +1951,13 @@ export class Databases extends Service {
      * @param {string} databaseId
      * @param {string} collectionId
      * @param {string} key
-     * @param {string} type
+     * @param {IndexType} type
      * @param {string[]} attributes
      * @param {string[]} orders
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createIndex(databaseId: string, collectionId: string, key: string, type: string, attributes: string[], orders?: string[]): Promise<Models.Index> {
+    async createIndex(databaseId: string, collectionId: string, key: string, type: IndexType, attributes: string[], orders?: string[]): Promise<Models.Index> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -2101,11 +2106,11 @@ export class Databases extends Service {
      *
      * @param {string} databaseId
      * @param {string} collectionId
-     * @param {string} range
+     * @param {DatabaseUsageRange} range
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getCollectionUsage(databaseId: string, collectionId: string, range?: string): Promise<Models.UsageCollection> {
+    async getCollectionUsage(databaseId: string, collectionId: string, range?: DatabaseUsageRange): Promise<Models.UsageCollection> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -2160,11 +2165,11 @@ export class Databases extends Service {
      *
      *
      * @param {string} databaseId
-     * @param {string} range
+     * @param {DatabaseUsageRange} range
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getDatabaseUsage(databaseId: string, range?: string): Promise<Models.UsageDatabase> {
+    async getDatabaseUsage(databaseId: string, range?: DatabaseUsageRange): Promise<Models.UsageDatabase> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }

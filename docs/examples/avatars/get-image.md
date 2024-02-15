@@ -1,4 +1,4 @@
-import { Client, Avatars } from "@appwrite.io/console";
+import { Client,  Avatars } from "@appwrite.io/console";
 
 const client = new Client();
 

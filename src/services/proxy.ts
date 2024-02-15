@@ -2,6 +2,8 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
+import { Query } from '../query';
+import { ResourceType } from '../enums/resource-type';
 
 export class Proxy extends Service {
 
@@ -45,12 +47,12 @@ export class Proxy extends Service {
      * Create a new proxy rule.
      *
      * @param {string} domain
-     * @param {string} resourceType
+     * @param {ResourceType} resourceType
      * @param {string} resourceId
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createRule(domain: string, resourceType: string, resourceId?: string): Promise<Models.ProxyRule> {
+    async createRule(domain: string, resourceType: ResourceType, resourceId?: string): Promise<Models.ProxyRule> {
         if (typeof domain === 'undefined') {
             throw new AppwriteException('Missing required parameter: "domain"');
         }

@@ -1,4 +1,4 @@
-import { Client, Projects } from "@appwrite.io/console";
+import { Client, APIService, Projects } from "@appwrite.io/console";
 
 const client = new Client();
 
@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = projects.updateServiceStatus('[PROJECT_ID]', 'account', false);
+const promise = projects.updateServiceStatus('[PROJECT_ID]', APIService.Account, false);
 
 promise.then(function (response) {
     console.log(response); // Success

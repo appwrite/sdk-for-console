@@ -1,4 +1,4 @@
-import { Client, Health } from "@appwrite.io/console";
+import { Client, , Health } from "@appwrite.io/console";
 
 const client = new Client();
 
@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = health.getFailedJobs('v1-database');
+const promise = health.getFailedJobs(.V1Database);
 
 promise.then(function (response) {
     console.log(response); // Success
