@@ -1,4 +1,4 @@
-import { Client,  Proxy } from "@appwrite.io/console";
+import { Client, Proxy } from "@appwrite.io/console";
 
 const client = new Client();
 

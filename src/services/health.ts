@@ -2,7 +2,6 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
-import { Query } from '../query';
 
 export class Health extends Service {
 
@@ -59,6 +58,29 @@ export class Health extends Service {
     async getCache(): Promise<Models.HealthStatus> {
         const apiPath = '/health/cache';
         const payload: Payload = {};
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Get the SSL certificate for a domain
+     *
+     * Get the SSL certificate for a domain
+     *
+     * @param {string} domain
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getCertificate(domain?: string): Promise<Models.HealthCertificate> {
+        const apiPath = '/health/certificate';
+        const payload: Payload = {};
+
+        if (typeof domain !== 'undefined') {
+            payload['domain'] = domain;
+        }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
@@ -211,6 +233,35 @@ export class Health extends Service {
     */
     async getQueueDeletes(threshold?: number): Promise<Models.HealthQueue> {
         const apiPath = '/health/queue/deletes';
+        const payload: Payload = {};
+
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Get number of failed queue jobs
+     *
+     * Returns the amount of failed jobs in a given queue.
+     * 
+     *
+     * @param {string} name
+     * @param {number} threshold
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getFailedJobs(name: string, threshold?: number): Promise<Models.HealthQueue> {
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+
+        const apiPath = '/health/queue/failed/{name}'.replace('{name}', name);
         const payload: Payload = {};
 
         if (typeof threshold !== 'undefined') {

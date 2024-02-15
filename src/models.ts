@@ -2657,6 +2657,35 @@ export namespace Models {
         status: string;
     }
     /**
+     * Health Certificate
+     */
+    export type HealthCertificate = {
+        /**
+         * Certificate name
+         */
+        name: string;
+        /**
+         * Subject SN
+         */
+        subjectSN: string;
+        /**
+         * Issuer organisation
+         */
+        issuerOrganisation: string;
+        /**
+         * Valid from
+         */
+        validFrom: string;
+        /**
+         * Valid to
+         */
+        validTo: string;
+        /**
+         * Signature type SN
+         */
+        signatureTypeSN: string;
+    }
+    /**
      * Health Time
      */
     export type HealthTime = {
@@ -3211,9 +3240,9 @@ export namespace Models {
         expire: string;
     }
     /**
-     * MFAProvider
+     * MFAType
      */
-    export type MfaProvider = {
+    export type MfaType = {
         /**
          * Backup codes.
          */
@@ -3228,9 +3257,9 @@ export namespace Models {
         uri: string;
     }
     /**
-     * MFAProviders
+     * MFAFactors
      */
-    export type MfaProviders = {
+    export type MfaFactors = {
         /**
          * TOTP
          */
@@ -3366,6 +3395,10 @@ export namespace Models {
          * Total count of subscribers subscribed to topic.
          */
         total: number;
+        /**
+         * Subscribe permissions.
+         */
+        subscribe: string[];
     }
     /**
      * Subscriber

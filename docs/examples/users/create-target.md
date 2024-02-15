@@ -1,4 +1,4 @@
-import { Client, MessagingProviderType, Users } from "@appwrite.io/console";
+import { Client, Users } from "@appwrite.io/console";
 
 const client = new Client();
 
@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = users.createTarget('[USER_ID]', '[TARGET_ID]', MessagingProviderType.Email, '[IDENTIFIER]');
+const promise = users.createTarget('[USER_ID]', '[TARGET_ID]', 'email', '[IDENTIFIER]');
 
 promise.then(function (response) {
     console.log(response); // Success

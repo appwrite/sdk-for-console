@@ -1,4 +1,4 @@
-import { Client, OAuthProvider, Projects } from "@appwrite.io/console";
+import { Client, Projects } from "@appwrite.io/console";
 
 const client = new Client();
 
@@ -9,7 +9,7 @@ client
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = projects.updateOAuth2('[PROJECT_ID]', OAuthProvider.Amazon);
+const promise = projects.updateOAuth2('[PROJECT_ID]', 'amazon');
 
 promise.then(function (response) {
     console.log(response); // Success

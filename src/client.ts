@@ -92,7 +92,7 @@ class AppwriteException extends Error {
 
 class Client {
     config = {
-        endpoint: 'https://HOSTNAME/v1',
+        endpoint: 'https://cloud.appwrite.io/v1',
         endpointRealtime: '',
         project: '',
         key: '',

@@ -1,15 +1,15 @@
-import { Client, AuthenticatorProvider, Account } from "@appwrite.io/console";
+import { Client, Health } from "@appwrite.io/console";
 
 const client = new Client();
 
-const account = new Account(client);
+const health = new Health(client);
 
 client
     .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('5df5acd0d48c2') // Your project ID
 ;
 
-const promise = account.createChallenge(AuthenticatorProvider.Totp);
+const promise = health.getCertificate();
 
 promise.then(function (response) {
     console.log(response); // Success

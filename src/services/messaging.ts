@@ -2,9 +2,6 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
-import { Query } from '../query';
-import { MessageType } from '../enums/message-type';
-import { SMTPEncryption } from '../enums/s-m-t-p-encryption';
 
 export class Messaging extends Service {
 
@@ -52,13 +49,13 @@ export class Messaging extends Service {
      * @param {string[]} targets
      * @param {string[]} cc
      * @param {string[]} bcc
-     * @param {MessageType} status
+     * @param {string} status
      * @param {boolean} html
      * @param {string} scheduledAt
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createEmail(messageId: string, subject: string, content: string, topics?: string[], users?: string[], targets?: string[], cc?: string[], bcc?: string[], status?: MessageType, html?: boolean, scheduledAt?: string): Promise<Models.Message> {
+    async createEmail(messageId: string, subject: string, content: string, topics?: string[], users?: string[], targets?: string[], cc?: string[], bcc?: string[], status?: string, html?: boolean, scheduledAt?: string): Promise<Models.Message> {
         if (typeof messageId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "messageId"');
         }
@@ -134,7 +131,7 @@ export class Messaging extends Service {
      * @param {string[]} targets
      * @param {string} subject
      * @param {string} content
-     * @param {MessageType} status
+     * @param {string} status
      * @param {boolean} html
      * @param {string[]} cc
      * @param {string[]} bcc
@@ -142,7 +139,7 @@ export class Messaging extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateEmail(messageId: string, topics?: string[], users?: string[], targets?: string[], subject?: string, content?: string, status?: MessageType, html?: boolean, cc?: string[], bcc?: string[], scheduledAt?: string): Promise<Models.Message> {
+    async updateEmail(messageId: string, topics?: string[], users?: string[], targets?: string[], subject?: string, content?: string, status?: string, html?: boolean, cc?: string[], bcc?: string[], scheduledAt?: string): Promise<Models.Message> {
         if (typeof messageId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "messageId"');
         }
@@ -213,12 +210,12 @@ export class Messaging extends Service {
      * @param {string} color
      * @param {string} tag
      * @param {string} badge
-     * @param {MessageType} status
+     * @param {string} status
      * @param {string} scheduledAt
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createPush(messageId: string, title: string, body: string, topics?: string[], users?: string[], targets?: string[], data?: object, action?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: string, status?: MessageType, scheduledAt?: string): Promise<Models.Message> {
+    async createPush(messageId: string, title: string, body: string, topics?: string[], users?: string[], targets?: string[], data?: object, action?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: string, status?: string, scheduledAt?: string): Promise<Models.Message> {
         if (typeof messageId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "messageId"');
         }
@@ -317,12 +314,12 @@ export class Messaging extends Service {
      * @param {string} color
      * @param {string} tag
      * @param {number} badge
-     * @param {MessageType} status
+     * @param {string} status
      * @param {string} scheduledAt
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updatePush(messageId: string, topics?: string[], users?: string[], targets?: string[], title?: string, body?: string, data?: object, action?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: number, status?: MessageType, scheduledAt?: string): Promise<Models.Message> {
+    async updatePush(messageId: string, topics?: string[], users?: string[], targets?: string[], title?: string, body?: string, data?: object, action?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: number, status?: string, scheduledAt?: string): Promise<Models.Message> {
         if (typeof messageId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "messageId"');
         }
@@ -401,12 +398,12 @@ export class Messaging extends Service {
      * @param {string[]} topics
      * @param {string[]} users
      * @param {string[]} targets
-     * @param {MessageType} status
+     * @param {string} status
      * @param {string} scheduledAt
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createSMS(messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], status?: MessageType, scheduledAt?: string): Promise<Models.Message> {
+    async createSMS(messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], status?: string, scheduledAt?: string): Promise<Models.Message> {
         if (typeof messageId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "messageId"');
         }
@@ -461,12 +458,12 @@ export class Messaging extends Service {
      * @param {string[]} users
      * @param {string[]} targets
      * @param {string} content
-     * @param {MessageType} status
+     * @param {string} status
      * @param {string} scheduledAt
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateSMS(messageId: string, topics?: string[], users?: string[], targets?: string[], content?: string, status?: MessageType, scheduledAt?: string): Promise<Models.Message> {
+    async updateSMS(messageId: string, topics?: string[], users?: string[], targets?: string[], content?: string, status?: string, scheduledAt?: string): Promise<Models.Message> {
         if (typeof messageId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "messageId"');
         }
@@ -1201,7 +1198,7 @@ export class Messaging extends Service {
      * @param {number} port
      * @param {string} username
      * @param {string} password
-     * @param {SMTPEncryption} encryption
+     * @param {string} encryption
      * @param {boolean} autoTLS
      * @param {string} mailer
      * @param {string} fromName
@@ -1212,7 +1209,7 @@ export class Messaging extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createSMTPProvider(providerId: string, name: string, host: string, port?: number, username?: string, password?: string, encryption?: SMTPEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean): Promise<Models.Provider> {
+    async createSMTPProvider(providerId: string, name: string, host: string, port?: number, username?: string, password?: string, encryption?: string, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean): Promise<Models.Provider> {
         if (typeof providerId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "providerId"');
         }
@@ -1300,8 +1297,9 @@ export class Messaging extends Service {
      * @param {number} port
      * @param {string} username
      * @param {string} password
-     * @param {SMTPEncryption} encryption
+     * @param {string} encryption
      * @param {boolean} autoTLS
+     * @param {string} mailer
      * @param {string} fromName
      * @param {string} fromEmail
      * @param {string} replyToName
@@ -1310,7 +1308,7 @@ export class Messaging extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateSMTPProvider(providerId: string, name?: string, host?: string, port?: number, username?: string, password?: string, encryption?: SMTPEncryption, autoTLS?: boolean, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean): Promise<Models.Provider> {
+    async updateSMTPProvider(providerId: string, name?: string, host?: string, port?: number, username?: string, password?: string, encryption?: string, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean): Promise<Models.Provider> {
         if (typeof providerId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "providerId"');
         }
@@ -1346,6 +1344,10 @@ export class Messaging extends Service {
             payload['autoTLS'] = autoTLS;
         }
 
+        if (typeof mailer !== 'undefined') {
+            payload['mailer'] = mailer;
+        }
+
         if (typeof fromName !== 'undefined') {
             payload['fromName'] = fromName;
         }
@@ -1379,13 +1381,13 @@ export class Messaging extends Service {
      * @param {string} providerId
      * @param {string} name
      * @param {string} from
-     * @param {string} username
-     * @param {string} password
+     * @param {string} customerId
+     * @param {string} apiKey
      * @param {boolean} enabled
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createTelesignProvider(providerId: string, name: string, from?: string, username?: string, password?: string, enabled?: boolean): Promise<Models.Provider> {
+    async createTelesignProvider(providerId: string, name: string, from?: string, customerId?: string, apiKey?: string, enabled?: boolean): Promise<Models.Provider> {
         if (typeof providerId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "providerId"');
         }
@@ -1409,12 +1411,12 @@ export class Messaging extends Service {
             payload['from'] = from;
         }
 
-        if (typeof username !== 'undefined') {
-            payload['username'] = username;
+        if (typeof customerId !== 'undefined') {
+            payload['customerId'] = customerId;
         }
 
-        if (typeof password !== 'undefined') {
-            payload['password'] = password;
+        if (typeof apiKey !== 'undefined') {
+            payload['apiKey'] = apiKey;
         }
 
         if (typeof enabled !== 'undefined') {
@@ -1434,13 +1436,13 @@ export class Messaging extends Service {
      * @param {string} providerId
      * @param {string} name
      * @param {boolean} enabled
-     * @param {string} username
-     * @param {string} password
+     * @param {string} customerId
+     * @param {string} apiKey
      * @param {string} from
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateTelesignProvider(providerId: string, name?: string, enabled?: boolean, username?: string, password?: string, from?: string): Promise<Models.Provider> {
+    async updateTelesignProvider(providerId: string, name?: string, enabled?: boolean, customerId?: string, apiKey?: string, from?: string): Promise<Models.Provider> {
         if (typeof providerId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "providerId"');
         }
@@ -1456,12 +1458,12 @@ export class Messaging extends Service {
             payload['enabled'] = enabled;
         }
 
-        if (typeof username !== 'undefined') {
-            payload['username'] = username;
+        if (typeof customerId !== 'undefined') {
+            payload['customerId'] = customerId;
         }
 
-        if (typeof password !== 'undefined') {
-            payload['password'] = password;
+        if (typeof apiKey !== 'undefined') {
+            payload['apiKey'] = apiKey;
         }
 
         if (typeof from !== 'undefined') {
@@ -1911,10 +1913,11 @@ export class Messaging extends Service {
      *
      * @param {string} topicId
      * @param {string} name
+     * @param {string[]} subscribe
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createTopic(topicId: string, name: string): Promise<Models.Topic> {
+    async createTopic(topicId: string, name: string, subscribe?: string[]): Promise<Models.Topic> {
         if (typeof topicId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "topicId"');
         }
@@ -1932,6 +1935,10 @@ export class Messaging extends Service {
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
+        }
+
+        if (typeof subscribe !== 'undefined') {
+            payload['subscribe'] = subscribe;
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
