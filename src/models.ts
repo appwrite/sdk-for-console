@@ -3392,9 +3392,17 @@ export namespace Models {
          */
         name: string;
         /**
-         * Total count of subscribers subscribed to topic.
+         * Total count of email subscribers subscribed to the topic.
          */
-        total: number;
+        emailTotal: number;
+        /**
+         * Total count of SMS subscribers subscribed to the topic.
+         */
+        smsTotal: number;
+        /**
+         * Total count of push subscribers subscribed to the topic.
+         */
+        pushTotal: number;
         /**
          * Subscribe permissions.
          */
