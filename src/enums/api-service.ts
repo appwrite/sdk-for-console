@@ -1,4 +1,4 @@
-export enum APIService {
+export enum ApiService {
     Account = 'account',
     Avatars = 'avatars',
     Databases = 'databases',

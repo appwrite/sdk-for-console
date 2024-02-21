@@ -1,4 +1,4 @@
-export enum SMSTemplateType {
+export enum SmsTemplateType {
     Verification = 'verification',
     Login = 'login',
     Invitation = 'invitation',

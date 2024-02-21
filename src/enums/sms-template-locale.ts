@@ -1,4 +1,4 @@
-export enum SMSTemplateLocale {
+export enum SmsTemplateLocale {
     Af = 'af',
     Arae = 'ar-ae',
     Arbh = 'ar-bh',

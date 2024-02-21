@@ -7,12 +7,12 @@ import { Region } from '../enums/region';
 import { AuthMethod } from '../enums/auth-method';
 import { OAuthProvider } from '../enums/o-auth-provider';
 import { PlatformType } from '../enums/platform-type';
-import { APIService } from '../enums/a-p-i-service';
+import { ApiService } from '../enums/api-service';
 import { SMTPSecure } from '../enums/s-m-t-p-secure';
 import { EmailTemplateType } from '../enums/email-template-type';
 import { EmailTemplateLocale } from '../enums/email-template-locale';
-import { SMSTemplateType } from '../enums/s-m-s-template-type';
-import { SMSTemplateLocale } from '../enums/s-m-s-template-locale';
+import { SmsTemplateType } from '../enums/sms-template-type';
+import { SmsTemplateLocale } from '../enums/sms-template-locale';
 
 export class Projects extends Service {
 
@@ -888,12 +888,12 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {APIService} service
+     * @param {ApiService} service
      * @param {boolean} status
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateServiceStatus(projectId: string, service: APIService, status: boolean): Promise<Models.Project> {
+    async updateServiceStatus(projectId: string, service: ApiService, status: boolean): Promise<Models.Project> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1273,12 +1273,12 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {SMSTemplateType} type
-     * @param {SMSTemplateLocale} locale
+     * @param {SmsTemplateType} type
+     * @param {SmsTemplateLocale} locale
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getSmsTemplate(projectId: string, type: SMSTemplateType, locale: SMSTemplateLocale): Promise<Models.SmsTemplate> {
+    async getSmsTemplate(projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale): Promise<Models.SmsTemplate> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1305,13 +1305,13 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {SMSTemplateType} type
-     * @param {SMSTemplateLocale} locale
+     * @param {SmsTemplateType} type
+     * @param {SmsTemplateLocale} locale
      * @param {string} message
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateSmsTemplate(projectId: string, type: SMSTemplateType, locale: SMSTemplateLocale, message: string): Promise<Models.SmsTemplate> {
+    async updateSmsTemplate(projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string): Promise<Models.SmsTemplate> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1346,12 +1346,12 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {SMSTemplateType} type
-     * @param {SMSTemplateLocale} locale
+     * @param {SmsTemplateType} type
+     * @param {SmsTemplateLocale} locale
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async deleteSmsTemplate(projectId: string, type: SMSTemplateType, locale: SMSTemplateLocale): Promise<Models.SmsTemplate> {
+    async deleteSmsTemplate(projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale): Promise<Models.SmsTemplate> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
