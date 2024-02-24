@@ -3,4 +3,5 @@ export enum EmailTemplateType {
     Magicsession = 'magicsession',
     Recovery = 'recovery',
     Invitation = 'invitation',
+    Mfachallenge = 'mfachallenge',
 }

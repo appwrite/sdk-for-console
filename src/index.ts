@@ -37,7 +37,7 @@ export { FunctionUsageRange } from './enums/function-usage-range';
 export { ExecutionMethod } from './enums/execution-method';
 export { Name } from './enums/name';
 export { MessageStatus } from './enums/message-status';
-export { Encryption } from './enums/encryption';
+export { SmtpEncryption } from './enums/smtp-encryption';
 export { ProjectUsageRange } from './enums/project-usage-range';
 export { Region } from './enums/region';
 export { AuthMethod } from './enums/auth-method';

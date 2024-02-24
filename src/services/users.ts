@@ -2,7 +2,6 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
-import { Query } from '../query';
 import { PasswordHash } from '../enums/password-hash';
 import { UserUsageRange } from '../enums/user-usage-range';
 import { AuthenticatorType } from '../enums/authenticator-type';

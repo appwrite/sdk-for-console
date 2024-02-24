@@ -2,7 +2,6 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
-import { Query } from '../query';
 import { Region } from '../enums/region';
 import { AuthMethod } from '../enums/auth-method';
 import { OAuthProvider } from '../enums/o-auth-provider';

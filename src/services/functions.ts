@@ -2,7 +2,6 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
-import { Query } from '../query';
 import { Runtime } from '../enums/runtime';
 import { FunctionUsageRange } from '../enums/function-usage-range';
 import { ExecutionMethod } from '../enums/execution-method';
