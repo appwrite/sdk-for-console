@@ -12,7 +12,7 @@ export class Project extends Service {
      }
 
     /**
-     * Get usage stats for a project
+     * Get project usage stats
      *
      *
      * @param {string} startDate

@@ -640,7 +640,7 @@ export class Storage extends Service {
     }
 
     /**
-     * Get usage stats for storage
+     * Get storage usage stats
      *
      *
      * @param {StorageUsageRange} range
@@ -662,7 +662,7 @@ export class Storage extends Service {
     }
 
     /**
-     * Get usage stats for storage bucket
+     * Get bucket usage stats
      *
      *
      * @param {string} bucketId

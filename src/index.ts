@@ -36,7 +36,6 @@ export { Runtime } from './enums/runtime';
 export { FunctionUsageRange } from './enums/function-usage-range';
 export { ExecutionMethod } from './enums/execution-method';
 export { Name } from './enums/name';
-export { MessageStatus } from './enums/message-status';
 export { SmtpEncryption } from './enums/smtp-encryption';
 export { ProjectUsageRange } from './enums/project-usage-range';
 export { Region } from './enums/region';

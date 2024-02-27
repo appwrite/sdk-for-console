@@ -591,7 +591,7 @@ export class Users extends Service {
     }
 
     /**
-     * Get usage stats for the users API
+     * Get users usage stats
      *
      *
      * @param {UserUsageRange} range
@@ -786,6 +786,7 @@ export class Users extends Service {
     /**
      * Update MFA
      *
+     * Enable or disable MFA on a user account.
      *
      * @param {string} userId
      * @param {boolean} mfa
@@ -817,6 +818,7 @@ export class Users extends Service {
     /**
      * List Factors
      *
+     * List the factors available on the account to be used as a MFA challange.
      *
      * @param {string} userId
      * @throws {AppwriteException}
@@ -839,14 +841,14 @@ export class Users extends Service {
     /**
      * Delete Authenticator
      *
+     * Delete an authenticator app.
      *
      * @param {string} userId
      * @param {AuthenticatorType} type
-     * @param {string} otp
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async deleteAuthenticator<Preferences extends Models.Preferences>(userId: string, type: AuthenticatorType, otp: string): Promise<Models.User<Preferences>> {
+    async deleteAuthenticator<Preferences extends Models.Preferences>(userId: string, type: AuthenticatorType): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
@@ -855,16 +857,8 @@ export class Users extends Service {
             throw new AppwriteException('Missing required parameter: "type"');
         }
 
-        if (typeof otp === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "otp"');
-        }
-
         const apiPath = '/users/{userId}/mfa/{type}'.replace('{userId}', userId).replace('{type}', type);
         const payload: Payload = {};
-
-        if (typeof otp !== 'undefined') {
-            payload['otp'] = otp;
-        }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
@@ -1163,6 +1157,7 @@ export class Users extends Service {
     /**
      * List User Targets
      *
+     * List the messaging targets that are associated with a user.
      *
      * @param {string} userId
      * @param {string[]} queries
@@ -1190,6 +1185,7 @@ export class Users extends Service {
     /**
      * Create User Target
      *
+     * Create a messaging target.
      *
      * @param {string} userId
      * @param {string} targetId
@@ -1249,6 +1245,7 @@ export class Users extends Service {
     /**
      * Get User Target
      *
+     * Get a user's push notification target by ID.
      *
      * @param {string} userId
      * @param {string} targetId
@@ -1276,6 +1273,7 @@ export class Users extends Service {
     /**
      * Update User target
      *
+     * Update a messaging target.
      *
      * @param {string} userId
      * @param {string} targetId
@@ -1318,6 +1316,7 @@ export class Users extends Service {
     /**
      * Delete user target
      *
+     * Delete a messaging target.
      *
      * @param {string} userId
      * @param {string} targetId
