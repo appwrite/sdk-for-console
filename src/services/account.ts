@@ -1058,10 +1058,11 @@ export class Account extends Service {
     }
 
     /**
-     * Update (or renew) session
+     * Update session
      *
-     * Extend session's expiry to increase it's lifespan. Extending a session is
-     * useful when session length is short such as 5 minutes.
+     * Use this endpoint to extend a session's length. Extending a session is
+     * useful when session expiry is short. If the session was created using an
+     * OAuth provider, this endpoint refreshes the access token from the provider.
      *
      * @param {string} sessionId
      * @throws {AppwriteException}
