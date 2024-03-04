@@ -4,7 +4,7 @@ import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
 import { PasswordHash } from '../enums/password-hash';
 import { UserUsageRange } from '../enums/user-usage-range';
-import { Type } from '../enums/type';
+import { AuthenticatorType } from '../enums/authenticator-type';
 import { MessagingProviderType } from '../enums/messaging-provider-type';
 
 export class Users extends Service {
@@ -821,11 +821,11 @@ export class Users extends Service {
      * Delete an authenticator app.
      *
      * @param {string} userId
-     * @param {Type} type
+     * @param {AuthenticatorType} type
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async deleteMfaAuthenticator<Preferences extends Models.Preferences>(userId: string, type: Type): Promise<Models.User<Preferences>> {
+    async deleteMfaAuthenticator<Preferences extends Models.Preferences>(userId: string, type: AuthenticatorType): Promise<Models.User<Preferences>> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }

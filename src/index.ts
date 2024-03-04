@@ -54,5 +54,4 @@ export { ImageFormat } from './enums/image-format';
 export { StorageUsageRange } from './enums/storage-usage-range';
 export { PasswordHash } from './enums/password-hash';
 export { UserUsageRange } from './enums/user-usage-range';
-export { Type } from './enums/type';
 export { MessagingProviderType } from './enums/messaging-provider-type';
