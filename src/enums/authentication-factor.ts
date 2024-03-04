@@ -1,4 +1,4 @@
-export enum Factor {
+export enum AuthenticationFactor {
     Email = 'email',
     Phone = 'phone',
     Totp = 'totp',

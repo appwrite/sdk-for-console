@@ -2,8 +2,8 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
-import { Type } from '../enums/type';
-import { Factor } from '../enums/factor';
+import { AuthenticatorType } from '../enums/authenticator-type';
+import { AuthenticationFactor } from '../enums/authentication-factor';
 import { OAuthProvider } from '../enums/o-auth-provider';
 
 export class Account extends Service {
@@ -275,11 +275,11 @@ export class Account extends Service {
      * authenticator](/docs/references/cloud/client-web/account#verifyAuthenticator)
      * method.
      *
-     * @param {Type} type
+     * @param {AuthenticatorType} type
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createMfaAuthenticator(type: Type): Promise<Models.MfaType> {
+    async createMfaAuthenticator(type: AuthenticatorType): Promise<Models.MfaType> {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
@@ -300,12 +300,12 @@ export class Account extends Service {
      * authenticator](/docs/references/cloud/client-web/account#addAuthenticator)
      * method.
      *
-     * @param {Type} type
+     * @param {AuthenticatorType} type
      * @param {string} otp
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateMfaAuthenticator<Preferences extends Models.Preferences>(type: Type, otp: string): Promise<Models.User<Preferences>> {
+    async updateMfaAuthenticator<Preferences extends Models.Preferences>(type: AuthenticatorType, otp: string): Promise<Models.User<Preferences>> {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
@@ -332,12 +332,12 @@ export class Account extends Service {
      *
      * Delete an authenticator for a user by ID.
      *
-     * @param {Type} type
+     * @param {AuthenticatorType} type
      * @param {string} otp
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async deleteMfaAuthenticator<Preferences extends Models.Preferences>(type: Type, otp: string): Promise<Models.User<Preferences>> {
+    async deleteMfaAuthenticator<Preferences extends Models.Preferences>(type: AuthenticatorType, otp: string): Promise<Models.User<Preferences>> {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
@@ -366,11 +366,11 @@ export class Account extends Service {
      * [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge)
      * method.
      *
-     * @param {Factor} factor
+     * @param {AuthenticationFactor} factor
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createMfaChallenge(factor: Factor): Promise<Models.MfaChallenge> {
+    async createMfaChallenge(factor: AuthenticationFactor): Promise<Models.MfaChallenge> {
         if (typeof factor === 'undefined') {
             throw new AppwriteException('Missing required parameter: "factor"');
         }
