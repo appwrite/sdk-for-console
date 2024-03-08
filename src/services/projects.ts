@@ -3,6 +3,7 @@ import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
 import { Region } from '../enums/region';
+import { Api } from '../enums/api';
 import { AuthMethod } from '../enums/auth-method';
 import { OAuthProvider } from '../enums/o-auth-provider';
 import { PlatformType } from '../enums/platform-type';
@@ -257,6 +258,77 @@ export class Projects extends Service {
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Update API status
+     *
+     *
+     * @param {string} projectId
+     * @param {Api} api
+     * @param {boolean} status
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async updateApiStatus(projectId: string, api: Api, status: boolean): Promise<Models.Project> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        if (typeof api === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "api"');
+        }
+
+        if (typeof status === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "status"');
+        }
+
+        const apiPath = '/projects/{projectId}/api'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+
+        if (typeof api !== 'undefined') {
+            payload['api'] = api;
+        }
+
+        if (typeof status !== 'undefined') {
+            payload['status'] = status;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('patch', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Update all API status
+     *
+     *
+     * @param {string} projectId
+     * @param {boolean} status
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async updateAPIStatusAll(projectId: string, status: boolean): Promise<Models.Project> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        if (typeof status === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "status"');
+        }
+
+        const apiPath = '/projects/{projectId}/api/all'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+
+        if (typeof status !== 'undefined') {
+            payload['status'] = status;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }

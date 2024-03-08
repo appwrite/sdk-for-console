@@ -39,6 +39,7 @@ export { Name } from './enums/name';
 export { SmtpEncryption } from './enums/smtp-encryption';
 export { ProjectUsageRange } from './enums/project-usage-range';
 export { Region } from './enums/region';
+export { Api } from './enums/api';
 export { AuthMethod } from './enums/auth-method';
 export { PlatformType } from './enums/platform-type';
 export { ApiService } from './enums/api-service';
