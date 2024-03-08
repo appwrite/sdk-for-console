@@ -311,7 +311,7 @@ export class Projects extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateAPIStatusAll(projectId: string, status: boolean): Promise<Models.Project> {
+    async updateApiStatusAll(projectId: string, status: boolean): Promise<Models.Project> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }

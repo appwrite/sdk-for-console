@@ -6,7 +6,7 @@ const client = new Client()
 
 const projects = new Projects(client);
 
-const result = await projects.updateAPIStatusAll(
+const result = await projects.updateApiStatusAll(
     '<PROJECT_ID>', // projectId
     false // status
 );
