@@ -14,12 +14,12 @@ export class Migrations extends Service {
      * List Migrations
      *
      *
-     * @param {string} queries
+     * @param {string[]} queries
      * @param {string} search
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async list(queries?: string, search?: string): Promise<Models.MigrationList> {
+    async list(queries?: string[], search?: string): Promise<Models.MigrationList> {
         const apiPath = '/migrations';
         const payload: Payload = {};
 

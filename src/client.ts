@@ -92,7 +92,7 @@ class AppwriteException extends Error {
 
 class Client {
     config = {
-        endpoint: 'https://HOSTNAME/v1',
+        endpoint: 'https://cloud.appwrite.io/v1',
         endpointRealtime: '',
         project: '',
         key: '',
@@ -104,8 +104,8 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '0.5.0',
-        'X-Appwrite-Response-Format': '1.4.0',
+        'x-sdk-version': '0.6.0-rc.17',
+        'X-Appwrite-Response-Format': '1.5.0',
     };
 
     /**

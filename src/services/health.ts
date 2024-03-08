@@ -2,6 +2,7 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
+import { Name } from '../enums/name';
 
 export class Health extends Service {
 
@@ -58,6 +59,29 @@ export class Health extends Service {
     async getCache(): Promise<Models.HealthStatus> {
         const apiPath = '/health/cache';
         const payload: Payload = {};
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Get the SSL certificate for a domain
+     *
+     * Get the SSL certificate for a domain
+     *
+     * @param {string} domain
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getCertificate(domain?: string): Promise<Models.HealthCertificate> {
+        const apiPath = '/health/certificate';
+        const payload: Payload = {};
+
+        if (typeof domain !== 'undefined') {
+            payload['domain'] = domain;
+        }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {
@@ -223,8 +247,39 @@ export class Health extends Service {
     }
 
     /**
+     * Get number of failed queue jobs
+     *
+     * Returns the amount of failed jobs in a given queue.
+     * 
+     *
+     * @param {Name} name
+     * @param {number} threshold
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getFailedJobs(name: Name, threshold?: number): Promise<Models.HealthQueue> {
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+
+        const apiPath = '/health/queue/failed/{name}'.replace('{name}', name);
+        const payload: Payload = {};
+
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * Get functions queue
      *
+     * Get the number of function executions that are waiting to be processed in
+     * the Appwrite internal queue server.
      *
      * @param {number} threshold
      * @throws {AppwriteException}
@@ -341,6 +396,54 @@ export class Health extends Service {
     }
 
     /**
+     * Get usage queue
+     *
+     * Get the number of metrics that are waiting to be processed in the Appwrite
+     * internal queue server.
+     *
+     * @param {number} threshold
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getQueueUsage(threshold?: number): Promise<Models.HealthQueue> {
+        const apiPath = '/health/queue/usage';
+        const payload: Payload = {};
+
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Get usage dump queue
+     *
+     * Get the number of projects containing metrics that are waiting to be
+     * processed in the Appwrite internal queue server.
+     *
+     * @param {number} threshold
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getQueueUsage(threshold?: number): Promise<Models.HealthQueue> {
+        const apiPath = '/health/queue/usage-dump';
+        const payload: Payload = {};
+
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * Get webhooks queue
      *
      * Get the number of webhooks that are waiting to be processed in the Appwrite
@@ -357,6 +460,24 @@ export class Health extends Service {
         if (typeof threshold !== 'undefined') {
             payload['threshold'] = threshold;
         }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Get storage
+     *
+     * Check the Appwrite storage device is up and connection is successful.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getStorage(): Promise<Models.HealthStatus> {
+        const apiPath = '/health/storage';
+        const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('get', uri, {

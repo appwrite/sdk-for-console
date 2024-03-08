@@ -403,6 +403,71 @@ export namespace Models {
         localeCodes: LocaleCode[];
     }
     /**
+     * Provider list
+     */
+    export type ProviderList = {
+        /**
+         * Total number of providers documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of providers.
+         */
+        providers: Provider[];
+    }
+    /**
+     * Message list
+     */
+    export type MessageList = {
+        /**
+         * Total number of messages documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of messages.
+         */
+        messages: Message[];
+    }
+    /**
+     * Topic list
+     */
+    export type TopicList = {
+        /**
+         * Total number of topics documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of topics.
+         */
+        topics: Topic[];
+    }
+    /**
+     * Subscriber list
+     */
+    export type SubscriberList = {
+        /**
+         * Total number of subscribers documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of subscribers.
+         */
+        subscribers: Subscriber[];
+    }
+    /**
+     * Target list
+     */
+    export type TargetList = {
+        /**
+         * Total number of targets documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of targets.
+         */
+        targets: Target[];
+    }
+    /**
      * Migrations List
      */
     export type MigrationList = {
@@ -1118,9 +1183,17 @@ export namespace Models {
          */
         phoneVerification: boolean;
         /**
+         * Multi factor authentication status.
+         */
+        mfa: boolean;
+        /**
          * User preferences as a key-value object
          */
         prefs: Preferences;
+        /**
+         * A user-owned message receiver. A single user may have multiple e.g. emails, phones, and a browser. Each target is registered with a single provider.
+         */
+        targets: Target[];
         /**
          * Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
          */
@@ -1339,6 +1412,18 @@ export namespace Models {
          * Returns true if this the current user session.
          */
         current: boolean;
+        /**
+         * Returns a list of active session factors.
+         */
+        factors: string[];
+        /**
+         * Secret used to authenticate the user. Only included if the request was made with an API key
+         */
+        secret: string;
+        /**
+         * Most recent date in ISO 8601 format when the session successfully passed MFA challenge.
+         */
+        mfaUpdatedAt: string;
     }
     /**
      * Identity
@@ -1409,6 +1494,10 @@ export namespace Models {
          * Token expiration date in ISO 8601 format.
          */
         expire: string;
+        /**
+         * Security phrase of a token. Empty if security phrase was not requested when creating a token. It includes randomly generated phrase which is also sent in the external resource such as email.
+         */
+        phrase: string;
     }
     /**
      * JWT
@@ -1644,6 +1733,10 @@ export namespace Models {
          * User confirmation status, true if the user has joined the team or false otherwise.
          */
         confirm: boolean;
+        /**
+         * Multi factor authentication status, true if the user has MFA enabled or false otherwise.
+         */
+        mfa: boolean;
         /**
          * User list of roles
          */
@@ -2106,9 +2199,9 @@ export namespace Models {
          */
         authPersonalDataCheck: boolean;
         /**
-         * List of Providers.
+         * List of Auth Providers.
          */
-        providers: Provider[];
+        oAuthProviders: AuthProvider[];
         /**
          * List of Platforms.
          */
@@ -2166,6 +2259,10 @@ export namespace Models {
          */
         authUsersAuthMagicURL: boolean;
         /**
+         * Email (OTP) auth method status
+         */
+        authEmailOtp: boolean;
+        /**
          * Anonymous auth method status
          */
         authAnonymous: boolean;
@@ -2221,6 +2318,10 @@ export namespace Models {
          * GraphQL service status
          */
         serviceStatusForGraphql: boolean;
+        /**
+         * Messaging service status
+         */
+        serviceStatusForMessaging: boolean;
     }
     /**
      * Webhook
@@ -2266,6 +2367,18 @@ export namespace Models {
          * Signature key which can be used to validated incoming
          */
         signatureKey: string;
+        /**
+         * Indicates if this webhook is enabled.
+         */
+        enabled: boolean;
+        /**
+         * Webhook error logs from the most recent failure.
+         */
+        logs: string;
+        /**
+         * Number of consecutive failed webhook attempts.
+         */
+        attempts: number;
     }
     /**
      * Key
@@ -2309,15 +2422,15 @@ export namespace Models {
         sdks: string[];
     }
     /**
-     * Provider
+     * AuthProvider
      */
-    export type Provider = {
+    export type AuthProvider = {
         /**
-         * Provider.
+         * Auth Provider.
          */
         key: string;
         /**
-         * Provider name.
+         * Auth Provider name.
          */
         name: string;
         /**
@@ -2329,7 +2442,7 @@ export namespace Models {
          */
         secret: string;
         /**
-         * Provider is active and can be used to create session.
+         * Auth Provider is active and can be used to create session.
          */
         enabled: boolean;
     }
@@ -2542,6 +2655,35 @@ export namespace Models {
          * Service status. Possible values can are: `pass`, `fail`
          */
         status: string;
+    }
+    /**
+     * Health Certificate
+     */
+    export type HealthCertificate = {
+        /**
+         * Certificate name
+         */
+        name: string;
+        /**
+         * Subject SN
+         */
+        subjectSN: string;
+        /**
+         * Issuer organisation
+         */
+        issuerOrganisation: string;
+        /**
+         * Valid from
+         */
+        validFrom: string;
+        /**
+         * Valid to
+         */
+        validTo: string;
+        /**
+         * Signature type SN
+         */
+        signatureTypeSN: string;
     }
     /**
      * Health Time
@@ -3075,6 +3217,279 @@ export namespace Models {
          * Defines if AI assistant is enabled.
          */
         _APP_ASSISTANT_ENABLED: boolean;
+    }
+    /**
+     * MFA Challenge
+     */
+    export type MfaChallenge = {
+        /**
+         * Token ID.
+         */
+        $id: string;
+        /**
+         * Token creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * User ID.
+         */
+        userId: string;
+        /**
+         * Token expiration date in ISO 8601 format.
+         */
+        expire: string;
+    }
+    /**
+     * MFA Recovery Codes
+     */
+    export type MfaRecoveryCodes = {
+        /**
+         * Recovery codes.
+         */
+        recoveryCodes: string[];
+    }
+    /**
+     * MFAType
+     */
+    export type MfaType = {
+        /**
+         * Secret token used for TOTP factor.
+         */
+        secret: string;
+        /**
+         * URI for authenticator apps.
+         */
+        uri: string;
+    }
+    /**
+     * MFAFactors
+     */
+    export type MfaFactors = {
+        /**
+         * TOTP
+         */
+        totp: boolean;
+        /**
+         * Phone
+         */
+        phone: boolean;
+        /**
+         * Email
+         */
+        email: boolean;
+    }
+    /**
+     * Provider
+     */
+    export type Provider = {
+        /**
+         * Provider ID.
+         */
+        $id: string;
+        /**
+         * Provider creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Provider update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * The name for the provider instance.
+         */
+        name: string;
+        /**
+         * The name of the provider service.
+         */
+        provider: string;
+        /**
+         * Is provider enabled?
+         */
+        enabled: boolean;
+        /**
+         * Type of provider.
+         */
+        type: string;
+        /**
+         * Provider credentials.
+         */
+        credentials: object;
+        /**
+         * Provider options.
+         */
+        options?: object;
+    }
+    /**
+     * Message
+     */
+    export type Message = {
+        /**
+         * Message ID.
+         */
+        $id: string;
+        /**
+         * Message creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Message update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Message provider type.
+         */
+        providerType: string;
+        /**
+         * Topic IDs set as recipients.
+         */
+        topics: string[];
+        /**
+         * User IDs set as recipients.
+         */
+        users: string[];
+        /**
+         * Target IDs set as recipients.
+         */
+        targets: string[];
+        /**
+         * The scheduled time for message.
+         */
+        scheduledAt?: string;
+        /**
+         * The time when the message was delivered.
+         */
+        deliveredAt?: string;
+        /**
+         * Delivery errors if any.
+         */
+        deliveryErrors?: string[];
+        /**
+         * Number of recipients the message was delivered to.
+         */
+        deliveredTotal: number;
+        /**
+         * Data of the message.
+         */
+        data: object;
+        /**
+         * Status of delivery.
+         */
+        status: string;
+    }
+    /**
+     * Topic
+     */
+    export type Topic = {
+        /**
+         * Topic ID.
+         */
+        $id: string;
+        /**
+         * Topic creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Topic update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * The name of the topic.
+         */
+        name: string;
+        /**
+         * Total count of email subscribers subscribed to the topic.
+         */
+        emailTotal: number;
+        /**
+         * Total count of SMS subscribers subscribed to the topic.
+         */
+        smsTotal: number;
+        /**
+         * Total count of push subscribers subscribed to the topic.
+         */
+        pushTotal: number;
+        /**
+         * Subscribe permissions.
+         */
+        subscribe: string[];
+    }
+    /**
+     * Subscriber
+     */
+    export type Subscriber = {
+        /**
+         * Subscriber ID.
+         */
+        $id: string;
+        /**
+         * Subscriber creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Subscriber update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Target ID.
+         */
+        targetId: string;
+        /**
+         * Target.
+         */
+        target: Target;
+        /**
+         * Topic ID.
+         */
+        userId: string;
+        /**
+         * User Name.
+         */
+        userName: string;
+        /**
+         * Topic ID.
+         */
+        topicId: string;
+        /**
+         * The target provider type. Can be one of the following: `email`, `sms` or `push`.
+         */
+        providerType: string;
+    }
+    /**
+     * Target
+     */
+    export type Target = {
+        /**
+         * Target ID.
+         */
+        $id: string;
+        /**
+         * Target creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Target update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Target Name.
+         */
+        name: string;
+        /**
+         * User ID.
+         */
+        userId: string;
+        /**
+         * Provider ID.
+         */
+        providerId?: string;
+        /**
+         * The target provider type. Can be one of the following: `email`, `sms` or `push`.
+         */
+        providerType: string;
+        /**
+         * The target identifier.
+         */
+        identifier: string;
     }
     /**
      * Migration

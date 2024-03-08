@@ -2,6 +2,17 @@ import { Service } from '../service';
 import { AppwriteException, Client } from '../client';
 import type { Models } from '../models';
 import type { UploadProgress, Payload } from '../client';
+import { Region } from '../enums/region';
+import { Api } from '../enums/api';
+import { AuthMethod } from '../enums/auth-method';
+import { OAuthProvider } from '../enums/o-auth-provider';
+import { PlatformType } from '../enums/platform-type';
+import { ApiService } from '../enums/api-service';
+import { SMTPSecure } from '../enums/s-m-t-p-secure';
+import { EmailTemplateType } from '../enums/email-template-type';
+import { EmailTemplateLocale } from '../enums/email-template-locale';
+import { SmsTemplateType } from '../enums/sms-template-type';
+import { SmsTemplateLocale } from '../enums/sms-template-locale';
 
 export class Projects extends Service {
 
@@ -44,7 +55,7 @@ export class Projects extends Service {
      * @param {string} projectId
      * @param {string} name
      * @param {string} teamId
-     * @param {string} region
+     * @param {Region} region
      * @param {string} description
      * @param {string} logo
      * @param {string} url
@@ -57,7 +68,7 @@ export class Projects extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async create(projectId: string, name: string, teamId: string, region?: string, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string): Promise<Models.Project> {
+    async create(projectId: string, name: string, teamId: string, region?: Region, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string): Promise<Models.Project> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -247,6 +258,77 @@ export class Projects extends Service {
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Update API status
+     *
+     *
+     * @param {string} projectId
+     * @param {Api} api
+     * @param {boolean} status
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async updateApiStatus(projectId: string, api: Api, status: boolean): Promise<Models.Project> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        if (typeof api === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "api"');
+        }
+
+        if (typeof status === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "status"');
+        }
+
+        const apiPath = '/projects/{projectId}/api'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+
+        if (typeof api !== 'undefined') {
+            payload['api'] = api;
+        }
+
+        if (typeof status !== 'undefined') {
+            payload['status'] = status;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('patch', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Update all API status
+     *
+     *
+     * @param {string} projectId
+     * @param {boolean} status
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async updateAPIStatusAll(projectId: string, status: boolean): Promise<Models.Project> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        if (typeof status === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "status"');
+        }
+
+        const apiPath = '/projects/{projectId}/api/all'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+
+        if (typeof status !== 'undefined') {
+            payload['status'] = status;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('patch', uri, {
             'content-type': 'application/json',
         }, payload);
     }
@@ -442,12 +524,12 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {string} method
+     * @param {AuthMethod} method
      * @param {boolean} status
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateAuthStatus(projectId: string, method: string, status: boolean): Promise<Models.Project> {
+    async updateAuthStatus(projectId: string, method: AuthMethod, status: boolean): Promise<Models.Project> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -649,14 +731,14 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {string} provider
+     * @param {OAuthProvider} provider
      * @param {string} appId
      * @param {string} secret
      * @param {boolean} enabled
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateOAuth2(projectId: string, provider: string, appId?: string, secret?: string, enabled?: boolean): Promise<Models.Project> {
+    async updateOAuth2(projectId: string, provider: OAuthProvider, appId?: string, secret?: string, enabled?: boolean): Promise<Models.Project> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -717,7 +799,7 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {string} type
+     * @param {PlatformType} type
      * @param {string} name
      * @param {string} key
      * @param {string} store
@@ -725,7 +807,7 @@ export class Projects extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createPlatform(projectId: string, type: string, name: string, key?: string, store?: string, hostname?: string): Promise<Models.Platform> {
+    async createPlatform(projectId: string, type: PlatformType, name: string, key?: string, store?: string, hostname?: string): Promise<Models.Platform> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -877,12 +959,12 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {string} service
+     * @param {ApiService} service
      * @param {boolean} status
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateServiceStatus(projectId: string, service: string, status: boolean): Promise<Models.Project> {
+    async updateServiceStatus(projectId: string, service: ApiService, status: boolean): Promise<Models.Project> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -944,7 +1026,7 @@ export class Projects extends Service {
     }
 
     /**
-     * Update SMTP configuration
+     * Update SMTP
      *
      *
      * @param {string} projectId
@@ -956,11 +1038,11 @@ export class Projects extends Service {
      * @param {number} port
      * @param {string} username
      * @param {string} password
-     * @param {string} secure
+     * @param {SMTPSecure} secure
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateSmtpConfiguration(projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: string): Promise<Models.Project> {
+    async updateSmtp(projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure): Promise<Models.Project> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1015,6 +1097,89 @@ export class Projects extends Service {
     }
 
     /**
+     * Create SMTP test
+     *
+     *
+     * @param {string} projectId
+     * @param {string[]} emails
+     * @param {string} senderName
+     * @param {string} senderEmail
+     * @param {string} host
+     * @param {string} replyTo
+     * @param {number} port
+     * @param {string} username
+     * @param {string} password
+     * @param {SMTPSecure} secure
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async createSmtpTest(projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure): Promise<{}> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        if (typeof emails === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "emails"');
+        }
+
+        if (typeof senderName === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "senderName"');
+        }
+
+        if (typeof senderEmail === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "senderEmail"');
+        }
+
+        if (typeof host === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "host"');
+        }
+
+        const apiPath = '/projects/{projectId}/smtp/tests'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+
+        if (typeof emails !== 'undefined') {
+            payload['emails'] = emails;
+        }
+
+        if (typeof senderName !== 'undefined') {
+            payload['senderName'] = senderName;
+        }
+
+        if (typeof senderEmail !== 'undefined') {
+            payload['senderEmail'] = senderEmail;
+        }
+
+        if (typeof replyTo !== 'undefined') {
+            payload['replyTo'] = replyTo;
+        }
+
+        if (typeof host !== 'undefined') {
+            payload['host'] = host;
+        }
+
+        if (typeof port !== 'undefined') {
+            payload['port'] = port;
+        }
+
+        if (typeof username !== 'undefined') {
+            payload['username'] = username;
+        }
+
+        if (typeof password !== 'undefined') {
+            payload['password'] = password;
+        }
+
+        if (typeof secure !== 'undefined') {
+            payload['secure'] = secure;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('post', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * Update Project Team
      *
      *
@@ -1050,12 +1215,12 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {string} type
-     * @param {string} locale
+     * @param {EmailTemplateType} type
+     * @param {EmailTemplateLocale} locale
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getEmailTemplate(projectId: string, type: string, locale: string): Promise<Models.EmailTemplate> {
+    async getEmailTemplate(projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale): Promise<Models.EmailTemplate> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1082,8 +1247,8 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {string} type
-     * @param {string} locale
+     * @param {EmailTemplateType} type
+     * @param {EmailTemplateLocale} locale
      * @param {string} subject
      * @param {string} message
      * @param {string} senderName
@@ -1092,7 +1257,7 @@ export class Projects extends Service {
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateEmailTemplate(projectId: string, type: string, locale: string, subject: string, message: string, senderName?: string, senderEmail?: string, replyTo?: string): Promise<Models.Project> {
+    async updateEmailTemplate(projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale, subject: string, message: string, senderName?: string, senderEmail?: string, replyTo?: string): Promise<Models.Project> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1147,12 +1312,12 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {string} type
-     * @param {string} locale
+     * @param {EmailTemplateType} type
+     * @param {EmailTemplateLocale} locale
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async deleteEmailTemplate(projectId: string, type: string, locale: string): Promise<Models.EmailTemplate> {
+    async deleteEmailTemplate(projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale): Promise<Models.EmailTemplate> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1179,12 +1344,12 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {string} type
-     * @param {string} locale
+     * @param {SmsTemplateType} type
+     * @param {SmsTemplateLocale} locale
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async getSmsTemplate(projectId: string, type: string, locale: string): Promise<Models.SmsTemplate> {
+    async getSmsTemplate(projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale): Promise<Models.SmsTemplate> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1211,13 +1376,13 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {string} type
-     * @param {string} locale
+     * @param {SmsTemplateType} type
+     * @param {SmsTemplateLocale} locale
      * @param {string} message
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateSmsTemplate(projectId: string, type: string, locale: string, message: string): Promise<Models.SmsTemplate> {
+    async updateSmsTemplate(projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string): Promise<Models.SmsTemplate> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1252,12 +1417,12 @@ export class Projects extends Service {
      *
      *
      * @param {string} projectId
-     * @param {string} type
-     * @param {string} locale
+     * @param {SmsTemplateType} type
+     * @param {SmsTemplateLocale} locale
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async deleteSmsTemplate(projectId: string, type: string, locale: string): Promise<Models.SmsTemplate> {
+    async deleteSmsTemplate(projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale): Promise<Models.SmsTemplate> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1310,12 +1475,13 @@ export class Projects extends Service {
      * @param {string[]} events
      * @param {string} url
      * @param {boolean} security
+     * @param {boolean} enabled
      * @param {string} httpUser
      * @param {string} httpPass
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async createWebhook(projectId: string, name: string, events: string[], url: string, security: boolean, httpUser?: string, httpPass?: string): Promise<Models.Webhook> {
+    async createWebhook(projectId: string, name: string, events: string[], url: string, security: boolean, enabled?: boolean, httpUser?: string, httpPass?: string): Promise<Models.Webhook> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1341,6 +1507,10 @@ export class Projects extends Service {
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
+        }
+
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
         }
 
         if (typeof events !== 'undefined') {
@@ -1406,12 +1576,13 @@ export class Projects extends Service {
      * @param {string[]} events
      * @param {string} url
      * @param {boolean} security
+     * @param {boolean} enabled
      * @param {string} httpUser
      * @param {string} httpPass
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateWebhook(projectId: string, webhookId: string, name: string, events: string[], url: string, security: boolean, httpUser?: string, httpPass?: string): Promise<Models.Webhook> {
+    async updateWebhook(projectId: string, webhookId: string, name: string, events: string[], url: string, security: boolean, enabled?: boolean, httpUser?: string, httpPass?: string): Promise<Models.Webhook> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1441,6 +1612,10 @@ export class Projects extends Service {
 
         if (typeof name !== 'undefined') {
             payload['name'] = name;
+        }
+
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
         }
 
         if (typeof events !== 'undefined') {
