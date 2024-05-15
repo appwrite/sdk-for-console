@@ -146,10 +146,11 @@ export class Messaging extends Service {
      * @param {string[]} cc
      * @param {string[]} bcc
      * @param {string} scheduledAt
+     * @param {string[]} attachments
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async updateEmail(messageId: string, topics?: string[], users?: string[], targets?: string[], subject?: string, content?: string, draft?: boolean, html?: boolean, cc?: string[], bcc?: string[], scheduledAt?: string): Promise<Models.Message> {
+    async updateEmail(messageId: string, topics?: string[], users?: string[], targets?: string[], subject?: string, content?: string, draft?: boolean, html?: boolean, cc?: string[], bcc?: string[], scheduledAt?: string, attachments?: string[]): Promise<Models.Message> {
         if (typeof messageId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "messageId"');
         }
@@ -195,6 +196,10 @@ export class Messaging extends Service {
 
         if (typeof scheduledAt !== 'undefined') {
             payload['scheduledAt'] = scheduledAt;
+        }
+
+        if (typeof attachments !== 'undefined') {
+            payload['attachments'] = attachments;
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
