@@ -47,4 +47,5 @@ export enum Runtime {
     Cpp17 = 'cpp-17',
     Cpp20 = 'cpp-20',
     Bun10 = 'bun-1.0',
+    Bun11 = 'bun-1.1'
 }
