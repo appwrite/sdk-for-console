@@ -1,5 +1,8 @@
 import { Models } from './models';
 import { Service } from './service';
+import JsonBigInt from 'json-bigint';
+
+const jsonBigInt = JsonBigInt({ storeAsString: false })
 
 type Payload = {
     [key: string]: any;
@@ -441,12 +444,13 @@ class Client {
         try {
             let data = null;
             const response = await fetch(url.toString(), options);
+            const responseData = await response.text()
 
             if (response.headers.get('content-type')?.includes('application/json')) {
-                data = await response.json();
+                data = jsonBigInt.parse(responseData)
             } else {
                 data = {
-                    message: await response.text()
+                    message: responseData
                 };
             }
 
