@@ -70,10 +70,11 @@ export class Functions extends Service {
      * @param {string} templateOwner
      * @param {string} templateRootDirectory
      * @param {string} templateBranch
+     * @param {string} specification
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async create(functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, templateRepository?: string, templateOwner?: string, templateRootDirectory?: string, templateBranch?: string): Promise<Models.Function> {
+    async create(functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, templateRepository?: string, templateOwner?: string, templateRootDirectory?: string, templateBranch?: string, specification?: string): Promise<Models.Function> {
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
@@ -169,6 +170,10 @@ export class Functions extends Service {
             payload['templateBranch'] = templateBranch;
         }
 
+        if (typeof specification !== 'undefined') {
+            payload['specification'] = specification;
+        }
+
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('post', uri, {
             'content-type': 'application/json',
@@ -185,6 +190,25 @@ export class Functions extends Service {
     */
     async listRuntimes(): Promise<Models.RuntimeList> {
         const apiPath = '/functions/runtimes';
+        const payload: Payload = {};
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
+     * Get available function runtime specifications
+     *
+     * Get allowed function specifications for this instance.
+     * 
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getSpecifications(): Promise<Models.SpecificationList> {
+        const apiPath = '/functions/specifications';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -259,10 +283,11 @@ export class Functions extends Service {
      * @param {string} providerBranch
      * @param {boolean} providerSilentMode
      * @param {string} providerRootDirectory
+     * @param {string} specification
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async update(functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string): Promise<Models.Function> {
+    async update(functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string): Promise<Models.Function> {
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
@@ -332,6 +357,10 @@ export class Functions extends Service {
 
         if (typeof providerRootDirectory !== 'undefined') {
             payload['providerRootDirectory'] = providerRootDirectory;
+        }
+
+        if (typeof specification !== 'undefined') {
+            payload['specification'] = specification;
         }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -527,7 +556,7 @@ export class Functions extends Service {
     }
 
     /**
-     * Update function deployment
+     * Update deployment
      *
      * Update the function code deployment ID using the unique function ID. Use
      * this endpoint to switch the code deployment that should be executed by the
@@ -619,7 +648,7 @@ export class Functions extends Service {
     }
 
     /**
-     * Download Deployment
+     * Download deployment
      *
      * Get a Deployment's contents by its unique ID. This endpoint supports range
      * requests for partial or streaming file download.

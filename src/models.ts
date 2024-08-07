@@ -1,3 +1,6 @@
+/**
+ * Appwrite Models
+ */
 export namespace Models {
     /**
      * Documents List
@@ -492,6 +495,19 @@ export namespace Models {
          * List of projects.
          */
         projects: FirebaseProject[];
+    }
+    /**
+     * Specifications List
+     */
+    export type SpecificationList = {
+        /**
+         * Total number of specifications documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of specifications.
+         */
+        specifications: Specification[];
     }
     /**
      * Database
@@ -1838,6 +1854,10 @@ export namespace Models {
          * Is VCS (Version Control System) connection is in silent mode? When in silence mode, no comments will be posted on the repository pull or merge requests
          */
         providerSilentMode: boolean;
+        /**
+         * Function execution and builds machine specification.
+         */
+        specification: string;
     }
     /**
      * Installation
@@ -2927,6 +2947,10 @@ export namespace Models {
          */
         buildsTimeTotal: number;
         /**
+         * Total aggregated sum of functions build mbSeconds.
+         */
+        buildsMbSecondsTotal: number;
+        /**
          * Total  aggregated number of functions execution.
          */
         executionsTotal: number;
@@ -2934,6 +2958,10 @@ export namespace Models {
          * Total aggregated sum of functions  execution compute time.
          */
         executionsTimeTotal: number;
+        /**
+         * Total aggregated sum of functions execution mbSeconds.
+         */
+        executionsMbSecondsTotal: number;
         /**
          * Aggregated number of functions per period.
          */
@@ -2959,6 +2987,10 @@ export namespace Models {
          */
         buildsTime: Metric[];
         /**
+         * Aggregated sum of functions build mbSeconds per period.
+         */
+        buildsMbSeconds: Metric[];
+        /**
          * Aggregated number of  functions execution per period.
          */
         executions: Metric[];
@@ -2966,6 +2998,10 @@ export namespace Models {
          * Aggregated number of functions execution compute time per period.
          */
         executionsTime: Metric[];
+        /**
+         * Aggregated number of functions mbSeconds per period.
+         */
+        executionsMbSeconds: Metric[];
     }
     /**
      * UsageFunction
@@ -2996,6 +3032,10 @@ export namespace Models {
          */
         buildsTimeTotal: number;
         /**
+         * Total aggregated sum of function builds mbSeconds.
+         */
+        buildsMbSecondsTotal: number;
+        /**
          * Total  aggregated number of function executions.
          */
         executionsTotal: number;
@@ -3003,6 +3043,10 @@ export namespace Models {
          * Total aggregated sum of function  executions compute time.
          */
         executionsTimeTotal: number;
+        /**
+         * Total aggregated sum of function executions mbSeconds.
+         */
+        executionsMbSecondsTotal: number;
         /**
          * Aggregated number of function deployments per period.
          */
@@ -3024,6 +3068,10 @@ export namespace Models {
          */
         buildsTime: Metric[];
         /**
+         * Aggregated number of function builds mbSeconds per period.
+         */
+        buildsMbSeconds: Metric[];
+        /**
          * Aggregated number of function executions per period.
          */
         executions: Metric[];
@@ -3031,6 +3079,10 @@ export namespace Models {
          * Aggregated number of function executions compute time per period.
          */
         executionsTime: Metric[];
+        /**
+         * Aggregated number of function mbSeconds per period.
+         */
+        executionsMbSeconds: Metric[];
     }
     /**
      * UsageProject
@@ -3057,9 +3109,21 @@ export namespace Models {
          */
         filesStorageTotal: number;
         /**
+         * Total aggregated sum of deployments storage size (in bytes).
+         */
+        deploymentsStorageTotal: number;
+        /**
          * Total aggregated number of buckets.
          */
         bucketsTotal: number;
+        /**
+         * Total aggregated number of function executions mbSeconds.
+         */
+        executionsMbSecondsTotal: number;
+        /**
+         * Total aggregated number of function builds mbSeconds.
+         */
+        buildsMbSecondsTotal: number;
         /**
          * Aggregated  number of requests per period.
          */
@@ -3084,6 +3148,18 @@ export namespace Models {
          * Aggregated breakdown in totals of usage by buckets.
          */
         bucketsBreakdown: MetricBreakdown[];
+        /**
+         * Aggregated breakdown in totals of execution mbSeconds by functions.
+         */
+        executionsMbSecondsBreakdown: MetricBreakdown[];
+        /**
+         * Aggregated breakdown in totals of build mbSeconds by functions.
+         */
+        buildsMbSecondsBreakdown: MetricBreakdown[];
+        /**
+         * Aggregated breakdown in totals of deployments storage size (in bytes).
+         */
+        deploymentsStorageBreakdown: MetricBreakdown[];
     }
     /**
      * Headers
@@ -3097,6 +3173,27 @@ export namespace Models {
          * Header value.
          */
         value: string;
+    }
+    /**
+     * Specification
+     */
+    export type Specification = {
+        /**
+         * Memory size in MB.
+         */
+        memory: number;
+        /**
+         * Number of CPUs.
+         */
+        cpus: number;
+        /**
+         * Is size enabled.
+         */
+        enabled: boolean;
+        /**
+         * Size slug.
+         */
+        slug: string;
     }
     /**
      * Rule

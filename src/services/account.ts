@@ -268,7 +268,7 @@ export class Account extends Service {
     }
 
     /**
-     * Add Authenticator
+     * Create Authenticator
      *
      * Add an authenticator app to be used as an MFA factor. Verify the
      * authenticator using the [verify
@@ -298,7 +298,7 @@ export class Account extends Service {
      *
      * Verify an authenticator app after adding it using the [add
      * authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator)
-     * method. add 
+     * method.
      *
      * @param {AuthenticatorType} type
      * @param {string} otp
@@ -360,7 +360,7 @@ export class Account extends Service {
     }
 
     /**
-     * Create 2FA Challenge
+     * Create MFA Challenge
      *
      * Begin the process of MFA verification after sign-in. Finish the flow with
      * [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge)
@@ -1543,7 +1543,7 @@ export class Account extends Service {
     }
 
     /**
-     * Create phone verification (confirmation)
+     * Update phone verification (confirmation)
      *
      * Use this endpoint to complete the user phone verification process. Use the
      * **userId** and **secret** that were sent to your user's phone number to
