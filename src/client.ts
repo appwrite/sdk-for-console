@@ -304,7 +304,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '0.6.3',
+        'x-sdk-version': '0.6.4',
         'X-Appwrite-Response-Format': '1.5.0',
     };
 
