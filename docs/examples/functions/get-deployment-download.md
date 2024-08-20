@@ -6,7 +6,7 @@ const client = new Client()
 
 const functions = new Functions(client);
 
-const result = functions.downloadDeployment(
+const result = functions.getDeploymentDownload(
     '<FUNCTION_ID>', // functionId
     '<DEPLOYMENT_ID>' // deploymentId
 );

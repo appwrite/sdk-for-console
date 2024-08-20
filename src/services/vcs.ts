@@ -132,6 +132,38 @@ export class Vcs extends Service {
     }
 
     /**
+     * Get files and directories of a VCS repository
+     *
+     *
+     * @param {string} installationId
+     * @param {string} providerRepositoryId
+     * @param {string} providerRootDirectory
+     * @throws {AppwriteException}
+     * @returns {Promise}
+    */
+    async getRepositoryContents(installationId: string, providerRepositoryId: string, providerRootDirectory?: string): Promise<Models.VcsContentList> {
+        if (typeof installationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "installationId"');
+        }
+
+        if (typeof providerRepositoryId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "providerRepositoryId"');
+        }
+
+        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}/contents'.replace('{installationId}', installationId).replace('{providerRepositoryId}', providerRepositoryId);
+        const payload: Payload = {};
+
+        if (typeof providerRootDirectory !== 'undefined') {
+            payload['providerRootDirectory'] = providerRootDirectory;
+        }
+
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        return await this.client.call('get', uri, {
+            'content-type': 'application/json',
+        }, payload);
+    }
+
+    /**
      * Detect runtime settings from source code
      *
      *

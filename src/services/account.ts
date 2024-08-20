@@ -207,7 +207,7 @@ export class Account extends Service {
      * @returns {Promise}
     */
     async createJWT(): Promise<Models.Jwt> {
-        const apiPath = '/account/jwt';
+        const apiPath = '/account/jwts';
         const payload: Payload = {};
 
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -333,25 +333,16 @@ export class Account extends Service {
      * Delete an authenticator for a user by ID.
      *
      * @param {AuthenticatorType} type
-     * @param {string} otp
      * @throws {AppwriteException}
      * @returns {Promise}
     */
-    async deleteMfaAuthenticator(type: AuthenticatorType, otp: string): Promise<{}> {
+    async deleteMfaAuthenticator(type: AuthenticatorType): Promise<{}> {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
 
-        if (typeof otp === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "otp"');
-        }
-
         const apiPath = '/account/mfa/authenticators/{type}'.replace('{type}', type);
         const payload: Payload = {};
-
-        if (typeof otp !== 'undefined') {
-            payload['otp'] = otp;
-        }
 
         const uri = new URL(this.client.config.endpoint + apiPath);
         return await this.client.call('delete', uri, {

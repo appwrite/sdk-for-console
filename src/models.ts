@@ -172,6 +172,19 @@ export namespace Models {
         functions: Function[];
     }
     /**
+     * Function Templates List
+     */
+    export type TemplateFunctionList = {
+        /**
+         * Total number of templates documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of templates.
+         */
+        templates: TemplateFunction[];
+    }
+    /**
      * Installations List
      */
     export type InstallationList = {
@@ -497,17 +510,17 @@ export namespace Models {
         projects: FirebaseProject[];
     }
     /**
-     * Specifications List
+     * VCS Content List
      */
-    export type SpecificationList = {
+    export type VcsContentList = {
         /**
-         * Total number of specifications documents that matched your query.
+         * Total number of contents documents that matched your query.
          */
         total: number;
         /**
-         * List of specifications.
+         * List of contents.
          */
-        specifications: Specification[];
+        contents: VcsContent[];
     }
     /**
      * Database
@@ -1807,6 +1820,10 @@ export namespace Models {
          */
         deployment: string;
         /**
+         * Allowed permission scopes.
+         */
+        scopes: string[];
+        /**
          * Function variables.
          */
         vars: Variable[];
@@ -1854,10 +1871,129 @@ export namespace Models {
          * Is VCS (Version Control System) connection is in silent mode? When in silence mode, no comments will be posted on the repository pull or merge requests
          */
         providerSilentMode: boolean;
+    }
+    /**
+     * Template Function
+     */
+    export type TemplateFunction = {
         /**
-         * Function execution and builds machine specification.
+         * Function Template Icon.
          */
-        specification: string;
+        icon: string;
+        /**
+         * Function Template ID.
+         */
+        id: string;
+        /**
+         * Function Template Name.
+         */
+        name: string;
+        /**
+         * Function Template Tagline.
+         */
+        tagline: string;
+        /**
+         * Execution permissions.
+         */
+        permissions: string[];
+        /**
+         * Function trigger events.
+         */
+        events: string[];
+        /**
+         * Function execution schedult in CRON format.
+         */
+        cron: string;
+        /**
+         * Function execution timeout in seconds.
+         */
+        timeout: number;
+        /**
+         * Function use cases.
+         */
+        useCases: string[];
+        /**
+         * List of runtimes that can be used with this template.
+         */
+        runtimes: TemplateRuntime[];
+        /**
+         * Function Template Instructions.
+         */
+        instructions: string;
+        /**
+         * VCS (Version Control System) Provider.
+         */
+        vcsProvider: string;
+        /**
+         * VCS (Version Control System) Repository ID
+         */
+        providerRepositoryId: string;
+        /**
+         * VCS (Version Control System) Owner.
+         */
+        providerOwner: string;
+        /**
+         * VCS (Version Control System) branch version (tag).
+         */
+        providerVersion: string;
+        /**
+         * Function variables.
+         */
+        variables: TemplateVariable[];
+        /**
+         * Function scopes.
+         */
+        scopes: string[];
+    }
+    /**
+     * Template Runtime
+     */
+    export type TemplateRuntime = {
+        /**
+         * Runtime Name.
+         */
+        name: string;
+        /**
+         * The build command used to build the deployment.
+         */
+        commands: string;
+        /**
+         * The entrypoint file used to execute the deployment.
+         */
+        entrypoint: string;
+        /**
+         * Path to function in VCS (Version Control System) repository
+         */
+        providerRootDirectory: string;
+    }
+    /**
+     * Template Variable
+     */
+    export type TemplateVariable = {
+        /**
+         * Variable Name.
+         */
+        name: string;
+        /**
+         * Variable Description.
+         */
+        description: string;
+        /**
+         * Variable Value.
+         */
+        value: string;
+        /**
+         * Variable Placeholder.
+         */
+        placeholder: string;
+        /**
+         * Is the variable required?
+         */
+        required: boolean;
+        /**
+         * Variable Type.
+         */
+        type: string;
     }
     /**
      * Installation
@@ -1931,6 +2067,23 @@ export namespace Models {
         runtime: string;
     }
     /**
+     * VcsContents
+     */
+    export type VcsContent = {
+        /**
+         * Content size in bytes. Only files have size, and for directories, 0 is returned.
+         */
+        size?: number;
+        /**
+         * If a content is a directory. Directories can be used to check nested contents.
+         */
+        isDirectory?: boolean;
+        /**
+         * Name of directory or file.
+         */
+        name: string;
+    }
+    /**
      * Branch
      */
     export type Branch = {
@@ -1947,6 +2100,10 @@ export namespace Models {
          * Runtime ID.
          */
         $id: string;
+        /**
+         * Parent runtime key.
+         */
+        key: string;
         /**
          * Runtime Name.
          */
@@ -2137,6 +2294,51 @@ export namespace Models {
          * Function execution duration in seconds.
          */
         duration: number;
+        /**
+         * The scheduled time for execution. If left empty, execution will be queued immediately.
+         */
+        scheduledAt?: string;
+    }
+    /**
+     * Build
+     */
+    export type Build = {
+        /**
+         * Build ID.
+         */
+        $id: string;
+        /**
+         * The deployment that created this build.
+         */
+        deploymentId: string;
+        /**
+         * The build status. There are a few different types and each one means something different. \nFailed - The deployment build has failed. More details can usually be found in buildStderr\nReady - The deployment build was successful and the deployment is ready to be deployed\nProcessing - The deployment is currently waiting to have a build triggered\nBuilding - The deployment is currently being built
+         */
+        status: string;
+        /**
+         * The stdout of the build.
+         */
+        stdout: string;
+        /**
+         * The stderr of the build.
+         */
+        stderr: string;
+        /**
+         * The deployment creation date in ISO 8601 format.
+         */
+        startTime: string;
+        /**
+         * The time the build was finished in ISO 8601 format.
+         */
+        endTime: string;
+        /**
+         * The build duration in seconds.
+         */
+        duration: number;
+        /**
+         * The code size in bytes.
+         */
+        size: number;
     }
     /**
      * Project
@@ -2222,6 +2424,14 @@ export namespace Models {
          * Whether or not to check the user password for similarity with their personal data.
          */
         authPersonalDataCheck: boolean;
+        /**
+         * An array of mock numbers and their corresponding verification codes (OTPs).
+         */
+        authMockNumbers: MockNumber[];
+        /**
+         * Whether or not to send session alert emails to users.
+         */
+        authSessionAlerts: boolean;
         /**
          * List of Auth Providers.
          */
@@ -2444,6 +2654,19 @@ export namespace Models {
          * List of SDK user agents that used this key.
          */
         sdks: string[];
+    }
+    /**
+     * Mock Number
+     */
+    export type MockNumber = {
+        /**
+         * Mock phone number for testing phone authentication. Useful for testing phone authentication without sending an SMS.
+         */
+        phone: string;
+        /**
+         * Mock OTP for the number. 
+         */
+        otp: string;
     }
     /**
      * AuthProvider
@@ -3173,27 +3396,6 @@ export namespace Models {
          * Header value.
          */
         value: string;
-    }
-    /**
-     * Specification
-     */
-    export type Specification = {
-        /**
-         * Memory size in MB.
-         */
-        memory: number;
-        /**
-         * Number of CPUs.
-         */
-        cpus: number;
-        /**
-         * Is size enabled.
-         */
-        enabled: boolean;
-        /**
-         * Size slug.
-         */
-        slug: string;
     }
     /**
      * Rule

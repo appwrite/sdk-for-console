@@ -6,6 +6,9 @@ const client = new Client()
 
 const functions = new Functions(client);
 
-const result = await functions.getSpecifications();
+const result = await functions.deleteExecution(
+    '<FUNCTION_ID>', // functionId
+    '<EXECUTION_ID>' // executionId
+);
 
-console.log(response);
+console.log(result);
