@@ -510,6 +510,19 @@ export namespace Models {
         projects: FirebaseProject[];
     }
     /**
+     * Specifications List
+     */
+    export type SpecificationList = {
+        /**
+         * Total number of specifications documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of specifications.
+         */
+        specifications: Specification[];
+    }
+    /**
      * VCS Content List
      */
     export type VcsContentList = {
@@ -1871,6 +1884,10 @@ export namespace Models {
          * Is VCS (Version Control System) connection is in silent mode? When in silence mode, no comments will be posted on the repository pull or merge requests
          */
         providerSilentMode: boolean;
+        /**
+         * Machine specification for builds and executions.
+         */
+        specification: string;
     }
     /**
      * Template Function
@@ -2165,6 +2182,10 @@ export namespace Models {
          * The code size in bytes.
          */
         size: number;
+        /**
+         * The build output size in bytes.
+         */
+        buildSize: number;
         /**
          * The current build ID.
          */
@@ -3396,6 +3417,27 @@ export namespace Models {
          * Header value.
          */
         value: string;
+    }
+    /**
+     * Specification
+     */
+    export type Specification = {
+        /**
+         * Memory size in MB.
+         */
+        memory: number;
+        /**
+         * Number of CPUs.
+         */
+        cpus: number;
+        /**
+         * Is size enabled.
+         */
+        enabled: boolean;
+        /**
+         * Size slug.
+         */
+        slug: string;
     }
     /**
      * Rule
