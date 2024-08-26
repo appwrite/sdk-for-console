@@ -1,3 +1,4 @@
+import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 import { PasswordHash } from '../enums/password-hash';
@@ -36,6 +37,7 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -83,6 +85,7 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'post',
@@ -133,6 +136,7 @@ export class Users {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -182,6 +186,7 @@ export class Users {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -214,6 +219,7 @@ export class Users {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -241,6 +247,7 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -291,6 +298,7 @@ export class Users {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -339,6 +347,7 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'post',
@@ -424,6 +433,7 @@ export class Users {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -494,6 +504,7 @@ export class Users {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -547,6 +558,7 @@ export class Users {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -573,6 +585,7 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -602,6 +615,7 @@ export class Users {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -629,6 +643,7 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -665,6 +680,7 @@ export class Users {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -700,6 +716,7 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'post',
@@ -738,6 +755,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'put',
             uri,
@@ -770,6 +788,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -797,6 +816,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -833,6 +853,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -865,6 +886,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'delete',
             uri,
@@ -892,6 +914,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -921,6 +944,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -949,6 +973,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'put',
             uri,
@@ -976,6 +1001,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -1012,6 +1038,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1046,6 +1073,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -1082,6 +1110,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1109,6 +1138,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1145,6 +1175,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1172,6 +1203,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1203,6 +1235,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1230,6 +1263,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -1262,6 +1296,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -1298,6 +1333,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1329,6 +1365,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1387,6 +1424,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1418,6 +1456,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1463,6 +1502,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1494,6 +1534,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -1532,6 +1573,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1567,6 +1609,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1601,6 +1644,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',

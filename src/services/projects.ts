@@ -1,3 +1,4 @@
+import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 import { Region } from '../enums/region';
@@ -42,6 +43,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -127,6 +129,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -153,6 +156,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -224,6 +228,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -250,6 +255,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -292,6 +298,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -325,6 +332,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -360,6 +368,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -393,6 +402,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -428,6 +438,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -461,6 +472,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -496,6 +508,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -529,6 +542,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -564,6 +578,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -597,6 +612,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -636,6 +652,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -674,6 +691,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -700,6 +718,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -746,6 +765,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -776,6 +796,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -826,6 +847,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'put',
             uri,
@@ -856,6 +878,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -903,6 +926,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -929,6 +953,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -983,6 +1008,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1013,6 +1039,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1064,6 +1091,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'put',
             uri,
@@ -1094,6 +1122,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -1136,6 +1165,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1169,6 +1199,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -1235,6 +1266,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -1311,6 +1343,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1344,6 +1377,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -1379,6 +1413,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1441,6 +1476,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1476,6 +1512,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'delete',
             uri,
@@ -1510,6 +1547,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1553,6 +1591,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1588,6 +1627,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'delete',
             uri,
@@ -1614,6 +1654,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1682,6 +1723,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1712,6 +1754,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1784,6 +1827,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'put',
             uri,
@@ -1815,6 +1859,7 @@ export class Projects {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'delete',
             uri,
@@ -1845,6 +1890,7 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',

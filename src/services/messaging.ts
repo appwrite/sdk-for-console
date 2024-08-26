@@ -1,3 +1,4 @@
+import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 import { SmtpEncryption } from '../enums/smtp-encryption';
@@ -33,6 +34,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -115,6 +117,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -187,6 +190,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -285,6 +289,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -374,6 +379,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -432,6 +438,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -485,6 +492,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -514,6 +522,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -541,6 +550,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -574,6 +584,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -606,6 +617,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -637,6 +649,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -700,6 +713,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -756,6 +770,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -802,6 +817,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -841,6 +857,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -912,6 +929,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -976,6 +994,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1030,6 +1049,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1077,6 +1097,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -1140,6 +1161,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1195,6 +1217,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -1285,6 +1308,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1365,6 +1389,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1419,6 +1444,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1466,6 +1492,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -1521,6 +1548,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1568,6 +1596,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -1623,6 +1652,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1670,6 +1700,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -1725,6 +1756,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1773,6 +1805,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1802,6 +1835,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -1829,6 +1863,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -1862,6 +1897,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -1894,6 +1930,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -1925,6 +1962,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1968,6 +2006,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1996,6 +2035,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -2034,6 +2074,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -2061,6 +2102,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -2093,6 +2135,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -2129,6 +2172,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -2172,6 +2216,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -2205,6 +2250,7 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -2236,6 +2282,7 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',

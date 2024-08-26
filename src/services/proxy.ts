@@ -1,3 +1,4 @@
+import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 import { ResourceType } from '../enums/resource-type';
@@ -33,6 +34,7 @@ export class Proxy {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -76,6 +78,7 @@ export class Proxy {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -103,6 +106,7 @@ export class Proxy {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -132,6 +136,7 @@ export class Proxy {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'delete',
             uri,
@@ -158,6 +163,7 @@ export class Proxy {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',

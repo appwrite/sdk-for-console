@@ -1,3 +1,4 @@
+import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
@@ -30,6 +31,7 @@ export class Assistant {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'post',

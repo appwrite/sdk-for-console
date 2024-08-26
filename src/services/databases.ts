@@ -1,3 +1,4 @@
+import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 import { DatabaseUsageRange } from '../enums/database-usage-range';
@@ -36,6 +37,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -80,6 +82,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -106,6 +109,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -134,6 +138,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -174,6 +179,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'put',
             uri,
@@ -201,6 +207,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -237,6 +244,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -292,6 +300,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -323,6 +332,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -375,6 +385,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'put',
             uri,
@@ -406,6 +417,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -442,6 +454,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -498,6 +511,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -547,6 +561,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -602,6 +617,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -651,6 +667,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -707,6 +724,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -757,6 +775,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -820,6 +839,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -877,6 +897,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -940,6 +961,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'post',
@@ -1006,6 +1028,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1068,6 +1091,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'post',
@@ -1134,6 +1158,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1189,6 +1214,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1239,6 +1265,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -1302,6 +1329,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'post',
@@ -1369,6 +1397,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1419,6 +1448,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'patch',
@@ -1475,6 +1505,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1526,6 +1557,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1562,6 +1594,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -1597,6 +1630,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -1639,6 +1673,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1674,6 +1709,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1725,6 +1761,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1764,6 +1801,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1809,6 +1847,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -1844,6 +1883,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -1885,6 +1925,7 @@ export class Databases {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -1920,6 +1961,7 @@ export class Databases {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1979,6 +2021,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -2014,6 +2057,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -2051,6 +2095,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'delete',
             uri,
@@ -2087,6 +2132,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -2122,6 +2168,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -2154,6 +2201,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -2184,6 +2232,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',

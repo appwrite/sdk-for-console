@@ -1,3 +1,4 @@
+import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 import { Runtime } from '../enums/runtime';
@@ -35,6 +36,7 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -157,6 +159,7 @@ export class Functions {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -180,6 +183,7 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -205,6 +209,7 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -246,6 +251,7 @@ export class Functions {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -274,6 +280,7 @@ export class Functions {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -300,6 +307,7 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -328,6 +336,7 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -428,6 +437,7 @@ export class Functions {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'put',
             uri,
@@ -455,6 +465,7 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -491,6 +502,7 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -546,6 +558,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'multipart/form-data',
         }
 
+
         return await this.client.chunkedUpload(
             'post',
             uri,
@@ -579,6 +592,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -611,6 +625,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -642,6 +657,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
@@ -678,6 +694,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -709,6 +726,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -739,6 +757,11 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
+        }
+
+        payload['project'] = this.client.config.project;
+        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+            uri.searchParams.append(key, value);
         }
 
         payload['project'] = this.client.config.project;
@@ -777,6 +800,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -830,6 +854,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -861,6 +886,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -895,6 +921,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'delete',
             uri,
@@ -926,6 +953,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -953,6 +981,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -996,6 +1025,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -1027,6 +1057,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -1071,6 +1102,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'put',
             uri,
@@ -1102,6 +1134,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',

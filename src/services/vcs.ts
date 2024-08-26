@@ -1,3 +1,4 @@
+import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
@@ -31,6 +32,7 @@ export class Vcs {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -73,6 +75,7 @@ export class Vcs {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -104,6 +107,7 @@ export class Vcs {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -134,6 +138,7 @@ export class Vcs {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -170,6 +175,7 @@ export class Vcs {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -204,6 +210,7 @@ export class Vcs {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'post',
@@ -243,6 +250,7 @@ export class Vcs {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'patch',
             uri,
@@ -274,6 +282,7 @@ export class Vcs {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -301,6 +310,7 @@ export class Vcs {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -327,6 +337,7 @@ export class Vcs {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',

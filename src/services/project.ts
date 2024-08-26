@@ -1,3 +1,4 @@
+import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 import { ProjectUsageRange } from '../enums/project-usage-range';
@@ -43,6 +44,7 @@ export class Project {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'get',
             uri,
@@ -66,6 +68,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -105,6 +108,7 @@ export class Project {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'post',
             uri,
@@ -132,6 +136,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'get',
@@ -172,6 +177,7 @@ export class Project {
             'content-type': 'application/json',
         }
 
+
         return await this.client.call(
             'put',
             uri,
@@ -199,6 +205,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
 
         return await this.client.call(
             'delete',
