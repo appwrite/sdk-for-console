@@ -12,4 +12,6 @@ export enum PlatformType {
     Appletvos = 'apple-tvos',
     Android = 'android',
     Unity = 'unity',
+    Reactnativeios = 'react-native-ios',
+    Reactnativeandroid = 'react-native-android',
 }
