@@ -9,7 +9,7 @@ const functions = new Functions(client);
 const result = await functions.createBuild(
     '<FUNCTION_ID>', // functionId
     '<DEPLOYMENT_ID>', // deploymentId
-    '<BUILD_ID>' // buildId (optional)
+    '<BUILD_ID>' // buildId
 );
 
 console.log(result);

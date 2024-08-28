@@ -4,6 +4,4 @@ export enum EmailTemplateType {
     Recovery = 'recovery',
     Invitation = 'invitation',
     Mfachallenge = 'mfachallenge',
-    Sessionalert = 'sessionalert',
-    Otpsession = 'otpsession',
 }

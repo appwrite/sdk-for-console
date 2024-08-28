@@ -18,7 +18,6 @@ const result = await functions.create(
     false, // logging (optional)
     '<ENTRYPOINT>', // entrypoint (optional)
     '<COMMANDS>', // commands (optional)
-    [], // scopes (optional)
     '<INSTALLATION_ID>', // installationId (optional)
     '<PROVIDER_REPOSITORY_ID>', // providerRepositoryId (optional)
     '<PROVIDER_BRANCH>', // providerBranch (optional)
@@ -27,8 +26,7 @@ const result = await functions.create(
     '<TEMPLATE_REPOSITORY>', // templateRepository (optional)
     '<TEMPLATE_OWNER>', // templateOwner (optional)
     '<TEMPLATE_ROOT_DIRECTORY>', // templateRootDirectory (optional)
-    '<TEMPLATE_VERSION>', // templateVersion (optional)
-    '' // specification (optional)
+    '<TEMPLATE_BRANCH>' // templateBranch (optional)
 );
 
 console.log(result);

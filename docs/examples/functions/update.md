@@ -18,13 +18,11 @@ const result = await functions.update(
     false, // logging (optional)
     '<ENTRYPOINT>', // entrypoint (optional)
     '<COMMANDS>', // commands (optional)
-    [], // scopes (optional)
     '<INSTALLATION_ID>', // installationId (optional)
     '<PROVIDER_REPOSITORY_ID>', // providerRepositoryId (optional)
     '<PROVIDER_BRANCH>', // providerBranch (optional)
     false, // providerSilentMode (optional)
-    '<PROVIDER_ROOT_DIRECTORY>', // providerRootDirectory (optional)
-    '' // specification (optional)
+    '<PROVIDER_ROOT_DIRECTORY>' // providerRootDirectory (optional)
 );
 
 console.log(result);

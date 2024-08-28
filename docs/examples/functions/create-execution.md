@@ -12,8 +12,7 @@ const result = await functions.createExecution(
     false, // async (optional)
     '<PATH>', // path (optional)
     ExecutionMethod.GET, // method (optional)
-    {}, // headers (optional)
-    '' // scheduledAt (optional)
+    {} // headers (optional)
 );
 
 console.log(result);

@@ -148,42 +148,6 @@ export class Vcs {
         );
     }
     /**
-     * Get files and directories of a VCS repository
-     *
-     *
-     * @param {string} installationId
-     * @param {string} providerRepositoryId
-     * @param {string} providerRootDirectory
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.VcsContentList>}
-     */
-    async getRepositoryContents(installationId: string, providerRepositoryId: string, providerRootDirectory?: string): Promise<Models.VcsContentList> {
-        if (typeof installationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "installationId"');
-        }
-        if (typeof providerRepositoryId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerRepositoryId"');
-        }
-        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}/contents'.replace('{installationId}', installationId).replace('{providerRepositoryId}', providerRepositoryId);
-        const payload: Payload = {};
-        if (typeof providerRootDirectory !== 'undefined') {
-            payload['providerRootDirectory'] = providerRootDirectory;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
      * Detect runtime settings from source code
      *
      *

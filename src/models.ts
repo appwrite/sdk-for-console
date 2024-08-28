@@ -172,19 +172,6 @@ export namespace Models {
         functions: Function[];
     }
     /**
-     * Function Templates List
-     */
-    export type TemplateFunctionList = {
-        /**
-         * Total number of templates documents that matched your query.
-         */
-        total: number;
-        /**
-         * List of templates.
-         */
-        templates: TemplateFunction[];
-    }
-    /**
      * Installations List
      */
     export type InstallationList = {
@@ -508,32 +495,6 @@ export namespace Models {
          * List of projects.
          */
         projects: FirebaseProject[];
-    }
-    /**
-     * Specifications List
-     */
-    export type SpecificationList = {
-        /**
-         * Total number of specifications documents that matched your query.
-         */
-        total: number;
-        /**
-         * List of specifications.
-         */
-        specifications: Specification[];
-    }
-    /**
-     * VCS Content List
-     */
-    export type VcsContentList = {
-        /**
-         * Total number of contents documents that matched your query.
-         */
-        total: number;
-        /**
-         * List of contents.
-         */
-        contents: VcsContent[];
     }
     /**
      * Database
@@ -1833,10 +1794,6 @@ export namespace Models {
          */
         deployment: string;
         /**
-         * Allowed permission scopes.
-         */
-        scopes: string[];
-        /**
          * Function variables.
          */
         vars: Variable[];
@@ -1884,133 +1841,6 @@ export namespace Models {
          * Is VCS (Version Control System) connection is in silent mode? When in silence mode, no comments will be posted on the repository pull or merge requests
          */
         providerSilentMode: boolean;
-        /**
-         * Machine specification for builds and executions.
-         */
-        specification: string;
-    }
-    /**
-     * Template Function
-     */
-    export type TemplateFunction = {
-        /**
-         * Function Template Icon.
-         */
-        icon: string;
-        /**
-         * Function Template ID.
-         */
-        id: string;
-        /**
-         * Function Template Name.
-         */
-        name: string;
-        /**
-         * Function Template Tagline.
-         */
-        tagline: string;
-        /**
-         * Execution permissions.
-         */
-        permissions: string[];
-        /**
-         * Function trigger events.
-         */
-        events: string[];
-        /**
-         * Function execution schedult in CRON format.
-         */
-        cron: string;
-        /**
-         * Function execution timeout in seconds.
-         */
-        timeout: number;
-        /**
-         * Function use cases.
-         */
-        useCases: string[];
-        /**
-         * List of runtimes that can be used with this template.
-         */
-        runtimes: TemplateRuntime[];
-        /**
-         * Function Template Instructions.
-         */
-        instructions: string;
-        /**
-         * VCS (Version Control System) Provider.
-         */
-        vcsProvider: string;
-        /**
-         * VCS (Version Control System) Repository ID
-         */
-        providerRepositoryId: string;
-        /**
-         * VCS (Version Control System) Owner.
-         */
-        providerOwner: string;
-        /**
-         * VCS (Version Control System) branch version (tag).
-         */
-        providerVersion: string;
-        /**
-         * Function variables.
-         */
-        variables: TemplateVariable[];
-        /**
-         * Function scopes.
-         */
-        scopes: string[];
-    }
-    /**
-     * Template Runtime
-     */
-    export type TemplateRuntime = {
-        /**
-         * Runtime Name.
-         */
-        name: string;
-        /**
-         * The build command used to build the deployment.
-         */
-        commands: string;
-        /**
-         * The entrypoint file used to execute the deployment.
-         */
-        entrypoint: string;
-        /**
-         * Path to function in VCS (Version Control System) repository
-         */
-        providerRootDirectory: string;
-    }
-    /**
-     * Template Variable
-     */
-    export type TemplateVariable = {
-        /**
-         * Variable Name.
-         */
-        name: string;
-        /**
-         * Variable Description.
-         */
-        description: string;
-        /**
-         * Variable Value.
-         */
-        value: string;
-        /**
-         * Variable Placeholder.
-         */
-        placeholder: string;
-        /**
-         * Is the variable required?
-         */
-        required: boolean;
-        /**
-         * Variable Type.
-         */
-        type: string;
     }
     /**
      * Installation
@@ -2084,23 +1914,6 @@ export namespace Models {
         runtime: string;
     }
     /**
-     * VcsContents
-     */
-    export type VcsContent = {
-        /**
-         * Content size in bytes. Only files have size, and for directories, 0 is returned.
-         */
-        size?: number;
-        /**
-         * If a content is a directory. Directories can be used to check nested contents.
-         */
-        isDirectory?: boolean;
-        /**
-         * Name of directory or file.
-         */
-        name: string;
-    }
-    /**
      * Branch
      */
     export type Branch = {
@@ -2117,10 +1930,6 @@ export namespace Models {
          * Runtime ID.
          */
         $id: string;
-        /**
-         * Parent runtime key.
-         */
-        key: string;
         /**
          * Runtime Name.
          */
@@ -2182,10 +1991,6 @@ export namespace Models {
          * The code size in bytes.
          */
         size: number;
-        /**
-         * The build output size in bytes.
-         */
-        buildSize: number;
         /**
          * The current build ID.
          */
@@ -2315,51 +2120,6 @@ export namespace Models {
          * Function execution duration in seconds.
          */
         duration: number;
-        /**
-         * The scheduled time for execution. If left empty, execution will be queued immediately.
-         */
-        scheduledAt?: string;
-    }
-    /**
-     * Build
-     */
-    export type Build = {
-        /**
-         * Build ID.
-         */
-        $id: string;
-        /**
-         * The deployment that created this build.
-         */
-        deploymentId: string;
-        /**
-         * The build status. There are a few different types and each one means something different. \nFailed - The deployment build has failed. More details can usually be found in buildStderr\nReady - The deployment build was successful and the deployment is ready to be deployed\nProcessing - The deployment is currently waiting to have a build triggered\nBuilding - The deployment is currently being built
-         */
-        status: string;
-        /**
-         * The stdout of the build.
-         */
-        stdout: string;
-        /**
-         * The stderr of the build.
-         */
-        stderr: string;
-        /**
-         * The deployment creation date in ISO 8601 format.
-         */
-        startTime: string;
-        /**
-         * The time the build was finished in ISO 8601 format.
-         */
-        endTime: string;
-        /**
-         * The build duration in seconds.
-         */
-        duration: number;
-        /**
-         * The code size in bytes.
-         */
-        size: number;
     }
     /**
      * Project
@@ -2445,14 +2205,6 @@ export namespace Models {
          * Whether or not to check the user password for similarity with their personal data.
          */
         authPersonalDataCheck: boolean;
-        /**
-         * An array of mock numbers and their corresponding verification codes (OTPs).
-         */
-        authMockNumbers: MockNumber[];
-        /**
-         * Whether or not to send session alert emails to users.
-         */
-        authSessionAlerts: boolean;
         /**
          * List of Auth Providers.
          */
@@ -2577,6 +2329,10 @@ export namespace Models {
          * Messaging service status
          */
         serviceStatusForMessaging: boolean;
+        /**
+         * Project region
+         */
+        region: number;
     }
     /**
      * Webhook
@@ -2675,19 +2431,6 @@ export namespace Models {
          * List of SDK user agents that used this key.
          */
         sdks: string[];
-    }
-    /**
-     * Mock Number
-     */
-    export type MockNumber = {
-        /**
-         * Mock phone number for testing phone authentication. Useful for testing phone authentication without sending an SMS.
-         */
-        phone: string;
-        /**
-         * Mock OTP for the number. 
-         */
-        otp: string;
     }
     /**
      * AuthProvider
@@ -3419,27 +3162,6 @@ export namespace Models {
         value: string;
     }
     /**
-     * Specification
-     */
-    export type Specification = {
-        /**
-         * Memory size in MB.
-         */
-        memory: number;
-        /**
-         * Number of CPUs.
-         */
-        cpus: number;
-        /**
-         * Is size enabled.
-         */
-        enabled: boolean;
-        /**
-         * Size slug.
-         */
-        slug: string;
-    }
-    /**
      * Rule
      */
     export type ProxyRule = {
@@ -3938,5 +3660,957 @@ export namespace Models {
          * Project display name.
          */
         displayName: string;
+    }
+    /**
+     * Billing Invoices List
+     */
+    export type InvoiceList = {
+        /**
+         * Total number of invoices documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of invoices.
+         */
+        invoices: Invoice[];
+    }
+    /**
+     * Payment Methods List
+     */
+    export type PaymentMethodList = {
+        /**
+         * Total number of paymentMethods documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of paymentMethods.
+         */
+        paymentMethods: PaymentMethod[];
+    }
+    /**
+     * Aggregation team list
+     */
+    export type AggregationTeamList = {
+        /**
+         * Total number of aggregations documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of aggregations.
+         */
+        aggregations: AggregationTeam[];
+    }
+    /**
+     * Regions list
+     */
+    export type ConsoleRegionList = {
+        /**
+         * Total number of regions documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of regions.
+         */
+        regions: ConsoleRegion[];
+    }
+    /**
+     * Billing plan list
+     */
+    export type BillingPlanList = {
+        /**
+         * Total number of plans documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of plans.
+         */
+        plans: BillingPlan[];
+    }
+    /**
+     * Backup policy list
+     */
+    export type BackupPolicyList = {
+        /**
+         * Total number of policies documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of policies.
+         */
+        policies: BackupPolicy[];
+    }
+    /**
+     * Backup archive list
+     */
+    export type BackupArchiveList = {
+        /**
+         * Total number of archives documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of archives.
+         */
+        archives: BackupArchive[];
+    }
+    /**
+     * Backup restoration list
+     */
+    export type BackupRestorationList = {
+        /**
+         * Total number of restorations documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of restorations.
+         */
+        restorations: BackupRestoration[];
+    }
+    /**
+     * Organization
+     */
+    export type Organization<Preferences extends Models.Preferences> = {
+        /**
+         * Team ID.
+         */
+        $id: string;
+        /**
+         * Team creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Team update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Team name.
+         */
+        name: string;
+        /**
+         * Total number of team members.
+         */
+        total: number;
+        /**
+         * Team preferences as a key-value object
+         */
+        prefs: Preferences;
+        /**
+         * Project budget limit
+         */
+        billingBudget: number;
+        /**
+         * Project budget limit
+         */
+        budgetAlerts: string[];
+        /**
+         * Billing plan selected. Can be one of `tier-0`, `tier-1` or `tier-2`.
+         */
+        billingPlan: string;
+        /**
+         * Billing email set for the organization.
+         */
+        billingEmail: string;
+        /**
+         * Billing cycle start date.
+         */
+        billingStartDate: string;
+        /**
+         * Current invoice cycle start date.
+         */
+        billingCurrentInvoiceDate: string;
+        /**
+         * Next invoice cycle start date.
+         */
+        billingNextInvoiceDate: string;
+        /**
+         * Start date of trial.
+         */
+        billingTrialStartDate: string;
+        /**
+         * Number of trial days.
+         */
+        billingTrialDays: number;
+        /**
+         * Current active aggregation id.
+         */
+        billingAggregationId: string;
+        /**
+         * Default payment method.
+         */
+        paymentMethodId: string;
+        /**
+         * Default payment method.
+         */
+        billingAddressId: string;
+        /**
+         * Backup payment method.
+         */
+        backupPaymentMethodId: string;
+        /**
+         * Organization agreements
+         */
+        agreementBAA: string;
+        /**
+         * Program manager&#039;s name.
+         */
+        programManagerName: string;
+        /**
+         * Program manager&#039;s calendar link.
+         */
+        programManagerCalendar: string;
+        /**
+         * Program&#039;s discord channel name.
+         */
+        programDiscordChannelName: string;
+        /**
+         * Program&#039;s discord channel URL.
+         */
+        programDiscordChannelUrl: string;
+        /**
+         * Billing limits reached
+         */
+        billingLimits: object;
+        /**
+         * Billing plan downgrade
+         */
+        billingPlanDowngrade: object;
+        /**
+         * Tax Id
+         */
+        billingTaxId: string;
+        /**
+         * Marked for deletion
+         */
+        markedForDeletion: boolean;
+    }
+    /**
+     * Credit
+     */
+    export type Credit = {
+        /**
+         * Credit ID.
+         */
+        $id: string;
+        /**
+         * Credit creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Credit update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Credit permissions. [Learn more about permissions](/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * coupon ID
+         */
+        couponId: string;
+        /**
+         * ID of the User.
+         */
+        userId: string;
+        /**
+         * ID of the Team.
+         */
+        teamId: string;
+        /**
+         * Provided credit amount
+         */
+        credits: number;
+        /**
+         * Provided credit amount
+         */
+        total: number;
+        /**
+         * Credit expiration time in ISO 8601 format.
+         */
+        expiration: string;
+        /**
+         * Status of the credit. Can be one of `disabled`, `active` or `expired`.
+         */
+        status: string;
+    }
+    /**
+     * Coupon
+     */
+    export type Coupon = {
+        /**
+         * coupon ID
+         */
+        $id: string;
+        /**
+         * coupon ID
+         */
+        code: string;
+        /**
+         * Provided credit amount
+         */
+        credits: number;
+        /**
+         * Coupon expiration time in ISO 8601 format.
+         */
+        expiration: string;
+        /**
+         * Credit validity in days.
+         */
+        validity: number;
+        /**
+         * Campaign the coupon is associated with`.
+         */
+        campaign: string;
+        /**
+         * Status of the coupon. Can be one of `disabled`, `active` or `expired`.
+         */
+        status: string;
+    }
+    /**
+     * Invoice
+     */
+    export type Invoice = {
+        /**
+         * Invoice ID.
+         */
+        $id: string;
+        /**
+         * Invoice creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Invoice update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Invoice permissions. [Learn more about permissions](/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * Project ID
+         */
+        teamId: string;
+        /**
+         * Aggregation ID
+         */
+        aggregationId: string;
+        /**
+         * Billing plan selected. Can be one of `tier-0`, `tier-1` or `tier-2`.
+         */
+        plan: string;
+        /**
+         * Usage breakdown per resource
+         */
+        usage: object;
+        /**
+         * Invoice Amount
+         */
+        amount: number;
+        /**
+         * Tax percentage
+         */
+        tax: number;
+        /**
+         * Tax amount
+         */
+        taxAmount: number;
+        /**
+         * VAT percentage
+         */
+        vat: number;
+        /**
+         * VAT amount
+         */
+        vatAmount: number;
+        /**
+         * Gross amount after vat, tax, and discounts applied.
+         */
+        grossAmount: number;
+        /**
+         * Credits used.
+         */
+        creditsUsed: number;
+        /**
+         * Currency the invoice is in
+         */
+        currency: string;
+        /**
+         * Client secret for processing failed payments in front-end
+         */
+        clientSecret: string;
+        /**
+         * Invoice status
+         */
+        status: string;
+        /**
+         * Last payment error associated with the invoice
+         */
+        lastError: string;
+        /**
+         * Invoice due date.
+         */
+        dueAt: string;
+        /**
+         * Beginning date of the invoice
+         */
+        from: string;
+        /**
+         * End date of the invoice
+         */
+        to: string;
+    }
+    /**
+     * paymentMethod
+     */
+    export type PaymentMethod = {
+        /**
+         * Payment Method ID.
+         */
+        $id: string;
+        /**
+         * Payment method creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Payment method update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Payment method permissions. [Learn more about permissions](/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * Payment method ID from the payment provider
+         */
+        providerMethodId: string;
+        /**
+         * Client secret hash for payment setup
+         */
+        clientSecret: string;
+        /**
+         * User ID from the payment provider.
+         */
+        providerUserId: string;
+        /**
+         * ID of the Team.
+         */
+        userId: string;
+        /**
+         * Expiry month of the payment method.
+         */
+        expiryMonth: number;
+        /**
+         * Expiry year of the payment method.
+         */
+        expiryYear: number;
+        /**
+         * Last 4 digit of the payment method
+         */
+        last4: string;
+        /**
+         * Payment method brand
+         */
+        brand: string;
+        /**
+         * Name of the owner
+         */
+        name: string;
+        /**
+         * Last payment error associated with the payment method.
+         */
+        lastError: string;
+        /**
+         * True when it&#039;s the default payment method.
+         */
+        default: boolean;
+        /**
+         * True when payment method has expired.
+         */
+        expired: boolean;
+        /**
+         * True when payment method has failed to process multiple times.
+         */
+        failed: boolean;
+    }
+    /**
+     * AggregationTeam
+     */
+    export type AggregationTeam = {
+        /**
+         * Aggregation ID.
+         */
+        $id: string;
+        /**
+         * Aggregation creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Aggregation update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Aggregation permissions. [Learn more about permissions](/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * Beginning date of the invoice
+         */
+        from: string;
+        /**
+         * End date of the invoice
+         */
+        to: string;
+        /**
+         * Total storage usage
+         */
+        usageStorage: number;
+        /**
+         * Total active users for the billing period
+         */
+        usageUsers: number;
+        /**
+         * Total number of executions for the billing period
+         */
+        usageExecutions: number;
+        /**
+         * Total bandwidth usage for the billing period
+         */
+        usageBandwidth: number;
+        /**
+         * Total realtime usage for the billing period
+         */
+        usageRealtime: number;
+        /**
+         * Additional members
+         */
+        additionalMembers: number;
+        /**
+         * Additional members cost
+         */
+        additionalMemberAmount: number;
+        /**
+         * Additional storage usage cost
+         */
+        additionalStorageAmount: number;
+        /**
+         * Additional users usage cost.
+         */
+        additionalUsersAmount: number;
+        /**
+         * Additional executions usage cost
+         */
+        additionalExecutionsAmount: number;
+        /**
+         * Additional bandwidth usage cost
+         */
+        additionalBandwidthAmount: number;
+        /**
+         * Additional realtime usage cost
+         */
+        additionalRealtimeAmount: number;
+        /**
+         * Aggregated amount
+         */
+        amount: number;
+    }
+    /**
+     * Region
+     */
+    export type ConsoleRegion = {
+        /**
+         * Region ID
+         */
+        $id: string;
+        /**
+         * Region name
+         */
+        name: string;
+        /**
+         * Is the region disabled.
+         */
+        disabled: boolean;
+        /**
+         * Is this the region default.
+         */
+        default: boolean;
+        /**
+         * Region flag code.
+         */
+        flag: string;
+    }
+    /**
+     * BillingAddress
+     */
+    export type BillingAddress = {
+        /**
+         * Region ID
+         */
+        $id: string;
+        /**
+         * Street address
+         */
+        streetAddress: string;
+        /**
+         * Address line 2
+         */
+        addressLine2: string;
+        /**
+         * Address country
+         */
+        country: string;
+        /**
+         * city
+         */
+        city: string;
+        /**
+         * state
+         */
+        state: string;
+        /**
+         * postal code
+         */
+        postalCode: string;
+    }
+    /**
+     * billingPlan
+     */
+    export type BillingPlan = {
+        /**
+         * Plan ID.
+         */
+        $id: string;
+        /**
+         * Plan name
+         */
+        name: string;
+        /**
+         * Price
+         */
+        price: number;
+        /**
+         * Trial days
+         */
+        trial: number;
+        /**
+         * Bandwidth
+         */
+        bandwidth: number;
+        /**
+         * Storage
+         */
+        storage: number;
+        /**
+         * Members
+         */
+        members: number;
+        /**
+         * Webhooks
+         */
+        webhooks: number;
+        /**
+         * Platofrms
+         */
+        platforms: number;
+        /**
+         * Users
+         */
+        users: number;
+        /**
+         * Teams
+         */
+        teams: number;
+        /**
+         * Databases
+         */
+        databases: number;
+        /**
+         * Buckets
+         */
+        buckets: number;
+        /**
+         * File size
+         */
+        fileSize: number;
+        /**
+         * Functions
+         */
+        functions: number;
+        /**
+         * Function executions
+         */
+        executions: number;
+        /**
+         * Realtime connections
+         */
+        realtime: number;
+        /**
+         * Log days
+         */
+        logs: number;
+        /**
+         * Additional resources
+         */
+        addons: AdditionalResource[];
+        /**
+         * Custom SMTP
+         */
+        customSmtp: boolean;
+        /**
+         * Appwrite branding in email
+         */
+        emailBranding: boolean;
+        /**
+         * Does plan require payment method
+         */
+        requiresPaymentMethod: boolean;
+        /**
+         * Does plan require billing address
+         */
+        requiresBillingAddress: boolean;
+    }
+    /**
+     * AdditionalResource
+     */
+    export type AdditionalResource = {
+        /**
+         * Resource unit
+         */
+        unit: string;
+        /**
+         * Price currency
+         */
+        currency: string;
+        /**
+         * Price
+         */
+        price: number;
+        /**
+         * Resource value
+         */
+        value: number;
+    }
+    /**
+     * UsageOrganization
+     */
+    export type UsageOrganization = {
+        /**
+         * Aggregated stats for number of requests.
+         */
+        bandwidth: Metric[];
+        /**
+         * Aggregated stats for consumed bandwidth.
+         */
+        users: Metric[];
+        /**
+         * Aggregated stats for function executions.
+         */
+        executions: Metric[];
+        /**
+         * Aggregated stats for function executions.
+         */
+        usersTotal: number;
+        /**
+         * Aggregated stats for function executions.
+         */
+        executionsTotal: number;
+        /**
+         * Aggregated stats for number of documents.
+         */
+        storageTotal: number;
+        /**
+         * Aggregated stats for each projects.
+         */
+        projects: UsageOrganizationProject[];
+    }
+    /**
+     * UsageOrganizationProject
+     */
+    export type UsageOrganizationProject = {
+        /**
+         * projectId
+         */
+        projectId: string;
+        /**
+         * Aggregated stats for number of requests.
+         */
+        bandwidth: Metric[];
+        /**
+         * Aggregated stats for consumed bandwidth.
+         */
+        users: Metric[];
+        /**
+         * Aggregated stats for function executions.
+         */
+        executions: number;
+        /**
+         * Aggregated stats for number of documents.
+         */
+        storage: number;
+    }
+    /**
+     * CreditList
+     */
+    export type CreditList = {
+        /**
+         * Credits
+         */
+        credits: Credit[];
+        /**
+         * Total number of credits
+         */
+        total: number;
+        /**
+         * Total available credit balance in USD
+         */
+        available: number;
+    }
+    /**
+     * backup
+     */
+    export type BackupPolicy = {
+        /**
+         * Backup policy ID.
+         */
+        $id: string;
+        /**
+         * Backup policy name.
+         */
+        name: string;
+        /**
+         * Policy creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Policy update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * The services that are backed up by this policy.
+         */
+        services: string[];
+        /**
+         * The resources that are backed up by this policy.
+         */
+        resources: string[];
+        /**
+         * The resource ID to backup. Set only if this policy should backup a single resource.
+         */
+        resourceId?: string;
+        /**
+         * The resource type to backup. Set only if this policy should backup a single resource.
+         */
+        resourceType?: string;
+        /**
+         * How many days to keep the backup before it will be automatically deleted.
+         */
+        retention: number;
+        /**
+         * Policy backup schedule in CRON format.
+         */
+        schedule: string;
+        /**
+         * Is this policy enabled.
+         */
+        enabled: boolean;
+    }
+    /**
+     * Archive
+     */
+    export type BackupArchive = {
+        /**
+         * Archive ID.
+         */
+        $id: string;
+        /**
+         * Archive creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Archive update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Archive policy ID.
+         */
+        policyId: string;
+        /**
+         * Archive size in bytes.
+         */
+        size: number;
+        /**
+         * The status of the archive creation. Possible values: pending, processing, uploading, completed, failed.
+         */
+        status: string;
+        /**
+         * The backup start time.
+         */
+        startedAt: string;
+        /**
+         * Migration ID.
+         */
+        migrationId: string;
+        /**
+         * The services that are backed up by this policy.
+         */
+        services: string[];
+        /**
+         * The resources that are backed up by this policy.
+         */
+        resources: string[];
+        /**
+         * The resource ID to backup. Set only if this policy should backup a single resource.
+         */
+        resourceId?: string;
+        /**
+         * The resource type to backup. Set only if this policy should backup a single resource.
+         */
+        resourceType?: string;
+    }
+    /**
+     * Restoration
+     */
+    export type BackupRestoration = {
+        /**
+         * Restoration ID.
+         */
+        $id: string;
+        /**
+         * Restoration creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Restoration update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Backup archive ID.
+         */
+        archiveId: string;
+        /**
+         * Backup policy ID.
+         */
+        policyId: string;
+        /**
+         * The status of the restoration. Possible values: pending, downloading, processing, completed, failed.
+         */
+        status: string;
+        /**
+         * The backup start time.
+         */
+        startedAt: string;
+        /**
+         * Migration ID.
+         */
+        migrationId: string;
+        /**
+         * The services that are backed up by this policy.
+         */
+        services: string[];
+        /**
+         * The resources that are backed up by this policy.
+         */
+        resources: string[];
+        /**
+         * Optional data in key-value object. 
+         */
+        options: string;
     }
 }

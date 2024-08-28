@@ -447,41 +447,6 @@ export class Projects {
         );
     }
     /**
-     * Update the mock numbers for the project
-     *
-     *
-     * @param {string} projectId
-     * @param {object[]} numbers
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
-     */
-    async updateMockNumbers(projectId: string, numbers: object[]): Promise<Models.Project> {
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof numbers === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "numbers"');
-        }
-        const apiPath = '/projects/{projectId}/auth/mock-numbers'.replace('{projectId}', projectId);
-        const payload: Payload = {};
-        if (typeof numbers !== 'undefined') {
-            payload['numbers'] = numbers;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
      * Update authentication password dictionary status. Use this endpoint to enable or disable the dicitonary check for user password
      *
      *
@@ -587,41 +552,6 @@ export class Projects {
         );
     }
     /**
-     * Update project sessions emails
-     *
-     *
-     * @param {string} projectId
-     * @param {boolean} alerts
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
-     */
-    async updateSessionAlerts(projectId: string, alerts: boolean): Promise<Models.Project> {
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof alerts === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "alerts"');
-        }
-        const apiPath = '/projects/{projectId}/auth/session-alerts'.replace('{projectId}', projectId);
-        const payload: Payload = {};
-        if (typeof alerts !== 'undefined') {
-            payload['alerts'] = alerts;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
      * Update project auth method status. Use this endpoint to enable or disable a given auth method for this project.
      *
      *
@@ -655,45 +585,6 @@ export class Projects {
 
         return await this.client.call(
             'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Create JWT
-     *
-     *
-     * @param {string} projectId
-     * @param {string[]} scopes
-     * @param {number} duration
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Jwt>}
-     */
-    async createJWT(projectId: string, scopes: string[], duration?: number): Promise<Models.Jwt> {
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof scopes === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "scopes"');
-        }
-        const apiPath = '/projects/{projectId}/jwts'.replace('{projectId}', projectId);
-        const payload: Payload = {};
-        if (typeof scopes !== 'undefined') {
-            payload['scopes'] = scopes;
-        }
-        if (typeof duration !== 'undefined') {
-            payload['duration'] = duration;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'post',
             uri,
             apiHeaders,
             payload
@@ -1352,7 +1243,7 @@ export class Projects {
         );
     }
     /**
-     * Update project team
+     * Update Project Team
      *
      *
      * @param {string} projectId
