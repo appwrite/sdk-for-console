@@ -76,11 +76,11 @@ export class Backups {
      * List archives
      *
      *
-     * @param {string} queries
+     * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupArchiveList>}
      */
-    async listArchives(queries?: string): Promise<Models.BackupArchiveList> {
+    async listArchives(queries?: string[]): Promise<Models.BackupArchiveList> {
         const apiPath = '/backups/archives';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -132,11 +132,11 @@ export class Backups {
      * List backup policies
      *
      *
-     * @param {string} queries
+     * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicyList>}
      */
-    async listPolicies(queries?: string): Promise<Models.BackupPolicyList> {
+    async listPolicies(queries?: string[]): Promise<Models.BackupPolicyList> {
         const apiPath = '/backups/policies';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -370,11 +370,11 @@ export class Backups {
      * List restorations
      *
      *
-     * @param {string} queries
+     * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupRestorationList>}
      */
-    async listRestorations(queries?: string): Promise<Models.BackupRestorationList> {
+    async listRestorations(queries?: string[]): Promise<Models.BackupRestorationList> {
         const apiPath = '/backups/restorations';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {

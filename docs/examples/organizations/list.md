@@ -7,7 +7,7 @@ const client = new Client()
 const organizations = new Organizations(client);
 
 const result = await organizations.list(
-    '', // queries (optional)
+    [], // queries (optional)
     '<SEARCH>' // search (optional)
 );
 

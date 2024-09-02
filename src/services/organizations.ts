@@ -15,12 +15,12 @@ export class Organizations {
      *
      * Get a list of all the teams in which the current user is a member. You can use the parameters to filter your results.
      *
-     * @param {string} queries
+     * @param {string[]} queries
      * @param {string} search
      * @throws {AppwriteException}
      * @returns {Promise<Models.TeamList<Preferences>>}
      */
-    async list<Preferences extends Models.Preferences>(queries?: string, search?: string): Promise<Models.TeamList<Preferences>> {
+    async list<Preferences extends Models.Preferences>(queries?: string[], search?: string): Promise<Models.TeamList<Preferences>> {
         const apiPath = '/organizations';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -131,11 +131,11 @@ export class Organizations {
      *
      *
      * @param {string} organizationId
-     * @param {string} queries
+     * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.AggregationTeamList>}
      */
-    async listAggregations(organizationId: string, queries?: string): Promise<Models.AggregationTeamList> {
+    async listAggregations(organizationId: string, queries?: string[]): Promise<Models.AggregationTeamList> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -431,11 +431,11 @@ export class Organizations {
      *
      *
      * @param {string} organizationId
-     * @param {string} queries
+     * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.InvoiceList>}
      */
-    async listInvoices(organizationId: string, queries?: string): Promise<Models.InvoiceList> {
+    async listInvoices(organizationId: string, queries?: string[]): Promise<Models.InvoiceList> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }

@@ -116,11 +116,11 @@ export class Account {
      * List billing addresses
      *
      *
-     * @param {string} queries
+     * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      */
-    async listBillingAddresses(queries?: string): Promise<Models.BillingAddress> {
+    async listBillingAddresses(queries?: string[]): Promise<Models.BillingAddress> {
         const apiPath = '/account/billing-addresses';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -271,11 +271,11 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
      * List invoices
      *
      *
-     * @param {string} queries
+     * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.InvoiceList>}
      */
-    async listInvoices(queries?: string): Promise<Models.InvoiceList> {
+    async listInvoices(queries?: string[]): Promise<Models.InvoiceList> {
         const apiPath = '/account/invoices';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -725,11 +725,11 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
      * List payment methods
      *
      *
-     * @param {string} queries
+     * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethodList>}
      */
-    async listPaymentMethods(queries?: string): Promise<Models.PaymentMethodList> {
+    async listPaymentMethods(queries?: string[]): Promise<Models.PaymentMethodList> {
         const apiPath = '/account/payment-methods';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -1952,11 +1952,11 @@ Please note that in order to avoid a [Redirect Attack](https://github.com/OWASP/
      *
      *
      * @param {string} organizationId
-     * @param {string} queries
+     * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.CreditList>}
      */
-    async listCredits(organizationId: string, queries?: string): Promise<Models.CreditList> {
+    async listCredits(organizationId: string, queries?: string[]): Promise<Models.CreditList> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }

@@ -4548,19 +4548,19 @@ export namespace Models {
          */
         migrationId: string;
         /**
-         * The services that are backed up by this policy.
+         * The services that are backed up by this archive.
          */
         services: string[];
         /**
-         * The resources that are backed up by this policy.
+         * The resources that are backed up by this archive.
          */
         resources: string[];
         /**
-         * The resource ID to backup. Set only if this policy should backup a single resource.
+         * The resource ID to backup. Set only if this archive should backup a single resource.
          */
         resourceId?: string;
         /**
-         * The resource type to backup. Set only if this policy should backup a single resource.
+         * The resource type to backup. Set only if this archive should backup a single resource.
          */
         resourceType?: string;
     }

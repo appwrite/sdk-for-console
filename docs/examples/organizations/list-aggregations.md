@@ -8,7 +8,7 @@ const organizations = new Organizations(client);
 
 const result = await organizations.listAggregations(
     '<ORGANIZATION_ID>', // organizationId
-    '' // queries (optional)
+    [] // queries (optional)
 );
 
 console.log(result);

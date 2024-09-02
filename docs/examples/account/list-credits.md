@@ -8,7 +8,7 @@ const account = new Account(client);
 
 const result = await account.listCredits(
     '<ORGANIZATION_ID>', // organizationId
-    '' // queries (optional)
+    [] // queries (optional)
 );
 
 console.log(result);
