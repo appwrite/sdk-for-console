@@ -3353,9 +3353,9 @@ export namespace Models {
          */
         filesStorageTotal: number;
         /**
-         * Total aggregated sum of deployments storage size (in bytes).
+         * Total aggregated sum of functions storage size (in bytes).
          */
-        deploymentsStorageTotal: number;
+        functionsStorageTotal: number;
         /**
          * Total aggregated number of buckets.
          */
@@ -3401,9 +3401,9 @@ export namespace Models {
          */
         buildsMbSecondsBreakdown: MetricBreakdown[];
         /**
-         * Aggregated breakdown in totals of deployments storage size (in bytes).
+         * Aggregated breakdown in totals of functions storage size (in bytes).
          */
-        deploymentsStorageBreakdown: MetricBreakdown[];
+        functionsStorageBreakdown: MetricBreakdown[];
     }
     /**
      * Headers
