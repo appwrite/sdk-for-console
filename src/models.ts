@@ -1,3 +1,6 @@
+/**
+ * Appwrite Models
+ */
 export namespace Models {
     /**
      * Documents List
@@ -167,6 +170,19 @@ export namespace Models {
          * List of functions.
          */
         functions: Function[];
+    }
+    /**
+     * Function Templates List
+     */
+    export type TemplateFunctionList = {
+        /**
+         * Total number of templates documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of templates.
+         */
+        templates: TemplateFunction[];
     }
     /**
      * Installations List
@@ -492,6 +508,32 @@ export namespace Models {
          * List of projects.
          */
         projects: FirebaseProject[];
+    }
+    /**
+     * Specifications List
+     */
+    export type SpecificationList = {
+        /**
+         * Total number of specifications documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of specifications.
+         */
+        specifications: Specification[];
+    }
+    /**
+     * VCS Content List
+     */
+    export type VcsContentList = {
+        /**
+         * Total number of contents documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of contents.
+         */
+        contents: VcsContent[];
     }
     /**
      * Database
@@ -1791,6 +1833,10 @@ export namespace Models {
          */
         deployment: string;
         /**
+         * Allowed permission scopes.
+         */
+        scopes: string[];
+        /**
          * Function variables.
          */
         vars: Variable[];
@@ -1838,6 +1884,133 @@ export namespace Models {
          * Is VCS (Version Control System) connection is in silent mode? When in silence mode, no comments will be posted on the repository pull or merge requests
          */
         providerSilentMode: boolean;
+        /**
+         * Machine specification for builds and executions.
+         */
+        specification: string;
+    }
+    /**
+     * Template Function
+     */
+    export type TemplateFunction = {
+        /**
+         * Function Template Icon.
+         */
+        icon: string;
+        /**
+         * Function Template ID.
+         */
+        id: string;
+        /**
+         * Function Template Name.
+         */
+        name: string;
+        /**
+         * Function Template Tagline.
+         */
+        tagline: string;
+        /**
+         * Execution permissions.
+         */
+        permissions: string[];
+        /**
+         * Function trigger events.
+         */
+        events: string[];
+        /**
+         * Function execution schedult in CRON format.
+         */
+        cron: string;
+        /**
+         * Function execution timeout in seconds.
+         */
+        timeout: number;
+        /**
+         * Function use cases.
+         */
+        useCases: string[];
+        /**
+         * List of runtimes that can be used with this template.
+         */
+        runtimes: TemplateRuntime[];
+        /**
+         * Function Template Instructions.
+         */
+        instructions: string;
+        /**
+         * VCS (Version Control System) Provider.
+         */
+        vcsProvider: string;
+        /**
+         * VCS (Version Control System) Repository ID
+         */
+        providerRepositoryId: string;
+        /**
+         * VCS (Version Control System) Owner.
+         */
+        providerOwner: string;
+        /**
+         * VCS (Version Control System) branch version (tag).
+         */
+        providerVersion: string;
+        /**
+         * Function variables.
+         */
+        variables: TemplateVariable[];
+        /**
+         * Function scopes.
+         */
+        scopes: string[];
+    }
+    /**
+     * Template Runtime
+     */
+    export type TemplateRuntime = {
+        /**
+         * Runtime Name.
+         */
+        name: string;
+        /**
+         * The build command used to build the deployment.
+         */
+        commands: string;
+        /**
+         * The entrypoint file used to execute the deployment.
+         */
+        entrypoint: string;
+        /**
+         * Path to function in VCS (Version Control System) repository
+         */
+        providerRootDirectory: string;
+    }
+    /**
+     * Template Variable
+     */
+    export type TemplateVariable = {
+        /**
+         * Variable Name.
+         */
+        name: string;
+        /**
+         * Variable Description.
+         */
+        description: string;
+        /**
+         * Variable Value.
+         */
+        value: string;
+        /**
+         * Variable Placeholder.
+         */
+        placeholder: string;
+        /**
+         * Is the variable required?
+         */
+        required: boolean;
+        /**
+         * Variable Type.
+         */
+        type: string;
     }
     /**
      * Installation
@@ -1911,6 +2084,23 @@ export namespace Models {
         runtime: string;
     }
     /**
+     * VcsContents
+     */
+    export type VcsContent = {
+        /**
+         * Content size in bytes. Only files have size, and for directories, 0 is returned.
+         */
+        size?: number;
+        /**
+         * If a content is a directory. Directories can be used to check nested contents.
+         */
+        isDirectory?: boolean;
+        /**
+         * Name of directory or file.
+         */
+        name: string;
+    }
+    /**
      * Branch
      */
     export type Branch = {
@@ -1927,6 +2117,10 @@ export namespace Models {
          * Runtime ID.
          */
         $id: string;
+        /**
+         * Parent runtime key.
+         */
+        key: string;
         /**
          * Runtime Name.
          */
@@ -1988,6 +2182,10 @@ export namespace Models {
          * The code size in bytes.
          */
         size: number;
+        /**
+         * The build output size in bytes.
+         */
+        buildSize: number;
         /**
          * The current build ID.
          */
@@ -2117,6 +2315,51 @@ export namespace Models {
          * Function execution duration in seconds.
          */
         duration: number;
+        /**
+         * The scheduled time for execution. If left empty, execution will be queued immediately.
+         */
+        scheduledAt?: string;
+    }
+    /**
+     * Build
+     */
+    export type Build = {
+        /**
+         * Build ID.
+         */
+        $id: string;
+        /**
+         * The deployment that created this build.
+         */
+        deploymentId: string;
+        /**
+         * The build status. There are a few different types and each one means something different. \nFailed - The deployment build has failed. More details can usually be found in buildStderr\nReady - The deployment build was successful and the deployment is ready to be deployed\nProcessing - The deployment is currently waiting to have a build triggered\nBuilding - The deployment is currently being built
+         */
+        status: string;
+        /**
+         * The stdout of the build.
+         */
+        stdout: string;
+        /**
+         * The stderr of the build.
+         */
+        stderr: string;
+        /**
+         * The deployment creation date in ISO 8601 format.
+         */
+        startTime: string;
+        /**
+         * The time the build was finished in ISO 8601 format.
+         */
+        endTime: string;
+        /**
+         * The build duration in seconds.
+         */
+        duration: number;
+        /**
+         * The code size in bytes.
+         */
+        size: number;
     }
     /**
      * Project
@@ -2202,6 +2445,14 @@ export namespace Models {
          * Whether or not to check the user password for similarity with their personal data.
          */
         authPersonalDataCheck: boolean;
+        /**
+         * An array of mock numbers and their corresponding verification codes (OTPs).
+         */
+        authMockNumbers: MockNumber[];
+        /**
+         * Whether or not to send session alert emails to users.
+         */
+        authSessionAlerts: boolean;
         /**
          * List of Auth Providers.
          */
@@ -2424,6 +2675,19 @@ export namespace Models {
          * List of SDK user agents that used this key.
          */
         sdks: string[];
+    }
+    /**
+     * Mock Number
+     */
+    export type MockNumber = {
+        /**
+         * Mock phone number for testing phone authentication. Useful for testing phone authentication without sending an SMS.
+         */
+        phone: string;
+        /**
+         * Mock OTP for the number. 
+         */
+        otp: string;
     }
     /**
      * AuthProvider
@@ -2927,6 +3191,10 @@ export namespace Models {
          */
         buildsTimeTotal: number;
         /**
+         * Total aggregated sum of functions build mbSeconds.
+         */
+        buildsMbSecondsTotal: number;
+        /**
          * Total  aggregated number of functions execution.
          */
         executionsTotal: number;
@@ -2934,6 +3202,10 @@ export namespace Models {
          * Total aggregated sum of functions  execution compute time.
          */
         executionsTimeTotal: number;
+        /**
+         * Total aggregated sum of functions execution mbSeconds.
+         */
+        executionsMbSecondsTotal: number;
         /**
          * Aggregated number of functions per period.
          */
@@ -2959,6 +3231,10 @@ export namespace Models {
          */
         buildsTime: Metric[];
         /**
+         * Aggregated sum of functions build mbSeconds per period.
+         */
+        buildsMbSeconds: Metric[];
+        /**
          * Aggregated number of  functions execution per period.
          */
         executions: Metric[];
@@ -2966,6 +3242,10 @@ export namespace Models {
          * Aggregated number of functions execution compute time per period.
          */
         executionsTime: Metric[];
+        /**
+         * Aggregated number of functions mbSeconds per period.
+         */
+        executionsMbSeconds: Metric[];
     }
     /**
      * UsageFunction
@@ -2996,6 +3276,10 @@ export namespace Models {
          */
         buildsTimeTotal: number;
         /**
+         * Total aggregated sum of function builds mbSeconds.
+         */
+        buildsMbSecondsTotal: number;
+        /**
          * Total  aggregated number of function executions.
          */
         executionsTotal: number;
@@ -3003,6 +3287,10 @@ export namespace Models {
          * Total aggregated sum of function  executions compute time.
          */
         executionsTimeTotal: number;
+        /**
+         * Total aggregated sum of function executions mbSeconds.
+         */
+        executionsMbSecondsTotal: number;
         /**
          * Aggregated number of function deployments per period.
          */
@@ -3024,6 +3312,10 @@ export namespace Models {
          */
         buildsTime: Metric[];
         /**
+         * Aggregated number of function builds mbSeconds per period.
+         */
+        buildsMbSeconds: Metric[];
+        /**
          * Aggregated number of function executions per period.
          */
         executions: Metric[];
@@ -3031,6 +3323,10 @@ export namespace Models {
          * Aggregated number of function executions compute time per period.
          */
         executionsTime: Metric[];
+        /**
+         * Aggregated number of function mbSeconds per period.
+         */
+        executionsMbSeconds: Metric[];
     }
     /**
      * UsageProject
@@ -3057,9 +3353,25 @@ export namespace Models {
          */
         filesStorageTotal: number;
         /**
+         * Total aggregated sum of builds storage size (in bytes).
+         */
+        buildsStorageTotal: number;
+        /**
+         * Total aggregated sum of deployments storage size (in bytes).
+         */
+        deploymentsStorageTotal: number;
+        /**
          * Total aggregated number of buckets.
          */
         bucketsTotal: number;
+        /**
+         * Total aggregated number of function executions mbSeconds.
+         */
+        executionsMbSecondsTotal: number;
+        /**
+         * Total aggregated number of function builds mbSeconds.
+         */
+        buildsMbSecondsTotal: number;
         /**
          * Aggregated  number of requests per period.
          */
@@ -3084,6 +3396,18 @@ export namespace Models {
          * Aggregated breakdown in totals of usage by buckets.
          */
         bucketsBreakdown: MetricBreakdown[];
+        /**
+         * Aggregated breakdown in totals of execution mbSeconds by functions.
+         */
+        executionsMbSecondsBreakdown: MetricBreakdown[];
+        /**
+         * Aggregated breakdown in totals of build mbSeconds by functions.
+         */
+        buildsMbSecondsBreakdown: MetricBreakdown[];
+        /**
+         * Aggregated breakdown in totals of functions storage size (in bytes).
+         */
+        functionsStorageBreakdown: MetricBreakdown[];
     }
     /**
      * Headers
@@ -3097,6 +3421,27 @@ export namespace Models {
          * Header value.
          */
         value: string;
+    }
+    /**
+     * Specification
+     */
+    export type Specification = {
+        /**
+         * Memory size in MB.
+         */
+        memory: number;
+        /**
+         * Number of CPUs.
+         */
+        cpus: number;
+        /**
+         * Is size enabled.
+         */
+        enabled: boolean;
+        /**
+         * Size slug.
+         */
+        slug: string;
     }
     /**
      * Rule

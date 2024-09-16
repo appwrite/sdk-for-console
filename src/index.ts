@@ -1,3 +1,10 @@
+/**
+ * Appwrite Console SDK
+ *
+ * This SDK is compatible with Appwrite server version 1.6.x. 
+ * For older versions, please check
+ * [previous releases](https://github.com/appwrite/sdk-for-console/releases).
+ */
 export { Client, Query, AppwriteException } from './client';
 export { Account } from './services/account';
 export { Avatars } from './services/avatars';
