@@ -2685,7 +2685,7 @@ export namespace Models {
          */
         phone: string;
         /**
-         * Mock OTP for the number. 
+         * Mock OTP for the number.
          */
         otp: string;
     }
@@ -3356,6 +3356,8 @@ export namespace Models {
          * Total aggregated sum of functions storage size (in bytes).
          */
         functionsStorageTotal: number;
+        buildsStorageTotal: number;
+        deploymentsStorageTotal: number;
         /**
          * Total aggregated number of buckets.
          */
@@ -3857,7 +3859,7 @@ export namespace Models {
          */
         $updatedAt: string;
         /**
-         * Migration status ( pending, processing, failed, completed ) 
+         * Migration status ( pending, processing, failed, completed )
          */
         status: string;
         /**
