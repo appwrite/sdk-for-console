@@ -10,7 +10,7 @@ export class Migrations {
     }
 
     /**
-     * List Migrations
+     * List migrations
      *
      *
      * @param {string[]} queries
@@ -42,7 +42,7 @@ export class Migrations {
         );
     }
     /**
-     * Migrate Appwrite Data
+     * Migrate Appwrite data
      *
      *
      * @param {string[]} resources
@@ -94,7 +94,7 @@ export class Migrations {
         );
     }
     /**
-     * Generate a report on Appwrite Data
+     * Generate a report on Appwrite data
      *
      *
      * @param {string[]} resources
@@ -146,7 +146,7 @@ export class Migrations {
         );
     }
     /**
-     * Migrate Firebase Data (Service Account)
+     * Migrate Firebase data (Service Account)
      *
      *
      * @param {string[]} resources
@@ -184,7 +184,7 @@ export class Migrations {
         );
     }
     /**
-     * Revoke Appwrite&#039;s authorization to access Firebase Projects
+     * Revoke Appwrite&#039;s authorization to access Firebase projects
      *
      *
      * @throws {AppwriteException}
@@ -208,7 +208,7 @@ export class Migrations {
         );
     }
     /**
-     * Migrate Firebase Data (OAuth)
+     * Migrate Firebase data (OAuth)
      *
      *
      * @param {string[]} resources
@@ -246,7 +246,7 @@ export class Migrations {
         );
     }
     /**
-     * List Firebase Projects
+     * List Firebase projects
      *
      *
      * @throws {AppwriteException}
@@ -270,7 +270,7 @@ export class Migrations {
         );
     }
     /**
-     * Generate a report on Firebase Data
+     * Generate a report on Firebase data
      *
      *
      * @param {string[]} resources
@@ -308,7 +308,7 @@ export class Migrations {
         );
     }
     /**
-     * Generate a report on Firebase Data using OAuth
+     * Generate a report on Firebase data using OAuth
      *
      *
      * @param {string[]} resources
@@ -346,7 +346,7 @@ export class Migrations {
         );
     }
     /**
-     * Migrate NHost Data
+     * Migrate NHost data
      *
      *
      * @param {string[]} resources
@@ -500,7 +500,7 @@ export class Migrations {
         );
     }
     /**
-     * Migrate Supabase Data
+     * Migrate Supabase data
      *
      *
      * @param {string[]} resources
@@ -640,7 +640,7 @@ export class Migrations {
         );
     }
     /**
-     * Get Migration
+     * Get migration
      *
      *
      * @param {string} migrationId
@@ -668,7 +668,7 @@ export class Migrations {
         );
     }
     /**
-     * Retry Migration
+     * Retry migration
      *
      *
      * @param {string} migrationId
@@ -696,7 +696,7 @@ export class Migrations {
         );
     }
     /**
-     * Delete Migration
+     * Delete migration
      *
      *
      * @param {string} migrationId

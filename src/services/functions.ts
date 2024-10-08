@@ -815,7 +815,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      * Trigger a function execution. The returned object will return you the current execution status. You can ping the `Get Execution` endpoint to get updates on the current execution status. Once this endpoint is called, your function execution process will start asynchronously.
      *
      * @param {string} functionId
-     * @param {string} body
+     * @param {payload} body
      * @param {boolean} async
      * @param {string} xpath
      * @param {ExecutionMethod} method
@@ -824,7 +824,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
      * @throws {AppwriteException}
      * @returns {Promise<Models.Execution>}
      */
-    async createExecution(functionId: string, body?: string, async?: boolean, xpath?: string, method?: ExecutionMethod, headers?: object, scheduledAt?: string): Promise<Models.Execution> {
+    async createExecution(functionId: string, body?: payload, async?: boolean, xpath?: string, method?: ExecutionMethod, headers?: object, scheduledAt?: string, onProgress = (progress: UploadProgress) => {}): Promise<Models.Execution> {
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
@@ -851,15 +851,16 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
+            'content-type': 'multipart/form-data',
         }
 
 
-        return await this.client.call(
+        return await this.client.chunkedUpload(
             'post',
             uri,
             apiHeaders,
-            payload
+            payload,
+            onProgress
         );
     }
     /**

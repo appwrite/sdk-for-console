@@ -195,7 +195,7 @@ export class Users {
         );
     }
     /**
-     * List Identities
+     * List identities
      *
      * Get identities for all users.
      *
@@ -862,7 +862,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
         );
     }
     /**
-     * Delete Authenticator
+     * Delete authenticator
      *
      * Delete an authenticator app.
      *
@@ -895,7 +895,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
         );
     }
     /**
-     * List Factors
+     * List factors
      *
      * List the factors available on the account to be used as a MFA challange.
      *
@@ -924,7 +924,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
         );
     }
     /**
-     * Get MFA Recovery Codes
+     * Get MFA recovery codes
      *
      * Get recovery codes that can be used as backup for MFA flow by User ID. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
      *
@@ -953,7 +953,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
         );
     }
     /**
-     * Regenerate MFA Recovery Codes
+     * Regenerate MFA recovery codes
      *
      * Regenerate recovery codes that can be used as backup for MFA flow by User ID. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
      *
@@ -982,7 +982,7 @@ Labels can be used to grant access to resources. While teams are a way for user&
         );
     }
     /**
-     * Create MFA Recovery Codes
+     * Create MFA recovery codes
      *
      * Generate recovery codes used as backup for MFA flow for User ID. Recovery codes can be used as a MFA verification type in [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method by client SDK.
      *
@@ -1342,7 +1342,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
         );
     }
     /**
-     * List User Targets
+     * List user targets
      *
      * List the messaging targets that are associated with a user.
      *
@@ -1375,7 +1375,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
         );
     }
     /**
-     * Create User Target
+     * Create user target
      *
      * Create a messaging target.
      *
@@ -1433,7 +1433,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
         );
     }
     /**
-     * Get User Target
+     * Get user target
      *
      * Get a user&#039;s push notification target by ID.
      *
@@ -1466,7 +1466,7 @@ If you want to generate a token for a custom authentication flow, use the [POST 
         );
     }
     /**
-     * Update User target
+     * Update user target
      *
      * Update a messaging target.
      *
