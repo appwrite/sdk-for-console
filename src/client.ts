@@ -304,7 +304,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '1.1.0',
+        'x-sdk-version': '1.2.1',
         'X-Appwrite-Response-Format': '1.6.0',
     };
 
@@ -602,6 +602,7 @@ class Client {
         let options: RequestInit = {
             method,
             headers,
+            credentials: 'include',
         };
 
         if (method === 'GET') {
