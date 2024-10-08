@@ -647,6 +647,14 @@ export namespace Models {
          */
         array?: boolean;
         /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
          * Attribute size.
          */
         size: number;
@@ -683,6 +691,14 @@ export namespace Models {
          * Is attribute an array?
          */
         array?: boolean;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
         /**
          * Minimum value to enforce for new documents.
          */
@@ -725,6 +741,14 @@ export namespace Models {
          */
         array?: boolean;
         /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
          * Minimum value to enforce for new documents.
          */
         min?: number;
@@ -766,6 +790,14 @@ export namespace Models {
          */
         array?: boolean;
         /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: boolean;
@@ -798,6 +830,14 @@ export namespace Models {
          * Is attribute an array?
          */
         array?: boolean;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
         /**
          * String format.
          */
@@ -835,6 +875,14 @@ export namespace Models {
          * Is attribute an array?
          */
         array?: boolean;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
         /**
          * Array of elements in enumerated type.
          */
@@ -877,6 +925,14 @@ export namespace Models {
          */
         array?: boolean;
         /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
          * String format.
          */
         format: string;
@@ -913,6 +969,14 @@ export namespace Models {
          * Is attribute an array?
          */
         array?: boolean;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
         /**
          * String format.
          */
@@ -951,6 +1015,14 @@ export namespace Models {
          */
         array?: boolean;
         /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
          * ISO 8601 format.
          */
         format: string;
@@ -987,6 +1059,14 @@ export namespace Models {
          * Is attribute an array?
          */
         array?: boolean;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
         /**
          * The ID of the related collection.
          */
@@ -1040,6 +1120,14 @@ export namespace Models {
          * Index orders.
          */
         orders?: string[];
+        /**
+         * Index creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Index update date in ISO 8601 format.
+         */
+        $updatedAt: string;
     }
     /**
      * Document
@@ -2298,7 +2386,7 @@ export namespace Models {
         /**
          * HTTP response body. This will return empty unless execution is created as synchronous.
          */
-        responseBody: string;
+        responseBody: payload;
         /**
          * HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
          */
@@ -3021,6 +3109,10 @@ export namespace Models {
          */
         documentsTotal: number;
         /**
+         * Total aggregated number of total databases storage in bytes.
+         */
+        storageTotal: number;
+        /**
          * Aggregated number of databases per period.
          */
         databases: Metric[];
@@ -3032,6 +3124,10 @@ export namespace Models {
          * Aggregated number of documents per period.
          */
         documents: Metric[];
+        /**
+         * An array of the aggregated number of databases storage in bytes per period.
+         */
+        storage: Metric[];
     }
     /**
      * UsageDatabase
@@ -3050,6 +3146,10 @@ export namespace Models {
          */
         documentsTotal: number;
         /**
+         * Total aggregated number of total storage used in bytes.
+         */
+        storageTotal: number;
+        /**
          * Aggregated  number of collections per period.
          */
         collections: Metric[];
@@ -3057,6 +3157,10 @@ export namespace Models {
          * Aggregated  number of documents per period.
          */
         documents: Metric[];
+        /**
+         * Aggregated storage used in bytes per period.
+         */
+        storage: Metric[];
     }
     /**
      * UsageCollection
@@ -3345,6 +3449,10 @@ export namespace Models {
          */
         databasesTotal: number;
         /**
+         * Total aggregated sum of databases storage size (in bytes).
+         */
+        databasesStorageTotal: number;
+        /**
          * Total aggregated number of users.
          */
         usersTotal: number;
@@ -3352,6 +3460,10 @@ export namespace Models {
          * Total aggregated sum of files storage size (in bytes).
          */
         filesStorageTotal: number;
+        /**
+         * Total aggregated sum of functions storage size (in bytes).
+         */
+        functionsStorageTotal: number;
         /**
          * Total aggregated sum of builds storage size (in bytes).
          */
@@ -3396,6 +3508,10 @@ export namespace Models {
          * Aggregated breakdown in totals of usage by buckets.
          */
         bucketsBreakdown: MetricBreakdown[];
+        /**
+         * An array of the aggregated breakdown of storage usage by databases.
+         */
+        databasesStorageBreakdown: MetricBreakdown[];
         /**
          * Aggregated breakdown in totals of execution mbSeconds by functions.
          */

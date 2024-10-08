@@ -11,7 +11,7 @@ export class Proxy {
     }
 
     /**
-     * List Rules
+     * List rules
      *
      * Get a list of all the proxy rules. You can use the query params to filter your results.
      *
@@ -44,7 +44,7 @@ export class Proxy {
         );
     }
     /**
-     * Create Rule
+     * Create rule
      *
      * Create a new proxy rule.
      *
@@ -87,7 +87,7 @@ export class Proxy {
         );
     }
     /**
-     * Get Rule
+     * Get rule
      *
      * Get a proxy rule by its unique ID.
      *
@@ -116,7 +116,7 @@ export class Proxy {
         );
     }
     /**
-     * Delete Rule
+     * Delete rule
      *
      * Delete a proxy rule by its unique ID.
      *
@@ -145,7 +145,7 @@ export class Proxy {
         );
     }
     /**
-     * Update Rule Verification Status
+     * Update rule verification status
      *
      *
      * @param {string} ruleId

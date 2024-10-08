@@ -10,7 +10,7 @@ export class Vcs {
     }
 
     /**
-     * List Repositories
+     * List repositories
      *
      *
      * @param {string} installationId
@@ -116,7 +116,7 @@ export class Vcs {
         );
     }
     /**
-     * List Repository Branches
+     * List repository branches
      *
      *
      * @param {string} installationId
@@ -319,7 +319,7 @@ export class Vcs {
         );
     }
     /**
-     * Delete Installation
+     * Delete installation
      *
      *
      * @param {string} installationId

@@ -53,7 +53,7 @@ export class Project {
         );
     }
     /**
-     * List Variables
+     * List variables
      *
      * Get a list of all project variables. These variables will be accessible in all Appwrite Functions at runtime.
      *
@@ -78,7 +78,7 @@ export class Project {
         );
     }
     /**
-     * Create Variable
+     * Create variable
      *
      * Create a new project variable. This variable will be accessible in all Appwrite Functions at runtime.
      *
@@ -117,7 +117,7 @@ export class Project {
         );
     }
     /**
-     * Get Variable
+     * Get variable
      *
      * Get a project variable by its unique ID.
      *
@@ -146,7 +146,7 @@ export class Project {
         );
     }
     /**
-     * Update Variable
+     * Update variable
      *
      * Update project variable by its unique ID. This variable will be accessible in all Appwrite Functions at runtime.
      *
@@ -186,7 +186,7 @@ export class Project {
         );
     }
     /**
-     * Delete Variable
+     * Delete variable
      *
      * Delete a project variable by its unique ID. 
      *
