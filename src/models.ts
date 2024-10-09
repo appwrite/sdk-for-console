@@ -2594,6 +2594,14 @@ export namespace Models {
          */
         smtpSecure: string;
         /**
+         * Number of times the ping was received for this project.
+         */
+        pingCount: number;
+        /**
+         * Last ping datetime in ISO 8601 format.
+         */
+        pingedAt: string;
+        /**
          * Email/Password auth method status
          */
         authEmailPassword: boolean;
