@@ -602,6 +602,7 @@ class Client {
         let options: RequestInit = {
             method,
             headers,
+            credentials: 'include',
         };
 
         if (method === 'GET') {
