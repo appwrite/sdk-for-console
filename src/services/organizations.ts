@@ -18,9 +18,9 @@ export class Organizations {
      * @param {string[]} queries
      * @param {string} search
      * @throws {AppwriteException}
-     * @returns {Promise<Models.TeamList<Preferences>>}
+     * @returns {Promise<Models.OrganizationList<Preferences>>}
      */
-    async list<Preferences extends Models.Preferences>(queries?: string[], search?: string): Promise<Models.TeamList<Preferences>> {
+    async list<Preferences extends Models.Preferences>(queries?: string[], search?: string): Promise<Models.OrganizationList<Preferences>> {
         const apiPath = '/organizations';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -165,9 +165,9 @@ export class Organizations {
      * @param {string} organizationId
      * @param {string} aggregationId
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Invoice>}
+     * @returns {Promise<Models.AggregationTeam>}
      */
-    async getAggregation(organizationId: string, aggregationId: string): Promise<Models.Invoice> {
+    async getAggregation(organizationId: string, aggregationId: string): Promise<Models.AggregationTeam> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -354,6 +354,38 @@ export class Organizations {
 
         return await this.client.call(
             'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * List credits
+     *
+     *
+     * @param {string} organizationId
+     * @param {string[]} queries
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.CreditList>}
+     */
+    async listCredits(organizationId: string, queries?: string[]): Promise<Models.CreditList> {
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        const apiPath = '/organizations/{organizationId}/credits'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+
+        return await this.client.call(
+            'get',
             uri,
             apiHeaders,
             payload

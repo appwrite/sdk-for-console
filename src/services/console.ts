@@ -45,7 +45,7 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Coupon>}
      */
-    async getCopon(couponId: string): Promise<Models.Coupon> {
+    async getCoupon(couponId: string): Promise<Models.Coupon> {
         if (typeof couponId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "couponId"');
         }
