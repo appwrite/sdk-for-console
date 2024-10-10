@@ -1,14 +1,13 @@
 /**
  * Appwrite Console SDK
  *
- * This SDK is compatible with Appwrite server version 1.5.x. 
+ * This SDK is compatible with Appwrite server version 1.6.x. 
  * For older versions, please check
  * [previous releases](https://github.com/appwrite/sdk-for-console/releases).
  */
 export { Client, Query, AppwriteException } from './client';
 export { Account } from './services/account';
 export { Avatars } from './services/avatars';
-export { Backups } from './services/backups';
 export { Assistant } from './services/assistant';
 export { Console } from './services/console';
 export { Databases } from './services/databases';
@@ -18,7 +17,6 @@ export { Health } from './services/health';
 export { Locale } from './services/locale';
 export { Messaging } from './services/messaging';
 export { Migrations } from './services/migrations';
-export { Organizations } from './services/organizations';
 export { Project } from './services/project';
 export { Projects } from './services/projects';
 export { Proxy } from './services/proxy';
@@ -46,7 +44,6 @@ export { FunctionUsageRange } from './enums/function-usage-range';
 export { ExecutionMethod } from './enums/execution-method';
 export { Name } from './enums/name';
 export { SmtpEncryption } from './enums/smtp-encryption';
-export { BillingPlan } from './enums/billing-plan';
 export { ProjectUsageRange } from './enums/project-usage-range';
 export { Region } from './enums/region';
 export { Api } from './enums/api';

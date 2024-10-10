@@ -1,13 +1,13 @@
-import { Client, Backups } from "@appwrite.io/console";
+import { Client, Functions } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const backups = new Backups(client);
+const functions = new Functions(client);
 
-const result = await backups.getArchive(
-    '<ARCHIVE_ID>' // archiveId
+const result = await functions.getTemplate(
+    '<TEMPLATE_ID>' // templateId
 );
 
 console.log(result);

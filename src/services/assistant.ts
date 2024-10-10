@@ -10,7 +10,7 @@ export class Assistant {
     }
 
     /**
-     * Ask Query
+     * Ask query
      *
      *
      * @param {string} prompt

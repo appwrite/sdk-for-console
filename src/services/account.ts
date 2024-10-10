@@ -113,62 +113,6 @@ export class Account {
         );
     }
     /**
-     * List billing addresses
-     *
-     *
-     * @param {string[]} queries
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.BillingAddress>}
-     */
-    async listBillingAddresses(queries?: string[]): Promise<Models.BillingAddress> {
-        const apiPath = '/account/billing-addresses';
-        const payload: Payload = {};
-        if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Get billing address
-     *
-     *
-     * @param {string} billingAddressId
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.BillingAddress>}
-     */
-    async getBillingAddress(billingAddressId: string): Promise<Models.BillingAddress> {
-        if (typeof billingAddressId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "billingAddressId"');
-        }
-        const apiPath = '/account/billing-addresses/{billingAddressId}'.replace('{billingAddressId}', billingAddressId);
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
      * Update email
      *
      * Update currently logged in user account email address. After changing user address, the user confirmation status will get reset. A new confirmation email is not sent automatically however you can use the send confirmation email endpoint again to send the confirmation email. For security measures, user password is required to complete this request.
@@ -210,7 +154,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
         );
     }
     /**
-     * List Identities
+     * List identities
      *
      * Get the list of identities for the currently logged in user.
      *
@@ -268,34 +212,6 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
         );
     }
     /**
-     * List invoices
-     *
-     *
-     * @param {string[]} queries
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.InvoiceList>}
-     */
-    async listInvoices(queries?: string[]): Promise<Models.InvoiceList> {
-        const apiPath = '/account/invoices';
-        const payload: Payload = {};
-        if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
      * Create JWT
      *
      * Use this endpoint to create a JSON Web Token. You can use the resulting JWT to authenticate on behalf of the current user when working with the Appwrite server-side API and SDKs. The JWT secret is valid for 15 minutes from its creation and will be invalid if the user will logout in that time frame.
@@ -304,7 +220,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
      * @returns {Promise<Models.Jwt>}
      */
     async createJWT(): Promise<Models.Jwt> {
-        const apiPath = '/account/jwt';
+        const apiPath = '/account/jwts';
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -382,7 +298,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
         );
     }
     /**
-     * Create Authenticator
+     * Create authenticator
      *
      * Add an authenticator app to be used as an MFA factor. Verify the authenticator using the [verify authenticator](/docs/references/cloud/client-web/account#updateMfaAuthenticator) method.
      *
@@ -411,7 +327,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
         );
     }
     /**
-     * Verify Authenticator
+     * Verify authenticator
      *
      * Verify an authenticator app after adding it using the [add authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator) method.
      *
@@ -447,27 +363,20 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
         );
     }
     /**
-     * Delete Authenticator
+     * Delete authenticator
      *
      * Delete an authenticator for a user by ID.
      *
      * @param {AuthenticatorType} type
-     * @param {string} otp
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    async deleteMfaAuthenticator(type: AuthenticatorType, otp: string): Promise<{}> {
+    async deleteMfaAuthenticator(type: AuthenticatorType): Promise<{}> {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
-        if (typeof otp === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "otp"');
-        }
         const apiPath = '/account/mfa/authenticators/{type}'.replace('{type}', type);
         const payload: Payload = {};
-        if (typeof otp !== 'undefined') {
-            payload['otp'] = otp;
-        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -483,7 +392,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
         );
     }
     /**
-     * Create MFA Challenge
+     * Create MFA challenge
      *
      * Begin the process of MFA verification after sign-in. Finish the flow with [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge) method.
      *
@@ -515,7 +424,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
         );
     }
     /**
-     * Create MFA Challenge (confirmation)
+     * Create MFA challenge (confirmation)
      *
      * Complete the MFA challenge by providing the one-time password. Finish the process of MFA verification by providing the one-time password. To begin the flow, use [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method.
      *
@@ -554,7 +463,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
         );
     }
     /**
-     * List Factors
+     * List factors
      *
      * List the factors available on the account to be used as a MFA challange.
      *
@@ -579,7 +488,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
         );
     }
     /**
-     * Get MFA Recovery Codes
+     * Get MFA recovery codes
      *
      * Get recovery codes that can be used as backup for MFA flow. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method. An OTP challenge is required to read recovery codes.
      *
@@ -604,7 +513,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
         );
     }
     /**
-     * Create MFA Recovery Codes
+     * Create MFA recovery codes
      *
      * Generate recovery codes as backup for MFA flow. It&#039;s recommended to generate and show then immediately after user successfully adds their authehticator. Recovery codes can be used as a MFA verification type in [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method.
      *
@@ -629,7 +538,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
         );
     }
     /**
-     * Regenerate MFA Recovery Codes
+     * Regenerate MFA recovery codes
      *
      * Regenerate recovery codes that can be used as backup for MFA flow. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method. An OTP challenge is required to regenreate recovery codes.
      *
@@ -707,226 +616,6 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
         if (typeof oldPassword !== 'undefined') {
             payload['oldPassword'] = oldPassword;
         }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * List payment methods
-     *
-     *
-     * @param {string[]} queries
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.PaymentMethodList>}
-     */
-    async listPaymentMethods(queries?: string[]): Promise<Models.PaymentMethodList> {
-        const apiPath = '/account/payment-methods';
-        const payload: Payload = {};
-        if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Create new payment method
-     *
-     *
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.PaymentMethod>}
-     */
-    async createPaymentMethod(): Promise<Models.PaymentMethod> {
-        const apiPath = '/account/payment-methods';
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Get payment method
-     *
-     *
-     * @param {string} paymentMethodId
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.PaymentMethod>}
-     */
-    async getPaymentMethod(paymentMethodId: string): Promise<Models.PaymentMethod> {
-        if (typeof paymentMethodId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
-        }
-        const apiPath = '/account/payment-methods/{paymentMethodId}'.replace('{paymentMethodId}', paymentMethodId);
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Update payment method
-     *
-     *
-     * @param {string} paymentMethodId
-     * @param {number} expiryMonth
-     * @param {number} expiryYear
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.PaymentMethod>}
-     */
-    async updatePaymentMethod(paymentMethodId: string, expiryMonth: number, expiryYear: number): Promise<Models.PaymentMethod> {
-        if (typeof paymentMethodId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
-        }
-        if (typeof expiryMonth === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "expiryMonth"');
-        }
-        if (typeof expiryYear === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "expiryYear"');
-        }
-        const apiPath = '/account/payment-methods/{paymentMethodId}'.replace('{paymentMethodId}', paymentMethodId);
-        const payload: Payload = {};
-        if (typeof expiryMonth !== 'undefined') {
-            payload['expiryMonth'] = expiryMonth;
-        }
-        if (typeof expiryYear !== 'undefined') {
-            payload['expiryYear'] = expiryYear;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Delete payment method
-     *
-     *
-     * @param {string} paymentMethodId
-     * @throws {AppwriteException}
-     * @returns {Promise<{}>}
-     */
-    async deletePaymentMethod(paymentMethodId: string): Promise<{}> {
-        if (typeof paymentMethodId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
-        }
-        const apiPath = '/account/payment-methods/{paymentMethodId}'.replace('{paymentMethodId}', paymentMethodId);
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Update payment method provider id
-     *
-     *
-     * @param {string} paymentMethodId
-     * @param {string} providerMethodId
-     * @param {string} name
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.PaymentMethod>}
-     */
-    async updatePaymentMethodProvider(paymentMethodId: string, providerMethodId: string, name: string): Promise<Models.PaymentMethod> {
-        if (typeof paymentMethodId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
-        }
-        if (typeof providerMethodId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerMethodId"');
-        }
-        if (typeof name === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "name"');
-        }
-        const apiPath = '/account/payment-methods/{paymentMethodId}/provider'.replace('{paymentMethodId}', paymentMethodId);
-        const payload: Payload = {};
-        if (typeof providerMethodId !== 'undefined') {
-            payload['providerMethodId'] = providerMethodId;
-        }
-        if (typeof name !== 'undefined') {
-            payload['name'] = name;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Update payment method with new setup with mandates for indian cards
-     *
-     *
-     * @param {string} paymentMethodId
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.PaymentMethod>}
-     */
-    async updatePaymentMethodMandateOptions(paymentMethodId: string): Promise<Models.PaymentMethod> {
-        if (typeof paymentMethodId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
-        }
-        const apiPath = '/account/payment-methods/{paymentMethodId}/setup'.replace('{paymentMethodId}', paymentMethodId);
-        const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1942,38 +1631,6 @@ Please note that in order to avoid a [Redirect Attack](https://github.com/OWASP/
 
         return await this.client.call(
             'put',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * List credits
-     *
-     *
-     * @param {string} organizationId
-     * @param {string[]} queries
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.CreditList>}
-     */
-    async listCredits(organizationId: string, queries?: string[]): Promise<Models.CreditList> {
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
-        }
-        const apiPath = '/organizations/{organizationId}/credits'.replace('{organizationId}', organizationId);
-        const payload: Payload = {};
-        if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload

@@ -6,9 +6,9 @@ const client = new Client()
 
 const functions = new Functions(client);
 
-const result = functions.downloadDeployment(
+const result = await functions.deleteExecution(
     '<FUNCTION_ID>', // functionId
-    '<DEPLOYMENT_ID>' // deploymentId
+    '<EXECUTION_ID>' // executionId
 );
 
 console.log(result);

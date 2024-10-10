@@ -6,10 +6,9 @@ const client = new Client()
 
 const functions = new Functions(client);
 
-const result = await functions.createBuild(
+const result = functions.getDeploymentDownload(
     '<FUNCTION_ID>', // functionId
-    '<DEPLOYMENT_ID>', // deploymentId
-    '<BUILD_ID>' // buildId (optional)
+    '<DEPLOYMENT_ID>' // deploymentId
 );
 
 console.log(result);

@@ -6,10 +6,11 @@ const client = new Client()
 
 const functions = new Functions(client);
 
-const result = await functions.createBuild(
-    '<FUNCTION_ID>', // functionId
-    '<DEPLOYMENT_ID>', // deploymentId
-    '<BUILD_ID>' // buildId (optional)
+const result = await functions.listTemplates(
+    [], // runtimes (optional)
+    [], // useCases (optional)
+    1, // limit (optional)
+    0 // offset (optional)
 );
 
 console.log(result);
