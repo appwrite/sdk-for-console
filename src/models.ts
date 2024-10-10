@@ -4366,7 +4366,7 @@ export namespace Models {
         /**
          * Additional resources
          */
-        addons: AdditionalResource[];
+        addons: AdditionalResource;
         /**
          * Custom SMTP
          */
@@ -4811,6 +4811,14 @@ export namespace Models {
          */
         name: string;
         /**
+         * Mandate ID of the payment method
+         */
+        mandateId: string;
+        /**
+         * Country of the payment method
+         */
+        country: string;
+        /**
          * Last payment error associated with the payment method.
          */
         lastError: string;
@@ -5144,6 +5152,19 @@ export namespace Models {
         invoices: Invoice[];
     }
     /**
+     * Billing address list
+     */
+    export type BillingAddressList = {
+        /**
+         * Total number of billingAddresses documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of billingAddresses.
+         */
+        billingAddresses: BillingAddress[];
+    }
+    /**
      * Billing plan list
      */
     export type BillingPlanList = {
@@ -5155,6 +5176,19 @@ export namespace Models {
          * List of plans.
          */
         plans: BillingPlan[];
+    }
+    /**
+     * Organizations List
+     */
+    export type OrganizationList<Preferences extends Models.Preferences> = {
+        /**
+         * Total number of teams documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of teams.
+         */
+        teams: Organization<Preferences>[];
     }
     /**
      * Payment Methods List

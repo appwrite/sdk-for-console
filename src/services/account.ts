@@ -118,9 +118,9 @@ export class Account {
      *
      * @param {string[]} queries
      * @throws {AppwriteException}
-     * @returns {Promise<Models.BillingAddress>}
+     * @returns {Promise<Models.BillingAddressList>}
      */
-    async listBillingAddresses(queries?: string[]): Promise<Models.BillingAddress> {
+    async listBillingAddresses(queries?: string[]): Promise<Models.BillingAddressList> {
         const apiPath = '/account/billing-addresses';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -135,6 +135,66 @@ export class Account {
 
         return await this.client.call(
             'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Create new billing address
+     *
+     *
+     * @param {string} country
+     * @param {string} streetAddress
+     * @param {string} city
+     * @param {string} state
+     * @param {string} postalCode
+     * @param {string} addressLine2
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    async createBillingAddress(country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string): Promise<{}> {
+        if (typeof country === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "country"');
+        }
+        if (typeof streetAddress === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "streetAddress"');
+        }
+        if (typeof city === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "city"');
+        }
+        if (typeof state === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "state"');
+        }
+        const apiPath = '/account/billing-addresses';
+        const payload: Payload = {};
+        if (typeof country !== 'undefined') {
+            payload['country'] = country;
+        }
+        if (typeof streetAddress !== 'undefined') {
+            payload['streetAddress'] = streetAddress;
+        }
+        if (typeof city !== 'undefined') {
+            payload['city'] = city;
+        }
+        if (typeof state !== 'undefined') {
+            payload['state'] = state;
+        }
+        if (typeof postalCode !== 'undefined') {
+            payload['postalCode'] = postalCode;
+        }
+        if (typeof addressLine2 !== 'undefined') {
+            payload['addressLine2'] = addressLine2;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+
+        return await this.client.call(
+            'post',
             uri,
             apiHeaders,
             payload
@@ -163,6 +223,98 @@ export class Account {
 
         return await this.client.call(
             'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Update billing address
+     *
+     *
+     * @param {string} billingAddressId
+     * @param {string} country
+     * @param {string} streetAddress
+     * @param {string} city
+     * @param {string} state
+     * @param {string} postalCode
+     * @param {string} addressLine2
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    async updateBillingAddress(billingAddressId: string, country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string): Promise<{}> {
+        if (typeof billingAddressId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "billingAddressId"');
+        }
+        if (typeof country === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "country"');
+        }
+        if (typeof streetAddress === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "streetAddress"');
+        }
+        if (typeof city === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "city"');
+        }
+        if (typeof state === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "state"');
+        }
+        const apiPath = '/account/billing-addresses/{billingAddressId}'.replace('{billingAddressId}', billingAddressId);
+        const payload: Payload = {};
+        if (typeof country !== 'undefined') {
+            payload['country'] = country;
+        }
+        if (typeof streetAddress !== 'undefined') {
+            payload['streetAddress'] = streetAddress;
+        }
+        if (typeof city !== 'undefined') {
+            payload['city'] = city;
+        }
+        if (typeof state !== 'undefined') {
+            payload['state'] = state;
+        }
+        if (typeof postalCode !== 'undefined') {
+            payload['postalCode'] = postalCode;
+        }
+        if (typeof addressLine2 !== 'undefined') {
+            payload['addressLine2'] = addressLine2;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+
+        return await this.client.call(
+            'put',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Delete billing address
+     *
+     *
+     * @param {string} billingAddressId
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    async deleteBillingAddress(billingAddressId: string): Promise<{}> {
+        if (typeof billingAddressId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "billingAddressId"');
+        }
+        const apiPath = '/account/billing-addresses/{billingAddressId}'.replace('{billingAddressId}', billingAddressId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+
+        return await this.client.call(
+            'delete',
             uri,
             apiHeaders,
             payload
@@ -1935,38 +2087,6 @@ Please note that in order to avoid a [Redirect Attack](https://github.com/OWASP/
 
         return await this.client.call(
             'put',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * List credits
-     *
-     *
-     * @param {string} organizationId
-     * @param {string[]} queries
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.CreditList>}
-     */
-    async listCredits(organizationId: string, queries?: string[]): Promise<Models.CreditList> {
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
-        }
-        const apiPath = '/organizations/{organizationId}/credits'.replace('{organizationId}', organizationId);
-        const payload: Payload = {};
-        if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload
