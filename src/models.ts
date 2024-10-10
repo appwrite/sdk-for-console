@@ -2684,7 +2684,7 @@ export namespace Models {
         /**
          * Project region
          */
-        region: number;
+        region: string;
     }
     /**
      * Webhook
