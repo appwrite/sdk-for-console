@@ -5033,6 +5033,10 @@ export namespace Models {
          */
         databasesStorageTotal: number;
         /**
+         * Aggregated stats for total backups storage.
+         */
+        backupsStorageTotal: number;
+        /**
          * Aggregated stats for total storage.
          */
         storageTotal: number;
