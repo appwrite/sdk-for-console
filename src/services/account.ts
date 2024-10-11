@@ -151,9 +151,9 @@ export class Account {
      * @param {string} postalCode
      * @param {string} addressLine2
      * @throws {AppwriteException}
-     * @returns {Promise<{}>}
+     * @returns {Promise<Models.BillingAddress>}
      */
-    async createBillingAddress(country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string): Promise<{}> {
+    async createBillingAddress(country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string): Promise<Models.BillingAddress> {
         if (typeof country === 'undefined') {
             throw new AppwriteException('Missing required parameter: "country"');
         }
@@ -240,9 +240,9 @@ export class Account {
      * @param {string} postalCode
      * @param {string} addressLine2
      * @throws {AppwriteException}
-     * @returns {Promise<{}>}
+     * @returns {Promise<Models.BillingAddress>}
      */
-    async updateBillingAddress(billingAddressId: string, country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string): Promise<{}> {
+    async updateBillingAddress(billingAddressId: string, country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string): Promise<Models.BillingAddress> {
         if (typeof billingAddressId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "billingAddressId"');
         }
