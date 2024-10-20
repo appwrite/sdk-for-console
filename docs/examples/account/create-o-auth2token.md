@@ -1,3 +1,4 @@
+```typescript
 import { Client, Account, OAuthProvider } from "@appwrite.io/console";
 
 const client = new Client()
@@ -13,3 +14,5 @@ account.createOAuth2Token(
     [] // scopes (optional)
 );
 
+
+```

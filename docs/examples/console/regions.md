@@ -1,3 +1,4 @@
+```typescript
 import { Client, Console } from "@appwrite.io/console";
 
 const client = new Client()
@@ -9,3 +10,5 @@ const console = new Console(client);
 const result = await console.regions();
 
 console.log(result);
+
+```

@@ -1,3 +1,4 @@
+```typescript
 import { Client, Console } from "@appwrite.io/console";
 
 const client = new Client()
@@ -11,3 +12,5 @@ const result = await console.getCopon(
 );
 
 console.log(result);
+
+```

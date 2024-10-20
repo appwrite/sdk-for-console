@@ -1,3 +1,4 @@
+```typescript
 import { Client, Console } from "@appwrite.io/console";
 
 const client = new Client()
@@ -15,3 +16,5 @@ const result = await console.createSource(
 );
 
 console.log(result);
+
+```

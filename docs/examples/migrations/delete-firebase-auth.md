@@ -1,3 +1,4 @@
+```typescript
 import { Client, Migrations } from "@appwrite.io/console";
 
 const client = new Client()
@@ -9,3 +10,5 @@ const migrations = new Migrations(client);
 const result = await migrations.deleteFirebaseAuth();
 
 console.log(result);
+
+```

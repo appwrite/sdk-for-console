@@ -1,3 +1,4 @@
+```typescript
 import { Client, Messaging } from "@appwrite.io/console";
 
 const client = new Client()
@@ -16,3 +17,5 @@ const result = await messaging.createMsg91Provider(
 );
 
 console.log(result);
+
+```

@@ -1,3 +1,4 @@
+```typescript
 import { Client, Storage } from "@appwrite.io/console";
 
 const client = new Client()
@@ -13,3 +14,5 @@ const result = await storage.listFiles(
 );
 
 console.log(result);
+
+```

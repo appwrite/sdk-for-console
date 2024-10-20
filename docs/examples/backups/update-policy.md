@@ -1,3 +1,4 @@
+```typescript
 import { Client, Backups } from "@appwrite.io/console";
 
 const client = new Client()
@@ -15,3 +16,5 @@ const result = await backups.updatePolicy(
 );
 
 console.log(result);
+
+```

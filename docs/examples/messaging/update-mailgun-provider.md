@@ -1,3 +1,4 @@
+```typescript
 import { Client, Messaging } from "@appwrite.io/console";
 
 const client = new Client()
@@ -20,3 +21,5 @@ const result = await messaging.updateMailgunProvider(
 );
 
 console.log(result);
+
+```

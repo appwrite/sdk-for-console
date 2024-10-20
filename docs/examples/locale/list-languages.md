@@ -1,3 +1,4 @@
+```typescript
 import { Client, Locale } from "@appwrite.io/console";
 
 const client = new Client()
@@ -9,3 +10,5 @@ const locale = new Locale(client);
 const result = await locale.listLanguages();
 
 console.log(result);
+
+```

@@ -1,3 +1,4 @@
+```typescript
 import { Client, Vcs } from "@appwrite.io/console";
 
 const client = new Client()
@@ -12,3 +13,5 @@ const result = await vcs.listRepositories(
 );
 
 console.log(result);
+
+```

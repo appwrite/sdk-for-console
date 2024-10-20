@@ -1,3 +1,4 @@
+```typescript
 import { Client, Account } from "@appwrite.io/console";
 
 const client = new Client()
@@ -9,3 +10,5 @@ const account = new Account(client);
 const result = await account.listMfaFactors();
 
 console.log(result);
+
+```

@@ -1,3 +1,4 @@
+```typescript
 import { Client, Avatars, Flag } from "@appwrite.io/console";
 
 const client = new Client()
@@ -14,3 +15,5 @@ const result = avatars.getFlag(
 );
 
 console.log(result);
+
+```

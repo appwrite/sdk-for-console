@@ -1,3 +1,4 @@
+```typescript
 import { Client, Teams } from "@appwrite.io/console";
 
 const client = new Client()
@@ -13,3 +14,5 @@ const result = await teams.create(
 );
 
 console.log(result);
+
+```

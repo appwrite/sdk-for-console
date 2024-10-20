@@ -1,3 +1,4 @@
+```typescript
 import { Client, Storage, ImageGravity, ImageFormat } from "@appwrite.io/console";
 
 const client = new Client()
@@ -23,3 +24,5 @@ const result = storage.getFilePreview(
 );
 
 console.log(result);
+
+```

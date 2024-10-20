@@ -1,3 +1,4 @@
+```typescript
 import { Client, Functions } from "@appwrite.io/console";
 
 const client = new Client()
@@ -15,3 +16,5 @@ const result = await functions.createDeployment(
 );
 
 console.log(result);
+
+```

@@ -1,3 +1,4 @@
+```typescript
 import { Client, Functions, ExecutionMethod } from "@appwrite.io/console";
 
 const client = new Client()
@@ -17,3 +18,5 @@ const result = await functions.createExecution(
 );
 
 console.log(result);
+
+```

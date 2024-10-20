@@ -1,3 +1,4 @@
+```typescript
 import { Client, Projects, SmsTemplateType, SmsTemplateLocale } from "@appwrite.io/console";
 
 const client = new Client()
@@ -14,3 +15,5 @@ const result = await projects.updateSmsTemplate(
 );
 
 console.log(result);
+
+```

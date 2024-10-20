@@ -1,3 +1,4 @@
+```typescript
 import { Client, Health } from "@appwrite.io/console";
 
 const client = new Client()
@@ -11,3 +12,5 @@ const result = await health.getQueueWebhooks(
 );
 
 console.log(result);
+
+```

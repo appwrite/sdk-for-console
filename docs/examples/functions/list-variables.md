@@ -1,3 +1,4 @@
+```typescript
 import { Client, Functions } from "@appwrite.io/console";
 
 const client = new Client()
@@ -11,3 +12,5 @@ const result = await functions.listVariables(
 );
 
 console.log(result);
+
+```

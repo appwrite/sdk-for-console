@@ -1,3 +1,4 @@
+```typescript
 import { Client, Databases, IndexType } from "@appwrite.io/console";
 
 const client = new Client()
@@ -16,3 +17,5 @@ const result = await databases.createIndex(
 );
 
 console.log(result);
+
+```

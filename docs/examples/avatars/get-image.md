@@ -1,3 +1,4 @@
+```typescript
 import { Client, Avatars } from "@appwrite.io/console";
 
 const client = new Client()
@@ -13,3 +14,5 @@ const result = avatars.getImage(
 );
 
 console.log(result);
+
+```

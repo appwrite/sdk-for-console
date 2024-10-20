@@ -1,3 +1,4 @@
+```typescript
 import { Client, Messaging, SmtpEncryption } from "@appwrite.io/console";
 
 const client = new Client()
@@ -24,3 +25,5 @@ const result = await messaging.createSmtpProvider(
 );
 
 console.log(result);
+
+```

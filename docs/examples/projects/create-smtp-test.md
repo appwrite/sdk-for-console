@@ -1,3 +1,4 @@
+```typescript
 import { Client, Projects, SMTPSecure } from "@appwrite.io/console";
 
 const client = new Client()
@@ -20,3 +21,5 @@ const result = await projects.createSmtpTest(
 );
 
 console.log(result);
+
+```

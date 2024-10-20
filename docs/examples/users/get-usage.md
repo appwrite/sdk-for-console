@@ -1,3 +1,4 @@
+```typescript
 import { Client, Users, UserUsageRange } from "@appwrite.io/console";
 
 const client = new Client()
@@ -11,3 +12,5 @@ const result = await users.getUsage(
 );
 
 console.log(result);
+
+```

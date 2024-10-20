@@ -1,3 +1,4 @@
+```typescript
 import { Client, Organizations } from "@appwrite.io/console";
 
 const client = new Client()
@@ -13,3 +14,5 @@ const result = await organizations.createInvoicePayment(
 );
 
 console.log(result);
+
+```

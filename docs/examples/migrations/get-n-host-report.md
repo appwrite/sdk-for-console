@@ -1,3 +1,4 @@
+```typescript
 import { Client, Migrations } from "@appwrite.io/console";
 
 const client = new Client()
@@ -18,3 +19,5 @@ const result = await migrations.getNHostReport(
 );
 
 console.log(result);
+
+```

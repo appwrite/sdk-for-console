@@ -1,3 +1,4 @@
+```typescript
 import { Client, Users } from "@appwrite.io/console";
 
 const client = new Client()
@@ -14,3 +15,5 @@ const result = await users.createBcryptUser(
 );
 
 console.log(result);
+
+```

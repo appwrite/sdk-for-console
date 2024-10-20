@@ -1,3 +1,4 @@
+```typescript
 import { Client, Health } from "@appwrite.io/console";
 
 const client = new Client()
@@ -9,3 +10,5 @@ const health = new Health(client);
 const result = await health.getDB();
 
 console.log(result);
+
+```

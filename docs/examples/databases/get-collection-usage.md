@@ -1,3 +1,4 @@
+```typescript
 import { Client, Databases, DatabaseUsageRange } from "@appwrite.io/console";
 
 const client = new Client()
@@ -13,3 +14,5 @@ const result = await databases.getCollectionUsage(
 );
 
 console.log(result);
+
+```
