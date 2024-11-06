@@ -622,6 +622,41 @@ export class Projects {
         );
     }
     /**
+     * Update project team sensitive attributes
+     *
+     *
+     * @param {string} projectId
+     * @param {boolean} enabled
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     */
+    async updateTeamsSensitiveAttributes(projectId: string, enabled: boolean): Promise<Models.Project> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof enabled === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "enabled"');
+        }
+        const apiPath = '/projects/{projectId}/auth/teams-sensitive-attributes'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+
+        return await this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
      * Update project auth method status. Use this endpoint to enable or disable a given auth method for this project.
      *
      *

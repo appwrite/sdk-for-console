@@ -56,4 +56,5 @@ export enum Runtime {
     Bun10 = 'bun-1.0',
     Bun11 = 'bun-1.1',
     Go123 = 'go-1.23',
+    Static1 = 'static-1',
 }

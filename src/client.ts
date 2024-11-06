@@ -304,7 +304,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '1.2.2',
+        'x-sdk-version': '1.2.1',
         'X-Appwrite-Response-Format': '1.6.0',
     };
 
@@ -680,6 +680,10 @@ class Client {
         }
 
         return response;
+    }
+
+    async ping(): Promise<string> {
+        return this.call('GET', new URL(this.config.endpoint + '/ping'));
     }
 
     async call(method: string, url: URL, headers: Headers = {}, params: Payload = {}, responseType = 'json'): Promise<any> {
