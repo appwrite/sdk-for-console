@@ -1848,11 +1848,11 @@ export namespace Models {
          */
         userId: string;
         /**
-         * User name.
+         * User name. Hide this attribute by disabling teams sensitive data in the Console.
          */
         userName: string;
         /**
-         * User email address.
+         * User email address. Hide this attribute by disabling teams sensitive data in the Console.
          */
         userEmail: string;
         /**
@@ -1876,7 +1876,7 @@ export namespace Models {
          */
         confirm: boolean;
         /**
-         * Multi factor authentication status, true if the user has MFA enabled or false otherwise.
+         * Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by disabling teams sensitive data in the Console.
          */
         mfa: boolean;
         /**
@@ -2549,6 +2549,10 @@ export namespace Models {
          * Whether or not to send session alert emails to users.
          */
         authSessionAlerts: boolean;
+        /**
+         * Whether or not to show sensitive attributes in the teams API.
+         */
+        teamsSensitiveAttributes: boolean;
         /**
          * List of Auth Providers.
          */
@@ -3979,6 +3983,10 @@ export namespace Models {
          * The target identifier.
          */
         identifier: string;
+        /**
+         * Is the target expired.
+         */
+        expired: boolean;
     }
     /**
      * Migration
@@ -4009,7 +4017,11 @@ export namespace Models {
          */
         source: string;
         /**
-         * Resources to migration.
+         * A string containing the type of destination of the migration.
+         */
+        destination: string;
+        /**
+         * Resources to migrate.
          */
         resources: string[];
         /**
