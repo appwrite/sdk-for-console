@@ -559,6 +559,14 @@ export namespace Models {
          * If database is enabled. Can be &#039;enabled&#039; or &#039;disabled&#039;. When disabled, the database is inaccessible to users, but remains accessible to Server SDKs using API keys.
          */
         enabled: boolean;
+        /**
+         * Database backup policies.
+         */
+        policies: Index[];
+        /**
+         * Database backup archives.
+         */
+        archives: Collection[];
     }
     /**
      * Collection
@@ -2677,6 +2685,10 @@ export namespace Models {
          * Messaging service status
          */
         serviceStatusForMessaging: boolean;
+        /**
+         * Project region
+         */
+        region: string;
     }
     /**
      * Webhook
@@ -4078,5 +4090,1142 @@ export namespace Models {
          * Project display name.
          */
         displayName: string;
+    }
+    /**
+     * AdditionalResource
+     */
+    export type AdditionalResource = {
+        /**
+         * Resource unit
+         */
+        unit: string;
+        /**
+         * Price currency
+         */
+        currency: string;
+        /**
+         * Price
+         */
+        price: number;
+        /**
+         * Resource value
+         */
+        value: number;
+    }
+    /**
+     * AggregationTeam
+     */
+    export type AggregationTeam = {
+        /**
+         * Aggregation ID.
+         */
+        $id: string;
+        /**
+         * Aggregation creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Aggregation update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Aggregation permissions. [Learn more about permissions](/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * Beginning date of the invoice
+         */
+        from: string;
+        /**
+         * End date of the invoice
+         */
+        to: string;
+        /**
+         * Total storage usage
+         */
+        usageStorage: number;
+        /**
+         * Total storage usage with builds storage
+         */
+        usageTotalStorage: number;
+        /**
+         * Total files storage usage
+         */
+        usageFilesStorage: number;
+        /**
+         * Total deployments storage usage
+         */
+        usageDeploymentsStorage: number;
+        /**
+         * Total builds storage usage
+         */
+        usageBuildsStorage: number;
+        /**
+         * Total databases storage usage
+         */
+        usageDatabasesStorage: number;
+        /**
+         * Total active users for the billing period
+         */
+        usageUsers: number;
+        /**
+         * Total number of executions for the billing period
+         */
+        usageExecutions: number;
+        /**
+         * Total bandwidth usage for the billing period
+         */
+        usageBandwidth: number;
+        /**
+         * Total realtime usage for the billing period
+         */
+        usageRealtime: number;
+        /**
+         * Additional members
+         */
+        additionalMembers: number;
+        /**
+         * Additional members cost
+         */
+        additionalMemberAmount: number;
+        /**
+         * Additional storage usage cost
+         */
+        additionalStorageAmount: number;
+        /**
+         * Additional users usage cost.
+         */
+        additionalUsersAmount: number;
+        /**
+         * Additional executions usage cost
+         */
+        additionalExecutionsAmount: number;
+        /**
+         * Additional bandwidth usage cost
+         */
+        additionalBandwidthAmount: number;
+        /**
+         * Additional realtime usage cost
+         */
+        additionalRealtimeAmount: number;
+        /**
+         * Aggregated amount
+         */
+        amount: number;
+    }
+    /**
+     * Archive
+     */
+    export type BackupArchive = {
+        /**
+         * Archive ID.
+         */
+        $id: string;
+        /**
+         * Archive creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Archive update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Archive policy ID.
+         */
+        policyId: string;
+        /**
+         * Archive size in bytes.
+         */
+        size: number;
+        /**
+         * The status of the archive creation. Possible values: pending, processing, uploading, completed, failed.
+         */
+        status: string;
+        /**
+         * The backup start time.
+         */
+        startedAt: string;
+        /**
+         * Migration ID.
+         */
+        migrationId: string;
+        /**
+         * The services that are backed up by this archive.
+         */
+        services: string[];
+        /**
+         * The resources that are backed up by this archive.
+         */
+        resources: string[];
+        /**
+         * The resource ID to backup. Set only if this archive should backup a single resource.
+         */
+        resourceId?: string;
+        /**
+         * The resource type to backup. Set only if this archive should backup a single resource.
+         */
+        resourceType?: string;
+    }
+    /**
+     * BillingAddress
+     */
+    export type BillingAddress = {
+        /**
+         * Region ID
+         */
+        $id: string;
+        /**
+         * Street address
+         */
+        streetAddress: string;
+        /**
+         * Address line 2
+         */
+        addressLine2: string;
+        /**
+         * Address country
+         */
+        country: string;
+        /**
+         * city
+         */
+        city: string;
+        /**
+         * state
+         */
+        state: string;
+        /**
+         * postal code
+         */
+        postalCode: string;
+    }
+    /**
+     * billingPlan
+     */
+    export type BillingPlan = {
+        /**
+         * Plan ID.
+         */
+        $id: string;
+        /**
+         * Plan name
+         */
+        name: string;
+        /**
+         * Price
+         */
+        price: number;
+        /**
+         * Trial days
+         */
+        trial: number;
+        /**
+         * Bandwidth
+         */
+        bandwidth: number;
+        /**
+         * Storage
+         */
+        storage: number;
+        /**
+         * Members
+         */
+        members: number;
+        /**
+         * Webhooks
+         */
+        webhooks: number;
+        /**
+         * Platofrms
+         */
+        platforms: number;
+        /**
+         * Users
+         */
+        users: number;
+        /**
+         * Teams
+         */
+        teams: number;
+        /**
+         * Databases
+         */
+        databases: number;
+        /**
+         * Buckets
+         */
+        buckets: number;
+        /**
+         * File size
+         */
+        fileSize: number;
+        /**
+         * Functions
+         */
+        functions: number;
+        /**
+         * Function executions
+         */
+        executions: number;
+        /**
+         * Realtime connections
+         */
+        realtime: number;
+        /**
+         * Log days
+         */
+        logs: number;
+        /**
+         * Additional resources
+         */
+        addons: AdditionalResource;
+        /**
+         * Custom SMTP
+         */
+        customSmtp: boolean;
+        /**
+         * Appwrite branding in email
+         */
+        emailBranding: boolean;
+        /**
+         * Does plan require payment method
+         */
+        requiresPaymentMethod: boolean;
+        /**
+         * Does plan require billing address
+         */
+        requiresBillingAddress: boolean;
+        /**
+         * Is the billing plan available
+         */
+        isAvailable: boolean;
+        /**
+         * Can user change the plan themselves
+         */
+        selfService: boolean;
+    }
+    /**
+     * Campaign
+     */
+    export type Campaign = {
+        /**
+         * Campaign ID
+         */
+        $id: string;
+        /**
+         * Campaign template
+         */
+        template: string;
+        /**
+         * Campaign title
+         */
+        title: string;
+        /**
+         * Campaign description
+         */
+        description: string;
+        /**
+         * Billing plan campaign is associated with
+         */
+        plan?: string;
+        /**
+         * Campaign CTA
+         */
+        cta?: string;
+        /**
+         * Campaign info when claimed
+         */
+        claimed?: string;
+        /**
+         * Campaign infor when unclaimed
+         */
+        unclaimed?: string;
+        /**
+         * Campaign images
+         */
+        image?: object;
+        /**
+         * Campaign reviews
+         */
+        reviews?: Review[];
+        /**
+         * Campaign valid only for new orgs.
+         */
+        onlyNewOrgs?: boolean;
+        /**
+         * Is footer
+         */
+        footer?: boolean;
+    }
+    /**
+     * Coupon
+     */
+    export type Coupon = {
+        /**
+         * coupon ID
+         */
+        $id: string;
+        /**
+         * coupon ID
+         */
+        code: string;
+        /**
+         * Provided credit amount
+         */
+        credits: number;
+        /**
+         * Coupon expiration time in ISO 8601 format.
+         */
+        expiration: string;
+        /**
+         * Credit validity in days.
+         */
+        validity: number;
+        /**
+         * Campaign the coupon is associated with`.
+         */
+        campaign: string;
+        /**
+         * Status of the coupon. Can be one of `disabled`, `active` or `expired`.
+         */
+        status: string;
+    }
+    /**
+     * Credit
+     */
+    export type Credit = {
+        /**
+         * Credit ID.
+         */
+        $id: string;
+        /**
+         * Credit creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Credit update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Credit permissions. [Learn more about permissions](/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * coupon ID
+         */
+        couponId: string;
+        /**
+         * ID of the User.
+         */
+        userId: string;
+        /**
+         * ID of the Team.
+         */
+        teamId: string;
+        /**
+         * Provided credit amount
+         */
+        credits: number;
+        /**
+         * Provided credit amount
+         */
+        total: number;
+        /**
+         * Credit expiration time in ISO 8601 format.
+         */
+        expiration: string;
+        /**
+         * Status of the credit. Can be one of `disabled`, `active` or `expired`.
+         */
+        status: string;
+    }
+    /**
+     * CreditList
+     */
+    export type CreditList = {
+        /**
+         * Credits
+         */
+        credits: Credit[];
+        /**
+         * Total number of credits
+         */
+        total: number;
+        /**
+         * Total available credit balance in USD
+         */
+        available: number;
+    }
+    /**
+     * Invoice
+     */
+    export type Invoice = {
+        /**
+         * Invoice ID.
+         */
+        $id: string;
+        /**
+         * Invoice creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Invoice update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Invoice permissions. [Learn more about permissions](/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * Project ID
+         */
+        teamId: string;
+        /**
+         * Aggregation ID
+         */
+        aggregationId: string;
+        /**
+         * Billing plan selected. Can be one of `tier-0`, `tier-1` or `tier-2`.
+         */
+        plan: string;
+        /**
+         * Usage breakdown per resource
+         */
+        usage: object;
+        /**
+         * Invoice Amount
+         */
+        amount: number;
+        /**
+         * Tax percentage
+         */
+        tax: number;
+        /**
+         * Tax amount
+         */
+        taxAmount: number;
+        /**
+         * VAT percentage
+         */
+        vat: number;
+        /**
+         * VAT amount
+         */
+        vatAmount: number;
+        /**
+         * Gross amount after vat, tax, and discounts applied.
+         */
+        grossAmount: number;
+        /**
+         * Credits used.
+         */
+        creditsUsed: number;
+        /**
+         * Currency the invoice is in
+         */
+        currency: string;
+        /**
+         * Client secret for processing failed payments in front-end
+         */
+        clientSecret: string;
+        /**
+         * Invoice status
+         */
+        status: string;
+        /**
+         * Last payment error associated with the invoice
+         */
+        lastError: string;
+        /**
+         * Invoice due date.
+         */
+        dueAt: string;
+        /**
+         * Beginning date of the invoice
+         */
+        from: string;
+        /**
+         * End date of the invoice
+         */
+        to: string;
+    }
+    /**
+     * Organization
+     */
+    export type Organization<Preferences extends Models.Preferences> = {
+        /**
+         * Team ID.
+         */
+        $id: string;
+        /**
+         * Team creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Team update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Team name.
+         */
+        name: string;
+        /**
+         * Total number of team members.
+         */
+        total: number;
+        /**
+         * Team preferences as a key-value object
+         */
+        prefs: Preferences;
+        /**
+         * Project budget limit
+         */
+        billingBudget: number;
+        /**
+         * Project budget limit
+         */
+        budgetAlerts: string[];
+        /**
+         * Billing plan selected. Can be one of `tier-0`, `tier-1` or `tier-2`.
+         */
+        billingPlan: string;
+        /**
+         * Billing email set for the organization.
+         */
+        billingEmail: string;
+        /**
+         * Billing cycle start date.
+         */
+        billingStartDate: string;
+        /**
+         * Current invoice cycle start date.
+         */
+        billingCurrentInvoiceDate: string;
+        /**
+         * Next invoice cycle start date.
+         */
+        billingNextInvoiceDate: string;
+        /**
+         * Start date of trial.
+         */
+        billingTrialStartDate: string;
+        /**
+         * Number of trial days.
+         */
+        billingTrialDays: number;
+        /**
+         * Current active aggregation id.
+         */
+        billingAggregationId: string;
+        /**
+         * Default payment method.
+         */
+        paymentMethodId: string;
+        /**
+         * Default payment method.
+         */
+        billingAddressId: string;
+        /**
+         * Backup payment method.
+         */
+        backupPaymentMethodId: string;
+        /**
+         * Organization agreements
+         */
+        agreementBAA: string;
+        /**
+         * Program manager&#039;s name.
+         */
+        programManagerName: string;
+        /**
+         * Program manager&#039;s calendar link.
+         */
+        programManagerCalendar: string;
+        /**
+         * Program&#039;s discord channel name.
+         */
+        programDiscordChannelName: string;
+        /**
+         * Program&#039;s discord channel URL.
+         */
+        programDiscordChannelUrl: string;
+        /**
+         * Billing limits reached
+         */
+        billingLimits: object;
+        /**
+         * Billing plan downgrade
+         */
+        billingPlanDowngrade: object;
+        /**
+         * Tax Id
+         */
+        billingTaxId: string;
+        /**
+         * Marked for deletion
+         */
+        markedForDeletion: boolean;
+    }
+    /**
+     * paymentMethod
+     */
+    export type PaymentMethod = {
+        /**
+         * Payment Method ID.
+         */
+        $id: string;
+        /**
+         * Payment method creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Payment method update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Payment method permissions. [Learn more about permissions](/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * Payment method ID from the payment provider
+         */
+        providerMethodId: string;
+        /**
+         * Client secret hash for payment setup
+         */
+        clientSecret: string;
+        /**
+         * User ID from the payment provider.
+         */
+        providerUserId: string;
+        /**
+         * ID of the Team.
+         */
+        userId: string;
+        /**
+         * Expiry month of the payment method.
+         */
+        expiryMonth: number;
+        /**
+         * Expiry year of the payment method.
+         */
+        expiryYear: number;
+        /**
+         * Last 4 digit of the payment method
+         */
+        last4: string;
+        /**
+         * Payment method brand
+         */
+        brand: string;
+        /**
+         * Name of the owner
+         */
+        name: string;
+        /**
+         * Mandate ID of the payment method
+         */
+        mandateId: string;
+        /**
+         * Country of the payment method
+         */
+        country: string;
+        /**
+         * Last payment error associated with the payment method.
+         */
+        lastError: string;
+        /**
+         * True when it&#039;s the default payment method.
+         */
+        default: boolean;
+        /**
+         * True when payment method has expired.
+         */
+        expired: boolean;
+        /**
+         * True when payment method has failed to process multiple times.
+         */
+        failed: boolean;
+    }
+    /**
+     * backup
+     */
+    export type BackupPolicy = {
+        /**
+         * Backup policy ID.
+         */
+        $id: string;
+        /**
+         * Backup policy name.
+         */
+        name: string;
+        /**
+         * Policy creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Policy update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * The services that are backed up by this policy.
+         */
+        services: string[];
+        /**
+         * The resources that are backed up by this policy.
+         */
+        resources: string[];
+        /**
+         * The resource ID to backup. Set only if this policy should backup a single resource.
+         */
+        resourceId?: string;
+        /**
+         * The resource type to backup. Set only if this policy should backup a single resource.
+         */
+        resourceType?: string;
+        /**
+         * How many days to keep the backup before it will be automatically deleted.
+         */
+        retention: number;
+        /**
+         * Policy backup schedule in CRON format.
+         */
+        schedule: string;
+        /**
+         * Is this policy enabled.
+         */
+        enabled: boolean;
+    }
+    /**
+     * Region
+     */
+    export type ConsoleRegion = {
+        /**
+         * Region ID
+         */
+        $id: string;
+        /**
+         * Region name
+         */
+        name: string;
+        /**
+         * Is the region disabled.
+         */
+        disabled: boolean;
+        /**
+         * Is this the region default.
+         */
+        default: boolean;
+        /**
+         * Region flag code.
+         */
+        flag: string;
+    }
+    /**
+     * Restoration
+     */
+    export type BackupRestoration = {
+        /**
+         * Restoration ID.
+         */
+        $id: string;
+        /**
+         * Restoration creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Restoration update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Backup archive ID.
+         */
+        archiveId: string;
+        /**
+         * Backup policy ID.
+         */
+        policyId: string;
+        /**
+         * The status of the restoration. Possible values: pending, downloading, processing, completed, failed.
+         */
+        status: string;
+        /**
+         * The backup start time.
+         */
+        startedAt: string;
+        /**
+         * Migration ID.
+         */
+        migrationId: string;
+        /**
+         * The services that are backed up by this policy.
+         */
+        services: string[];
+        /**
+         * The resources that are backed up by this policy.
+         */
+        resources: string[];
+        /**
+         * Optional data in key-value object. 
+         */
+        options: string;
+    }
+    /**
+     * Review
+     */
+    export type Review = {
+        /**
+         * Name of user
+         */
+        name: string;
+        /**
+         * Reviewer image
+         */
+        image: string;
+        /**
+         * Reviewer description
+         */
+        description: string;
+        /**
+         * Review
+         */
+        review: string;
+    }
+    /**
+     * Roles
+     */
+    export type Roles = {
+        /**
+         * Array of scopes accessible to current user.
+         */
+        scopes: string[];
+        /**
+         * Array of roles assigned to current user.
+         */
+        roles: string[];
+    }
+    /**
+     * UsageOrganization
+     */
+    export type UsageOrganization = {
+        /**
+         * Aggregated stats for number of requests.
+         */
+        bandwidth: Metric[];
+        /**
+         * Aggregated stats for consumed bandwidth.
+         */
+        users: Metric[];
+        /**
+         * Aggregated stats for function executions.
+         */
+        executions: Metric[];
+        /**
+         * Aggregated stats for total users.
+         */
+        usersTotal: number;
+        /**
+         * Aggregated stats for total executions.
+         */
+        executionsTotal: number;
+        /**
+         * Aggregated stats for function executions in mb seconds.
+         */
+        executionsMBSecondsTotal: number;
+        /**
+         * Aggregated stats for function builds in mb seconds.
+         */
+        buildsMBSecondsTotal: number;
+        /**
+         * Aggregated stats for total file storage.
+         */
+        filesStorageTotal: number;
+        /**
+         * Aggregated stats for total builds storage.
+         */
+        buildsStorageTotal: number;
+        /**
+         * Aggregated stats for total deployments storage.
+         */
+        deploymentsStorageTotal: number;
+        /**
+         * Aggregated stats for total databases storage.
+         */
+        databasesStorageTotal: number;
+        /**
+         * Aggregated stats for total backups storage.
+         */
+        backupsStorageTotal: number;
+        /**
+         * Aggregated stats for total storage.
+         */
+        storageTotal: number;
+        /**
+         * Aggregated stats for each projects.
+         */
+        projects: UsageOrganizationProject[];
+    }
+    /**
+     * UsageOrganizationProject
+     */
+    export type UsageOrganizationProject = {
+        /**
+         * projectId
+         */
+        projectId: string;
+        /**
+         * Aggregated stats for number of requests.
+         */
+        bandwidth: Metric[];
+        /**
+         * Aggregated stats for consumed bandwidth.
+         */
+        users: Metric[];
+        /**
+         * Aggregated stats for function executions.
+         */
+        executions: number;
+        /**
+         * Aggregated stats for function executions in mb seconds.
+         */
+        executionsMBSeconds: number;
+        /**
+         * Aggregated stats for function builds in mb seconds.
+         */
+        buildsMBSeconds: number;
+        /**
+         * Aggregated stats for number of documents.
+         */
+        storage: number;
+    }
+    /**
+     * Aggregation team list
+     */
+    export type AggregationTeamList = {
+        /**
+         * Total number of aggregations documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of aggregations.
+         */
+        aggregations: AggregationTeam[];
+    }
+    /**
+     * Backup archive list
+     */
+    export type BackupArchiveList = {
+        /**
+         * Total number of archives documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of archives.
+         */
+        archives: BackupArchive[];
+    }
+    /**
+     * Backup policy list
+     */
+    export type BackupPolicyList = {
+        /**
+         * Total number of policies documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of policies.
+         */
+        policies: BackupPolicy[];
+    }
+    /**
+     * Backup restoration list
+     */
+    export type BackupRestorationList = {
+        /**
+         * Total number of restorations documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of restorations.
+         */
+        restorations: BackupRestoration[];
+    }
+    /**
+     * Billing Invoices List
+     */
+    export type InvoiceList = {
+        /**
+         * Total number of invoices documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of invoices.
+         */
+        invoices: Invoice[];
+    }
+    /**
+     * Billing address list
+     */
+    export type BillingAddressList = {
+        /**
+         * Total number of billingAddresses documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of billingAddresses.
+         */
+        billingAddresses: BillingAddress[];
+    }
+    /**
+     * Billing plan list
+     */
+    export type BillingPlanList = {
+        /**
+         * Total number of plans documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of plans.
+         */
+        plans: BillingPlan[];
+    }
+    /**
+     * Organizations List
+     */
+    export type OrganizationList<Preferences extends Models.Preferences> = {
+        /**
+         * Total number of teams documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of teams.
+         */
+        teams: Organization<Preferences>[];
+    }
+    /**
+     * Payment Methods List
+     */
+    export type PaymentMethodList = {
+        /**
+         * Total number of paymentMethods documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of paymentMethods.
+         */
+        paymentMethods: PaymentMethod[];
+    }
+    /**
+     * Regions list
+     */
+    export type ConsoleRegionList = {
+        /**
+         * Total number of regions documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of regions.
+         */
+        regions: ConsoleRegion[];
     }
 }
