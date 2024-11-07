@@ -6,9 +6,11 @@ const client = new Client()
 
 const projects = new Projects(client);
 
-const result = await projects.updateTeamsSensitiveAttributes(
+const result = await projects.updateMembershipsPrivacy(
     '<PROJECT_ID>', // projectId
-    false // enabled
+    false, // userName
+    false, // userEmail
+    false // mfa
 );
 
 console.log(result);

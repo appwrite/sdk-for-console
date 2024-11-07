@@ -1848,11 +1848,11 @@ export namespace Models {
          */
         userId: string;
         /**
-         * User name. Hide this attribute by disabling teams sensitive data in the Console.
+         * User name. Hide this attribute by toggling membership privacy in the Console.
          */
         userName: string;
         /**
-         * User email address. Hide this attribute by disabling teams sensitive data in the Console.
+         * User email address. Hide this attribute by toggling membership privacy in the Console.
          */
         userEmail: string;
         /**
@@ -1876,7 +1876,7 @@ export namespace Models {
          */
         confirm: boolean;
         /**
-         * Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by disabling teams sensitive data in the Console.
+         * Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
          */
         mfa: boolean;
         /**
@@ -2550,9 +2550,17 @@ export namespace Models {
          */
         authSessionAlerts: boolean;
         /**
-         * Whether or not to show sensitive attributes in the teams API.
+         * Whether or not to show user names in the teams membership response.
          */
-        teamsSensitiveAttributes: boolean;
+        membershipsUserName: boolean;
+        /**
+         * Whether or not to show user emails in the teams membership response.
+         */
+        membershipsUserEmail: boolean;
+        /**
+         * Whether or not to show user MFA status in the teams membership response.
+         */
+        membershipsMfa: boolean;
         /**
          * List of Auth Providers.
          */
