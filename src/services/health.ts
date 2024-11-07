@@ -190,6 +190,34 @@ export class Health {
         );
     }
     /**
+     * Get billing aggregation queue
+     *
+     *
+     * @param {number} threshold
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthQueue>}
+     */
+    async getQueueBillingAggregation(threshold?: number): Promise<Models.HealthQueue> {
+        const apiPath = '/health/queue/billing-aggregation';
+        const payload: Payload = {};
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+
+        return await this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
      * Get builds queue
      *
      * Get the number of builds that are waiting to be processed in the Appwrite internal queue server.
@@ -200,6 +228,34 @@ export class Health {
      */
     async getQueueBuilds(threshold?: number): Promise<Models.HealthQueue> {
         const apiPath = '/health/queue/builds';
+        const payload: Payload = {};
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+
+        return await this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Get billing aggregation queue
+     *
+     *
+     * @param {number} threshold
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthQueue>}
+     */
+    async getQueuePriorityBuilds(threshold?: number): Promise<Models.HealthQueue> {
+        const apiPath = '/health/queue/builds-priority';
         const payload: Payload = {};
         if (typeof threshold !== 'undefined') {
             payload['threshold'] = threshold;

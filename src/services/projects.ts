@@ -447,7 +447,7 @@ export class Projects {
         );
     }
     /**
-     * Update project team sensitive attributes
+     * Update project team memberships privacy attributes
      *
      *
      * @param {string} projectId
