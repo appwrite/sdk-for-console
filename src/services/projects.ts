@@ -447,6 +447,55 @@ export class Projects {
         );
     }
     /**
+     * Update project team sensitive attributes
+     *
+     *
+     * @param {string} projectId
+     * @param {boolean} userName
+     * @param {boolean} userEmail
+     * @param {boolean} mfa
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     */
+    async updateMembershipsPrivacy(projectId: string, userName: boolean, userEmail: boolean, mfa: boolean): Promise<Models.Project> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof userName === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userName"');
+        }
+        if (typeof userEmail === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userEmail"');
+        }
+        if (typeof mfa === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "mfa"');
+        }
+        const apiPath = '/projects/{projectId}/auth/memberships-privacy'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+        if (typeof userName !== 'undefined') {
+            payload['userName'] = userName;
+        }
+        if (typeof userEmail !== 'undefined') {
+            payload['userEmail'] = userEmail;
+        }
+        if (typeof mfa !== 'undefined') {
+            payload['mfa'] = mfa;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+
+        return await this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
      * Update the mock numbers for the project
      *
      *
@@ -606,41 +655,6 @@ export class Projects {
         const payload: Payload = {};
         if (typeof alerts !== 'undefined') {
             payload['alerts'] = alerts;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Update project team sensitive attributes
-     *
-     *
-     * @param {string} projectId
-     * @param {boolean} enabled
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
-     */
-    async updateTeamsSensitiveAttributes(projectId: string, enabled: boolean): Promise<Models.Project> {
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof enabled === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "enabled"');
-        }
-        const apiPath = '/projects/{projectId}/auth/teams-sensitive-attributes'.replace('{projectId}', projectId);
-        const payload: Payload = {};
-        if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
