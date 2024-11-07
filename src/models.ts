@@ -2552,15 +2552,15 @@ export namespace Models {
         /**
          * Whether or not to show user names in the teams membership response.
          */
-        membershipsUserName: boolean;
+        authMembershipsUserName: boolean;
         /**
          * Whether or not to show user emails in the teams membership response.
          */
-        membershipsUserEmail: boolean;
+        authMembershipsUserEmail: boolean;
         /**
          * Whether or not to show user MFA status in the teams membership response.
          */
-        membershipsMfa: boolean;
+        authMembershipsMfa: boolean;
         /**
          * List of Auth Providers.
          */
