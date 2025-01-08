@@ -321,6 +321,34 @@ export class Account {
         );
     }
     /**
+     * Get coupon details
+     *
+     *
+     * @param {string} couponId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Coupon>}
+     */
+    async getCoupon(couponId: string): Promise<Models.Coupon> {
+        if (typeof couponId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "couponId"');
+        }
+        const apiPath = '/account/coupons/{couponId}'.replace('{couponId}', couponId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+
+        return await this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
      * Update email
      *
      * Update currently logged in user account email address. After changing user address, the user confirmation status will get reset. A new confirmation email is not sent automatically however you can use the send confirmation email endpoint again to send the confirmation email. For security measures, user password is required to complete this request.
@@ -1817,7 +1845,7 @@ A user is limited to 10 active sessions at a time by default. [Learn more about 
     /**
      * Create magic URL token
      *
-     * Sends the user an email with a secret key for creating a session. If the provided user ID has not been registered, a new user will be created. When the user clicks the link in the email, the user is redirected back to the URL you provided with the secret key and userId values attached to the URL query string. Use the query string parameters to submit a request to the [POST /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process. The link sent to the user&#039;s email address is valid for 1 hour. If you are on a mobile device you can leave the URL parameter empty, so that the login completion will be handled by your Appwrite instance by default.
+     * Sends the user an email with a secret key for creating a session. If the provided user ID has not been registered, a new user will be created. When the user clicks the link in the email, the user is redirected back to the URL you provided with the secret key and userId values attached to the URL query string. Use the query string parameters to submit a request to the [POST /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process. The link sent to the user&#039;s email address is valid for 1 hour.
 
 A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
 
