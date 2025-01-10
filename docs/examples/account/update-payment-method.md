@@ -9,7 +9,7 @@ const account = new Account(client);
 const result = await account.updatePaymentMethod(
     '<PAYMENT_METHOD_ID>', // paymentMethodId
     1, // expiryMonth
-    2024 // expiryYear
+    2025 // expiryYear
 );
 
 console.log(result);

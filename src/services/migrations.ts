@@ -146,7 +146,7 @@ export class Migrations {
         );
     }
     /**
-     * Migrate Firebase data (Service Account)
+     * Migrate Firebase data
      *
      *
      * @param {string[]} resources
@@ -184,92 +184,6 @@ export class Migrations {
         );
     }
     /**
-     * Revoke Appwrite&#039;s authorization to access Firebase projects
-     *
-     *
-     * @throws {AppwriteException}
-     * @returns {Promise<{}>}
-     */
-    async deleteFirebaseAuth(): Promise<{}> {
-        const apiPath = '/migrations/firebase/deauthorize';
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Migrate Firebase data (OAuth)
-     *
-     *
-     * @param {string[]} resources
-     * @param {string} projectId
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Migration>}
-     */
-    async createFirebaseOAuthMigration(resources: string[], projectId: string): Promise<Models.Migration> {
-        if (typeof resources === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resources"');
-        }
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        const apiPath = '/migrations/firebase/oauth';
-        const payload: Payload = {};
-        if (typeof resources !== 'undefined') {
-            payload['resources'] = resources;
-        }
-        if (typeof projectId !== 'undefined') {
-            payload['projectId'] = projectId;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * List Firebase projects
-     *
-     *
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.FirebaseProjectList>}
-     */
-    async listFirebaseProjects(): Promise<Models.FirebaseProjectList> {
-        const apiPath = '/migrations/firebase/projects';
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
      * Generate a report on Firebase data
      *
      *
@@ -292,44 +206,6 @@ export class Migrations {
         }
         if (typeof serviceAccount !== 'undefined') {
             payload['serviceAccount'] = serviceAccount;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-
-        return await this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Generate a report on Firebase data using OAuth
-     *
-     *
-     * @param {string[]} resources
-     * @param {string} projectId
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.MigrationReport>}
-     */
-    async getFirebaseReportOAuth(resources: string[], projectId: string): Promise<Models.MigrationReport> {
-        if (typeof resources === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resources"');
-        }
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        const apiPath = '/migrations/firebase/report/oauth';
-        const payload: Payload = {};
-        if (typeof resources !== 'undefined') {
-            payload['resources'] = resources;
-        }
-        if (typeof projectId !== 'undefined') {
-            payload['projectId'] = projectId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

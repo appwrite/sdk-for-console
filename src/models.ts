@@ -497,19 +497,6 @@ export namespace Models {
         migrations: Migration[];
     }
     /**
-     * Migrations Firebase Projects List
-     */
-    export type FirebaseProjectList = {
-        /**
-         * Total number of projects documents that matched your query.
-         */
-        total: number;
-        /**
-         * List of projects.
-         */
-        projects: FirebaseProject[];
-    }
-    /**
      * Specifications List
      */
     export type SpecificationList = {
@@ -1941,7 +1928,7 @@ export namespace Models {
          */
         events: string[];
         /**
-         * Function execution schedult in CRON format.
+         * Function execution schedule in CRON format.
          */
         schedule: string;
         /**
@@ -3110,7 +3097,7 @@ export namespace Models {
         /**
          * Resource ID.
          */
-        resourceId: string;
+        resourceId?: string;
         /**
          * Resource name.
          */
@@ -3119,6 +3106,10 @@ export namespace Models {
          * The value of this metric at the timestamp.
          */
         value: number;
+        /**
+         * The estimated value of this metric at the end of the period.
+         */
+        estimate?: number;
     }
     /**
      * UsageDatabases
@@ -3556,6 +3547,18 @@ export namespace Models {
          * Aggregated breakdown in totals of functions storage size (in bytes).
          */
         functionsStorageBreakdown: MetricBreakdown[];
+        /**
+         * Total aggregated number of phone auth.
+         */
+        authPhoneTotal: number;
+        /**
+         * Estimated total aggregated cost of phone auth.
+         */
+        authPhoneEstimate: number;
+        /**
+         * Aggregated breakdown in totals of phone auth by country.
+         */
+        authPhoneCountryBreakdown: MetricBreakdown[];
     }
     /**
      * Headers
@@ -4087,19 +4090,6 @@ export namespace Models {
         version: string;
     }
     /**
-     * MigrationFirebaseProject
-     */
-    export type FirebaseProject = {
-        /**
-         * Project ID.
-         */
-        projectId: string;
-        /**
-         * Project display name.
-         */
-        displayName: string;
-    }
-    /**
      * AdditionalResource
      */
     export type AdditionalResource = {
@@ -4320,6 +4310,10 @@ export namespace Models {
          */
         name: string;
         /**
+         * Plan order
+         */
+        order: number;
+        /**
          * Price
          */
         price: number;
@@ -4411,6 +4405,26 @@ export namespace Models {
          * Can user change the plan themselves
          */
         selfService: boolean;
+        /**
+         * Does plan enable premium support
+         */
+        premiumSupport: boolean;
+        /**
+         * Does plan support budget cap
+         */
+        budgeting: boolean;
+        /**
+         * Does plan support mock numbers
+         */
+        supportsMockNumbers: boolean;
+        /**
+         * Does plan support backup policies.
+         */
+        backupsEnabled: boolean;
+        /**
+         * How many policies does plan support
+         */
+        backupPolicies: number;
     }
     /**
      * Campaign
@@ -4692,7 +4706,7 @@ export namespace Models {
         /**
          * Project budget limit
          */
-        budgetAlerts: string[];
+        budgetAlerts: number[];
         /**
          * Billing plan selected. Can be one of `tier-0`, `tier-1` or `tier-2`.
          */
@@ -5069,6 +5083,14 @@ export namespace Models {
          */
         storageTotal: number;
         /**
+         * Aggregated stats for total phone authentication SMS.
+         */
+        authPhoneTotal: number;
+        /**
+         * Aggregated stats for estimated phone authentication SMS cost.
+         */
+        authPhoneEstimate: number;
+        /**
          * Aggregated stats for each projects.
          */
         projects: UsageOrganizationProject[];
@@ -5105,6 +5127,14 @@ export namespace Models {
          * Aggregated stats for number of documents.
          */
         storage: number;
+        /**
+         * Aggregated stats for phone authentication.
+         */
+        authPhoneTotal: number;
+        /**
+         * Aggregated stats for phone authentication estimated cost.
+         */
+        authPhoneEstimate: number;
     }
     /**
      * Aggregation team list

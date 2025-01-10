@@ -165,9 +165,9 @@ export class Organizations {
      * @param {string} organizationId
      * @param {string} aggregationId
      * @throws {AppwriteException}
-     * @returns {Promise<Models.AggregationTeam>}
+     * @returns {Promise<Models.Invoice>}
      */
-    async getAggregation(organizationId: string, aggregationId: string): Promise<Models.AggregationTeam> {
+    async getAggregation(organizationId: string, aggregationId: string): Promise<Models.Invoice> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -523,7 +523,7 @@ export class Organizations {
         );
     }
     /**
-     * View invoice in PDF
+     * Download invoice in PDF
      *
      *
      * @param {string} organizationId

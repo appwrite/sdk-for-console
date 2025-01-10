@@ -54,4 +54,5 @@ export enum Runtime {
     Bun11 = 'bun-1.1',
     Go123 = 'go-1.23',
     Static1 = 'static-1',
+    Flutter324 = 'flutter-3.24',
 }

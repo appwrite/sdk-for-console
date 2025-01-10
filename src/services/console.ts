@@ -90,6 +90,34 @@ export class Console {
         );
     }
     /**
+     * Create program membership
+     *
+     *
+     * @param {string} programId
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    async createProgramMembership(programId: string): Promise<{}> {
+        if (typeof programId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "programId"');
+        }
+        const apiPath = '/console/programs/{programId}/memberships'.replace('{programId}', programId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+
+        return await this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
      * Get Regions
      *
      *

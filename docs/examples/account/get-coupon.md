@@ -1,11 +1,13 @@
-import { Client, Migrations } from "@appwrite.io/console";
+import { Client, Account } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const migrations = new Migrations(client);
+const account = new Account(client);
 
-const result = await migrations.listFirebaseProjects();
+const result = await account.getCoupon(
+    '<COUPON_ID>' // couponId
+);
 
 console.log(result);
