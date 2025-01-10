@@ -5027,10 +5027,6 @@ export namespace Models {
          */
         executions: Metric[];
         /**
-         * Aggregated stats for phone authentication.
-         */
-        authPhone: Metric;
-        /**
          * Aggregated stats for total users.
          */
         usersTotal: number;
@@ -5071,9 +5067,13 @@ export namespace Models {
          */
         storageTotal: number;
         /**
-         * Breakdown of phone authentication stats by country code.
+         * Aggregated stats for total phone authentication SMS.
          */
-        authPhoneBreakdown: MetricBreakdown;
+        authPhoneTotal: number;
+        /**
+         * Aggregated stats for estimated phone authentication SMS cost.
+         */
+        authPhoneEstimate: number;
         /**
          * Aggregated stats for each projects.
          */
@@ -5111,6 +5111,14 @@ export namespace Models {
          * Aggregated stats for number of documents.
          */
         storage: number;
+        /**
+         * Aggregated stats for phone authentication.
+         */
+        authPhoneTotal: number;
+        /**
+         * Aggregated stats for phone authentication estimated cost.
+         */
+        authPhoneEstimate: number;
     }
     /**
      * Aggregation team list
