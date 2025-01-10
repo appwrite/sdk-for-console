@@ -3097,7 +3097,7 @@ export namespace Models {
         /**
          * Resource ID.
          */
-        resourceId: string;
+        resourceId?: string;
         /**
          * Resource name.
          */
@@ -3106,6 +3106,10 @@ export namespace Models {
          * The value of this metric at the timestamp.
          */
         value: number;
+        /**
+         * The estimated value of this metric at the end of the period.
+         */
+        estimate?: number;
     }
     /**
      * UsageDatabases
@@ -3543,6 +3547,18 @@ export namespace Models {
          * Aggregated breakdown in totals of functions storage size (in bytes).
          */
         functionsStorageBreakdown: MetricBreakdown[];
+        /**
+         * Total aggregated number of phone auth.
+         */
+        authPhoneTotal: number;
+        /**
+         * Estimated total aggregated cost of phone auth.
+         */
+        authPhoneEstimate: number;
+        /**
+         * Aggregated breakdown in totals of phone auth by country.
+         */
+        authPhoneCountryBreakdown: MetricBreakdown[];
     }
     /**
      * Headers
