@@ -13,6 +13,7 @@ export class Project {
     /**
      * Get project usage stats
      *
+     * Get comprehensive usage statistics for your project. View metrics including network requests, bandwidth, storage, function executions, database usage, and user activity. Specify a time range with startDate and endDate, and optionally set the data granularity with period (1h or 1d). The response includes both total counts and detailed breakdowns by resource, along with historical data over the specified period.
      *
      * @param {string} startDate
      * @param {string} endDate
