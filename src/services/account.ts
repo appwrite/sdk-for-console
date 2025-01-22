@@ -115,6 +115,7 @@ export class Account {
     /**
      * List billing addresses
      *
+     * List all billing addresses for a user.
      *
      * @param {string[]} queries
      * @throws {AppwriteException}
@@ -143,6 +144,7 @@ export class Account {
     /**
      * Create new billing address
      *
+     * Add a new billing address to a user&#039;s account.
      *
      * @param {string} country
      * @param {string} streetAddress
@@ -203,6 +205,7 @@ export class Account {
     /**
      * Get billing address
      *
+     * Get a specific billing address for a user using it&#039;s ID.
      *
      * @param {string} billingAddressId
      * @throws {AppwriteException}
@@ -231,6 +234,7 @@ export class Account {
     /**
      * Update billing address
      *
+     * Update a specific billing address using it&#039;s ID.
      *
      * @param {string} billingAddressId
      * @param {string} country
@@ -295,6 +299,7 @@ export class Account {
     /**
      * Delete billing address
      *
+     * Delete a specific billing address using it&#039;s ID.
      *
      * @param {string} billingAddressId
      * @throws {AppwriteException}
@@ -323,6 +328,7 @@ export class Account {
     /**
      * Get coupon details
      *
+     * Get coupon details for an account.
      *
      * @param {string} couponId
      * @throws {AppwriteException}
@@ -450,6 +456,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
     /**
      * List invoices
      *
+     * List all invoices tied to an account.
      *
      * @param {string[]} queries
      * @throws {AppwriteException}
@@ -695,9 +702,9 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
      * @param {string} challengeId
      * @param {string} otp
      * @throws {AppwriteException}
-     * @returns {Promise<{}>}
+     * @returns {Promise<Models.Session>}
      */
-    async updateMfaChallenge(challengeId: string, otp: string): Promise<{}> {
+    async updateMfaChallenge(challengeId: string, otp: string): Promise<Models.Session> {
         if (typeof challengeId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "challengeId"');
         }
@@ -897,6 +904,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
     /**
      * List payment methods
      *
+     * List payment methods for this account.
      *
      * @param {string[]} queries
      * @throws {AppwriteException}
@@ -925,6 +933,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
     /**
      * Create new payment method
      *
+     * Create a new payment method for the current user account.
      *
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
@@ -949,6 +958,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
     /**
      * Get payment method
      *
+     * Get a specific payment method for the user.
      *
      * @param {string} paymentMethodId
      * @throws {AppwriteException}
@@ -977,6 +987,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
     /**
      * Update payment method
      *
+     * Update a new payment method for the current user account.
      *
      * @param {string} paymentMethodId
      * @param {number} expiryMonth
@@ -1019,6 +1030,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
     /**
      * Delete payment method
      *
+     * Delete a specific payment method from a user&#039;s account.
      *
      * @param {string} paymentMethodId
      * @throws {AppwriteException}
@@ -1047,6 +1059,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
     /**
      * Update payment method provider id
      *
+     * Update payment method provider.
      *
      * @param {string} paymentMethodId
      * @param {string} providerMethodId
@@ -1089,6 +1102,7 @@ This endpoint can also be used to convert an anonymous account to a normal one, 
     /**
      * Update payment method with new setup with mandates for indian cards
      *
+     * Update payment method mandate options.
      *
      * @param {string} paymentMethodId
      * @throws {AppwriteException}
@@ -1695,6 +1709,7 @@ A user is limited to 10 active sessions at a time by default. [Learn more about 
     /**
      * Create push target
      *
+     * Use this endpoint to register a device for push notifications. Provide a target ID (custom or generated using ID.unique()), a device identifier (usually a device token), and optionally specify which provider should send notifications to this target. The target is automatically linked to the current session and includes device information like brand and model.
      *
      * @param {string} targetId
      * @param {string} identifier
@@ -1737,6 +1752,7 @@ A user is limited to 10 active sessions at a time by default. [Learn more about 
     /**
      * Update push target
      *
+     * Update the currently logged in user&#039;s push notification target. You can modify the target&#039;s identifier (device token) and provider ID (token, email, phone etc.). The target must exist and belong to the current user. If you change the provider ID, notifications will be sent through the new messaging provider instead.
      *
      * @param {string} targetId
      * @param {string} identifier
@@ -1772,6 +1788,7 @@ A user is limited to 10 active sessions at a time by default. [Learn more about 
     /**
      * Delete push target
      *
+     * Delete a push notification target for the currently logged in user. After deletion, the device will no longer receive push notifications. The target must exist and belong to the current user.
      *
      * @param {string} targetId
      * @throws {AppwriteException}

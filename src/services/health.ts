@@ -192,6 +192,7 @@ export class Health {
     /**
      * Get billing aggregation queue
      *
+     * Get billing aggregation queue
      *
      * @param {number} threshold
      * @throws {AppwriteException}
@@ -249,6 +250,7 @@ export class Health {
     /**
      * Get billing aggregation queue
      *
+     * Get the priority builds queue size.
      *
      * @param {number} threshold
      * @throws {AppwriteException}
@@ -555,6 +557,35 @@ export class Health {
      */
     async getQueueUsage(threshold?: number): Promise<Models.HealthQueue> {
         const apiPath = '/health/queue/usage';
+        const payload: Payload = {};
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+
+        return await this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Get usage count aggregation queue
+     *
+     * Get the usage count aggregation queue.
+     *
+     * @param {number} threshold
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthQueue>}
+     */
+    async getQueueUsageCount(threshold?: number): Promise<Models.HealthQueue> {
+        const apiPath = '/health/queue/usage-count';
         const payload: Payload = {};
         if (typeof threshold !== 'undefined') {
             payload['threshold'] = threshold;

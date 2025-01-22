@@ -46,7 +46,8 @@ export class Organizations {
     /**
      * Create Organization
      *
-     * Create a new team. The user who creates the team will automatically be assigned as the owner of the team. Only the users with the owner role can invite new members, add new owners and delete or update the team.
+     * Create a new organization.
+
      *
      * @param {string} organizationId
      * @param {string} name
@@ -100,7 +101,7 @@ export class Organizations {
     /**
      * Delete team
      *
-     * Delete a team using its ID. Only team members with the owner role can delete the team.
+     * Delete an organization.
      *
      * @param {string} organizationId
      * @throws {AppwriteException}
@@ -129,6 +130,7 @@ export class Organizations {
     /**
      * List aggregations
      *
+     * Get a list of all aggregations for an organization.
      *
      * @param {string} organizationId
      * @param {string[]} queries
@@ -161,6 +163,7 @@ export class Organizations {
     /**
      * Get invoice
      *
+     * Get a specific aggregation using it&#039;s aggregation ID.
      *
      * @param {string} organizationId
      * @param {string} aggregationId
@@ -193,6 +196,7 @@ export class Organizations {
     /**
      * Set team&#039;s billing address
      *
+     * Set a billing address for an organization.
      *
      * @param {string} organizationId
      * @param {string} billingAddressId
@@ -228,6 +232,7 @@ export class Organizations {
     /**
      * Delete team&#039;s billing address
      *
+     * Delete a team&#039;s billing address.
      *
      * @param {string} organizationId
      * @throws {AppwriteException}
@@ -256,6 +261,7 @@ export class Organizations {
     /**
      * Get billing address
      *
+     * Get a billing address using it&#039;s ID.
      *
      * @param {string} organizationId
      * @param {string} billingAddressId
@@ -288,6 +294,7 @@ export class Organizations {
     /**
      * Set team&#039;s billing email
      *
+     * Set the current billing email for the organization.
      *
      * @param {string} organizationId
      * @param {string} billingEmail
@@ -323,6 +330,7 @@ export class Organizations {
     /**
      * Update organization budget
      *
+     * Update the budget limit for an organization.
      *
      * @param {string} organizationId
      * @param {number} budget
@@ -362,6 +370,8 @@ export class Organizations {
     /**
      * List credits
      *
+     * List all credits for an organization.
+
      *
      * @param {string} organizationId
      * @param {string[]} queries
@@ -394,6 +404,7 @@ export class Organizations {
     /**
      * Add credits from coupon
      *
+     * Add credit to an organization using a coupon.
      *
      * @param {string} organizationId
      * @param {string} couponId
@@ -429,6 +440,7 @@ export class Organizations {
     /**
      * Get credit details
      *
+     * Get credit details.
      *
      * @param {string} organizationId
      * @param {string} creditId
@@ -461,6 +473,7 @@ export class Organizations {
     /**
      * List invoices
      *
+     * List all invoices for an organization.
      *
      * @param {string} organizationId
      * @param {string[]} queries
@@ -493,6 +506,7 @@ export class Organizations {
     /**
      * Get invoice
      *
+     * Get an invoice by its unique ID.
      *
      * @param {string} organizationId
      * @param {string} invoiceId
@@ -525,6 +539,7 @@ export class Organizations {
     /**
      * Download invoice in PDF
      *
+     * Download invoice in PDF
      *
      * @param {string} organizationId
      * @param {string} invoiceId
@@ -557,6 +572,7 @@ export class Organizations {
     /**
      * Initiate payment for failed invoice to pay live from console
      *
+     * Initiate payment for failed invoice to pay live from console
      *
      * @param {string} organizationId
      * @param {string} invoiceId
@@ -596,6 +612,7 @@ export class Organizations {
     /**
      * View invoice in PDF
      *
+     * View invoice in PDF
      *
      * @param {string} organizationId
      * @param {string} invoiceId
@@ -628,6 +645,7 @@ export class Organizations {
     /**
      * Set team&#039;s payment method
      *
+     * Set a organization&#039;s default payment method.
      *
      * @param {string} organizationId
      * @param {string} paymentMethodId
@@ -663,6 +681,7 @@ export class Organizations {
     /**
      * Delete team&#039;s default payment method
      *
+     * Delete the default payment method for an organization.
      *
      * @param {string} organizationId
      * @throws {AppwriteException}
@@ -691,6 +710,8 @@ export class Organizations {
     /**
      * Set team&#039;s backup payment method
      *
+     * Set an organization&#039;s backup payment method.
+
      *
      * @param {string} organizationId
      * @param {string} paymentMethodId
@@ -726,6 +747,7 @@ export class Organizations {
     /**
      * Delete team&#039;s backup payment method
      *
+     * Delete a backup payment method for an organization.
      *
      * @param {string} organizationId
      * @throws {AppwriteException}
@@ -754,6 +776,7 @@ export class Organizations {
     /**
      * Get payment method
      *
+     * Get an organization&#039;s payment method using it&#039;s payment method ID.
      *
      * @param {string} organizationId
      * @param {string} paymentMethodId
@@ -786,6 +809,7 @@ export class Organizations {
     /**
      * Get organization billing plan details
      *
+     * Get the details of the current billing plan for an organization.
      *
      * @param {string} organizationId
      * @throws {AppwriteException}
@@ -814,6 +838,7 @@ export class Organizations {
     /**
      * Update organization billing plan
      *
+     * Update the billing plan for an organization.
      *
      * @param {string} organizationId
      * @param {BillingPlan} billingPlan
@@ -857,6 +882,7 @@ export class Organizations {
     /**
      * Get Scopes
      *
+     * Get Scopes
      *
      * @param {string} organizationId
      * @throws {AppwriteException}
@@ -885,6 +911,7 @@ export class Organizations {
     /**
      * Set team&#039;s tax Id
      *
+     * Set an organization&#039;s billing tax ID.
      *
      * @param {string} organizationId
      * @param {string} taxId
@@ -920,6 +947,7 @@ export class Organizations {
     /**
      * Get team&#039;s usage data
      *
+     * Get the usage data for an organization.
      *
      * @param {string} organizationId
      * @param {string} startDate

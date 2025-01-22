@@ -12,6 +12,7 @@ export class Console {
     /**
      * Get campaign details
      *
+     * Recieve the details of a compaign using it&#039;s ID.
      *
      * @param {string} campaignId
      * @throws {AppwriteException}
@@ -40,6 +41,7 @@ export class Console {
     /**
      * Get coupon details
      *
+     * Get the details of a coupon using it&#039;s coupon ID.
      *
      * @param {string} couponId
      * @throws {AppwriteException}
@@ -68,6 +70,7 @@ export class Console {
     /**
      * Get plans
      *
+     * Return a list of all available plans.
      *
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingPlanList>}
@@ -92,12 +95,13 @@ export class Console {
     /**
      * Create program membership
      *
+     * Create a new membership for an account to a program.
      *
      * @param {string} programId
      * @throws {AppwriteException}
-     * @returns {Promise<{}>}
+     * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async createProgramMembership(programId: string): Promise<{}> {
+    async createProgramMembership<Preferences extends Models.Preferences>(programId: string): Promise<Models.Organization<Preferences>> {
         if (typeof programId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "programId"');
         }
@@ -120,6 +124,7 @@ export class Console {
     /**
      * Get Regions
      *
+     * Get all available regions for the console.
      *
      * @throws {AppwriteException}
      * @returns {Promise<Models.ConsoleRegionList>}
@@ -144,6 +149,7 @@ export class Console {
     /**
      * Create source
      *
+     * Create a new source.
      *
      * @param {string} ref
      * @param {string} referrer

@@ -12,6 +12,7 @@ export class Assistant {
     /**
      * Ask query
      *
+     * Send a prompt to the AI assistant and receive a response. This endpoint allows you to interact with Appwrite&#039;s AI assistant by sending questions or prompts and receiving helpful responses in real-time through a server-sent events stream. 
      *
      * @param {string} prompt
      * @throws {AppwriteException}

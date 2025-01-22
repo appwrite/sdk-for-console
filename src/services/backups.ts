@@ -12,6 +12,7 @@ export class Backups {
     /**
      * List archives
      *
+     * List all archives for a project.
      *
      * @param {string[]} queries
      * @throws {AppwriteException}
@@ -40,6 +41,7 @@ export class Backups {
     /**
      * Create archive
      *
+     * Create a new archive asynchronously for a project.
      *
      * @param {string[]} services
      * @param {string} resourceId
@@ -75,6 +77,7 @@ export class Backups {
     /**
      * Get backup archive
      *
+     * Get a backup archive using it&#039;s ID.
      *
      * @param {string} archiveId
      * @throws {AppwriteException}
@@ -103,6 +106,7 @@ export class Backups {
     /**
      * Delete archive
      *
+     * Delete an existing archive for a project.
      *
      * @param {string} archiveId
      * @throws {AppwriteException}
@@ -131,6 +135,7 @@ export class Backups {
     /**
      * List backup policies
      *
+     * List all policies for a project.
      *
      * @param {string[]} queries
      * @throws {AppwriteException}
@@ -159,6 +164,7 @@ export class Backups {
     /**
      * Create backup policy
      *
+     * Create a new backup policy.
      *
      * @param {string} policyId
      * @param {string[]} services
@@ -223,6 +229,7 @@ export class Backups {
     /**
      * Get backup policy
      *
+     * Get a backup policy using it&#039;s ID.
      *
      * @param {string} policyId
      * @throws {AppwriteException}
@@ -251,6 +258,7 @@ export class Backups {
     /**
      * Update backup policy
      *
+     * Update an existing policy using it&#039;s ID.
      *
      * @param {string} policyId
      * @param {string} name
@@ -295,6 +303,7 @@ export class Backups {
     /**
      * Delete backup policy
      *
+     * Delete a policy using it&#039;s ID.
      *
      * @param {string} policyId
      * @throws {AppwriteException}
@@ -323,6 +332,7 @@ export class Backups {
     /**
      * Create restoration
      *
+     * Create and trigger a new restoration for a backup on a project.
      *
      * @param {string} archiveId
      * @param {string[]} services
@@ -369,6 +379,7 @@ export class Backups {
     /**
      * List restorations
      *
+     * List all backup restorations for a project.
      *
      * @param {string[]} queries
      * @throws {AppwriteException}
@@ -397,12 +408,13 @@ export class Backups {
     /**
      * Get backup restoration
      *
+     * Get the current status of a backup restoration.
      *
      * @param {string} restorationId
      * @throws {AppwriteException}
-     * @returns {Promise<Models.BackupArchive>}
+     * @returns {Promise<Models.BackupRestoration>}
      */
-    async getRestoration(restorationId: string): Promise<Models.BackupArchive> {
+    async getRestoration(restorationId: string): Promise<Models.BackupRestoration> {
         if (typeof restorationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "restorationId"');
         }

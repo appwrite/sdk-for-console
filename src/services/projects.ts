@@ -23,6 +23,7 @@ export class Projects {
     /**
      * List projects
      *
+     * Get a list of all projects. You can use the query params to filter your results. 
      *
      * @param {string[]} queries
      * @param {string} search
@@ -55,6 +56,7 @@ export class Projects {
     /**
      * Create project
      *
+     * Create a new project. You can create a maximum of 100 projects per account. 
      *
      * @param {string} projectId
      * @param {string} name
@@ -140,6 +142,7 @@ export class Projects {
     /**
      * Get project
      *
+     * Get a project by its unique ID. This endpoint allows you to retrieve the project&#039;s details, including its name, description, team, region, and other metadata. 
      *
      * @param {string} projectId
      * @throws {AppwriteException}
@@ -168,6 +171,7 @@ export class Projects {
     /**
      * Update project
      *
+     * Update a project by its unique ID.
      *
      * @param {string} projectId
      * @param {string} name
@@ -239,6 +243,7 @@ export class Projects {
     /**
      * Delete project
      *
+     * Delete a project by its unique ID.
      *
      * @param {string} projectId
      * @throws {AppwriteException}
@@ -267,6 +272,7 @@ export class Projects {
     /**
      * Update API status
      *
+     * Update the status of a specific API type. Use this endpoint to enable or disable API types such as REST, GraphQL and Realtime.
      *
      * @param {string} projectId
      * @param {Api} api
@@ -309,6 +315,7 @@ export class Projects {
     /**
      * Update all API status
      *
+     * Update the status of all API types. Use this endpoint to enable or disable API types such as REST, GraphQL and Realtime all at once.
      *
      * @param {string} projectId
      * @param {boolean} status
@@ -344,6 +351,7 @@ export class Projects {
     /**
      * Update project authentication duration
      *
+     * Update how long sessions created within a project should stay active for.
      *
      * @param {string} projectId
      * @param {number} duration
@@ -379,6 +387,7 @@ export class Projects {
     /**
      * Update project users limit
      *
+     * Update the maximum number of users allowed in this project. Set to 0 for unlimited users. 
      *
      * @param {string} projectId
      * @param {number} limit
@@ -414,6 +423,7 @@ export class Projects {
     /**
      * Update project user sessions limit
      *
+     * Update the maximum number of sessions allowed per user within the project, if the limit is hit the oldest session will be deleted to make room for new sessions.
      *
      * @param {string} projectId
      * @param {number} limit
@@ -449,6 +459,7 @@ export class Projects {
     /**
      * Update project memberships privacy attributes
      *
+     * Update project membership privacy settings. Use this endpoint to control what user information is visible to other team members, such as user name, email, and MFA status. 
      *
      * @param {string} projectId
      * @param {boolean} userName
@@ -498,6 +509,7 @@ export class Projects {
     /**
      * Update the mock numbers for the project
      *
+     * Update the list of mock phone numbers for testing. Use these numbers to bypass SMS verification in development. 
      *
      * @param {string} projectId
      * @param {object[]} numbers
@@ -533,6 +545,7 @@ export class Projects {
     /**
      * Update authentication password dictionary status. Use this endpoint to enable or disable the dicitonary check for user password
      *
+     * Enable or disable checking user passwords against common passwords dictionary. This helps ensure users don&#039;t use common and insecure passwords. 
      *
      * @param {string} projectId
      * @param {boolean} enabled
@@ -568,6 +581,7 @@ export class Projects {
     /**
      * Update authentication password history. Use this endpoint to set the number of password history to save and 0 to disable password history.
      *
+     * Update the authentication password history requirement. Use this endpoint to require new passwords to be different than the last X amount of previously used ones.
      *
      * @param {string} projectId
      * @param {number} limit
@@ -603,6 +617,7 @@ export class Projects {
     /**
      * Enable or disable checking user passwords for similarity with their personal data.
      *
+     * Enable or disable checking user passwords against their personal data. This helps prevent users from using personal information in their passwords. 
      *
      * @param {string} projectId
      * @param {boolean} enabled
@@ -638,6 +653,7 @@ export class Projects {
     /**
      * Update project sessions emails
      *
+     * Enable or disable session email alerts. When enabled, users will receive email notifications when new sessions are created.
      *
      * @param {string} projectId
      * @param {boolean} alerts
@@ -673,6 +689,7 @@ export class Projects {
     /**
      * Update project auth method status. Use this endpoint to enable or disable a given auth method for this project.
      *
+     * Update the status of a specific authentication method. Use this endpoint to enable or disable different authentication methods such as email, magic urls or sms in your project. 
      *
      * @param {string} projectId
      * @param {AuthMethod} method
@@ -712,6 +729,7 @@ export class Projects {
     /**
      * Create JWT
      *
+     * Create a new JWT token. This token can be used to authenticate users with custom scopes and expiration time. 
      *
      * @param {string} projectId
      * @param {string[]} scopes
@@ -751,6 +769,7 @@ export class Projects {
     /**
      * List keys
      *
+     * Get a list of all API keys from the current project. 
      *
      * @param {string} projectId
      * @throws {AppwriteException}
@@ -779,6 +798,7 @@ export class Projects {
     /**
      * Create key
      *
+     * Create a new API key. It&#039;s recommended to have multiple API keys with strict scopes for separate functions within your project.
      *
      * @param {string} projectId
      * @param {string} name
@@ -825,6 +845,7 @@ export class Projects {
     /**
      * Get key
      *
+     * Get a key by its unique ID. This endpoint returns details about a specific API key in your project including it&#039;s scopes.
      *
      * @param {string} projectId
      * @param {string} keyId
@@ -857,6 +878,7 @@ export class Projects {
     /**
      * Update key
      *
+     * Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key. 
      *
      * @param {string} projectId
      * @param {string} keyId
@@ -907,6 +929,7 @@ export class Projects {
     /**
      * Delete key
      *
+     * Delete a key by its unique ID. Once deleted, the key can no longer be used to authenticate API calls. 
      *
      * @param {string} projectId
      * @param {string} keyId
@@ -939,6 +962,7 @@ export class Projects {
     /**
      * Update project OAuth2
      *
+     * Update the OAuth2 provider configurations. Use this endpoint to set up or update the OAuth2 provider credentials or enable/disable providers. 
      *
      * @param {string} projectId
      * @param {OAuthProvider} provider
@@ -986,6 +1010,7 @@ export class Projects {
     /**
      * List platforms
      *
+     * Get a list of all platforms in the project. This endpoint returns an array of all platforms and their configurations. 
      *
      * @param {string} projectId
      * @throws {AppwriteException}
@@ -1014,6 +1039,7 @@ export class Projects {
     /**
      * Create platform
      *
+     * Create a new platform for your project. Use this endpoint to register a new platform where your users will run your application which will interact with the Appwrite API.
      *
      * @param {string} projectId
      * @param {PlatformType} type
@@ -1068,6 +1094,7 @@ export class Projects {
     /**
      * Get platform
      *
+     * Get a platform by its unique ID. This endpoint returns the platform&#039;s details, including its name, type, and key configurations. 
      *
      * @param {string} projectId
      * @param {string} platformId
@@ -1100,6 +1127,7 @@ export class Projects {
     /**
      * Update platform
      *
+     * Update a platform by its unique ID. Use this endpoint to update the platform&#039;s name, key, platform store ID, or hostname. 
      *
      * @param {string} projectId
      * @param {string} platformId
@@ -1151,6 +1179,7 @@ export class Projects {
     /**
      * Delete platform
      *
+     * Delete a platform by its unique ID. This endpoint removes the platform and all its configurations from the project. 
      *
      * @param {string} projectId
      * @param {string} platformId
@@ -1183,6 +1212,7 @@ export class Projects {
     /**
      * Update service status
      *
+     * Update the status of a specific service. Use this endpoint to enable or disable a service in your project. 
      *
      * @param {string} projectId
      * @param {ApiService} service
@@ -1225,6 +1255,7 @@ export class Projects {
     /**
      * Update all service status
      *
+     * Update the status of all services. Use this endpoint to enable or disable all optional services at once. 
      *
      * @param {string} projectId
      * @param {boolean} status
@@ -1260,6 +1291,7 @@ export class Projects {
     /**
      * Update SMTP
      *
+     * Update the SMTP configuration for your project. Use this endpoint to configure your project&#039;s SMTP provider with your custom settings for sending transactional emails. 
      *
      * @param {string} projectId
      * @param {boolean} enabled
@@ -1327,6 +1359,7 @@ export class Projects {
     /**
      * Create SMTP test
      *
+     * Send a test email to verify SMTP configuration. 
      *
      * @param {string} projectId
      * @param {string[]} emails
@@ -1403,6 +1436,7 @@ export class Projects {
     /**
      * Update project team
      *
+     * Update the team ID of a project allowing for it to be transferred to another team.
      *
      * @param {string} projectId
      * @param {string} teamId
@@ -1438,6 +1472,7 @@ export class Projects {
     /**
      * Get custom email template
      *
+     * Get a custom email template for the specified locale and type. This endpoint returns the template content, subject, and other configuration details. 
      *
      * @param {string} projectId
      * @param {EmailTemplateType} type
@@ -1474,6 +1509,7 @@ export class Projects {
     /**
      * Update custom email templates
      *
+     * Update a custom email template for the specified locale and type. Use this endpoint to modify the content of your email templates.
      *
      * @param {string} projectId
      * @param {EmailTemplateType} type
@@ -1484,9 +1520,9 @@ export class Projects {
      * @param {string} senderEmail
      * @param {string} replyTo
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
+     * @returns {Promise<Models.EmailTemplate>}
      */
-    async updateEmailTemplate(projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale, subject: string, message: string, senderName?: string, senderEmail?: string, replyTo?: string): Promise<Models.Project> {
+    async updateEmailTemplate(projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale, subject: string, message: string, senderName?: string, senderEmail?: string, replyTo?: string): Promise<Models.EmailTemplate> {
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
@@ -1536,6 +1572,7 @@ export class Projects {
     /**
      * Reset custom email template
      *
+     * Reset a custom email template to its default value. This endpoint removes any custom content and restores the template to its original state. 
      *
      * @param {string} projectId
      * @param {EmailTemplateType} type
@@ -1572,6 +1609,7 @@ export class Projects {
     /**
      * Get custom SMS template
      *
+     * Get a custom SMS template for the specified locale and type returning it&#039;s contents.
      *
      * @param {string} projectId
      * @param {SmsTemplateType} type
@@ -1608,6 +1646,7 @@ export class Projects {
     /**
      * Update custom SMS template
      *
+     * Update a custom SMS template for the specified locale and type. Use this endpoint to modify the content of your SMS templates. 
      *
      * @param {string} projectId
      * @param {SmsTemplateType} type
@@ -1651,6 +1690,7 @@ export class Projects {
     /**
      * Reset custom SMS template
      *
+     * Reset a custom SMS template to its default value. This endpoint removes any custom message and restores the template to its original state. 
      *
      * @param {string} projectId
      * @param {SmsTemplateType} type
@@ -1687,6 +1727,7 @@ export class Projects {
     /**
      * List webhooks
      *
+     * Get a list of all webhooks belonging to the project. You can use the query params to filter your results. 
      *
      * @param {string} projectId
      * @throws {AppwriteException}
@@ -1715,6 +1756,7 @@ export class Projects {
     /**
      * Create webhook
      *
+     * Create a new webhook. Use this endpoint to configure a URL that will receive events from Appwrite when specific events occur. 
      *
      * @param {string} projectId
      * @param {string} name
@@ -1783,6 +1825,7 @@ export class Projects {
     /**
      * Get webhook
      *
+     * Get a webhook by its unique ID. This endpoint returns details about a specific webhook configured for a project. 
      *
      * @param {string} projectId
      * @param {string} webhookId
@@ -1815,6 +1858,7 @@ export class Projects {
     /**
      * Update webhook
      *
+     * Update a webhook by its unique ID. Use this endpoint to update the URL, events, or status of an existing webhook. 
      *
      * @param {string} projectId
      * @param {string} webhookId
@@ -1887,6 +1931,7 @@ export class Projects {
     /**
      * Delete webhook
      *
+     * Delete a webhook by its unique ID. Once deleted, the webhook will no longer receive project events. 
      *
      * @param {string} projectId
      * @param {string} webhookId
@@ -1919,6 +1964,7 @@ export class Projects {
     /**
      * Update webhook signature key
      *
+     * Update the webhook signature key. This endpoint can be used to regenerate the signature key used to sign and validate payload deliveries for a specific webhook. 
      *
      * @param {string} projectId
      * @param {string} webhookId

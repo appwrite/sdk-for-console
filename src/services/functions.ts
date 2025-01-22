@@ -291,6 +291,7 @@ export class Functions {
     /**
      * Get functions usage
      *
+     * Get usage metrics and statistics for a for all functions. View statistics including total functions, deployments, builds, executions, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
      *
      * @param {FunctionUsageRange} range
      * @throws {AppwriteException}
@@ -669,6 +670,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
     /**
      * Rebuild deployment
      *
+     * Create a new build for an existing function deployment. This endpoint allows you to rebuild a deployment with the updated function configuration, including its entrypoint and build commands if they have been modified The build process will be queued and executed asynchronously. The original deployment&#039;s code will be preserved and used for the new build.
      *
      * @param {string} functionId
      * @param {string} deploymentId
@@ -705,6 +707,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
     /**
      * Cancel deployment
      *
+     * Cancel an ongoing function deployment build. If the build is already in progress, it will be stopped and marked as canceled. If the build hasn&#039;t started yet, it will be marked as canceled without executing. You cannot cancel builds that have already completed (status &#039;ready&#039;) or failed. The response includes the final build status and details.
      *
      * @param {string} functionId
      * @param {string} deploymentId
@@ -932,6 +935,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
     /**
      * Get function usage
      *
+     * Get usage metrics and statistics for a for a specific function. View statistics including total deployments, builds, executions, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
      *
      * @param {string} functionId
      * @param {FunctionUsageRange} range

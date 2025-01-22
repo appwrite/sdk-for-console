@@ -569,6 +569,8 @@ export class Users {
     /**
      * Get users usage stats
      *
+     * Get usage metrics and statistics for all users in the project. You can view the total number of users and sessions. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
+
      *
      * @param {UserUsageRange} range
      * @throws {AppwriteException}
@@ -869,9 +871,9 @@ Labels can be used to grant access to resources. While teams are a way for user&
      * @param {string} userId
      * @param {AuthenticatorType} type
      * @throws {AppwriteException}
-     * @returns {Promise<Models.User<Preferences>>}
+     * @returns {Promise<{}>}
      */
-    async deleteMfaAuthenticator<Preferences extends Models.Preferences>(userId: string, type: AuthenticatorType): Promise<Models.User<Preferences>> {
+    async deleteMfaAuthenticator(userId: string, type: AuthenticatorType): Promise<{}> {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }

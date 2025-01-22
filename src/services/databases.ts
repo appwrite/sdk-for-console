@@ -93,6 +93,7 @@ export class Databases {
     /**
      * Get databases usage stats
      *
+     * Get usage metrics and statistics for all databases in the project. You can view the total number of databases, collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
      * @param {DatabaseUsageRange} range
      * @throws {AppwriteException}
@@ -2187,6 +2188,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
     /**
      * Get collection usage stats
      *
+     * Get usage metrics and statistics for a collection. Returning the total number of documents. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -2256,6 +2258,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
     /**
      * Get database usage stats
      *
+     * Get usage metrics and statistics for a database. You can view the total number of collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
      * @param {string} databaseId
      * @param {DatabaseUsageRange} range

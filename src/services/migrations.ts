@@ -12,6 +12,7 @@ export class Migrations {
     /**
      * List migrations
      *
+     * List all migrations in the current project. This endpoint returns a list of all migrations including their status, progress, and any errors that occurred during the migration process.
      *
      * @param {string[]} queries
      * @param {string} search
@@ -44,6 +45,7 @@ export class Migrations {
     /**
      * Migrate Appwrite data
      *
+     * Migrate data from another Appwrite project to your current project. This endpoint allows you to migrate resources like databases, collections, documents, users, and files from an existing Appwrite project. 
      *
      * @param {string[]} resources
      * @param {string} endpoint
@@ -96,6 +98,7 @@ export class Migrations {
     /**
      * Generate a report on Appwrite data
      *
+     * Generate a report of the data in an Appwrite project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
      * @param {string[]} resources
      * @param {string} endpoint
@@ -148,6 +151,7 @@ export class Migrations {
     /**
      * Migrate Firebase data
      *
+     * Migrate data from a Firebase project to your Appwrite project. This endpoint allows you to migrate resources like authentication and other supported services from a Firebase project. 
      *
      * @param {string[]} resources
      * @param {string} serviceAccount
@@ -186,6 +190,7 @@ export class Migrations {
     /**
      * Generate a report on Firebase data
      *
+     * Generate a report of the data in a Firebase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
      * @param {string[]} resources
      * @param {string} serviceAccount
@@ -224,6 +229,7 @@ export class Migrations {
     /**
      * Migrate NHost data
      *
+     * Migrate data from an NHost project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from an NHost project. 
      *
      * @param {string[]} resources
      * @param {string} subdomain
@@ -301,6 +307,7 @@ export class Migrations {
     /**
      * Generate a report on NHost Data
      *
+     * Generate a detailed report of the data in an NHost project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
      *
      * @param {string[]} resources
      * @param {string} subdomain
@@ -378,6 +385,7 @@ export class Migrations {
     /**
      * Migrate Supabase data
      *
+     * Migrate data from a Supabase project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from a Supabase project. 
      *
      * @param {string[]} resources
      * @param {string} endpoint
@@ -448,6 +456,7 @@ export class Migrations {
     /**
      * Generate a report on Supabase Data
      *
+     * Generate a report of the data in a Supabase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
      *
      * @param {string[]} resources
      * @param {string} endpoint
@@ -518,6 +527,7 @@ export class Migrations {
     /**
      * Get migration
      *
+     * Get a migration by its unique ID. This endpoint returns detailed information about a specific migration including its current status, progress, and any errors that occurred during the migration process. 
      *
      * @param {string} migrationId
      * @throws {AppwriteException}
@@ -546,6 +556,7 @@ export class Migrations {
     /**
      * Retry migration
      *
+     * Retry a failed migration. This endpoint allows you to retry a migration that has previously failed.
      *
      * @param {string} migrationId
      * @throws {AppwriteException}
@@ -574,6 +585,7 @@ export class Migrations {
     /**
      * Delete migration
      *
+     * Delete a migration by its unique ID. This endpoint allows you to remove a migration from your project&#039;s migration history. 
      *
      * @param {string} migrationId
      * @throws {AppwriteException}
