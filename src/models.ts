@@ -3136,6 +3136,14 @@ export namespace Models {
          */
         storageTotal: number;
         /**
+         * Total number of databases reads.
+         */
+        databasesReadsTotal: number;
+        /**
+         * Total number of databases writes.
+         */
+        databasesWritesTotal: number;
+        /**
          * Aggregated number of databases per period.
          */
         databases: Metric[];
@@ -3151,6 +3159,14 @@ export namespace Models {
          * An array of the aggregated number of databases storage in bytes per period.
          */
         storage: Metric[];
+        /**
+         * An array of aggregated number of database reads.
+         */
+        databasesReads: Metric[];
+        /**
+         * An array of aggregated number of database writes.
+         */
+        databasesWrites: Metric[];
     }
     /**
      * UsageDatabase
@@ -3173,6 +3189,14 @@ export namespace Models {
          */
         storageTotal: number;
         /**
+         * Total number of databases reads.
+         */
+        databaseReadsTotal: number;
+        /**
+         * Total number of databases writes.
+         */
+        databaseWritesTotal: number;
+        /**
          * Aggregated  number of collections per period.
          */
         collections: Metric[];
@@ -3184,6 +3208,14 @@ export namespace Models {
          * Aggregated storage used in bytes per period.
          */
         storage: Metric[];
+        /**
+         * An array of aggregated number of database reads.
+         */
+        databaseReads: Metric[];
+        /**
+         * An array of aggregated number of database writes.
+         */
+        databaseWrites: Metric[];
     }
     /**
      * UsageCollection
@@ -3508,6 +3540,14 @@ export namespace Models {
          */
         buildsMbSecondsTotal: number;
         /**
+         * Total number of databases reads.
+         */
+        databasesReadsTotal: number;
+        /**
+         * Total number of databases writes.
+         */
+        databasesWritesTotal: number;
+        /**
          * Aggregated  number of requests per period.
          */
         requests: Metric[];
@@ -3559,6 +3599,14 @@ export namespace Models {
          * Aggregated breakdown in totals of phone auth by country.
          */
         authPhoneCountryBreakdown: MetricBreakdown[];
+        /**
+         * An array of aggregated number of database reads.
+         */
+        databasesReads: Metric[];
+        /**
+         * An array of aggregated number of database writes.
+         */
+        databasesWrites: Metric[];
     }
     /**
      * Headers

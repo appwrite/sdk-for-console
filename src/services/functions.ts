@@ -769,10 +769,6 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
 
         payload['project'] = this.client.config.project;
 
-        for (const [key, value] of Object.entries(Client.flatten(payload))) {
-            uri.searchParams.append(key, value);
-        }
-
         return uri.toString();
     }
     /**
