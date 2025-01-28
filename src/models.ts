@@ -5043,6 +5043,14 @@ export namespace Models {
          */
         executions: Metric[];
         /**
+         * Aggregated stats for database reads.
+         */
+        databasesReads: Metric[];
+        /**
+         * Aggregated stats for database writes.
+         */
+        databasesWrites: Metric[];
+        /**
          * Aggregated stats for total users.
          */
         usersTotal: number;
@@ -5074,6 +5082,14 @@ export namespace Models {
          * Aggregated stats for total databases storage.
          */
         databasesStorageTotal: number;
+        /**
+         * Aggregated stats for total databases storage reads.
+         */
+        databasesReadsTotal: number;
+        /**
+         * Aggregated stats for total databases storage writes.
+         */
+        databasesWritesTotal: number;
         /**
          * Aggregated stats for total backups storage.
          */
