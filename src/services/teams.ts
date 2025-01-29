@@ -34,6 +34,8 @@ export class Teams {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -77,6 +79,8 @@ export class Teams {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -105,6 +109,8 @@ export class Teams {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -142,6 +148,8 @@ export class Teams {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'put',
@@ -170,6 +178,8 @@ export class Teams {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -203,6 +213,8 @@ export class Teams {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -240,6 +252,8 @@ export class Teams {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -304,6 +318,8 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -336,6 +352,8 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -378,6 +396,8 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'patch',
@@ -410,6 +430,8 @@ Please note that to avoid a [Redirect Attack](https://github.com/OWASP/CheatShee
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -461,6 +483,8 @@ If the request is successful, a session for the user is automatically created.
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'patch',
@@ -489,6 +513,8 @@ If the request is successful, a session for the user is automatically created.
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -525,6 +551,8 @@ If the request is successful, a session for the user is automatically created.
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(

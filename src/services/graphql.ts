@@ -34,6 +34,8 @@ export class Graphql {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -66,6 +68,8 @@ export class Graphql {
             'x-sdk-graphql': 'true',
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(

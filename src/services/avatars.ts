@@ -48,11 +48,10 @@ When one dimension is specified and the other is 0, the image is scaled with pre
         }
 
         payload['project'] = this.client.config.project;
+
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-
-        payload['project'] = this.client.config.project;
 
         return uri.toString();
     }
@@ -93,11 +92,10 @@ When one dimension is specified and the other is 0, the image is scaled with pre
         }
 
         payload['project'] = this.client.config.project;
+
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-
-        payload['project'] = this.client.config.project;
 
         return uri.toString();
     }
@@ -128,11 +126,10 @@ This endpoint does not follow HTTP redirects.
         }
 
         payload['project'] = this.client.config.project;
+
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-
-        payload['project'] = this.client.config.project;
 
         return uri.toString();
     }
@@ -173,11 +170,10 @@ When one dimension is specified and the other is 0, the image is scaled with pre
         }
 
         payload['project'] = this.client.config.project;
+
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-
-        payload['project'] = this.client.config.project;
 
         return uri.toString();
     }
@@ -218,11 +214,10 @@ This endpoint does not follow HTTP redirects.
         }
 
         payload['project'] = this.client.config.project;
+
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-
-        payload['project'] = this.client.config.project;
 
         return uri.toString();
     }
@@ -265,11 +260,10 @@ When one dimension is specified and the other is 0, the image is scaled with pre
         }
 
         payload['project'] = this.client.config.project;
+
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-
-        payload['project'] = this.client.config.project;
 
         return uri.toString();
     }
@@ -311,11 +305,10 @@ When one dimension is specified and the other is 0, the image is scaled with pre
         }
 
         payload['project'] = this.client.config.project;
+
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-
-        payload['project'] = this.client.config.project;
 
         return uri.toString();
     }

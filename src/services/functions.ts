@@ -37,6 +37,8 @@ export class Functions {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -159,6 +161,8 @@ export class Functions {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -183,6 +187,8 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -209,6 +215,8 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -251,6 +259,8 @@ export class Functions {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -279,6 +289,8 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -309,6 +321,8 @@ export class Functions {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -337,6 +351,8 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -438,6 +454,8 @@ export class Functions {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'put',
@@ -466,6 +484,8 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -503,6 +523,8 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -559,6 +581,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'multipart/form-data',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.chunkedUpload(
             'post',
@@ -593,6 +617,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -626,6 +652,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'patch',
@@ -658,6 +686,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -696,6 +726,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -728,6 +760,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -763,11 +797,10 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         }
 
         payload['project'] = this.client.config.project;
+
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-
-        payload['project'] = this.client.config.project;
 
         return uri.toString();
     }
@@ -799,6 +832,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -853,6 +888,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -885,6 +922,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -920,6 +959,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'delete',
@@ -953,6 +994,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -981,6 +1024,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -1025,6 +1070,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -1057,6 +1104,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -1102,6 +1151,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'put',
@@ -1134,6 +1185,8 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
