@@ -33,6 +33,8 @@ export class Assistant {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',

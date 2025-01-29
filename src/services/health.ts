@@ -27,6 +27,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -52,6 +54,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -76,6 +80,8 @@ export class Health {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -106,6 +112,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -130,6 +138,8 @@ export class Health {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -156,6 +166,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -180,6 +192,8 @@ export class Health {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -210,6 +224,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -238,6 +254,8 @@ export class Health {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -268,6 +286,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -296,6 +316,8 @@ export class Health {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -330,6 +352,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -358,6 +382,8 @@ export class Health {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -393,6 +419,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -421,6 +449,8 @@ export class Health {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -451,6 +481,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -479,6 +511,8 @@ export class Health {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -509,6 +543,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -537,6 +573,8 @@ export class Health {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -567,6 +605,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -595,6 +635,8 @@ export class Health {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -625,6 +667,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -654,6 +698,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -678,6 +724,8 @@ export class Health {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -704,6 +752,8 @@ export class Health {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -728,6 +778,8 @@ export class Health {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(

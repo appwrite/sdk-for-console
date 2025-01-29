@@ -34,6 +34,8 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -86,6 +88,8 @@ export class Migrations {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -140,6 +144,8 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -179,6 +185,8 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -217,6 +225,8 @@ export class Migrations {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -296,6 +306,8 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -374,6 +386,8 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -444,6 +458,8 @@ export class Migrations {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -516,6 +532,8 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -544,6 +562,8 @@ export class Migrations {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -574,6 +594,8 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'patch',
@@ -602,6 +624,8 @@ export class Migrations {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(

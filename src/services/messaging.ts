@@ -36,6 +36,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -118,6 +120,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -129,7 +133,7 @@ export class Messaging {
     /**
      * Update email
      *
-     * Update an email message by its unique ID.
+     * Update an email message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
 
      *
      * @param {string} messageId
@@ -191,6 +195,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -296,6 +302,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -307,7 +315,7 @@ export class Messaging {
     /**
      * Update push notification
      *
-     * Update a push notification by its unique ID.
+     * Update a push notification by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
 
      *
      * @param {string} messageId
@@ -398,6 +406,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'patch',
@@ -457,6 +467,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -468,7 +480,7 @@ export class Messaging {
     /**
      * Update SMS
      *
-     * Update an SMS message by its unique ID.
+     * Update an SMS message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
 
      *
      * @param {string} messageId
@@ -511,6 +523,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'patch',
@@ -541,6 +555,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -569,6 +585,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -603,6 +621,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -636,6 +656,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -668,6 +690,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -732,6 +756,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -789,6 +815,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'patch',
@@ -836,6 +864,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -876,6 +906,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -948,6 +980,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -1013,6 +1047,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'patch',
@@ -1068,6 +1104,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -1116,6 +1154,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -1180,6 +1220,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -1236,6 +1278,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -1327,6 +1371,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -1408,6 +1454,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'patch',
@@ -1463,6 +1511,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -1511,6 +1561,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -1567,6 +1619,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -1615,6 +1669,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -1671,6 +1727,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -1719,6 +1777,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -1775,6 +1835,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -1824,6 +1886,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'patch',
@@ -1854,6 +1918,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -1882,6 +1948,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -1916,6 +1984,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -1949,6 +2019,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -1981,6 +2053,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -2025,6 +2099,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -2054,6 +2130,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -2093,6 +2171,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'patch',
@@ -2121,6 +2201,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -2154,6 +2236,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -2191,6 +2275,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -2235,6 +2321,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -2269,6 +2357,8 @@ export class Messaging {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -2301,6 +2391,8 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(

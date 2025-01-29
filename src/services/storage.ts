@@ -38,6 +38,8 @@ export class Storage {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -109,6 +111,8 @@ export class Storage {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -137,6 +141,8 @@ export class Storage {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -206,6 +212,8 @@ export class Storage {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'put',
@@ -234,6 +242,8 @@ export class Storage {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -271,6 +281,8 @@ export class Storage {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -326,6 +338,8 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             'content-type': 'multipart/form-data',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.chunkedUpload(
             'post',
@@ -359,6 +373,8 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -401,6 +417,8 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'put',
@@ -433,6 +451,8 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -468,13 +488,8 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         }
 
         payload['project'] = this.client.config.project;
+
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
-            uri.searchParams.append(key, value);
-        }
-
-        payload['project'] = this.client.config.project;
-
-        for (const [key, value] of Object.entries(Client.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
 
@@ -550,13 +565,8 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         }
 
         payload['project'] = this.client.config.project;
+
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
-            uri.searchParams.append(key, value);
-        }
-
-        payload['project'] = this.client.config.project;
-
-        for (const [key, value] of Object.entries(Client.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
 
@@ -588,13 +598,8 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         }
 
         payload['project'] = this.client.config.project;
+
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
-            uri.searchParams.append(key, value);
-        }
-
-        payload['project'] = this.client.config.project;
-
-        for (const [key, value] of Object.entries(Client.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
 
@@ -621,6 +626,8 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -655,6 +662,8 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(

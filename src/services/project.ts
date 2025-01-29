@@ -45,6 +45,8 @@ export class Project {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'get',
@@ -69,6 +71,8 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -109,6 +113,8 @@ export class Project {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'post',
@@ -137,6 +143,8 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
@@ -178,6 +186,8 @@ export class Project {
             'content-type': 'application/json',
         }
 
+        payload['project'] = this.client.config.project;
+
 
         return await this.client.call(
             'put',
@@ -206,6 +216,8 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
         }
+
+        payload['project'] = this.client.config.project;
 
 
         return await this.client.call(
