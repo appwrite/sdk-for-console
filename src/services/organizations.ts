@@ -56,10 +56,14 @@ export class Organizations {
      * @param {BillingPlan} billingPlan
      * @param {string} paymentMethodId
      * @param {string} billingAddressId
+     * @param {string[]} invites
+     * @param {string} couponId
+     * @param {string} taxId
+     * @param {number} budget
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async create<Preferences extends Models.Preferences>(organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string): Promise<Models.Organization<Preferences>> {
+    async create<Preferences extends Models.Preferences>(organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -85,6 +89,18 @@ export class Organizations {
         }
         if (typeof billingAddressId !== 'undefined') {
             payload['billingAddressId'] = billingAddressId;
+        }
+        if (typeof invites !== 'undefined') {
+            payload['invites'] = invites;
+        }
+        if (typeof couponId !== 'undefined') {
+            payload['couponId'] = couponId;
+        }
+        if (typeof taxId !== 'undefined') {
+            payload['taxId'] = taxId;
+        }
+        if (typeof budget !== 'undefined') {
+            payload['budget'] = budget;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -892,10 +908,14 @@ export class Organizations {
      * @param {BillingPlan} billingPlan
      * @param {string} paymentMethodId
      * @param {string} billingAddressId
+     * @param {string[]} invites
+     * @param {string} couponId
+     * @param {string} taxId
+     * @param {number} budget
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async updatePlan<Preferences extends Models.Preferences>(organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string): Promise<Models.Organization<Preferences>> {
+    async updatePlan<Preferences extends Models.Preferences>(organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -912,6 +932,18 @@ export class Organizations {
         }
         if (typeof billingAddressId !== 'undefined') {
             payload['billingAddressId'] = billingAddressId;
+        }
+        if (typeof invites !== 'undefined') {
+            payload['invites'] = invites;
+        }
+        if (typeof couponId !== 'undefined') {
+            payload['couponId'] = couponId;
+        }
+        if (typeof taxId !== 'undefined') {
+            payload['taxId'] = taxId;
+        }
+        if (typeof budget !== 'undefined') {
+            payload['budget'] = budget;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

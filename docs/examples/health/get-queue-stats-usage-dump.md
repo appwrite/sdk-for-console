@@ -6,7 +6,7 @@ const client = new Client()
 
 const health = new Health(client);
 
-const result = await health.getQueueUsageCount(
+const result = await health.getQueueStatsUsageDump(
     null // threshold (optional)
 );
 
