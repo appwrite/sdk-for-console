@@ -3618,11 +3618,11 @@ export namespace Models {
         /**
          * An array of aggregated number of image transformations.
          */
-        imageTransformationsTotal: number;
+        imageTransformations: Metric[];
         /**
          * Total aggregated number of image transformations.
          */
-        imageTransformations: number;
+        imageTransformationsTotal: number;
     }
     /**
      * Headers
