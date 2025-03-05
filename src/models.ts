@@ -3316,6 +3316,14 @@ export namespace Models {
          * Aggregated  number of bucket storage files (in bytes) per period.
          */
         storage: Metric[];
+        /**
+         * Aggregated number of files transformations per period.
+         */
+        imageTransformations: Metric[];
+        /**
+         * Total aggregated number of files transformations.
+         */
+        imageTransformationsTotal: number;
     }
     /**
      * UsageFunctions
@@ -3607,6 +3615,14 @@ export namespace Models {
          * An array of aggregated number of database writes.
          */
         databasesWrites: Metric[];
+        /**
+         * An array of aggregated number of image transformations.
+         */
+        imageTransformations: Metric[];
+        /**
+         * Total aggregated number of image transformations.
+         */
+        imageTransformationsTotal: number;
     }
     /**
      * Headers
@@ -4255,6 +4271,10 @@ export namespace Models {
          */
         additionalRealtimeAmount: number;
         /**
+         * Billing plan
+         */
+        plan: string;
+        /**
          * Aggregated amount
          */
         amount: number;
@@ -4358,6 +4378,10 @@ export namespace Models {
          */
         name: string;
         /**
+         * Plan description
+         */
+        desc: string;
+        /**
          * Plan order
          */
         order: number;
@@ -4377,6 +4401,10 @@ export namespace Models {
          * Storage
          */
         storage: number;
+        /**
+         * Image Transformations
+         */
+        imageTransformations: number;
         /**
          * Members
          */
@@ -4428,7 +4456,11 @@ export namespace Models {
         /**
          * Additional resources
          */
-        addons: AdditionalResource;
+        usage: AdditionalResource[];
+        /**
+         * Addons
+         */
+        addons: BillingPlanAddon[];
         /**
          * Custom SMTP
          */
@@ -4466,6 +4498,10 @@ export namespace Models {
          */
         supportsMockNumbers: boolean;
         /**
+         * Does plan support credit
+         */
+        supportsCredits: boolean;
+        /**
          * Does plan support backup policies.
          */
         backupsEnabled: boolean;
@@ -4473,6 +4509,35 @@ export namespace Models {
          * How many policies does plan support
          */
         backupPolicies: number;
+    }
+    /**
+     * BillingPlanAddon
+     */
+    export type BillingPlanAddon = {
+        /**
+         * Is the addon supported in the plan?
+         */
+        supported: boolean;
+        /**
+         * Addon limit
+         */
+        limit: number;
+        /**
+         * Addon type
+         */
+        type: string;
+        /**
+         * Price currency
+         */
+        currency: string;
+        /**
+         * Price
+         */
+        price: number;
+        /**
+         * Resource value
+         */
+        value: number;
     }
     /**
      * Campaign
@@ -4788,6 +4853,10 @@ export namespace Models {
          */
         billingAggregationId: string;
         /**
+         * Current active aggregation id.
+         */
+        billingInvoiceId: string;
+        /**
          * Default payment method.
          */
         paymentMethodId: string;
@@ -4799,6 +4868,14 @@ export namespace Models {
          * Backup payment method.
          */
         backupPaymentMethodId: string;
+        /**
+         * Team status.
+         */
+        status: string;
+        /**
+         * Remarks on team status.
+         */
+        remarks: string;
         /**
          * Organization agreements
          */
@@ -5098,6 +5175,14 @@ export namespace Models {
          * Aggregated stats for database writes.
          */
         databasesWrites: Metric[];
+        /**
+         * Aggregated stats for file transformations.
+         */
+        imageTransformations: Metric[];
+        /**
+         * Aggregated stats for total file transformations.
+         */
+        imageTransformationsTotal: number;
         /**
          * Aggregated stats for total users.
          */
