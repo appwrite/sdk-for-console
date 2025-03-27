@@ -11,8 +11,6 @@ export class Proxy {
     }
 
     /**
-     * List rules
-     *
      * Get a list of all the proxy rules. You can use the query params to filter your results.
      *
      * @param {string[]} queries
@@ -20,7 +18,7 @@ export class Proxy {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRuleList>}
      */
-    async listRules(queries?: string[], search?: string): Promise<Models.ProxyRuleList> {
+    listRules(queries?: string[], search?: string): Promise<Models.ProxyRuleList> {
         const apiPath = '/proxy/rules';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -35,10 +33,7 @@ export class Proxy {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -46,8 +41,6 @@ export class Proxy {
         );
     }
     /**
-     * Create rule
-     *
      * Create a new proxy rule.
      *
      * @param {string} domain
@@ -56,7 +49,7 @@ export class Proxy {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    async createRule(domain: string, resourceType: ResourceType, resourceId?: string): Promise<Models.ProxyRule> {
+    createRule(domain: string, resourceType: ResourceType, resourceId?: string): Promise<Models.ProxyRule> {
         if (typeof domain === 'undefined') {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
@@ -80,10 +73,7 @@ export class Proxy {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'post',
             uri,
             apiHeaders,
@@ -91,15 +81,13 @@ export class Proxy {
         );
     }
     /**
-     * Get rule
-     *
      * Get a proxy rule by its unique ID.
      *
      * @param {string} ruleId
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    async getRule(ruleId: string): Promise<Models.ProxyRule> {
+    getRule(ruleId: string): Promise<Models.ProxyRule> {
         if (typeof ruleId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ruleId"');
         }
@@ -111,10 +99,7 @@ export class Proxy {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -122,15 +107,13 @@ export class Proxy {
         );
     }
     /**
-     * Delete rule
-     *
      * Delete a proxy rule by its unique ID.
      *
      * @param {string} ruleId
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    async deleteRule(ruleId: string): Promise<{}> {
+    deleteRule(ruleId: string): Promise<{}> {
         if (typeof ruleId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ruleId"');
         }
@@ -142,10 +125,7 @@ export class Proxy {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'delete',
             uri,
             apiHeaders,
@@ -153,15 +133,13 @@ export class Proxy {
         );
     }
     /**
-     * Update rule verification status
-     *
      * Retry getting verification process of a proxy rule. This endpoint triggers domain verification by checking DNS records (CNAME) against the configured target domain. If verification is successful, a TLS certificate will be automatically provisioned for the domain.
      *
      * @param {string} ruleId
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    async updateRuleVerification(ruleId: string): Promise<Models.ProxyRule> {
+    updateRuleVerification(ruleId: string): Promise<Models.ProxyRule> {
         if (typeof ruleId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ruleId"');
         }
@@ -173,10 +151,7 @@ export class Proxy {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'patch',
             uri,
             apiHeaders,

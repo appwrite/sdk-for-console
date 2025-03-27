@@ -330,8 +330,12 @@ class Client {
      * @returns {this}
      */
     setEndpoint(endpoint: string): this {
+        if (!endpoint.startsWith('http://') && !endpoint.startsWith('https://')) {
+            throw new AppwriteException('Invalid endpoint URL: ' + endpoint);
+        }
+
         this.config.endpoint = endpoint;
-        this.config.endpointRealtime = this.config.endpointRealtime || this.config.endpoint.replace('https://', 'wss://').replace('http://', 'ws://');
+        this.config.endpointRealtime = endpoint.replace('https://', 'wss://').replace('http://', 'ws://');
 
         return this;
     }
@@ -344,8 +348,11 @@ class Client {
      * @returns {this}
      */
     setEndpointRealtime(endpointRealtime: string): this {
-        this.config.endpointRealtime = endpointRealtime;
+        if (!endpointRealtime.startsWith('ws://') && !endpointRealtime.startsWith('wss://')) {
+            throw new AppwriteException('Invalid realtime endpoint URL: ' + endpointRealtime);
+        }
 
+        this.config.endpointRealtime = endpointRealtime;
         return this;
     }
 
@@ -669,6 +676,10 @@ class Client {
     async chunkedUpload(method: string, url: URL, headers: Headers = {}, originalPayload: Payload = {}, onProgress: (progress: UploadProgress) => void) {
         const file = Object.values(originalPayload).find((value) => value instanceof File);
 
+        if (!file) {
+            throw new Error('File not found in payload');
+        }
+
         if (file.size <= Client.CHUNK_SIZE) {
             return await this.call(method, url, headers, originalPayload);
         }
@@ -736,7 +747,13 @@ class Client {
         }
 
         if (400 <= response.status) {
-            throw new AppwriteException(data?.message, response.status, data?.type, data);
+            let responseText = '';
+            if (response.headers.get('content-type')?.includes('application/json') || responseType === 'arrayBuffer') {
+                responseText = JSON.stringify(data);
+            } else {
+                responseText = data?.message;
+            }
+            throw new AppwriteException(data?.message, response.status, data?.type, responseText);
         }
 
         const cookieFallback = response.headers.get('X-Fallback-Cookies');

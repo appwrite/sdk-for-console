@@ -594,7 +594,7 @@ export namespace Models {
         /**
          * Collection attributes.
          */
-        attributes: string[];
+        attributes: (Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributeString)[];
         /**
          * Collection indexes.
          */
@@ -611,7 +611,7 @@ export namespace Models {
         /**
          * List of attributes.
          */
-        attributes: string[];
+        attributes: (Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributeString)[];
     }
     /**
      * AttributeString

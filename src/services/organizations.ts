@@ -11,8 +11,6 @@ export class Organizations {
     }
 
     /**
-     * List Orgnizations
-     *
      * Get a list of all the teams in which the current user is a member. You can use the parameters to filter your results.
      *
      * @param {string[]} queries
@@ -20,7 +18,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.OrganizationList<Preferences>>}
      */
-    async list<Preferences extends Models.Preferences>(queries?: string[], search?: string): Promise<Models.OrganizationList<Preferences>> {
+    list<Preferences extends Models.Preferences>(queries?: string[], search?: string): Promise<Models.OrganizationList<Preferences>> {
         const apiPath = '/organizations';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -35,10 +33,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -46,8 +41,6 @@ export class Organizations {
         );
     }
     /**
-     * Create Organization
-     *
      * Create a new organization.
 
      *
@@ -63,7 +56,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async create<Preferences extends Models.Preferences>(organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>> {
+    create<Preferences extends Models.Preferences>(organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -108,10 +101,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'post',
             uri,
             apiHeaders,
@@ -119,15 +109,13 @@ export class Organizations {
         );
     }
     /**
-     * Delete team
-     *
      * Delete an organization.
      *
      * @param {string} organizationId
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    async delete(organizationId: string): Promise<{}> {
+    delete(organizationId: string): Promise<{}> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -139,10 +127,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'delete',
             uri,
             apiHeaders,
@@ -150,8 +135,6 @@ export class Organizations {
         );
     }
     /**
-     * List aggregations
-     *
      * Get a list of all aggregations for an organization.
      *
      * @param {string} organizationId
@@ -159,7 +142,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.AggregationTeamList>}
      */
-    async listAggregations(organizationId: string, queries?: string[]): Promise<Models.AggregationTeamList> {
+    listAggregations(organizationId: string, queries?: string[]): Promise<Models.AggregationTeamList> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -174,10 +157,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -185,8 +165,6 @@ export class Organizations {
         );
     }
     /**
-     * Get invoice
-     *
      * Get a specific aggregation using it&#039;s aggregation ID.
      *
      * @param {string} organizationId
@@ -194,7 +172,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.AggregationTeam>}
      */
-    async getAggregation(organizationId: string, aggregationId: string): Promise<Models.AggregationTeam> {
+    getAggregation(organizationId: string, aggregationId: string): Promise<Models.AggregationTeam> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -209,10 +187,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -220,8 +195,6 @@ export class Organizations {
         );
     }
     /**
-     * Set team&#039;s billing address
-     *
      * Set a billing address for an organization.
      *
      * @param {string} organizationId
@@ -229,7 +202,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async setBillingAddress<Preferences extends Models.Preferences>(organizationId: string, billingAddressId: string): Promise<Models.Organization<Preferences>> {
+    setBillingAddress<Preferences extends Models.Preferences>(organizationId: string, billingAddressId: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -247,10 +220,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'patch',
             uri,
             apiHeaders,
@@ -258,15 +228,13 @@ export class Organizations {
         );
     }
     /**
-     * Delete team&#039;s billing address
-     *
      * Delete a team&#039;s billing address.
      *
      * @param {string} organizationId
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    async deleteBillingAddress(organizationId: string): Promise<{}> {
+    deleteBillingAddress(organizationId: string): Promise<{}> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -278,10 +246,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'delete',
             uri,
             apiHeaders,
@@ -289,8 +254,6 @@ export class Organizations {
         );
     }
     /**
-     * Get billing address
-     *
      * Get a billing address using it&#039;s ID.
      *
      * @param {string} organizationId
@@ -298,7 +261,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      */
-    async getBillingAddress(organizationId: string, billingAddressId: string): Promise<Models.BillingAddress> {
+    getBillingAddress(organizationId: string, billingAddressId: string): Promise<Models.BillingAddress> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -313,10 +276,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -324,8 +284,6 @@ export class Organizations {
         );
     }
     /**
-     * Set team&#039;s billing email
-     *
      * Set the current billing email for the organization.
      *
      * @param {string} organizationId
@@ -333,7 +291,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async setBillingEmail<Preferences extends Models.Preferences>(organizationId: string, billingEmail: string): Promise<Models.Organization<Preferences>> {
+    setBillingEmail<Preferences extends Models.Preferences>(organizationId: string, billingEmail: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -351,10 +309,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'patch',
             uri,
             apiHeaders,
@@ -362,8 +317,6 @@ export class Organizations {
         );
     }
     /**
-     * Update organization budget
-     *
      * Update the budget limit for an organization.
      *
      * @param {string} organizationId
@@ -372,7 +325,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async updateBudget<Preferences extends Models.Preferences>(organizationId: string, budget?: number, alerts?: number[]): Promise<Models.Organization<Preferences>> {
+    updateBudget<Preferences extends Models.Preferences>(organizationId: string, budget?: number, alerts?: number[]): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -393,10 +346,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'patch',
             uri,
             apiHeaders,
@@ -404,8 +354,6 @@ export class Organizations {
         );
     }
     /**
-     * List credits
-     *
      * List all credits for an organization.
 
      *
@@ -414,7 +362,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.CreditList>}
      */
-    async listCredits(organizationId: string, queries?: string[]): Promise<Models.CreditList> {
+    listCredits(organizationId: string, queries?: string[]): Promise<Models.CreditList> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -429,10 +377,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -440,8 +385,6 @@ export class Organizations {
         );
     }
     /**
-     * Add credits from coupon
-     *
      * Add credit to an organization using a coupon.
      *
      * @param {string} organizationId
@@ -449,7 +392,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Credit>}
      */
-    async addCredit(organizationId: string, couponId: string): Promise<Models.Credit> {
+    addCredit(organizationId: string, couponId: string): Promise<Models.Credit> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -467,10 +410,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'post',
             uri,
             apiHeaders,
@@ -478,8 +418,6 @@ export class Organizations {
         );
     }
     /**
-     * Get credit details
-     *
      * Get credit details.
      *
      * @param {string} organizationId
@@ -487,7 +425,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Credit>}
      */
-    async getCredit(organizationId: string, creditId: string): Promise<Models.Credit> {
+    getCredit(organizationId: string, creditId: string): Promise<Models.Credit> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -502,10 +440,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -513,8 +448,6 @@ export class Organizations {
         );
     }
     /**
-     * List invoices
-     *
      * List all invoices for an organization.
      *
      * @param {string} organizationId
@@ -522,7 +455,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.InvoiceList>}
      */
-    async listInvoices(organizationId: string, queries?: string[]): Promise<Models.InvoiceList> {
+    listInvoices(organizationId: string, queries?: string[]): Promise<Models.InvoiceList> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -537,10 +470,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -548,8 +478,6 @@ export class Organizations {
         );
     }
     /**
-     * Get invoice
-     *
      * Get an invoice by its unique ID.
      *
      * @param {string} organizationId
@@ -557,7 +485,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Invoice>}
      */
-    async getInvoice(organizationId: string, invoiceId: string): Promise<Models.Invoice> {
+    getInvoice(organizationId: string, invoiceId: string): Promise<Models.Invoice> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -572,10 +500,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -585,14 +510,12 @@ export class Organizations {
     /**
      * Download invoice in PDF
      *
-     * Download invoice in PDF
-     *
      * @param {string} organizationId
      * @param {string} invoiceId
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      */
-    async getInvoiceDownload(organizationId: string, invoiceId: string): Promise<Models.PaymentMethod> {
+    getInvoiceDownload(organizationId: string, invoiceId: string): Promise<Models.PaymentMethod> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -607,10 +530,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -620,15 +540,13 @@ export class Organizations {
     /**
      * Initiate payment for failed invoice to pay live from console
      *
-     * Initiate payment for failed invoice to pay live from console
-     *
      * @param {string} organizationId
      * @param {string} invoiceId
      * @param {string} paymentMethodId
      * @throws {AppwriteException}
      * @returns {Promise<Models.Invoice>}
      */
-    async createInvoicePayment(organizationId: string, invoiceId: string, paymentMethodId: string): Promise<Models.Invoice> {
+    createInvoicePayment(organizationId: string, invoiceId: string, paymentMethodId: string): Promise<Models.Invoice> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -649,10 +567,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'post',
             uri,
             apiHeaders,
@@ -662,14 +577,12 @@ export class Organizations {
     /**
      * View invoice in PDF
      *
-     * View invoice in PDF
-     *
      * @param {string} organizationId
      * @param {string} invoiceId
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      */
-    async getInvoiceView(organizationId: string, invoiceId: string): Promise<Models.PaymentMethod> {
+    getInvoiceView(organizationId: string, invoiceId: string): Promise<Models.PaymentMethod> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -684,10 +597,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -695,8 +605,6 @@ export class Organizations {
         );
     }
     /**
-     * Set team&#039;s payment method
-     *
      * Set a organization&#039;s default payment method.
      *
      * @param {string} organizationId
@@ -704,7 +612,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async setDefaultPaymentMethod<Preferences extends Models.Preferences>(organizationId: string, paymentMethodId: string): Promise<Models.Organization<Preferences>> {
+    setDefaultPaymentMethod<Preferences extends Models.Preferences>(organizationId: string, paymentMethodId: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -722,10 +630,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'patch',
             uri,
             apiHeaders,
@@ -733,15 +638,13 @@ export class Organizations {
         );
     }
     /**
-     * Delete team&#039;s default payment method
-     *
      * Delete the default payment method for an organization.
      *
      * @param {string} organizationId
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async deleteDefaultPaymentMethod<Preferences extends Models.Preferences>(organizationId: string): Promise<Models.Organization<Preferences>> {
+    deleteDefaultPaymentMethod<Preferences extends Models.Preferences>(organizationId: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -753,10 +656,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'delete',
             uri,
             apiHeaders,
@@ -764,8 +664,6 @@ export class Organizations {
         );
     }
     /**
-     * Set team&#039;s backup payment method
-     *
      * Set an organization&#039;s backup payment method.
 
      *
@@ -774,7 +672,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async setBackupPaymentMethod<Preferences extends Models.Preferences>(organizationId: string, paymentMethodId: string): Promise<Models.Organization<Preferences>> {
+    setBackupPaymentMethod<Preferences extends Models.Preferences>(organizationId: string, paymentMethodId: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -792,10 +690,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'patch',
             uri,
             apiHeaders,
@@ -803,15 +698,13 @@ export class Organizations {
         );
     }
     /**
-     * Delete team&#039;s backup payment method
-     *
      * Delete a backup payment method for an organization.
      *
      * @param {string} organizationId
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async deleteBackupPaymentMethod<Preferences extends Models.Preferences>(organizationId: string): Promise<Models.Organization<Preferences>> {
+    deleteBackupPaymentMethod<Preferences extends Models.Preferences>(organizationId: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -823,10 +716,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'delete',
             uri,
             apiHeaders,
@@ -834,8 +724,6 @@ export class Organizations {
         );
     }
     /**
-     * Get payment method
-     *
      * Get an organization&#039;s payment method using it&#039;s payment method ID.
      *
      * @param {string} organizationId
@@ -843,7 +731,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      */
-    async getPaymentMethod(organizationId: string, paymentMethodId: string): Promise<Models.PaymentMethod> {
+    getPaymentMethod(organizationId: string, paymentMethodId: string): Promise<Models.PaymentMethod> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -858,10 +746,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -869,15 +754,13 @@ export class Organizations {
         );
     }
     /**
-     * Get organization billing plan details
-     *
      * Get the details of the current billing plan for an organization.
      *
      * @param {string} organizationId
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingPlan>}
      */
-    async getPlan(organizationId: string): Promise<Models.BillingPlan> {
+    getPlan(organizationId: string): Promise<Models.BillingPlan> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -889,10 +772,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -900,8 +780,6 @@ export class Organizations {
         );
     }
     /**
-     * Update organization billing plan
-     *
      * Update the billing plan for an organization.
      *
      * @param {string} organizationId
@@ -915,7 +793,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async updatePlan<Preferences extends Models.Preferences>(organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>> {
+    updatePlan<Preferences extends Models.Preferences>(organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -951,10 +829,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'patch',
             uri,
             apiHeaders,
@@ -964,13 +839,11 @@ export class Organizations {
     /**
      * Get Scopes
      *
-     * Get Scopes
-     *
      * @param {string} organizationId
      * @throws {AppwriteException}
      * @returns {Promise<Models.Roles>}
      */
-    async getScopes(organizationId: string): Promise<Models.Roles> {
+    getScopes(organizationId: string): Promise<Models.Roles> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -982,10 +855,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -993,8 +863,6 @@ export class Organizations {
         );
     }
     /**
-     * Set team&#039;s tax Id
-     *
      * Set an organization&#039;s billing tax ID.
      *
      * @param {string} organizationId
@@ -1002,7 +870,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async setBillingTaxId<Preferences extends Models.Preferences>(organizationId: string, taxId: string): Promise<Models.Organization<Preferences>> {
+    setBillingTaxId<Preferences extends Models.Preferences>(organizationId: string, taxId: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -1020,10 +888,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'patch',
             uri,
             apiHeaders,
@@ -1031,8 +896,6 @@ export class Organizations {
         );
     }
     /**
-     * Get team&#039;s usage data
-     *
      * Get the usage data for an organization.
      *
      * @param {string} organizationId
@@ -1041,7 +904,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageOrganization>}
      */
-    async getUsage(organizationId: string, startDate?: string, endDate?: string): Promise<Models.UsageOrganization> {
+    getUsage(organizationId: string, startDate?: string, endDate?: string): Promise<Models.UsageOrganization> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -1059,10 +922,7 @@ export class Organizations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
