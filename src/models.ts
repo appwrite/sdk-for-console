@@ -4341,6 +4341,10 @@ export namespace Models {
          */
         $id: string;
         /**
+         * User ID
+         */
+        userId: string;
+        /**
          * Street address
          */
         streetAddress: string;
@@ -4456,11 +4460,11 @@ export namespace Models {
         /**
          * Additional resources
          */
-        usage: AdditionalResource[];
+        usage: UsageBillingPlan;
         /**
          * Addons
          */
-        addons: BillingPlanAddon[];
+        addons: BillingPlanAddon;
         /**
          * Custom SMTP
          */
@@ -4515,6 +4519,15 @@ export namespace Models {
      */
     export type BillingPlanAddon = {
         /**
+         * Addon seats
+         */
+        seats: BillingPlanAddonDetails;
+    }
+    /**
+     * BillingPlanAddonDetails
+     */
+    export type BillingPlanAddonDetails = {
+        /**
          * Is the addon supported in the plan?
          */
         supported: boolean;
@@ -4538,6 +4551,39 @@ export namespace Models {
          * Resource value
          */
         value: number;
+    }
+    /**
+     * BillingLimits
+     */
+    export type BillingLimits = {
+        /**
+         * Bandwidth limit
+         */
+        bandwidth: number;
+        /**
+         * Storage limit
+         */
+        storage: number;
+        /**
+         * Users limit
+         */
+        users: number;
+        /**
+         * Executions limit
+         */
+        executions: number;
+        /**
+         * GBHours limit
+         */
+        GBHours: number;
+        /**
+         * Image transformations limit
+         */
+        imageTransformations: number;
+        /**
+         * Auth phone limit
+         */
+        authPhone: number;
     }
     /**
      * Campaign
@@ -4624,6 +4670,10 @@ export namespace Models {
          * Status of the coupon. Can be one of `disabled`, `active` or `expired`.
          */
         status: string;
+        /**
+         * If the coupon is only valid for new organizations or not.
+         */
+        onlyNewOrgs: boolean;
     }
     /**
      * Credit
@@ -4726,7 +4776,7 @@ export namespace Models {
         /**
          * Usage breakdown per resource
          */
-        usage: object;
+        usage: UsageInvoice[];
         /**
          * Invoice Amount
          */
@@ -4899,7 +4949,7 @@ export namespace Models {
         /**
          * Billing limits reached
          */
-        billingLimits: object;
+        billingLimits: BillingLimits;
         /**
          * Billing plan downgrade
          */
@@ -5284,6 +5334,68 @@ export namespace Models {
          * Aggregated stats for phone authentication estimated cost.
          */
         authPhoneEstimate: number;
+    }
+    /**
+     * UsageInvoice
+     */
+    export type UsageInvoice = {
+        /**
+         * Invoice name
+         */
+        name: string;
+        /**
+         * Invoice value
+         */
+        value: number;
+        /**
+         * Invoice amount
+         */
+        amount: number;
+        /**
+         * Invoice rate
+         */
+        rate: number;
+        /**
+         * Invoice description
+         */
+        desc: string;
+    }
+    /**
+     * usageBillingPlan
+     */
+    export type UsageBillingPlan = {
+        /**
+         * Bandwidth additional resources
+         */
+        bandwidth: AdditionalResource;
+        /**
+         * Executions additional resources
+         */
+        executions: AdditionalResource;
+        /**
+         * Member additional resources
+         */
+        member: AdditionalResource;
+        /**
+         * Realtime additional resources
+         */
+        realtime: AdditionalResource;
+        /**
+         * Storage additional resources
+         */
+        storage: AdditionalResource;
+        /**
+         * User additional resources
+         */
+        users: AdditionalResource;
+        /**
+         * GBHour additional resources
+         */
+        GBHours: AdditionalResource;
+        /**
+         * Image transformation additional resources
+         */
+        imageTransformations: AdditionalResource;
     }
     /**
      * Aggregation team list

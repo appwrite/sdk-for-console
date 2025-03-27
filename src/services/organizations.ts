@@ -192,9 +192,9 @@ export class Organizations {
      * @param {string} organizationId
      * @param {string} aggregationId
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Invoice>}
+     * @returns {Promise<Models.AggregationTeam>}
      */
-    async getAggregation(organizationId: string, aggregationId: string): Promise<Models.Invoice> {
+    async getAggregation(organizationId: string, aggregationId: string): Promise<Models.AggregationTeam> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -372,7 +372,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    async updateBudget<Preferences extends Models.Preferences>(organizationId: string, budget: number, alerts?: number[]): Promise<Models.Organization<Preferences>> {
+    async updateBudget<Preferences extends Models.Preferences>(organizationId: string, budget?: number, alerts?: number[]): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
