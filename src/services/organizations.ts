@@ -575,6 +575,36 @@ export class Organizations {
         );
     }
     /**
+     * Validates the payment linked with the invoice and updates the invoice status if the payment status is changed.
+     *
+     * @param {string} organizationId
+     * @param {string} invoiceId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Invoice>}
+     */
+    validateInvoice(organizationId: string, invoiceId: string): Promise<Models.Invoice> {
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof invoiceId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "invoiceId"');
+        }
+        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}/status'.replace('{organizationId}', organizationId).replace('{invoiceId}', invoiceId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
      * View invoice in PDF
      *
      * @param {string} organizationId
