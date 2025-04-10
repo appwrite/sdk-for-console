@@ -10,15 +10,13 @@ export class Backups {
     }
 
     /**
-     * List archives
-     *
      * List all archives for a project.
      *
      * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupArchiveList>}
      */
-    async listArchives(queries?: string[]): Promise<Models.BackupArchiveList> {
+    listArchives(queries?: string[]): Promise<Models.BackupArchiveList> {
         const apiPath = '/backups/archives';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -30,10 +28,7 @@ export class Backups {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -41,8 +36,6 @@ export class Backups {
         );
     }
     /**
-     * Create archive
-     *
      * Create a new archive asynchronously for a project.
      *
      * @param {string[]} services
@@ -50,7 +43,7 @@ export class Backups {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupArchive>}
      */
-    async createArchive(services: string[], resourceId?: string): Promise<Models.BackupArchive> {
+    createArchive(services: string[], resourceId?: string): Promise<Models.BackupArchive> {
         if (typeof services === 'undefined') {
             throw new AppwriteException('Missing required parameter: "services"');
         }
@@ -68,10 +61,7 @@ export class Backups {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'post',
             uri,
             apiHeaders,
@@ -79,15 +69,13 @@ export class Backups {
         );
     }
     /**
-     * Get backup archive
-     *
      * Get a backup archive using it&#039;s ID.
      *
      * @param {string} archiveId
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupArchive>}
      */
-    async getArchive(archiveId: string): Promise<Models.BackupArchive> {
+    getArchive(archiveId: string): Promise<Models.BackupArchive> {
         if (typeof archiveId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "archiveId"');
         }
@@ -99,10 +87,7 @@ export class Backups {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -110,15 +95,13 @@ export class Backups {
         );
     }
     /**
-     * Delete archive
-     *
      * Delete an existing archive for a project.
      *
      * @param {string} archiveId
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    async deleteArchive(archiveId: string): Promise<{}> {
+    deleteArchive(archiveId: string): Promise<{}> {
         if (typeof archiveId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "archiveId"');
         }
@@ -130,10 +113,7 @@ export class Backups {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'delete',
             uri,
             apiHeaders,
@@ -141,15 +121,13 @@ export class Backups {
         );
     }
     /**
-     * List backup policies
-     *
      * List all policies for a project.
      *
      * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicyList>}
      */
-    async listPolicies(queries?: string[]): Promise<Models.BackupPolicyList> {
+    listPolicies(queries?: string[]): Promise<Models.BackupPolicyList> {
         const apiPath = '/backups/policies';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -161,10 +139,7 @@ export class Backups {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -172,8 +147,6 @@ export class Backups {
         );
     }
     /**
-     * Create backup policy
-     *
      * Create a new backup policy.
      *
      * @param {string} policyId
@@ -186,7 +159,7 @@ export class Backups {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
      */
-    async createPolicy(policyId: string, services: string[], retention: number, schedule: string, name?: string, resourceId?: string, enabled?: boolean): Promise<Models.BackupPolicy> {
+    createPolicy(policyId: string, services: string[], retention: number, schedule: string, name?: string, resourceId?: string, enabled?: boolean): Promise<Models.BackupPolicy> {
         if (typeof policyId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "policyId"');
         }
@@ -228,10 +201,7 @@ export class Backups {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'post',
             uri,
             apiHeaders,
@@ -239,15 +209,13 @@ export class Backups {
         );
     }
     /**
-     * Get backup policy
-     *
      * Get a backup policy using it&#039;s ID.
      *
      * @param {string} policyId
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
      */
-    async getPolicy(policyId: string): Promise<Models.BackupPolicy> {
+    getPolicy(policyId: string): Promise<Models.BackupPolicy> {
         if (typeof policyId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "policyId"');
         }
@@ -259,10 +227,7 @@ export class Backups {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -270,8 +235,6 @@ export class Backups {
         );
     }
     /**
-     * Update backup policy
-     *
      * Update an existing policy using it&#039;s ID.
      *
      * @param {string} policyId
@@ -282,7 +245,7 @@ export class Backups {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
      */
-    async updatePolicy(policyId: string, name?: string, retention?: number, schedule?: string, enabled?: boolean): Promise<Models.BackupPolicy> {
+    updatePolicy(policyId: string, name?: string, retention?: number, schedule?: string, enabled?: boolean): Promise<Models.BackupPolicy> {
         if (typeof policyId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "policyId"');
         }
@@ -306,10 +269,7 @@ export class Backups {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'patch',
             uri,
             apiHeaders,
@@ -317,15 +277,13 @@ export class Backups {
         );
     }
     /**
-     * Delete backup policy
-     *
      * Delete a policy using it&#039;s ID.
      *
      * @param {string} policyId
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    async deletePolicy(policyId: string): Promise<{}> {
+    deletePolicy(policyId: string): Promise<{}> {
         if (typeof policyId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "policyId"');
         }
@@ -337,10 +295,7 @@ export class Backups {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'delete',
             uri,
             apiHeaders,
@@ -348,8 +303,6 @@ export class Backups {
         );
     }
     /**
-     * Create restoration
-     *
      * Create and trigger a new restoration for a backup on a project.
      *
      * @param {string} archiveId
@@ -359,7 +312,7 @@ export class Backups {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupRestoration>}
      */
-    async createRestoration(archiveId: string, services: string[], newResourceId?: string, newResourceName?: string): Promise<Models.BackupRestoration> {
+    createRestoration(archiveId: string, services: string[], newResourceId?: string, newResourceName?: string): Promise<Models.BackupRestoration> {
         if (typeof archiveId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "archiveId"');
         }
@@ -386,10 +339,7 @@ export class Backups {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'post',
             uri,
             apiHeaders,
@@ -397,15 +347,13 @@ export class Backups {
         );
     }
     /**
-     * List restorations
-     *
      * List all backup restorations for a project.
      *
      * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupRestorationList>}
      */
-    async listRestorations(queries?: string[]): Promise<Models.BackupRestorationList> {
+    listRestorations(queries?: string[]): Promise<Models.BackupRestorationList> {
         const apiPath = '/backups/restorations';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -417,10 +365,7 @@ export class Backups {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -428,15 +373,13 @@ export class Backups {
         );
     }
     /**
-     * Get backup restoration
-     *
      * Get the current status of a backup restoration.
      *
      * @param {string} restorationId
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupRestoration>}
      */
-    async getRestoration(restorationId: string): Promise<Models.BackupRestoration> {
+    getRestoration(restorationId: string): Promise<Models.BackupRestoration> {
         if (typeof restorationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "restorationId"');
         }
@@ -448,10 +391,7 @@ export class Backups {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,

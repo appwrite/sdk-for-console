@@ -10,8 +10,6 @@ export class Migrations {
     }
 
     /**
-     * List migrations
-     *
      * List all migrations in the current project. This endpoint returns a list of all migrations including their status, progress, and any errors that occurred during the migration process.
      *
      * @param {string[]} queries
@@ -19,7 +17,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationList>}
      */
-    async list(queries?: string[], search?: string): Promise<Models.MigrationList> {
+    list(queries?: string[], search?: string): Promise<Models.MigrationList> {
         const apiPath = '/migrations';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -34,10 +32,7 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -45,8 +40,6 @@ export class Migrations {
         );
     }
     /**
-     * Migrate Appwrite data
-     *
      * Migrate data from another Appwrite project to your current project. This endpoint allows you to migrate resources like databases, collections, documents, users, and files from an existing Appwrite project. 
      *
      * @param {string[]} resources
@@ -56,7 +49,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    async createAppwriteMigration(resources: string[], endpoint: string, projectId: string, apiKey: string): Promise<Models.Migration> {
+    createAppwriteMigration(resources: string[], endpoint: string, projectId: string, apiKey: string): Promise<Models.Migration> {
         if (typeof resources === 'undefined') {
             throw new AppwriteException('Missing required parameter: "resources"');
         }
@@ -89,10 +82,7 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'post',
             uri,
             apiHeaders,
@@ -100,8 +90,6 @@ export class Migrations {
         );
     }
     /**
-     * Generate a report on Appwrite data
-     *
      * Generate a report of the data in an Appwrite project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
      * @param {string[]} resources
@@ -111,7 +99,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    async getAppwriteReport(resources: string[], endpoint: string, projectID: string, key: string): Promise<Models.MigrationReport> {
+    getAppwriteReport(resources: string[], endpoint: string, projectID: string, key: string): Promise<Models.MigrationReport> {
         if (typeof resources === 'undefined') {
             throw new AppwriteException('Missing required parameter: "resources"');
         }
@@ -144,10 +132,7 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -155,8 +140,6 @@ export class Migrations {
         );
     }
     /**
-     * Migrate Firebase data
-     *
      * Migrate data from a Firebase project to your Appwrite project. This endpoint allows you to migrate resources like authentication and other supported services from a Firebase project. 
      *
      * @param {string[]} resources
@@ -164,7 +147,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    async createFirebaseMigration(resources: string[], serviceAccount: string): Promise<Models.Migration> {
+    createFirebaseMigration(resources: string[], serviceAccount: string): Promise<Models.Migration> {
         if (typeof resources === 'undefined') {
             throw new AppwriteException('Missing required parameter: "resources"');
         }
@@ -185,10 +168,7 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'post',
             uri,
             apiHeaders,
@@ -196,8 +176,6 @@ export class Migrations {
         );
     }
     /**
-     * Generate a report on Firebase data
-     *
      * Generate a report of the data in a Firebase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
      * @param {string[]} resources
@@ -205,7 +183,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    async getFirebaseReport(resources: string[], serviceAccount: string): Promise<Models.MigrationReport> {
+    getFirebaseReport(resources: string[], serviceAccount: string): Promise<Models.MigrationReport> {
         if (typeof resources === 'undefined') {
             throw new AppwriteException('Missing required parameter: "resources"');
         }
@@ -226,10 +204,7 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -237,8 +212,6 @@ export class Migrations {
         );
     }
     /**
-     * Migrate NHost data
-     *
      * Migrate data from an NHost project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from an NHost project. 
      *
      * @param {string[]} resources
@@ -252,7 +225,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    async createNHostMigration(resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number): Promise<Models.Migration> {
+    createNHostMigration(resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number): Promise<Models.Migration> {
         if (typeof resources === 'undefined') {
             throw new AppwriteException('Missing required parameter: "resources"');
         }
@@ -306,10 +279,7 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'post',
             uri,
             apiHeaders,
@@ -317,8 +287,6 @@ export class Migrations {
         );
     }
     /**
-     * Generate a report on NHost Data
-     *
      * Generate a detailed report of the data in an NHost project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
      *
      * @param {string[]} resources
@@ -332,7 +300,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    async getNHostReport(resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number): Promise<Models.MigrationReport> {
+    getNHostReport(resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number): Promise<Models.MigrationReport> {
         if (typeof resources === 'undefined') {
             throw new AppwriteException('Missing required parameter: "resources"');
         }
@@ -386,10 +354,7 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -397,8 +362,6 @@ export class Migrations {
         );
     }
     /**
-     * Migrate Supabase data
-     *
      * Migrate data from a Supabase project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from a Supabase project. 
      *
      * @param {string[]} resources
@@ -411,7 +374,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    async createSupabaseMigration(resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number): Promise<Models.Migration> {
+    createSupabaseMigration(resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number): Promise<Models.Migration> {
         if (typeof resources === 'undefined') {
             throw new AppwriteException('Missing required parameter: "resources"');
         }
@@ -459,10 +422,7 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'post',
             uri,
             apiHeaders,
@@ -470,8 +430,6 @@ export class Migrations {
         );
     }
     /**
-     * Generate a report on Supabase Data
-     *
      * Generate a report of the data in a Supabase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
      *
      * @param {string[]} resources
@@ -484,7 +442,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    async getSupabaseReport(resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number): Promise<Models.MigrationReport> {
+    getSupabaseReport(resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number): Promise<Models.MigrationReport> {
         if (typeof resources === 'undefined') {
             throw new AppwriteException('Missing required parameter: "resources"');
         }
@@ -532,10 +490,7 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -543,15 +498,13 @@ export class Migrations {
         );
     }
     /**
-     * Get migration
-     *
      * Get a migration by its unique ID. This endpoint returns detailed information about a specific migration including its current status, progress, and any errors that occurred during the migration process. 
      *
      * @param {string} migrationId
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    async get(migrationId: string): Promise<Models.Migration> {
+    get(migrationId: string): Promise<Models.Migration> {
         if (typeof migrationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "migrationId"');
         }
@@ -563,10 +516,7 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -574,15 +524,13 @@ export class Migrations {
         );
     }
     /**
-     * Retry migration
-     *
      * Retry a failed migration. This endpoint allows you to retry a migration that has previously failed.
      *
      * @param {string} migrationId
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    async retry(migrationId: string): Promise<Models.Migration> {
+    retry(migrationId: string): Promise<Models.Migration> {
         if (typeof migrationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "migrationId"');
         }
@@ -594,10 +542,7 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'patch',
             uri,
             apiHeaders,
@@ -605,15 +550,13 @@ export class Migrations {
         );
     }
     /**
-     * Delete migration
-     *
      * Delete a migration by its unique ID. This endpoint allows you to remove a migration from your project&#039;s migration history. 
      *
      * @param {string} migrationId
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    async delete(migrationId: string): Promise<{}> {
+    delete(migrationId: string): Promise<{}> {
         if (typeof migrationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "migrationId"');
         }
@@ -625,10 +568,7 @@ export class Migrations {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'delete',
             uri,
             apiHeaders,

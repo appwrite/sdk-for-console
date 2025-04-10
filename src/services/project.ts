@@ -11,8 +11,6 @@ export class Project {
     }
 
     /**
-     * Get project usage stats
-     *
      * Get comprehensive usage statistics for your project. View metrics including network requests, bandwidth, storage, function executions, database usage, and user activity. Specify a time range with startDate and endDate, and optionally set the data granularity with period (1h or 1d). The response includes both total counts and detailed breakdowns by resource, along with historical data over the specified period.
      *
      * @param {string} startDate
@@ -21,7 +19,7 @@ export class Project {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageProject>}
      */
-    async getUsage(startDate: string, endDate: string, period?: ProjectUsageRange): Promise<Models.UsageProject> {
+    getUsage(startDate: string, endDate: string, period?: ProjectUsageRange): Promise<Models.UsageProject> {
         if (typeof startDate === 'undefined') {
             throw new AppwriteException('Missing required parameter: "startDate"');
         }
@@ -45,10 +43,7 @@ export class Project {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -56,14 +51,12 @@ export class Project {
         );
     }
     /**
-     * List variables
-     *
      * Get a list of all project variables. These variables will be accessible in all Appwrite Functions at runtime.
      *
      * @throws {AppwriteException}
      * @returns {Promise<Models.VariableList>}
      */
-    async listVariables(): Promise<Models.VariableList> {
+    listVariables(): Promise<Models.VariableList> {
         const apiPath = '/project/variables';
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -72,10 +65,7 @@ export class Project {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -83,8 +73,6 @@ export class Project {
         );
     }
     /**
-     * Create variable
-     *
      * Create a new project variable. This variable will be accessible in all Appwrite Functions at runtime.
      *
      * @param {string} key
@@ -92,7 +80,7 @@ export class Project {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    async createVariable(key: string, value: string): Promise<Models.Variable> {
+    createVariable(key: string, value: string): Promise<Models.Variable> {
         if (typeof key === 'undefined') {
             throw new AppwriteException('Missing required parameter: "key"');
         }
@@ -113,10 +101,7 @@ export class Project {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'post',
             uri,
             apiHeaders,
@@ -124,15 +109,13 @@ export class Project {
         );
     }
     /**
-     * Get variable
-     *
      * Get a project variable by its unique ID.
      *
      * @param {string} variableId
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    async getVariable(variableId: string): Promise<Models.Variable> {
+    getVariable(variableId: string): Promise<Models.Variable> {
         if (typeof variableId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
@@ -144,10 +127,7 @@ export class Project {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -155,8 +135,6 @@ export class Project {
         );
     }
     /**
-     * Update variable
-     *
      * Update project variable by its unique ID. This variable will be accessible in all Appwrite Functions at runtime.
      *
      * @param {string} variableId
@@ -165,7 +143,7 @@ export class Project {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    async updateVariable(variableId: string, key: string, value?: string): Promise<Models.Variable> {
+    updateVariable(variableId: string, key: string, value?: string): Promise<Models.Variable> {
         if (typeof variableId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
@@ -186,10 +164,7 @@ export class Project {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'put',
             uri,
             apiHeaders,
@@ -197,15 +172,13 @@ export class Project {
         );
     }
     /**
-     * Delete variable
-     *
      * Delete a project variable by its unique ID. 
      *
      * @param {string} variableId
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    async deleteVariable(variableId: string): Promise<{}> {
+    deleteVariable(variableId: string): Promise<{}> {
         if (typeof variableId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
@@ -217,10 +190,7 @@ export class Project {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'delete',
             uri,
             apiHeaders,

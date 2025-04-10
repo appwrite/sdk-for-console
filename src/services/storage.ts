@@ -14,8 +14,6 @@ export class Storage {
     }
 
     /**
-     * List buckets
-     *
      * Get a list of all the storage buckets. You can use the query params to filter your results.
      *
      * @param {string[]} queries
@@ -23,7 +21,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BucketList>}
      */
-    async listBuckets(queries?: string[], search?: string): Promise<Models.BucketList> {
+    listBuckets(queries?: string[], search?: string): Promise<Models.BucketList> {
         const apiPath = '/storage/buckets';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -38,10 +36,7 @@ export class Storage {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -49,8 +44,6 @@ export class Storage {
         );
     }
     /**
-     * Create bucket
-     *
      * Create a new storage bucket.
      *
      * @param {string} bucketId
@@ -66,7 +59,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Bucket>}
      */
-    async createBucket(bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: Compression, encryption?: boolean, antivirus?: boolean): Promise<Models.Bucket> {
+    createBucket(bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: Compression, encryption?: boolean, antivirus?: boolean): Promise<Models.Bucket> {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -111,10 +104,7 @@ export class Storage {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'post',
             uri,
             apiHeaders,
@@ -122,15 +112,13 @@ export class Storage {
         );
     }
     /**
-     * Get bucket
-     *
      * Get a storage bucket by its unique ID. This endpoint response returns a JSON object with the storage bucket metadata.
      *
      * @param {string} bucketId
      * @throws {AppwriteException}
      * @returns {Promise<Models.Bucket>}
      */
-    async getBucket(bucketId: string): Promise<Models.Bucket> {
+    getBucket(bucketId: string): Promise<Models.Bucket> {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -142,10 +130,7 @@ export class Storage {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -153,8 +138,6 @@ export class Storage {
         );
     }
     /**
-     * Update bucket
-     *
      * Update a storage bucket by its unique ID.
      *
      * @param {string} bucketId
@@ -170,7 +153,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Bucket>}
      */
-    async updateBucket(bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: Compression, encryption?: boolean, antivirus?: boolean): Promise<Models.Bucket> {
+    updateBucket(bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: Compression, encryption?: boolean, antivirus?: boolean): Promise<Models.Bucket> {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -212,10 +195,7 @@ export class Storage {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'put',
             uri,
             apiHeaders,
@@ -223,15 +203,13 @@ export class Storage {
         );
     }
     /**
-     * Delete bucket
-     *
      * Delete a storage bucket by its unique ID.
      *
      * @param {string} bucketId
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    async deleteBucket(bucketId: string): Promise<{}> {
+    deleteBucket(bucketId: string): Promise<{}> {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -243,10 +221,7 @@ export class Storage {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'delete',
             uri,
             apiHeaders,
@@ -254,8 +229,6 @@ export class Storage {
         );
     }
     /**
-     * List files
-     *
      * Get a list of all the user files. You can use the query params to filter your results.
      *
      * @param {string} bucketId
@@ -264,7 +237,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.FileList>}
      */
-    async listFiles(bucketId: string, queries?: string[], search?: string): Promise<Models.FileList> {
+    listFiles(bucketId: string, queries?: string[], search?: string): Promise<Models.FileList> {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -282,10 +255,7 @@ export class Storage {
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -293,8 +263,6 @@ export class Storage {
         );
     }
     /**
-     * Create file
-     *
      * Create a new file. Before using this route, you should create a new bucket resource using either a [server integration](https://appwrite.io/docs/server/storage#storageCreateBucket) API or directly from your Appwrite console.
 
 Larger files should be uploaded using multiple requests with the [content-range](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Range) header to send a partial request with a maximum supported chunk of `5MB`. The `content-range` header values should always be in bytes.
@@ -311,7 +279,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
      * @throws {AppwriteException}
      * @returns {Promise<Models.File>}
      */
-    async createFile(bucketId: string, fileId: string, file: File, permissions?: string[], onProgress = (progress: UploadProgress) => {}): Promise<Models.File> {
+    createFile(bucketId: string, fileId: string, file: File, permissions?: string[], onProgress = (progress: UploadProgress) => {}): Promise<Models.File> {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -338,10 +306,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             'content-type': 'multipart/form-data',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.chunkedUpload(
+        return this.client.chunkedUpload(
             'post',
             uri,
             apiHeaders,
@@ -350,8 +315,6 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         );
     }
     /**
-     * Get file
-     *
      * Get a file by its unique ID. This endpoint response returns a JSON object with the file metadata.
      *
      * @param {string} bucketId
@@ -359,7 +322,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
      * @throws {AppwriteException}
      * @returns {Promise<Models.File>}
      */
-    async getFile(bucketId: string, fileId: string): Promise<Models.File> {
+    getFile(bucketId: string, fileId: string): Promise<Models.File> {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -374,10 +337,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -385,8 +345,6 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         );
     }
     /**
-     * Update file
-     *
      * Update a file by its unique ID. Only users with write permissions have access to update this resource.
      *
      * @param {string} bucketId
@@ -396,7 +354,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
      * @throws {AppwriteException}
      * @returns {Promise<Models.File>}
      */
-    async updateFile(bucketId: string, fileId: string, name?: string, permissions?: string[]): Promise<Models.File> {
+    updateFile(bucketId: string, fileId: string, name?: string, permissions?: string[]): Promise<Models.File> {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -417,10 +375,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'put',
             uri,
             apiHeaders,
@@ -428,8 +383,6 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         );
     }
     /**
-     * Delete file
-     *
      * Delete a file by its unique ID. Only users with write permissions have access to delete this resource.
      *
      * @param {string} bucketId
@@ -437,7 +390,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    async deleteFile(bucketId: string, fileId: string): Promise<{}> {
+    deleteFile(bucketId: string, fileId: string): Promise<{}> {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -452,10 +405,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'delete',
             uri,
             apiHeaders,
@@ -463,8 +413,6 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         );
     }
     /**
-     * Get file for download
-     *
      * Get a file content by its unique ID. The endpoint response return with a &#039;Content-Disposition: attachment&#039; header that tells the browser to start downloading the file to user downloads directory.
      *
      * @param {string} bucketId
@@ -492,12 +440,10 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-
+        
         return uri.toString();
     }
     /**
-     * Get file preview
-     *
      * Get a file preview image. Currently, this method supports preview for image files (jpg, png, and gif), other supported formats, like pdf, docs, slides, and spreadsheets, will return the file icon image. You can also pass query string arguments for cutting and resizing your preview image. Preview is supported only for image files smaller than 10MB.
      *
      * @param {string} bucketId
@@ -569,12 +515,10 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-
+        
         return uri.toString();
     }
     /**
-     * Get file for view
-     *
      * Get a file content by its unique ID. This endpoint is similar to the download method but returns with no  &#039;Content-Disposition: attachment&#039; header.
      *
      * @param {string} bucketId
@@ -602,12 +546,10 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-
+        
         return uri.toString();
     }
     /**
-     * Get storage usage stats
-     *
      * Get usage metrics and statistics for all buckets in the project. You can view the total number of buckets, files, storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
 
      *
@@ -615,7 +557,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageStorage>}
      */
-    async getUsage(range?: StorageUsageRange): Promise<Models.UsageStorage> {
+    getUsage(range?: StorageUsageRange): Promise<Models.UsageStorage> {
         const apiPath = '/storage/usage';
         const payload: Payload = {};
         if (typeof range !== 'undefined') {
@@ -627,10 +569,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
@@ -638,8 +577,6 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
         );
     }
     /**
-     * Get bucket usage stats
-     *
      * Get usage metrics and statistics a specific bucket in the project. You can view the total number of files, storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
 
      *
@@ -648,7 +585,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageBuckets>}
      */
-    async getBucketUsage(bucketId: string, range?: StorageUsageRange): Promise<Models.UsageBuckets> {
+    getBucketUsage(bucketId: string, range?: StorageUsageRange): Promise<Models.UsageBuckets> {
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
         }
@@ -663,10 +600,7 @@ If you&#039;re creating a new file using one of the Appwrite SDKs, all the chunk
             'content-type': 'application/json',
         }
 
-        payload['project'] = this.client.config.project;
-
-
-        return await this.client.call(
+        return this.client.call(
             'get',
             uri,
             apiHeaders,
