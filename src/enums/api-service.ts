@@ -7,6 +7,7 @@ export enum ApiService {
     Storage = 'storage',
     Teams = 'teams',
     Users = 'users',
+    Sites = 'sites',
     Functions = 'functions',
     Graphql = 'graphql',
     Messaging = 'messaging',

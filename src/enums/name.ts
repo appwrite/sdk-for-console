@@ -6,7 +6,6 @@ export enum Name {
     V1functions = 'v1-functions',
     V1statsresources = 'v1-stats-resources',
     V1statsusage = 'v1-stats-usage',
-    V1statsusagedump = 'v1-stats-usage-dump',
     V1webhooks = 'v1-webhooks',
     V1certificates = 'v1-certificates',
     V1builds = 'v1-builds',

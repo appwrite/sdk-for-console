@@ -29,7 +29,6 @@ export class Migrations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -129,11 +128,53 @@ export class Migrations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
             'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Import documents from a CSV file into your Appwrite database. This endpoint allows you to import documents from a CSV file uploaded to Appwrite Storage bucket.
+     *
+     * @param {string} bucketId
+     * @param {string} fileId
+     * @param {string} resourceId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Migration>}
+     */
+    createCsvMigration(bucketId: string, fileId: string, resourceId: string): Promise<Models.Migration> {
+        if (typeof bucketId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "bucketId"');
+        }
+        if (typeof fileId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "fileId"');
+        }
+        if (typeof resourceId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "resourceId"');
+        }
+        const apiPath = '/migrations/csv';
+        const payload: Payload = {};
+        if (typeof bucketId !== 'undefined') {
+            payload['bucketId'] = bucketId;
+        }
+        if (typeof fileId !== 'undefined') {
+            payload['fileId'] = fileId;
+        }
+        if (typeof resourceId !== 'undefined') {
+            payload['resourceId'] = resourceId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
             uri,
             apiHeaders,
             payload
@@ -201,7 +242,6 @@ export class Migrations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -351,7 +391,6 @@ export class Migrations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -487,7 +526,6 @@ export class Migrations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -513,7 +551,6 @@ export class Migrations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(

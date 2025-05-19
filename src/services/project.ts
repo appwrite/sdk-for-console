@@ -40,7 +40,6 @@ export class Project {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -62,7 +61,6 @@ export class Project {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -77,10 +75,11 @@ export class Project {
      *
      * @param {string} key
      * @param {string} value
+     * @param {boolean} secret
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    createVariable(key: string, value: string): Promise<Models.Variable> {
+    createVariable(key: string, value: string, secret?: boolean): Promise<Models.Variable> {
         if (typeof key === 'undefined') {
             throw new AppwriteException('Missing required parameter: "key"');
         }
@@ -94,6 +93,9 @@ export class Project {
         }
         if (typeof value !== 'undefined') {
             payload['value'] = value;
+        }
+        if (typeof secret !== 'undefined') {
+            payload['secret'] = secret;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -124,7 +126,6 @@ export class Project {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -140,10 +141,11 @@ export class Project {
      * @param {string} variableId
      * @param {string} key
      * @param {string} value
+     * @param {boolean} secret
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    updateVariable(variableId: string, key: string, value?: string): Promise<Models.Variable> {
+    updateVariable(variableId: string, key: string, value?: string, secret?: boolean): Promise<Models.Variable> {
         if (typeof variableId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
@@ -157,6 +159,9 @@ export class Project {
         }
         if (typeof value !== 'undefined') {
             payload['value'] = value;
+        }
+        if (typeof secret !== 'undefined') {
+            payload['secret'] = secret;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

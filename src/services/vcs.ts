@@ -1,6 +1,7 @@
 import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
+import { VCSDetectionType } from '../enums/v-c-s-detection-type';
 
 export class Vcs {
     client: Client;
@@ -10,26 +11,76 @@ export class Vcs {
     }
 
     /**
-     * Get a list of GitHub repositories available through your installation. This endpoint returns repositories with their basic information, detected runtime environments, and latest push dates. You can optionally filter repositories using a search term. Each repository&#039;s runtime is automatically detected based on its contents and language statistics. The GitHub installation must be properly configured for this endpoint to work.
+     * Analyze a GitHub repository to automatically detect the programming language and runtime environment. This endpoint scans the repository&#039;s files and language statistics to determine the appropriate runtime settings for your function. The GitHub installation must be properly configured and the repository must be accessible through your installation for this endpoint to work.
      *
      * @param {string} installationId
-     * @param {string} search
+     * @param {string} providerRepositoryId
+     * @param {VCSDetectionType} type
+     * @param {string} providerRootDirectory
      * @throws {AppwriteException}
-     * @returns {Promise<Models.ProviderRepositoryList>}
+     * @returns {Promise<Models.DetectionFramework>}
      */
-    listRepositories(installationId: string, search?: string): Promise<Models.ProviderRepositoryList> {
+    createRepositoryDetection(installationId: string, providerRepositoryId: string, type: VCSDetectionType, providerRootDirectory?: string): Promise<Models.DetectionFramework> {
         if (typeof installationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "installationId"');
         }
+        if (typeof providerRepositoryId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "providerRepositoryId"');
+        }
+        if (typeof type === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "type"');
+        }
+        const apiPath = '/vcs/github/installations/{installationId}/detections'.replace('{installationId}', installationId);
+        const payload: Payload = {};
+        if (typeof providerRepositoryId !== 'undefined') {
+            payload['providerRepositoryId'] = providerRepositoryId;
+        }
+        if (typeof type !== 'undefined') {
+            payload['type'] = type;
+        }
+        if (typeof providerRootDirectory !== 'undefined') {
+            payload['providerRootDirectory'] = providerRootDirectory;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Get a list of GitHub repositories available through your installation. This endpoint returns repositories with their basic information, detected runtime environments, and latest push dates. You can optionally filter repositories using a search term. Each repository&#039;s runtime is automatically detected based on its contents and language statistics. The GitHub installation must be properly configured for this endpoint to work.
+     *
+     * @param {string} installationId
+     * @param {VCSDetectionType} type
+     * @param {string} search
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ProviderRepositoryFrameworkList>}
+     */
+    listRepositories(installationId: string, type: VCSDetectionType, search?: string): Promise<Models.ProviderRepositoryFrameworkList> {
+        if (typeof installationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "installationId"');
+        }
+        if (typeof type === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "type"');
+        }
         const apiPath = '/vcs/github/installations/{installationId}/providerRepositories'.replace('{installationId}', installationId);
         const payload: Payload = {};
+        if (typeof type !== 'undefined') {
+            payload['type'] = type;
+        }
         if (typeof search !== 'undefined') {
             payload['search'] = search;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -99,7 +150,6 @@ export class Vcs {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -130,7 +180,6 @@ export class Vcs {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -165,45 +214,10 @@ export class Vcs {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
             'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Analyze a GitHub repository to automatically detect the programming language and runtime environment. This endpoint scans the repository&#039;s files and language statistics to determine the appropriate runtime settings for your function. The GitHub installation must be properly configured and the repository must be accessible through your installation for this endpoint to work.
-     *
-     * @param {string} installationId
-     * @param {string} providerRepositoryId
-     * @param {string} providerRootDirectory
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Detection>}
-     */
-    createRepositoryDetection(installationId: string, providerRepositoryId: string, providerRootDirectory?: string): Promise<Models.Detection> {
-        if (typeof installationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "installationId"');
-        }
-        if (typeof providerRepositoryId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerRepositoryId"');
-        }
-        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}/detection'.replace('{installationId}', installationId).replace('{providerRepositoryId}', providerRepositoryId);
-        const payload: Payload = {};
-        if (typeof providerRootDirectory !== 'undefined') {
-            payload['providerRootDirectory'] = providerRootDirectory;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'post',
             uri,
             apiHeaders,
             payload
@@ -267,7 +281,6 @@ export class Vcs {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -293,7 +306,6 @@ export class Vcs {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(

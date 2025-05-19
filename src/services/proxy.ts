@@ -1,7 +1,7 @@
 import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
-import { ResourceType } from '../enums/resource-type';
+import { StatusCode } from '../enums/status-code';
 
 export class Proxy {
     client: Client;
@@ -30,7 +30,6 @@ export class Proxy {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -41,31 +40,143 @@ export class Proxy {
         );
     }
     /**
-     * Create a new proxy rule.
+     * Create a new proxy rule for serving Appwrite&#039;s API on custom domain.
      *
      * @param {string} domain
-     * @param {ResourceType} resourceType
-     * @param {string} resourceId
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    createRule(domain: string, resourceType: ResourceType, resourceId?: string): Promise<Models.ProxyRule> {
+    createAPIRule(domain: string): Promise<Models.ProxyRule> {
         if (typeof domain === 'undefined') {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
-        if (typeof resourceType === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resourceType"');
-        }
-        const apiPath = '/proxy/rules';
+        const apiPath = '/proxy/rules/api';
         const payload: Payload = {};
         if (typeof domain !== 'undefined') {
             payload['domain'] = domain;
         }
-        if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
         }
-        if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Create a new proxy rule for executing Appwrite Function on custom domain.
+     *
+     * @param {string} domain
+     * @param {string} functionId
+     * @param {string} branch
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ProxyRule>}
+     */
+    createFunctionRule(domain: string, functionId: string, branch?: string): Promise<Models.ProxyRule> {
+        if (typeof domain === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "domain"');
+        }
+        if (typeof functionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "functionId"');
+        }
+        const apiPath = '/proxy/rules/function';
+        const payload: Payload = {};
+        if (typeof domain !== 'undefined') {
+            payload['domain'] = domain;
+        }
+        if (typeof functionId !== 'undefined') {
+            payload['functionId'] = functionId;
+        }
+        if (typeof branch !== 'undefined') {
+            payload['branch'] = branch;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Create a new proxy rule for to redirect from custom domain to another domain.
+     *
+     * @param {string} domain
+     * @param {string} url
+     * @param {StatusCode} statusCode
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ProxyRule>}
+     */
+    createRedirectRule(domain: string, url: string, statusCode: StatusCode): Promise<Models.ProxyRule> {
+        if (typeof domain === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "domain"');
+        }
+        if (typeof url === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "url"');
+        }
+        if (typeof statusCode === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "statusCode"');
+        }
+        const apiPath = '/proxy/rules/redirect';
+        const payload: Payload = {};
+        if (typeof domain !== 'undefined') {
+            payload['domain'] = domain;
+        }
+        if (typeof url !== 'undefined') {
+            payload['url'] = url;
+        }
+        if (typeof statusCode !== 'undefined') {
+            payload['statusCode'] = statusCode;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Create a new proxy rule for serving Appwrite Site on custom domain.
+     *
+     * @param {string} domain
+     * @param {string} siteId
+     * @param {string} branch
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ProxyRule>}
+     */
+    createSiteRule(domain: string, siteId: string, branch?: string): Promise<Models.ProxyRule> {
+        if (typeof domain === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "domain"');
+        }
+        if (typeof siteId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "siteId"');
+        }
+        const apiPath = '/proxy/rules/site';
+        const payload: Payload = {};
+        if (typeof domain !== 'undefined') {
+            payload['domain'] = domain;
+        }
+        if (typeof siteId !== 'undefined') {
+            payload['siteId'] = siteId;
+        }
+        if (typeof branch !== 'undefined') {
+            payload['branch'] = branch;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -96,7 +207,6 @@ export class Proxy {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(

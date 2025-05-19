@@ -133,6 +133,19 @@ export namespace Models {
         buckets: Bucket[];
     }
     /**
+     * Resource Tokens List
+     */
+    export type ResourceTokenList = {
+        /**
+         * Total number of tokens documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of tokens.
+         */
+        tokens: ResourceToken[];
+    }
+    /**
      * Teams List
      */
     export type TeamList<Preferences extends Models.Preferences> = {
@@ -157,6 +170,32 @@ export namespace Models {
          * List of memberships.
          */
         memberships: Membership[];
+    }
+    /**
+     * Sites List
+     */
+    export type SiteList = {
+        /**
+         * Total number of sites documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of sites.
+         */
+        sites: Site[];
+    }
+    /**
+     * Site Templates List
+     */
+    export type TemplateSiteList = {
+        /**
+         * Total number of templates documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of templates.
+         */
+        templates: TemplateSite[];
     }
     /**
      * Functions List
@@ -198,17 +237,30 @@ export namespace Models {
         installations: Installation[];
     }
     /**
-     * Provider Repositories List
+     * Framework Provider Repositories List
      */
-    export type ProviderRepositoryList = {
+    export type ProviderRepositoryFrameworkList = {
         /**
-         * Total number of providerRepositories documents that matched your query.
+         * Total number of frameworkProviderRepositories documents that matched your query.
          */
         total: number;
         /**
-         * List of providerRepositories.
+         * List of frameworkProviderRepositories.
          */
-        providerRepositories: ProviderRepository[];
+        frameworkProviderRepositories: ProviderRepositoryFramework[];
+    }
+    /**
+     * Runtime Provider Repositories List
+     */
+    export type ProviderRepositoryRuntimeList = {
+        /**
+         * Total number of runtimeProviderRepositories documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of runtimeProviderRepositories.
+         */
+        runtimeProviderRepositories: ProviderRepositoryRuntime[];
     }
     /**
      * Branches List
@@ -222,6 +274,19 @@ export namespace Models {
          * List of branches.
          */
         branches: Branch[];
+    }
+    /**
+     * Frameworks List
+     */
+    export type FrameworkList = {
+        /**
+         * Total number of frameworks documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of frameworks.
+         */
+        frameworks: Framework[];
     }
     /**
      * Runtimes List
@@ -300,6 +365,19 @@ export namespace Models {
          * List of keys.
          */
         keys: Key[];
+    }
+    /**
+     * Dev Keys List
+     */
+    export type DevKeyList = {
+        /**
+         * Total number of devKeys documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of devKeys.
+         */
+        devKeys: DevKey[];
     }
     /**
      * Platforms List
@@ -1112,6 +1190,10 @@ export namespace Models {
          */
         attributes: string[];
         /**
+         * Index attributes length.
+         */
+        lengths: number[];
+        /**
          * Index orders.
          */
         orders?: string[];
@@ -1786,6 +1868,39 @@ export namespace Models {
         antivirus: boolean;
     }
     /**
+     * ResourceToken
+     */
+    export type ResourceToken = {
+        /**
+         * Token ID.
+         */
+        $id: string;
+        /**
+         * Token creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Resource ID.
+         */
+        resourceId: string;
+        /**
+         * Resource type.
+         */
+        resourceType: string;
+        /**
+         * Token expiration date in ISO 8601 format.
+         */
+        expire: string;
+        /**
+         * JWT encoded string.
+         */
+        secret: string;
+        /**
+         * Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+         */
+        accessedAt: string;
+    }
+    /**
      * Team
      */
     export type Team<Preferences extends Models.Preferences> = {
@@ -1872,6 +1987,225 @@ export namespace Models {
         roles: string[];
     }
     /**
+     * Site
+     */
+    export type Site = {
+        /**
+         * Site ID.
+         */
+        $id: string;
+        /**
+         * Site creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Site update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Site name.
+         */
+        name: string;
+        /**
+         * Site enabled.
+         */
+        enabled: boolean;
+        /**
+         * Is the site deployed with the latest configuration? This is set to false if you&#039;ve changed an environment variables, entrypoint, commands, or other settings that needs redeploy to be applied. When the value is false, redeploy the site to update it with the latest configuration.
+         */
+        live: boolean;
+        /**
+         * When disabled, request logs will exclude logs and errors, and site responses will be slightly faster.
+         */
+        logging: boolean;
+        /**
+         * Site framework.
+         */
+        framework: string;
+        /**
+         * Site&#039;s active deployment ID.
+         */
+        deploymentId: string;
+        /**
+         * Active deployment creation date in ISO 8601 format.
+         */
+        deploymentCreatedAt: string;
+        /**
+         * Screenshot of active deployment with light theme preference file ID.
+         */
+        deploymentScreenshotLight: string;
+        /**
+         * Screenshot of active deployment with dark theme preference file ID.
+         */
+        deploymentScreenshotDark: string;
+        /**
+         * Site&#039;s latest deployment ID.
+         */
+        latestDeploymentId: string;
+        /**
+         * Latest deployment creation date in ISO 8601 format.
+         */
+        latestDeploymentCreatedAt: string;
+        /**
+         * Status of latest deployment. Possible values are &quot;waiting&quot;, &quot;processing&quot;, &quot;building&quot;, &quot;ready&quot;, and &quot;failed&quot;.
+         */
+        latestDeploymentStatus: string;
+        /**
+         * Site variables.
+         */
+        vars: Variable[];
+        /**
+         * Site request timeout in seconds.
+         */
+        timeout: number;
+        /**
+         * The install command used to install the site dependencies.
+         */
+        installCommand: string;
+        /**
+         * The build command used to build the site.
+         */
+        buildCommand: string;
+        /**
+         * The directory where the site build output is located.
+         */
+        outputDirectory: string;
+        /**
+         * Site VCS (Version Control System) installation id.
+         */
+        installationId: string;
+        /**
+         * VCS (Version Control System) Repository ID
+         */
+        providerRepositoryId: string;
+        /**
+         * VCS (Version Control System) branch name
+         */
+        providerBranch: string;
+        /**
+         * Path to site in VCS (Version Control System) repository
+         */
+        providerRootDirectory: string;
+        /**
+         * Is VCS (Version Control System) connection is in silent mode? When in silence mode, no comments will be posted on the repository pull or merge requests
+         */
+        providerSilentMode: boolean;
+        /**
+         * Machine specification for builds and executions.
+         */
+        specification: string;
+        /**
+         * Site build runtime.
+         */
+        buildRuntime: string;
+        /**
+         * Site framework adapter.
+         */
+        adapter: string;
+        /**
+         * Name of fallback file to use instead of 404 page. If null, Appwrite 404 page will be displayed.
+         */
+        fallbackFile: string;
+    }
+    /**
+     * Template Site
+     */
+    export type TemplateSite = {
+        /**
+         * Site Template ID.
+         */
+        key: string;
+        /**
+         * Site Template Name.
+         */
+        name: string;
+        /**
+         * Short description of template
+         */
+        tagline: string;
+        /**
+         * URL hosting a template demo.
+         */
+        demoUrl: string;
+        /**
+         * File URL with preview screenshot in dark theme preference.
+         */
+        screenshotDark: string;
+        /**
+         * File URL with preview screenshot in light theme preference.
+         */
+        screenshotLight: string;
+        /**
+         * Site use cases.
+         */
+        useCases: string[];
+        /**
+         * List of frameworks that can be used with this template.
+         */
+        frameworks: TemplateFramework[];
+        /**
+         * VCS (Version Control System) Provider.
+         */
+        vcsProvider: string;
+        /**
+         * VCS (Version Control System) Repository ID
+         */
+        providerRepositoryId: string;
+        /**
+         * VCS (Version Control System) Owner.
+         */
+        providerOwner: string;
+        /**
+         * VCS (Version Control System) branch version (tag).
+         */
+        providerVersion: string;
+        /**
+         * Site variables.
+         */
+        variables: TemplateVariable[];
+    }
+    /**
+     * Template Framework
+     */
+    export type TemplateFramework = {
+        /**
+         * Parent framework key.
+         */
+        key: string;
+        /**
+         * Framework Name.
+         */
+        name: string;
+        /**
+         * The install command used to install the dependencies.
+         */
+        installCommand: string;
+        /**
+         * The build command used to build the deployment.
+         */
+        buildCommand: string;
+        /**
+         * The output directory to store the build output.
+         */
+        outputDirectory: string;
+        /**
+         * Path to site in VCS (Version Control System) repository
+         */
+        providerRootDirectory: string;
+        /**
+         * Runtime used during build step of template.
+         */
+        buildRuntime: string;
+        /**
+         * Site framework runtime
+         */
+        adapter: string;
+        /**
+         * Fallback file for SPA. Only relevant for static serve runtime.
+         */
+        fallbackFile: string;
+    }
+    /**
      * Function
      */
     export type Function = {
@@ -1904,17 +2238,33 @@ export namespace Models {
          */
         live: boolean;
         /**
-         * Whether executions will be logged. When set to false, executions will not be logged, but will reduce resource used by your Appwrite project.
+         * When disabled, executions will exclude logs and errors, and will be slightly faster.
          */
         logging: boolean;
         /**
-         * Function execution runtime.
+         * Function execution and build runtime.
          */
         runtime: string;
         /**
          * Function&#039;s active deployment ID.
          */
-        deployment: string;
+        deploymentId: string;
+        /**
+         * Active deployment creation date in ISO 8601 format.
+         */
+        deploymentCreatedAt: string;
+        /**
+         * Function&#039;s latest deployment ID.
+         */
+        latestDeploymentId: string;
+        /**
+         * Latest deployment creation date in ISO 8601 format.
+         */
+        latestDeploymentCreatedAt: string;
+        /**
+         * Status of latest deployment. Possible values are &quot;waiting&quot;, &quot;processing&quot;, &quot;building&quot;, &quot;ready&quot;, and &quot;failed&quot;.
+         */
+        latestDeploymentStatus: string;
         /**
          * Allowed permission scopes.
          */
@@ -2083,6 +2433,10 @@ export namespace Models {
          */
         value: string;
         /**
+         * Variable secret flag. Secret variables can only be updated or deleted, but never read.
+         */
+        secret: boolean;
+        /**
          * Variable Placeholder.
          */
         placeholder: string;
@@ -2149,22 +2503,113 @@ export namespace Models {
          */
         private: boolean;
         /**
-         * Auto-detected runtime suggestion. Empty if getting response of getRuntime().
-         */
-        runtime: string;
-        /**
          * Last commit date in ISO 8601 format.
          */
         pushedAt: string;
     }
     /**
-     * Detection
+     * ProviderRepositoryFramework
      */
-    export type Detection = {
+    export type ProviderRepositoryFramework = {
+        /**
+         * VCS (Version Control System) repository ID.
+         */
+        id: string;
+        /**
+         * VCS (Version Control System) repository name.
+         */
+        name: string;
+        /**
+         * VCS (Version Control System) organization name
+         */
+        organization: string;
+        /**
+         * VCS (Version Control System) provider name.
+         */
+        provider: string;
+        /**
+         * Is VCS (Version Control System) repository private?
+         */
+        private: boolean;
+        /**
+         * Last commit date in ISO 8601 format.
+         */
+        pushedAt: string;
+        /**
+         * Auto-detected framework. Empty if type is not &quot;framework&quot;.
+         */
+        framework: string;
+    }
+    /**
+     * ProviderRepositoryRuntime
+     */
+    export type ProviderRepositoryRuntime = {
+        /**
+         * VCS (Version Control System) repository ID.
+         */
+        id: string;
+        /**
+         * VCS (Version Control System) repository name.
+         */
+        name: string;
+        /**
+         * VCS (Version Control System) organization name
+         */
+        organization: string;
+        /**
+         * VCS (Version Control System) provider name.
+         */
+        provider: string;
+        /**
+         * Is VCS (Version Control System) repository private?
+         */
+        private: boolean;
+        /**
+         * Last commit date in ISO 8601 format.
+         */
+        pushedAt: string;
+        /**
+         * Auto-detected runtime. Empty if type is not &quot;runtime&quot;.
+         */
+        runtime: string;
+    }
+    /**
+     * DetectionFramework
+     */
+    export type DetectionFramework = {
+        /**
+         * Framework
+         */
+        framework: string;
+        /**
+         * Site Install Command
+         */
+        installCommand: string;
+        /**
+         * Site Build Command
+         */
+        buildCommand: string;
+        /**
+         * Site Output Directory
+         */
+        outputDirectory: string;
+    }
+    /**
+     * DetectionRuntime
+     */
+    export type DetectionRuntime = {
         /**
          * Runtime
          */
         runtime: string;
+        /**
+         * Function Entrypoint
+         */
+        entrypoint: string;
+        /**
+         * Function install and build commands
+         */
+        commands: string;
     }
     /**
      * VcsContents
@@ -2230,6 +2675,56 @@ export namespace Models {
         supports: string[];
     }
     /**
+     * Framework
+     */
+    export type Framework = {
+        /**
+         * Framework key.
+         */
+        key: string;
+        /**
+         * Framework Name.
+         */
+        name: string;
+        /**
+         * Default runtime version.
+         */
+        buildRuntime: string;
+        /**
+         * List of supported runtime versions.
+         */
+        runtimes: string[];
+        /**
+         * List of supported adapters.
+         */
+        adapters: FrameworkAdapter[];
+    }
+    /**
+     * Framework Adapter
+     */
+    export type FrameworkAdapter = {
+        /**
+         * Adapter key.
+         */
+        key: string;
+        /**
+         * Default command to download dependencies.
+         */
+        installCommand: string;
+        /**
+         * Default command to build site into output directory.
+         */
+        buildCommand: string;
+        /**
+         * Default output directory of build.
+         */
+        outputDirectory: string;
+        /**
+         * Name of fallback file to use instead of 404 page. If null, Appwrite 404 page will be displayed.
+         */
+        fallbackFile: string;
+    }
+    /**
      * Deployment
      */
     export type Deployment = {
@@ -2264,11 +2759,15 @@ export namespace Models {
         /**
          * The code size in bytes.
          */
-        size: number;
+        sourceSize: number;
         /**
          * The build output size in bytes.
          */
         buildSize: number;
+        /**
+         * The total size in bytes (source and build output).
+         */
+        totalSize: number;
         /**
          * The current build ID.
          */
@@ -2278,7 +2777,15 @@ export namespace Models {
          */
         activate: boolean;
         /**
-         * The deployment status. Possible values are &quot;processing&quot;, &quot;building&quot;, &quot;waiting&quot;, &quot;ready&quot;, and &quot;failed&quot;.
+         * Screenshot with light theme preference file ID.
+         */
+        screenshotLight: string;
+        /**
+         * Screenshot with dark theme preference file ID.
+         */
+        screenshotDark: string;
+        /**
+         * The deployment status. Possible values are &quot;waiting&quot;, &quot;processing&quot;, &quot;building&quot;, &quot;ready&quot;, and &quot;failed&quot;.
          */
         status: string;
         /**
@@ -2288,7 +2795,7 @@ export namespace Models {
         /**
          * The current build time in seconds.
          */
-        buildTime: number;
+        buildDuration: number;
         /**
          * The name of the vcs provider repository
          */
@@ -2395,54 +2902,13 @@ export namespace Models {
          */
         errors: string;
         /**
-         * Function execution duration in seconds.
+         * Resource(function/site) execution duration in seconds.
          */
         duration: number;
         /**
          * The scheduled time for execution. If left empty, execution will be queued immediately.
          */
         scheduledAt?: string;
-    }
-    /**
-     * Build
-     */
-    export type Build = {
-        /**
-         * Build ID.
-         */
-        $id: string;
-        /**
-         * The deployment that created this build.
-         */
-        deploymentId: string;
-        /**
-         * The build status. There are a few different types and each one means something different. \nFailed - The deployment build has failed. More details can usually be found in buildStderr\nReady - The deployment build was successful and the deployment is ready to be deployed\nProcessing - The deployment is currently waiting to have a build triggered\nBuilding - The deployment is currently being built
-         */
-        status: string;
-        /**
-         * The stdout of the build.
-         */
-        stdout: string;
-        /**
-         * The stderr of the build.
-         */
-        stderr: string;
-        /**
-         * The deployment creation date in ISO 8601 format.
-         */
-        startTime: string;
-        /**
-         * The time the build was finished in ISO 8601 format.
-         */
-        endTime: string;
-        /**
-         * The build duration in seconds.
-         */
-        duration: number;
-        /**
-         * The code size in bytes.
-         */
-        size: number;
     }
     /**
      * Project
@@ -2565,6 +3031,10 @@ export namespace Models {
          */
         keys: Key[];
         /**
+         * List of dev keys.
+         */
+        devKeys: DevKey[];
+        /**
          * Status for custom SMTP
          */
         smtpEnabled: boolean;
@@ -2669,6 +3139,10 @@ export namespace Models {
          */
         serviceStatusForUsers: boolean;
         /**
+         * Sites service status
+         */
+        serviceStatusForSites: boolean;
+        /**
          * Functions service status
          */
         serviceStatusForFunctions: boolean;
@@ -2770,6 +3244,43 @@ export namespace Models {
          * Allowed permission scopes.
          */
         scopes: string[];
+        /**
+         * Secret key.
+         */
+        secret: string;
+        /**
+         * Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+         */
+        accessedAt: string;
+        /**
+         * List of SDK user agents that used this key.
+         */
+        sdks: string[];
+    }
+    /**
+     * DevKey
+     */
+    export type DevKey = {
+        /**
+         * Key ID.
+         */
+        $id: string;
+        /**
+         * Key creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Key update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Key name.
+         */
+        name: string;
+        /**
+         * Key expiration date in ISO 8601 format.
+         */
+        expire: string;
         /**
          * Secret key.
          */
@@ -2890,6 +3401,10 @@ export namespace Models {
          * Variable value.
          */
         value: string;
+        /**
+         * Variable secret flag. Secret variables can only be updated or deleted, but never read.
+         */
+        secret: boolean;
         /**
          * Service to which the variable belongs. Possible values are &quot;project&quot;, &quot;function&quot;
          */
@@ -3386,6 +3901,14 @@ export namespace Models {
          */
         deploymentsStorage: Metric[];
         /**
+         * Total aggregated number of successful function builds.
+         */
+        buildsSuccessTotal: number;
+        /**
+         * Total aggregated number of failed function builds.
+         */
+        buildsFailedTotal: number;
+        /**
          * Aggregated number of functions build per period.
          */
         builds: Metric[];
@@ -3413,6 +3936,14 @@ export namespace Models {
          * Aggregated number of functions mbSeconds per period.
          */
         executionsMbSeconds: Metric[];
+        /**
+         * Aggregated number of successful function builds per period.
+         */
+        buildsSuccess: Metric[];
+        /**
+         * Aggregated number of failed function builds per period.
+         */
+        buildsFailed: Metric[];
     }
     /**
      * UsageFunction
@@ -3435,6 +3966,14 @@ export namespace Models {
          */
         buildsTotal: number;
         /**
+         * Total aggregated number of successful function builds.
+         */
+        buildsSuccessTotal: number;
+        /**
+         * Total aggregated number of failed function builds.
+         */
+        buildsFailedTotal: number;
+        /**
          * total aggregated sum of function builds storage.
          */
         buildsStorageTotal: number;
@@ -3442,6 +3981,10 @@ export namespace Models {
          * Total aggregated sum of function builds compute time.
          */
         buildsTimeTotal: number;
+        /**
+         * Average builds compute time.
+         */
+        buildsTimeAverage: number;
         /**
          * Total aggregated sum of function builds mbSeconds.
          */
@@ -3494,6 +4037,268 @@ export namespace Models {
          * Aggregated number of function mbSeconds per period.
          */
         executionsMbSeconds: Metric[];
+        /**
+         * Aggregated number of successful builds per period.
+         */
+        buildsSuccess: Metric[];
+        /**
+         * Aggregated number of failed builds per period.
+         */
+        buildsFailed: Metric[];
+    }
+    /**
+     * UsageSites
+     */
+    export type UsageSites = {
+        /**
+         * Time range of the usage stats.
+         */
+        range: string;
+        /**
+         * Total aggregated number of functions deployments.
+         */
+        deploymentsTotal: number;
+        /**
+         * Total aggregated sum of functions deployment storage.
+         */
+        deploymentsStorageTotal: number;
+        /**
+         * Total aggregated number of functions build.
+         */
+        buildsTotal: number;
+        /**
+         * total aggregated sum of functions build storage.
+         */
+        buildsStorageTotal: number;
+        /**
+         * Total aggregated sum of functions build compute time.
+         */
+        buildsTimeTotal: number;
+        /**
+         * Total aggregated sum of functions build mbSeconds.
+         */
+        buildsMbSecondsTotal: number;
+        /**
+         * Total  aggregated number of functions execution.
+         */
+        executionsTotal: number;
+        /**
+         * Total aggregated sum of functions  execution compute time.
+         */
+        executionsTimeTotal: number;
+        /**
+         * Total aggregated sum of functions execution mbSeconds.
+         */
+        executionsMbSecondsTotal: number;
+        /**
+         * Aggregated number of functions deployment per period.
+         */
+        deployments: Metric[];
+        /**
+         * Aggregated number of  functions deployment storage per period.
+         */
+        deploymentsStorage: Metric[];
+        /**
+         * Total aggregated number of successful function builds.
+         */
+        buildsSuccessTotal: number;
+        /**
+         * Total aggregated number of failed function builds.
+         */
+        buildsFailedTotal: number;
+        /**
+         * Aggregated number of functions build per period.
+         */
+        builds: Metric[];
+        /**
+         * Aggregated sum of functions build storage per period.
+         */
+        buildsStorage: Metric[];
+        /**
+         * Aggregated sum of  functions build compute time per period.
+         */
+        buildsTime: Metric[];
+        /**
+         * Aggregated sum of functions build mbSeconds per period.
+         */
+        buildsMbSeconds: Metric[];
+        /**
+         * Aggregated number of  functions execution per period.
+         */
+        executions: Metric[];
+        /**
+         * Aggregated number of functions execution compute time per period.
+         */
+        executionsTime: Metric[];
+        /**
+         * Aggregated number of functions mbSeconds per period.
+         */
+        executionsMbSeconds: Metric[];
+        /**
+         * Aggregated number of successful function builds per period.
+         */
+        buildsSuccess: Metric[];
+        /**
+         * Aggregated number of failed function builds per period.
+         */
+        buildsFailed: Metric[];
+        /**
+         * Total aggregated number of sites.
+         */
+        sitesTotal: number;
+        /**
+         * Aggregated number of sites per period.
+         */
+        sites: Metric[];
+        /**
+         * Total aggregated number of requests.
+         */
+        requestsTotal: number;
+        /**
+         * Aggregated number of requests per period.
+         */
+        requests: Metric[];
+        /**
+         * Total aggregated inbound bandwidth.
+         */
+        inboundTotal: number;
+        /**
+         * Aggregated number of inbound bandwidth per period.
+         */
+        inbound: Metric[];
+        /**
+         * Total aggregated outbound bandwidth.
+         */
+        outboundTotal: number;
+        /**
+         * Aggregated number of outbound bandwidth per period.
+         */
+        outbound: Metric[];
+    }
+    /**
+     * UsageSite
+     */
+    export type UsageSite = {
+        /**
+         * The time range of the usage stats.
+         */
+        range: string;
+        /**
+         * Total aggregated number of function deployments.
+         */
+        deploymentsTotal: number;
+        /**
+         * Total aggregated sum of function deployments storage.
+         */
+        deploymentsStorageTotal: number;
+        /**
+         * Total aggregated number of function builds.
+         */
+        buildsTotal: number;
+        /**
+         * Total aggregated number of successful function builds.
+         */
+        buildsSuccessTotal: number;
+        /**
+         * Total aggregated number of failed function builds.
+         */
+        buildsFailedTotal: number;
+        /**
+         * total aggregated sum of function builds storage.
+         */
+        buildsStorageTotal: number;
+        /**
+         * Total aggregated sum of function builds compute time.
+         */
+        buildsTimeTotal: number;
+        /**
+         * Average builds compute time.
+         */
+        buildsTimeAverage: number;
+        /**
+         * Total aggregated sum of function builds mbSeconds.
+         */
+        buildsMbSecondsTotal: number;
+        /**
+         * Total  aggregated number of function executions.
+         */
+        executionsTotal: number;
+        /**
+         * Total aggregated sum of function  executions compute time.
+         */
+        executionsTimeTotal: number;
+        /**
+         * Total aggregated sum of function executions mbSeconds.
+         */
+        executionsMbSecondsTotal: number;
+        /**
+         * Aggregated number of function deployments per period.
+         */
+        deployments: Metric[];
+        /**
+         * Aggregated number of  function deployments storage per period.
+         */
+        deploymentsStorage: Metric[];
+        /**
+         * Aggregated number of function builds per period.
+         */
+        builds: Metric[];
+        /**
+         * Aggregated sum of function builds storage per period.
+         */
+        buildsStorage: Metric[];
+        /**
+         * Aggregated sum of function builds compute time per period.
+         */
+        buildsTime: Metric[];
+        /**
+         * Aggregated number of function builds mbSeconds per period.
+         */
+        buildsMbSeconds: Metric[];
+        /**
+         * Aggregated number of function executions per period.
+         */
+        executions: Metric[];
+        /**
+         * Aggregated number of function executions compute time per period.
+         */
+        executionsTime: Metric[];
+        /**
+         * Aggregated number of function mbSeconds per period.
+         */
+        executionsMbSeconds: Metric[];
+        /**
+         * Aggregated number of successful builds per period.
+         */
+        buildsSuccess: Metric[];
+        /**
+         * Aggregated number of failed builds per period.
+         */
+        buildsFailed: Metric[];
+        /**
+         * Total aggregated number of requests.
+         */
+        requestsTotal: number;
+        /**
+         * Aggregated number of requests per period.
+         */
+        requests: Metric[];
+        /**
+         * Total aggregated inbound bandwidth.
+         */
+        inboundTotal: number;
+        /**
+         * Aggregated number of inbound bandwidth per period.
+         */
+        inbound: Metric[];
+        /**
+         * Total aggregated outbound bandwidth.
+         */
+        outboundTotal: number;
+        /**
+         * Aggregated number of outbound bandwidth per period.
+         */
+        outbound: Metric[];
     }
     /**
      * UsageProject
@@ -3548,11 +4353,11 @@ export namespace Models {
          */
         buildsMbSecondsTotal: number;
         /**
-         * Total number of databases reads.
+         * Aggregated stats for total databases reads.
          */
         databasesReadsTotal: number;
         /**
-         * Total number of databases writes.
+         * Aggregated stats for total databases writes.
          */
         databasesWritesTotal: number;
         /**
@@ -3596,11 +4401,11 @@ export namespace Models {
          */
         functionsStorageBreakdown: MetricBreakdown[];
         /**
-         * Total aggregated number of phone auth.
+         * Aggregated stats for total auth phone.
          */
         authPhoneTotal: number;
         /**
-         * Estimated total aggregated cost of phone auth.
+         * Aggregated stats for total auth phone estimation.
          */
         authPhoneEstimate: number;
         /**
@@ -3608,11 +4413,11 @@ export namespace Models {
          */
         authPhoneCountryBreakdown: MetricBreakdown[];
         /**
-         * An array of aggregated number of database reads.
+         * Aggregated stats for database reads.
          */
         databasesReads: Metric[];
         /**
-         * An array of aggregated number of database writes.
+         * Aggregated stats for database writes.
          */
         databasesWrites: Metric[];
         /**
@@ -3623,6 +4428,14 @@ export namespace Models {
          * Total aggregated number of image transformations.
          */
         imageTransformationsTotal: number;
+        /**
+         * Aggregated stats for total network bandwidth.
+         */
+        networkTotal: number;
+        /**
+         * Aggregated stats for total backups storage.
+         */
+        backupsStorageTotal: number;
     }
     /**
      * Headers
@@ -3679,13 +4492,37 @@ export namespace Models {
          */
         domain: string;
         /**
-         * Action definition for the rule. Possible values are &quot;api&quot;, &quot;function&quot;, or &quot;redirect&quot;
+         * Action definition for the rule. Possible values are &quot;api&quot;, &quot;deployment&quot;, or &quot;redirect&quot;
          */
-        resourceType: string;
+        type: string;
         /**
-         * ID of resource for the action type. If resourceType is &quot;api&quot; or &quot;url&quot;, it is empty. If resourceType is &quot;function&quot;, it is ID of the function.
+         * Defines how the rule was created. Possible values are &quot;manual&quot; or &quot;deployment&quot;
          */
-        resourceId: string;
+        trigger: string;
+        /**
+         * URL to redirect to. Used if type is &quot;redirect&quot;
+         */
+        redirectUrl: string;
+        /**
+         * Status code to apply during redirect. Used if type is &quot;redirect&quot;
+         */
+        redirectStatusCode: number;
+        /**
+         * ID of deployment. Used if type is &quot;deployment&quot;
+         */
+        deploymentId: string;
+        /**
+         * Type of deployment. Possible values are &quot;function&quot;, &quot;site&quot;. Used if rule&#039;s type is &quot;deployment&quot;.
+         */
+        deploymentResourceType: string;
+        /**
+         * ID deployment&#039;s resource. Used if type is &quot;deployment&quot;
+         */
+        deploymentResourceId: string;
+        /**
+         * Name of Git branch that updates rule. Used if type is &quot;deployment&quot;
+         */
+        deploymentVcsProviderBranch: string;
         /**
          * Domain verification status. Possible values are &quot;created&quot;, &quot;verifying&quot;, &quot;verified&quot; and &quot;unverified&quot;
          */
@@ -3756,7 +4593,15 @@ export namespace Models {
         /**
          * CNAME target for your Appwrite custom domains.
          */
-        _APP_DOMAIN_TARGET: string;
+        _APP_DOMAIN_TARGET_CNAME: string;
+        /**
+         * A target for your Appwrite custom domains.
+         */
+        _APP_DOMAIN_TARGET_A: string;
+        /**
+         * AAAA target for your Appwrite custom domains.
+         */
+        _APP_DOMAIN_TARGET_AAAA: string;
         /**
          * Maximum file size allowed for file upload in bytes.
          */
@@ -3764,7 +4609,7 @@ export namespace Models {
         /**
          * Maximum file size allowed for deployment in bytes.
          */
-        _APP_FUNCTIONS_SIZE_LIMIT: number;
+        _APP_COMPUTE_SIZE_LIMIT: number;
         /**
          * Defines if usage stats are enabled. This value is set to &#039;enabled&#039; by default, to disable the usage stats set the value to &#039;disabled&#039;.
          */
@@ -3781,6 +4626,22 @@ export namespace Models {
          * Defines if AI assistant is enabled.
          */
         _APP_ASSISTANT_ENABLED: boolean;
+        /**
+         * A domain to use for site URLs.
+         */
+        _APP_DOMAIN_SITES: string;
+        /**
+         * A domain to use for function URLs.
+         */
+        _APP_DOMAIN_FUNCTIONS: string;
+        /**
+         * Defines if HTTPS is enforced for all requests.
+         */
+        _APP_OPTIONS_FORCE_HTTPS: string;
+        /**
+         * Comma-separated list of nameservers.
+         */
+        _APP_DOMAINS_NAMESERVERS: string;
     }
     /**
      * MFA Challenge
@@ -4099,6 +4960,10 @@ export namespace Models {
          * Resources to migrate.
          */
         resources: string[];
+        /**
+         * Id of the resource to migrate.
+         */
+        resourceId: string;
         /**
          * A group of counters that represent the total progress of the migration.
          */
@@ -4465,6 +5330,10 @@ export namespace Models {
          * Addons
          */
         addons: BillingPlanAddon;
+        /**
+         * Budget cap enabled or disabled.
+         */
+        budgetCapEnabled: boolean;
         /**
          * Custom SMTP
          */
@@ -5106,7 +5975,11 @@ export namespace Models {
          */
         name: string;
         /**
-         * Is the region disabled.
+         * Does the organization have access to this region.
+         */
+        available: boolean;
+        /**
+         * Does the backend support this region.
          */
         disabled: boolean;
         /**
@@ -5202,138 +6075,110 @@ export namespace Models {
         roles: string[];
     }
     /**
-     * UsageOrganization
+     * Domain
      */
-    export type UsageOrganization = {
+    export type Domain = {
         /**
-         * Aggregated stats for number of requests.
+         * Domain ID.
          */
-        bandwidth: Metric[];
+        $id: string;
         /**
-         * Aggregated stats for consumed bandwidth.
+         * Domain creation time in ISO 8601 format.
          */
-        users: Metric[];
+        $createdAt: string;
         /**
-         * Aggregated stats for function executions.
+         * Domain update date in ISO 8601 format.
          */
-        executions: Metric[];
+        $updatedAt: string;
         /**
-         * Aggregated stats for database reads.
+         * Domain name.
          */
-        databasesReads: Metric[];
+        domain: string;
         /**
-         * Aggregated stats for database writes.
+         * Domain registrar (e.g. &quot;appwrite&quot; or &quot;third_party&quot;).
          */
-        databasesWrites: Metric[];
+        registrar: string;
         /**
-         * Aggregated stats for file transformations.
+         * Nameservers setting. &quot;Appwrite&quot; or empty string.
          */
-        imageTransformations: Metric[];
+        nameservers: string;
         /**
-         * Aggregated stats for total file transformations.
+         * Domain expiry date in ISO 8601 format.
          */
-        imageTransformationsTotal: number;
+        expire: string;
         /**
-         * Aggregated stats for total users.
+         * Domain renewal date in ISO 8601 format.
          */
-        usersTotal: number;
+        renewal: string;
         /**
-         * Aggregated stats for total executions.
+         * If set to true, the domain will automatically renew.
          */
-        executionsTotal: number;
+        autoRenewal: boolean;
         /**
-         * Aggregated stats for function executions in mb seconds.
+         * Renewal price (in USD).
          */
-        executionsMBSecondsTotal: number;
+        renewalPrice: number;
         /**
-         * Aggregated stats for function builds in mb seconds.
+         * Team ID.
          */
-        buildsMBSecondsTotal: number;
+        teamId: string;
         /**
-         * Aggregated stats for total file storage.
+         * Dns records
          */
-        filesStorageTotal: number;
-        /**
-         * Aggregated stats for total builds storage.
-         */
-        buildsStorageTotal: number;
-        /**
-         * Aggregated stats for total deployments storage.
-         */
-        deploymentsStorageTotal: number;
-        /**
-         * Aggregated stats for total databases storage.
-         */
-        databasesStorageTotal: number;
-        /**
-         * Aggregated stats for total databases storage reads.
-         */
-        databasesReadsTotal: number;
-        /**
-         * Aggregated stats for total databases storage writes.
-         */
-        databasesWritesTotal: number;
-        /**
-         * Aggregated stats for total backups storage.
-         */
-        backupsStorageTotal: number;
-        /**
-         * Aggregated stats for total storage.
-         */
-        storageTotal: number;
-        /**
-         * Aggregated stats for total phone authentication SMS.
-         */
-        authPhoneTotal: number;
-        /**
-         * Aggregated stats for estimated phone authentication SMS cost.
-         */
-        authPhoneEstimate: number;
-        /**
-         * Aggregated stats for each projects.
-         */
-        projects: UsageOrganizationProject[];
+        dnsRecords: DnsRecord[];
     }
     /**
-     * UsageOrganizationProject
+     * DNSRecord
      */
-    export type UsageOrganizationProject = {
+    export type DnsRecord = {
         /**
-         * projectId
+         * DNS Record ID.
          */
-        projectId: string;
+        $id: string;
         /**
-         * Aggregated stats for number of requests.
+         * DNS Record creation time in ISO 8601 format.
          */
-        bandwidth: Metric[];
+        $createdAt: string;
         /**
-         * Aggregated stats for consumed bandwidth.
+         * DNS Record update date in ISO 8601 format.
          */
-        users: Metric[];
+        $updatedAt: string;
         /**
-         * Aggregated stats for function executions.
+         * DNS record type (e.g. A, CNAME, MX).
          */
-        executions: number;
+        type: string;
         /**
-         * Aggregated stats for function executions in mb seconds.
+         * Record name or subdomain.
          */
-        executionsMBSeconds: number;
+        name: string;
         /**
-         * Aggregated stats for function builds in mb seconds.
+         * Value of the record (IP address, domain, etc.).
          */
-        buildsMBSeconds: number;
+        value: string;
         /**
-         * Aggregated stats for number of documents.
+         * Time to live (in seconds).
          */
-        storage: number;
+        ttl: number;
         /**
-         * Aggregated stats for phone authentication.
+         * Record priority (commonly used for MX).
          */
-        authPhoneTotal: number;
+        priority: number;
         /**
-         * Aggregated stats for phone authentication estimated cost.
+         * Whether this record is locked (read-only).
          */
-        authPhoneEstimate: number;
+        lock: boolean;
+        /**
+         * Record weight (used for SRV records).
+         */
+        weight: number;
+        /**
+         * Target port (used for SRV records).
+         */
+        port: number;
+        /**
+         * Comment for the DNS record.
+         */
+        comment: string;
     }
     /**
      * UsageInvoice
@@ -5450,7 +6295,7 @@ export namespace Models {
         restorations: BackupRestoration[];
     }
     /**
-     * Billing Invoices List
+     * Billing invoices list
      */
     export type InvoiceList = {
         /**
@@ -5502,7 +6347,7 @@ export namespace Models {
         teams: Organization<Preferences>[];
     }
     /**
-     * Payment Methods List
+     * Payment methods list
      */
     export type PaymentMethodList = {
         /**
@@ -5526,5 +6371,31 @@ export namespace Models {
          * List of regions.
          */
         regions: ConsoleRegion[];
+    }
+    /**
+     * Domains list
+     */
+    export type DomainsList = {
+        /**
+         * Total number of domains documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of domains.
+         */
+        domains: Domain[];
+    }
+    /**
+     * DNS records list
+     */
+    export type DnsRecordsList = {
+        /**
+         * Total number of dnsRecords documents that matched your query.
+         */
+        total: number;
+        /**
+         * List of dnsRecords.
+         */
+        dnsRecords: DnsRecord[];
     }
 }

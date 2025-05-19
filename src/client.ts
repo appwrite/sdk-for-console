@@ -316,8 +316,8 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '1.6.0',
-        'X-Appwrite-Response-Format': '1.6.0',
+        'x-sdk-version': '1.7.0',
+        'X-Appwrite-Response-Format': '1.7.0',
     };
 
     /**
@@ -730,6 +730,16 @@ class Client {
         let data: any = null;
 
         const response = await fetch(uri, options);
+
+        // type opaque: No-CORS, different-origin response (CORS-issue)
+        if (response.type === 'opaque') {
+            throw new AppwriteException(
+                `Invalid Origin. Register your new client (${window.location.host}) as a new Web platform on your project console dashboard`,
+                403,
+                "forbidden",
+                ""
+            );
+        }
 
         const warnings = response.headers.get('x-appwrite-warning');
         if (warnings) {

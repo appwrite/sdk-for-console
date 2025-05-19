@@ -1,7 +1,7 @@
 /**
  * Appwrite Console SDK
  *
- * This SDK is compatible with Appwrite server version 1.6.x. 
+ * This SDK is compatible with Appwrite server version 1.7.x. 
  * For older versions, please check
  * [previous releases](https://github.com/appwrite/sdk-for-console/releases).
  */
@@ -12,6 +12,7 @@ export { Backups } from './services/backups';
 export { Assistant } from './services/assistant';
 export { Console } from './services/console';
 export { Databases } from './services/databases';
+export { Domains } from './services/domains';
 export { Functions } from './services/functions';
 export { Graphql } from './services/graphql';
 export { Health } from './services/health';
@@ -22,8 +23,10 @@ export { Organizations } from './services/organizations';
 export { Project } from './services/project';
 export { Projects } from './services/projects';
 export { Proxy } from './services/proxy';
+export { Sites } from './services/sites';
 export { Storage } from './services/storage';
 export { Teams } from './services/teams';
+export { Tokens } from './services/tokens';
 export { Users } from './services/users';
 export { Vcs } from './services/vcs';
 export type { Models, Payload, RealtimeResponseEvent, UploadProgress } from './client';
@@ -37,12 +40,15 @@ export { OAuthProvider } from './enums/o-auth-provider';
 export { Browser } from './enums/browser';
 export { CreditCard } from './enums/credit-card';
 export { Flag } from './enums/flag';
+export { ConsoleResourceType } from './enums/console-resource-type';
 export { DatabaseUsageRange } from './enums/database-usage-range';
 export { RelationshipType } from './enums/relationship-type';
 export { RelationMutate } from './enums/relation-mutate';
 export { IndexType } from './enums/index-type';
 export { Runtime } from './enums/runtime';
 export { FunctionUsageRange } from './enums/function-usage-range';
+export { VCSDeploymentType } from './enums/v-c-s-deployment-type';
+export { DeploymentDownloadType } from './enums/deployment-download-type';
 export { ExecutionMethod } from './enums/execution-method';
 export { Name } from './enums/name';
 export { MessagePriority } from './enums/message-priority';
@@ -59,7 +65,11 @@ export { EmailTemplateType } from './enums/email-template-type';
 export { EmailTemplateLocale } from './enums/email-template-locale';
 export { SmsTemplateType } from './enums/sms-template-type';
 export { SmsTemplateLocale } from './enums/sms-template-locale';
-export { ResourceType } from './enums/resource-type';
+export { StatusCode } from './enums/status-code';
+export { Framework } from './enums/framework';
+export { BuildRuntime } from './enums/build-runtime';
+export { Adapter } from './enums/adapter';
+export { SiteUsageRange } from './enums/site-usage-range';
 export { Compression } from './enums/compression';
 export { ImageGravity } from './enums/image-gravity';
 export { ImageFormat } from './enums/image-format';
@@ -67,3 +77,4 @@ export { StorageUsageRange } from './enums/storage-usage-range';
 export { PasswordHash } from './enums/password-hash';
 export { UserUsageRange } from './enums/user-usage-range';
 export { MessagingProviderType } from './enums/messaging-provider-type';
+export { VCSDetectionType } from './enums/v-c-s-detection-type';

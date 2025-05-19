@@ -40,7 +40,6 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -149,7 +148,6 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -676,6 +674,178 @@ export class Projects {
         );
     }
     /**
+     * List all the project\&#039;s dev keys. Dev keys are project specific and allow you to bypass rate limits and get better error logging during development.&#039;
+     *
+     * @param {string} projectId
+     * @param {string[]} queries
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DevKeyList>}
+     */
+    listDevKeys(projectId: string, queries?: string[]): Promise<Models.DevKeyList> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        const apiPath = '/projects/{projectId}/dev-keys'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Create a new project dev key. Dev keys are project specific and allow you to bypass rate limits and get better error logging during development. Strictly meant for development purposes only.
+     *
+     * @param {string} projectId
+     * @param {string} name
+     * @param {string} expire
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DevKey>}
+     */
+    createDevKey(projectId: string, name: string, expire: string): Promise<Models.DevKey> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof expire === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "expire"');
+        }
+        const apiPath = '/projects/{projectId}/dev-keys'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof expire !== 'undefined') {
+            payload['expire'] = expire;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Get a project\&#039;s dev key by its unique ID. Dev keys are project specific and allow you to bypass rate limits and get better error logging during development.
+     *
+     * @param {string} projectId
+     * @param {string} keyId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DevKey>}
+     */
+    getDevKey(projectId: string, keyId: string): Promise<Models.DevKey> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Update a project\&#039;s dev key by its unique ID. Use this endpoint to update a project\&#039;s dev key name or expiration time.&#039;
+     *
+     * @param {string} projectId
+     * @param {string} keyId
+     * @param {string} name
+     * @param {string} expire
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DevKey>}
+     */
+    updateDevKey(projectId: string, keyId: string, name: string, expire: string): Promise<Models.DevKey> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof expire === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "expire"');
+        }
+        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
+        const payload: Payload = {};
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof expire !== 'undefined') {
+            payload['expire'] = expire;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'put',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Delete a project\&#039;s dev key by its unique ID. Once deleted, the key will no longer allow bypassing of rate limits and better logging of errors.
+     *
+     * @param {string} projectId
+     * @param {string} keyId
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteDevKey(projectId: string, keyId: string): Promise<{}> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
      * Create a new JWT token. This token can be used to authenticate users with custom scopes and expiration time. 
      *
      * @param {string} projectId
@@ -728,7 +898,6 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -802,7 +971,6 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -951,7 +1119,6 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -1033,7 +1200,6 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -1391,7 +1557,6 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -1519,7 +1684,6 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -1620,7 +1784,6 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -1716,7 +1879,6 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(

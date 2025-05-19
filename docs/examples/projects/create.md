@@ -1,7 +1,7 @@
 import { Client, Projects,  } from "@appwrite.io/console";
 
 const client = new Client()
-    .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
+    .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
 const projects = new Projects(client);
@@ -10,7 +10,7 @@ const result = await projects.create(
     '', // projectId
     '<NAME>', // name
     '<TEAM_ID>', // teamId
-    .Default, // region (optional)
+    .Fra, // region (optional)
     '<DESCRIPTION>', // description (optional)
     '<LOGO>', // logo (optional)
     'https://example.com', // url (optional)

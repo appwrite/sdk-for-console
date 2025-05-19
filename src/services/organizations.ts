@@ -30,7 +30,6 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -154,7 +153,6 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -184,7 +182,6 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -273,7 +270,6 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -374,7 +370,6 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -437,7 +432,6 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -467,7 +461,6 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -497,7 +490,6 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -527,7 +519,6 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -624,7 +615,6 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -773,7 +763,6 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -799,7 +788,6 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -882,7 +870,6 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
         }
 
         return this.client.call(
@@ -920,40 +907,6 @@ export class Organizations {
 
         return this.client.call(
             'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Get the usage data for an organization.
-     *
-     * @param {string} organizationId
-     * @param {string} startDate
-     * @param {string} endDate
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageOrganization>}
-     */
-    getUsage(organizationId: string, startDate?: string, endDate?: string): Promise<Models.UsageOrganization> {
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
-        }
-        const apiPath = '/organizations/{organizationId}/usage'.replace('{organizationId}', organizationId);
-        const payload: Payload = {};
-        if (typeof startDate !== 'undefined') {
-            payload['startDate'] = startDate;
-        }
-        if (typeof endDate !== 'undefined') {
-            payload['endDate'] = endDate;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload
