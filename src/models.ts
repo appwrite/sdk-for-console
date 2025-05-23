@@ -735,6 +735,10 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: string;
+        /**
+         * Defines whether this attribute is encrypted or not.
+         */
+        encrypt?: boolean;
     }
     /**
      * AttributeInteger
@@ -5382,6 +5386,14 @@ export namespace Models {
          * How many policies does plan support
          */
         backupPolicies: number;
+        /**
+         * Maximum function and site deployment size in MB
+         */
+        deploymentSize: number;
+        /**
+         * Maximum function and site deployment size in MB
+         */
+        buildSize: number;
     }
     /**
      * BillingPlanAddon

@@ -316,7 +316,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '1.7.0',
+        'x-sdk-version': '1.8.0',
         'X-Appwrite-Response-Format': '1.7.0',
     };
 
@@ -636,8 +636,11 @@ class Client {
         let options: RequestInit = {
             method,
             headers,
-            credentials: 'include',
         };
+
+        if (headers['X-Appwrite-Dev-Key'] === undefined) {
+            options.credentials = 'include';
+        }
 
         if (method === 'GET') {
             for (const [key, value] of Object.entries(Client.flatten(params))) {

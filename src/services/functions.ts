@@ -64,14 +64,10 @@ export class Functions {
      * @param {boolean} providerSilentMode
      * @param {string} providerRootDirectory
      * @param {string} specification
-     * @param {string} templateRepository
-     * @param {string} templateOwner
-     * @param {string} templateRootDirectory
-     * @param {string} templateVersion
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    create(functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string, templateRepository?: string, templateOwner?: string, templateRootDirectory?: string, templateVersion?: string): Promise<Models.Function> {
+    create(functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string): Promise<Models.Function> {
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
@@ -136,18 +132,6 @@ export class Functions {
         }
         if (typeof specification !== 'undefined') {
             payload['specification'] = specification;
-        }
-        if (typeof templateRepository !== 'undefined') {
-            payload['templateRepository'] = templateRepository;
-        }
-        if (typeof templateOwner !== 'undefined') {
-            payload['templateOwner'] = templateOwner;
-        }
-        if (typeof templateRootDirectory !== 'undefined') {
-            payload['templateRootDirectory'] = templateRootDirectory;
-        }
-        if (typeof templateVersion !== 'undefined') {
-            payload['templateVersion'] = templateVersion;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
