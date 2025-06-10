@@ -11,7 +11,7 @@ const result = await domains.updateRecordAlias(
     '<RECORD_ID>', // recordId
     '<NAME>', // name
     '<VALUE>', // value
-    null, // ttl
+    1, // ttl
     '<COMMENT>' // comment (optional)
 );
 

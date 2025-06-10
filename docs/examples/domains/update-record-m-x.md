@@ -11,7 +11,7 @@ const result = await domains.updateRecordMX(
     '<RECORD_ID>', // recordId
     '<NAME>', // name
     '<VALUE>', // value
-    null, // ttl
+    1, // ttl
     null, // priority
     '<COMMENT>' // comment (optional)
 );

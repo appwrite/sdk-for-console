@@ -1,4 +1,4 @@
-import { Client, Organizations } from "@appwrite.io/console";
+import { Client, Organizations,  } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -6,10 +6,11 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.getUsage(
+const result = await organizations.estimationUpdatePlan(
     '<ORGANIZATION_ID>', // organizationId
-    '', // startDate (optional)
-    '' // endDate (optional)
+    .Tier0, // billingPlan
+    [], // invites (optional)
+    '<COUPON_ID>' // couponId (optional)
 );
 
 console.log(result);

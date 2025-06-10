@@ -6,10 +6,9 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.getUsage(
+const result = await organizations.validatePayment(
     '<ORGANIZATION_ID>', // organizationId
-    '', // startDate (optional)
-    '' // endDate (optional)
+    [] // invites (optional)
 );
 
 console.log(result);

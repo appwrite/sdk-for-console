@@ -6,10 +6,8 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.getUsage(
-    '<ORGANIZATION_ID>', // organizationId
-    '', // startDate (optional)
-    '' // endDate (optional)
+const result = await organizations.estimationDeleteOrganization(
+    '<ORGANIZATION_ID>' // organizationId
 );
 
 console.log(result);

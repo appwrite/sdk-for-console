@@ -10,7 +10,7 @@ const result = await domains.createRecordSRV(
     '<DOMAIN_ID>', // domainId
     '<NAME>', // name
     '<VALUE>', // value
-    null, // ttl
+    1, // ttl
     null, // priority
     null, // weight
     null, // port

@@ -1219,6 +1219,10 @@ export namespace Models {
          */
         $id: string;
         /**
+         * Document automatically incrementing ID.
+         */
+        $sequence: number;
+        /**
          * Collection ID.
          */
         $collectionId: string;
@@ -5375,6 +5379,10 @@ export namespace Models {
          */
         supportsMockNumbers: boolean;
         /**
+         * Does plan support organization roles
+         */
+        supportsOrganizationRoles: boolean;
+        /**
          * Does plan support credit
          */
         supportsCredits: boolean;
@@ -5394,6 +5402,10 @@ export namespace Models {
          * Maximum function and site deployment size in MB
          */
         buildSize: number;
+        /**
+         * Does the plan support encrypted string attributes or not.
+         */
+        databasesAllowEncrypt: boolean;
     }
     /**
      * BillingPlanAddon
@@ -5832,9 +5844,9 @@ export namespace Models {
          */
         billingLimits: BillingLimits;
         /**
-         * Billing plan downgrade
+         * Billing plan selected for downgrade.
          */
-        billingPlanDowngrade: object;
+        billingPlanDowngrade: string;
         /**
          * Tax Id
          */
@@ -6087,6 +6099,164 @@ export namespace Models {
         roles: string[];
     }
     /**
+     * UsageOrganization
+     */
+    export type UsageOrganization = {
+        /**
+         * Aggregated stats for number of requests.
+         */
+        bandwidth: Metric[];
+        /**
+         * Aggregated stats for consumed bandwidth.
+         */
+        users: Metric[];
+        /**
+         * Aggregated stats for function executions.
+         */
+        executions: Metric[];
+        /**
+         * Aggregated stats for database reads.
+         */
+        databasesReads: Metric[];
+        /**
+         * Aggregated stats for database writes.
+         */
+        databasesWrites: Metric[];
+        /**
+         * Aggregated stats for file transformations.
+         */
+        imageTransformations: Metric[];
+        /**
+         * Aggregated stats for total file transformations.
+         */
+        imageTransformationsTotal: number;
+        /**
+         * Aggregated stats for total users.
+         */
+        usersTotal: number;
+        /**
+         * Aggregated stats for total executions.
+         */
+        executionsTotal: number;
+        /**
+         * Aggregated stats for function executions in mb seconds.
+         */
+        executionsMBSecondsTotal: number;
+        /**
+         * Aggregated stats for function builds in mb seconds.
+         */
+        buildsMBSecondsTotal: number;
+        /**
+         * Aggregated stats for total file storage.
+         */
+        filesStorageTotal: number;
+        /**
+         * Aggregated stats for total builds storage.
+         */
+        buildsStorageTotal: number;
+        /**
+         * Aggregated stats for total deployments storage.
+         */
+        deploymentsStorageTotal: number;
+        /**
+         * Aggregated stats for total databases storage.
+         */
+        databasesStorageTotal: number;
+        /**
+         * Aggregated stats for total databases  reads.
+         */
+        databasesReadsTotal: number;
+        /**
+         * Aggregated stats for total databases  writes.
+         */
+        databasesWritesTotal: number;
+        /**
+         * Aggregated stats for total backups storage.
+         */
+        backupsStorageTotal: number;
+        /**
+         * Aggregated stats for total storage.
+         */
+        storageTotal: number;
+        /**
+         * Aggregated stats for total auth phone.
+         */
+        authPhoneTotal: number;
+        /**
+         * Aggregated stats for total auth phone estimation.
+         */
+        authPhoneEstimate: number;
+        /**
+         * Aggregated stats for each projects.
+         */
+        projects: UsageOrganizationProject[];
+    }
+    /**
+     * UsageOrganizationProject
+     */
+    export type UsageOrganizationProject = {
+        /**
+         * projectId
+         */
+        projectId: string;
+        /**
+         * Aggregated stats for number of requests.
+         */
+        bandwidth: Metric[];
+        /**
+         * Aggregated stats for consumed bandwidth.
+         */
+        users: Metric[];
+        /**
+         * Aggregated stats for function executions.
+         */
+        executions: number;
+        /**
+         * Aggregated stats for database reads.
+         */
+        databasesReads: Metric[];
+        /**
+         * Aggregated stats for database writes.
+         */
+        databasesWrites: Metric[];
+        /**
+         * Aggregated stats for function executions in mb seconds.
+         */
+        executionsMBSeconds: number;
+        /**
+         * Aggregated stats for function builds in mb seconds.
+         */
+        buildsMBSeconds: number;
+        /**
+         * Aggregated stats for number of documents.
+         */
+        storage: number;
+        /**
+         * Aggregated stats for phone authentication.
+         */
+        authPhoneTotal: number;
+        /**
+         * Aggregated stats for phone authentication estimated cost.
+         */
+        authPhoneEstimate: number;
+        /**
+         * Aggregated stats for total databases reads.
+         */
+        databasesReadsTotal: number;
+        /**
+         * Aggregated stats for total databases writes.
+         */
+        databasesWritesTotal: number;
+        /**
+         * Aggregated stats for file transformations.
+         */
+        imageTransformations: Metric[];
+        /**
+         * Aggregated stats for total file transformations.
+         */
+        imageTransformationsTotal: number;
+    }
+    /**
      * Domain
      */
     export type Domain = {
@@ -6253,6 +6423,106 @@ export namespace Models {
          * Image transformation additional resources
          */
         imageTransformations: AdditionalResource;
+    }
+    /**
+     * Estimation
+     */
+    export type Estimation = {
+        /**
+         * Total amount
+         */
+        amount: number;
+        /**
+         * Gross payable amount
+         */
+        grossAmount: number;
+        /**
+         * Discount amount
+         */
+        discount: number;
+        /**
+         * Credits amount
+         */
+        credits: number;
+        /**
+         * Estimation items
+         */
+        items: EstimationItem[];
+        /**
+         * Estimation discount items
+         */
+        discounts: EstimationItem[];
+        /**
+         * Trial days
+         */
+        trialDays: number;
+        /**
+         * Trial end date
+         */
+        trialEndDate?: string;
+    }
+    /**
+     * EstimationUpdatePlan
+     */
+    export type EstimationUpdatePlan = {
+        /**
+         * Total amount
+         */
+        amount: number;
+        /**
+         * Gross payable amount
+         */
+        grossAmount: number;
+        /**
+         * Discount amount
+         */
+        discount: number;
+        /**
+         * Credits amount
+         */
+        credits: number;
+        /**
+         * Estimation items
+         */
+        items: EstimationItem[];
+        /**
+         * Estimation discount items
+         */
+        discounts: EstimationItem[];
+        /**
+         * Trial days
+         */
+        trialDays: number;
+        /**
+         * Trial end date
+         */
+        trialEndDate?: string;
+        /**
+         * Organization&#039;s existing credits
+         */
+        organizationCredits: number;
+    }
+    /**
+     * EstimationDeleteOrganization
+     */
+    export type EstimationDeleteOrganization = {
+        /**
+         * List of unpaid invoices
+         */
+        unpaidInvoices: Invoice[];
+    }
+    /**
+     * EstimationItem
+     */
+    export type EstimationItem = {
+        /**
+         * Label
+         */
+        label: string;
+        /**
+         * Gross payable amount
+         */
+        value: number;
     }
     /**
      * Aggregation team list
