@@ -11,7 +11,7 @@ const result = await domains.updateRecordSRV(
     '<RECORD_ID>', // recordId
     '<NAME>', // name
     '<VALUE>', // value
-    null, // ttl
+    1, // ttl
     null, // priority
     null, // weight
     null, // port

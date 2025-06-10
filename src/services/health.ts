@@ -141,14 +141,39 @@ export class Health {
         );
     }
     /**
-     * Get billing aggregation queue
+     * Get billing project aggregation queue
      *
      * @param {number} threshold
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueBillingAggregation(threshold?: number): Promise<Models.HealthQueue> {
-        const apiPath = '/health/queue/billing-aggregation';
+    getQueueBillingProjectAggregation(threshold?: number): Promise<Models.HealthQueue> {
+        const apiPath = '/health/queue/billing-project-aggregation';
+        const payload: Payload = {};
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Get billing team aggregation queue
+     *
+     * @param {number} threshold
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthQueue>}
+     */
+    getQueueBillingTeamAggregation(threshold?: number): Promise<Models.HealthQueue> {
+        const apiPath = '/health/queue/billing-team-aggregation';
         const payload: Payload = {};
         if (typeof threshold !== 'undefined') {
             payload['threshold'] = threshold;

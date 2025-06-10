@@ -2,6 +2,7 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 import { StatusCode } from '../enums/status-code';
+import { ProxyResourceType } from '../enums/proxy-resource-type';
 
 export class Proxy {
     client: Client;
@@ -114,10 +115,12 @@ export class Proxy {
      * @param {string} domain
      * @param {string} url
      * @param {StatusCode} statusCode
+     * @param {string} resourceId
+     * @param {ProxyResourceType} resourceType
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    createRedirectRule(domain: string, url: string, statusCode: StatusCode): Promise<Models.ProxyRule> {
+    createRedirectRule(domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType): Promise<Models.ProxyRule> {
         if (typeof domain === 'undefined') {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
@@ -126,6 +129,12 @@ export class Proxy {
         }
         if (typeof statusCode === 'undefined') {
             throw new AppwriteException('Missing required parameter: "statusCode"');
+        }
+        if (typeof resourceId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "resourceId"');
+        }
+        if (typeof resourceType === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "resourceType"');
         }
         const apiPath = '/proxy/rules/redirect';
         const payload: Payload = {};
@@ -137,6 +146,12 @@ export class Proxy {
         }
         if (typeof statusCode !== 'undefined') {
             payload['statusCode'] = statusCode;
+        }
+        if (typeof resourceId !== 'undefined') {
+            payload['resourceId'] = resourceId;
+        }
+        if (typeof resourceType !== 'undefined') {
+            payload['resourceType'] = resourceType;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

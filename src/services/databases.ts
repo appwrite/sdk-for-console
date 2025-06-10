@@ -1733,12 +1733,15 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DocumentList<Document>>}
      */
-    upsertDocuments<Document extends Models.Document>(databaseId: string, collectionId: string, documents?: object[]): Promise<Models.DocumentList<Document>> {
+    upsertDocuments<Document extends Models.Document>(databaseId: string, collectionId: string, documents: object[]): Promise<Models.DocumentList<Document>> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
         if (typeof collectionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof documents === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "documents"');
         }
         const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
         const payload: Payload = {};
@@ -2020,6 +2023,98 @@ export class Databases {
 
         return this.client.call(
             'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Decrement a specific attribute of a document by a given value.
+     *
+     * @param {string} databaseId
+     * @param {string} collectionId
+     * @param {string} documentId
+     * @param {string} attribute
+     * @param {number} value
+     * @param {number} min
+     * @throws {AppwriteException}
+     * @returns {Promise<Document>}
+     */
+    decrementDocumentAttribute<Document extends Models.Document>(databaseId: string, collectionId: string, documentId: string, attribute: string, value?: number, min?: number): Promise<Document> {
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof documentId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "documentId"');
+        }
+        if (typeof attribute === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "attribute"');
+        }
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/decrement'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId).replace('{attribute}', attribute);
+        const payload: Payload = {};
+        if (typeof value !== 'undefined') {
+            payload['value'] = value;
+        }
+        if (typeof min !== 'undefined') {
+            payload['min'] = min;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Increment a specific attribute of a document by a given value.
+     *
+     * @param {string} databaseId
+     * @param {string} collectionId
+     * @param {string} documentId
+     * @param {string} attribute
+     * @param {number} value
+     * @param {number} max
+     * @throws {AppwriteException}
+     * @returns {Promise<Document>}
+     */
+    incrementDocumentAttribute<Document extends Models.Document>(databaseId: string, collectionId: string, documentId: string, attribute: string, value?: number, max?: number): Promise<Document> {
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof documentId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "documentId"');
+        }
+        if (typeof attribute === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "attribute"');
+        }
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/increment'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId).replace('{attribute}', attribute);
+        const payload: Payload = {};
+        if (typeof value !== 'undefined') {
+            payload['value'] = value;
+        }
+        if (typeof max !== 'undefined') {
+            payload['max'] = max;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
             uri,
             apiHeaders,
             payload

@@ -10,7 +10,7 @@ const result = await domains.createRecordAAAA(
     '<DOMAIN_ID>', // domainId
     '<NAME>', // name
     '', // value
-    null, // ttl
+    1, // ttl
     '<COMMENT>' // comment (optional)
 );
 

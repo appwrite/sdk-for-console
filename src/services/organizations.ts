@@ -108,6 +108,47 @@ export class Organizations {
         );
     }
     /**
+     * Get estimation for creating an organization.
+     *
+     * @param {BillingPlan} billingPlan
+     * @param {string} paymentMethodId
+     * @param {string[]} invites
+     * @param {string} couponId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Estimation>}
+     */
+    estimationCreateOrganization(billingPlan: BillingPlan, paymentMethodId?: string, invites?: string[], couponId?: string): Promise<Models.Estimation> {
+        if (typeof billingPlan === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "billingPlan"');
+        }
+        const apiPath = '/organizations/estimations/create-organization';
+        const payload: Payload = {};
+        if (typeof billingPlan !== 'undefined') {
+            payload['billingPlan'] = billingPlan;
+        }
+        if (typeof paymentMethodId !== 'undefined') {
+            payload['paymentMethodId'] = paymentMethodId;
+        }
+        if (typeof invites !== 'undefined') {
+            payload['invites'] = invites;
+        }
+        if (typeof couponId !== 'undefined') {
+            payload['couponId'] = couponId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
      * Delete an organization.
      *
      * @param {string} organizationId
@@ -436,6 +477,73 @@ export class Organizations {
 
         return this.client.call(
             'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Get estimation for deleting an organization.
+     *
+     * @param {string} organizationId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.EstimationDeleteOrganization>}
+     */
+    estimationDeleteOrganization(organizationId: string): Promise<Models.EstimationDeleteOrganization> {
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        const apiPath = '/organizations/{organizationId}/estimations/delete-organization'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Get estimation for updating the organization plan.
+     *
+     * @param {string} organizationId
+     * @param {BillingPlan} billingPlan
+     * @param {string[]} invites
+     * @param {string} couponId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.EstimationUpdatePlan>}
+     */
+    estimationUpdatePlan(organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string): Promise<Models.EstimationUpdatePlan> {
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof billingPlan === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "billingPlan"');
+        }
+        const apiPath = '/organizations/{organizationId}/estimations/update-plan'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        if (typeof billingPlan !== 'undefined') {
+            payload['billingPlan'] = billingPlan;
+        }
+        if (typeof invites !== 'undefined') {
+            payload['invites'] = invites;
+        }
+        if (typeof couponId !== 'undefined') {
+            payload['couponId'] = couponId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
             uri,
             apiHeaders,
             payload
@@ -855,6 +963,32 @@ export class Organizations {
         );
     }
     /**
+     * Cancel the downgrade initiated for an organization.
+     *
+     * @param {string} organizationId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Organization<Preferences>>}
+     */
+    cancelDowngrade<Preferences extends Models.Preferences>(organizationId: string): Promise<Models.Organization<Preferences>> {
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        const apiPath = '/organizations/{organizationId}/plan/cancel'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
      * Get Scopes
      *
      * @param {string} organizationId
@@ -898,6 +1032,69 @@ export class Organizations {
         const payload: Payload = {};
         if (typeof taxId !== 'undefined') {
             payload['taxId'] = taxId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Get the usage data for an organization.
+     *
+     * @param {string} organizationId
+     * @param {string} startDate
+     * @param {string} endDate
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.UsageOrganization>}
+     */
+    getUsage(organizationId: string, startDate?: string, endDate?: string): Promise<Models.UsageOrganization> {
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        const apiPath = '/organizations/{organizationId}/usage'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        if (typeof startDate !== 'undefined') {
+            payload['startDate'] = startDate;
+        }
+        if (typeof endDate !== 'undefined') {
+            payload['endDate'] = endDate;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+    /**
+     * Validate payment for team after creation or upgrade.
+     *
+     * @param {string} organizationId
+     * @param {string[]} invites
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Organization<Preferences>>}
+     */
+    validatePayment<Preferences extends Models.Preferences>(organizationId: string, invites?: string[]): Promise<Models.Organization<Preferences>> {
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        const apiPath = '/organizations/{organizationId}/validate'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        if (typeof invites !== 'undefined') {
+            payload['invites'] = invites;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

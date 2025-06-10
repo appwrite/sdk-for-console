@@ -66,6 +66,7 @@ export { EmailTemplateLocale } from './enums/email-template-locale';
 export { SmsTemplateType } from './enums/sms-template-type';
 export { SmsTemplateLocale } from './enums/sms-template-locale';
 export { StatusCode } from './enums/status-code';
+export { ProxyResourceType } from './enums/proxy-resource-type';
 export { Framework } from './enums/framework';
 export { BuildRuntime } from './enums/build-runtime';
 export { Adapter } from './enums/adapter';

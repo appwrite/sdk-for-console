@@ -11,7 +11,7 @@ const result = await domains.updateRecordHTTPS(
     '<RECORD_ID>', // recordId
     '<NAME>', // name
     '<VALUE>', // value
-    null, // ttl
+    1, // ttl
     '<COMMENT>' // comment (optional)
 );
 
