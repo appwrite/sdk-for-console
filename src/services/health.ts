@@ -141,56 +141,6 @@ export class Health {
         );
     }
     /**
-     * Get billing project aggregation queue
-     *
-     * @param {number} threshold
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.HealthQueue>}
-     */
-    getQueueBillingProjectAggregation(threshold?: number): Promise<Models.HealthQueue> {
-        const apiPath = '/health/queue/billing-project-aggregation';
-        const payload: Payload = {};
-        if (typeof threshold !== 'undefined') {
-            payload['threshold'] = threshold;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Get billing team aggregation queue
-     *
-     * @param {number} threshold
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.HealthQueue>}
-     */
-    getQueueBillingTeamAggregation(threshold?: number): Promise<Models.HealthQueue> {
-        const apiPath = '/health/queue/billing-team-aggregation';
-        const payload: Payload = {};
-        if (typeof threshold !== 'undefined') {
-            payload['threshold'] = threshold;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
      * Get the number of builds that are waiting to be processed in the Appwrite internal queue server.
      *
      * @param {number} threshold
@@ -199,31 +149,6 @@ export class Health {
      */
     getQueueBuilds(threshold?: number): Promise<Models.HealthQueue> {
         const apiPath = '/health/queue/builds';
-        const payload: Payload = {};
-        if (typeof threshold !== 'undefined') {
-            payload['threshold'] = threshold;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Get the priority builds queue size.
-     *
-     * @param {number} threshold
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.HealthQueue>}
-     */
-    getQueuePriorityBuilds(threshold?: number): Promise<Models.HealthQueue> {
-        const apiPath = '/health/queue/builds-priority';
         const payload: Payload = {};
         if (typeof threshold !== 'undefined') {
             payload['threshold'] = threshold;
@@ -458,31 +383,6 @@ export class Health {
      */
     getQueueMigrations(threshold?: number): Promise<Models.HealthQueue> {
         const apiPath = '/health/queue/migrations';
-        const payload: Payload = {};
-        if (typeof threshold !== 'undefined') {
-            payload['threshold'] = threshold;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-    /**
-     * Get region manager queue
-     *
-     * @param {number} threshold
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.HealthQueue>}
-     */
-    getQueueRegionManager(threshold?: number): Promise<Models.HealthQueue> {
-        const apiPath = '/health/queue/region-manager';
         const payload: Payload = {};
         if (typeof threshold !== 'undefined') {
             payload['threshold'] = threshold;

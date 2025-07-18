@@ -191,15 +191,15 @@ export class Vcs {
     }
     /**
      * Get a list of files and directories from a GitHub repository connected to your project. This endpoint returns the contents of a specified repository path, including file names, sizes, and whether each item is a file or directory. The GitHub installation must be properly configured and the repository must be accessible through your installation for this endpoint to work.
-
      *
      * @param {string} installationId
      * @param {string} providerRepositoryId
      * @param {string} providerRootDirectory
+     * @param {string} providerReference
      * @throws {AppwriteException}
      * @returns {Promise<Models.VcsContentList>}
      */
-    getRepositoryContents(installationId: string, providerRepositoryId: string, providerRootDirectory?: string): Promise<Models.VcsContentList> {
+    getRepositoryContents(installationId: string, providerRepositoryId: string, providerRootDirectory?: string, providerReference?: string): Promise<Models.VcsContentList> {
         if (typeof installationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "installationId"');
         }
@@ -210,6 +210,9 @@ export class Vcs {
         const payload: Payload = {};
         if (typeof providerRootDirectory !== 'undefined') {
             payload['providerRootDirectory'] = providerRootDirectory;
+        }
+        if (typeof providerReference !== 'undefined') {
+            payload['providerReference'] = providerReference;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
