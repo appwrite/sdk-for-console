@@ -45,6 +45,7 @@ export class Console {
             payload
         );
     }
+
     /**
      * Get all Environment Variables that are relevant for the console.
      *

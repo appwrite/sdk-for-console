@@ -42,6 +42,7 @@ export class Tokens {
             payload
         );
     }
+
     /**
      * Create a new token. A token is linked to a file. Token can be passed as a request URL search parameter.
      *
@@ -76,6 +77,7 @@ export class Tokens {
             payload
         );
     }
+
     /**
      * Get a token by its unique ID.
      *
@@ -101,6 +103,7 @@ export class Tokens {
             payload
         );
     }
+
     /**
      * Update a token by its unique ID. Use this endpoint to update a token&#039;s expiry date.
      *
@@ -131,6 +134,7 @@ export class Tokens {
             payload
         );
     }
+
     /**
      * Delete a token by its unique ID.
      *

@@ -49,6 +49,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Create a new project. You can create a maximum of 100 projects per account. 
      *
@@ -132,6 +133,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Get a project by its unique ID. This endpoint allows you to retrieve the project&#039;s details, including its name, description, team, region, and other metadata. 
      *
@@ -157,6 +159,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update a project by its unique ID.
      *
@@ -226,6 +229,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Delete a project by its unique ID.
      *
@@ -252,6 +256,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update the status of a specific API type. Use this endpoint to enable or disable API types such as REST, GraphQL and Realtime.
      *
@@ -292,6 +297,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update the status of all API types. Use this endpoint to enable or disable API types such as REST, GraphQL and Realtime all at once.
      *
@@ -325,6 +331,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update how long sessions created within a project should stay active for.
      *
@@ -358,6 +365,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update the maximum number of users allowed in this project. Set to 0 for unlimited users. 
      *
@@ -391,6 +399,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update the maximum number of sessions allowed per user within the project, if the limit is hit the oldest session will be deleted to make room for new sessions.
      *
@@ -424,6 +433,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update project membership privacy settings. Use this endpoint to control what user information is visible to other team members, such as user name, email, and MFA status. 
      *
@@ -471,6 +481,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update the list of mock phone numbers for testing. Use these numbers to bypass SMS verification in development. 
      *
@@ -504,6 +515,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Enable or disable checking user passwords against common passwords dictionary. This helps ensure users don&#039;t use common and insecure passwords. 
      *
@@ -537,6 +549,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update the authentication password history requirement. Use this endpoint to require new passwords to be different than the last X amount of previously used ones.
      *
@@ -570,6 +583,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Enable or disable checking user passwords against their personal data. This helps prevent users from using personal information in their passwords. 
      *
@@ -603,6 +617,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Enable or disable session email alerts. When enabled, users will receive email notifications when new sessions are created.
      *
@@ -636,6 +651,41 @@ export class Projects {
             payload
         );
     }
+
+    /**
+     * Invalidate all existing sessions. An optional auth security setting for projects, and enabled by default for console project.
+     *
+     * @param {string} projectId
+     * @param {boolean} enabled
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     */
+    updateSessionInvalidation(projectId: string, enabled: boolean): Promise<Models.Project> {
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof enabled === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "enabled"');
+        }
+        const apiPath = '/projects/{projectId}/auth/session-invalidation'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
     /**
      * Update the status of a specific authentication method. Use this endpoint to enable or disable different authentication methods such as email, magic urls or sms in your project. 
      *
@@ -673,6 +723,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * List all the project\&#039;s dev keys. Dev keys are project specific and allow you to bypass rate limits and get better error logging during development.&#039;
      *
@@ -702,6 +753,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Create a new project dev key. Dev keys are project specific and allow you to bypass rate limits and get better error logging during development. Strictly meant for development purposes only.
      *
@@ -742,6 +794,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Get a project\&#039;s dev key by its unique ID. Dev keys are project specific and allow you to bypass rate limits and get better error logging during development.
      *
@@ -771,6 +824,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update a project\&#039;s dev key by its unique ID. Use this endpoint to update a project\&#039;s dev key name or expiration time.&#039;
      *
@@ -815,6 +869,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Delete a project\&#039;s dev key by its unique ID. Once deleted, the key will no longer allow bypassing of rate limits and better logging of errors.
      *
@@ -845,6 +900,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Create a new JWT token. This token can be used to authenticate users with custom scopes and expiration time. 
      *
@@ -882,6 +938,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Get a list of all API keys from the current project. 
      *
@@ -907,6 +964,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Create a new API key. It&#039;s recommended to have multiple API keys with strict scopes for separate functions within your project.
      *
@@ -951,6 +1009,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Get a key by its unique ID. This endpoint returns details about a specific API key in your project including it&#039;s scopes.
      *
@@ -980,6 +1039,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key. 
      *
@@ -1028,6 +1088,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Delete a key by its unique ID. Once deleted, the key can no longer be used to authenticate API calls. 
      *
@@ -1058,6 +1119,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update the OAuth2 provider configurations. Use this endpoint to set up or update the OAuth2 provider credentials or enable/disable providers. 
      *
@@ -1103,6 +1165,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Get a list of all platforms in the project. This endpoint returns an array of all platforms and their configurations. 
      *
@@ -1128,6 +1191,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Create a new platform for your project. Use this endpoint to register a new platform where your users will run your application which will interact with the Appwrite API.
      *
@@ -1180,6 +1244,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Get a platform by its unique ID. This endpoint returns the platform&#039;s details, including its name, type, and key configurations. 
      *
@@ -1209,6 +1274,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update a platform by its unique ID. Use this endpoint to update the platform&#039;s name, key, platform store ID, or hostname. 
      *
@@ -1258,6 +1324,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Delete a platform by its unique ID. This endpoint removes the platform and all its configurations from the project. 
      *
@@ -1288,6 +1355,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update the status of a specific service. Use this endpoint to enable or disable a service in your project. 
      *
@@ -1328,6 +1396,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update the status of all services. Use this endpoint to enable or disable all optional services at once. 
      *
@@ -1361,6 +1430,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update the SMTP configuration for your project. Use this endpoint to configure your project&#039;s SMTP provider with your custom settings for sending transactional emails. 
      *
@@ -1426,6 +1496,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Send a test email to verify SMTP configuration. 
      *
@@ -1500,6 +1571,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update the team ID of a project allowing for it to be transferred to another team.
      *
@@ -1533,6 +1605,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Get a custom email template for the specified locale and type. This endpoint returns the template content, subject, and other configuration details. 
      *
@@ -1566,6 +1639,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update a custom email template for the specified locale and type. Use this endpoint to modify the content of your email templates.
      *
@@ -1626,6 +1700,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Reset a custom email template to its default value. This endpoint removes any custom content and restores the template to its original state. 
      *
@@ -1660,6 +1735,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Get a custom SMS template for the specified locale and type returning it&#039;s contents.
      *
@@ -1693,6 +1769,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update a custom SMS template for the specified locale and type. Use this endpoint to modify the content of your SMS templates. 
      *
@@ -1734,6 +1811,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Reset a custom SMS template to its default value. This endpoint removes any custom message and restores the template to its original state. 
      *
@@ -1768,6 +1846,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Get a list of all webhooks belonging to the project. You can use the query params to filter your results. 
      *
@@ -1793,6 +1872,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Create a new webhook. Use this endpoint to configure a URL that will receive events from Appwrite when specific events occur. 
      *
@@ -1859,6 +1939,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Get a webhook by its unique ID. This endpoint returns details about a specific webhook configured for a project. 
      *
@@ -1888,6 +1969,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update a webhook by its unique ID. Use this endpoint to update the URL, events, or status of an existing webhook. 
      *
@@ -1958,6 +2040,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Delete a webhook by its unique ID. Once deleted, the webhook will no longer receive project events. 
      *
@@ -1988,6 +2071,7 @@ export class Projects {
             payload
         );
     }
+
     /**
      * Update the webhook signature key. This endpoint can be used to regenerate the signature key used to sign and validate payload deliveries for a specific webhook. 
      *

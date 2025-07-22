@@ -43,6 +43,7 @@ export class Functions {
             payload
         );
     }
+
     /**
      * Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
      *
@@ -146,6 +147,7 @@ export class Functions {
             payload
         );
     }
+
     /**
      * Get a list of all runtimes that are currently active on your instance.
      *
@@ -167,6 +169,7 @@ export class Functions {
             payload
         );
     }
+
     /**
      * List allowed function specifications for this instance.
      *
@@ -188,6 +191,7 @@ export class Functions {
             payload
         );
     }
+
     /**
      * List available function templates. You can use template details in [createFunction](/docs/references/cloud/server-nodejs/functions#create) method.
      *
@@ -225,6 +229,7 @@ export class Functions {
             payload
         );
     }
+
     /**
      * Get a function template using ID. You can use template details in [createFunction](/docs/references/cloud/server-nodejs/functions#create) method.
      *
@@ -250,6 +255,7 @@ export class Functions {
             payload
         );
     }
+
     /**
      * Get usage metrics and statistics for all functions in the project. View statistics including total deployments, builds, logs, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
      *
@@ -275,6 +281,7 @@ export class Functions {
             payload
         );
     }
+
     /**
      * Get a function by its unique ID.
      *
@@ -300,6 +307,7 @@ export class Functions {
             payload
         );
     }
+
     /**
      * Update function by its unique ID.
      *
@@ -397,6 +405,7 @@ export class Functions {
             payload
         );
     }
+
     /**
      * Delete a function by its unique ID.
      *
@@ -423,6 +432,7 @@ export class Functions {
             payload
         );
     }
+
     /**
      * Update the function active deployment. Use this endpoint to switch the code deployment that should be used when visitor opens your function.
      *
@@ -456,6 +466,7 @@ export class Functions {
             payload
         );
     }
+
     /**
      * Get a list of all the function&#039;s code deployments. You can use the query params to filter your results.
      *
@@ -489,12 +500,13 @@ export class Functions {
             payload
         );
     }
+
     /**
      * Create a new function code deployment. Use this endpoint to upload a new version of your code function. To execute your newly uploaded code, you&#039;ll need to update the function&#039;s deployment to use your new deployment UID.
-
-This endpoint accepts a tar.gz file compressed with your code. Make sure to include any dependencies your code has within the compressed file. You can learn more about code packaging in the [Appwrite Cloud Functions tutorial](https://appwrite.io/docs/functions).
-
-Use the &quot;command&quot; param to set the entrypoint used to execute your code.
+     * 
+     * This endpoint accepts a tar.gz file compressed with your code. Make sure to include any dependencies your code has within the compressed file. You can learn more about code packaging in the [Appwrite Cloud Functions tutorial](https://appwrite.io/docs/functions).
+     * 
+     * Use the &quot;command&quot; param to set the entrypoint used to execute your code.
      *
      * @param {string} functionId
      * @param {File} code
@@ -542,6 +554,7 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             onProgress
         );
     }
+
     /**
      * Create a new build for an existing function deployment. This endpoint allows you to rebuild a deployment with the updated function configuration, including its entrypoint and build commands if they have been modified. The build process will be queued and executed asynchronously. The original deployment&#039;s code will be preserved and used for the new build.
      *
@@ -579,10 +592,11 @@ Use the &quot;command&quot; param to set the entrypoint used to execute your cod
             payload
         );
     }
+
     /**
      * Create a deployment based on a template.
-
-Use this endpoint with combination of [listTemplates](https://appwrite.io/docs/server/functions#listTemplates) to find the template details.
+     * 
+     * Use this endpoint with combination of [listTemplates](https://appwrite.io/docs/server/functions#listTemplates) to find the template details.
      *
      * @param {string} functionId
      * @param {string} repository
@@ -639,10 +653,11 @@ Use this endpoint with combination of [listTemplates](https://appwrite.io/docs/s
             payload
         );
     }
+
     /**
      * Create a deployment when a function is connected to VCS.
-
-This endpoint lets you create deployment from a branch, commit, or a tag.
+     * 
+     * This endpoint lets you create deployment from a branch, commit, or a tag.
      *
      * @param {string} functionId
      * @param {VCSDeploymentType} type
@@ -685,6 +700,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get a function deployment by its unique ID.
      *
@@ -714,6 +730,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Delete a code deployment by its unique ID.
      *
@@ -744,6 +761,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get a function deployment content by its unique ID. The endpoint response return with a &#039;Content-Disposition: attachment&#039; header that tells the browser to start downloading the file to user downloads directory.
      *
@@ -778,6 +796,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
         
         return uri.toString();
     }
+
     /**
      * Cancel an ongoing function deployment build. If the build is already in progress, it will be stopped and marked as canceled. If the build hasn&#039;t started yet, it will be marked as canceled without executing. You cannot cancel builds that have already completed (status &#039;ready&#039;) or failed. The response includes the final build status and details.
      *
@@ -808,6 +827,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get a list of all the current user function execution logs. You can use the query params to filter your results.
      *
@@ -837,6 +857,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Trigger a function execution. The returned object will return you the current execution status. You can ping the `Get Execution` endpoint to get updates on the current execution status. Once this endpoint is called, your function execution process will start asynchronously.
      *
@@ -887,6 +908,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get a function execution log by its unique ID.
      *
@@ -916,6 +938,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Delete a function execution by its unique ID.
      *
@@ -946,6 +969,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get usage metrics and statistics for a for a specific function. View statistics including total deployments, builds, executions, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
      *
@@ -975,6 +999,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get a list of all variables of a specific function.
      *
@@ -1000,6 +1025,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Create a new function environment variable. These variables can be accessed in the function at runtime as environment variables.
      *
@@ -1044,6 +1070,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get a variable by its unique ID.
      *
@@ -1073,6 +1100,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Update variable by its unique ID.
      *
@@ -1118,6 +1146,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Delete a variable by its unique ID.
      *
