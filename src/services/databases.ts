@@ -86,13 +86,13 @@ export class Databases {
     }
 
     /**
-     * List usage metrics and statistics for all databases in the project. You can view the total number of databases, collections/tables, documents/rows, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
+     * Get usage metrics and statistics for all databases in the project. You can view the total number of databases, collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
      * @param {DatabaseUsageRange} range
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageDatabases>}
      */
-    listUsage(range?: DatabaseUsageRange): Promise<Models.UsageDatabases> {
+    getUsage(range?: DatabaseUsageRange): Promise<Models.UsageDatabases> {
         const apiPath = '/databases/usage';
         const payload: Payload = {};
         if (typeof range !== 'undefined') {
@@ -210,7 +210,6 @@ export class Databases {
      * @param {string} search
      * @throws {AppwriteException}
      * @returns {Promise<Models.CollectionList>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.list` instead.
      */
     listCollections(databaseId: string, queries?: string[], search?: string): Promise<Models.CollectionList> {
         if (typeof databaseId === 'undefined') {
@@ -248,7 +247,6 @@ export class Databases {
      * @param {boolean} enabled
      * @throws {AppwriteException}
      * @returns {Promise<Models.Collection>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.create` instead.
      */
     createCollection(databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean): Promise<Models.Collection> {
         if (typeof databaseId === 'undefined') {
@@ -298,7 +296,6 @@ export class Databases {
      * @param {string} collectionId
      * @throws {AppwriteException}
      * @returns {Promise<Models.Collection>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.get` instead.
      */
     getCollection(databaseId: string, collectionId: string): Promise<Models.Collection> {
         if (typeof databaseId === 'undefined') {
@@ -333,7 +330,6 @@ export class Databases {
      * @param {boolean} enabled
      * @throws {AppwriteException}
      * @returns {Promise<Models.Collection>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.update` instead.
      */
     updateCollection(databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean): Promise<Models.Collection> {
         if (typeof databaseId === 'undefined') {
@@ -380,7 +376,6 @@ export class Databases {
      * @param {string} collectionId
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.delete` instead.
      */
     deleteCollection(databaseId: string, collectionId: string): Promise<{}> {
         if (typeof databaseId === 'undefined') {
@@ -413,7 +408,6 @@ export class Databases {
      * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeList>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.listColumns` instead.
      */
     listAttributes(databaseId: string, collectionId: string, queries?: string[]): Promise<Models.AttributeList> {
         if (typeof databaseId === 'undefined') {
@@ -452,7 +446,6 @@ export class Databases {
      * @param {boolean} array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeBoolean>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.createBooleanColumn` instead.
      */
     createBooleanAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: boolean, array?: boolean): Promise<Models.AttributeBoolean> {
         if (typeof databaseId === 'undefined') {
@@ -506,7 +499,6 @@ export class Databases {
      * @param {string} newKey
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeBoolean>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.updateBooleanColumn` instead.
      */
     updateBooleanAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: boolean, newKey?: string): Promise<Models.AttributeBoolean> {
         if (typeof databaseId === 'undefined') {
@@ -560,7 +552,6 @@ export class Databases {
      * @param {boolean} array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeDatetime>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.createDatetimeColumn` instead.
      */
     createDatetimeAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeDatetime> {
         if (typeof databaseId === 'undefined') {
@@ -614,7 +605,6 @@ export class Databases {
      * @param {string} newKey
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeDatetime>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.updateDatetimeColumn` instead.
      */
     updateDatetimeAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string): Promise<Models.AttributeDatetime> {
         if (typeof databaseId === 'undefined') {
@@ -669,7 +659,6 @@ export class Databases {
      * @param {boolean} array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeEmail>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.createEmailColumn` instead.
      */
     createEmailAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeEmail> {
         if (typeof databaseId === 'undefined') {
@@ -724,7 +713,6 @@ export class Databases {
      * @param {string} newKey
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeEmail>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.updateEmailColumn` instead.
      */
     updateEmailAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string): Promise<Models.AttributeEmail> {
         if (typeof databaseId === 'undefined') {
@@ -768,7 +756,7 @@ export class Databases {
     }
 
     /**
-     * Create an enum attribute. The `elements` param acts as a white-list of accepted values for this attribute. 
+     * Create an enumeration attribute. The `elements` param acts as a white-list of accepted values for this attribute. 
      * 
      *
      * @param {string} databaseId
@@ -780,7 +768,6 @@ export class Databases {
      * @param {boolean} array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeEnum>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.createEnumColumn` instead.
      */
     createEnumAttribute(databaseId: string, collectionId: string, key: string, elements: string[], required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeEnum> {
         if (typeof databaseId === 'undefined') {
@@ -842,7 +829,6 @@ export class Databases {
      * @param {string} newKey
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeEnum>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.updateEnumColumn` instead.
      */
     updateEnumAttribute(databaseId: string, collectionId: string, key: string, elements: string[], required: boolean, xdefault?: string, newKey?: string): Promise<Models.AttributeEnum> {
         if (typeof databaseId === 'undefined') {
@@ -905,7 +891,6 @@ export class Databases {
      * @param {boolean} array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeFloat>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.createFloatColumn` instead.
      */
     createFloatAttribute(databaseId: string, collectionId: string, key: string, required: boolean, min?: number, max?: number, xdefault?: number, array?: boolean): Promise<Models.AttributeFloat> {
         if (typeof databaseId === 'undefined') {
@@ -968,7 +953,6 @@ export class Databases {
      * @param {string} newKey
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeFloat>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.updateFloatColumn` instead.
      */
     updateFloatAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: number, min?: number, max?: number, newKey?: string): Promise<Models.AttributeFloat> {
         if (typeof databaseId === 'undefined') {
@@ -1031,7 +1015,6 @@ export class Databases {
      * @param {boolean} array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeInteger>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.createIntegerColumn` instead.
      */
     createIntegerAttribute(databaseId: string, collectionId: string, key: string, required: boolean, min?: number, max?: number, xdefault?: number, array?: boolean): Promise<Models.AttributeInteger> {
         if (typeof databaseId === 'undefined') {
@@ -1094,7 +1077,6 @@ export class Databases {
      * @param {string} newKey
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeInteger>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.updateIntegerColumn` instead.
      */
     updateIntegerAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: number, min?: number, max?: number, newKey?: string): Promise<Models.AttributeInteger> {
         if (typeof databaseId === 'undefined') {
@@ -1155,7 +1137,6 @@ export class Databases {
      * @param {boolean} array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeIp>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.createIpColumn` instead.
      */
     createIpAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeIp> {
         if (typeof databaseId === 'undefined') {
@@ -1210,7 +1191,6 @@ export class Databases {
      * @param {string} newKey
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeIp>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.updateIpColumn` instead.
      */
     updateIpAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string): Promise<Models.AttributeIp> {
         if (typeof databaseId === 'undefined') {
@@ -1267,7 +1247,6 @@ export class Databases {
      * @param {RelationMutate} onDelete
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeRelationship>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.createRelationshipColumn` instead.
      */
     createRelationshipAttribute(databaseId: string, collectionId: string, relatedCollectionId: string, type: RelationshipType, twoWay?: boolean, key?: string, twoWayKey?: string, onDelete?: RelationMutate): Promise<Models.AttributeRelationship> {
         if (typeof databaseId === 'undefined') {
@@ -1330,7 +1309,6 @@ export class Databases {
      * @param {boolean} encrypt
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeString>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.createStringColumn` instead.
      */
     createStringAttribute(databaseId: string, collectionId: string, key: string, size: number, required: boolean, xdefault?: string, array?: boolean, encrypt?: boolean): Promise<Models.AttributeString> {
         if (typeof databaseId === 'undefined') {
@@ -1395,7 +1373,6 @@ export class Databases {
      * @param {string} newKey
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeString>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.updateStringColumn` instead.
      */
     updateStringAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, size?: number, newKey?: string): Promise<Models.AttributeString> {
         if (typeof databaseId === 'undefined') {
@@ -1453,7 +1430,6 @@ export class Databases {
      * @param {boolean} array
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeUrl>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.createUrlColumn` instead.
      */
     createUrlAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeUrl> {
         if (typeof databaseId === 'undefined') {
@@ -1508,7 +1484,6 @@ export class Databases {
      * @param {string} newKey
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeUrl>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.updateUrlColumn` instead.
      */
     updateUrlAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string): Promise<Models.AttributeUrl> {
         if (typeof databaseId === 'undefined') {
@@ -1559,7 +1534,6 @@ export class Databases {
      * @param {string} key
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.getColumn` instead.
      */
     getAttribute(databaseId: string, collectionId: string, key: string): Promise<{}> {
         if (typeof databaseId === 'undefined') {
@@ -1594,7 +1568,6 @@ export class Databases {
      * @param {string} key
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.deleteColumn` instead.
      */
     deleteAttribute(databaseId: string, collectionId: string, key: string): Promise<{}> {
         if (typeof databaseId === 'undefined') {
@@ -1633,7 +1606,6 @@ export class Databases {
      * @param {string} newKey
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeRelationship>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.updateRelationshipColumn` instead.
      */
     updateRelationshipAttribute(databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate, newKey?: string): Promise<Models.AttributeRelationship> {
         if (typeof databaseId === 'undefined') {
@@ -1675,7 +1647,6 @@ export class Databases {
      * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.DocumentList<Document>>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.listRows` instead.
      */
     listDocuments<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, queries?: string[]): Promise<Models.DocumentList<Document>> {
         if (typeof databaseId === 'undefined') {
@@ -1712,7 +1683,6 @@ export class Databases {
      * @param {string[]} permissions
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.createRow` instead.
      */
     createDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, data: Document extends Models.DefaultDocument ? Models.DataWithoutDocumentKeys : Omit<Document, keyof Models.Document>, permissions?: string[]): Promise<Document> {
         if (typeof databaseId === 'undefined') {
@@ -1762,7 +1732,6 @@ export class Databases {
      * @param {object[]} documents
      * @throws {AppwriteException}
      * @returns {Promise<Models.DocumentList<Document>>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.createRow` instead.
      */
     createDocuments<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documents: object[]): Promise<Models.DocumentList<Document>> {
         if (typeof databaseId === 'undefined') {
@@ -1801,19 +1770,25 @@ export class Databases {
      *
      * @param {string} databaseId
      * @param {string} collectionId
+     * @param {object[]} documents
      * @throws {AppwriteException}
      * @returns {Promise<Models.DocumentList<Document>>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.upsertRows` instead.
      */
-    upsertDocuments<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string): Promise<Models.DocumentList<Document>> {
+    upsertDocuments<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documents: object[]): Promise<Models.DocumentList<Document>> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
         if (typeof collectionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
+        if (typeof documents === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "documents"');
+        }
         const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
         const payload: Payload = {};
+        if (typeof documents !== 'undefined') {
+            payload['documents'] = documents;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1839,7 +1814,6 @@ export class Databases {
      * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.DocumentList<Document>>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.updateRows` instead.
      */
     updateDocuments<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, data?: object, queries?: string[]): Promise<Models.DocumentList<Document>> {
         if (typeof databaseId === 'undefined') {
@@ -1880,7 +1854,6 @@ export class Databases {
      * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.DocumentList<Document>>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.deleteRows` instead.
      */
     deleteDocuments<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, queries?: string[]): Promise<Models.DocumentList<Document>> {
         if (typeof databaseId === 'undefined') {
@@ -1917,7 +1890,6 @@ export class Databases {
      * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.getRow` instead.
      */
     getDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, queries?: string[]): Promise<Document> {
         if (typeof databaseId === 'undefined') {
@@ -1955,11 +1927,12 @@ export class Databases {
      * @param {string} databaseId
      * @param {string} collectionId
      * @param {string} documentId
+     * @param {object} data
+     * @param {string[]} permissions
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.upsertRow` instead.
      */
-    upsertDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string): Promise<Document> {
+    upsertDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, data: object, permissions?: string[]): Promise<Document> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1969,8 +1942,17 @@ export class Databases {
         if (typeof documentId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "documentId"');
         }
+        if (typeof data === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "data"');
+        }
         const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
         const payload: Payload = {};
+        if (typeof data !== 'undefined') {
+            payload['data'] = data;
+        }
+        if (typeof permissions !== 'undefined') {
+            payload['permissions'] = permissions;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1995,7 +1977,6 @@ export class Databases {
      * @param {string[]} permissions
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.updateRow` instead.
      */
     updateDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, data?: Partial<Document extends Models.DefaultDocument ? Models.DataWithoutDocumentKeys : Omit<Document, keyof Models.Document>>, permissions?: string[]): Promise<Document> {
         if (typeof databaseId === 'undefined') {
@@ -2037,7 +2018,6 @@ export class Databases {
      * @param {string} documentId
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.deleteRow` instead.
      */
     deleteDocument(databaseId: string, collectionId: string, documentId: string): Promise<{}> {
         if (typeof databaseId === 'undefined') {
@@ -2074,7 +2054,6 @@ export class Databases {
      * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.LogList>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.listLogs` instead.
      */
     listDocumentLogs(databaseId: string, collectionId: string, documentId: string, queries?: string[]): Promise<Models.LogList> {
         if (typeof databaseId === 'undefined') {
@@ -2115,7 +2094,6 @@ export class Databases {
      * @param {number} min
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.decrementRowColumn` instead.
      */
     decrementDocumentAttribute<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, attribute: string, value?: number, min?: number): Promise<Document> {
         if (typeof databaseId === 'undefined') {
@@ -2163,7 +2141,6 @@ export class Databases {
      * @param {number} max
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.incrementRowColumn` instead.
      */
     incrementDocumentAttribute<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, attribute: string, value?: number, max?: number): Promise<Document> {
         if (typeof databaseId === 'undefined') {
@@ -2208,7 +2185,6 @@ export class Databases {
      * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.IndexList>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.listIndexes` instead.
      */
     listIndexes(databaseId: string, collectionId: string, queries?: string[]): Promise<Models.IndexList> {
         if (typeof databaseId === 'undefined') {
@@ -2248,7 +2224,6 @@ export class Databases {
      * @param {number[]} lengths
      * @throws {AppwriteException}
      * @returns {Promise<Models.Index>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.createIndex` instead.
      */
     createIndex(databaseId: string, collectionId: string, key: string, type: IndexType, attributes: string[], orders?: string[], lengths?: number[]): Promise<Models.Index> {
         if (typeof databaseId === 'undefined') {
@@ -2305,7 +2280,6 @@ export class Databases {
      * @param {string} key
      * @throws {AppwriteException}
      * @returns {Promise<Models.Index>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.getIndex` instead.
      */
     getIndex(databaseId: string, collectionId: string, key: string): Promise<Models.Index> {
         if (typeof databaseId === 'undefined') {
@@ -2340,7 +2314,6 @@ export class Databases {
      * @param {string} key
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.deleteIndex` instead.
      */
     deleteIndex(databaseId: string, collectionId: string, key: string): Promise<{}> {
         if (typeof databaseId === 'undefined') {
@@ -2376,7 +2349,6 @@ export class Databases {
      * @param {string[]} queries
      * @throws {AppwriteException}
      * @returns {Promise<Models.LogList>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.listLogs` instead.
      */
     listCollectionLogs(databaseId: string, collectionId: string, queries?: string[]): Promise<Models.LogList> {
         if (typeof databaseId === 'undefined') {
@@ -2411,7 +2383,6 @@ export class Databases {
      * @param {DatabaseUsageRange} range
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageCollection>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Tables.getUsage` instead.
      */
     getCollectionUsage(databaseId: string, collectionId: string, range?: DatabaseUsageRange): Promise<Models.UsageCollection> {
         if (typeof databaseId === 'undefined') {

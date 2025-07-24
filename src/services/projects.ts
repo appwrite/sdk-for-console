@@ -653,40 +653,6 @@ export class Projects {
     }
 
     /**
-     * Invalidate all existing sessions. An optional auth security setting for projects, and enabled by default for console project.
-     *
-     * @param {string} projectId
-     * @param {boolean} enabled
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
-     */
-    updateSessionInvalidation(projectId: string, enabled: boolean): Promise<Models.Project> {
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof enabled === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "enabled"');
-        }
-        const apiPath = '/projects/{projectId}/auth/session-invalidation'.replace('{projectId}', projectId);
-        const payload: Payload = {};
-        if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
      * Update the status of a specific authentication method. Use this endpoint to enable or disable different authentication methods such as email, magic urls or sms in your project. 
      *
      * @param {string} projectId

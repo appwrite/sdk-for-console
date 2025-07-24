@@ -2,7 +2,6 @@ export enum ApiService {
     Account = 'account',
     Avatars = 'avatars',
     Databases = 'databases',
-    Tables = 'tables',
     Locale = 'locale',
     Health = 'health',
     Storage = 'storage',

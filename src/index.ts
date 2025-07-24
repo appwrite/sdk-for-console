@@ -1,7 +1,7 @@
 /**
  * Appwrite Console SDK
  *
- * This SDK is compatible with Appwrite server version 1.8.x. 
+ * This SDK is compatible with Appwrite server version 1.7.x. 
  * For older versions, please check
  * [previous releases](https://github.com/appwrite/sdk-for-console/releases).
  */
@@ -11,7 +11,6 @@ export { Avatars } from './services/avatars';
 export { Assistant } from './services/assistant';
 export { Console } from './services/console';
 export { Databases } from './services/databases';
-export { Tables } from './services/tables';
 export { Functions } from './services/functions';
 export { Graphql } from './services/graphql';
 export { Health } from './services/health';
