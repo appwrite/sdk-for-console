@@ -40,6 +40,7 @@ export class Proxy {
             payload
         );
     }
+
     /**
      * Create a new proxy rule for serving Appwrite&#039;s API on custom domain.
      *
@@ -69,6 +70,7 @@ export class Proxy {
             payload
         );
     }
+
     /**
      * Create a new proxy rule for executing Appwrite Function on custom domain.
      *
@@ -109,6 +111,7 @@ export class Proxy {
             payload
         );
     }
+
     /**
      * Create a new proxy rule for to redirect from custom domain to another domain.
      *
@@ -166,6 +169,7 @@ export class Proxy {
             payload
         );
     }
+
     /**
      * Create a new proxy rule for serving Appwrite Site on custom domain.
      *
@@ -206,6 +210,7 @@ export class Proxy {
             payload
         );
     }
+
     /**
      * Get a proxy rule by its unique ID.
      *
@@ -231,6 +236,7 @@ export class Proxy {
             payload
         );
     }
+
     /**
      * Delete a proxy rule by its unique ID.
      *
@@ -257,6 +263,7 @@ export class Proxy {
             payload
         );
     }
+
     /**
      * Retry getting verification process of a proxy rule. This endpoint triggers domain verification by checking DNS records (CNAME) against the configured target domain. If verification is successful, a TLS certificate will be automatically provisioned for the domain.
      *

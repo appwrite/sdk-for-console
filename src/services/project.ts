@@ -49,6 +49,7 @@ export class Project {
             payload
         );
     }
+
     /**
      * Get a list of all project variables. These variables will be accessible in all Appwrite Functions at runtime.
      *
@@ -70,6 +71,7 @@ export class Project {
             payload
         );
     }
+
     /**
      * Create a new project variable. This variable will be accessible in all Appwrite Functions at runtime.
      *
@@ -110,6 +112,7 @@ export class Project {
             payload
         );
     }
+
     /**
      * Get a project variable by its unique ID.
      *
@@ -135,6 +138,7 @@ export class Project {
             payload
         );
     }
+
     /**
      * Update project variable by its unique ID. This variable will be accessible in all Appwrite Functions at runtime.
      *
@@ -176,6 +180,7 @@ export class Project {
             payload
         );
     }
+
     /**
      * Delete a project variable by its unique ID. 
      *

@@ -44,6 +44,7 @@ export class Sites {
             payload
         );
     }
+
     /**
      * Create a new site.
      *
@@ -150,6 +151,7 @@ export class Sites {
             payload
         );
     }
+
     /**
      * Get a list of all frameworks that are currently available on the server instance.
      *
@@ -171,6 +173,7 @@ export class Sites {
             payload
         );
     }
+
     /**
      * List allowed site specifications for this instance.
      *
@@ -192,6 +195,7 @@ export class Sites {
             payload
         );
     }
+
     /**
      * List available site templates. You can use template details in [createSite](/docs/references/cloud/server-nodejs/sites#create) method.
      *
@@ -229,6 +233,7 @@ export class Sites {
             payload
         );
     }
+
     /**
      * Get a site template using ID. You can use template details in [createSite](/docs/references/cloud/server-nodejs/sites#create) method.
      *
@@ -254,6 +259,7 @@ export class Sites {
             payload
         );
     }
+
     /**
      * Get usage metrics and statistics for all sites in the project. View statistics including total deployments, builds, logs, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
      *
@@ -279,6 +285,7 @@ export class Sites {
             payload
         );
     }
+
     /**
      * Get a site by its unique ID.
      *
@@ -304,6 +311,7 @@ export class Sites {
             payload
         );
     }
+
     /**
      * Update site by its unique ID.
      *
@@ -404,6 +412,7 @@ export class Sites {
             payload
         );
     }
+
     /**
      * Delete a site by its unique ID.
      *
@@ -430,6 +439,7 @@ export class Sites {
             payload
         );
     }
+
     /**
      * Update the site active deployment. Use this endpoint to switch the code deployment that should be used when visitor opens your site.
      *
@@ -463,6 +473,7 @@ export class Sites {
             payload
         );
     }
+
     /**
      * Get a list of all the site&#039;s code deployments. You can use the query params to filter your results.
      *
@@ -496,6 +507,7 @@ export class Sites {
             payload
         );
     }
+
     /**
      * Create a new site code deployment. Use this endpoint to upload a new version of your site code. To activate your newly uploaded code, you&#039;ll need to update the function&#039;s deployment to use your new deployment ID.
      *
@@ -549,6 +561,7 @@ export class Sites {
             onProgress
         );
     }
+
     /**
      * Create a new build for an existing site deployment. This endpoint allows you to rebuild a deployment with the updated site configuration, including its commands and output directory if they have been modified. The build process will be queued and executed asynchronously. The original deployment&#039;s code will be preserved and used for the new build.
      *
@@ -582,10 +595,11 @@ export class Sites {
             payload
         );
     }
+
     /**
      * Create a deployment based on a template.
-
-Use this endpoint with combination of [listTemplates](https://appwrite.io/docs/server/sites#listTemplates) to find the template details.
+     * 
+     * Use this endpoint with combination of [listTemplates](https://appwrite.io/docs/server/sites#listTemplates) to find the template details.
      *
      * @param {string} siteId
      * @param {string} repository
@@ -642,10 +656,11 @@ Use this endpoint with combination of [listTemplates](https://appwrite.io/docs/s
             payload
         );
     }
+
     /**
      * Create a deployment when a site is connected to VCS.
-
-This endpoint lets you create deployment from a branch, commit, or a tag.
+     * 
+     * This endpoint lets you create deployment from a branch, commit, or a tag.
      *
      * @param {string} siteId
      * @param {VCSDeploymentType} type
@@ -688,6 +703,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get a site deployment by its unique ID.
      *
@@ -717,6 +733,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Delete a site deployment by its unique ID.
      *
@@ -747,6 +764,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get a site deployment content by its unique ID. The endpoint response return with a &#039;Content-Disposition: attachment&#039; header that tells the browser to start downloading the file to user downloads directory.
      *
@@ -781,6 +799,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
         
         return uri.toString();
     }
+
     /**
      * Cancel an ongoing site deployment build. If the build is already in progress, it will be stopped and marked as canceled. If the build hasn&#039;t started yet, it will be marked as canceled without executing. You cannot cancel builds that have already completed (status &#039;ready&#039;) or failed. The response includes the final build status and details.
      *
@@ -811,6 +830,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get a list of all site logs. You can use the query params to filter your results.
      *
@@ -840,6 +860,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get a site request log by its unique ID.
      *
@@ -869,6 +890,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Delete a site log by its unique ID.
      *
@@ -899,6 +921,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get usage metrics and statistics for a for a specific site. View statistics including total deployments, builds, executions, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
      *
@@ -928,6 +951,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get a list of all variables of a specific site.
      *
@@ -953,6 +977,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Create a new site variable. These variables can be accessed during build and runtime (server-side rendering) as environment variables.
      *
@@ -997,6 +1022,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Get a variable by its unique ID.
      *
@@ -1026,6 +1052,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Update variable by its unique ID.
      *
@@ -1071,6 +1098,7 @@ This endpoint lets you create deployment from a branch, commit, or a tag.
             payload
         );
     }
+
     /**
      * Delete a variable by its unique ID.
      *

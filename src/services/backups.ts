@@ -34,6 +34,7 @@ export class Backups {
             payload
         );
     }
+
     /**
      * Create a new archive asynchronously for a project.
      *
@@ -67,6 +68,7 @@ export class Backups {
             payload
         );
     }
+
     /**
      * Get a backup archive using it&#039;s ID.
      *
@@ -92,6 +94,7 @@ export class Backups {
             payload
         );
     }
+
     /**
      * Delete an existing archive for a project.
      *
@@ -118,6 +121,7 @@ export class Backups {
             payload
         );
     }
+
     /**
      * List all policies for a project.
      *
@@ -143,6 +147,7 @@ export class Backups {
             payload
         );
     }
+
     /**
      * Create a new backup policy.
      *
@@ -205,6 +210,7 @@ export class Backups {
             payload
         );
     }
+
     /**
      * Get a backup policy using it&#039;s ID.
      *
@@ -230,6 +236,7 @@ export class Backups {
             payload
         );
     }
+
     /**
      * Update an existing policy using it&#039;s ID.
      *
@@ -272,6 +279,7 @@ export class Backups {
             payload
         );
     }
+
     /**
      * Delete a policy using it&#039;s ID.
      *
@@ -298,6 +306,7 @@ export class Backups {
             payload
         );
     }
+
     /**
      * Create and trigger a new restoration for a backup on a project.
      *
@@ -342,6 +351,7 @@ export class Backups {
             payload
         );
     }
+
     /**
      * List all backup restorations for a project.
      *
@@ -367,6 +377,7 @@ export class Backups {
             payload
         );
     }
+
     /**
      * Get the current status of a backup restoration.
      *

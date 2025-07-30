@@ -35,6 +35,7 @@ export class Console {
             payload
         );
     }
+
     /**
      * Get the details of a coupon using it&#039;s coupon ID.
      *
@@ -60,6 +61,7 @@ export class Console {
             payload
         );
     }
+
     /**
      * Return a list of all available plans.
      *
@@ -81,6 +83,7 @@ export class Console {
             payload
         );
     }
+
     /**
      * Create a new membership for an account to a program.
      *
@@ -88,7 +91,7 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    createProgramMembership<Preferences extends Models.Preferences>(programId: string): Promise<Models.Organization<Preferences>> {
+    createProgramMembership<Preferences extends Models.Preferences = Models.DefaultPreferences>(programId: string): Promise<Models.Organization<Preferences>> {
         if (typeof programId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "programId"');
         }
@@ -107,6 +110,7 @@ export class Console {
             payload
         );
     }
+
     /**
      * Get all available regions for the console.
      *
@@ -128,6 +132,7 @@ export class Console {
             payload
         );
     }
+
     /**
      * Check if a resource ID is available.
      *
@@ -163,6 +168,7 @@ export class Console {
             payload
         );
     }
+
     /**
      * Create a new source.
      *
@@ -205,6 +211,7 @@ export class Console {
             payload
         );
     }
+
     /**
      * Get all Environment Variables that are relevant for the console.
      *

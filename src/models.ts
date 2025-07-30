@@ -2,10 +2,13 @@
  * Appwrite Models
  */
 export namespace Models {
+
+    declare const __default: unique symbol;
+
     /**
      * Documents List
      */
-    export type DocumentList<Document extends Models.Document> = {
+    export type DocumentList<Document extends Models.Document = Models.DefaultDocument> = {
         /**
          * Total number of documents documents that matched your query.
          */
@@ -15,6 +18,7 @@ export namespace Models {
          */
         documents: Document[];
     }
+
     /**
      * Collections List
      */
@@ -28,6 +32,7 @@ export namespace Models {
          */
         collections: Collection[];
     }
+
     /**
      * Databases List
      */
@@ -41,6 +46,7 @@ export namespace Models {
          */
         databases: Database[];
     }
+
     /**
      * Indexes List
      */
@@ -54,10 +60,11 @@ export namespace Models {
          */
         indexes: Index[];
     }
+
     /**
      * Users List
      */
-    export type UserList<Preferences extends Models.Preferences> = {
+    export type UserList<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
         /**
          * Total number of users documents that matched your query.
          */
@@ -67,6 +74,7 @@ export namespace Models {
          */
         users: User<Preferences>[];
     }
+
     /**
      * Sessions List
      */
@@ -80,6 +88,7 @@ export namespace Models {
          */
         sessions: Session[];
     }
+
     /**
      * Identities List
      */
@@ -93,6 +102,7 @@ export namespace Models {
          */
         identities: Identity[];
     }
+
     /**
      * Logs List
      */
@@ -106,6 +116,7 @@ export namespace Models {
          */
         logs: Log[];
     }
+
     /**
      * Files List
      */
@@ -119,6 +130,7 @@ export namespace Models {
          */
         files: File[];
     }
+
     /**
      * Buckets List
      */
@@ -132,6 +144,7 @@ export namespace Models {
          */
         buckets: Bucket[];
     }
+
     /**
      * Resource Tokens List
      */
@@ -145,10 +158,11 @@ export namespace Models {
          */
         tokens: ResourceToken[];
     }
+
     /**
      * Teams List
      */
-    export type TeamList<Preferences extends Models.Preferences> = {
+    export type TeamList<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
         /**
          * Total number of teams documents that matched your query.
          */
@@ -158,6 +172,7 @@ export namespace Models {
          */
         teams: Team<Preferences>[];
     }
+
     /**
      * Memberships List
      */
@@ -171,6 +186,7 @@ export namespace Models {
          */
         memberships: Membership[];
     }
+
     /**
      * Sites List
      */
@@ -184,6 +200,7 @@ export namespace Models {
          */
         sites: Site[];
     }
+
     /**
      * Site Templates List
      */
@@ -197,6 +214,7 @@ export namespace Models {
          */
         templates: TemplateSite[];
     }
+
     /**
      * Functions List
      */
@@ -210,6 +228,7 @@ export namespace Models {
          */
         functions: Function[];
     }
+
     /**
      * Function Templates List
      */
@@ -223,6 +242,7 @@ export namespace Models {
          */
         templates: TemplateFunction[];
     }
+
     /**
      * Installations List
      */
@@ -236,6 +256,7 @@ export namespace Models {
          */
         installations: Installation[];
     }
+
     /**
      * Framework Provider Repositories List
      */
@@ -249,6 +270,7 @@ export namespace Models {
          */
         frameworkProviderRepositories: ProviderRepositoryFramework[];
     }
+
     /**
      * Runtime Provider Repositories List
      */
@@ -262,6 +284,7 @@ export namespace Models {
          */
         runtimeProviderRepositories: ProviderRepositoryRuntime[];
     }
+
     /**
      * Branches List
      */
@@ -275,6 +298,7 @@ export namespace Models {
          */
         branches: Branch[];
     }
+
     /**
      * Frameworks List
      */
@@ -288,6 +312,7 @@ export namespace Models {
          */
         frameworks: Framework[];
     }
+
     /**
      * Runtimes List
      */
@@ -301,6 +326,7 @@ export namespace Models {
          */
         runtimes: Runtime[];
     }
+
     /**
      * Deployments List
      */
@@ -314,6 +340,7 @@ export namespace Models {
          */
         deployments: Deployment[];
     }
+
     /**
      * Executions List
      */
@@ -327,6 +354,7 @@ export namespace Models {
          */
         executions: Execution[];
     }
+
     /**
      * Projects List
      */
@@ -340,6 +368,7 @@ export namespace Models {
          */
         projects: Project[];
     }
+
     /**
      * Webhooks List
      */
@@ -353,6 +382,7 @@ export namespace Models {
          */
         webhooks: Webhook[];
     }
+
     /**
      * API Keys List
      */
@@ -366,6 +396,7 @@ export namespace Models {
          */
         keys: Key[];
     }
+
     /**
      * Dev Keys List
      */
@@ -379,6 +410,7 @@ export namespace Models {
          */
         devKeys: DevKey[];
     }
+
     /**
      * Platforms List
      */
@@ -392,6 +424,7 @@ export namespace Models {
          */
         platforms: Platform[];
     }
+
     /**
      * Countries List
      */
@@ -405,6 +438,7 @@ export namespace Models {
          */
         countries: Country[];
     }
+
     /**
      * Continents List
      */
@@ -418,6 +452,7 @@ export namespace Models {
          */
         continents: Continent[];
     }
+
     /**
      * Languages List
      */
@@ -431,6 +466,7 @@ export namespace Models {
          */
         languages: Language[];
     }
+
     /**
      * Currencies List
      */
@@ -444,6 +480,7 @@ export namespace Models {
          */
         currencies: Currency[];
     }
+
     /**
      * Phones List
      */
@@ -457,6 +494,7 @@ export namespace Models {
          */
         phones: Phone[];
     }
+
     /**
      * Variables List
      */
@@ -470,6 +508,7 @@ export namespace Models {
          */
         variables: Variable[];
     }
+
     /**
      * Rule List
      */
@@ -483,6 +522,7 @@ export namespace Models {
          */
         rules: ProxyRule[];
     }
+
     /**
      * Locale codes list
      */
@@ -496,6 +536,7 @@ export namespace Models {
          */
         localeCodes: LocaleCode[];
     }
+
     /**
      * Provider list
      */
@@ -509,6 +550,7 @@ export namespace Models {
          */
         providers: Provider[];
     }
+
     /**
      * Message list
      */
@@ -522,6 +564,7 @@ export namespace Models {
          */
         messages: Message[];
     }
+
     /**
      * Topic list
      */
@@ -535,6 +578,7 @@ export namespace Models {
          */
         topics: Topic[];
     }
+
     /**
      * Subscriber list
      */
@@ -548,6 +592,7 @@ export namespace Models {
          */
         subscribers: Subscriber[];
     }
+
     /**
      * Target list
      */
@@ -561,6 +606,7 @@ export namespace Models {
          */
         targets: Target[];
     }
+
     /**
      * Migrations List
      */
@@ -574,6 +620,7 @@ export namespace Models {
          */
         migrations: Migration[];
     }
+
     /**
      * Specifications List
      */
@@ -587,6 +634,7 @@ export namespace Models {
          */
         specifications: Specification[];
     }
+
     /**
      * VCS Content List
      */
@@ -600,6 +648,7 @@ export namespace Models {
          */
         contents: VcsContent[];
     }
+
     /**
      * Database
      */
@@ -633,6 +682,7 @@ export namespace Models {
          */
         archives: Collection[];
     }
+
     /**
      * Collection
      */
@@ -678,6 +728,7 @@ export namespace Models {
          */
         indexes: Index[];
     }
+
     /**
      * Attributes List
      */
@@ -691,6 +742,7 @@ export namespace Models {
          */
         attributes: (Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributeString)[];
     }
+
     /**
      * AttributeString
      */
@@ -740,6 +792,7 @@ export namespace Models {
          */
         encrypt?: boolean;
     }
+
     /**
      * AttributeInteger
      */
@@ -789,6 +842,7 @@ export namespace Models {
          */
         default?: number;
     }
+
     /**
      * AttributeFloat
      */
@@ -838,6 +892,7 @@ export namespace Models {
          */
         default?: number;
     }
+
     /**
      * AttributeBoolean
      */
@@ -879,6 +934,7 @@ export namespace Models {
          */
         default?: boolean;
     }
+
     /**
      * AttributeEmail
      */
@@ -924,6 +980,7 @@ export namespace Models {
          */
         default?: string;
     }
+
     /**
      * AttributeEnum
      */
@@ -973,6 +1030,7 @@ export namespace Models {
          */
         default?: string;
     }
+
     /**
      * AttributeIP
      */
@@ -1018,6 +1076,7 @@ export namespace Models {
          */
         default?: string;
     }
+
     /**
      * AttributeURL
      */
@@ -1063,6 +1122,7 @@ export namespace Models {
          */
         default?: string;
     }
+
     /**
      * AttributeDatetime
      */
@@ -1108,6 +1168,7 @@ export namespace Models {
          */
         default?: string;
     }
+
     /**
      * AttributeRelationship
      */
@@ -1169,6 +1230,7 @@ export namespace Models {
          */
         side: string;
     }
+
     /**
      * Index
      */
@@ -1210,6 +1272,7 @@ export namespace Models {
          */
         $updatedAt: string;
     }
+
     /**
      * Document
      */
@@ -1242,8 +1305,13 @@ export namespace Models {
          * Document permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
          */
         $permissions: string[];
-        [key: string]: any;
     }
+
+    export type DefaultDocument = Document & {
+        [key: string]: any;
+        [__default]: true;
+    };
+
     /**
      * Log
      */
@@ -1333,10 +1401,11 @@ export namespace Models {
          */
         countryName: string;
     }
+
     /**
      * User
      */
-    export type User<Preferences extends Models.Preferences> = {
+    export type User<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
         /**
          * User ID.
          */
@@ -1414,6 +1483,7 @@ export namespace Models {
          */
         accessedAt: string;
     }
+
     /**
      * AlgoMD5
      */
@@ -1423,6 +1493,7 @@ export namespace Models {
          */
         type: string;
     }
+
     /**
      * AlgoSHA
      */
@@ -1432,6 +1503,7 @@ export namespace Models {
          */
         type: string;
     }
+
     /**
      * AlgoPHPass
      */
@@ -1441,6 +1513,7 @@ export namespace Models {
          */
         type: string;
     }
+
     /**
      * AlgoBcrypt
      */
@@ -1450,6 +1523,7 @@ export namespace Models {
          */
         type: string;
     }
+
     /**
      * AlgoScrypt
      */
@@ -1475,6 +1549,7 @@ export namespace Models {
          */
         length: number;
     }
+
     /**
      * AlgoScryptModified
      */
@@ -1496,6 +1571,7 @@ export namespace Models {
          */
         signerKey: string;
     }
+
     /**
      * AlgoArgon2
      */
@@ -1517,12 +1593,18 @@ export namespace Models {
          */
         threads: number;
     }
+
     /**
      * Preferences
      */
     export type Preferences = {
-        [key: string]: any;
     }
+
+    export type DefaultPreferences = Preferences & {
+        [key: string]: any;
+        [__default]: true;
+    };
+
     /**
      * Session
      */
@@ -1644,6 +1726,7 @@ export namespace Models {
          */
         mfaUpdatedAt: string;
     }
+
     /**
      * Identity
      */
@@ -1689,6 +1772,7 @@ export namespace Models {
          */
         providerRefreshToken: string;
     }
+
     /**
      * Token
      */
@@ -1718,6 +1802,7 @@ export namespace Models {
          */
         phrase: string;
     }
+
     /**
      * JWT
      */
@@ -1727,6 +1812,7 @@ export namespace Models {
          */
         jwt: string;
     }
+
     /**
      * Locale
      */
@@ -1760,6 +1846,7 @@ export namespace Models {
          */
         currency: string;
     }
+
     /**
      * LocaleCode
      */
@@ -1773,6 +1860,7 @@ export namespace Models {
          */
         name: string;
     }
+
     /**
      * File
      */
@@ -1822,6 +1910,7 @@ export namespace Models {
          */
         chunksUploaded: number;
     }
+
     /**
      * Bucket
      */
@@ -1875,6 +1964,7 @@ export namespace Models {
          */
         antivirus: boolean;
     }
+
     /**
      * ResourceToken
      */
@@ -1908,10 +1998,11 @@ export namespace Models {
          */
         accessedAt: string;
     }
+
     /**
      * Team
      */
-    export type Team<Preferences extends Models.Preferences> = {
+    export type Team<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
         /**
          * Team ID.
          */
@@ -1937,6 +2028,7 @@ export namespace Models {
          */
         prefs: Preferences;
     }
+
     /**
      * Membership
      */
@@ -1994,6 +2086,7 @@ export namespace Models {
          */
         roles: string[];
     }
+
     /**
      * Site
      */
@@ -2115,6 +2208,7 @@ export namespace Models {
          */
         fallbackFile: string;
     }
+
     /**
      * Template Site
      */
@@ -2172,6 +2266,7 @@ export namespace Models {
          */
         variables: TemplateVariable[];
     }
+
     /**
      * Template Framework
      */
@@ -2213,6 +2308,7 @@ export namespace Models {
          */
         fallbackFile: string;
     }
+
     /**
      * Function
      */
@@ -2330,6 +2426,7 @@ export namespace Models {
          */
         specification: string;
     }
+
     /**
      * Template Function
      */
@@ -2403,6 +2500,7 @@ export namespace Models {
          */
         scopes: string[];
     }
+
     /**
      * Template Runtime
      */
@@ -2424,6 +2522,7 @@ export namespace Models {
          */
         providerRootDirectory: string;
     }
+
     /**
      * Template Variable
      */
@@ -2457,6 +2556,7 @@ export namespace Models {
          */
         type: string;
     }
+
     /**
      * Installation
      */
@@ -2486,6 +2586,7 @@ export namespace Models {
          */
         providerInstallationId: string;
     }
+
     /**
      * ProviderRepository
      */
@@ -2511,10 +2612,15 @@ export namespace Models {
          */
         private: boolean;
         /**
+         * VCS (Version Control System) repository&#039;s default branch name.
+         */
+        defaultBranch: string;
+        /**
          * Last commit date in ISO 8601 format.
          */
         pushedAt: string;
     }
+
     /**
      * ProviderRepositoryFramework
      */
@@ -2540,6 +2646,10 @@ export namespace Models {
          */
         private: boolean;
         /**
+         * VCS (Version Control System) repository&#039;s default branch name.
+         */
+        defaultBranch: string;
+        /**
          * Last commit date in ISO 8601 format.
          */
         pushedAt: string;
@@ -2548,6 +2658,7 @@ export namespace Models {
          */
         framework: string;
     }
+
     /**
      * ProviderRepositoryRuntime
      */
@@ -2573,6 +2684,10 @@ export namespace Models {
          */
         private: boolean;
         /**
+         * VCS (Version Control System) repository&#039;s default branch name.
+         */
+        defaultBranch: string;
+        /**
          * Last commit date in ISO 8601 format.
          */
         pushedAt: string;
@@ -2581,6 +2696,7 @@ export namespace Models {
          */
         runtime: string;
     }
+
     /**
      * DetectionFramework
      */
@@ -2602,6 +2718,7 @@ export namespace Models {
          */
         outputDirectory: string;
     }
+
     /**
      * DetectionRuntime
      */
@@ -2619,6 +2736,7 @@ export namespace Models {
          */
         commands: string;
     }
+
     /**
      * VcsContents
      */
@@ -2636,6 +2754,7 @@ export namespace Models {
          */
         name: string;
     }
+
     /**
      * Branch
      */
@@ -2645,6 +2764,7 @@ export namespace Models {
          */
         name: string;
     }
+
     /**
      * Runtime
      */
@@ -2682,6 +2802,7 @@ export namespace Models {
          */
         supports: string[];
     }
+
     /**
      * Framework
      */
@@ -2707,6 +2828,7 @@ export namespace Models {
          */
         adapters: FrameworkAdapter[];
     }
+
     /**
      * Framework Adapter
      */
@@ -2732,6 +2854,7 @@ export namespace Models {
          */
         fallbackFile: string;
     }
+
     /**
      * Deployment
      */
@@ -2845,6 +2968,7 @@ export namespace Models {
          */
         providerBranchUrl: string;
     }
+
     /**
      * Execution
      */
@@ -2918,6 +3042,7 @@ export namespace Models {
          */
         scheduledAt?: string;
     }
+
     /**
      * Project
      */
@@ -3167,6 +3292,7 @@ export namespace Models {
          */
         region: string;
     }
+
     /**
      * Webhook
      */
@@ -3224,6 +3350,7 @@ export namespace Models {
          */
         attempts: number;
     }
+
     /**
      * Key
      */
@@ -3265,6 +3392,7 @@ export namespace Models {
          */
         sdks: string[];
     }
+
     /**
      * DevKey
      */
@@ -3302,6 +3430,7 @@ export namespace Models {
          */
         sdks: string[];
     }
+
     /**
      * Mock Number
      */
@@ -3315,6 +3444,7 @@ export namespace Models {
          */
         otp: string;
     }
+
     /**
      * AuthProvider
      */
@@ -3340,6 +3470,7 @@ export namespace Models {
          */
         enabled: boolean;
     }
+
     /**
      * Platform
      */
@@ -3385,6 +3516,7 @@ export namespace Models {
          */
         httpPass: string;
     }
+
     /**
      * Variable
      */
@@ -3422,6 +3554,7 @@ export namespace Models {
          */
         resourceId: string;
     }
+
     /**
      * Country
      */
@@ -3435,6 +3568,7 @@ export namespace Models {
          */
         code: string;
     }
+
     /**
      * Continent
      */
@@ -3448,6 +3582,7 @@ export namespace Models {
          */
         code: string;
     }
+
     /**
      * Language
      */
@@ -3465,6 +3600,7 @@ export namespace Models {
          */
         nativeName: string;
     }
+
     /**
      * Currency
      */
@@ -3498,6 +3634,7 @@ export namespace Models {
          */
         namePlural: string;
     }
+
     /**
      * Phone
      */
@@ -3515,6 +3652,7 @@ export namespace Models {
          */
         countryName: string;
     }
+
     /**
      * Health Antivirus
      */
@@ -3528,6 +3666,7 @@ export namespace Models {
          */
         status: string;
     }
+
     /**
      * Health Queue
      */
@@ -3537,6 +3676,7 @@ export namespace Models {
          */
         size: number;
     }
+
     /**
      * Health Status
      */
@@ -3554,6 +3694,7 @@ export namespace Models {
          */
         status: string;
     }
+
     /**
      * Health Certificate
      */
@@ -3583,6 +3724,7 @@ export namespace Models {
          */
         signatureTypeSN: string;
     }
+
     /**
      * Health Time
      */
@@ -3600,6 +3742,7 @@ export namespace Models {
          */
         diff: number;
     }
+
     /**
      * Metric
      */
@@ -3613,6 +3756,7 @@ export namespace Models {
          */
         date: string;
     }
+
     /**
      * Metric Breakdown
      */
@@ -3634,6 +3778,7 @@ export namespace Models {
          */
         estimate?: number;
     }
+
     /**
      * UsageDatabases
      */
@@ -3691,6 +3836,7 @@ export namespace Models {
          */
         databasesWrites: Metric[];
     }
+
     /**
      * UsageDatabase
      */
@@ -3740,6 +3886,7 @@ export namespace Models {
          */
         databaseWrites: Metric[];
     }
+
     /**
      * UsageCollection
      */
@@ -3757,6 +3904,7 @@ export namespace Models {
          */
         documents: Metric[];
     }
+
     /**
      * UsageUsers
      */
@@ -3782,6 +3930,7 @@ export namespace Models {
          */
         sessions: Metric[];
     }
+
     /**
      * StorageUsage
      */
@@ -3815,6 +3964,7 @@ export namespace Models {
          */
         storage: Metric[];
     }
+
     /**
      * UsageBuckets
      */
@@ -3848,6 +3998,7 @@ export namespace Models {
          */
         imageTransformationsTotal: number;
     }
+
     /**
      * UsageFunctions
      */
@@ -3953,6 +4104,7 @@ export namespace Models {
          */
         buildsFailed: Metric[];
     }
+
     /**
      * UsageFunction
      */
@@ -4054,6 +4206,7 @@ export namespace Models {
          */
         buildsFailed: Metric[];
     }
+
     /**
      * UsageSites
      */
@@ -4183,6 +4336,7 @@ export namespace Models {
          */
         outbound: Metric[];
     }
+
     /**
      * UsageSite
      */
@@ -4308,6 +4462,7 @@ export namespace Models {
          */
         outbound: Metric[];
     }
+
     /**
      * UsageProject
      */
@@ -4445,6 +4600,7 @@ export namespace Models {
          */
         backupsStorageTotal: number;
     }
+
     /**
      * Headers
      */
@@ -4458,6 +4614,7 @@ export namespace Models {
          */
         value: string;
     }
+
     /**
      * Specification
      */
@@ -4479,6 +4636,7 @@ export namespace Models {
          */
         slug: string;
     }
+
     /**
      * Rule
      */
@@ -4544,6 +4702,7 @@ export namespace Models {
          */
         renewAt: string;
     }
+
     /**
      * SmsTemplate
      */
@@ -4561,6 +4720,7 @@ export namespace Models {
          */
         message: string;
     }
+
     /**
      * EmailTemplate
      */
@@ -4594,6 +4754,7 @@ export namespace Models {
          */
         subject: string;
     }
+
     /**
      * Console Variables
      */
@@ -4651,6 +4812,7 @@ export namespace Models {
          */
         _APP_DOMAINS_NAMESERVERS: string;
     }
+
     /**
      * MFA Challenge
      */
@@ -4672,6 +4834,7 @@ export namespace Models {
          */
         expire: string;
     }
+
     /**
      * MFA Recovery Codes
      */
@@ -4681,6 +4844,7 @@ export namespace Models {
          */
         recoveryCodes: string[];
     }
+
     /**
      * MFAType
      */
@@ -4694,6 +4858,7 @@ export namespace Models {
          */
         uri: string;
     }
+
     /**
      * MFAFactors
      */
@@ -4715,6 +4880,7 @@ export namespace Models {
          */
         recoveryCode: boolean;
     }
+
     /**
      * Provider
      */
@@ -4756,6 +4922,7 @@ export namespace Models {
          */
         options?: object;
     }
+
     /**
      * Message
      */
@@ -4813,6 +4980,7 @@ export namespace Models {
          */
         status: string;
     }
+
     /**
      * Topic
      */
@@ -4850,6 +5018,7 @@ export namespace Models {
          */
         subscribe: string[];
     }
+
     /**
      * Subscriber
      */
@@ -4891,6 +5060,7 @@ export namespace Models {
          */
         providerType: string;
     }
+
     /**
      * Target
      */
@@ -4932,6 +5102,7 @@ export namespace Models {
          */
         expired: boolean;
     }
+
     /**
      * Migration
      */
@@ -4985,6 +5156,7 @@ export namespace Models {
          */
         errors: string[];
     }
+
     /**
      * Migration Report
      */
@@ -5026,6 +5198,7 @@ export namespace Models {
          */
         version: string;
     }
+
     /**
      * AdditionalResource
      */
@@ -5047,6 +5220,7 @@ export namespace Models {
          */
         value: number;
     }
+
     /**
      * AggregationTeam
      */
@@ -5152,6 +5326,7 @@ export namespace Models {
          */
         amount: number;
     }
+
     /**
      * Archive
      */
@@ -5205,6 +5380,7 @@ export namespace Models {
          */
         resourceType?: string;
     }
+
     /**
      * BillingAddress
      */
@@ -5242,6 +5418,7 @@ export namespace Models {
          */
         postalCode: string;
     }
+
     /**
      * billingPlan
      */
@@ -5290,6 +5467,10 @@ export namespace Models {
          * Webhooks
          */
         webhooks: number;
+        /**
+         * Projects
+         */
+        projects: number;
         /**
          * Platofrms
          */
@@ -5407,6 +5588,7 @@ export namespace Models {
          */
         databasesAllowEncrypt: boolean;
     }
+
     /**
      * BillingPlanAddon
      */
@@ -5416,6 +5598,7 @@ export namespace Models {
          */
         seats: BillingPlanAddonDetails;
     }
+
     /**
      * BillingPlanAddonDetails
      */
@@ -5445,6 +5628,7 @@ export namespace Models {
          */
         value: number;
     }
+
     /**
      * BillingLimits
      */
@@ -5478,6 +5662,7 @@ export namespace Models {
          */
         authPhone: number;
     }
+
     /**
      * Campaign
      */
@@ -5531,6 +5716,7 @@ export namespace Models {
          */
         footer?: boolean;
     }
+
     /**
      * Coupon
      */
@@ -5568,6 +5754,7 @@ export namespace Models {
          */
         onlyNewOrgs: boolean;
     }
+
     /**
      * Credit
      */
@@ -5617,6 +5804,17 @@ export namespace Models {
          */
         status: string;
     }
+
+    /**
+     * CreditAvailable
+     */
+    export type CreditAvailable = {
+        /**
+         * Total available credits for the organization.
+         */
+        available: number;
+    }
+
     /**
      * CreditList
      */
@@ -5634,6 +5832,7 @@ export namespace Models {
          */
         available: number;
     }
+
     /**
      * Invoice
      */
@@ -5727,10 +5926,11 @@ export namespace Models {
          */
         to: string;
     }
+
     /**
      * Organization
      */
-    export type Organization<Preferences extends Models.Preferences> = {
+    export type Organization<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
         /**
          * Team ID.
          */
@@ -5855,7 +6055,12 @@ export namespace Models {
          * Marked for deletion
          */
         markedForDeletion: boolean;
+        /**
+         * Selected projects
+         */
+        projects: string[];
     }
+
     /**
      * paymentMethod
      */
@@ -5937,6 +6142,7 @@ export namespace Models {
          */
         failed: boolean;
     }
+
     /**
      * backup
      */
@@ -5986,6 +6192,7 @@ export namespace Models {
          */
         enabled: boolean;
     }
+
     /**
      * Region
      */
@@ -6015,6 +6222,7 @@ export namespace Models {
          */
         flag: string;
     }
+
     /**
      * Restoration
      */
@@ -6064,6 +6272,7 @@ export namespace Models {
          */
         options: string;
     }
+
     /**
      * Review
      */
@@ -6085,6 +6294,7 @@ export namespace Models {
          */
         review: string;
     }
+
     /**
      * Roles
      */
@@ -6098,6 +6308,7 @@ export namespace Models {
          */
         roles: string[];
     }
+
     /**
      * UsageOrganization
      */
@@ -6191,6 +6402,7 @@ export namespace Models {
          */
         projects: UsageOrganizationProject[];
     }
+
     /**
      * UsageOrganizationProject
      */
@@ -6256,6 +6468,7 @@ export namespace Models {
          */
         imageTransformationsTotal: number;
     }
+
     /**
      * Domain
      */
@@ -6309,6 +6522,7 @@ export namespace Models {
          */
         dnsRecords: DnsRecord[];
     }
+
     /**
      * DNSRecord
      */
@@ -6362,6 +6576,7 @@ export namespace Models {
          */
         comment: string;
     }
+
     /**
      * UsageInvoice
      */
@@ -6387,6 +6602,7 @@ export namespace Models {
          */
         desc: string;
     }
+
     /**
      * usageBillingPlan
      */
@@ -6424,6 +6640,7 @@ export namespace Models {
          */
         imageTransformations: AdditionalResource;
     }
+
     /**
      * Estimation
      */
@@ -6461,6 +6678,7 @@ export namespace Models {
          */
         trialEndDate?: string;
     }
+
     /**
      * EstimationUpdatePlan
      */
@@ -6502,6 +6720,7 @@ export namespace Models {
          */
         organizationCredits: number;
     }
+
     /**
      * EstimationDeleteOrganization
      */
@@ -6511,6 +6730,7 @@ export namespace Models {
          */
         unpaidInvoices: Invoice[];
     }
+
     /**
      * EstimationItem
      */
@@ -6524,6 +6744,7 @@ export namespace Models {
          */
         value: number;
     }
+
     /**
      * Aggregation team list
      */
@@ -6537,6 +6758,7 @@ export namespace Models {
          */
         aggregations: AggregationTeam[];
     }
+
     /**
      * Backup archive list
      */
@@ -6550,6 +6772,7 @@ export namespace Models {
          */
         archives: BackupArchive[];
     }
+
     /**
      * Backup policy list
      */
@@ -6563,6 +6786,7 @@ export namespace Models {
          */
         policies: BackupPolicy[];
     }
+
     /**
      * Backup restoration list
      */
@@ -6576,6 +6800,7 @@ export namespace Models {
          */
         restorations: BackupRestoration[];
     }
+
     /**
      * Billing invoices list
      */
@@ -6589,6 +6814,7 @@ export namespace Models {
          */
         invoices: Invoice[];
     }
+
     /**
      * Billing address list
      */
@@ -6602,6 +6828,7 @@ export namespace Models {
          */
         billingAddresses: BillingAddress[];
     }
+
     /**
      * Billing plan list
      */
@@ -6615,10 +6842,11 @@ export namespace Models {
          */
         plans: BillingPlan[];
     }
+
     /**
      * Organizations List
      */
-    export type OrganizationList<Preferences extends Models.Preferences> = {
+    export type OrganizationList<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
         /**
          * Total number of teams documents that matched your query.
          */
@@ -6628,6 +6856,7 @@ export namespace Models {
          */
         teams: Organization<Preferences>[];
     }
+
     /**
      * Payment methods list
      */
@@ -6641,6 +6870,7 @@ export namespace Models {
          */
         paymentMethods: PaymentMethod[];
     }
+
     /**
      * Regions list
      */
@@ -6654,6 +6884,7 @@ export namespace Models {
          */
         regions: ConsoleRegion[];
     }
+
     /**
      * Domains list
      */
@@ -6667,6 +6898,7 @@ export namespace Models {
          */
         domains: Domain[];
     }
+
     /**
      * DNS records list
      */

@@ -42,9 +42,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Create a new Database.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} name
@@ -83,6 +84,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Get usage metrics and statistics for all databases in the project. You can view the total number of databases, collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
@@ -108,6 +110,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
      *
@@ -133,6 +136,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Update a database by its unique ID.
      *
@@ -170,6 +174,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Delete a database by its unique ID. Only API keys with with databases.write scope can delete a database.
      *
@@ -196,6 +201,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Get a list of all collections that belong to the provided databaseId. You can use the search parameter to filter your results.
      *
@@ -229,6 +235,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Create a new Collection. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
      *
@@ -281,6 +288,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Get a collection by its unique ID. This endpoint response returns a JSON object with the collection metadata.
      *
@@ -310,6 +318,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Update a collection by its unique ID.
      *
@@ -359,6 +368,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Delete a collection by its unique ID. Only users with write permissions have access to delete this resource.
      *
@@ -389,6 +399,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * List attributes in the collection.
      *
@@ -422,9 +433,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Create a boolean attribute.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -475,6 +487,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Update a boolean attribute. Changing the `default` value will not update already existing documents.
      *
@@ -527,6 +540,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Create a date time attribute according to the ISO 8601 standard.
      *
@@ -579,6 +593,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Update a date time attribute. Changing the `default` value will not update already existing documents.
      *
@@ -631,9 +646,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Create an email attribute.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -684,9 +700,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Update an email attribute. Changing the `default` value will not update already existing documents.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -737,9 +754,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Create an enumeration attribute. The `elements` param acts as a white-list of accepted values for this attribute. 
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -797,9 +815,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Update an enum attribute. Changing the `default` value will not update already existing documents.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -857,9 +876,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Create a float attribute. Optionally, minimum and maximum values can be provided.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -918,9 +938,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Update a float attribute. Changing the `default` value will not update already existing documents.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -979,9 +1000,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Create an integer attribute. Optionally, minimum and maximum values can be provided.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -1040,9 +1062,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Update an integer attribute. Changing the `default` value will not update already existing documents.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -1101,9 +1124,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Create IP address attribute.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -1154,9 +1178,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Update an ip attribute. Changing the `default` value will not update already existing documents.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -1207,9 +1232,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Create relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -1268,9 +1294,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Create a string attribute.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -1332,9 +1359,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Update a string attribute. Changing the `default` value will not update already existing documents.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -1389,9 +1417,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Create a URL attribute.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -1442,9 +1471,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Update an url attribute. Changing the `default` value will not update already existing documents.
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -1495,6 +1525,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Get attribute by ID.
      *
@@ -1528,6 +1559,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Deletes an attribute.
      *
@@ -1562,9 +1594,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Update relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
-
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -1605,6 +1638,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Get a list of all the user&#039;s documents in a given collection. You can use the query params to filter your results.
      *
@@ -1614,7 +1648,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DocumentList<Document>>}
      */
-    listDocuments<Document extends Models.Document>(databaseId: string, collectionId: string, queries?: string[]): Promise<Models.DocumentList<Document>> {
+    listDocuments<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, queries?: string[]): Promise<Models.DocumentList<Document>> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1638,18 +1672,19 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
      *
      * @param {string} databaseId
      * @param {string} collectionId
      * @param {string} documentId
-     * @param {Omit<Document, keyof Models.Document>} data
+     * @param {Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Omit<Document, keyof Models.Document>} data
      * @param {string[]} permissions
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
      */
-    createDocument<Document extends Models.Document>(databaseId: string, collectionId: string, documentId: string, data: Omit<Document, keyof Models.Document>, permissions?: string[]): Promise<Document> {
+    createDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, data: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Omit<Document, keyof Models.Document>, permissions?: string[]): Promise<Document> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1686,7 +1721,10 @@ export class Databases {
             payload
         );
     }
+
     /**
+     * **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
+     * 
      * Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
      *
      * @param {string} databaseId
@@ -1695,7 +1733,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DocumentList<Document>>}
      */
-    createDocuments<Document extends Models.Document>(databaseId: string, collectionId: string, documents: object[]): Promise<Models.DocumentList<Document>> {
+    createDocuments<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documents: object[]): Promise<Models.DocumentList<Document>> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1723,9 +1761,12 @@ export class Databases {
             payload
         );
     }
-    /**
-     * Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
 
+    /**
+     * **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
+     * 
+     * Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
+     * 
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -1733,7 +1774,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DocumentList<Document>>}
      */
-    upsertDocuments<Document extends Models.Document>(databaseId: string, collectionId: string, documents: object[]): Promise<Models.DocumentList<Document>> {
+    upsertDocuments<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documents: object[]): Promise<Models.DocumentList<Document>> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1761,7 +1802,10 @@ export class Databases {
             payload
         );
     }
+
     /**
+     * **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
+     * 
      * Update all documents that match your queries, if no queries are submitted then all documents are updated. You can pass only specific fields to be updated.
      *
      * @param {string} databaseId
@@ -1771,7 +1815,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DocumentList<Document>>}
      */
-    updateDocuments<Document extends Models.Document>(databaseId: string, collectionId: string, data?: object, queries?: string[]): Promise<Models.DocumentList<Document>> {
+    updateDocuments<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, data?: object, queries?: string[]): Promise<Models.DocumentList<Document>> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1799,7 +1843,10 @@ export class Databases {
             payload
         );
     }
+
     /**
+     * **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
+     * 
      * Bulk delete documents using queries, if no queries are passed then all documents are deleted.
      *
      * @param {string} databaseId
@@ -1808,7 +1855,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DocumentList<Document>>}
      */
-    deleteDocuments<Document extends Models.Document>(databaseId: string, collectionId: string, queries?: string[]): Promise<Models.DocumentList<Document>> {
+    deleteDocuments<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, queries?: string[]): Promise<Models.DocumentList<Document>> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1833,6 +1880,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Get a document by its unique ID. This endpoint response returns a JSON object with the document data.
      *
@@ -1843,7 +1891,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
      */
-    getDocument<Document extends Models.Document>(databaseId: string, collectionId: string, documentId: string, queries?: string[]): Promise<Document> {
+    getDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, queries?: string[]): Promise<Document> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1870,7 +1918,10 @@ export class Databases {
             payload
         );
     }
+
     /**
+     * **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
+     * 
      * Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
      *
      * @param {string} databaseId
@@ -1881,7 +1932,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
      */
-    upsertDocument<Document extends Models.Document>(databaseId: string, collectionId: string, documentId: string, data: object, permissions?: string[]): Promise<Document> {
+    upsertDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, data: object, permissions?: string[]): Promise<Document> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1915,18 +1966,19 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Update a document by its unique ID. Using the patch method you can pass only specific fields that will get updated.
      *
      * @param {string} databaseId
      * @param {string} collectionId
      * @param {string} documentId
-     * @param {Partial<Omit<Document, keyof Models.Document>>} data
+     * @param {Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Partial<Omit<Document, keyof Models.Document>>} data
      * @param {string[]} permissions
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
      */
-    updateDocument<Document extends Models.Document>(databaseId: string, collectionId: string, documentId: string, data?: Partial<Omit<Document, keyof Models.Document>>, permissions?: string[]): Promise<Document> {
+    updateDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, data?: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Partial<Omit<Document, keyof Models.Document>>, permissions?: string[]): Promise<Document> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1957,6 +2009,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Delete a document by its unique ID.
      *
@@ -1991,6 +2044,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Get the document activity logs list by its unique ID.
      *
@@ -2028,6 +2082,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Decrement a specific attribute of a document by a given value.
      *
@@ -2040,7 +2095,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
      */
-    decrementDocumentAttribute<Document extends Models.Document>(databaseId: string, collectionId: string, documentId: string, attribute: string, value?: number, min?: number): Promise<Document> {
+    decrementDocumentAttribute<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, attribute: string, value?: number, min?: number): Promise<Document> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -2074,6 +2129,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Increment a specific attribute of a document by a given value.
      *
@@ -2086,7 +2142,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
      */
-    incrementDocumentAttribute<Document extends Models.Document>(databaseId: string, collectionId: string, documentId: string, attribute: string, value?: number, max?: number): Promise<Document> {
+    incrementDocumentAttribute<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, attribute: string, value?: number, max?: number): Promise<Document> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -2120,6 +2176,7 @@ export class Databases {
             payload
         );
     }
+
     /**
      * List indexes in the collection.
      *
@@ -2153,9 +2210,10 @@ export class Databases {
             payload
         );
     }
+
     /**
      * Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
-Attributes can be `key`, `fulltext`, and `unique`.
+     * Attributes can be `key`, `fulltext`, and `unique`.
      *
      * @param {string} databaseId
      * @param {string} collectionId
@@ -2213,6 +2271,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
             payload
         );
     }
+
     /**
      * Get index by ID.
      *
@@ -2246,6 +2305,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
             payload
         );
     }
+
     /**
      * Delete an index.
      *
@@ -2280,6 +2340,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
             payload
         );
     }
+
     /**
      * Get the collection activity logs list by its unique ID.
      *
@@ -2313,6 +2374,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
             payload
         );
     }
+
     /**
      * Get usage metrics and statistics for a collection. Returning the total number of documents. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
@@ -2346,6 +2408,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
             payload
         );
     }
+
     /**
      * Get the database activity logs list by its unique ID.
      *
@@ -2375,6 +2438,7 @@ Attributes can be `key`, `fulltext`, and `unique`.
             payload
         );
     }
+
     /**
      * Get usage metrics and statistics for a database. You can view the total number of collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *

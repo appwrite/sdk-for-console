@@ -38,6 +38,7 @@ export class Migrations {
             payload
         );
     }
+
     /**
      * Migrate data from another Appwrite project to your current project. This endpoint allows you to migrate resources like databases, collections, documents, users, and files from an existing Appwrite project. 
      *
@@ -88,6 +89,7 @@ export class Migrations {
             payload
         );
     }
+
     /**
      * Generate a report of the data in an Appwrite project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
@@ -137,6 +139,7 @@ export class Migrations {
             payload
         );
     }
+
     /**
      * Import documents from a CSV file into your Appwrite database. This endpoint allows you to import documents from a CSV file uploaded to Appwrite Storage bucket.
      *
@@ -180,6 +183,7 @@ export class Migrations {
             payload
         );
     }
+
     /**
      * Migrate data from a Firebase project to your Appwrite project. This endpoint allows you to migrate resources like authentication and other supported services from a Firebase project. 
      *
@@ -216,6 +220,7 @@ export class Migrations {
             payload
         );
     }
+
     /**
      * Generate a report of the data in a Firebase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
@@ -251,6 +256,7 @@ export class Migrations {
             payload
         );
     }
+
     /**
      * Migrate data from an NHost project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from an NHost project. 
      *
@@ -326,6 +332,7 @@ export class Migrations {
             payload
         );
     }
+
     /**
      * Generate a detailed report of the data in an NHost project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
      *
@@ -400,6 +407,7 @@ export class Migrations {
             payload
         );
     }
+
     /**
      * Migrate data from a Supabase project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from a Supabase project. 
      *
@@ -468,6 +476,7 @@ export class Migrations {
             payload
         );
     }
+
     /**
      * Generate a report of the data in a Supabase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
      *
@@ -535,6 +544,7 @@ export class Migrations {
             payload
         );
     }
+
     /**
      * Get a migration by its unique ID. This endpoint returns detailed information about a specific migration including its current status, progress, and any errors that occurred during the migration process. 
      *
@@ -560,6 +570,7 @@ export class Migrations {
             payload
         );
     }
+
     /**
      * Retry a failed migration. This endpoint allows you to retry a migration that has previously failed.
      *
@@ -586,6 +597,7 @@ export class Migrations {
             payload
         );
     }
+
     /**
      * Delete a migration by its unique ID. This endpoint allows you to remove a migration from your project&#039;s migration history. 
      *

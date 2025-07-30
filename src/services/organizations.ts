@@ -18,7 +18,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.OrganizationList<Preferences>>}
      */
-    list<Preferences extends Models.Preferences>(queries?: string[], search?: string): Promise<Models.OrganizationList<Preferences>> {
+    list<Preferences extends Models.Preferences = Models.DefaultPreferences>(queries?: string[], search?: string): Promise<Models.OrganizationList<Preferences>> {
         const apiPath = '/organizations';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -39,9 +39,10 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Create a new organization.
-
+     * 
      *
      * @param {string} organizationId
      * @param {string} name
@@ -55,7 +56,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    create<Preferences extends Models.Preferences>(organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>> {
+    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -107,6 +108,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Get estimation for creating an organization.
      *
@@ -148,6 +150,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Delete an organization.
      *
@@ -174,6 +177,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Get a list of all aggregations for an organization.
      *
@@ -203,6 +207,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Get a specific aggregation using it&#039;s aggregation ID.
      *
@@ -232,6 +237,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Set a billing address for an organization.
      *
@@ -240,7 +246,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setBillingAddress<Preferences extends Models.Preferences>(organizationId: string, billingAddressId: string): Promise<Models.Organization<Preferences>> {
+    setBillingAddress<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, billingAddressId: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -265,6 +271,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Delete a team&#039;s billing address.
      *
@@ -291,6 +298,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Get a billing address using it&#039;s ID.
      *
@@ -320,6 +328,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Set the current billing email for the organization.
      *
@@ -328,7 +337,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setBillingEmail<Preferences extends Models.Preferences>(organizationId: string, billingEmail: string): Promise<Models.Organization<Preferences>> {
+    setBillingEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, billingEmail: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -353,6 +362,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Update the budget limit for an organization.
      *
@@ -362,7 +372,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    updateBudget<Preferences extends Models.Preferences>(organizationId: string, budget?: number, alerts?: number[]): Promise<Models.Organization<Preferences>> {
+    updateBudget<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, budget?: number, alerts?: number[]): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -390,9 +400,10 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * List all credits for an organization.
-
+     * 
      *
      * @param {string} organizationId
      * @param {string[]} queries
@@ -420,6 +431,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Add credit to an organization using a coupon.
      *
@@ -453,6 +465,33 @@ export class Organizations {
             payload
         );
     }
+
+    /**
+     * Get total available valid credits for an organization.
+     *
+     * @param {string} organizationId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.CreditAvailable>}
+     */
+    getAvailableCredits(organizationId: string): Promise<Models.CreditAvailable> {
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        const apiPath = '/organizations/{organizationId}/credits/available'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
     /**
      * Get credit details.
      *
@@ -482,6 +521,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Get estimation for deleting an organization.
      *
@@ -508,6 +548,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Get estimation for updating the organization plan.
      *
@@ -549,6 +590,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * List all invoices for an organization.
      *
@@ -578,6 +620,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Get an invoice by its unique ID.
      *
@@ -607,6 +650,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Download invoice in PDF
      *
@@ -636,6 +680,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Initiate payment for failed invoice to pay live from console
      *
@@ -673,6 +718,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Validates the payment linked with the invoice and updates the invoice status if the payment status is changed.
      *
@@ -703,6 +749,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * View invoice in PDF
      *
@@ -732,6 +779,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Set a organization&#039;s default payment method.
      *
@@ -740,7 +788,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setDefaultPaymentMethod<Preferences extends Models.Preferences>(organizationId: string, paymentMethodId: string): Promise<Models.Organization<Preferences>> {
+    setDefaultPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, paymentMethodId: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -765,6 +813,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Delete the default payment method for an organization.
      *
@@ -772,7 +821,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    deleteDefaultPaymentMethod<Preferences extends Models.Preferences>(organizationId: string): Promise<Models.Organization<Preferences>> {
+    deleteDefaultPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -791,16 +840,17 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Set an organization&#039;s backup payment method.
-
+     * 
      *
      * @param {string} organizationId
      * @param {string} paymentMethodId
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setBackupPaymentMethod<Preferences extends Models.Preferences>(organizationId: string, paymentMethodId: string): Promise<Models.Organization<Preferences>> {
+    setBackupPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, paymentMethodId: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -825,6 +875,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Delete a backup payment method for an organization.
      *
@@ -832,7 +883,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    deleteBackupPaymentMethod<Preferences extends Models.Preferences>(organizationId: string): Promise<Models.Organization<Preferences>> {
+    deleteBackupPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -851,6 +902,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Get an organization&#039;s payment method using it&#039;s payment method ID.
      *
@@ -880,6 +932,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Get the details of the current billing plan for an organization.
      *
@@ -905,6 +958,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Update the billing plan for an organization.
      *
@@ -919,7 +973,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    updatePlan<Preferences extends Models.Preferences>(organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>> {
+    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -962,6 +1016,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Cancel the downgrade initiated for an organization.
      *
@@ -969,7 +1024,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    cancelDowngrade<Preferences extends Models.Preferences>(organizationId: string): Promise<Models.Organization<Preferences>> {
+    cancelDowngrade<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -988,6 +1043,38 @@ export class Organizations {
             payload
         );
     }
+
+    /**
+     * Update selected projects to keep in the organization.
+     *
+     * @param {string} organizationId
+     * @param {string[]} projects
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Organization<Preferences>>}
+     */
+    updateProjects<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, projects?: string[]): Promise<Models.Organization<Preferences>> {
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        const apiPath = '/organizations/{organizationId}/projects'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        if (typeof projects !== 'undefined') {
+            payload['projects'] = projects;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
     /**
      * Get Scopes
      *
@@ -1013,6 +1100,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Set an organization&#039;s billing tax ID.
      *
@@ -1021,7 +1109,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setBillingTaxId<Preferences extends Models.Preferences>(organizationId: string, taxId: string): Promise<Models.Organization<Preferences>> {
+    setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, taxId: string): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
@@ -1046,6 +1134,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Get the usage data for an organization.
      *
@@ -1079,6 +1168,7 @@ export class Organizations {
             payload
         );
     }
+
     /**
      * Validate payment for team after creation or upgrade.
      *
@@ -1087,7 +1177,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    validatePayment<Preferences extends Models.Preferences>(organizationId: string, invites?: string[]): Promise<Models.Organization<Preferences>> {
+    validatePayment<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, invites?: string[]): Promise<Models.Organization<Preferences>> {
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
