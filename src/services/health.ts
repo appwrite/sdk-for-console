@@ -11,6 +11,95 @@ export class Health {
     }
 
     /**
+     * Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
+     *
+     * @param {string} databaseId
+     * @param {string} collectionId
+     * @param {string} documentId
+     * @param {Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Omit<Document, keyof Models.Document>} data
+     * @param {string[]} permissions
+     * @throws {AppwriteException}
+     * @returns {Promise<Document>}
+     */
+    createDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, data: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Omit<Document, keyof Models.Document>, permissions?: string[]): Promise<Document> {
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof documentId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "documentId"');
+        }
+        if (typeof data === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "data"');
+        }
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
+        if (typeof documentId !== 'undefined') {
+            payload['documentId'] = documentId;
+        }
+        if (typeof data !== 'undefined') {
+            payload['data'] = data;
+        }
+        if (typeof permissions !== 'undefined') {
+            payload['permissions'] = permissions;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
+     * 
+     * Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
+     *
+     * @param {string} databaseId
+     * @param {string} collectionId
+     * @param {object[]} documents
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DocumentList<Document>>}
+     */
+    createDocuments<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documents: object[]): Promise<Models.DocumentList<Document>> {
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof documents === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "documents"');
+        }
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
+        if (typeof documents !== 'undefined') {
+            payload['documents'] = documents;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Check the Appwrite HTTP server is up and responsive.
      *
      * @throws {AppwriteException}
@@ -147,6 +236,58 @@ export class Health {
     }
 
     /**
+     * Get billing project aggregation queue
+     *
+     * @param {number} threshold
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthQueue>}
+     */
+    getQueueBillingProjectAggregation(threshold?: number): Promise<Models.HealthQueue> {
+        const apiPath = '/health/queue/billing-project-aggregation';
+        const payload: Payload = {};
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get billing team aggregation queue
+     *
+     * @param {number} threshold
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthQueue>}
+     */
+    getQueueBillingTeamAggregation(threshold?: number): Promise<Models.HealthQueue> {
+        const apiPath = '/health/queue/billing-team-aggregation';
+        const payload: Payload = {};
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Get the number of builds that are waiting to be processed in the Appwrite internal queue server.
      *
      * @param {number} threshold
@@ -155,6 +296,32 @@ export class Health {
      */
     getQueueBuilds(threshold?: number): Promise<Models.HealthQueue> {
         const apiPath = '/health/queue/builds';
+        const payload: Payload = {};
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get the priority builds queue size.
+     *
+     * @param {number} threshold
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthQueue>}
+     */
+    getQueuePriorityBuilds(threshold?: number): Promise<Models.HealthQueue> {
+        const apiPath = '/health/queue/builds-priority';
         const payload: Payload = {};
         if (typeof threshold !== 'undefined') {
             payload['threshold'] = threshold;
@@ -398,6 +565,32 @@ export class Health {
      */
     getQueueMigrations(threshold?: number): Promise<Models.HealthQueue> {
         const apiPath = '/health/queue/migrations';
+        const payload: Payload = {};
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get region manager queue
+     *
+     * @param {number} threshold
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthQueue>}
+     */
+    getQueueRegionManager(threshold?: number): Promise<Models.HealthQueue> {
+        const apiPath = '/health/queue/region-manager';
         const payload: Payload = {};
         if (typeof threshold !== 'undefined') {
             payload['threshold'] = threshold;

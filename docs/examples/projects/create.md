@@ -10,7 +10,7 @@ const result = await projects.create(
     '', // projectId
     '<NAME>', // name
     '<TEAM_ID>', // teamId
-    .Default, // region (optional)
+    .Fra, // region (optional)
     '<DESCRIPTION>', // description (optional)
     '<LOGO>', // logo (optional)
     'https://example.com', // url (optional)

@@ -106,6 +106,233 @@ export class Account {
     }
 
     /**
+     * List all billing addresses for a user.
+     *
+     * @param {string[]} queries
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.BillingAddressList>}
+     */
+    listBillingAddresses(queries?: string[]): Promise<Models.BillingAddressList> {
+        const apiPath = '/account/billing-addresses';
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Add a new billing address to a user&#039;s account.
+     *
+     * @param {string} country
+     * @param {string} streetAddress
+     * @param {string} city
+     * @param {string} state
+     * @param {string} postalCode
+     * @param {string} addressLine2
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.BillingAddress>}
+     */
+    createBillingAddress(country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string): Promise<Models.BillingAddress> {
+        if (typeof country === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "country"');
+        }
+        if (typeof streetAddress === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "streetAddress"');
+        }
+        if (typeof city === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "city"');
+        }
+        if (typeof state === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "state"');
+        }
+        const apiPath = '/account/billing-addresses';
+        const payload: Payload = {};
+        if (typeof country !== 'undefined') {
+            payload['country'] = country;
+        }
+        if (typeof streetAddress !== 'undefined') {
+            payload['streetAddress'] = streetAddress;
+        }
+        if (typeof city !== 'undefined') {
+            payload['city'] = city;
+        }
+        if (typeof state !== 'undefined') {
+            payload['state'] = state;
+        }
+        if (typeof postalCode !== 'undefined') {
+            payload['postalCode'] = postalCode;
+        }
+        if (typeof addressLine2 !== 'undefined') {
+            payload['addressLine2'] = addressLine2;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get a specific billing address for a user using it&#039;s ID.
+     *
+     * @param {string} billingAddressId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.BillingAddress>}
+     */
+    getBillingAddress(billingAddressId: string): Promise<Models.BillingAddress> {
+        if (typeof billingAddressId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "billingAddressId"');
+        }
+        const apiPath = '/account/billing-addresses/{billingAddressId}'.replace('{billingAddressId}', billingAddressId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update a specific billing address using it&#039;s ID.
+     *
+     * @param {string} billingAddressId
+     * @param {string} country
+     * @param {string} streetAddress
+     * @param {string} city
+     * @param {string} state
+     * @param {string} postalCode
+     * @param {string} addressLine2
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.BillingAddress>}
+     */
+    updateBillingAddress(billingAddressId: string, country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string): Promise<Models.BillingAddress> {
+        if (typeof billingAddressId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "billingAddressId"');
+        }
+        if (typeof country === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "country"');
+        }
+        if (typeof streetAddress === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "streetAddress"');
+        }
+        if (typeof city === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "city"');
+        }
+        if (typeof state === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "state"');
+        }
+        const apiPath = '/account/billing-addresses/{billingAddressId}'.replace('{billingAddressId}', billingAddressId);
+        const payload: Payload = {};
+        if (typeof country !== 'undefined') {
+            payload['country'] = country;
+        }
+        if (typeof streetAddress !== 'undefined') {
+            payload['streetAddress'] = streetAddress;
+        }
+        if (typeof city !== 'undefined') {
+            payload['city'] = city;
+        }
+        if (typeof state !== 'undefined') {
+            payload['state'] = state;
+        }
+        if (typeof postalCode !== 'undefined') {
+            payload['postalCode'] = postalCode;
+        }
+        if (typeof addressLine2 !== 'undefined') {
+            payload['addressLine2'] = addressLine2;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'put',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Delete a specific billing address using it&#039;s ID.
+     *
+     * @param {string} billingAddressId
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteBillingAddress(billingAddressId: string): Promise<{}> {
+        if (typeof billingAddressId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "billingAddressId"');
+        }
+        const apiPath = '/account/billing-addresses/{billingAddressId}'.replace('{billingAddressId}', billingAddressId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get coupon details for an account.
+     *
+     * @param {string} couponId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Coupon>}
+     */
+    getCoupon(couponId: string): Promise<Models.Coupon> {
+        if (typeof couponId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "couponId"');
+        }
+        const apiPath = '/account/coupons/{couponId}'.replace('{couponId}', couponId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Update currently logged in user account email address. After changing user address, the user confirmation status will get reset. A new confirmation email is not sent automatically however you can use the send confirmation email endpoint again to send the confirmation email. For security measures, user password is required to complete this request.
      * This endpoint can also be used to convert an anonymous account to a normal one, by passing an email address and a new password.
      * 
@@ -191,6 +418,32 @@ export class Account {
 
         return this.client.call(
             'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List all invoices tied to an account.
+     *
+     * @param {string[]} queries
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.InvoiceList>}
+     */
+    listInvoices(queries?: string[]): Promise<Models.InvoiceList> {
+        const apiPath = '/account/invoices';
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
             uri,
             apiHeaders,
             payload
@@ -571,6 +824,217 @@ export class Account {
         if (typeof oldPassword !== 'undefined') {
             payload['oldPassword'] = oldPassword;
         }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List payment methods for this account.
+     *
+     * @param {string[]} queries
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.PaymentMethodList>}
+     */
+    listPaymentMethods(queries?: string[]): Promise<Models.PaymentMethodList> {
+        const apiPath = '/account/payment-methods';
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a new payment method for the current user account.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.PaymentMethod>}
+     */
+    createPaymentMethod(): Promise<Models.PaymentMethod> {
+        const apiPath = '/account/payment-methods';
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get a specific payment method for the user.
+     *
+     * @param {string} paymentMethodId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.PaymentMethod>}
+     */
+    getPaymentMethod(paymentMethodId: string): Promise<Models.PaymentMethod> {
+        if (typeof paymentMethodId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
+        }
+        const apiPath = '/account/payment-methods/{paymentMethodId}'.replace('{paymentMethodId}', paymentMethodId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update a new payment method for the current user account.
+     *
+     * @param {string} paymentMethodId
+     * @param {number} expiryMonth
+     * @param {number} expiryYear
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.PaymentMethod>}
+     */
+    updatePaymentMethod(paymentMethodId: string, expiryMonth: number, expiryYear: number): Promise<Models.PaymentMethod> {
+        if (typeof paymentMethodId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
+        }
+        if (typeof expiryMonth === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "expiryMonth"');
+        }
+        if (typeof expiryYear === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "expiryYear"');
+        }
+        const apiPath = '/account/payment-methods/{paymentMethodId}'.replace('{paymentMethodId}', paymentMethodId);
+        const payload: Payload = {};
+        if (typeof expiryMonth !== 'undefined') {
+            payload['expiryMonth'] = expiryMonth;
+        }
+        if (typeof expiryYear !== 'undefined') {
+            payload['expiryYear'] = expiryYear;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Delete a specific payment method from a user&#039;s account.
+     *
+     * @param {string} paymentMethodId
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deletePaymentMethod(paymentMethodId: string): Promise<{}> {
+        if (typeof paymentMethodId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
+        }
+        const apiPath = '/account/payment-methods/{paymentMethodId}'.replace('{paymentMethodId}', paymentMethodId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update payment method provider.
+     *
+     * @param {string} paymentMethodId
+     * @param {string} providerMethodId
+     * @param {string} name
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.PaymentMethod>}
+     */
+    updatePaymentMethodProvider(paymentMethodId: string, providerMethodId: string, name: string): Promise<Models.PaymentMethod> {
+        if (typeof paymentMethodId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
+        }
+        if (typeof providerMethodId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "providerMethodId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        const apiPath = '/account/payment-methods/{paymentMethodId}/provider'.replace('{paymentMethodId}', paymentMethodId);
+        const payload: Payload = {};
+        if (typeof providerMethodId !== 'undefined') {
+            payload['providerMethodId'] = providerMethodId;
+        }
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update payment method mandate options.
+     *
+     * @param {string} paymentMethodId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.PaymentMethod>}
+     */
+    updatePaymentMethodMandateOptions(paymentMethodId: string): Promise<Models.PaymentMethod> {
+        if (typeof paymentMethodId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
+        }
+        const apiPath = '/account/payment-methods/{paymentMethodId}/setup'.replace('{paymentMethodId}', paymentMethodId);
+        const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1531,6 +1995,95 @@ export class Account {
 
         return this.client.call(
             'put',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
+     *
+     * @param {string} databaseId
+     * @param {string} collectionId
+     * @param {string} documentId
+     * @param {Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Omit<Document, keyof Models.Document>} data
+     * @param {string[]} permissions
+     * @throws {AppwriteException}
+     * @returns {Promise<Document>}
+     */
+    createDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, data: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Omit<Document, keyof Models.Document>, permissions?: string[]): Promise<Document> {
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof documentId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "documentId"');
+        }
+        if (typeof data === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "data"');
+        }
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
+        if (typeof documentId !== 'undefined') {
+            payload['documentId'] = documentId;
+        }
+        if (typeof data !== 'undefined') {
+            payload['data'] = data;
+        }
+        if (typeof permissions !== 'undefined') {
+            payload['permissions'] = permissions;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * **WARNING: Experimental Feature** - This endpoint is experimental and not yet officially supported. It may be subject to breaking changes or removal in future versions.
+     * 
+     * Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
+     *
+     * @param {string} databaseId
+     * @param {string} collectionId
+     * @param {object[]} documents
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DocumentList<Document>>}
+     */
+    createDocuments<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documents: object[]): Promise<Models.DocumentList<Document>> {
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof documents === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "documents"');
+        }
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
+        if (typeof documents !== 'undefined') {
+            payload['documents'] = documents;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
             uri,
             apiHeaders,
             payload

@@ -1,3 +1,5 @@
 export enum Region {
-    Default = 'default',
+    Fra = 'fra',
+    Nyc = 'nyc',
+    Syd = 'syd',
 }

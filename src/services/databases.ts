@@ -1679,12 +1679,12 @@ export class Databases {
      * @param {string} databaseId
      * @param {string} collectionId
      * @param {string} documentId
-     * @param {Document extends Models.DefaultDocument ? Models.DataWithoutDocumentKeys : Omit<Document, keyof Models.Document>} data
+     * @param {Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Omit<Document, keyof Models.Document>} data
      * @param {string[]} permissions
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
      */
-    createDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, data: Document extends Models.DefaultDocument ? Models.DataWithoutDocumentKeys : Omit<Document, keyof Models.Document>, permissions?: string[]): Promise<Document> {
+    createDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, data: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Omit<Document, keyof Models.Document>, permissions?: string[]): Promise<Document> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -1973,12 +1973,12 @@ export class Databases {
      * @param {string} databaseId
      * @param {string} collectionId
      * @param {string} documentId
-     * @param {Partial<Document extends Models.DefaultDocument ? Models.DataWithoutDocumentKeys : Omit<Document, keyof Models.Document>>} data
+     * @param {Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Partial<Omit<Document, keyof Models.Document>>} data
      * @param {string[]} permissions
      * @throws {AppwriteException}
      * @returns {Promise<Document>}
      */
-    updateDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, data?: Partial<Document extends Models.DefaultDocument ? Models.DataWithoutDocumentKeys : Omit<Document, keyof Models.Document>>, permissions?: string[]): Promise<Document> {
+    updateDocument<Document extends Models.Document = Models.DefaultDocument>(databaseId: string, collectionId: string, documentId: string, data?: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Partial<Omit<Document, keyof Models.Document>>, permissions?: string[]): Promise<Document> {
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
