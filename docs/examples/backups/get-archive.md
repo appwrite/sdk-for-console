@@ -6,8 +6,8 @@ const client = new Client()
 
 const backups = new Backups(client);
 
-const result = await backups.getArchive(
-    '<ARCHIVE_ID>' // archiveId
-);
+const result = await backups.getArchive({
+    archiveId: '<ARCHIVE_ID>'
+});
 
 console.log(result);

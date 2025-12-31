@@ -6,10 +6,10 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.createInvoicePayment(
-    '<ORGANIZATION_ID>', // organizationId
-    '<INVOICE_ID>', // invoiceId
-    '<PAYMENT_METHOD_ID>' // paymentMethodId
-);
+const result = await organizations.createInvoicePayment({
+    organizationId: '<ORGANIZATION_ID>',
+    invoiceId: '<INVOICE_ID>',
+    paymentMethodId: '<PAYMENT_METHOD_ID>'
+});
 
 console.log(result);

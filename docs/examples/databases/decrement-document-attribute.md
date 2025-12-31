@@ -6,13 +6,14 @@ const client = new Client()
 
 const databases = new Databases(client);
 
-const result = await databases.decrementDocumentAttribute(
-    '<DATABASE_ID>', // databaseId
-    '<COLLECTION_ID>', // collectionId
-    '<DOCUMENT_ID>', // documentId
-    '', // attribute
-    null, // value (optional)
-    null // min (optional)
-);
+const result = await databases.decrementDocumentAttribute({
+    databaseId: '<DATABASE_ID>',
+    collectionId: '<COLLECTION_ID>',
+    documentId: '<DOCUMENT_ID>',
+    attribute: '',
+    value: null, // optional
+    min: null, // optional
+    transactionId: '<TRANSACTION_ID>' // optional
+});
 
 console.log(result);

@@ -1,4 +1,4 @@
-import { Client, Projects,  } from "@appwrite.io/console";
+import { Client, Projects, Api } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -6,10 +6,10 @@ const client = new Client()
 
 const projects = new Projects(client);
 
-const result = await projects.updateApiStatus(
-    '<PROJECT_ID>', // projectId
-    .Rest, // api
-    false // status
-);
+const result = await projects.updateAPIStatus({
+    projectId: '<PROJECT_ID>',
+    api: Api.Rest,
+    status: false
+});
 
 console.log(result);

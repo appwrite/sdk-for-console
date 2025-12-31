@@ -6,8 +6,8 @@ const client = new Client()
 
 const backups = new Backups(client);
 
-const result = await backups.deleteArchive(
-    '<ARCHIVE_ID>' // archiveId
-);
+const result = await backups.deleteArchive({
+    archiveId: '<ARCHIVE_ID>'
+});
 
 console.log(result);

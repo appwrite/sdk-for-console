@@ -6,10 +6,10 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.updateBudget(
-    '<ORGANIZATION_ID>', // organizationId
-    0, // budget
-    [] // alerts (optional)
-);
+const result = await organizations.updateBudget({
+    organizationId: '<ORGANIZATION_ID>',
+    budget: 0,
+    alerts: [] // optional
+});
 
 console.log(result);

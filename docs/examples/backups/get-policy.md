@@ -6,8 +6,8 @@ const client = new Client()
 
 const backups = new Backups(client);
 
-const result = await backups.getPolicy(
-    '<POLICY_ID>' // policyId
-);
+const result = await backups.getPolicy({
+    policyId: '<POLICY_ID>'
+});
 
 console.log(result);

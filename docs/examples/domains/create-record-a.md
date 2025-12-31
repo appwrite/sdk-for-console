@@ -6,12 +6,12 @@ const client = new Client()
 
 const domains = new Domains(client);
 
-const result = await domains.createRecordA(
-    '<DOMAIN_ID>', // domainId
-    '<NAME>', // name
-    '', // value
-    1, // ttl
-    '<COMMENT>' // comment (optional)
-);
+const result = await domains.createRecordA({
+    domainId: '<DOMAIN_ID>',
+    name: '<NAME>',
+    value: '',
+    ttl: 1,
+    comment: '<COMMENT>' // optional
+});
 
 console.log(result);

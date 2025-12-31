@@ -300,7 +300,11 @@ class Client {
     /**
      * Holds configuration such as project.
      */
-    config = {
+    config: {
+        endpoint: string;
+        endpointRealtime: string;
+        [key: string]: string | undefined;
+    } = {
         endpoint: 'https://cloud.appwrite.io/v1',
         endpointRealtime: '',
         project: '',
@@ -308,6 +312,7 @@ class Client {
         jwt: '',
         locale: '',
         mode: '',
+        platform: '',
     };
     /**
      * Custom headers for API requests.
@@ -316,8 +321,8 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '1.10.0',
-        'X-Appwrite-Response-Format': '1.7.0',
+        'x-sdk-version': '2.0.0',
+        'X-Appwrite-Response-Format': '1.8.0',
     };
 
     /**
@@ -330,6 +335,10 @@ class Client {
      * @returns {this}
      */
     setEndpoint(endpoint: string): this {
+        if (!endpoint || typeof endpoint !== 'string') {
+            throw new AppwriteException('Endpoint must be a valid string');
+        }
+
         if (!endpoint.startsWith('http://') && !endpoint.startsWith('https://')) {
             throw new AppwriteException('Invalid endpoint URL: ' + endpoint);
         }
@@ -348,6 +357,10 @@ class Client {
      * @returns {this}
      */
     setEndpointRealtime(endpointRealtime: string): this {
+        if (!endpointRealtime || typeof endpointRealtime !== 'string') {
+            throw new AppwriteException('Endpoint must be a valid string');
+        }
+
         if (!endpointRealtime.startsWith('ws://') && !endpointRealtime.startsWith('wss://')) {
             throw new AppwriteException('Invalid realtime endpoint URL: ' + endpointRealtime);
         }
@@ -422,6 +435,20 @@ class Client {
         this.config.mode = value;
         return this;
     }
+    /**
+     * Set Platform
+     *
+     * The platform type (Appwrite or Imagine)
+     *
+     * @param value string
+     *
+     * @return {this}
+     */
+    setPlatform(value: string): this {
+        this.headers['X-Appwrite-Platform'] = value;
+        this.config.platform = value;
+        return this;
+    }
 
     private realtime: Realtime = {
         socket: undefined,
@@ -471,7 +498,9 @@ class Client {
             }
 
             const channels = new URLSearchParams();
-            channels.set('project', this.config.project);
+            if (this.config.project) {
+                channels.set('project', this.config.project);
+            }
             this.realtime.channels.forEach(channel => {
                 channels.append('channels[]', channel);
             });
@@ -526,10 +555,13 @@ class Client {
                 this.realtime.lastMessage = message;
                 switch (message.type) {
                     case 'connected':
-                        const cookie = JSON.parse(window.localStorage.getItem('cookieFallback') ?? '{}');
-                        const session = cookie?.[`a_session_${this.config.project}`];
-                        const messageData = <RealtimeResponseConnected>message.data;
+                        let session = this.config.session;
+                        if (!session) {
+                            const cookie = JSON.parse(window.localStorage.getItem('cookieFallback') ?? '{}');
+                            session = cookie?.[`a_session_${this.config.project}`];
+                        }
 
+                        const messageData = <RealtimeResponseConnected>message.data;
                         if (session && !messageData.user) {
                             this.realtime.socket?.send(JSON.stringify(<RealtimeRequest>{
                                 type: 'authentication',
@@ -579,6 +611,9 @@ class Client {
 
     /**
      * Subscribes to Appwrite events and passes you the payload in realtime.
+     *
+     * @deprecated Use the Realtime service instead.
+     * @see Realtime
      *
      * @param {string|string[]} channels
      * Channel to subscribe - pass a single channel as a string or multiple with an array of strings.

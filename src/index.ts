@@ -1,7 +1,7 @@
 /**
  * Appwrite Console SDK
  *
- * This SDK is compatible with Appwrite server version 1.7.x. 
+ * This SDK is compatible with Appwrite server version 1.8.x. 
  * For older versions, please check
  * [previous releases](https://github.com/appwrite/sdk-for-console/releases).
  */
@@ -25,42 +25,49 @@ export { Projects } from './services/projects';
 export { Proxy } from './services/proxy';
 export { Sites } from './services/sites';
 export { Storage } from './services/storage';
+export { TablesDB } from './services/tables-db';
 export { Teams } from './services/teams';
 export { Tokens } from './services/tokens';
 export { Users } from './services/users';
 export { Vcs } from './services/vcs';
+export { Realtime } from './services/realtime';
 export type { Models, Payload, RealtimeResponseEvent, UploadProgress } from './client';
 export type { QueryTypes, QueryTypesList } from './query';
 export { Permission } from './permission';
 export { Role } from './role';
 export { ID } from './id';
+export { Operator, Condition } from './operator';
 export { AuthenticatorType } from './enums/authenticator-type';
 export { AuthenticationFactor } from './enums/authentication-factor';
 export { OAuthProvider } from './enums/o-auth-provider';
 export { Browser } from './enums/browser';
 export { CreditCard } from './enums/credit-card';
 export { Flag } from './enums/flag';
+export { Theme } from './enums/theme';
+export { Timezone } from './enums/timezone';
+export { ImageFormat } from './enums/image-format';
+export { Platform } from './enums/platform';
 export { ConsoleResourceType } from './enums/console-resource-type';
-export { DatabaseUsageRange } from './enums/database-usage-range';
+export { UsageRange } from './enums/usage-range';
 export { RelationshipType } from './enums/relationship-type';
 export { RelationMutate } from './enums/relation-mutate';
 export { IndexType } from './enums/index-type';
 export { Runtime } from './enums/runtime';
-export { FunctionUsageRange } from './enums/function-usage-range';
-export { VCSDeploymentType } from './enums/v-c-s-deployment-type';
+export { TemplateReferenceType } from './enums/template-reference-type';
+export { VCSReferenceType } from './enums/vcs-reference-type';
 export { DeploymentDownloadType } from './enums/deployment-download-type';
 export { ExecutionMethod } from './enums/execution-method';
 export { Name } from './enums/name';
 export { MessagePriority } from './enums/message-priority';
 export { SmtpEncryption } from './enums/smtp-encryption';
-export { BillingPlan } from './enums/billing-plan';
 export { ProjectUsageRange } from './enums/project-usage-range';
 export { Region } from './enums/region';
 export { Api } from './enums/api';
 export { AuthMethod } from './enums/auth-method';
 export { PlatformType } from './enums/platform-type';
 export { ApiService } from './enums/api-service';
-export { SMTPSecure } from './enums/s-m-t-p-secure';
+export { SMTPSecure } from './enums/smtp-secure';
+export { Status } from './enums/status';
 export { EmailTemplateType } from './enums/email-template-type';
 export { EmailTemplateLocale } from './enums/email-template-locale';
 export { SmsTemplateType } from './enums/sms-template-type';
@@ -70,12 +77,21 @@ export { ProxyResourceType } from './enums/proxy-resource-type';
 export { Framework } from './enums/framework';
 export { BuildRuntime } from './enums/build-runtime';
 export { Adapter } from './enums/adapter';
-export { SiteUsageRange } from './enums/site-usage-range';
 export { Compression } from './enums/compression';
 export { ImageGravity } from './enums/image-gravity';
-export { ImageFormat } from './enums/image-format';
-export { StorageUsageRange } from './enums/storage-usage-range';
 export { PasswordHash } from './enums/password-hash';
-export { UserUsageRange } from './enums/user-usage-range';
 export { MessagingProviderType } from './enums/messaging-provider-type';
-export { VCSDetectionType } from './enums/v-c-s-detection-type';
+export { VCSDetectionType } from './enums/vcs-detection-type';
+export { DatabaseType } from './enums/database-type';
+export { AttributeStatus } from './enums/attribute-status';
+export { ColumnStatus } from './enums/column-status';
+export { IndexStatus } from './enums/index-status';
+export { DeploymentStatus } from './enums/deployment-status';
+export { ExecutionTrigger } from './enums/execution-trigger';
+export { ExecutionStatus } from './enums/execution-status';
+export { HealthAntivirusStatus } from './enums/health-antivirus-status';
+export { HealthCheckStatus } from './enums/health-check-status';
+export { ProxyRuleDeploymentResourceType } from './enums/proxy-rule-deployment-resource-type';
+export { ProxyRuleStatus } from './enums/proxy-rule-status';
+export { MessageStatus } from './enums/message-status';
+export { BillingPlanGroup } from './enums/billing-plan-group';

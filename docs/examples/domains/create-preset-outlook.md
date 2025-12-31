@@ -6,8 +6,8 @@ const client = new Client()
 
 const domains = new Domains(client);
 
-const result = await domains.createPresetOutlook(
-    '<DOMAIN_ID>' // domainId
-);
+const result = await domains.createPresetOutlook({
+    domainId: '<DOMAIN_ID>'
+});
 
 console.log(result);

@@ -1,4 +1,4 @@
-import { Client, Storage,  } from "@appwrite.io/console";
+import { Client, Storage, Compression, Permission, Role } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -6,17 +6,18 @@ const client = new Client()
 
 const storage = new Storage(client);
 
-const result = await storage.createBucket(
-    '<BUCKET_ID>', // bucketId
-    '<NAME>', // name
-    ["read("any")"], // permissions (optional)
-    false, // fileSecurity (optional)
-    false, // enabled (optional)
-    1, // maximumFileSize (optional)
-    [], // allowedFileExtensions (optional)
-    .None, // compression (optional)
-    false, // encryption (optional)
-    false // antivirus (optional)
-);
+const result = await storage.createBucket({
+    bucketId: '<BUCKET_ID>',
+    name: '<NAME>',
+    permissions: [Permission.read(Role.any())], // optional
+    fileSecurity: false, // optional
+    enabled: false, // optional
+    maximumFileSize: 1, // optional
+    allowedFileExtensions: [], // optional
+    compression: Compression.None, // optional
+    encryption: false, // optional
+    antivirus: false, // optional
+    transformations: false // optional
+});
 
 console.log(result);

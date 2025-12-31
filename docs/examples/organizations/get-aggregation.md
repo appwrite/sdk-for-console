@@ -6,9 +6,11 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.getAggregation(
-    '<ORGANIZATION_ID>', // organizationId
-    '<AGGREGATION_ID>' // aggregationId
-);
+const result = await organizations.getAggregation({
+    organizationId: '<ORGANIZATION_ID>',
+    aggregationId: '<AGGREGATION_ID>',
+    limit: 0, // optional
+    offset: null // optional
+});
 
 console.log(result);

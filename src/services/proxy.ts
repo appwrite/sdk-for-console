@@ -1,6 +1,7 @@
 import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
+
 import { StatusCode } from '../enums/status-code';
 import { ProxyResourceType } from '../enums/proxy-resource-type';
 
@@ -14,12 +15,45 @@ export class Proxy {
     /**
      * Get a list of all the proxy rules. You can use the query params to filter your results.
      *
-     * @param {string[]} queries
-     * @param {string} search
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: domain, type, trigger, deploymentResourceType, deploymentResourceId, deploymentId, deploymentVcsProviderBranch
+     * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRuleList>}
      */
-    listRules(queries?: string[], search?: string): Promise<Models.ProxyRuleList> {
+    listRules(params?: { queries?: string[], search?: string, total?: boolean  }): Promise<Models.ProxyRuleList>;
+    /**
+     * Get a list of all the proxy rules. You can use the query params to filter your results.
+     *
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: domain, type, trigger, deploymentResourceType, deploymentResourceId, deploymentId, deploymentVcsProviderBranch
+     * @param {string} search - Search term to filter your list results. Max length: 256 chars.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ProxyRuleList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listRules(queries?: string[], search?: string, total?: boolean): Promise<Models.ProxyRuleList>;
+    listRules(
+        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
+        ...rest: [(string)?, (boolean)?]    
+    ): Promise<Models.ProxyRuleList> {
+        let params: { queries?: string[], search?: string, total?: boolean };
+        
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
+        } else {
+            params = {
+                queries: paramsOrFirst as string[],
+                search: rest[0] as string,
+                total: rest[1] as boolean            
+            };
+        }
+        
+        const queries = params.queries;
+        const search = params.search;
+        const total = params.total;
+
+
         const apiPath = '/proxy/rules';
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -27,6 +61,9 @@ export class Proxy {
         }
         if (typeof search !== 'undefined') {
             payload['search'] = search;
+        }
+        if (typeof total !== 'undefined') {
+            payload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -42,16 +79,41 @@ export class Proxy {
     }
 
     /**
-     * Create a new proxy rule for serving Appwrite&#039;s API on custom domain.
+     * Create a new proxy rule for serving Appwrite's API on custom domain.
      *
-     * @param {string} domain
+     * @param {string} params.domain - Domain name.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    createAPIRule(domain: string): Promise<Models.ProxyRule> {
+    createAPIRule(params: { domain: string  }): Promise<Models.ProxyRule>;
+    /**
+     * Create a new proxy rule for serving Appwrite's API on custom domain.
+     *
+     * @param {string} domain - Domain name.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ProxyRule>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createAPIRule(domain: string): Promise<Models.ProxyRule>;
+    createAPIRule(
+        paramsOrFirst: { domain: string } | string    
+    ): Promise<Models.ProxyRule> {
+        let params: { domain: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { domain: string };
+        } else {
+            params = {
+                domain: paramsOrFirst as string            
+            };
+        }
+        
+        const domain = params.domain;
+
         if (typeof domain === 'undefined') {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
+
         const apiPath = '/proxy/rules/api';
         const payload: Payload = {};
         if (typeof domain !== 'undefined') {
@@ -74,19 +136,51 @@ export class Proxy {
     /**
      * Create a new proxy rule for executing Appwrite Function on custom domain.
      *
-     * @param {string} domain
-     * @param {string} functionId
-     * @param {string} branch
+     * @param {string} params.domain - Domain name.
+     * @param {string} params.functionId - ID of function to be executed.
+     * @param {string} params.branch - Name of VCS branch to deploy changes automatically
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    createFunctionRule(domain: string, functionId: string, branch?: string): Promise<Models.ProxyRule> {
+    createFunctionRule(params: { domain: string, functionId: string, branch?: string  }): Promise<Models.ProxyRule>;
+    /**
+     * Create a new proxy rule for executing Appwrite Function on custom domain.
+     *
+     * @param {string} domain - Domain name.
+     * @param {string} functionId - ID of function to be executed.
+     * @param {string} branch - Name of VCS branch to deploy changes automatically
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ProxyRule>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createFunctionRule(domain: string, functionId: string, branch?: string): Promise<Models.ProxyRule>;
+    createFunctionRule(
+        paramsOrFirst: { domain: string, functionId: string, branch?: string } | string,
+        ...rest: [(string)?, (string)?]    
+    ): Promise<Models.ProxyRule> {
+        let params: { domain: string, functionId: string, branch?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { domain: string, functionId: string, branch?: string };
+        } else {
+            params = {
+                domain: paramsOrFirst as string,
+                functionId: rest[0] as string,
+                branch: rest[1] as string            
+            };
+        }
+        
+        const domain = params.domain;
+        const functionId = params.functionId;
+        const branch = params.branch;
+
         if (typeof domain === 'undefined') {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
+
         const apiPath = '/proxy/rules/function';
         const payload: Payload = {};
         if (typeof domain !== 'undefined') {
@@ -115,15 +209,52 @@ export class Proxy {
     /**
      * Create a new proxy rule for to redirect from custom domain to another domain.
      *
-     * @param {string} domain
-     * @param {string} url
-     * @param {StatusCode} statusCode
-     * @param {string} resourceId
-     * @param {ProxyResourceType} resourceType
+     * @param {string} params.domain - Domain name.
+     * @param {string} params.url - Target URL of redirection
+     * @param {StatusCode} params.statusCode - Status code of redirection
+     * @param {string} params.resourceId - ID of parent resource.
+     * @param {ProxyResourceType} params.resourceType - Type of parent resource.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    createRedirectRule(domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType): Promise<Models.ProxyRule> {
+    createRedirectRule(params: { domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType  }): Promise<Models.ProxyRule>;
+    /**
+     * Create a new proxy rule for to redirect from custom domain to another domain.
+     *
+     * @param {string} domain - Domain name.
+     * @param {string} url - Target URL of redirection
+     * @param {StatusCode} statusCode - Status code of redirection
+     * @param {string} resourceId - ID of parent resource.
+     * @param {ProxyResourceType} resourceType - Type of parent resource.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ProxyRule>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createRedirectRule(domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType): Promise<Models.ProxyRule>;
+    createRedirectRule(
+        paramsOrFirst: { domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType } | string,
+        ...rest: [(string)?, (StatusCode)?, (string)?, (ProxyResourceType)?]    
+    ): Promise<Models.ProxyRule> {
+        let params: { domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType };
+        } else {
+            params = {
+                domain: paramsOrFirst as string,
+                url: rest[0] as string,
+                statusCode: rest[1] as StatusCode,
+                resourceId: rest[2] as string,
+                resourceType: rest[3] as ProxyResourceType            
+            };
+        }
+        
+        const domain = params.domain;
+        const url = params.url;
+        const statusCode = params.statusCode;
+        const resourceId = params.resourceId;
+        const resourceType = params.resourceType;
+
         if (typeof domain === 'undefined') {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
@@ -139,6 +270,7 @@ export class Proxy {
         if (typeof resourceType === 'undefined') {
             throw new AppwriteException('Missing required parameter: "resourceType"');
         }
+
         const apiPath = '/proxy/rules/redirect';
         const payload: Payload = {};
         if (typeof domain !== 'undefined') {
@@ -173,19 +305,51 @@ export class Proxy {
     /**
      * Create a new proxy rule for serving Appwrite Site on custom domain.
      *
-     * @param {string} domain
-     * @param {string} siteId
-     * @param {string} branch
+     * @param {string} params.domain - Domain name.
+     * @param {string} params.siteId - ID of site to be executed.
+     * @param {string} params.branch - Name of VCS branch to deploy changes automatically
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    createSiteRule(domain: string, siteId: string, branch?: string): Promise<Models.ProxyRule> {
+    createSiteRule(params: { domain: string, siteId: string, branch?: string  }): Promise<Models.ProxyRule>;
+    /**
+     * Create a new proxy rule for serving Appwrite Site on custom domain.
+     *
+     * @param {string} domain - Domain name.
+     * @param {string} siteId - ID of site to be executed.
+     * @param {string} branch - Name of VCS branch to deploy changes automatically
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ProxyRule>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createSiteRule(domain: string, siteId: string, branch?: string): Promise<Models.ProxyRule>;
+    createSiteRule(
+        paramsOrFirst: { domain: string, siteId: string, branch?: string } | string,
+        ...rest: [(string)?, (string)?]    
+    ): Promise<Models.ProxyRule> {
+        let params: { domain: string, siteId: string, branch?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { domain: string, siteId: string, branch?: string };
+        } else {
+            params = {
+                domain: paramsOrFirst as string,
+                siteId: rest[0] as string,
+                branch: rest[1] as string            
+            };
+        }
+        
+        const domain = params.domain;
+        const siteId = params.siteId;
+        const branch = params.branch;
+
         if (typeof domain === 'undefined') {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
         if (typeof siteId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "siteId"');
         }
+
         const apiPath = '/proxy/rules/site';
         const payload: Payload = {};
         if (typeof domain !== 'undefined') {
@@ -214,14 +378,39 @@ export class Proxy {
     /**
      * Get a proxy rule by its unique ID.
      *
-     * @param {string} ruleId
+     * @param {string} params.ruleId - Rule ID.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    getRule(ruleId: string): Promise<Models.ProxyRule> {
+    getRule(params: { ruleId: string  }): Promise<Models.ProxyRule>;
+    /**
+     * Get a proxy rule by its unique ID.
+     *
+     * @param {string} ruleId - Rule ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ProxyRule>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getRule(ruleId: string): Promise<Models.ProxyRule>;
+    getRule(
+        paramsOrFirst: { ruleId: string } | string    
+    ): Promise<Models.ProxyRule> {
+        let params: { ruleId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { ruleId: string };
+        } else {
+            params = {
+                ruleId: paramsOrFirst as string            
+            };
+        }
+        
+        const ruleId = params.ruleId;
+
         if (typeof ruleId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ruleId"');
         }
+
         const apiPath = '/proxy/rules/{ruleId}'.replace('{ruleId}', ruleId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -240,14 +429,39 @@ export class Proxy {
     /**
      * Delete a proxy rule by its unique ID.
      *
-     * @param {string} ruleId
+     * @param {string} params.ruleId - Rule ID.
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteRule(ruleId: string): Promise<{}> {
+    deleteRule(params: { ruleId: string  }): Promise<{}>;
+    /**
+     * Delete a proxy rule by its unique ID.
+     *
+     * @param {string} ruleId - Rule ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteRule(ruleId: string): Promise<{}>;
+    deleteRule(
+        paramsOrFirst: { ruleId: string } | string    
+    ): Promise<{}> {
+        let params: { ruleId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { ruleId: string };
+        } else {
+            params = {
+                ruleId: paramsOrFirst as string            
+            };
+        }
+        
+        const ruleId = params.ruleId;
+
         if (typeof ruleId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ruleId"');
         }
+
         const apiPath = '/proxy/rules/{ruleId}'.replace('{ruleId}', ruleId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -267,14 +481,39 @@ export class Proxy {
     /**
      * Retry getting verification process of a proxy rule. This endpoint triggers domain verification by checking DNS records (CNAME) against the configured target domain. If verification is successful, a TLS certificate will be automatically provisioned for the domain.
      *
-     * @param {string} ruleId
+     * @param {string} params.ruleId - Rule ID.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    updateRuleVerification(ruleId: string): Promise<Models.ProxyRule> {
+    updateRuleVerification(params: { ruleId: string  }): Promise<Models.ProxyRule>;
+    /**
+     * Retry getting verification process of a proxy rule. This endpoint triggers domain verification by checking DNS records (CNAME) against the configured target domain. If verification is successful, a TLS certificate will be automatically provisioned for the domain.
+     *
+     * @param {string} ruleId - Rule ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ProxyRule>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateRuleVerification(ruleId: string): Promise<Models.ProxyRule>;
+    updateRuleVerification(
+        paramsOrFirst: { ruleId: string } | string    
+    ): Promise<Models.ProxyRule> {
+        let params: { ruleId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { ruleId: string };
+        } else {
+            params = {
+                ruleId: paramsOrFirst as string            
+            };
+        }
+        
+        const ruleId = params.ruleId;
+
         if (typeof ruleId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ruleId"');
         }
+
         const apiPath = '/proxy/rules/{ruleId}/verification'.replace('{ruleId}', ruleId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);

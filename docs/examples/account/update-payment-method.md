@@ -6,10 +6,11 @@ const client = new Client()
 
 const account = new Account(client);
 
-const result = await account.updatePaymentMethod(
-    '<PAYMENT_METHOD_ID>', // paymentMethodId
-    1, // expiryMonth
-    2025 // expiryYear
-);
+const result = await account.updatePaymentMethod({
+    paymentMethodId: '<PAYMENT_METHOD_ID>',
+    expiryMonth: 1,
+    expiryYear: 2025,
+    state: '<STATE>' // optional
+});
 
 console.log(result);

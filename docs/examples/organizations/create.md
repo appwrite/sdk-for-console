@@ -1,4 +1,4 @@
-import { Client, Organizations,  } from "@appwrite.io/console";
+import { Client, Organizations, Platform } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -6,16 +6,17 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.create(
-    '<ORGANIZATION_ID>', // organizationId
-    '<NAME>', // name
-    .Tier0, // billingPlan
-    '<PAYMENT_METHOD_ID>', // paymentMethodId (optional)
-    '<BILLING_ADDRESS_ID>', // billingAddressId (optional)
-    [], // invites (optional)
-    '<COUPON_ID>', // couponId (optional)
-    '<TAX_ID>', // taxId (optional)
-    0 // budget (optional)
-);
+const result = await organizations.create({
+    organizationId: '<ORGANIZATION_ID>',
+    name: '<NAME>',
+    billingPlan: 'tier-0',
+    paymentMethodId: '<PAYMENT_METHOD_ID>', // optional
+    billingAddressId: '<BILLING_ADDRESS_ID>', // optional
+    invites: [], // optional
+    couponId: '<COUPON_ID>', // optional
+    taxId: '<TAX_ID>', // optional
+    budget: 0, // optional
+    platform: Platform.Appwrite // optional
+});
 
 console.log(result);

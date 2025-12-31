@@ -6,9 +6,10 @@ const client = new Client()
 
 const users = new Users(client);
 
-const result = await users.listLogs(
-    '<USER_ID>', // userId
-    [] // queries (optional)
-);
+const result = await users.listLogs({
+    userId: '<USER_ID>',
+    queries: [], // optional
+    total: false // optional
+});
 
 console.log(result);

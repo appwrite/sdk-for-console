@@ -6,12 +6,12 @@ const client = new Client()
 
 const console = new Console(client);
 
-const result = await console.createSource(
-    '<REF>', // ref (optional)
-    'https://example.com', // referrer (optional)
-    '<UTM_SOURCE>', // utmSource (optional)
-    '<UTM_CAMPAIGN>', // utmCampaign (optional)
-    '<UTM_MEDIUM>' // utmMedium (optional)
-);
+const result = await console.createSource({
+    ref: '<REF>', // optional
+    referrer: 'https://example.com', // optional
+    utmSource: '<UTM_SOURCE>', // optional
+    utmCampaign: '<UTM_CAMPAIGN>', // optional
+    utmMedium: '<UTM_MEDIUM>' // optional
+});
 
 console.log(result);

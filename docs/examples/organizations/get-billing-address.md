@@ -6,9 +6,9 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.getBillingAddress(
-    '<ORGANIZATION_ID>', // organizationId
-    '<BILLING_ADDRESS_ID>' // billingAddressId
-);
+const result = await organizations.getBillingAddress({
+    organizationId: '<ORGANIZATION_ID>',
+    billingAddressId: '<BILLING_ADDRESS_ID>'
+});
 
 console.log(result);

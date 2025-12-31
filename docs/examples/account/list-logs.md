@@ -6,8 +6,9 @@ const client = new Client()
 
 const account = new Account(client);
 
-const result = await account.listLogs(
-    [] // queries (optional)
-);
+const result = await account.listLogs({
+    queries: [], // optional
+    total: false // optional
+});
 
 console.log(result);

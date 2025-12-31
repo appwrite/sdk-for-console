@@ -6,8 +6,8 @@ const client = new Client()
 
 const console = new Console(client);
 
-const result = await console.getCampaign(
-    '<CAMPAIGN_ID>' // campaignId
-);
+const result = await console.getCampaign({
+    campaignId: '<CAMPAIGN_ID>'
+});
 
 console.log(result);

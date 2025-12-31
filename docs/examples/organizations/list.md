@@ -6,9 +6,9 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.list(
-    [], // queries (optional)
-    '<SEARCH>' // search (optional)
-);
+const result = await organizations.list({
+    queries: [], // optional
+    search: '<SEARCH>' // optional
+});
 
 console.log(result);

@@ -6,8 +6,8 @@ const client = new Client()
 
 const account = new Account(client);
 
-const result = await account.listBillingAddresses(
-    [] // queries (optional)
-);
+const result = await account.listBillingAddresses({
+    queries: [] // optional
+});
 
 console.log(result);

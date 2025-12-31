@@ -1,4 +1,4 @@
-import { Client, Storage } from "@appwrite.io/console";
+import { Client, Storage, Permission, Role } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -6,11 +6,11 @@ const client = new Client()
 
 const storage = new Storage(client);
 
-const result = await storage.updateFile(
-    '<BUCKET_ID>', // bucketId
-    '<FILE_ID>', // fileId
-    '<NAME>', // name (optional)
-    ["read("any")"] // permissions (optional)
-);
+const result = await storage.updateFile({
+    bucketId: '<BUCKET_ID>',
+    fileId: '<FILE_ID>',
+    name: '<NAME>', // optional
+    permissions: [Permission.read(Role.any())] // optional
+});
 
 console.log(result);

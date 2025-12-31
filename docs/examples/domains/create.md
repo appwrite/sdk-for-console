@@ -6,9 +6,9 @@ const client = new Client()
 
 const domains = new Domains(client);
 
-const result = await domains.create(
-    '<TEAM_ID>', // teamId
-    '' // domain
-);
+const result = await domains.create({
+    teamId: '<TEAM_ID>',
+    domain: ''
+});
 
 console.log(result);

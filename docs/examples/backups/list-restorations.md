@@ -6,8 +6,8 @@ const client = new Client()
 
 const backups = new Backups(client);
 
-const result = await backups.listRestorations(
-    [] // queries (optional)
-);
+const result = await backups.listRestorations({
+    queries: [] // optional
+});
 
 console.log(result);

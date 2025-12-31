@@ -6,8 +6,8 @@ const client = new Client()
 
 const console = new Console(client);
 
-const result = await console.getCoupon(
-    '<COUPON_ID>' // couponId
-);
+const result = await console.getCoupon({
+    couponId: '<COUPON_ID>'
+});
 
 console.log(result);

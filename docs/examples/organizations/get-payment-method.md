@@ -6,9 +6,9 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.getPaymentMethod(
-    '<ORGANIZATION_ID>', // organizationId
-    '<PAYMENT_METHOD_ID>' // paymentMethodId
-);
+const result = await organizations.getPaymentMethod({
+    organizationId: '<ORGANIZATION_ID>',
+    paymentMethodId: '<PAYMENT_METHOD_ID>'
+});
 
 console.log(result);

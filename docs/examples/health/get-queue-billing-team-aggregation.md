@@ -6,8 +6,8 @@ const client = new Client()
 
 const health = new Health(client);
 
-const result = await health.getQueueBillingTeamAggregation(
-    null // threshold (optional)
-);
+const result = await health.getQueueBillingTeamAggregation({
+    threshold: null // optional
+});
 
 console.log(result);

@@ -6,13 +6,13 @@ const client = new Client()
 
 const domains = new Domains(client);
 
-const result = await domains.updateRecordAlias(
-    '<DOMAIN_ID>', // domainId
-    '<RECORD_ID>', // recordId
-    '<NAME>', // name
-    '<VALUE>', // value
-    1, // ttl
-    '<COMMENT>' // comment (optional)
-);
+const result = await domains.updateRecordAlias({
+    domainId: '<DOMAIN_ID>',
+    recordId: '<RECORD_ID>',
+    name: '<NAME>',
+    value: '<VALUE>',
+    ttl: 1,
+    comment: '<COMMENT>' // optional
+});
 
 console.log(result);

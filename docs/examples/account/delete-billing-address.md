@@ -6,8 +6,8 @@ const client = new Client()
 
 const account = new Account(client);
 
-const result = await account.deleteBillingAddress(
-    '<BILLING_ADDRESS_ID>' // billingAddressId
-);
+const result = await account.deleteBillingAddress({
+    billingAddressId: '<BILLING_ADDRESS_ID>'
+});
 
 console.log(result);

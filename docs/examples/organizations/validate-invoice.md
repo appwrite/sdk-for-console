@@ -6,9 +6,9 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.validateInvoice(
-    '<ORGANIZATION_ID>', // organizationId
-    '<INVOICE_ID>' // invoiceId
-);
+const result = await organizations.validateInvoice({
+    organizationId: '<ORGANIZATION_ID>',
+    invoiceId: '<INVOICE_ID>'
+});
 
 console.log(result);
