@@ -6,12 +6,12 @@ const client = new Client()
 
 const domains = new Domains(client);
 
-const result = await domains.createRecordAlias(
-    '<DOMAIN_ID>', // domainId
-    '<NAME>', // name
-    '<VALUE>', // value
-    1, // ttl
-    '<COMMENT>' // comment (optional)
-);
+const result = await domains.createRecordAlias({
+    domainId: '<DOMAIN_ID>',
+    name: '<NAME>',
+    value: '<VALUE>',
+    ttl: 1,
+    comment: '<COMMENT>' // optional
+});
 
 console.log(result);

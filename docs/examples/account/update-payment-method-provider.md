@@ -6,10 +6,11 @@ const client = new Client()
 
 const account = new Account(client);
 
-const result = await account.updatePaymentMethodProvider(
-    '<PAYMENT_METHOD_ID>', // paymentMethodId
-    '<PROVIDER_METHOD_ID>', // providerMethodId
-    '<NAME>' // name
-);
+const result = await account.updatePaymentMethodProvider({
+    paymentMethodId: '<PAYMENT_METHOD_ID>',
+    providerMethodId: '<PROVIDER_METHOD_ID>',
+    name: '<NAME>',
+    state: '<STATE>' // optional
+});
 
 console.log(result);

@@ -1,0 +1,17 @@
+import { Client, Organizations } from "@appwrite.io/console";
+
+const client = new Client()
+    .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
+    .setProject('<YOUR_PROJECT_ID>'); // Your project ID
+
+const organizations = new Organizations(client);
+
+const result = await organizations.createDowngradeFeedback({
+    organizationId: '<ORGANIZATION_ID>',
+    reason: '<REASON>',
+    message: '<MESSAGE>',
+    fromPlanId: '<FROM_PLAN_ID>',
+    toPlanId: '<TO_PLAN_ID>'
+});
+
+console.log(result);

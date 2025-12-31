@@ -6,10 +6,11 @@ const client = new Client()
 
 const teams = new Teams(client);
 
-const result = await teams.listMemberships(
-    '<TEAM_ID>', // teamId
-    [], // queries (optional)
-    '<SEARCH>' // search (optional)
-);
+const result = await teams.listMemberships({
+    teamId: '<TEAM_ID>',
+    queries: [], // optional
+    search: '<SEARCH>', // optional
+    total: false // optional
+});
 
 console.log(result);

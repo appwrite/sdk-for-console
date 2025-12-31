@@ -6,9 +6,9 @@ const client = new Client()
 
 const domains = new Domains(client);
 
-const result = await domains.list(
-    [], // queries (optional)
-    '<SEARCH>' // search (optional)
-);
+const result = await domains.list({
+    queries: [], // optional
+    search: '<SEARCH>' // optional
+});
 
 console.log(result);

@@ -6,9 +6,9 @@ const client = new Client()
 
 const domains = new Domains(client);
 
-const result = await domains.updateZone(
-    '<DOMAIN_ID>', // domainId
-    '<CONTENT>' // content
-);
+const result = await domains.updateZone({
+    domainId: '<DOMAIN_ID>',
+    content: '<CONTENT>'
+});
 
 console.log(result);

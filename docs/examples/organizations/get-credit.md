@@ -6,9 +6,9 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.getCredit(
-    '<ORGANIZATION_ID>', // organizationId
-    '<CREDIT_ID>' // creditId
-);
+const result = await organizations.getCredit({
+    organizationId: '<ORGANIZATION_ID>',
+    creditId: '<CREDIT_ID>'
+});
 
 console.log(result);

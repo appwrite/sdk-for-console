@@ -6,8 +6,9 @@ const client = new Client()
 
 const users = new Users(client);
 
-const result = await users.listSessions(
-    '<USER_ID>' // userId
-);
+const result = await users.listSessions({
+    userId: '<USER_ID>',
+    total: false // optional
+});
 
 console.log(result);

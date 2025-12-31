@@ -6,10 +6,11 @@ const client = new Client()
 
 const users = new Users(client);
 
-const result = await users.listMemberships(
-    '<USER_ID>', // userId
-    [], // queries (optional)
-    '<SEARCH>' // search (optional)
-);
+const result = await users.listMemberships({
+    userId: '<USER_ID>',
+    queries: [], // optional
+    search: '<SEARCH>', // optional
+    total: false // optional
+});
 
 console.log(result);

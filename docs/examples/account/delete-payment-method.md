@@ -6,8 +6,8 @@ const client = new Client()
 
 const account = new Account(client);
 
-const result = await account.deletePaymentMethod(
-    '<PAYMENT_METHOD_ID>' // paymentMethodId
-);
+const result = await account.deletePaymentMethod({
+    paymentMethodId: '<PAYMENT_METHOD_ID>'
+});
 
 console.log(result);

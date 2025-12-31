@@ -6,8 +6,8 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.deleteBackupPaymentMethod(
-    '<ORGANIZATION_ID>' // organizationId
-);
+const result = await organizations.deleteBackupPaymentMethod({
+    organizationId: '<ORGANIZATION_ID>'
+});
 
 console.log(result);

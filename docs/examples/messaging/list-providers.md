@@ -6,9 +6,10 @@ const client = new Client()
 
 const messaging = new Messaging(client);
 
-const result = await messaging.listProviders(
-    [], // queries (optional)
-    '<SEARCH>' // search (optional)
-);
+const result = await messaging.listProviders({
+    queries: [], // optional
+    search: '<SEARCH>', // optional
+    total: false // optional
+});
 
 console.log(result);

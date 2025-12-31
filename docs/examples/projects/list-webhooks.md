@@ -6,8 +6,9 @@ const client = new Client()
 
 const projects = new Projects(client);
 
-const result = await projects.listWebhooks(
-    '<PROJECT_ID>' // projectId
-);
+const result = await projects.listWebhooks({
+    projectId: '<PROJECT_ID>',
+    total: false // optional
+});
 
 console.log(result);

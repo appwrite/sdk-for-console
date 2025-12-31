@@ -6,9 +6,9 @@ const client = new Client()
 
 const domains = new Domains(client);
 
-const result = await domains.listRecords(
-    '<DOMAIN_ID>', // domainId
-    [] // queries (optional)
-);
+const result = await domains.listRecords({
+    domainId: '<DOMAIN_ID>',
+    queries: [] // optional
+});
 
 console.log(result);

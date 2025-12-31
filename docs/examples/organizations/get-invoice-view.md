@@ -6,9 +6,9 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.getInvoiceView(
-    '<ORGANIZATION_ID>', // organizationId
-    '<INVOICE_ID>' // invoiceId
-);
+const result = await organizations.getInvoiceView({
+    organizationId: '<ORGANIZATION_ID>',
+    invoiceId: '<INVOICE_ID>'
+});
 
 console.log(result);

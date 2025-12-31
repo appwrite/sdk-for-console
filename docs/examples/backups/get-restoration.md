@@ -6,8 +6,8 @@ const client = new Client()
 
 const backups = new Backups(client);
 
-const result = await backups.getRestoration(
-    '<RESTORATION_ID>' // restorationId
-);
+const result = await backups.getRestoration({
+    restorationId: '<RESTORATION_ID>'
+});
 
 console.log(result);

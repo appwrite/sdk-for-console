@@ -6,9 +6,9 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.setBillingEmail(
-    '<ORGANIZATION_ID>', // organizationId
-    'email@example.com' // billingEmail
-);
+const result = await organizations.setBillingEmail({
+    organizationId: '<ORGANIZATION_ID>',
+    billingEmail: 'email@example.com'
+});
 
 console.log(result);

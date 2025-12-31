@@ -6,9 +6,9 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.validatePayment(
-    '<ORGANIZATION_ID>', // organizationId
-    [] // invites (optional)
-);
+const result = await organizations.validatePayment({
+    organizationId: '<ORGANIZATION_ID>',
+    invites: [] // optional
+});
 
 console.log(result);

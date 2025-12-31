@@ -6,9 +6,9 @@ const client = new Client()
 
 const domains = new Domains(client);
 
-const result = await domains.updateTeam(
-    '<DOMAIN_ID>', // domainId
-    '<TEAM_ID>' // teamId
-);
+const result = await domains.updateTeam({
+    domainId: '<DOMAIN_ID>',
+    teamId: '<TEAM_ID>'
+});
 
 console.log(result);

@@ -6,9 +6,9 @@ const client = new Client()
 
 const domains = new Domains(client);
 
-const result = await domains.deleteRecord(
-    '<DOMAIN_ID>', // domainId
-    '<RECORD_ID>' // recordId
-);
+const result = await domains.deleteRecord({
+    domainId: '<DOMAIN_ID>',
+    recordId: '<RECORD_ID>'
+});
 
 console.log(result);

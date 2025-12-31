@@ -6,9 +6,10 @@ const client = new Client()
 
 const functions = new Functions(client);
 
-const result = await functions.listExecutions(
-    '<FUNCTION_ID>', // functionId
-    [] // queries (optional)
-);
+const result = await functions.listExecutions({
+    functionId: '<FUNCTION_ID>',
+    queries: [], // optional
+    total: false // optional
+});
 
 console.log(result);

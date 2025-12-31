@@ -6,14 +6,14 @@ const client = new Client()
 
 const account = new Account(client);
 
-const result = await account.updateBillingAddress(
-    '<BILLING_ADDRESS_ID>', // billingAddressId
-    '<COUNTRY>', // country
-    '<STREET_ADDRESS>', // streetAddress
-    '<CITY>', // city
-    '<STATE>', // state
-    '<POSTAL_CODE>', // postalCode (optional)
-    '<ADDRESS_LINE2>' // addressLine2 (optional)
-);
+const result = await account.updateBillingAddress({
+    billingAddressId: '<BILLING_ADDRESS_ID>',
+    country: '<COUNTRY>',
+    streetAddress: '<STREET_ADDRESS>',
+    city: '<CITY>',
+    state: '<STATE>',
+    postalCode: '<POSTAL_CODE>', // optional
+    addressLine2: '<ADDRESS_LINE2>' // optional
+});
 
 console.log(result);

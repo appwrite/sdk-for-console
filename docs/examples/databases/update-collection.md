@@ -1,4 +1,4 @@
-import { Client, Databases } from "@appwrite.io/console";
+import { Client, Databases, Permission, Role } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -6,13 +6,13 @@ const client = new Client()
 
 const databases = new Databases(client);
 
-const result = await databases.updateCollection(
-    '<DATABASE_ID>', // databaseId
-    '<COLLECTION_ID>', // collectionId
-    '<NAME>', // name
-    ["read("any")"], // permissions (optional)
-    false, // documentSecurity (optional)
-    false // enabled (optional)
-);
+const result = await databases.updateCollection({
+    databaseId: '<DATABASE_ID>',
+    collectionId: '<COLLECTION_ID>',
+    name: '<NAME>',
+    permissions: [Permission.read(Role.any())], // optional
+    documentSecurity: false, // optional
+    enabled: false // optional
+});
 
 console.log(result);

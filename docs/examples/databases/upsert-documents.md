@@ -6,10 +6,11 @@ const client = new Client()
 
 const databases = new Databases(client);
 
-const result = await databases.upsertDocuments(
-    '<DATABASE_ID>', // databaseId
-    '<COLLECTION_ID>', // collectionId
-    [] // documents
-);
+const result = await databases.upsertDocuments({
+    databaseId: '<DATABASE_ID>',
+    collectionId: '<COLLECTION_ID>',
+    documents: [],
+    transactionId: '<TRANSACTION_ID>' // optional
+});
 
 console.log(result);

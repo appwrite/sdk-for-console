@@ -6,10 +6,10 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.getUsage(
-    '<ORGANIZATION_ID>', // organizationId
-    '', // startDate (optional)
-    '' // endDate (optional)
-);
+const result = await organizations.getUsage({
+    organizationId: '<ORGANIZATION_ID>',
+    startDate: '', // optional
+    endDate: '' // optional
+});
 
 console.log(result);

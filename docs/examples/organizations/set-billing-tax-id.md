@@ -6,9 +6,9 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.setBillingTaxId(
-    '<ORGANIZATION_ID>', // organizationId
-    '<TAX_ID>' // taxId
-);
+const result = await organizations.setBillingTaxId({
+    organizationId: '<ORGANIZATION_ID>',
+    taxId: '<TAX_ID>'
+});
 
 console.log(result);

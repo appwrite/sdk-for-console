@@ -6,8 +6,8 @@ const client = new Client()
 
 const backups = new Backups(client);
 
-const result = await backups.deletePolicy(
-    '<POLICY_ID>' // policyId
-);
+const result = await backups.deletePolicy({
+    policyId: '<POLICY_ID>'
+});
 
 console.log(result);

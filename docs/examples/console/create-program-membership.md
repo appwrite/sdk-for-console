@@ -6,8 +6,8 @@ const client = new Client()
 
 const console = new Console(client);
 
-const result = await console.createProgramMembership(
-    '<PROGRAM_ID>' // programId
-);
+const result = await console.createProgramMembership({
+    programId: '<PROGRAM_ID>'
+});
 
 console.log(result);

@@ -6,13 +6,13 @@ const client = new Client()
 
 const account = new Account(client);
 
-const result = await account.createBillingAddress(
-    '<COUNTRY>', // country
-    '<STREET_ADDRESS>', // streetAddress
-    '<CITY>', // city
-    '<STATE>', // state
-    '<POSTAL_CODE>', // postalCode (optional)
-    '<ADDRESS_LINE2>' // addressLine2 (optional)
-);
+const result = await account.createBillingAddress({
+    country: '<COUNTRY>',
+    streetAddress: '<STREET_ADDRESS>',
+    city: '<CITY>',
+    state: '<STATE>',
+    postalCode: '<POSTAL_CODE>', // optional
+    addressLine2: '<ADDRESS_LINE2>' // optional
+});
 
 console.log(result);

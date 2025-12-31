@@ -6,12 +6,12 @@ const client = new Client()
 
 const backups = new Backups(client);
 
-const result = await backups.updatePolicy(
-    '<POLICY_ID>', // policyId
-    '<NAME>', // name (optional)
-    1, // retention (optional)
-    '', // schedule (optional)
-    false // enabled (optional)
-);
+const result = await backups.updatePolicy({
+    policyId: '<POLICY_ID>',
+    name: '<NAME>', // optional
+    retention: 1, // optional
+    schedule: '', // optional
+    enabled: false // optional
+});
 
 console.log(result);

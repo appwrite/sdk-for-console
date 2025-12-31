@@ -6,10 +6,11 @@ const client = new Client()
 
 const databases = new Databases(client);
 
-const result = await databases.createDocuments(
-    '<DATABASE_ID>', // databaseId
-    '<COLLECTION_ID>', // collectionId
-    [] // documents
-);
+const result = await databases.createDocuments({
+    databaseId: '<DATABASE_ID>',
+    collectionId: '<COLLECTION_ID>',
+    documents: [],
+    transactionId: '<TRANSACTION_ID>' // optional
+});
 
 console.log(result);

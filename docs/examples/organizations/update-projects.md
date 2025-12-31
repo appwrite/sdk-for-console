@@ -6,9 +6,9 @@ const client = new Client()
 
 const organizations = new Organizations(client);
 
-const result = await organizations.updateProjects(
-    '<ORGANIZATION_ID>', // organizationId
-    [] // projects (optional)
-);
+const result = await organizations.updateProjects({
+    organizationId: '<ORGANIZATION_ID>',
+    projects: [] // optional
+});
 
 console.log(result);

@@ -6,8 +6,8 @@ const client = new Client()
 
 const account = new Account(client);
 
-const result = await account.updatePaymentMethodMandateOptions(
-    '<PAYMENT_METHOD_ID>' // paymentMethodId
-);
+const result = await account.updatePaymentMethodMandateOptions({
+    paymentMethodId: '<PAYMENT_METHOD_ID>'
+});
 
 console.log(result);

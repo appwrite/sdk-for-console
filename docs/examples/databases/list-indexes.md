@@ -6,10 +6,11 @@ const client = new Client()
 
 const databases = new Databases(client);
 
-const result = await databases.listIndexes(
-    '<DATABASE_ID>', // databaseId
-    '<COLLECTION_ID>', // collectionId
-    [] // queries (optional)
-);
+const result = await databases.listIndexes({
+    databaseId: '<DATABASE_ID>',
+    collectionId: '<COLLECTION_ID>',
+    queries: [], // optional
+    total: false // optional
+});
 
 console.log(result);

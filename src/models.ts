@@ -1,3 +1,18 @@
+import { DatabaseType } from "./enums/database-type"
+import { AttributeStatus } from "./enums/attribute-status"
+import { ColumnStatus } from "./enums/column-status"
+import { IndexStatus } from "./enums/index-status"
+import { DeploymentStatus } from "./enums/deployment-status"
+import { ExecutionTrigger } from "./enums/execution-trigger"
+import { ExecutionStatus } from "./enums/execution-status"
+import { PlatformType } from "./enums/platform-type"
+import { HealthAntivirusStatus } from "./enums/health-antivirus-status"
+import { HealthCheckStatus } from "./enums/health-check-status"
+import { ProxyRuleDeploymentResourceType } from "./enums/proxy-rule-deployment-resource-type"
+import { ProxyRuleStatus } from "./enums/proxy-rule-status"
+import { MessageStatus } from "./enums/message-status"
+import { BillingPlanGroup } from "./enums/billing-plan-group"
+
 /**
  * Appwrite Models
  */
@@ -6,11 +21,25 @@ export namespace Models {
     declare const __default: unique symbol;
 
     /**
+     * Rows List
+     */
+    export type RowList<Row extends Models.Row = Models.DefaultRow> = {
+        /**
+         * Total number of rows that matched your query.
+         */
+        total: number;
+        /**
+         * List of rows.
+         */
+        rows: Row[];
+    }
+
+    /**
      * Documents List
      */
     export type DocumentList<Document extends Models.Document = Models.DefaultDocument> = {
         /**
-         * Total number of documents documents that matched your query.
+         * Total number of documents that matched your query.
          */
         total: number;
         /**
@@ -20,11 +49,25 @@ export namespace Models {
     }
 
     /**
+     * Tables List
+     */
+    export type TableList = {
+        /**
+         * Total number of tables that matched your query.
+         */
+        total: number;
+        /**
+         * List of tables.
+         */
+        tables: Table[];
+    }
+
+    /**
      * Collections List
      */
     export type CollectionList = {
         /**
-         * Total number of collections documents that matched your query.
+         * Total number of collections that matched your query.
          */
         total: number;
         /**
@@ -38,7 +81,7 @@ export namespace Models {
      */
     export type DatabaseList = {
         /**
-         * Total number of databases documents that matched your query.
+         * Total number of databases that matched your query.
          */
         total: number;
         /**
@@ -52,7 +95,7 @@ export namespace Models {
      */
     export type IndexList = {
         /**
-         * Total number of indexes documents that matched your query.
+         * Total number of indexes that matched your query.
          */
         total: number;
         /**
@@ -62,11 +105,25 @@ export namespace Models {
     }
 
     /**
+     * Column Indexes List
+     */
+    export type ColumnIndexList = {
+        /**
+         * Total number of indexes that matched your query.
+         */
+        total: number;
+        /**
+         * List of indexes.
+         */
+        indexes: ColumnIndex[];
+    }
+
+    /**
      * Users List
      */
     export type UserList<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
         /**
-         * Total number of users documents that matched your query.
+         * Total number of users that matched your query.
          */
         total: number;
         /**
@@ -80,7 +137,7 @@ export namespace Models {
      */
     export type SessionList = {
         /**
-         * Total number of sessions documents that matched your query.
+         * Total number of sessions that matched your query.
          */
         total: number;
         /**
@@ -94,7 +151,7 @@ export namespace Models {
      */
     export type IdentityList = {
         /**
-         * Total number of identities documents that matched your query.
+         * Total number of identities that matched your query.
          */
         total: number;
         /**
@@ -108,7 +165,7 @@ export namespace Models {
      */
     export type LogList = {
         /**
-         * Total number of logs documents that matched your query.
+         * Total number of logs that matched your query.
          */
         total: number;
         /**
@@ -122,7 +179,7 @@ export namespace Models {
      */
     export type FileList = {
         /**
-         * Total number of files documents that matched your query.
+         * Total number of files that matched your query.
          */
         total: number;
         /**
@@ -136,7 +193,7 @@ export namespace Models {
      */
     export type BucketList = {
         /**
-         * Total number of buckets documents that matched your query.
+         * Total number of buckets that matched your query.
          */
         total: number;
         /**
@@ -150,7 +207,7 @@ export namespace Models {
      */
     export type ResourceTokenList = {
         /**
-         * Total number of tokens documents that matched your query.
+         * Total number of tokens that matched your query.
          */
         total: number;
         /**
@@ -164,7 +221,7 @@ export namespace Models {
      */
     export type TeamList<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
         /**
-         * Total number of teams documents that matched your query.
+         * Total number of teams that matched your query.
          */
         total: number;
         /**
@@ -178,7 +235,7 @@ export namespace Models {
      */
     export type MembershipList = {
         /**
-         * Total number of memberships documents that matched your query.
+         * Total number of memberships that matched your query.
          */
         total: number;
         /**
@@ -192,7 +249,7 @@ export namespace Models {
      */
     export type SiteList = {
         /**
-         * Total number of sites documents that matched your query.
+         * Total number of sites that matched your query.
          */
         total: number;
         /**
@@ -206,7 +263,7 @@ export namespace Models {
      */
     export type TemplateSiteList = {
         /**
-         * Total number of templates documents that matched your query.
+         * Total number of templates that matched your query.
          */
         total: number;
         /**
@@ -220,7 +277,7 @@ export namespace Models {
      */
     export type FunctionList = {
         /**
-         * Total number of functions documents that matched your query.
+         * Total number of functions that matched your query.
          */
         total: number;
         /**
@@ -234,7 +291,7 @@ export namespace Models {
      */
     export type TemplateFunctionList = {
         /**
-         * Total number of templates documents that matched your query.
+         * Total number of templates that matched your query.
          */
         total: number;
         /**
@@ -248,7 +305,7 @@ export namespace Models {
      */
     export type InstallationList = {
         /**
-         * Total number of installations documents that matched your query.
+         * Total number of installations that matched your query.
          */
         total: number;
         /**
@@ -262,7 +319,7 @@ export namespace Models {
      */
     export type ProviderRepositoryFrameworkList = {
         /**
-         * Total number of frameworkProviderRepositories documents that matched your query.
+         * Total number of frameworkProviderRepositories that matched your query.
          */
         total: number;
         /**
@@ -276,7 +333,7 @@ export namespace Models {
      */
     export type ProviderRepositoryRuntimeList = {
         /**
-         * Total number of runtimeProviderRepositories documents that matched your query.
+         * Total number of runtimeProviderRepositories that matched your query.
          */
         total: number;
         /**
@@ -290,7 +347,7 @@ export namespace Models {
      */
     export type BranchList = {
         /**
-         * Total number of branches documents that matched your query.
+         * Total number of branches that matched your query.
          */
         total: number;
         /**
@@ -304,7 +361,7 @@ export namespace Models {
      */
     export type FrameworkList = {
         /**
-         * Total number of frameworks documents that matched your query.
+         * Total number of frameworks that matched your query.
          */
         total: number;
         /**
@@ -318,7 +375,7 @@ export namespace Models {
      */
     export type RuntimeList = {
         /**
-         * Total number of runtimes documents that matched your query.
+         * Total number of runtimes that matched your query.
          */
         total: number;
         /**
@@ -332,7 +389,7 @@ export namespace Models {
      */
     export type DeploymentList = {
         /**
-         * Total number of deployments documents that matched your query.
+         * Total number of deployments that matched your query.
          */
         total: number;
         /**
@@ -346,7 +403,7 @@ export namespace Models {
      */
     export type ExecutionList = {
         /**
-         * Total number of executions documents that matched your query.
+         * Total number of executions that matched your query.
          */
         total: number;
         /**
@@ -360,7 +417,7 @@ export namespace Models {
      */
     export type ProjectList = {
         /**
-         * Total number of projects documents that matched your query.
+         * Total number of projects that matched your query.
          */
         total: number;
         /**
@@ -374,7 +431,7 @@ export namespace Models {
      */
     export type WebhookList = {
         /**
-         * Total number of webhooks documents that matched your query.
+         * Total number of webhooks that matched your query.
          */
         total: number;
         /**
@@ -388,7 +445,7 @@ export namespace Models {
      */
     export type KeyList = {
         /**
-         * Total number of keys documents that matched your query.
+         * Total number of keys that matched your query.
          */
         total: number;
         /**
@@ -402,7 +459,7 @@ export namespace Models {
      */
     export type DevKeyList = {
         /**
-         * Total number of devKeys documents that matched your query.
+         * Total number of devKeys that matched your query.
          */
         total: number;
         /**
@@ -416,7 +473,7 @@ export namespace Models {
      */
     export type PlatformList = {
         /**
-         * Total number of platforms documents that matched your query.
+         * Total number of platforms that matched your query.
          */
         total: number;
         /**
@@ -430,7 +487,7 @@ export namespace Models {
      */
     export type CountryList = {
         /**
-         * Total number of countries documents that matched your query.
+         * Total number of countries that matched your query.
          */
         total: number;
         /**
@@ -444,7 +501,7 @@ export namespace Models {
      */
     export type ContinentList = {
         /**
-         * Total number of continents documents that matched your query.
+         * Total number of continents that matched your query.
          */
         total: number;
         /**
@@ -458,7 +515,7 @@ export namespace Models {
      */
     export type LanguageList = {
         /**
-         * Total number of languages documents that matched your query.
+         * Total number of languages that matched your query.
          */
         total: number;
         /**
@@ -472,7 +529,7 @@ export namespace Models {
      */
     export type CurrencyList = {
         /**
-         * Total number of currencies documents that matched your query.
+         * Total number of currencies that matched your query.
          */
         total: number;
         /**
@@ -486,7 +543,7 @@ export namespace Models {
      */
     export type PhoneList = {
         /**
-         * Total number of phones documents that matched your query.
+         * Total number of phones that matched your query.
          */
         total: number;
         /**
@@ -500,7 +557,7 @@ export namespace Models {
      */
     export type VariableList = {
         /**
-         * Total number of variables documents that matched your query.
+         * Total number of variables that matched your query.
          */
         total: number;
         /**
@@ -514,7 +571,7 @@ export namespace Models {
      */
     export type ProxyRuleList = {
         /**
-         * Total number of rules documents that matched your query.
+         * Total number of rules that matched your query.
          */
         total: number;
         /**
@@ -528,7 +585,7 @@ export namespace Models {
      */
     export type LocaleCodeList = {
         /**
-         * Total number of localeCodes documents that matched your query.
+         * Total number of localeCodes that matched your query.
          */
         total: number;
         /**
@@ -542,7 +599,7 @@ export namespace Models {
      */
     export type ProviderList = {
         /**
-         * Total number of providers documents that matched your query.
+         * Total number of providers that matched your query.
          */
         total: number;
         /**
@@ -556,7 +613,7 @@ export namespace Models {
      */
     export type MessageList = {
         /**
-         * Total number of messages documents that matched your query.
+         * Total number of messages that matched your query.
          */
         total: number;
         /**
@@ -570,7 +627,7 @@ export namespace Models {
      */
     export type TopicList = {
         /**
-         * Total number of topics documents that matched your query.
+         * Total number of topics that matched your query.
          */
         total: number;
         /**
@@ -584,7 +641,7 @@ export namespace Models {
      */
     export type SubscriberList = {
         /**
-         * Total number of subscribers documents that matched your query.
+         * Total number of subscribers that matched your query.
          */
         total: number;
         /**
@@ -598,7 +655,7 @@ export namespace Models {
      */
     export type TargetList = {
         /**
-         * Total number of targets documents that matched your query.
+         * Total number of targets that matched your query.
          */
         total: number;
         /**
@@ -608,11 +665,25 @@ export namespace Models {
     }
 
     /**
+     * Transaction List
+     */
+    export type TransactionList = {
+        /**
+         * Total number of transactions that matched your query.
+         */
+        total: number;
+        /**
+         * List of transactions.
+         */
+        transactions: Transaction[];
+    }
+
+    /**
      * Migrations List
      */
     export type MigrationList = {
         /**
-         * Total number of migrations documents that matched your query.
+         * Total number of migrations that matched your query.
          */
         total: number;
         /**
@@ -626,7 +697,7 @@ export namespace Models {
      */
     export type SpecificationList = {
         /**
-         * Total number of specifications documents that matched your query.
+         * Total number of specifications that matched your query.
          */
         total: number;
         /**
@@ -640,7 +711,7 @@ export namespace Models {
      */
     export type VcsContentList = {
         /**
-         * Total number of contents documents that matched your query.
+         * Total number of contents that matched your query.
          */
         total: number;
         /**
@@ -670,9 +741,13 @@ export namespace Models {
          */
         $updatedAt: string;
         /**
-         * If database is enabled. Can be &#039;enabled&#039; or &#039;disabled&#039;. When disabled, the database is inaccessible to users, but remains accessible to Server SDKs using API keys.
+         * If database is enabled. Can be 'enabled' or 'disabled'. When disabled, the database is inaccessible to users, but remains accessible to Server SDKs using API keys.
          */
         enabled: boolean;
+        /**
+         * Database type.
+         */
+        type: DatabaseType;
         /**
          * Database backup policies.
          */
@@ -712,7 +787,7 @@ export namespace Models {
          */
         name: string;
         /**
-         * Collection enabled. Can be &#039;enabled&#039; or &#039;disabled&#039;. When disabled, the collection is inaccessible to users, but remains accessible to Server SDKs using API keys.
+         * Collection enabled. Can be 'enabled' or 'disabled'. When disabled, the collection is inaccessible to users, but remains accessible to Server SDKs using API keys.
          */
         enabled: boolean;
         /**
@@ -722,7 +797,7 @@ export namespace Models {
         /**
          * Collection attributes.
          */
-        attributes: (Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributeString)[];
+        attributes: (Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributePoint | Models.AttributeLine | Models.AttributePolygon | Models.AttributeString)[];
         /**
          * Collection indexes.
          */
@@ -740,7 +815,7 @@ export namespace Models {
         /**
          * List of attributes.
          */
-        attributes: (Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributeString)[];
+        attributes: (Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributePoint | Models.AttributeLine | Models.AttributePolygon | Models.AttributeString)[];
     }
 
     /**
@@ -758,7 +833,7 @@ export namespace Models {
         /**
          * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
          */
-        status: string;
+        status: AttributeStatus;
         /**
          * Error message. Displays error generated on failure of creating or deleting an attribute.
          */
@@ -808,7 +883,7 @@ export namespace Models {
         /**
          * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
          */
-        status: string;
+        status: AttributeStatus;
         /**
          * Error message. Displays error generated on failure of creating or deleting an attribute.
          */
@@ -858,7 +933,7 @@ export namespace Models {
         /**
          * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
          */
-        status: string;
+        status: AttributeStatus;
         /**
          * Error message. Displays error generated on failure of creating or deleting an attribute.
          */
@@ -908,7 +983,7 @@ export namespace Models {
         /**
          * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
          */
-        status: string;
+        status: AttributeStatus;
         /**
          * Error message. Displays error generated on failure of creating or deleting an attribute.
          */
@@ -950,7 +1025,7 @@ export namespace Models {
         /**
          * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
          */
-        status: string;
+        status: AttributeStatus;
         /**
          * Error message. Displays error generated on failure of creating or deleting an attribute.
          */
@@ -996,7 +1071,7 @@ export namespace Models {
         /**
          * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
          */
-        status: string;
+        status: AttributeStatus;
         /**
          * Error message. Displays error generated on failure of creating or deleting an attribute.
          */
@@ -1046,7 +1121,7 @@ export namespace Models {
         /**
          * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
          */
-        status: string;
+        status: AttributeStatus;
         /**
          * Error message. Displays error generated on failure of creating or deleting an attribute.
          */
@@ -1092,7 +1167,7 @@ export namespace Models {
         /**
          * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
          */
-        status: string;
+        status: AttributeStatus;
         /**
          * Error message. Displays error generated on failure of creating or deleting an attribute.
          */
@@ -1138,7 +1213,7 @@ export namespace Models {
         /**
          * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
          */
-        status: string;
+        status: AttributeStatus;
         /**
          * Error message. Displays error generated on failure of creating or deleting an attribute.
          */
@@ -1184,7 +1259,7 @@ export namespace Models {
         /**
          * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
          */
-        status: string;
+        status: AttributeStatus;
         /**
          * Error message. Displays error generated on failure of creating or deleting an attribute.
          */
@@ -1232,9 +1307,867 @@ export namespace Models {
     }
 
     /**
+     * AttributePoint
+     */
+    export type AttributePoint = {
+        /**
+         * Attribute Key.
+         */
+        key: string;
+        /**
+         * Attribute type.
+         */
+        type: string;
+        /**
+         * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: AttributeStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an attribute.
+         */
+        error: string;
+        /**
+         * Is attribute required?
+         */
+        required: boolean;
+        /**
+         * Is attribute an array?
+         */
+        array?: boolean;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Default value for attribute when not provided. Cannot be set when attribute is required.
+         */
+        default?: any[];
+    }
+
+    /**
+     * AttributeLine
+     */
+    export type AttributeLine = {
+        /**
+         * Attribute Key.
+         */
+        key: string;
+        /**
+         * Attribute type.
+         */
+        type: string;
+        /**
+         * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: AttributeStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an attribute.
+         */
+        error: string;
+        /**
+         * Is attribute required?
+         */
+        required: boolean;
+        /**
+         * Is attribute an array?
+         */
+        array?: boolean;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Default value for attribute when not provided. Cannot be set when attribute is required.
+         */
+        default?: any[];
+    }
+
+    /**
+     * AttributePolygon
+     */
+    export type AttributePolygon = {
+        /**
+         * Attribute Key.
+         */
+        key: string;
+        /**
+         * Attribute type.
+         */
+        type: string;
+        /**
+         * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: AttributeStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an attribute.
+         */
+        error: string;
+        /**
+         * Is attribute required?
+         */
+        required: boolean;
+        /**
+         * Is attribute an array?
+         */
+        array?: boolean;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Default value for attribute when not provided. Cannot be set when attribute is required.
+         */
+        default?: any[];
+    }
+
+    /**
+     * Table
+     */
+    export type Table = {
+        /**
+         * Table ID.
+         */
+        $id: string;
+        /**
+         * Table creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Table update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Table permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * Database ID.
+         */
+        databaseId: string;
+        /**
+         * Table name.
+         */
+        name: string;
+        /**
+         * Table enabled. Can be 'enabled' or 'disabled'. When disabled, the table is inaccessible to users, but remains accessible to Server SDKs using API keys.
+         */
+        enabled: boolean;
+        /**
+         * Whether row-level permissions are enabled. [Learn more about permissions](https://appwrite.io/docs/permissions).
+         */
+        rowSecurity: boolean;
+        /**
+         * Table columns.
+         */
+        columns: (Models.ColumnBoolean | Models.ColumnInteger | Models.ColumnFloat | Models.ColumnEmail | Models.ColumnEnum | Models.ColumnUrl | Models.ColumnIp | Models.ColumnDatetime | Models.ColumnRelationship | Models.ColumnPoint | Models.ColumnLine | Models.ColumnPolygon | Models.ColumnString)[];
+        /**
+         * Table indexes.
+         */
+        indexes: ColumnIndex[];
+    }
+
+    /**
+     * Columns List
+     */
+    export type ColumnList = {
+        /**
+         * Total number of columns in the given table.
+         */
+        total: number;
+        /**
+         * List of columns.
+         */
+        columns: (Models.ColumnBoolean | Models.ColumnInteger | Models.ColumnFloat | Models.ColumnEmail | Models.ColumnEnum | Models.ColumnUrl | Models.ColumnIp | Models.ColumnDatetime | Models.ColumnRelationship | Models.ColumnPoint | Models.ColumnLine | Models.ColumnPolygon | Models.ColumnString)[];
+    }
+
+    /**
+     * ColumnString
+     */
+    export type ColumnString = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Column size.
+         */
+        size: number;
+        /**
+         * Default value for column when not provided. Cannot be set when column is required.
+         */
+        default?: string;
+        /**
+         * Defines whether this column is encrypted or not.
+         */
+        encrypt?: boolean;
+    }
+
+    /**
+     * ColumnInteger
+     */
+    export type ColumnInteger = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Minimum value to enforce for new documents.
+         */
+        min?: number;
+        /**
+         * Maximum value to enforce for new documents.
+         */
+        max?: number;
+        /**
+         * Default value for column when not provided. Cannot be set when column is required.
+         */
+        default?: number;
+    }
+
+    /**
+     * ColumnFloat
+     */
+    export type ColumnFloat = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Minimum value to enforce for new documents.
+         */
+        min?: number;
+        /**
+         * Maximum value to enforce for new documents.
+         */
+        max?: number;
+        /**
+         * Default value for column when not provided. Cannot be set when column is required.
+         */
+        default?: number;
+    }
+
+    /**
+     * ColumnBoolean
+     */
+    export type ColumnBoolean = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Default value for column when not provided. Cannot be set when column is required.
+         */
+        default?: boolean;
+    }
+
+    /**
+     * ColumnEmail
+     */
+    export type ColumnEmail = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * String format.
+         */
+        format: string;
+        /**
+         * Default value for column when not provided. Cannot be set when column is required.
+         */
+        default?: string;
+    }
+
+    /**
+     * ColumnEnum
+     */
+    export type ColumnEnum = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Array of elements in enumerated type.
+         */
+        elements: string[];
+        /**
+         * String format.
+         */
+        format: string;
+        /**
+         * Default value for column when not provided. Cannot be set when column is required.
+         */
+        default?: string;
+    }
+
+    /**
+     * ColumnIP
+     */
+    export type ColumnIp = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * String format.
+         */
+        format: string;
+        /**
+         * Default value for column when not provided. Cannot be set when column is required.
+         */
+        default?: string;
+    }
+
+    /**
+     * ColumnURL
+     */
+    export type ColumnUrl = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * String format.
+         */
+        format: string;
+        /**
+         * Default value for column when not provided. Cannot be set when column is required.
+         */
+        default?: string;
+    }
+
+    /**
+     * ColumnDatetime
+     */
+    export type ColumnDatetime = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ISO 8601 format.
+         */
+        format: string;
+        /**
+         * Default value for column when not provided. Only null is optional
+         */
+        default?: string;
+    }
+
+    /**
+     * ColumnRelationship
+     */
+    export type ColumnRelationship = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * The ID of the related table.
+         */
+        relatedTable: string;
+        /**
+         * The type of the relationship.
+         */
+        relationType: string;
+        /**
+         * Is the relationship two-way?
+         */
+        twoWay: boolean;
+        /**
+         * The key of the two-way relationship.
+         */
+        twoWayKey: string;
+        /**
+         * How deleting the parent document will propagate to child documents.
+         */
+        onDelete: string;
+        /**
+         * Whether this is the parent or child side of the relationship
+         */
+        side: string;
+    }
+
+    /**
+     * ColumnPoint
+     */
+    export type ColumnPoint = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Default value for column when not provided. Cannot be set when column is required.
+         */
+        default?: any[];
+    }
+
+    /**
+     * ColumnLine
+     */
+    export type ColumnLine = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Default value for column when not provided. Cannot be set when column is required.
+         */
+        default?: any[];
+    }
+
+    /**
+     * ColumnPolygon
+     */
+    export type ColumnPolygon = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Default value for column when not provided. Cannot be set when column is required.
+         */
+        default?: any[];
+    }
+
+    /**
      * Index
      */
     export type Index = {
+        /**
+         * Index ID.
+         */
+        $id: string;
+        /**
+         * Index creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Index update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Index key.
+         */
+        key: string;
+        /**
+         * Index type.
+         */
+        type: string;
+        /**
+         * Index status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: IndexStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an index.
+         */
+        error: string;
+        /**
+         * Index attributes.
+         */
+        attributes: string[];
+        /**
+         * Index attributes length.
+         */
+        lengths: number[];
+        /**
+         * Index orders.
+         */
+        orders?: string[];
+    }
+
+    /**
+     * Index
+     */
+    export type ColumnIndex = {
+        /**
+         * Index ID.
+         */
+        $id: string;
+        /**
+         * Index creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Index update date in ISO 8601 format.
+         */
+        $updatedAt: string;
         /**
          * Index Key.
          */
@@ -1252,26 +2185,57 @@ export namespace Models {
          */
         error: string;
         /**
-         * Index attributes.
+         * Index columns.
          */
-        attributes: string[];
+        columns: string[];
         /**
-         * Index attributes length.
+         * Index columns length.
          */
         lengths: number[];
         /**
          * Index orders.
          */
         orders?: string[];
+    }
+
+    /**
+     * Row
+     */
+    export type Row = {
         /**
-         * Index creation date in ISO 8601 format.
+         * Row ID.
+         */
+        $id: string;
+        /**
+         * Row automatically incrementing ID.
+         */
+        $sequence: number;
+        /**
+         * Table ID.
+         */
+        $tableId: string;
+        /**
+         * Database ID.
+         */
+        $databaseId: string;
+        /**
+         * Row creation date in ISO 8601 format.
          */
         $createdAt: string;
         /**
-         * Index update date in ISO 8601 format.
+         * Row update date in ISO 8601 format.
          */
         $updatedAt: string;
+        /**
+         * Row permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+         */
+        $permissions: string[];
     }
+
+    export type DefaultRow = Row & {
+        [key: string]: any;
+        [__default]: true;
+    };
 
     /**
      * Document
@@ -1830,7 +2794,7 @@ export namespace Models {
          */
         country: string;
         /**
-         * Continent code. A two character continent code &quot;AF&quot; for Africa, &quot;AN&quot; for Antarctica, &quot;AS&quot; for Asia, &quot;EU&quot; for Europe, &quot;NA&quot; for North America, &quot;OC&quot; for Oceania, and &quot;SA&quot; for South America.
+         * Continent code. A two character continent code "AF" for Africa, "AN" for Antarctica, "AS" for Asia, "EU" for Europe, "NA" for North America, "OC" for Oceania, and "SA" for South America.
          */
         continentCode: string;
         /**
@@ -1963,6 +2927,10 @@ export namespace Models {
          * Virus scanning is enabled.
          */
         antivirus: boolean;
+        /**
+         * Image transformations are enabled.
+         */
+        transformations: boolean;
     }
 
     /**
@@ -2112,7 +3080,7 @@ export namespace Models {
          */
         enabled: boolean;
         /**
-         * Is the site deployed with the latest configuration? This is set to false if you&#039;ve changed an environment variables, entrypoint, commands, or other settings that needs redeploy to be applied. When the value is false, redeploy the site to update it with the latest configuration.
+         * Is the site deployed with the latest configuration? This is set to false if you've changed an environment variables, entrypoint, commands, or other settings that needs redeploy to be applied. When the value is false, redeploy the site to update it with the latest configuration.
          */
         live: boolean;
         /**
@@ -2124,7 +3092,7 @@ export namespace Models {
          */
         framework: string;
         /**
-         * Site&#039;s active deployment ID.
+         * Site's active deployment ID.
          */
         deploymentId: string;
         /**
@@ -2140,7 +3108,7 @@ export namespace Models {
          */
         deploymentScreenshotDark: string;
         /**
-         * Site&#039;s latest deployment ID.
+         * Site's latest deployment ID.
          */
         latestDeploymentId: string;
         /**
@@ -2148,7 +3116,7 @@ export namespace Models {
          */
         latestDeploymentCreatedAt: string;
         /**
-         * Status of latest deployment. Possible values are &quot;waiting&quot;, &quot;processing&quot;, &quot;building&quot;, &quot;ready&quot;, and &quot;failed&quot;.
+         * Status of latest deployment. Possible values are "waiting", "processing", "building", "ready", and "failed".
          */
         latestDeploymentStatus: string;
         /**
@@ -2338,7 +3306,7 @@ export namespace Models {
          */
         enabled: boolean;
         /**
-         * Is the function deployed with the latest configuration? This is set to false if you&#039;ve changed an environment variables, entrypoint, commands, or other settings that needs redeploy to be applied. When the value is false, redeploy the function to update it with the latest configuration.
+         * Is the function deployed with the latest configuration? This is set to false if you've changed an environment variables, entrypoint, commands, or other settings that needs redeploy to be applied. When the value is false, redeploy the function to update it with the latest configuration.
          */
         live: boolean;
         /**
@@ -2350,7 +3318,7 @@ export namespace Models {
          */
         runtime: string;
         /**
-         * Function&#039;s active deployment ID.
+         * Function's active deployment ID.
          */
         deploymentId: string;
         /**
@@ -2358,7 +3326,7 @@ export namespace Models {
          */
         deploymentCreatedAt: string;
         /**
-         * Function&#039;s latest deployment ID.
+         * Function's latest deployment ID.
          */
         latestDeploymentId: string;
         /**
@@ -2366,7 +3334,7 @@ export namespace Models {
          */
         latestDeploymentCreatedAt: string;
         /**
-         * Status of latest deployment. Possible values are &quot;waiting&quot;, &quot;processing&quot;, &quot;building&quot;, &quot;ready&quot;, and &quot;failed&quot;.
+         * Status of latest deployment. Possible values are "waiting", "processing", "building", "ready", and "failed".
          */
         latestDeploymentStatus: string;
         /**
@@ -2612,13 +3580,17 @@ export namespace Models {
          */
         private: boolean;
         /**
-         * VCS (Version Control System) repository&#039;s default branch name.
+         * VCS (Version Control System) repository's default branch name.
          */
         defaultBranch: string;
         /**
          * Last commit date in ISO 8601 format.
          */
         pushedAt: string;
+        /**
+         * Environment variables found in .env files
+         */
+        variables: string[];
     }
 
     /**
@@ -2646,7 +3618,7 @@ export namespace Models {
          */
         private: boolean;
         /**
-         * VCS (Version Control System) repository&#039;s default branch name.
+         * VCS (Version Control System) repository's default branch name.
          */
         defaultBranch: string;
         /**
@@ -2654,7 +3626,11 @@ export namespace Models {
          */
         pushedAt: string;
         /**
-         * Auto-detected framework. Empty if type is not &quot;framework&quot;.
+         * Environment variables found in .env files
+         */
+        variables: string[];
+        /**
+         * Auto-detected framework. Empty if type is not "framework".
          */
         framework: string;
     }
@@ -2684,7 +3660,7 @@ export namespace Models {
          */
         private: boolean;
         /**
-         * VCS (Version Control System) repository&#039;s default branch name.
+         * VCS (Version Control System) repository's default branch name.
          */
         defaultBranch: string;
         /**
@@ -2692,7 +3668,11 @@ export namespace Models {
          */
         pushedAt: string;
         /**
-         * Auto-detected runtime. Empty if type is not &quot;runtime&quot;.
+         * Environment variables found in .env files
+         */
+        variables: string[];
+        /**
+         * Auto-detected runtime. Empty if type is not "runtime".
          */
         runtime: string;
     }
@@ -2701,6 +3681,10 @@ export namespace Models {
      * DetectionFramework
      */
     export type DetectionFramework = {
+        /**
+         * Environment variables found in .env files
+         */
+        variables?: DetectionVariable[];
         /**
          * Framework
          */
@@ -2724,6 +3708,10 @@ export namespace Models {
      */
     export type DetectionRuntime = {
         /**
+         * Environment variables found in .env files
+         */
+        variables?: DetectionVariable[];
+        /**
          * Runtime
          */
         runtime: string;
@@ -2735,6 +3723,20 @@ export namespace Models {
          * Function install and build commands
          */
         commands: string;
+    }
+
+    /**
+     * DetectionVariable
+     */
+    export type DetectionVariable = {
+        /**
+         * Name of environment variable
+         */
+        name: string;
+        /**
+         * Value of environment variable
+         */
+        value: string;
     }
 
     /**
@@ -2916,9 +3918,9 @@ export namespace Models {
          */
         screenshotDark: string;
         /**
-         * The deployment status. Possible values are &quot;waiting&quot;, &quot;processing&quot;, &quot;building&quot;, &quot;ready&quot;, and &quot;failed&quot;.
+         * The deployment status. Possible values are "waiting", "processing", "building", "ready", and "failed".
          */
-        status: string;
+        status: DeploymentStatus;
         /**
          * The build logs.
          */
@@ -2939,10 +3941,6 @@ export namespace Models {
          * The url of the vcs provider repository
          */
         providerRepositoryUrl: string;
-        /**
-         * The branch of the vcs repository
-         */
-        providerBranch: string;
         /**
          * The commit hash of the vcs commit
          */
@@ -2966,6 +3964,10 @@ export namespace Models {
         /**
          * The branch of the vcs repository
          */
+        providerBranch: string;
+        /**
+         * The branch of the vcs repository
+         */
         providerBranchUrl: string;
     }
 
@@ -2982,7 +3984,7 @@ export namespace Models {
          */
         $createdAt: string;
         /**
-         * Execution upate date in ISO 8601 format.
+         * Execution update date in ISO 8601 format.
          */
         $updatedAt: string;
         /**
@@ -2994,13 +3996,17 @@ export namespace Models {
          */
         functionId: string;
         /**
+         * Function's deployment ID used to create the execution.
+         */
+        deploymentId: string;
+        /**
          * The trigger that caused the function to execute. Possible values can be: `http`, `schedule`, or `event`.
          */
-        trigger: string;
+        trigger: ExecutionTrigger;
         /**
-         * The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, or `failed`.
+         * The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, `failed`, or `scheduled`.
          */
-        status: string;
+        status: ExecutionStatus;
         /**
          * HTTP request method type.
          */
@@ -3010,7 +4016,7 @@ export namespace Models {
          */
         requestPath: string;
         /**
-         * HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
+         * HTTP request headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
          */
         requestHeaders: Headers[];
         /**
@@ -3120,7 +4126,7 @@ export namespace Models {
          */
         authPasswordHistory: number;
         /**
-         * Whether or not to check user&#039;s password against most commonly used passwords.
+         * Whether or not to check user's password against most commonly used passwords.
          */
         authPasswordDictionary: boolean;
         /**
@@ -3147,6 +4153,10 @@ export namespace Models {
          * Whether or not to show user MFA status in the teams membership response.
          */
         authMembershipsMfa: boolean;
+        /**
+         * Whether or not all existing sessions should be invalidated on password change
+         */
+        authInvalidateSessions: boolean;
         /**
          * List of Auth Providers.
          */
@@ -3248,9 +4258,13 @@ export namespace Models {
          */
         serviceStatusForAvatars: boolean;
         /**
-         * Databases service status
+         * Databases (legacy) service status
          */
         serviceStatusForDatabases: boolean;
+        /**
+         * TablesDB service status
+         */
+        serviceStatusForTablesdb: boolean;
         /**
          * Locale service status
          */
@@ -3291,6 +4305,18 @@ export namespace Models {
          * Project region
          */
         region: string;
+        /**
+         * Project status
+         */
+        status: string;
+        /**
+         * Billing limits reached
+         */
+        billingLimits: BillingLimits;
+        /**
+         * Project blocks information
+         */
+        blocks: Block[];
     }
 
     /**
@@ -3492,9 +4518,9 @@ export namespace Models {
          */
         name: string;
         /**
-         * Platform type. Possible values are: web, flutter-web, flutter-ios, flutter-android, ios, android, and unity.
+         * Platform type. Possible values are: web, flutter-web, flutter-ios, flutter-android, flutter-linux, flutter-macos, flutter-windows, apple-ios, apple-macos, apple-watchos, apple-tvos, android, unity, react-native-ios, react-native-android.
          */
-        type: string;
+        type: PlatformType;
         /**
          * Platform Key. iOS bundle ID or Android package name.  Empty string for other platforms.
          */
@@ -3546,11 +4572,11 @@ export namespace Models {
          */
         secret: boolean;
         /**
-         * Service to which the variable belongs. Possible values are &quot;project&quot;, &quot;function&quot;
+         * Service to which the variable belongs. Possible values are "project", "function"
          */
         resourceType: string;
         /**
-         * ID of resource to which the variable belongs. If resourceType is &quot;project&quot;, it is empty. If resourceType is &quot;function&quot;, it is ID of the function.
+         * ID of resource to which the variable belongs. If resourceType is "project", it is empty. If resourceType is "function", it is ID of the function.
          */
         resourceId: string;
     }
@@ -3662,9 +4688,9 @@ export namespace Models {
          */
         version: string;
         /**
-         * Antivirus status. Possible values can are: `disabled`, `offline`, `online`
+         * Antivirus status. Possible values are: `disabled`, `offline`, `online`
          */
-        status: string;
+        status: HealthAntivirusStatus;
     }
 
     /**
@@ -3690,9 +4716,9 @@ export namespace Models {
          */
         ping: number;
         /**
-         * Service status. Possible values can are: `pass`, `fail`
+         * Service status. Possible values are: `pass`, `fail`
          */
-        status: string;
+        status: HealthCheckStatus;
     }
 
     /**
@@ -3796,9 +4822,17 @@ export namespace Models {
          */
         collectionsTotal: number;
         /**
+         * Total aggregated number  of tables.
+         */
+        tablesTotal: number;
+        /**
          * Total aggregated number of documents.
          */
         documentsTotal: number;
+        /**
+         * Total aggregated number of rows.
+         */
+        rowsTotal: number;
         /**
          * Total aggregated number of total databases storage in bytes.
          */
@@ -3820,9 +4854,17 @@ export namespace Models {
          */
         collections: Metric[];
         /**
+         * Aggregated number of tables per period.
+         */
+        tables: Metric[];
+        /**
          * Aggregated number of documents per period.
          */
         documents: Metric[];
+        /**
+         * Aggregated number of rows per period.
+         */
+        rows: Metric[];
         /**
          * An array of the aggregated number of databases storage in bytes per period.
          */
@@ -3850,9 +4892,17 @@ export namespace Models {
          */
         collectionsTotal: number;
         /**
+         * Total aggregated number of tables.
+         */
+        tablesTotal: number;
+        /**
          * Total aggregated number of documents.
          */
         documentsTotal: number;
+        /**
+         * Total aggregated number of rows.
+         */
+        rowsTotal: number;
         /**
          * Total aggregated number of total storage used in bytes.
          */
@@ -3870,9 +4920,17 @@ export namespace Models {
          */
         collections: Metric[];
         /**
+         * Aggregated  number of tables per period.
+         */
+        tables: Metric[];
+        /**
          * Aggregated  number of documents per period.
          */
         documents: Metric[];
+        /**
+         * Aggregated  number of rows per period.
+         */
+        rows: Metric[];
         /**
          * Aggregated storage used in bytes per period.
          */
@@ -3885,6 +4943,24 @@ export namespace Models {
          * An array of aggregated number of database writes.
          */
         databaseWrites: Metric[];
+    }
+
+    /**
+     * UsageTable
+     */
+    export type UsageTable = {
+        /**
+         * Time range of the usage stats.
+         */
+        range: string;
+        /**
+         * Total aggregated number of of rows.
+         */
+        rowsTotal: number;
+        /**
+         * Aggregated  number of rows per period.
+         */
+        rows: Metric[];
     }
 
     /**
@@ -4476,6 +5552,10 @@ export namespace Models {
          */
         documentsTotal: number;
         /**
+         * Total aggregated  number of rows.
+         */
+        rowsTotal: number;
+        /**
          * Total aggregated number of databases.
          */
         databasesTotal: number;
@@ -4599,6 +5679,22 @@ export namespace Models {
          * Aggregated stats for total backups storage.
          */
         backupsStorageTotal: number;
+        /**
+         * An array of aggregated number of screenshots generated.
+         */
+        screenshotsGenerated: Metric[];
+        /**
+         * Total aggregated number of screenshots generated.
+         */
+        screenshotsGeneratedTotal: number;
+        /**
+         * An array of aggregated number of Imagine credits in the given period.
+         */
+        imagineCredits: Metric[];
+        /**
+         * Total aggregated number of Imagine credits.
+         */
+        imagineCreditsTotal: number;
     }
 
     /**
@@ -4658,43 +5754,43 @@ export namespace Models {
          */
         domain: string;
         /**
-         * Action definition for the rule. Possible values are &quot;api&quot;, &quot;deployment&quot;, or &quot;redirect&quot;
+         * Action definition for the rule. Possible values are "api", "deployment", or "redirect"
          */
         type: string;
         /**
-         * Defines how the rule was created. Possible values are &quot;manual&quot; or &quot;deployment&quot;
+         * Defines how the rule was created. Possible values are "manual" or "deployment"
          */
         trigger: string;
         /**
-         * URL to redirect to. Used if type is &quot;redirect&quot;
+         * URL to redirect to. Used if type is "redirect"
          */
         redirectUrl: string;
         /**
-         * Status code to apply during redirect. Used if type is &quot;redirect&quot;
+         * Status code to apply during redirect. Used if type is "redirect"
          */
         redirectStatusCode: number;
         /**
-         * ID of deployment. Used if type is &quot;deployment&quot;
+         * ID of deployment. Used if type is "deployment"
          */
         deploymentId: string;
         /**
-         * Type of deployment. Possible values are &quot;function&quot;, &quot;site&quot;. Used if rule&#039;s type is &quot;deployment&quot;.
+         * Type of deployment. Possible values are "function", "site". Used if rule's type is "deployment".
          */
-        deploymentResourceType: string;
+        deploymentResourceType: ProxyRuleDeploymentResourceType;
         /**
-         * ID deployment&#039;s resource. Used if type is &quot;deployment&quot;
+         * ID deployment's resource. Used if type is "deployment"
          */
         deploymentResourceId: string;
         /**
-         * Name of Git branch that updates rule. Used if type is &quot;deployment&quot;
+         * Name of Git branch that updates rule. Used if type is "deployment"
          */
         deploymentVcsProviderBranch: string;
         /**
-         * Domain verification status. Possible values are &quot;created&quot;, &quot;verifying&quot;, &quot;verified&quot; and &quot;unverified&quot;
+         * Domain verification status. Possible values are "created", "verifying", "verified" and "unverified"
          */
-        status: string;
+        status: ProxyRuleStatus;
         /**
-         * Certificate generation logs. This will return an empty string if generation did not run, or succeeded.
+         * Logs from rule verification or certificate generation. Certificate generation logs are prioritized if both are available.
          */
         logs: string;
         /**
@@ -4768,9 +5864,17 @@ export namespace Models {
          */
         _APP_DOMAIN_TARGET_A: string;
         /**
+         * Maximum build timeout in seconds.
+         */
+        _APP_COMPUTE_BUILD_TIMEOUT: number;
+        /**
          * AAAA target for your Appwrite custom domains.
          */
         _APP_DOMAIN_TARGET_AAAA: string;
+        /**
+         * CAA target for your Appwrite custom domains.
+         */
+        _APP_DOMAIN_TARGET_CAA: string;
         /**
          * Maximum file size allowed for file upload in bytes.
          */
@@ -4780,7 +5884,7 @@ export namespace Models {
          */
         _APP_COMPUTE_SIZE_LIMIT: number;
         /**
-         * Defines if usage stats are enabled. This value is set to &#039;enabled&#039; by default, to disable the usage stats set the value to &#039;disabled&#039;.
+         * Defines if usage stats are enabled. This value is set to 'enabled' by default, to disable the usage stats set the value to 'disabled'.
          */
         _APP_USAGE_STATS: string;
         /**
@@ -4978,7 +6082,7 @@ export namespace Models {
         /**
          * Status of delivery.
          */
-        status: string;
+        status: MessageStatus;
     }
 
     /**
@@ -5017,6 +6121,36 @@ export namespace Models {
          * Subscribe permissions.
          */
         subscribe: string[];
+    }
+
+    /**
+     * Transaction
+     */
+    export type Transaction = {
+        /**
+         * Transaction ID.
+         */
+        $id: string;
+        /**
+         * Transaction creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Transaction update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Current status of the transaction. One of: pending, committing, committed, rolled_back, failed.
+         */
+        status: string;
+        /**
+         * Number of operations in the transaction.
+         */
+        operations: number;
+        /**
+         * Expiration time in ISO 8601 format.
+         */
+        expiresAt: string;
     }
 
     /**
@@ -5155,6 +6289,10 @@ export namespace Models {
          * All errors that occurred during the migration process.
          */
         errors: string[];
+        /**
+         * Migration options used during the migration process.
+         */
+        options: object;
     }
 
     /**
@@ -5174,9 +6312,9 @@ export namespace Models {
          */
         database: number;
         /**
-         * Number of documents to be migrated.
+         * Number of rows to be migrated.
          */
-        document: number;
+        row: number;
         /**
          * Number of files to be migrated.
          */
@@ -5204,6 +6342,10 @@ export namespace Models {
      */
     export type AdditionalResource = {
         /**
+         * Resource name
+         */
+        name: string;
+        /**
          * Resource unit
          */
         unit: string;
@@ -5219,6 +6361,10 @@ export namespace Models {
          * Resource value
          */
         value: number;
+        /**
+         * Description on invoice
+         */
+        invoiceDesc: string;
     }
 
     /**
@@ -5325,6 +6471,40 @@ export namespace Models {
          * Aggregated amount
          */
         amount: number;
+        /**
+         * Aggregation project breakdown
+         */
+        breakdown: AggregationBreakdown[];
+        /**
+         * Usage resources
+         */
+        resources: UsageResources[];
+    }
+
+    /**
+     * AggregationBreakdown
+     */
+    export type AggregationBreakdown = {
+        /**
+         * Aggregation ID.
+         */
+        $id: string;
+        /**
+         * Project name
+         */
+        name: string;
+        /**
+         * Project region
+         */
+        region: string;
+        /**
+         * Aggregated amount
+         */
+        amount: number;
+        /**
+         * 
+         */
+        resources: UsageResources[];
     }
 
     /**
@@ -5472,7 +6652,7 @@ export namespace Models {
          */
         projects: number;
         /**
-         * Platofrms
+         * Platforms
          */
         platforms: number;
         /**
@@ -5488,6 +6668,18 @@ export namespace Models {
          */
         databases: number;
         /**
+         * Database reads per month
+         */
+        databasesReads: number;
+        /**
+         * Database writes per month
+         */
+        databasesWrites: number;
+        /**
+         * Database batch size limit
+         */
+        databasesBatchSize: number;
+        /**
          * Buckets
          */
         buckets: number;
@@ -5500,17 +6692,45 @@ export namespace Models {
          */
         functions: number;
         /**
+         * Sites
+         */
+        sites: number;
+        /**
          * Function executions
          */
         executions: number;
+        /**
+         * GB hours for functions
+         */
+        GBHours: number;
         /**
          * Realtime connections
          */
         realtime: number;
         /**
+         * Messages per month
+         */
+        messages: number;
+        /**
+         * Topics for messaging
+         */
+        topics: number;
+        /**
+         * SMS authentications per month
+         */
+        authPhone: number;
+        /**
+         * Custom domains
+         */
+        domains: number;
+        /**
          * Log days
          */
         logs: number;
+        /**
+         * Alert threshold percentage
+         */
+        alertLimit: number;
         /**
          * Additional resources
          */
@@ -5572,6 +6792,10 @@ export namespace Models {
          */
         backupsEnabled: boolean;
         /**
+         * Whether usage addons are calculated per project.
+         */
+        usagePerProject: boolean;
+        /**
          * How many policies does plan support
          */
         backupPolicies: number;
@@ -5587,6 +6811,14 @@ export namespace Models {
          * Does the plan support encrypted string attributes or not.
          */
         databasesAllowEncrypt: boolean;
+        /**
+         * Plan specific limits
+         */
+        limits?: BillingPlanLimits;
+        /**
+         * Group of this billing plan for variants
+         */
+        group: BillingPlanGroup;
     }
 
     /**
@@ -5597,6 +6829,10 @@ export namespace Models {
          * Addon seats
          */
         seats: BillingPlanAddonDetails;
+        /**
+         * Addon projects
+         */
+        projects: BillingPlanAddonDetails;
     }
 
     /**
@@ -5607,6 +6843,10 @@ export namespace Models {
          * Is the addon supported in the plan?
          */
         supported: boolean;
+        /**
+         * Addon plan included value
+         */
+        planIncluded: number;
         /**
          * Addon limit
          */
@@ -5627,6 +6867,24 @@ export namespace Models {
          * Resource value
          */
         value: number;
+        /**
+         * Description on invoice
+         */
+        invoiceDesc: string;
+    }
+
+    /**
+     * BillingPlanLimits
+     */
+    export type BillingPlanLimits = {
+        /**
+         * Credits limit per billing cycle
+         */
+        credits?: number;
+        /**
+         * Daily credits limit (if applicable)
+         */
+        dailyCredits?: number;
     }
 
     /**
@@ -5661,6 +6919,36 @@ export namespace Models {
          * Auth phone limit
          */
         authPhone: number;
+        /**
+         * Budget limit percentage
+         */
+        budgetLimit: number;
+    }
+
+    /**
+     * Block
+     */
+    export type Block = {
+        /**
+         * Block creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Resource type that is blocked
+         */
+        resourceType: string;
+        /**
+         * Resource identifier that is blocked
+         */
+        resourceId: string;
+        /**
+         * Reason for the block
+         */
+        reason: string;
+        /**
+         * Block expiration date in ISO 8601 format.
+         */
+        expiredAt: string;
     }
 
     /**
@@ -5834,6 +7122,52 @@ export namespace Models {
     }
 
     /**
+     * Downgrade Feedback
+     */
+    export type DowngradeFeedback = {
+        /**
+         * Feedback ID.
+         */
+        $id: string;
+        /**
+         * Feedback creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Feedback update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Feedback reason
+         */
+        title: string;
+        /**
+         * Feedback message
+         */
+        message: string;
+        /**
+         * Plan ID downgrading from
+         */
+        fromPlanId: string;
+        /**
+         * Plan ID downgrading to
+         */
+        toPlanId: string;
+        /**
+         * Organization ID
+         */
+        teamId: string;
+        /**
+         * User ID who submitted feedback
+         */
+        userId: string;
+        /**
+         * Console version
+         */
+        version: string;
+    }
+
+    /**
      * Invoice
      */
     export type Invoice = {
@@ -5868,7 +7202,7 @@ export namespace Models {
         /**
          * Usage breakdown per resource
          */
-        usage: UsageInvoice[];
+        usage: UsageResources[];
         /**
          * Invoice Amount
          */
@@ -5964,9 +7298,17 @@ export namespace Models {
          */
         budgetAlerts: number[];
         /**
-         * Billing plan selected. Can be one of `tier-0`, `tier-1` or `tier-2`.
+         * Organization's billing plan ID.
          */
         billingPlan: string;
+        /**
+         * Organization's billing plan ID.
+         */
+        billingPlanId: string;
+        /**
+         * Organization's billing plan.
+         */
+        billingPlanDetails: BillingPlan;
         /**
          * Billing email set for the organization.
          */
@@ -6024,19 +7366,19 @@ export namespace Models {
          */
         agreementBAA: string;
         /**
-         * Program manager&#039;s name.
+         * Program manager's name.
          */
         programManagerName: string;
         /**
-         * Program manager&#039;s calendar link.
+         * Program manager's calendar link.
          */
         programManagerCalendar: string;
         /**
-         * Program&#039;s discord channel name.
+         * Program's discord channel name.
          */
         programDiscordChannelName: string;
         /**
-         * Program&#039;s discord channel URL.
+         * Program's discord channel URL.
          */
         programDiscordChannelUrl: string;
         /**
@@ -6056,9 +7398,35 @@ export namespace Models {
          */
         markedForDeletion: boolean;
         /**
+         * Product with which the organization is associated (appwrite or imagine)
+         */
+        platform: string;
+        /**
          * Selected projects
          */
         projects: string[];
+    }
+
+    /**
+     * PaymentAuthentication
+     */
+    export type PaymentAuthentication = {
+        /**
+         * Message for the end user to show on Console.
+         */
+        message: string;
+        /**
+         * Stripe client secret to use for validation.
+         */
+        clientSecret: string;
+        /**
+         * Organization ID for which the payment authentication is needed.
+         */
+        organizationId: string;
+        /**
+         * Invoice ID against which the payment needs to be validated.
+         */
+        invoiceId: string;
     }
 
     /**
@@ -6130,7 +7498,7 @@ export namespace Models {
          */
         lastError: string;
         /**
-         * True when it&#039;s the default payment method.
+         * True when it's the default payment method.
          */
         default: boolean;
         /**
@@ -6342,6 +7710,22 @@ export namespace Models {
          */
         imageTransformationsTotal: number;
         /**
+         * Aggregated stats for file transformations.
+         */
+        screenshotsGenerated: Metric[];
+        /**
+         * Aggregated stats for total file transformations.
+         */
+        screenshotsGeneratedTotal: number;
+        /**
+         * Aggregated stats for imagine credits.
+         */
+        imagineCredits: Metric[];
+        /**
+         * Aggregated stats for total imagine credits.
+         */
+        imagineCreditsTotal: number;
+        /**
          * Aggregated stats for total users.
          */
         usersTotal: number;
@@ -6467,6 +7851,18 @@ export namespace Models {
          * Aggregated stats for total file transformations.
          */
         imageTransformationsTotal: number;
+        /**
+         * Aggregated stats for file transformations.
+         */
+        screenshotsGenerated: Metric[];
+        /**
+         * Aggregated stats for total file transformations.
+         */
+        screenshotsGeneratedTotal: number;
+        /**
+         * Aggregated stats for imagine credits.
+         */
+        imagineCredits: number;
     }
 
     /**
@@ -6490,11 +7886,11 @@ export namespace Models {
          */
         domain: string;
         /**
-         * Domain registrar (e.g. &quot;appwrite&quot; or &quot;third_party&quot;).
+         * Domain registrar (e.g. "appwrite" or "third_party").
          */
         registrar: string;
         /**
-         * Nameservers setting. &quot;Appwrite&quot; or empty string.
+         * Nameservers setting. "Appwrite" or empty string.
          */
         nameservers: string;
         /**
@@ -6578,9 +7974,9 @@ export namespace Models {
     }
 
     /**
-     * UsageInvoice
+     * UsageResource
      */
-    export type UsageInvoice = {
+    export type UsageResources = {
         /**
          * Invoice name
          */
@@ -6601,6 +7997,10 @@ export namespace Models {
          * Invoice description
          */
         desc: string;
+        /**
+         * Resource ID
+         */
+        resourceId: string;
     }
 
     /**
@@ -6639,6 +8039,10 @@ export namespace Models {
          * Image transformation additional resources
          */
         imageTransformations: AdditionalResource;
+        /**
+         * Credits additional resources
+         */
+        credits: AdditionalResource;
     }
 
     /**
@@ -6716,7 +8120,7 @@ export namespace Models {
          */
         trialEndDate?: string;
         /**
-         * Organization&#039;s existing credits
+         * Organization's existing credits
          */
         organizationCredits: number;
     }
@@ -6750,7 +8154,7 @@ export namespace Models {
      */
     export type AggregationTeamList = {
         /**
-         * Total number of aggregations documents that matched your query.
+         * Total number of aggregations that matched your query.
          */
         total: number;
         /**
@@ -6764,7 +8168,7 @@ export namespace Models {
      */
     export type BackupArchiveList = {
         /**
-         * Total number of archives documents that matched your query.
+         * Total number of archives that matched your query.
          */
         total: number;
         /**
@@ -6778,7 +8182,7 @@ export namespace Models {
      */
     export type BackupPolicyList = {
         /**
-         * Total number of policies documents that matched your query.
+         * Total number of policies that matched your query.
          */
         total: number;
         /**
@@ -6792,7 +8196,7 @@ export namespace Models {
      */
     export type BackupRestorationList = {
         /**
-         * Total number of restorations documents that matched your query.
+         * Total number of restorations that matched your query.
          */
         total: number;
         /**
@@ -6806,7 +8210,7 @@ export namespace Models {
      */
     export type InvoiceList = {
         /**
-         * Total number of invoices documents that matched your query.
+         * Total number of invoices that matched your query.
          */
         total: number;
         /**
@@ -6820,7 +8224,7 @@ export namespace Models {
      */
     export type BillingAddressList = {
         /**
-         * Total number of billingAddresses documents that matched your query.
+         * Total number of billingAddresses that matched your query.
          */
         total: number;
         /**
@@ -6834,7 +8238,7 @@ export namespace Models {
      */
     export type BillingPlanList = {
         /**
-         * Total number of plans documents that matched your query.
+         * Total number of plans that matched your query.
          */
         total: number;
         /**
@@ -6844,11 +8248,11 @@ export namespace Models {
     }
 
     /**
-     * Organizations List
+     * Organizations list
      */
     export type OrganizationList<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
         /**
-         * Total number of teams documents that matched your query.
+         * Total number of teams that matched your query.
          */
         total: number;
         /**
@@ -6862,7 +8266,7 @@ export namespace Models {
      */
     export type PaymentMethodList = {
         /**
-         * Total number of paymentMethods documents that matched your query.
+         * Total number of paymentMethods that matched your query.
          */
         total: number;
         /**
@@ -6876,7 +8280,7 @@ export namespace Models {
      */
     export type ConsoleRegionList = {
         /**
-         * Total number of regions documents that matched your query.
+         * Total number of regions that matched your query.
          */
         total: number;
         /**
@@ -6890,7 +8294,7 @@ export namespace Models {
      */
     export type DomainsList = {
         /**
-         * Total number of domains documents that matched your query.
+         * Total number of domains that matched your query.
          */
         total: number;
         /**
@@ -6904,7 +8308,7 @@ export namespace Models {
      */
     export type DnsRecordsList = {
         /**
-         * Total number of dnsRecords documents that matched your query.
+         * Total number of dnsRecords that matched your query.
          */
         total: number;
         /**
