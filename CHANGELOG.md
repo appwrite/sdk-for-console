@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.0.0
+
+* Update SDK examples to use object-based parameters instead of positional arguments
+* Align all service method usage with the new API signature style
+* Update publish workflow to use trusted publishing mechanism
+
 ## 1.10.0
 
 * Fix autocompletion not working for `Document` model even when generic is passed
