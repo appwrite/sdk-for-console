@@ -197,67 +197,64 @@ export class Account {
     /**
      * Add a new billing address to a user's account.
      *
-     * @param {string} params.country - 
-     * @param {string} params.streetAddress - 
-     * @param {string} params.city - 
-     * @param {string} params.state - 
-     * @param {string} params.postalCode - Postal code
+     * @param {string} params.country - Country
+     * @param {string} params.city - City
+     * @param {string} params.streetAddress - Street address
      * @param {string} params.addressLine2 - Address line 2
+     * @param {string} params.state - State or province
+     * @param {string} params.postalCode - Postal code
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      */
-    createBillingAddress(params: { country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string  }): Promise<Models.BillingAddress>;
+    createBillingAddress(params: { country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string  }): Promise<Models.BillingAddress>;
     /**
      * Add a new billing address to a user's account.
      *
-     * @param {string} country - 
-     * @param {string} streetAddress - 
-     * @param {string} city - 
-     * @param {string} state - 
-     * @param {string} postalCode - Postal code
+     * @param {string} country - Country
+     * @param {string} city - City
+     * @param {string} streetAddress - Street address
      * @param {string} addressLine2 - Address line 2
+     * @param {string} state - State or province
+     * @param {string} postalCode - Postal code
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createBillingAddress(country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string): Promise<Models.BillingAddress>;
+    createBillingAddress(country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string): Promise<Models.BillingAddress>;
     createBillingAddress(
-        paramsOrFirst: { country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string } | string,
+        paramsOrFirst: { country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string } | string,
         ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?]    
     ): Promise<Models.BillingAddress> {
-        let params: { country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string };
+        let params: { country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string };
+            params = (paramsOrFirst || {}) as { country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string };
         } else {
             params = {
                 country: paramsOrFirst as string,
-                streetAddress: rest[0] as string,
-                city: rest[1] as string,
-                state: rest[2] as string,
-                postalCode: rest[3] as string,
-                addressLine2: rest[4] as string            
+                city: rest[0] as string,
+                streetAddress: rest[1] as string,
+                addressLine2: rest[2] as string,
+                state: rest[3] as string,
+                postalCode: rest[4] as string            
             };
         }
         
         const country = params.country;
-        const streetAddress = params.streetAddress;
         const city = params.city;
+        const streetAddress = params.streetAddress;
+        const addressLine2 = params.addressLine2;
         const state = params.state;
         const postalCode = params.postalCode;
-        const addressLine2 = params.addressLine2;
 
         if (typeof country === 'undefined') {
             throw new AppwriteException('Missing required parameter: "country"');
         }
-        if (typeof streetAddress === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "streetAddress"');
-        }
         if (typeof city === 'undefined') {
             throw new AppwriteException('Missing required parameter: "city"');
         }
-        if (typeof state === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "state"');
+        if (typeof streetAddress === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "streetAddress"');
         }
 
         const apiPath = '/account/billing-addresses';
@@ -265,20 +262,20 @@ export class Account {
         if (typeof country !== 'undefined') {
             payload['country'] = country;
         }
+        if (typeof city !== 'undefined') {
+            payload['city'] = city;
+        }
         if (typeof streetAddress !== 'undefined') {
             payload['streetAddress'] = streetAddress;
         }
-        if (typeof city !== 'undefined') {
-            payload['city'] = city;
+        if (typeof addressLine2 !== 'undefined') {
+            payload['addressLine2'] = addressLine2;
         }
         if (typeof state !== 'undefined') {
             payload['state'] = state;
         }
         if (typeof postalCode !== 'undefined') {
             payload['postalCode'] = postalCode;
-        }
-        if (typeof addressLine2 !== 'undefined') {
-            payload['addressLine2'] = addressLine2;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -348,59 +345,59 @@ export class Account {
     /**
      * Update a specific billing address using it's ID.
      *
-     * @param {string} params.billingAddressId - Billing address unique ID
-     * @param {string} params.country - 
-     * @param {string} params.streetAddress - 
-     * @param {string} params.city - 
-     * @param {string} params.state - 
-     * @param {string} params.postalCode - Postla code
+     * @param {string} params.billingAddressId - Unique ID of billing address
+     * @param {string} params.country - Country
+     * @param {string} params.city - City
+     * @param {string} params.streetAddress - Street address
      * @param {string} params.addressLine2 - Address line 2
+     * @param {string} params.state - State or province
+     * @param {string} params.postalCode - Postal code
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      */
-    updateBillingAddress(params: { billingAddressId: string, country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string  }): Promise<Models.BillingAddress>;
+    updateBillingAddress(params: { billingAddressId: string, country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string  }): Promise<Models.BillingAddress>;
     /**
      * Update a specific billing address using it's ID.
      *
-     * @param {string} billingAddressId - Billing address unique ID
-     * @param {string} country - 
-     * @param {string} streetAddress - 
-     * @param {string} city - 
-     * @param {string} state - 
-     * @param {string} postalCode - Postla code
+     * @param {string} billingAddressId - Unique ID of billing address
+     * @param {string} country - Country
+     * @param {string} city - City
+     * @param {string} streetAddress - Street address
      * @param {string} addressLine2 - Address line 2
+     * @param {string} state - State or province
+     * @param {string} postalCode - Postal code
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateBillingAddress(billingAddressId: string, country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string): Promise<Models.BillingAddress>;
+    updateBillingAddress(billingAddressId: string, country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string): Promise<Models.BillingAddress>;
     updateBillingAddress(
-        paramsOrFirst: { billingAddressId: string, country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string } | string,
+        paramsOrFirst: { billingAddressId: string, country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string } | string,
         ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
     ): Promise<Models.BillingAddress> {
-        let params: { billingAddressId: string, country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string };
+        let params: { billingAddressId: string, country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { billingAddressId: string, country: string, streetAddress: string, city: string, state: string, postalCode?: string, addressLine2?: string };
+            params = (paramsOrFirst || {}) as { billingAddressId: string, country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string };
         } else {
             params = {
                 billingAddressId: paramsOrFirst as string,
                 country: rest[0] as string,
-                streetAddress: rest[1] as string,
-                city: rest[2] as string,
-                state: rest[3] as string,
-                postalCode: rest[4] as string,
-                addressLine2: rest[5] as string            
+                city: rest[1] as string,
+                streetAddress: rest[2] as string,
+                addressLine2: rest[3] as string,
+                state: rest[4] as string,
+                postalCode: rest[5] as string            
             };
         }
         
         const billingAddressId = params.billingAddressId;
         const country = params.country;
-        const streetAddress = params.streetAddress;
         const city = params.city;
+        const streetAddress = params.streetAddress;
+        const addressLine2 = params.addressLine2;
         const state = params.state;
         const postalCode = params.postalCode;
-        const addressLine2 = params.addressLine2;
 
         if (typeof billingAddressId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "billingAddressId"');
@@ -408,14 +405,11 @@ export class Account {
         if (typeof country === 'undefined') {
             throw new AppwriteException('Missing required parameter: "country"');
         }
-        if (typeof streetAddress === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "streetAddress"');
-        }
         if (typeof city === 'undefined') {
             throw new AppwriteException('Missing required parameter: "city"');
         }
-        if (typeof state === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "state"');
+        if (typeof streetAddress === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "streetAddress"');
         }
 
         const apiPath = '/account/billing-addresses/{billingAddressId}'.replace('{billingAddressId}', billingAddressId);
@@ -423,20 +417,20 @@ export class Account {
         if (typeof country !== 'undefined') {
             payload['country'] = country;
         }
+        if (typeof city !== 'undefined') {
+            payload['city'] = city;
+        }
         if (typeof streetAddress !== 'undefined') {
             payload['streetAddress'] = streetAddress;
         }
-        if (typeof city !== 'undefined') {
-            payload['city'] = city;
+        if (typeof addressLine2 !== 'undefined') {
+            payload['addressLine2'] = addressLine2;
         }
         if (typeof state !== 'undefined') {
             payload['state'] = state;
         }
         if (typeof postalCode !== 'undefined') {
             payload['postalCode'] = postalCode;
-        }
-        if (typeof addressLine2 !== 'undefined') {
-            payload['addressLine2'] = addressLine2;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

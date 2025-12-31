@@ -6819,6 +6819,10 @@ export namespace Models {
          * Group of this billing plan for variants
          */
         group: BillingPlanGroup;
+        /**
+         * Details of the program this plan is a part of.
+         */
+        program?: Program;
     }
 
     /**
@@ -7003,6 +7007,48 @@ export namespace Models {
          * Is footer
          */
         footer?: boolean;
+    }
+
+    /**
+     * Program
+     */
+    export type Program = {
+        /**
+         * Program ID
+         */
+        $id: string;
+        /**
+         * Program title
+         */
+        title: string;
+        /**
+         * Program description
+         */
+        description: string;
+        /**
+         * Program tag for highlighting on console
+         */
+        tag: string;
+        /**
+         * Program icon for highlighting on console
+         */
+        icon: string;
+        /**
+         * URL for more information on this program
+         */
+        url: string;
+        /**
+         * Whether this program is active
+         */
+        active: boolean;
+        /**
+         * Whether this program is external
+         */
+        external: boolean;
+        /**
+         * Billing plan ID that this is program is associated with.
+         */
+        billingPlanId: string;
     }
 
     /**
@@ -7493,6 +7539,10 @@ export namespace Models {
          * Country of the payment method
          */
         country: string;
+        /**
+         * State of the payment method
+         */
+        state: string;
         /**
          * Last payment error associated with the payment method.
          */

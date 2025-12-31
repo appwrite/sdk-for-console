@@ -8,11 +8,11 @@ const account = new Account(client);
 
 const result = await account.createBillingAddress({
     country: '<COUNTRY>',
-    streetAddress: '<STREET_ADDRESS>',
     city: '<CITY>',
-    state: '<STATE>',
-    postalCode: '<POSTAL_CODE>', // optional
-    addressLine2: '<ADDRESS_LINE2>' // optional
+    streetAddress: '<STREET_ADDRESS>',
+    addressLine2: '<ADDRESS_LINE2>', // optional
+    state: '<STATE>', // optional
+    postalCode: '<POSTAL_CODE>' // optional
 });
 
 console.log(result);

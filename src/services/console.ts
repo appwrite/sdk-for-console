@@ -217,6 +217,57 @@ export class Console {
     }
 
     /**
+     * Receive the details of a program using its ID.
+     *
+     * @param {string} params.programId - ID of the program
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Program>}
+     */
+    getProgram(params: { programId: string  }): Promise<Models.Program>;
+    /**
+     * Receive the details of a program using its ID.
+     *
+     * @param {string} programId - ID of the program
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Program>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getProgram(programId: string): Promise<Models.Program>;
+    getProgram(
+        paramsOrFirst: { programId: string } | string    
+    ): Promise<Models.Program> {
+        let params: { programId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { programId: string };
+        } else {
+            params = {
+                programId: paramsOrFirst as string            
+            };
+        }
+        
+        const programId = params.programId;
+
+        if (typeof programId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "programId"');
+        }
+
+        const apiPath = '/console/programs/{programId}'.replace('{programId}', programId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Create a new membership for an account to a program.
      *
      * @param {string} params.programId - ID of the program
