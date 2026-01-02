@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.1.0
+
+* Add `setSelfSigned` and `setCookie` methods to `Client` class
+
 ## 2.0.0
 
 * Update SDK examples to use object-based parameters instead of positional arguments
