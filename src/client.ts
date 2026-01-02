@@ -303,15 +303,18 @@ class Client {
     config: {
         endpoint: string;
         endpointRealtime: string;
-        [key: string]: string | undefined;
+        selfSigned: boolean;
+        [key: string]: string | boolean | undefined;
     } = {
         endpoint: 'https://cloud.appwrite.io/v1',
         endpointRealtime: '',
+        selfSigned: false,
         project: '',
         key: '',
         jwt: '',
         locale: '',
         mode: '',
+        cookie: '',
         platform: '',
     };
     /**
@@ -321,7 +324,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '2.0.0',
+        'x-sdk-version': '2.1.0',
         'X-Appwrite-Response-Format': '1.8.0',
     };
 
@@ -366,6 +369,18 @@ class Client {
         }
 
         this.config.endpointRealtime = endpointRealtime;
+        return this;
+    }
+
+    /**
+     * Set self-signed
+     *
+     * @param {boolean} selfSigned
+     *
+     * @returns {this}
+     */
+    setSelfSigned(selfSigned: boolean): this {
+        this.config.selfSigned = selfSigned;
         return this;
     }
 
@@ -433,6 +448,20 @@ class Client {
     setMode(value: string): this {
         this.headers['X-Appwrite-Mode'] = value;
         this.config.mode = value;
+        return this;
+    }
+    /**
+     * Set Cookie
+     *
+     * The user cookie to authenticate with
+     *
+     * @param value string
+     *
+     * @return {this}
+     */
+    setCookie(value: string): this {
+        this.headers['Cookie'] = value;
+        this.config.cookie = value;
         return this;
     }
     /**
