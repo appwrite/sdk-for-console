@@ -528,7 +528,7 @@ class Client {
 
             const channels = new URLSearchParams();
             if (this.config.project) {
-                channels.set('project', this.config.project);
+                channels.set('project', this.config.project as string);
             }
             this.realtime.channels.forEach(channel => {
                 channels.append('channels[]', channel);
