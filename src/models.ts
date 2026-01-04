@@ -5292,94 +5292,6 @@ export namespace Models {
          */
         range: string;
         /**
-         * Total aggregated number of functions deployments.
-         */
-        deploymentsTotal: number;
-        /**
-         * Total aggregated sum of functions deployment storage.
-         */
-        deploymentsStorageTotal: number;
-        /**
-         * Total aggregated number of functions build.
-         */
-        buildsTotal: number;
-        /**
-         * total aggregated sum of functions build storage.
-         */
-        buildsStorageTotal: number;
-        /**
-         * Total aggregated sum of functions build compute time.
-         */
-        buildsTimeTotal: number;
-        /**
-         * Total aggregated sum of functions build mbSeconds.
-         */
-        buildsMbSecondsTotal: number;
-        /**
-         * Total  aggregated number of functions execution.
-         */
-        executionsTotal: number;
-        /**
-         * Total aggregated sum of functions  execution compute time.
-         */
-        executionsTimeTotal: number;
-        /**
-         * Total aggregated sum of functions execution mbSeconds.
-         */
-        executionsMbSecondsTotal: number;
-        /**
-         * Aggregated number of functions deployment per period.
-         */
-        deployments: Metric[];
-        /**
-         * Aggregated number of  functions deployment storage per period.
-         */
-        deploymentsStorage: Metric[];
-        /**
-         * Total aggregated number of successful function builds.
-         */
-        buildsSuccessTotal: number;
-        /**
-         * Total aggregated number of failed function builds.
-         */
-        buildsFailedTotal: number;
-        /**
-         * Aggregated number of functions build per period.
-         */
-        builds: Metric[];
-        /**
-         * Aggregated sum of functions build storage per period.
-         */
-        buildsStorage: Metric[];
-        /**
-         * Aggregated sum of  functions build compute time per period.
-         */
-        buildsTime: Metric[];
-        /**
-         * Aggregated sum of functions build mbSeconds per period.
-         */
-        buildsMbSeconds: Metric[];
-        /**
-         * Aggregated number of  functions execution per period.
-         */
-        executions: Metric[];
-        /**
-         * Aggregated number of functions execution compute time per period.
-         */
-        executionsTime: Metric[];
-        /**
-         * Aggregated number of functions mbSeconds per period.
-         */
-        executionsMbSeconds: Metric[];
-        /**
-         * Aggregated number of successful function builds per period.
-         */
-        buildsSuccess: Metric[];
-        /**
-         * Aggregated number of failed function builds per period.
-         */
-        buildsFailed: Metric[];
-        /**
          * Total aggregated number of sites.
          */
         sitesTotal: number;
@@ -5387,6 +5299,42 @@ export namespace Models {
          * Aggregated number of sites per period.
          */
         sites: Metric[];
+        /**
+         * Total aggregated number of sites deployments.
+         */
+        deploymentsTotal: number;
+        /**
+         * Total aggregated sum of sites deployment storage.
+         */
+        deploymentsStorageTotal: number;
+        /**
+         * Total aggregated number of sites build.
+         */
+        buildsTotal: number;
+        /**
+         * total aggregated sum of sites build storage.
+         */
+        buildsStorageTotal: number;
+        /**
+         * Total aggregated sum of sites build compute time.
+         */
+        buildsTimeTotal: number;
+        /**
+         * Total aggregated sum of sites build mbSeconds.
+         */
+        buildsMbSecondsTotal: number;
+        /**
+         * Total  aggregated number of sites execution.
+         */
+        executionsTotal: number;
+        /**
+         * Total aggregated sum of sites  execution compute time.
+         */
+        executionsTimeTotal: number;
+        /**
+         * Total aggregated sum of sites execution mbSeconds.
+         */
+        executionsMbSecondsTotal: number;
         /**
          * Total aggregated number of requests.
          */
@@ -5411,6 +5359,58 @@ export namespace Models {
          * Aggregated number of outbound bandwidth per period.
          */
         outbound: Metric[];
+        /**
+         * Aggregated number of sites deployment per period.
+         */
+        deployments: Metric[];
+        /**
+         * Aggregated number of  sites deployment storage per period.
+         */
+        deploymentsStorage: Metric[];
+        /**
+         * Total aggregated number of successful site builds.
+         */
+        buildsSuccessTotal: number;
+        /**
+         * Total aggregated number of failed site builds.
+         */
+        buildsFailedTotal: number;
+        /**
+         * Aggregated number of sites build per period.
+         */
+        builds: Metric[];
+        /**
+         * Aggregated sum of sites build storage per period.
+         */
+        buildsStorage: Metric[];
+        /**
+         * Aggregated sum of  sites build compute time per period.
+         */
+        buildsTime: Metric[];
+        /**
+         * Aggregated sum of sites build mbSeconds per period.
+         */
+        buildsMbSeconds: Metric[];
+        /**
+         * Aggregated number of  sites execution per period.
+         */
+        executions: Metric[];
+        /**
+         * Aggregated number of sites execution compute time per period.
+         */
+        executionsTime: Metric[];
+        /**
+         * Aggregated number of sites mbSeconds per period.
+         */
+        executionsMbSeconds: Metric[];
+        /**
+         * Aggregated number of successful site builds per period.
+         */
+        buildsSuccess: Metric[];
+        /**
+         * Aggregated number of failed site builds per period.
+         */
+        buildsFailed: Metric[];
     }
 
     /**
