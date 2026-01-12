@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.1.1
+
+* Allow `bigint` to be passed in all methods that previously only accepted `number`
+
 ## 2.1.0
 
 * Add `setSelfSigned` and `setCookie` methods to `Client` class
