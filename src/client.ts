@@ -1,4 +1,6 @@
 import { Models } from './models';
+import JSONbigModule from 'json-bigint';
+const JSONbig = JSONbigModule({ useNativeBigInt: true });
 
 /**
  * Payload type representing a key-value pair with string keys and any values.
@@ -303,12 +305,18 @@ class Client {
     config: {
         endpoint: string;
         endpointRealtime: string;
+        project: string;
+        key: string;
+        jwt: string;
+        locale: string;
+        mode: string;
+        cookie: string;
+        platform: string;
         selfSigned: boolean;
-        [key: string]: string | boolean | undefined;
+        session?: string;
     } = {
         endpoint: 'https://cloud.appwrite.io/v1',
         endpointRealtime: '',
-        selfSigned: false,
         project: '',
         key: '',
         jwt: '',
@@ -316,6 +324,8 @@ class Client {
         mode: '',
         cookie: '',
         platform: '',
+        selfSigned: false,
+        session: undefined,
     };
     /**
      * Custom headers for API requests.
@@ -324,7 +334,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '2.1.0',
+        'x-sdk-version': '2.1.1',
         'X-Appwrite-Response-Format': '1.8.0',
     };
 
@@ -514,7 +524,7 @@ class Client {
             }
 
             this.realtime.heartbeat = window?.setInterval(() => {
-                this.realtime.socket?.send(JSON.stringify({
+                this.realtime.socket?.send(JSONbig.stringify({
                     type: 'ping'
                 }));
             }, 20_000);
@@ -580,19 +590,19 @@ class Client {
         },
         onMessage: (event) => {
             try {
-                const message: RealtimeResponse = JSON.parse(event.data);
+                const message: RealtimeResponse = JSONbig.parse(event.data);
                 this.realtime.lastMessage = message;
                 switch (message.type) {
                     case 'connected':
                         let session = this.config.session;
                         if (!session) {
-                            const cookie = JSON.parse(window.localStorage.getItem('cookieFallback') ?? '{}');
+                            const cookie = JSONbig.parse(window.localStorage.getItem('cookieFallback') ?? '{}');
                             session = cookie?.[`a_session_${this.config.project}`];
                         }
 
                         const messageData = <RealtimeResponseConnected>message.data;
                         if (session && !messageData.user) {
-                            this.realtime.socket?.send(JSON.stringify(<RealtimeRequest>{
+                            this.realtime.socket?.send(JSONbig.stringify(<RealtimeRequest>{
                                 type: 'authentication',
                                 data: {
                                     session
@@ -713,7 +723,7 @@ class Client {
         } else {
             switch (headers['content-type']) {
                 case 'application/json':
-                    options.body = JSON.stringify(params);
+                    options.body = JSONbig.stringify(params);
                     break;
 
                 case 'multipart/form-data':
@@ -815,7 +825,7 @@ class Client {
         }
 
         if (response.headers.get('content-type')?.includes('application/json')) {
-            data = await response.json();
+            data = JSONbig.parse(await response.text());
         } else if (responseType === 'arrayBuffer') {
             data = await response.arrayBuffer();
         } else {
@@ -827,7 +837,7 @@ class Client {
         if (400 <= response.status) {
             let responseText = '';
             if (response.headers.get('content-type')?.includes('application/json') || responseType === 'arrayBuffer') {
-                responseText = JSON.stringify(data);
+                responseText = JSONbig.stringify(data);
             } else {
                 responseText = data?.message;
             }

@@ -92,7 +92,7 @@ export class Sites {
      * @param {BuildRuntime} params.buildRuntime - Runtime to use during build step.
      * @param {boolean} params.enabled - Is site enabled? When set to 'disabled', users cannot access the site but Server SDKs with and API key can still access the site. No data is lost when this is toggled.
      * @param {boolean} params.logging - When disabled, request logs will exclude logs and errors, and site responses will be slightly faster.
-     * @param {number} params.timeout - Maximum request time in seconds.
+     * @param {number | bigint} params.timeout - Maximum request time in seconds.
      * @param {string} params.installCommand - Install Command.
      * @param {string} params.buildCommand - Build Command.
      * @param {string} params.outputDirectory - Output Directory for site.
@@ -107,7 +107,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      */
-    create(params: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string  }): Promise<Models.Site>;
+    create(params: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number | bigint, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string  }): Promise<Models.Site>;
     /**
      * Create a new site.
      *
@@ -117,7 +117,7 @@ export class Sites {
      * @param {BuildRuntime} buildRuntime - Runtime to use during build step.
      * @param {boolean} enabled - Is site enabled? When set to 'disabled', users cannot access the site but Server SDKs with and API key can still access the site. No data is lost when this is toggled.
      * @param {boolean} logging - When disabled, request logs will exclude logs and errors, and site responses will be slightly faster.
-     * @param {number} timeout - Maximum request time in seconds.
+     * @param {number | bigint} timeout - Maximum request time in seconds.
      * @param {string} installCommand - Install Command.
      * @param {string} buildCommand - Build Command.
      * @param {string} outputDirectory - Output Directory for site.
@@ -133,15 +133,15 @@ export class Sites {
      * @returns {Promise<Models.Site>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string): Promise<Models.Site>;
+    create(siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number | bigint, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string): Promise<Models.Site>;
     create(
-        paramsOrFirst: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string } | string,
-        ...rest: [(string)?, (Framework)?, (BuildRuntime)?, (boolean)?, (boolean)?, (number)?, (string)?, (string)?, (string)?, (Adapter)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?]    
+        paramsOrFirst: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number | bigint, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string } | string,
+        ...rest: [(string)?, (Framework)?, (BuildRuntime)?, (boolean)?, (boolean)?, (number | bigint)?, (string)?, (string)?, (string)?, (Adapter)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?]    
     ): Promise<Models.Site> {
-        let params: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
+        let params: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number | bigint, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
+            params = (paramsOrFirst || {}) as { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number | bigint, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
         } else {
             params = {
                 siteId: paramsOrFirst as string,
@@ -150,7 +150,7 @@ export class Sites {
                 buildRuntime: rest[2] as BuildRuntime,
                 enabled: rest[3] as boolean,
                 logging: rest[4] as boolean,
-                timeout: rest[5] as number,
+                timeout: rest[5] as number | bigint,
                 installCommand: rest[6] as string,
                 buildCommand: rest[7] as string,
                 outputDirectory: rest[8] as string,
@@ -318,38 +318,38 @@ export class Sites {
      *
      * @param {string[]} params.frameworks - List of frameworks allowed for filtering site templates. Maximum of 100 frameworks are allowed.
      * @param {string[]} params.useCases - List of use cases allowed for filtering site templates. Maximum of 100 use cases are allowed.
-     * @param {number} params.limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
-     * @param {number} params.offset - Offset the list of returned templates. Maximum offset is 5000.
+     * @param {number | bigint} params.limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
+     * @param {number | bigint} params.offset - Offset the list of returned templates. Maximum offset is 5000.
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateSiteList>}
      */
-    listTemplates(params?: { frameworks?: string[], useCases?: string[], limit?: number, offset?: number  }): Promise<Models.TemplateSiteList>;
+    listTemplates(params?: { frameworks?: string[], useCases?: string[], limit?: number | bigint, offset?: number | bigint  }): Promise<Models.TemplateSiteList>;
     /**
      * List available site templates. You can use template details in [createSite](/docs/references/cloud/server-nodejs/sites#create) method.
      *
      * @param {string[]} frameworks - List of frameworks allowed for filtering site templates. Maximum of 100 frameworks are allowed.
      * @param {string[]} useCases - List of use cases allowed for filtering site templates. Maximum of 100 use cases are allowed.
-     * @param {number} limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
-     * @param {number} offset - Offset the list of returned templates. Maximum offset is 5000.
+     * @param {number | bigint} limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
+     * @param {number | bigint} offset - Offset the list of returned templates. Maximum offset is 5000.
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateSiteList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listTemplates(frameworks?: string[], useCases?: string[], limit?: number, offset?: number): Promise<Models.TemplateSiteList>;
+    listTemplates(frameworks?: string[], useCases?: string[], limit?: number | bigint, offset?: number | bigint): Promise<Models.TemplateSiteList>;
     listTemplates(
-        paramsOrFirst?: { frameworks?: string[], useCases?: string[], limit?: number, offset?: number } | string[],
-        ...rest: [(string[])?, (number)?, (number)?]    
+        paramsOrFirst?: { frameworks?: string[], useCases?: string[], limit?: number | bigint, offset?: number | bigint } | string[],
+        ...rest: [(string[])?, (number | bigint)?, (number | bigint)?]    
     ): Promise<Models.TemplateSiteList> {
-        let params: { frameworks?: string[], useCases?: string[], limit?: number, offset?: number };
+        let params: { frameworks?: string[], useCases?: string[], limit?: number | bigint, offset?: number | bigint };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { frameworks?: string[], useCases?: string[], limit?: number, offset?: number };
+            params = (paramsOrFirst || {}) as { frameworks?: string[], useCases?: string[], limit?: number | bigint, offset?: number | bigint };
         } else {
             params = {
                 frameworks: paramsOrFirst as string[],
                 useCases: rest[0] as string[],
-                limit: rest[1] as number,
-                offset: rest[2] as number            
+                limit: rest[1] as number | bigint,
+                offset: rest[2] as number | bigint            
             };
         }
         
@@ -547,7 +547,7 @@ export class Sites {
      * @param {Framework} params.framework - Sites framework.
      * @param {boolean} params.enabled - Is site enabled? When set to 'disabled', users cannot access the site but Server SDKs with and API key can still access the site. No data is lost when this is toggled.
      * @param {boolean} params.logging - When disabled, request logs will exclude logs and errors, and site responses will be slightly faster.
-     * @param {number} params.timeout - Maximum request time in seconds.
+     * @param {number | bigint} params.timeout - Maximum request time in seconds.
      * @param {string} params.installCommand - Install Command.
      * @param {string} params.buildCommand - Build Command.
      * @param {string} params.outputDirectory - Output Directory for site.
@@ -563,7 +563,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      */
-    update(params: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string  }): Promise<Models.Site>;
+    update(params: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number | bigint, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string  }): Promise<Models.Site>;
     /**
      * Update site by its unique ID.
      *
@@ -572,7 +572,7 @@ export class Sites {
      * @param {Framework} framework - Sites framework.
      * @param {boolean} enabled - Is site enabled? When set to 'disabled', users cannot access the site but Server SDKs with and API key can still access the site. No data is lost when this is toggled.
      * @param {boolean} logging - When disabled, request logs will exclude logs and errors, and site responses will be slightly faster.
-     * @param {number} timeout - Maximum request time in seconds.
+     * @param {number | bigint} timeout - Maximum request time in seconds.
      * @param {string} installCommand - Install Command.
      * @param {string} buildCommand - Build Command.
      * @param {string} outputDirectory - Output Directory for site.
@@ -589,15 +589,15 @@ export class Sites {
      * @returns {Promise<Models.Site>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string): Promise<Models.Site>;
+    update(siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number | bigint, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string): Promise<Models.Site>;
     update(
-        paramsOrFirst: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string } | string,
-        ...rest: [(string)?, (Framework)?, (boolean)?, (boolean)?, (number)?, (string)?, (string)?, (string)?, (BuildRuntime)?, (Adapter)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?]    
+        paramsOrFirst: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number | bigint, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string } | string,
+        ...rest: [(string)?, (Framework)?, (boolean)?, (boolean)?, (number | bigint)?, (string)?, (string)?, (string)?, (BuildRuntime)?, (Adapter)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?]    
     ): Promise<Models.Site> {
-        let params: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
+        let params: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number | bigint, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
+            params = (paramsOrFirst || {}) as { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number | bigint, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
         } else {
             params = {
                 siteId: paramsOrFirst as string,
@@ -605,7 +605,7 @@ export class Sites {
                 framework: rest[1] as Framework,
                 enabled: rest[2] as boolean,
                 logging: rest[3] as boolean,
-                timeout: rest[4] as number,
+                timeout: rest[4] as number | bigint,
                 installCommand: rest[5] as string,
                 buildCommand: rest[6] as string,
                 outputDirectory: rest[7] as string,

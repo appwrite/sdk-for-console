@@ -25,7 +25,7 @@ export class Projects {
     /**
      * Get a list of all projects. You can use the query params to filter your results. 
      *
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, teamId
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, teamId, labels, search
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -35,7 +35,7 @@ export class Projects {
     /**
      * Get a list of all projects. You can use the query params to filter your results. 
      *
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, teamId
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, teamId, labels, search
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -741,33 +741,33 @@ export class Projects {
      * Update how long sessions created within a project should stay active for.
      *
      * @param {string} params.projectId - Project unique ID.
-     * @param {number} params.duration - Project session length in seconds. Max length: 31536000 seconds.
+     * @param {number | bigint} params.duration - Project session length in seconds. Max length: 31536000 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAuthDuration(params: { projectId: string, duration: number  }): Promise<Models.Project>;
+    updateAuthDuration(params: { projectId: string, duration: number | bigint  }): Promise<Models.Project>;
     /**
      * Update how long sessions created within a project should stay active for.
      *
      * @param {string} projectId - Project unique ID.
-     * @param {number} duration - Project session length in seconds. Max length: 31536000 seconds.
+     * @param {number | bigint} duration - Project session length in seconds. Max length: 31536000 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateAuthDuration(projectId: string, duration: number): Promise<Models.Project>;
+    updateAuthDuration(projectId: string, duration: number | bigint): Promise<Models.Project>;
     updateAuthDuration(
-        paramsOrFirst: { projectId: string, duration: number } | string,
-        ...rest: [(number)?]    
+        paramsOrFirst: { projectId: string, duration: number | bigint } | string,
+        ...rest: [(number | bigint)?]    
     ): Promise<Models.Project> {
-        let params: { projectId: string, duration: number };
+        let params: { projectId: string, duration: number | bigint };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, duration: number };
+            params = (paramsOrFirst || {}) as { projectId: string, duration: number | bigint };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                duration: rest[0] as number            
+                duration: rest[0] as number | bigint            
             };
         }
         
@@ -804,33 +804,33 @@ export class Projects {
      * Update the maximum number of users allowed in this project. Set to 0 for unlimited users. 
      *
      * @param {string} params.projectId - Project unique ID.
-     * @param {number} params.limit - Set the max number of users allowed in this project. Use 0 for unlimited.
+     * @param {number | bigint} params.limit - Set the max number of users allowed in this project. Use 0 for unlimited.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAuthLimit(params: { projectId: string, limit: number  }): Promise<Models.Project>;
+    updateAuthLimit(params: { projectId: string, limit: number | bigint  }): Promise<Models.Project>;
     /**
      * Update the maximum number of users allowed in this project. Set to 0 for unlimited users. 
      *
      * @param {string} projectId - Project unique ID.
-     * @param {number} limit - Set the max number of users allowed in this project. Use 0 for unlimited.
+     * @param {number | bigint} limit - Set the max number of users allowed in this project. Use 0 for unlimited.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateAuthLimit(projectId: string, limit: number): Promise<Models.Project>;
+    updateAuthLimit(projectId: string, limit: number | bigint): Promise<Models.Project>;
     updateAuthLimit(
-        paramsOrFirst: { projectId: string, limit: number } | string,
-        ...rest: [(number)?]    
+        paramsOrFirst: { projectId: string, limit: number | bigint } | string,
+        ...rest: [(number | bigint)?]    
     ): Promise<Models.Project> {
-        let params: { projectId: string, limit: number };
+        let params: { projectId: string, limit: number | bigint };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, limit: number };
+            params = (paramsOrFirst || {}) as { projectId: string, limit: number | bigint };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                limit: rest[0] as number            
+                limit: rest[0] as number | bigint            
             };
         }
         
@@ -867,33 +867,33 @@ export class Projects {
      * Update the maximum number of sessions allowed per user within the project, if the limit is hit the oldest session will be deleted to make room for new sessions.
      *
      * @param {string} params.projectId - Project unique ID.
-     * @param {number} params.limit - Set the max number of users allowed in this project. Value allowed is between 1-100. Default is 10
+     * @param {number | bigint} params.limit - Set the max number of users allowed in this project. Value allowed is between 1-100. Default is 10
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAuthSessionsLimit(params: { projectId: string, limit: number  }): Promise<Models.Project>;
+    updateAuthSessionsLimit(params: { projectId: string, limit: number | bigint  }): Promise<Models.Project>;
     /**
      * Update the maximum number of sessions allowed per user within the project, if the limit is hit the oldest session will be deleted to make room for new sessions.
      *
      * @param {string} projectId - Project unique ID.
-     * @param {number} limit - Set the max number of users allowed in this project. Value allowed is between 1-100. Default is 10
+     * @param {number | bigint} limit - Set the max number of users allowed in this project. Value allowed is between 1-100. Default is 10
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateAuthSessionsLimit(projectId: string, limit: number): Promise<Models.Project>;
+    updateAuthSessionsLimit(projectId: string, limit: number | bigint): Promise<Models.Project>;
     updateAuthSessionsLimit(
-        paramsOrFirst: { projectId: string, limit: number } | string,
-        ...rest: [(number)?]    
+        paramsOrFirst: { projectId: string, limit: number | bigint } | string,
+        ...rest: [(number | bigint)?]    
     ): Promise<Models.Project> {
-        let params: { projectId: string, limit: number };
+        let params: { projectId: string, limit: number | bigint };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, limit: number };
+            params = (paramsOrFirst || {}) as { projectId: string, limit: number | bigint };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                limit: rest[0] as number            
+                limit: rest[0] as number | bigint            
             };
         }
         
@@ -1139,33 +1139,33 @@ export class Projects {
      * Update the authentication password history requirement. Use this endpoint to require new passwords to be different than the last X amount of previously used ones.
      *
      * @param {string} params.projectId - Project unique ID.
-     * @param {number} params.limit - Set the max number of passwords to store in user history. User can't choose a new password that is already stored in the password history list.  Max number of passwords allowed in history is20. Default value is 0
+     * @param {number | bigint} params.limit - Set the max number of passwords to store in user history. User can't choose a new password that is already stored in the password history list.  Max number of passwords allowed in history is20. Default value is 0
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAuthPasswordHistory(params: { projectId: string, limit: number  }): Promise<Models.Project>;
+    updateAuthPasswordHistory(params: { projectId: string, limit: number | bigint  }): Promise<Models.Project>;
     /**
      * Update the authentication password history requirement. Use this endpoint to require new passwords to be different than the last X amount of previously used ones.
      *
      * @param {string} projectId - Project unique ID.
-     * @param {number} limit - Set the max number of passwords to store in user history. User can't choose a new password that is already stored in the password history list.  Max number of passwords allowed in history is20. Default value is 0
+     * @param {number | bigint} limit - Set the max number of passwords to store in user history. User can't choose a new password that is already stored in the password history list.  Max number of passwords allowed in history is20. Default value is 0
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateAuthPasswordHistory(projectId: string, limit: number): Promise<Models.Project>;
+    updateAuthPasswordHistory(projectId: string, limit: number | bigint): Promise<Models.Project>;
     updateAuthPasswordHistory(
-        paramsOrFirst: { projectId: string, limit: number } | string,
-        ...rest: [(number)?]    
+        paramsOrFirst: { projectId: string, limit: number | bigint } | string,
+        ...rest: [(number | bigint)?]    
     ): Promise<Models.Project> {
-        let params: { projectId: string, limit: number };
+        let params: { projectId: string, limit: number | bigint };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, limit: number };
+            params = (paramsOrFirst || {}) as { projectId: string, limit: number | bigint };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                limit: rest[0] as number            
+                limit: rest[0] as number | bigint            
             };
         }
         
@@ -1793,35 +1793,35 @@ export class Projects {
      *
      * @param {string} params.projectId - Project unique ID.
      * @param {string[]} params.scopes - List of scopes allowed for JWT key. Maximum of 100 scopes are allowed.
-     * @param {number} params.duration - Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
+     * @param {number | bigint} params.duration - Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Jwt>}
      */
-    createJWT(params: { projectId: string, scopes: string[], duration?: number  }): Promise<Models.Jwt>;
+    createJWT(params: { projectId: string, scopes: string[], duration?: number | bigint  }): Promise<Models.Jwt>;
     /**
      * Create a new JWT token. This token can be used to authenticate users with custom scopes and expiration time. 
      *
      * @param {string} projectId - Project unique ID.
      * @param {string[]} scopes - List of scopes allowed for JWT key. Maximum of 100 scopes are allowed.
-     * @param {number} duration - Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
+     * @param {number | bigint} duration - Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Jwt>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createJWT(projectId: string, scopes: string[], duration?: number): Promise<Models.Jwt>;
+    createJWT(projectId: string, scopes: string[], duration?: number | bigint): Promise<Models.Jwt>;
     createJWT(
-        paramsOrFirst: { projectId: string, scopes: string[], duration?: number } | string,
-        ...rest: [(string[])?, (number)?]    
+        paramsOrFirst: { projectId: string, scopes: string[], duration?: number | bigint } | string,
+        ...rest: [(string[])?, (number | bigint)?]    
     ): Promise<Models.Jwt> {
-        let params: { projectId: string, scopes: string[], duration?: number };
+        let params: { projectId: string, scopes: string[], duration?: number | bigint };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, scopes: string[], duration?: number };
+            params = (paramsOrFirst || {}) as { projectId: string, scopes: string[], duration?: number | bigint };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
                 scopes: rest[0] as string[],
-                duration: rest[1] as number            
+                duration: rest[1] as number | bigint            
             };
         }
         
@@ -2197,6 +2197,69 @@ export class Projects {
 
         return this.client.call(
             'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update the project labels by its unique ID. Labels can be used to easily filter projects in an organization.
+     *
+     * @param {string} params.projectId - Project unique ID.
+     * @param {string[]} params.labels - Array of project labels. Replaces the previous labels. Maximum of 1000 labels are allowed, each up to 36 alphanumeric characters long.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     */
+    updateLabels(params: { projectId: string, labels: string[]  }): Promise<Models.Project>;
+    /**
+     * Update the project labels by its unique ID. Labels can be used to easily filter projects in an organization.
+     *
+     * @param {string} projectId - Project unique ID.
+     * @param {string[]} labels - Array of project labels. Replaces the previous labels. Maximum of 1000 labels are allowed, each up to 36 alphanumeric characters long.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateLabels(projectId: string, labels: string[]): Promise<Models.Project>;
+    updateLabels(
+        paramsOrFirst: { projectId: string, labels: string[] } | string,
+        ...rest: [(string[])?]    
+    ): Promise<Models.Project> {
+        let params: { projectId: string, labels: string[] };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string, labels: string[] };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string,
+                labels: rest[0] as string[]            
+            };
+        }
+        
+        const projectId = params.projectId;
+        const labels = params.labels;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof labels === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "labels"');
+        }
+
+        const apiPath = '/projects/{projectId}/labels'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+        if (typeof labels !== 'undefined') {
+            payload['labels'] = labels;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'put',
             uri,
             apiHeaders,
             payload
@@ -2795,7 +2858,7 @@ export class Projects {
      * @param {string} params.senderEmail - Email of the sender
      * @param {string} params.replyTo - Reply to email
      * @param {string} params.host - SMTP server host name
-     * @param {number} params.port - SMTP server port
+     * @param {number | bigint} params.port - SMTP server port
      * @param {string} params.username - SMTP server username
      * @param {string} params.password - SMTP server password
      * @param {SMTPSecure} params.secure - Does SMTP server use secure connection
@@ -2803,7 +2866,7 @@ export class Projects {
      * @returns {Promise<Models.Project>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Projects.updateSMTP` instead.
      */
-    updateSmtp(params: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure  }): Promise<Models.Project>;
+    updateSmtp(params: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure  }): Promise<Models.Project>;
     /**
      * Update the SMTP configuration for your project. Use this endpoint to configure your project's SMTP provider with your custom settings for sending transactional emails. 
      *
@@ -2813,7 +2876,7 @@ export class Projects {
      * @param {string} senderEmail - Email of the sender
      * @param {string} replyTo - Reply to email
      * @param {string} host - SMTP server host name
-     * @param {number} port - SMTP server port
+     * @param {number | bigint} port - SMTP server port
      * @param {string} username - SMTP server username
      * @param {string} password - SMTP server password
      * @param {SMTPSecure} secure - Does SMTP server use secure connection
@@ -2821,15 +2884,15 @@ export class Projects {
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateSmtp(projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure): Promise<Models.Project>;
+    updateSmtp(projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure): Promise<Models.Project>;
     updateSmtp(
-        paramsOrFirst: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure } | string,
-        ...rest: [(boolean)?, (string)?, (string)?, (string)?, (string)?, (number)?, (string)?, (string)?, (SMTPSecure)?]    
+        paramsOrFirst: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure } | string,
+        ...rest: [(boolean)?, (string)?, (string)?, (string)?, (string)?, (number | bigint)?, (string)?, (string)?, (SMTPSecure)?]    
     ): Promise<Models.Project> {
-        let params: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure };
+        let params: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure };
+            params = (paramsOrFirst || {}) as { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
@@ -2838,7 +2901,7 @@ export class Projects {
                 senderEmail: rest[2] as string,
                 replyTo: rest[3] as string,
                 host: rest[4] as string,
-                port: rest[5] as number,
+                port: rest[5] as number | bigint,
                 username: rest[6] as string,
                 password: rest[7] as string,
                 secure: rest[8] as SMTPSecure            
@@ -2915,14 +2978,14 @@ export class Projects {
      * @param {string} params.senderEmail - Email of the sender
      * @param {string} params.replyTo - Reply to email
      * @param {string} params.host - SMTP server host name
-     * @param {number} params.port - SMTP server port
+     * @param {number | bigint} params.port - SMTP server port
      * @param {string} params.username - SMTP server username
      * @param {string} params.password - SMTP server password
      * @param {SMTPSecure} params.secure - Does SMTP server use secure connection
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateSMTP(params: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure  }): Promise<Models.Project>;
+    updateSMTP(params: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure  }): Promise<Models.Project>;
     /**
      * Update the SMTP configuration for your project. Use this endpoint to configure your project's SMTP provider with your custom settings for sending transactional emails. 
      *
@@ -2932,7 +2995,7 @@ export class Projects {
      * @param {string} senderEmail - Email of the sender
      * @param {string} replyTo - Reply to email
      * @param {string} host - SMTP server host name
-     * @param {number} port - SMTP server port
+     * @param {number | bigint} port - SMTP server port
      * @param {string} username - SMTP server username
      * @param {string} password - SMTP server password
      * @param {SMTPSecure} secure - Does SMTP server use secure connection
@@ -2940,15 +3003,15 @@ export class Projects {
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateSMTP(projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure): Promise<Models.Project>;
+    updateSMTP(projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure): Promise<Models.Project>;
     updateSMTP(
-        paramsOrFirst: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure } | string,
-        ...rest: [(boolean)?, (string)?, (string)?, (string)?, (string)?, (number)?, (string)?, (string)?, (SMTPSecure)?]    
+        paramsOrFirst: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure } | string,
+        ...rest: [(boolean)?, (string)?, (string)?, (string)?, (string)?, (number | bigint)?, (string)?, (string)?, (SMTPSecure)?]    
     ): Promise<Models.Project> {
-        let params: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure };
+        let params: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure };
+            params = (paramsOrFirst || {}) as { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
@@ -2957,7 +3020,7 @@ export class Projects {
                 senderEmail: rest[2] as string,
                 replyTo: rest[3] as string,
                 host: rest[4] as string,
-                port: rest[5] as number,
+                port: rest[5] as number | bigint,
                 username: rest[6] as string,
                 password: rest[7] as string,
                 secure: rest[8] as SMTPSecure            
@@ -3034,7 +3097,7 @@ export class Projects {
      * @param {string} params.senderEmail - Email of the sender
      * @param {string} params.host - SMTP server host name
      * @param {string} params.replyTo - Reply to email
-     * @param {number} params.port - SMTP server port
+     * @param {number | bigint} params.port - SMTP server port
      * @param {string} params.username - SMTP server username
      * @param {string} params.password - SMTP server password
      * @param {SMTPSecure} params.secure - Does SMTP server use secure connection
@@ -3042,7 +3105,7 @@ export class Projects {
      * @returns {Promise<{}>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Projects.createSMTPTest` instead.
      */
-    createSmtpTest(params: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure  }): Promise<{}>;
+    createSmtpTest(params: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure  }): Promise<{}>;
     /**
      * Send a test email to verify SMTP configuration. 
      *
@@ -3052,7 +3115,7 @@ export class Projects {
      * @param {string} senderEmail - Email of the sender
      * @param {string} host - SMTP server host name
      * @param {string} replyTo - Reply to email
-     * @param {number} port - SMTP server port
+     * @param {number | bigint} port - SMTP server port
      * @param {string} username - SMTP server username
      * @param {string} password - SMTP server password
      * @param {SMTPSecure} secure - Does SMTP server use secure connection
@@ -3060,15 +3123,15 @@ export class Projects {
      * @returns {Promise<{}>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSmtpTest(projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure): Promise<{}>;
+    createSmtpTest(projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure): Promise<{}>;
     createSmtpTest(
-        paramsOrFirst: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure } | string,
-        ...rest: [(string[])?, (string)?, (string)?, (string)?, (string)?, (number)?, (string)?, (string)?, (SMTPSecure)?]    
+        paramsOrFirst: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure } | string,
+        ...rest: [(string[])?, (string)?, (string)?, (string)?, (string)?, (number | bigint)?, (string)?, (string)?, (SMTPSecure)?]    
     ): Promise<{}> {
-        let params: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure };
+        let params: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure };
+            params = (paramsOrFirst || {}) as { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
@@ -3077,7 +3140,7 @@ export class Projects {
                 senderEmail: rest[2] as string,
                 host: rest[3] as string,
                 replyTo: rest[4] as string,
-                port: rest[5] as number,
+                port: rest[5] as number | bigint,
                 username: rest[6] as string,
                 password: rest[7] as string,
                 secure: rest[8] as SMTPSecure            
@@ -3163,14 +3226,14 @@ export class Projects {
      * @param {string} params.senderEmail - Email of the sender
      * @param {string} params.host - SMTP server host name
      * @param {string} params.replyTo - Reply to email
-     * @param {number} params.port - SMTP server port
+     * @param {number | bigint} params.port - SMTP server port
      * @param {string} params.username - SMTP server username
      * @param {string} params.password - SMTP server password
      * @param {SMTPSecure} params.secure - Does SMTP server use secure connection
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    createSMTPTest(params: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure  }): Promise<{}>;
+    createSMTPTest(params: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure  }): Promise<{}>;
     /**
      * Send a test email to verify SMTP configuration. 
      *
@@ -3180,7 +3243,7 @@ export class Projects {
      * @param {string} senderEmail - Email of the sender
      * @param {string} host - SMTP server host name
      * @param {string} replyTo - Reply to email
-     * @param {number} port - SMTP server port
+     * @param {number | bigint} port - SMTP server port
      * @param {string} username - SMTP server username
      * @param {string} password - SMTP server password
      * @param {SMTPSecure} secure - Does SMTP server use secure connection
@@ -3188,15 +3251,15 @@ export class Projects {
      * @returns {Promise<{}>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSMTPTest(projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure): Promise<{}>;
+    createSMTPTest(projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure): Promise<{}>;
     createSMTPTest(
-        paramsOrFirst: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure } | string,
-        ...rest: [(string[])?, (string)?, (string)?, (string)?, (string)?, (number)?, (string)?, (string)?, (SMTPSecure)?]    
+        paramsOrFirst: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure } | string,
+        ...rest: [(string[])?, (string)?, (string)?, (string)?, (string)?, (number | bigint)?, (string)?, (string)?, (SMTPSecure)?]    
     ): Promise<{}> {
-        let params: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure };
+        let params: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure };
+            params = (paramsOrFirst || {}) as { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number | bigint, username?: string, password?: string, secure?: SMTPSecure };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
@@ -3205,7 +3268,7 @@ export class Projects {
                 senderEmail: rest[2] as string,
                 host: rest[3] as string,
                 replyTo: rest[4] as string,
-                port: rest[5] as number,
+                port: rest[5] as number | bigint,
                 username: rest[6] as string,
                 password: rest[7] as string,
                 secure: rest[8] as SMTPSecure            

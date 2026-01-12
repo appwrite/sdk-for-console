@@ -27,7 +27,7 @@ export namespace Models {
         /**
          * Total number of rows that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of rows.
          */
@@ -41,7 +41,7 @@ export namespace Models {
         /**
          * Total number of documents that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of documents.
          */
@@ -55,7 +55,7 @@ export namespace Models {
         /**
          * Total number of tables that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of tables.
          */
@@ -69,7 +69,7 @@ export namespace Models {
         /**
          * Total number of collections that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of collections.
          */
@@ -83,7 +83,7 @@ export namespace Models {
         /**
          * Total number of databases that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of databases.
          */
@@ -97,7 +97,7 @@ export namespace Models {
         /**
          * Total number of indexes that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of indexes.
          */
@@ -111,7 +111,7 @@ export namespace Models {
         /**
          * Total number of indexes that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of indexes.
          */
@@ -125,7 +125,7 @@ export namespace Models {
         /**
          * Total number of users that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of users.
          */
@@ -139,7 +139,7 @@ export namespace Models {
         /**
          * Total number of sessions that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of sessions.
          */
@@ -153,7 +153,7 @@ export namespace Models {
         /**
          * Total number of identities that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of identities.
          */
@@ -167,7 +167,7 @@ export namespace Models {
         /**
          * Total number of logs that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of logs.
          */
@@ -181,7 +181,7 @@ export namespace Models {
         /**
          * Total number of files that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of files.
          */
@@ -195,7 +195,7 @@ export namespace Models {
         /**
          * Total number of buckets that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of buckets.
          */
@@ -209,7 +209,7 @@ export namespace Models {
         /**
          * Total number of tokens that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of tokens.
          */
@@ -223,7 +223,7 @@ export namespace Models {
         /**
          * Total number of teams that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of teams.
          */
@@ -237,7 +237,7 @@ export namespace Models {
         /**
          * Total number of memberships that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of memberships.
          */
@@ -251,7 +251,7 @@ export namespace Models {
         /**
          * Total number of sites that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of sites.
          */
@@ -265,7 +265,7 @@ export namespace Models {
         /**
          * Total number of templates that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of templates.
          */
@@ -279,7 +279,7 @@ export namespace Models {
         /**
          * Total number of functions that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of functions.
          */
@@ -293,7 +293,7 @@ export namespace Models {
         /**
          * Total number of templates that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of templates.
          */
@@ -307,7 +307,7 @@ export namespace Models {
         /**
          * Total number of installations that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of installations.
          */
@@ -321,7 +321,7 @@ export namespace Models {
         /**
          * Total number of frameworkProviderRepositories that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of frameworkProviderRepositories.
          */
@@ -335,7 +335,7 @@ export namespace Models {
         /**
          * Total number of runtimeProviderRepositories that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of runtimeProviderRepositories.
          */
@@ -349,7 +349,7 @@ export namespace Models {
         /**
          * Total number of branches that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of branches.
          */
@@ -363,7 +363,7 @@ export namespace Models {
         /**
          * Total number of frameworks that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of frameworks.
          */
@@ -377,7 +377,7 @@ export namespace Models {
         /**
          * Total number of runtimes that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of runtimes.
          */
@@ -391,7 +391,7 @@ export namespace Models {
         /**
          * Total number of deployments that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of deployments.
          */
@@ -405,7 +405,7 @@ export namespace Models {
         /**
          * Total number of executions that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of executions.
          */
@@ -419,7 +419,7 @@ export namespace Models {
         /**
          * Total number of projects that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of projects.
          */
@@ -433,7 +433,7 @@ export namespace Models {
         /**
          * Total number of webhooks that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of webhooks.
          */
@@ -447,7 +447,7 @@ export namespace Models {
         /**
          * Total number of keys that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of keys.
          */
@@ -461,7 +461,7 @@ export namespace Models {
         /**
          * Total number of devKeys that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of devKeys.
          */
@@ -475,7 +475,7 @@ export namespace Models {
         /**
          * Total number of platforms that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of platforms.
          */
@@ -489,7 +489,7 @@ export namespace Models {
         /**
          * Total number of countries that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of countries.
          */
@@ -503,7 +503,7 @@ export namespace Models {
         /**
          * Total number of continents that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of continents.
          */
@@ -517,7 +517,7 @@ export namespace Models {
         /**
          * Total number of languages that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of languages.
          */
@@ -531,7 +531,7 @@ export namespace Models {
         /**
          * Total number of currencies that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of currencies.
          */
@@ -545,7 +545,7 @@ export namespace Models {
         /**
          * Total number of phones that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of phones.
          */
@@ -559,7 +559,7 @@ export namespace Models {
         /**
          * Total number of variables that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of variables.
          */
@@ -573,7 +573,7 @@ export namespace Models {
         /**
          * Total number of rules that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of rules.
          */
@@ -587,7 +587,7 @@ export namespace Models {
         /**
          * Total number of localeCodes that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of localeCodes.
          */
@@ -601,7 +601,7 @@ export namespace Models {
         /**
          * Total number of providers that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of providers.
          */
@@ -615,7 +615,7 @@ export namespace Models {
         /**
          * Total number of messages that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of messages.
          */
@@ -629,7 +629,7 @@ export namespace Models {
         /**
          * Total number of topics that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of topics.
          */
@@ -643,7 +643,7 @@ export namespace Models {
         /**
          * Total number of subscribers that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of subscribers.
          */
@@ -657,7 +657,7 @@ export namespace Models {
         /**
          * Total number of targets that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of targets.
          */
@@ -671,7 +671,7 @@ export namespace Models {
         /**
          * Total number of transactions that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of transactions.
          */
@@ -685,7 +685,7 @@ export namespace Models {
         /**
          * Total number of migrations that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of migrations.
          */
@@ -699,7 +699,7 @@ export namespace Models {
         /**
          * Total number of specifications that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of specifications.
          */
@@ -713,7 +713,7 @@ export namespace Models {
         /**
          * Total number of contents that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of contents.
          */
@@ -811,7 +811,7 @@ export namespace Models {
         /**
          * Total number of attributes in the given collection.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of attributes.
          */
@@ -857,7 +857,7 @@ export namespace Models {
         /**
          * Attribute size.
          */
-        size: number;
+        size: number | bigint;
         /**
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
@@ -907,15 +907,15 @@ export namespace Models {
         /**
          * Minimum value to enforce for new documents.
          */
-        min?: number;
+        min?: number | bigint;
         /**
          * Maximum value to enforce for new documents.
          */
-        max?: number;
+        max?: number | bigint;
         /**
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
-        default?: number;
+        default?: number | bigint;
     }
 
     /**
@@ -957,15 +957,15 @@ export namespace Models {
         /**
          * Minimum value to enforce for new documents.
          */
-        min?: number;
+        min?: number | bigint;
         /**
          * Maximum value to enforce for new documents.
          */
-        max?: number;
+        max?: number | bigint;
         /**
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
-        default?: number;
+        default?: number | bigint;
     }
 
     /**
@@ -1485,7 +1485,7 @@ export namespace Models {
         /**
          * Total number of columns in the given table.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of columns.
          */
@@ -1531,7 +1531,7 @@ export namespace Models {
         /**
          * Column size.
          */
-        size: number;
+        size: number | bigint;
         /**
          * Default value for column when not provided. Cannot be set when column is required.
          */
@@ -1581,15 +1581,15 @@ export namespace Models {
         /**
          * Minimum value to enforce for new documents.
          */
-        min?: number;
+        min?: number | bigint;
         /**
          * Maximum value to enforce for new documents.
          */
-        max?: number;
+        max?: number | bigint;
         /**
          * Default value for column when not provided. Cannot be set when column is required.
          */
-        default?: number;
+        default?: number | bigint;
     }
 
     /**
@@ -1631,15 +1631,15 @@ export namespace Models {
         /**
          * Minimum value to enforce for new documents.
          */
-        min?: number;
+        min?: number | bigint;
         /**
          * Maximum value to enforce for new documents.
          */
-        max?: number;
+        max?: number | bigint;
         /**
          * Default value for column when not provided. Cannot be set when column is required.
          */
-        default?: number;
+        default?: number | bigint;
     }
 
     /**
@@ -2145,7 +2145,7 @@ export namespace Models {
         /**
          * Index attributes length.
          */
-        lengths: number[];
+        lengths: number | bigint[];
         /**
          * Index orders.
          */
@@ -2191,7 +2191,7 @@ export namespace Models {
         /**
          * Index columns length.
          */
-        lengths: number[];
+        lengths: number | bigint[];
         /**
          * Index orders.
          */
@@ -2209,7 +2209,7 @@ export namespace Models {
         /**
          * Row automatically incrementing ID.
          */
-        $sequence: number;
+        $sequence: number | bigint;
         /**
          * Table ID.
          */
@@ -2248,7 +2248,7 @@ export namespace Models {
         /**
          * Document automatically incrementing ID.
          */
-        $sequence: number;
+        $sequence: number | bigint;
         /**
          * Collection ID.
          */
@@ -2499,19 +2499,19 @@ export namespace Models {
         /**
          * CPU complexity of computed hash.
          */
-        costCpu: number;
+        costCpu: number | bigint;
         /**
          * Memory complexity of computed hash.
          */
-        costMemory: number;
+        costMemory: number | bigint;
         /**
          * Parallelization of computed hash.
          */
-        costParallel: number;
+        costParallel: number | bigint;
         /**
          * Length used to compute hash.
          */
-        length: number;
+        length: number | bigint;
     }
 
     /**
@@ -2547,15 +2547,15 @@ export namespace Models {
         /**
          * Memory used to compute hash.
          */
-        memoryCost: number;
+        memoryCost: number | bigint;
         /**
          * Amount of time consumed to compute hash
          */
-        timeCost: number;
+        timeCost: number | bigint;
         /**
          * Number of threads used to compute hash.
          */
-        threads: number;
+        threads: number | bigint;
     }
 
     /**
@@ -2864,15 +2864,15 @@ export namespace Models {
         /**
          * File original size in bytes.
          */
-        sizeOriginal: number;
+        sizeOriginal: number | bigint;
         /**
          * Total number of chunks available
          */
-        chunksTotal: number;
+        chunksTotal: number | bigint;
         /**
          * Total number of chunks uploaded
          */
-        chunksUploaded: number;
+        chunksUploaded: number | bigint;
     }
 
     /**
@@ -2910,13 +2910,13 @@ export namespace Models {
         /**
          * Maximum file size supported.
          */
-        maximumFileSize: number;
+        maximumFileSize: number | bigint;
         /**
          * Allowed file extensions.
          */
         allowedFileExtensions: string[];
         /**
-         * Compression algorithm choosen for compression. Will be one of none, [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd).
+         * Compression algorithm chosen for compression. Will be one of none, [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd).
          */
         compression: string;
         /**
@@ -2931,6 +2931,10 @@ export namespace Models {
          * Image transformations are enabled.
          */
         transformations: boolean;
+        /**
+         * Total size of this bucket in bytes.
+         */
+        totalSize: number | bigint;
     }
 
     /**
@@ -2990,7 +2994,7 @@ export namespace Models {
         /**
          * Total number of team members.
          */
-        total: number;
+        total: number | bigint;
         /**
          * Team preferences as a key-value object
          */
@@ -3126,7 +3130,7 @@ export namespace Models {
         /**
          * Site request timeout in seconds.
          */
-        timeout: number;
+        timeout: number | bigint;
         /**
          * The install command used to install the site dependencies.
          */
@@ -3356,7 +3360,7 @@ export namespace Models {
         /**
          * Function execution timeout in seconds.
          */
-        timeout: number;
+        timeout: number | bigint;
         /**
          * The entrypoint file used to execute the deployment.
          */
@@ -3430,7 +3434,7 @@ export namespace Models {
         /**
          * Function execution timeout in seconds.
          */
-        timeout: number;
+        timeout: number | bigint;
         /**
          * Function use cases.
          */
@@ -3746,7 +3750,7 @@ export namespace Models {
         /**
          * Content size in bytes. Only files have size, and for directories, 0 is returned.
          */
-        size?: number;
+        size?: number | bigint;
         /**
          * If a content is a directory. Directories can be used to check nested contents.
          */
@@ -3892,15 +3896,15 @@ export namespace Models {
         /**
          * The code size in bytes.
          */
-        sourceSize: number;
+        sourceSize: number | bigint;
         /**
          * The build output size in bytes.
          */
-        buildSize: number;
+        buildSize: number | bigint;
         /**
          * The total size in bytes (source and build output).
          */
-        totalSize: number;
+        totalSize: number | bigint;
         /**
          * The current build ID.
          */
@@ -3928,7 +3932,7 @@ export namespace Models {
         /**
          * The current build time in seconds.
          */
-        buildDuration: number;
+        buildDuration: number | bigint;
         /**
          * The name of the vcs provider repository
          */
@@ -4022,7 +4026,7 @@ export namespace Models {
         /**
          * HTTP response status code.
          */
-        responseStatusCode: number;
+        responseStatusCode: number | bigint;
         /**
          * HTTP response body. This will return empty unless execution is created as synchronous.
          */
@@ -4042,7 +4046,7 @@ export namespace Models {
         /**
          * Resource(function/site) execution duration in seconds.
          */
-        duration: number;
+        duration: number | bigint;
         /**
          * The scheduled time for execution. If left empty, execution will be queued immediately.
          */
@@ -4112,19 +4116,19 @@ export namespace Models {
         /**
          * Session duration in seconds.
          */
-        authDuration: number;
+        authDuration: number | bigint;
         /**
          * Max users allowed. 0 is unlimited.
          */
-        authLimit: number;
+        authLimit: number | bigint;
         /**
          * Max sessions allowed per user. 100 maximum.
          */
-        authSessionsLimit: number;
+        authSessionsLimit: number | bigint;
         /**
          * Max allowed passwords in the history list per user. Max passwords limit allowed in history is 20. Use 0 for disabling password history.
          */
-        authPasswordHistory: number;
+        authPasswordHistory: number | bigint;
         /**
          * Whether or not to check user's password against most commonly used passwords.
          */
@@ -4200,7 +4204,7 @@ export namespace Models {
         /**
          * SMTP server port
          */
-        smtpPort: number;
+        smtpPort: number | bigint;
         /**
          * SMTP server username
          */
@@ -4216,11 +4220,15 @@ export namespace Models {
         /**
          * Number of times the ping was received for this project.
          */
-        pingCount: number;
+        pingCount: number | bigint;
         /**
          * Last ping datetime in ISO 8601 format.
          */
         pingedAt: string;
+        /**
+         * Labels for the project.
+         */
+        labels: string[];
         /**
          * Email/Password auth method status
          */
@@ -4374,7 +4382,7 @@ export namespace Models {
         /**
          * Number of consecutive failed webhook attempts.
          */
-        attempts: number;
+        attempts: number | bigint;
     }
 
     /**
@@ -4646,11 +4654,11 @@ export namespace Models {
         /**
          * Number of decimal digits.
          */
-        decimalDigits: number;
+        decimalDigits: number | bigint;
         /**
          * Currency digit rounding.
          */
-        rounding: number;
+        rounding: number | bigint;
         /**
          * Currency code in [ISO 4217-1](http://en.wikipedia.org/wiki/ISO_4217) three-character format.
          */
@@ -4700,7 +4708,7 @@ export namespace Models {
         /**
          * Amount of actions in the queue.
          */
-        size: number;
+        size: number | bigint;
     }
 
     /**
@@ -4714,7 +4722,7 @@ export namespace Models {
         /**
          * Duration in milliseconds how long the health check took.
          */
-        ping: number;
+        ping: number | bigint;
         /**
          * Service status. Possible values are: `pass`, `fail`
          */
@@ -4758,15 +4766,15 @@ export namespace Models {
         /**
          * Current unix timestamp on trustful remote server.
          */
-        remoteTime: number;
+        remoteTime: number | bigint;
         /**
          * Current unix timestamp of local server where Appwrite runs.
          */
-        localTime: number;
+        localTime: number | bigint;
         /**
          * Difference of unix remote and local timestamps in milliseconds.
          */
-        diff: number;
+        diff: number | bigint;
     }
 
     /**
@@ -4776,7 +4784,7 @@ export namespace Models {
         /**
          * The value of this metric at the timestamp.
          */
-        value: number;
+        value: number | bigint;
         /**
          * The date at which this metric was aggregated in ISO 8601 format.
          */
@@ -4798,11 +4806,11 @@ export namespace Models {
         /**
          * The value of this metric at the timestamp.
          */
-        value: number;
+        value: number | bigint;
         /**
          * The estimated value of this metric at the end of the period.
          */
-        estimate?: number;
+        estimate?: number | bigint;
     }
 
     /**
@@ -4816,35 +4824,35 @@ export namespace Models {
         /**
          * Total aggregated number of databases.
          */
-        databasesTotal: number;
+        databasesTotal: number | bigint;
         /**
          * Total aggregated number  of collections.
          */
-        collectionsTotal: number;
+        collectionsTotal: number | bigint;
         /**
          * Total aggregated number  of tables.
          */
-        tablesTotal: number;
+        tablesTotal: number | bigint;
         /**
          * Total aggregated number of documents.
          */
-        documentsTotal: number;
+        documentsTotal: number | bigint;
         /**
          * Total aggregated number of rows.
          */
-        rowsTotal: number;
+        rowsTotal: number | bigint;
         /**
          * Total aggregated number of total databases storage in bytes.
          */
-        storageTotal: number;
+        storageTotal: number | bigint;
         /**
          * Total number of databases reads.
          */
-        databasesReadsTotal: number;
+        databasesReadsTotal: number | bigint;
         /**
          * Total number of databases writes.
          */
-        databasesWritesTotal: number;
+        databasesWritesTotal: number | bigint;
         /**
          * Aggregated number of databases per period.
          */
@@ -4890,31 +4898,31 @@ export namespace Models {
         /**
          * Total aggregated number of collections.
          */
-        collectionsTotal: number;
+        collectionsTotal: number | bigint;
         /**
          * Total aggregated number of tables.
          */
-        tablesTotal: number;
+        tablesTotal: number | bigint;
         /**
          * Total aggregated number of documents.
          */
-        documentsTotal: number;
+        documentsTotal: number | bigint;
         /**
          * Total aggregated number of rows.
          */
-        rowsTotal: number;
+        rowsTotal: number | bigint;
         /**
          * Total aggregated number of total storage used in bytes.
          */
-        storageTotal: number;
+        storageTotal: number | bigint;
         /**
          * Total number of databases reads.
          */
-        databaseReadsTotal: number;
+        databaseReadsTotal: number | bigint;
         /**
          * Total number of databases writes.
          */
-        databaseWritesTotal: number;
+        databaseWritesTotal: number | bigint;
         /**
          * Aggregated  number of collections per period.
          */
@@ -4956,7 +4964,7 @@ export namespace Models {
         /**
          * Total aggregated number of of rows.
          */
-        rowsTotal: number;
+        rowsTotal: number | bigint;
         /**
          * Aggregated  number of rows per period.
          */
@@ -4974,7 +4982,7 @@ export namespace Models {
         /**
          * Total aggregated number of of documents.
          */
-        documentsTotal: number;
+        documentsTotal: number | bigint;
         /**
          * Aggregated  number of documents per period.
          */
@@ -4992,11 +5000,11 @@ export namespace Models {
         /**
          * Total aggregated number of statistics of users.
          */
-        usersTotal: number;
+        usersTotal: number | bigint;
         /**
          * Total aggregated number of active sessions.
          */
-        sessionsTotal: number;
+        sessionsTotal: number | bigint;
         /**
          * Aggregated number of users per period.
          */
@@ -5018,15 +5026,15 @@ export namespace Models {
         /**
          * Total aggregated number of buckets
          */
-        bucketsTotal: number;
+        bucketsTotal: number | bigint;
         /**
          * Total aggregated number of files.
          */
-        filesTotal: number;
+        filesTotal: number | bigint;
         /**
          * Total aggregated number of files storage (in bytes).
          */
-        filesStorageTotal: number;
+        filesStorageTotal: number | bigint;
         /**
          * Aggregated number of buckets per period.
          */
@@ -5052,11 +5060,11 @@ export namespace Models {
         /**
          * Total aggregated number of bucket files.
          */
-        filesTotal: number;
+        filesTotal: number | bigint;
         /**
          * Total aggregated number of bucket files storage (in bytes).
          */
-        filesStorageTotal: number;
+        filesStorageTotal: number | bigint;
         /**
          * Aggregated  number of bucket files per period.
          */
@@ -5072,7 +5080,7 @@ export namespace Models {
         /**
          * Total aggregated number of files transformations.
          */
-        imageTransformationsTotal: number;
+        imageTransformationsTotal: number | bigint;
     }
 
     /**
@@ -5086,43 +5094,43 @@ export namespace Models {
         /**
          * Total aggregated number of functions.
          */
-        functionsTotal: number;
+        functionsTotal: number | bigint;
         /**
          * Total aggregated number of functions deployments.
          */
-        deploymentsTotal: number;
+        deploymentsTotal: number | bigint;
         /**
          * Total aggregated sum of functions deployment storage.
          */
-        deploymentsStorageTotal: number;
+        deploymentsStorageTotal: number | bigint;
         /**
          * Total aggregated number of functions build.
          */
-        buildsTotal: number;
+        buildsTotal: number | bigint;
         /**
          * total aggregated sum of functions build storage.
          */
-        buildsStorageTotal: number;
+        buildsStorageTotal: number | bigint;
         /**
          * Total aggregated sum of functions build compute time.
          */
-        buildsTimeTotal: number;
+        buildsTimeTotal: number | bigint;
         /**
          * Total aggregated sum of functions build mbSeconds.
          */
-        buildsMbSecondsTotal: number;
+        buildsMbSecondsTotal: number | bigint;
         /**
          * Total  aggregated number of functions execution.
          */
-        executionsTotal: number;
+        executionsTotal: number | bigint;
         /**
          * Total aggregated sum of functions  execution compute time.
          */
-        executionsTimeTotal: number;
+        executionsTimeTotal: number | bigint;
         /**
          * Total aggregated sum of functions execution mbSeconds.
          */
-        executionsMbSecondsTotal: number;
+        executionsMbSecondsTotal: number | bigint;
         /**
          * Aggregated number of functions per period.
          */
@@ -5138,11 +5146,11 @@ export namespace Models {
         /**
          * Total aggregated number of successful function builds.
          */
-        buildsSuccessTotal: number;
+        buildsSuccessTotal: number | bigint;
         /**
          * Total aggregated number of failed function builds.
          */
-        buildsFailedTotal: number;
+        buildsFailedTotal: number | bigint;
         /**
          * Aggregated number of functions build per period.
          */
@@ -5192,51 +5200,51 @@ export namespace Models {
         /**
          * Total aggregated number of function deployments.
          */
-        deploymentsTotal: number;
+        deploymentsTotal: number | bigint;
         /**
          * Total aggregated sum of function deployments storage.
          */
-        deploymentsStorageTotal: number;
+        deploymentsStorageTotal: number | bigint;
         /**
          * Total aggregated number of function builds.
          */
-        buildsTotal: number;
+        buildsTotal: number | bigint;
         /**
          * Total aggregated number of successful function builds.
          */
-        buildsSuccessTotal: number;
+        buildsSuccessTotal: number | bigint;
         /**
          * Total aggregated number of failed function builds.
          */
-        buildsFailedTotal: number;
+        buildsFailedTotal: number | bigint;
         /**
          * total aggregated sum of function builds storage.
          */
-        buildsStorageTotal: number;
+        buildsStorageTotal: number | bigint;
         /**
          * Total aggregated sum of function builds compute time.
          */
-        buildsTimeTotal: number;
+        buildsTimeTotal: number | bigint;
         /**
          * Average builds compute time.
          */
-        buildsTimeAverage: number;
+        buildsTimeAverage: number | bigint;
         /**
          * Total aggregated sum of function builds mbSeconds.
          */
-        buildsMbSecondsTotal: number;
+        buildsMbSecondsTotal: number | bigint;
         /**
          * Total  aggregated number of function executions.
          */
-        executionsTotal: number;
+        executionsTotal: number | bigint;
         /**
          * Total aggregated sum of function  executions compute time.
          */
-        executionsTimeTotal: number;
+        executionsTimeTotal: number | bigint;
         /**
          * Total aggregated sum of function executions mbSeconds.
          */
-        executionsMbSecondsTotal: number;
+        executionsMbSecondsTotal: number | bigint;
         /**
          * Aggregated number of function deployments per period.
          */
@@ -5292,105 +5300,53 @@ export namespace Models {
          */
         range: string;
         /**
-         * Total aggregated number of functions deployments.
-         */
-        deploymentsTotal: number;
-        /**
-         * Total aggregated sum of functions deployment storage.
-         */
-        deploymentsStorageTotal: number;
-        /**
-         * Total aggregated number of functions build.
-         */
-        buildsTotal: number;
-        /**
-         * total aggregated sum of functions build storage.
-         */
-        buildsStorageTotal: number;
-        /**
-         * Total aggregated sum of functions build compute time.
-         */
-        buildsTimeTotal: number;
-        /**
-         * Total aggregated sum of functions build mbSeconds.
-         */
-        buildsMbSecondsTotal: number;
-        /**
-         * Total  aggregated number of functions execution.
-         */
-        executionsTotal: number;
-        /**
-         * Total aggregated sum of functions  execution compute time.
-         */
-        executionsTimeTotal: number;
-        /**
-         * Total aggregated sum of functions execution mbSeconds.
-         */
-        executionsMbSecondsTotal: number;
-        /**
-         * Aggregated number of functions deployment per period.
-         */
-        deployments: Metric[];
-        /**
-         * Aggregated number of  functions deployment storage per period.
-         */
-        deploymentsStorage: Metric[];
-        /**
-         * Total aggregated number of successful function builds.
-         */
-        buildsSuccessTotal: number;
-        /**
-         * Total aggregated number of failed function builds.
-         */
-        buildsFailedTotal: number;
-        /**
-         * Aggregated number of functions build per period.
-         */
-        builds: Metric[];
-        /**
-         * Aggregated sum of functions build storage per period.
-         */
-        buildsStorage: Metric[];
-        /**
-         * Aggregated sum of  functions build compute time per period.
-         */
-        buildsTime: Metric[];
-        /**
-         * Aggregated sum of functions build mbSeconds per period.
-         */
-        buildsMbSeconds: Metric[];
-        /**
-         * Aggregated number of  functions execution per period.
-         */
-        executions: Metric[];
-        /**
-         * Aggregated number of functions execution compute time per period.
-         */
-        executionsTime: Metric[];
-        /**
-         * Aggregated number of functions mbSeconds per period.
-         */
-        executionsMbSeconds: Metric[];
-        /**
-         * Aggregated number of successful function builds per period.
-         */
-        buildsSuccess: Metric[];
-        /**
-         * Aggregated number of failed function builds per period.
-         */
-        buildsFailed: Metric[];
-        /**
          * Total aggregated number of sites.
          */
-        sitesTotal: number;
+        sitesTotal: number | bigint;
         /**
          * Aggregated number of sites per period.
          */
         sites: Metric[];
         /**
+         * Total aggregated number of sites deployments.
+         */
+        deploymentsTotal: number | bigint;
+        /**
+         * Total aggregated sum of sites deployment storage.
+         */
+        deploymentsStorageTotal: number | bigint;
+        /**
+         * Total aggregated number of sites build.
+         */
+        buildsTotal: number | bigint;
+        /**
+         * total aggregated sum of sites build storage.
+         */
+        buildsStorageTotal: number | bigint;
+        /**
+         * Total aggregated sum of sites build compute time.
+         */
+        buildsTimeTotal: number | bigint;
+        /**
+         * Total aggregated sum of sites build mbSeconds.
+         */
+        buildsMbSecondsTotal: number | bigint;
+        /**
+         * Total  aggregated number of sites execution.
+         */
+        executionsTotal: number | bigint;
+        /**
+         * Total aggregated sum of sites  execution compute time.
+         */
+        executionsTimeTotal: number | bigint;
+        /**
+         * Total aggregated sum of sites execution mbSeconds.
+         */
+        executionsMbSecondsTotal: number | bigint;
+        /**
          * Total aggregated number of requests.
          */
-        requestsTotal: number;
+        requestsTotal: number | bigint;
         /**
          * Aggregated number of requests per period.
          */
@@ -5398,7 +5354,7 @@ export namespace Models {
         /**
          * Total aggregated inbound bandwidth.
          */
-        inboundTotal: number;
+        inboundTotal: number | bigint;
         /**
          * Aggregated number of inbound bandwidth per period.
          */
@@ -5406,11 +5362,63 @@ export namespace Models {
         /**
          * Total aggregated outbound bandwidth.
          */
-        outboundTotal: number;
+        outboundTotal: number | bigint;
         /**
          * Aggregated number of outbound bandwidth per period.
          */
         outbound: Metric[];
+        /**
+         * Aggregated number of sites deployment per period.
+         */
+        deployments: Metric[];
+        /**
+         * Aggregated number of  sites deployment storage per period.
+         */
+        deploymentsStorage: Metric[];
+        /**
+         * Total aggregated number of successful site builds.
+         */
+        buildsSuccessTotal: number | bigint;
+        /**
+         * Total aggregated number of failed site builds.
+         */
+        buildsFailedTotal: number | bigint;
+        /**
+         * Aggregated number of sites build per period.
+         */
+        builds: Metric[];
+        /**
+         * Aggregated sum of sites build storage per period.
+         */
+        buildsStorage: Metric[];
+        /**
+         * Aggregated sum of  sites build compute time per period.
+         */
+        buildsTime: Metric[];
+        /**
+         * Aggregated sum of sites build mbSeconds per period.
+         */
+        buildsMbSeconds: Metric[];
+        /**
+         * Aggregated number of  sites execution per period.
+         */
+        executions: Metric[];
+        /**
+         * Aggregated number of sites execution compute time per period.
+         */
+        executionsTime: Metric[];
+        /**
+         * Aggregated number of sites mbSeconds per period.
+         */
+        executionsMbSeconds: Metric[];
+        /**
+         * Aggregated number of successful site builds per period.
+         */
+        buildsSuccess: Metric[];
+        /**
+         * Aggregated number of failed site builds per period.
+         */
+        buildsFailed: Metric[];
     }
 
     /**
@@ -5424,51 +5432,51 @@ export namespace Models {
         /**
          * Total aggregated number of function deployments.
          */
-        deploymentsTotal: number;
+        deploymentsTotal: number | bigint;
         /**
          * Total aggregated sum of function deployments storage.
          */
-        deploymentsStorageTotal: number;
+        deploymentsStorageTotal: number | bigint;
         /**
          * Total aggregated number of function builds.
          */
-        buildsTotal: number;
+        buildsTotal: number | bigint;
         /**
          * Total aggregated number of successful function builds.
          */
-        buildsSuccessTotal: number;
+        buildsSuccessTotal: number | bigint;
         /**
          * Total aggregated number of failed function builds.
          */
-        buildsFailedTotal: number;
+        buildsFailedTotal: number | bigint;
         /**
          * total aggregated sum of function builds storage.
          */
-        buildsStorageTotal: number;
+        buildsStorageTotal: number | bigint;
         /**
          * Total aggregated sum of function builds compute time.
          */
-        buildsTimeTotal: number;
+        buildsTimeTotal: number | bigint;
         /**
          * Average builds compute time.
          */
-        buildsTimeAverage: number;
+        buildsTimeAverage: number | bigint;
         /**
          * Total aggregated sum of function builds mbSeconds.
          */
-        buildsMbSecondsTotal: number;
+        buildsMbSecondsTotal: number | bigint;
         /**
          * Total  aggregated number of function executions.
          */
-        executionsTotal: number;
+        executionsTotal: number | bigint;
         /**
          * Total aggregated sum of function  executions compute time.
          */
-        executionsTimeTotal: number;
+        executionsTimeTotal: number | bigint;
         /**
          * Total aggregated sum of function executions mbSeconds.
          */
-        executionsMbSecondsTotal: number;
+        executionsMbSecondsTotal: number | bigint;
         /**
          * Aggregated number of function deployments per period.
          */
@@ -5516,7 +5524,7 @@ export namespace Models {
         /**
          * Total aggregated number of requests.
          */
-        requestsTotal: number;
+        requestsTotal: number | bigint;
         /**
          * Aggregated number of requests per period.
          */
@@ -5524,7 +5532,7 @@ export namespace Models {
         /**
          * Total aggregated inbound bandwidth.
          */
-        inboundTotal: number;
+        inboundTotal: number | bigint;
         /**
          * Aggregated number of inbound bandwidth per period.
          */
@@ -5532,7 +5540,7 @@ export namespace Models {
         /**
          * Total aggregated outbound bandwidth.
          */
-        outboundTotal: number;
+        outboundTotal: number | bigint;
         /**
          * Aggregated number of outbound bandwidth per period.
          */
@@ -5546,63 +5554,63 @@ export namespace Models {
         /**
          * Total aggregated number of function executions.
          */
-        executionsTotal: number;
+        executionsTotal: number | bigint;
         /**
          * Total aggregated  number of documents.
          */
-        documentsTotal: number;
+        documentsTotal: number | bigint;
         /**
          * Total aggregated  number of rows.
          */
-        rowsTotal: number;
+        rowsTotal: number | bigint;
         /**
          * Total aggregated number of databases.
          */
-        databasesTotal: number;
+        databasesTotal: number | bigint;
         /**
          * Total aggregated sum of databases storage size (in bytes).
          */
-        databasesStorageTotal: number;
+        databasesStorageTotal: number | bigint;
         /**
          * Total aggregated number of users.
          */
-        usersTotal: number;
+        usersTotal: number | bigint;
         /**
          * Total aggregated sum of files storage size (in bytes).
          */
-        filesStorageTotal: number;
+        filesStorageTotal: number | bigint;
         /**
          * Total aggregated sum of functions storage size (in bytes).
          */
-        functionsStorageTotal: number;
+        functionsStorageTotal: number | bigint;
         /**
          * Total aggregated sum of builds storage size (in bytes).
          */
-        buildsStorageTotal: number;
+        buildsStorageTotal: number | bigint;
         /**
          * Total aggregated sum of deployments storage size (in bytes).
          */
-        deploymentsStorageTotal: number;
+        deploymentsStorageTotal: number | bigint;
         /**
          * Total aggregated number of buckets.
          */
-        bucketsTotal: number;
+        bucketsTotal: number | bigint;
         /**
          * Total aggregated number of function executions mbSeconds.
          */
-        executionsMbSecondsTotal: number;
+        executionsMbSecondsTotal: number | bigint;
         /**
          * Total aggregated number of function builds mbSeconds.
          */
-        buildsMbSecondsTotal: number;
+        buildsMbSecondsTotal: number | bigint;
         /**
          * Aggregated stats for total databases reads.
          */
-        databasesReadsTotal: number;
+        databasesReadsTotal: number | bigint;
         /**
          * Aggregated stats for total databases writes.
          */
-        databasesWritesTotal: number;
+        databasesWritesTotal: number | bigint;
         /**
          * Aggregated  number of requests per period.
          */
@@ -5646,11 +5654,11 @@ export namespace Models {
         /**
          * Aggregated stats for total auth phone.
          */
-        authPhoneTotal: number;
+        authPhoneTotal: number | bigint;
         /**
          * Aggregated stats for total auth phone estimation.
          */
-        authPhoneEstimate: number;
+        authPhoneEstimate: number | bigint;
         /**
          * Aggregated breakdown in totals of phone auth by country.
          */
@@ -5670,15 +5678,15 @@ export namespace Models {
         /**
          * Total aggregated number of image transformations.
          */
-        imageTransformationsTotal: number;
+        imageTransformationsTotal: number | bigint;
         /**
          * Aggregated stats for total network bandwidth.
          */
-        networkTotal: number;
+        networkTotal: number | bigint;
         /**
          * Aggregated stats for total backups storage.
          */
-        backupsStorageTotal: number;
+        backupsStorageTotal: number | bigint;
         /**
          * An array of aggregated number of screenshots generated.
          */
@@ -5686,7 +5694,7 @@ export namespace Models {
         /**
          * Total aggregated number of screenshots generated.
          */
-        screenshotsGeneratedTotal: number;
+        screenshotsGeneratedTotal: number | bigint;
         /**
          * An array of aggregated number of Imagine credits in the given period.
          */
@@ -5694,7 +5702,7 @@ export namespace Models {
         /**
          * Total aggregated number of Imagine credits.
          */
-        imagineCreditsTotal: number;
+        imagineCreditsTotal: number | bigint;
     }
 
     /**
@@ -5718,11 +5726,11 @@ export namespace Models {
         /**
          * Memory size in MB.
          */
-        memory: number;
+        memory: number | bigint;
         /**
          * Number of CPUs.
          */
-        cpus: number;
+        cpus: number | bigint;
         /**
          * Is size enabled.
          */
@@ -5768,7 +5776,7 @@ export namespace Models {
         /**
          * Status code to apply during redirect. Used if type is "redirect"
          */
-        redirectStatusCode: number;
+        redirectStatusCode: number | bigint;
         /**
          * ID of deployment. Used if type is "deployment"
          */
@@ -5866,7 +5874,7 @@ export namespace Models {
         /**
          * Maximum build timeout in seconds.
          */
-        _APP_COMPUTE_BUILD_TIMEOUT: number;
+        _APP_COMPUTE_BUILD_TIMEOUT: number | bigint;
         /**
          * AAAA target for your Appwrite custom domains.
          */
@@ -5878,11 +5886,11 @@ export namespace Models {
         /**
          * Maximum file size allowed for file upload in bytes.
          */
-        _APP_STORAGE_LIMIT: number;
+        _APP_STORAGE_LIMIT: number | bigint;
         /**
          * Maximum file size allowed for deployment in bytes.
          */
-        _APP_COMPUTE_SIZE_LIMIT: number;
+        _APP_COMPUTE_SIZE_LIMIT: number | bigint;
         /**
          * Defines if usage stats are enabled. This value is set to 'enabled' by default, to disable the usage stats set the value to 'disabled'.
          */
@@ -6074,7 +6082,7 @@ export namespace Models {
         /**
          * Number of recipients the message was delivered to.
          */
-        deliveredTotal: number;
+        deliveredTotal: number | bigint;
         /**
          * Data of the message.
          */
@@ -6108,15 +6116,15 @@ export namespace Models {
         /**
          * Total count of email subscribers subscribed to the topic.
          */
-        emailTotal: number;
+        emailTotal: number | bigint;
         /**
          * Total count of SMS subscribers subscribed to the topic.
          */
-        smsTotal: number;
+        smsTotal: number | bigint;
         /**
          * Total count of push subscribers subscribed to the topic.
          */
-        pushTotal: number;
+        pushTotal: number | bigint;
         /**
          * Subscribe permissions.
          */
@@ -6146,7 +6154,7 @@ export namespace Models {
         /**
          * Number of operations in the transaction.
          */
-        operations: number;
+        operations: number | bigint;
         /**
          * Expiration time in ISO 8601 format.
          */
@@ -6302,35 +6310,35 @@ export namespace Models {
         /**
          * Number of users to be migrated.
          */
-        user: number;
+        user: number | bigint;
         /**
          * Number of teams to be migrated.
          */
-        team: number;
+        team: number | bigint;
         /**
          * Number of databases to be migrated.
          */
-        database: number;
+        database: number | bigint;
         /**
          * Number of rows to be migrated.
          */
-        row: number;
+        row: number | bigint;
         /**
          * Number of files to be migrated.
          */
-        file: number;
+        file: number | bigint;
         /**
          * Number of buckets to be migrated.
          */
-        bucket: number;
+        bucket: number | bigint;
         /**
          * Number of functions to be migrated.
          */
-        function: number;
+        function: number | bigint;
         /**
          * Size of files to be migrated in mb.
          */
-        size: number;
+        size: number | bigint;
         /**
          * Version of the Appwrite instance to be migrated.
          */
@@ -6356,11 +6364,11 @@ export namespace Models {
         /**
          * Price
          */
-        price: number;
+        price: number | bigint;
         /**
          * Resource value
          */
-        value: number;
+        value: number | bigint;
         /**
          * Description on invoice
          */
@@ -6398,71 +6406,71 @@ export namespace Models {
         /**
          * Total storage usage
          */
-        usageStorage: number;
+        usageStorage: number | bigint;
         /**
          * Total storage usage with builds storage
          */
-        usageTotalStorage: number;
+        usageTotalStorage: number | bigint;
         /**
          * Total files storage usage
          */
-        usageFilesStorage: number;
+        usageFilesStorage: number | bigint;
         /**
          * Total deployments storage usage
          */
-        usageDeploymentsStorage: number;
+        usageDeploymentsStorage: number | bigint;
         /**
          * Total builds storage usage
          */
-        usageBuildsStorage: number;
+        usageBuildsStorage: number | bigint;
         /**
          * Total databases storage usage
          */
-        usageDatabasesStorage: number;
+        usageDatabasesStorage: number | bigint;
         /**
          * Total active users for the billing period
          */
-        usageUsers: number;
+        usageUsers: number | bigint;
         /**
          * Total number of executions for the billing period
          */
-        usageExecutions: number;
+        usageExecutions: number | bigint;
         /**
          * Total bandwidth usage for the billing period
          */
-        usageBandwidth: number;
+        usageBandwidth: number | bigint;
         /**
          * Total realtime usage for the billing period
          */
-        usageRealtime: number;
+        usageRealtime: number | bigint;
         /**
          * Additional members
          */
-        additionalMembers: number;
+        additionalMembers: number | bigint;
         /**
          * Additional members cost
          */
-        additionalMemberAmount: number;
+        additionalMemberAmount: number | bigint;
         /**
          * Additional storage usage cost
          */
-        additionalStorageAmount: number;
+        additionalStorageAmount: number | bigint;
         /**
          * Additional users usage cost.
          */
-        additionalUsersAmount: number;
+        additionalUsersAmount: number | bigint;
         /**
          * Additional executions usage cost
          */
-        additionalExecutionsAmount: number;
+        additionalExecutionsAmount: number | bigint;
         /**
          * Additional bandwidth usage cost
          */
-        additionalBandwidthAmount: number;
+        additionalBandwidthAmount: number | bigint;
         /**
          * Additional realtime usage cost
          */
-        additionalRealtimeAmount: number;
+        additionalRealtimeAmount: number | bigint;
         /**
          * Billing plan
          */
@@ -6470,7 +6478,7 @@ export namespace Models {
         /**
          * Aggregated amount
          */
-        amount: number;
+        amount: number | bigint;
         /**
          * Aggregation project breakdown
          */
@@ -6500,7 +6508,7 @@ export namespace Models {
         /**
          * Aggregated amount
          */
-        amount: number;
+        amount: number | bigint;
         /**
          * 
          */
@@ -6530,7 +6538,7 @@ export namespace Models {
         /**
          * Archive size in bytes.
          */
-        size: number;
+        size: number | bigint;
         /**
          * The status of the archive creation. Possible values: pending, processing, uploading, completed, failed.
          */
@@ -6618,119 +6626,119 @@ export namespace Models {
         /**
          * Plan order
          */
-        order: number;
+        order: number | bigint;
         /**
          * Price
          */
-        price: number;
+        price: number | bigint;
         /**
          * Trial days
          */
-        trial: number;
+        trial: number | bigint;
         /**
          * Bandwidth
          */
-        bandwidth: number;
+        bandwidth: number | bigint;
         /**
          * Storage
          */
-        storage: number;
+        storage: number | bigint;
         /**
          * Image Transformations
          */
-        imageTransformations: number;
+        imageTransformations: number | bigint;
         /**
          * Members
          */
-        members: number;
+        members: number | bigint;
         /**
          * Webhooks
          */
-        webhooks: number;
+        webhooks: number | bigint;
         /**
          * Projects
          */
-        projects: number;
+        projects: number | bigint;
         /**
          * Platforms
          */
-        platforms: number;
+        platforms: number | bigint;
         /**
          * Users
          */
-        users: number;
+        users: number | bigint;
         /**
          * Teams
          */
-        teams: number;
+        teams: number | bigint;
         /**
          * Databases
          */
-        databases: number;
+        databases: number | bigint;
         /**
          * Database reads per month
          */
-        databasesReads: number;
+        databasesReads: number | bigint;
         /**
          * Database writes per month
          */
-        databasesWrites: number;
+        databasesWrites: number | bigint;
         /**
          * Database batch size limit
          */
-        databasesBatchSize: number;
+        databasesBatchSize: number | bigint;
         /**
          * Buckets
          */
-        buckets: number;
+        buckets: number | bigint;
         /**
          * File size
          */
-        fileSize: number;
+        fileSize: number | bigint;
         /**
          * Functions
          */
-        functions: number;
+        functions: number | bigint;
         /**
          * Sites
          */
-        sites: number;
+        sites: number | bigint;
         /**
          * Function executions
          */
-        executions: number;
+        executions: number | bigint;
         /**
          * GB hours for functions
          */
-        GBHours: number;
+        GBHours: number | bigint;
         /**
          * Realtime connections
          */
-        realtime: number;
+        realtime: number | bigint;
         /**
          * Messages per month
          */
-        messages: number;
+        messages: number | bigint;
         /**
          * Topics for messaging
          */
-        topics: number;
+        topics: number | bigint;
         /**
          * SMS authentications per month
          */
-        authPhone: number;
+        authPhone: number | bigint;
         /**
          * Custom domains
          */
-        domains: number;
+        domains: number | bigint;
         /**
          * Log days
          */
-        logs: number;
+        logs: number | bigint;
         /**
          * Alert threshold percentage
          */
-        alertLimit: number;
+        alertLimit: number | bigint;
         /**
          * Additional resources
          */
@@ -6798,15 +6806,15 @@ export namespace Models {
         /**
          * How many policies does plan support
          */
-        backupPolicies: number;
+        backupPolicies: number | bigint;
         /**
          * Maximum function and site deployment size in MB
          */
-        deploymentSize: number;
+        deploymentSize: number | bigint;
         /**
          * Maximum function and site deployment size in MB
          */
-        buildSize: number;
+        buildSize: number | bigint;
         /**
          * Does the plan support encrypted string attributes or not.
          */
@@ -6850,11 +6858,11 @@ export namespace Models {
         /**
          * Addon plan included value
          */
-        planIncluded: number;
+        planIncluded: number | bigint;
         /**
          * Addon limit
          */
-        limit: number;
+        limit: number | bigint;
         /**
          * Addon type
          */
@@ -6866,11 +6874,11 @@ export namespace Models {
         /**
          * Price
          */
-        price: number;
+        price: number | bigint;
         /**
          * Resource value
          */
-        value: number;
+        value: number | bigint;
         /**
          * Description on invoice
          */
@@ -6884,11 +6892,11 @@ export namespace Models {
         /**
          * Credits limit per billing cycle
          */
-        credits?: number;
+        credits?: number | bigint;
         /**
          * Daily credits limit (if applicable)
          */
-        dailyCredits?: number;
+        dailyCredits?: number | bigint;
     }
 
     /**
@@ -6898,35 +6906,35 @@ export namespace Models {
         /**
          * Bandwidth limit
          */
-        bandwidth: number;
+        bandwidth: number | bigint;
         /**
          * Storage limit
          */
-        storage: number;
+        storage: number | bigint;
         /**
          * Users limit
          */
-        users: number;
+        users: number | bigint;
         /**
          * Executions limit
          */
-        executions: number;
+        executions: number | bigint;
         /**
          * GBHours limit
          */
-        GBHours: number;
+        GBHours: number | bigint;
         /**
          * Image transformations limit
          */
-        imageTransformations: number;
+        imageTransformations: number | bigint;
         /**
          * Auth phone limit
          */
-        authPhone: number;
+        authPhone: number | bigint;
         /**
          * Budget limit percentage
          */
-        budgetLimit: number;
+        budgetLimit: number | bigint;
     }
 
     /**
@@ -7066,7 +7074,7 @@ export namespace Models {
         /**
          * Provided credit amount
          */
-        credits: number;
+        credits: number | bigint;
         /**
          * Coupon expiration time in ISO 8601 format.
          */
@@ -7074,7 +7082,7 @@ export namespace Models {
         /**
          * Credit validity in days.
          */
-        validity: number;
+        validity: number | bigint;
         /**
          * Campaign the coupon is associated with`.
          */
@@ -7124,11 +7132,11 @@ export namespace Models {
         /**
          * Provided credit amount
          */
-        credits: number;
+        credits: number | bigint;
         /**
          * Provided credit amount
          */
-        total: number;
+        total: number | bigint;
         /**
          * Credit expiration time in ISO 8601 format.
          */
@@ -7146,7 +7154,7 @@ export namespace Models {
         /**
          * Total available credits for the organization.
          */
-        available: number;
+        available: number | bigint;
     }
 
     /**
@@ -7160,11 +7168,11 @@ export namespace Models {
         /**
          * Total number of credits
          */
-        total: number;
+        total: number | bigint;
         /**
          * Total available credit balance in USD
          */
-        available: number;
+        available: number | bigint;
     }
 
     /**
@@ -7252,31 +7260,31 @@ export namespace Models {
         /**
          * Invoice Amount
          */
-        amount: number;
+        amount: number | bigint;
         /**
          * Tax percentage
          */
-        tax: number;
+        tax: number | bigint;
         /**
          * Tax amount
          */
-        taxAmount: number;
+        taxAmount: number | bigint;
         /**
          * VAT percentage
          */
-        vat: number;
+        vat: number | bigint;
         /**
          * VAT amount
          */
-        vatAmount: number;
+        vatAmount: number | bigint;
         /**
          * Gross amount after vat, tax, and discounts applied.
          */
-        grossAmount: number;
+        grossAmount: number | bigint;
         /**
          * Credits used.
          */
-        creditsUsed: number;
+        creditsUsed: number | bigint;
         /**
          * Currency the invoice is in
          */
@@ -7330,7 +7338,7 @@ export namespace Models {
         /**
          * Total number of team members.
          */
-        total: number;
+        total: number | bigint;
         /**
          * Team preferences as a key-value object
          */
@@ -7338,11 +7346,11 @@ export namespace Models {
         /**
          * Project budget limit
          */
-        billingBudget: number;
+        billingBudget: number | bigint;
         /**
          * Project budget limit
          */
-        budgetAlerts: number[];
+        budgetAlerts: number | bigint[];
         /**
          * Organization's billing plan ID.
          */
@@ -7378,7 +7386,7 @@ export namespace Models {
         /**
          * Number of trial days.
          */
-        billingTrialDays: number;
+        billingTrialDays: number | bigint;
         /**
          * Current active aggregation id.
          */
@@ -7514,11 +7522,11 @@ export namespace Models {
         /**
          * Expiry month of the payment method.
          */
-        expiryMonth: number;
+        expiryMonth: number | bigint;
         /**
          * Expiry year of the payment method.
          */
-        expiryYear: number;
+        expiryYear: number | bigint;
         /**
          * Last 4 digit of the payment method
          */
@@ -7600,7 +7608,7 @@ export namespace Models {
         /**
          * How many days to keep the backup before it will be automatically deleted.
          */
-        retention: number;
+        retention: number | bigint;
         /**
          * Policy backup schedule in CRON format.
          */
@@ -7758,7 +7766,7 @@ export namespace Models {
         /**
          * Aggregated stats for total file transformations.
          */
-        imageTransformationsTotal: number;
+        imageTransformationsTotal: number | bigint;
         /**
          * Aggregated stats for file transformations.
          */
@@ -7766,7 +7774,7 @@ export namespace Models {
         /**
          * Aggregated stats for total file transformations.
          */
-        screenshotsGeneratedTotal: number;
+        screenshotsGeneratedTotal: number | bigint;
         /**
          * Aggregated stats for imagine credits.
          */
@@ -7774,63 +7782,63 @@ export namespace Models {
         /**
          * Aggregated stats for total imagine credits.
          */
-        imagineCreditsTotal: number;
+        imagineCreditsTotal: number | bigint;
         /**
          * Aggregated stats for total users.
          */
-        usersTotal: number;
+        usersTotal: number | bigint;
         /**
          * Aggregated stats for total executions.
          */
-        executionsTotal: number;
+        executionsTotal: number | bigint;
         /**
          * Aggregated stats for function executions in mb seconds.
          */
-        executionsMBSecondsTotal: number;
+        executionsMBSecondsTotal: number | bigint;
         /**
          * Aggregated stats for function builds in mb seconds.
          */
-        buildsMBSecondsTotal: number;
+        buildsMBSecondsTotal: number | bigint;
         /**
          * Aggregated stats for total file storage.
          */
-        filesStorageTotal: number;
+        filesStorageTotal: number | bigint;
         /**
          * Aggregated stats for total builds storage.
          */
-        buildsStorageTotal: number;
+        buildsStorageTotal: number | bigint;
         /**
          * Aggregated stats for total deployments storage.
          */
-        deploymentsStorageTotal: number;
+        deploymentsStorageTotal: number | bigint;
         /**
          * Aggregated stats for total databases storage.
          */
-        databasesStorageTotal: number;
+        databasesStorageTotal: number | bigint;
         /**
          * Aggregated stats for total databases  reads.
          */
-        databasesReadsTotal: number;
+        databasesReadsTotal: number | bigint;
         /**
          * Aggregated stats for total databases  writes.
          */
-        databasesWritesTotal: number;
+        databasesWritesTotal: number | bigint;
         /**
          * Aggregated stats for total backups storage.
          */
-        backupsStorageTotal: number;
+        backupsStorageTotal: number | bigint;
         /**
          * Aggregated stats for total storage.
          */
-        storageTotal: number;
+        storageTotal: number | bigint;
         /**
          * Aggregated stats for total auth phone.
          */
-        authPhoneTotal: number;
+        authPhoneTotal: number | bigint;
         /**
          * Aggregated stats for total auth phone estimation.
          */
-        authPhoneEstimate: number;
+        authPhoneEstimate: number | bigint;
         /**
          * Aggregated stats for each projects.
          */
@@ -7856,7 +7864,7 @@ export namespace Models {
         /**
          * Aggregated stats for function executions.
          */
-        executions: number;
+        executions: number | bigint;
         /**
          * Aggregated stats for database reads.
          */
@@ -7868,31 +7876,31 @@ export namespace Models {
         /**
          * Aggregated stats for function executions in mb seconds.
          */
-        executionsMBSeconds: number;
+        executionsMBSeconds: number | bigint;
         /**
          * Aggregated stats for function builds in mb seconds.
          */
-        buildsMBSeconds: number;
+        buildsMBSeconds: number | bigint;
         /**
          * Aggregated stats for number of documents.
          */
-        storage: number;
+        storage: number | bigint;
         /**
          * Aggregated stats for phone authentication.
          */
-        authPhoneTotal: number;
+        authPhoneTotal: number | bigint;
         /**
          * Aggregated stats for phone authentication estimated cost.
          */
-        authPhoneEstimate: number;
+        authPhoneEstimate: number | bigint;
         /**
          * Aggregated stats for total databases reads.
          */
-        databasesReadsTotal: number;
+        databasesReadsTotal: number | bigint;
         /**
          * Aggregated stats for total databases writes.
          */
-        databasesWritesTotal: number;
+        databasesWritesTotal: number | bigint;
         /**
          * Aggregated stats for file transformations.
          */
@@ -7900,7 +7908,7 @@ export namespace Models {
         /**
          * Aggregated stats for total file transformations.
          */
-        imageTransformationsTotal: number;
+        imageTransformationsTotal: number | bigint;
         /**
          * Aggregated stats for file transformations.
          */
@@ -7908,11 +7916,11 @@ export namespace Models {
         /**
          * Aggregated stats for total file transformations.
          */
-        screenshotsGeneratedTotal: number;
+        screenshotsGeneratedTotal: number | bigint;
         /**
          * Aggregated stats for imagine credits.
          */
-        imagineCredits: number;
+        imagineCredits: number | bigint;
     }
 
     /**
@@ -7958,7 +7966,7 @@ export namespace Models {
         /**
          * Renewal price (in USD).
          */
-        renewalPrice: number;
+        renewalPrice: number | bigint;
         /**
          * Team ID.
          */
@@ -8000,11 +8008,11 @@ export namespace Models {
         /**
          * Time to live (in seconds).
          */
-        ttl: number;
+        ttl: number | bigint;
         /**
          * Record priority (commonly used for MX).
          */
-        priority: number;
+        priority: number | bigint;
         /**
          * Whether this record is locked (read-only).
          */
@@ -8012,11 +8020,11 @@ export namespace Models {
         /**
          * Record weight (used for SRV records).
          */
-        weight: number;
+        weight: number | bigint;
         /**
          * Target port (used for SRV records).
          */
-        port: number;
+        port: number | bigint;
         /**
          * Comment for the DNS record.
          */
@@ -8034,15 +8042,15 @@ export namespace Models {
         /**
          * Invoice value
          */
-        value: number;
+        value: number | bigint;
         /**
          * Invoice amount
          */
-        amount: number;
+        amount: number | bigint;
         /**
          * Invoice rate
          */
-        rate: number;
+        rate: number | bigint;
         /**
          * Invoice description
          */
@@ -8102,19 +8110,19 @@ export namespace Models {
         /**
          * Total amount
          */
-        amount: number;
+        amount: number | bigint;
         /**
          * Gross payable amount
          */
-        grossAmount: number;
+        grossAmount: number | bigint;
         /**
          * Discount amount
          */
-        discount: number;
+        discount: number | bigint;
         /**
          * Credits amount
          */
-        credits: number;
+        credits: number | bigint;
         /**
          * Estimation items
          */
@@ -8126,7 +8134,7 @@ export namespace Models {
         /**
          * Trial days
          */
-        trialDays: number;
+        trialDays: number | bigint;
         /**
          * Trial end date
          */
@@ -8140,19 +8148,19 @@ export namespace Models {
         /**
          * Total amount
          */
-        amount: number;
+        amount: number | bigint;
         /**
          * Gross payable amount
          */
-        grossAmount: number;
+        grossAmount: number | bigint;
         /**
          * Discount amount
          */
-        discount: number;
+        discount: number | bigint;
         /**
          * Credits amount
          */
-        credits: number;
+        credits: number | bigint;
         /**
          * Estimation items
          */
@@ -8164,7 +8172,7 @@ export namespace Models {
         /**
          * Trial days
          */
-        trialDays: number;
+        trialDays: number | bigint;
         /**
          * Trial end date
          */
@@ -8172,7 +8180,7 @@ export namespace Models {
         /**
          * Organization's existing credits
          */
-        organizationCredits: number;
+        organizationCredits: number | bigint;
     }
 
     /**
@@ -8196,7 +8204,7 @@ export namespace Models {
         /**
          * Gross payable amount
          */
-        value: number;
+        value: number | bigint;
     }
 
     /**
@@ -8206,7 +8214,7 @@ export namespace Models {
         /**
          * Total number of aggregations that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of aggregations.
          */
@@ -8220,7 +8228,7 @@ export namespace Models {
         /**
          * Total number of archives that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of archives.
          */
@@ -8234,7 +8242,7 @@ export namespace Models {
         /**
          * Total number of policies that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of policies.
          */
@@ -8248,7 +8256,7 @@ export namespace Models {
         /**
          * Total number of restorations that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of restorations.
          */
@@ -8262,7 +8270,7 @@ export namespace Models {
         /**
          * Total number of invoices that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of invoices.
          */
@@ -8276,7 +8284,7 @@ export namespace Models {
         /**
          * Total number of billingAddresses that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of billingAddresses.
          */
@@ -8290,7 +8298,7 @@ export namespace Models {
         /**
          * Total number of plans that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of plans.
          */
@@ -8304,7 +8312,7 @@ export namespace Models {
         /**
          * Total number of teams that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of teams.
          */
@@ -8318,7 +8326,7 @@ export namespace Models {
         /**
          * Total number of paymentMethods that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of paymentMethods.
          */
@@ -8332,7 +8340,7 @@ export namespace Models {
         /**
          * Total number of regions that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of regions.
          */
@@ -8346,7 +8354,7 @@ export namespace Models {
         /**
          * Total number of domains that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of domains.
          */
@@ -8360,7 +8368,7 @@ export namespace Models {
         /**
          * Total number of dnsRecords that matched your query.
          */
-        total: number;
+        total: number | bigint;
         /**
          * List of dnsRecords.
          */

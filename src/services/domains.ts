@@ -994,12 +994,12 @@ export class Domains {
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - IPv4 address for this A record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment explaining what this record is for.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordA(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordA(params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      * Create a new A record for the given domain. A records are used to point a domain name 
      * to an IPv4 address. The record value should be a valid IPv4 address.
@@ -1007,27 +1007,27 @@ export class Domains {
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - IPv4 address for this A record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment explaining what this record is for.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordA(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    createRecordA(domainId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     createRecordA(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
-                ttl: rest[2] as number,
+                ttl: rest[2] as number | bigint,
                 comment: rest[3] as string            
             };
         }
@@ -1088,12 +1088,12 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - IPv4 address for this A record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment explaining what this record is for.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing A record for the given domain. This endpoint allows you to modify 
      *     the properties of an A record including its name (subdomain), IPv4 address, TTL, 
@@ -1103,28 +1103,28 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - IPv4 address for this A record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment explaining what this record is for.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordA(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    updateRecordA(domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     updateRecordA(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 recordId: rest[0] as string,
                 name: rest[1] as string,
                 value: rest[2] as string,
-                ttl: rest[3] as number,
+                ttl: rest[3] as number | bigint,
                 comment: rest[4] as string            
             };
         }
@@ -1187,12 +1187,12 @@ export class Domains {
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - IPv6 address for this AAAA record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment explaining what this record is for.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordAAAA(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordAAAA(params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Create a new AAAA record for the given domain. This endpoint allows you to add a new IPv6 DNS record 
      *     to your domain. The record will be used to point a hostname to an IPv6 address.
@@ -1200,27 +1200,27 @@ export class Domains {
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - IPv6 address for this AAAA record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment explaining what this record is for.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordAAAA(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    createRecordAAAA(domainId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     createRecordAAAA(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
-                ttl: rest[2] as number,
+                ttl: rest[2] as number | bigint,
                 comment: rest[3] as string            
             };
         }
@@ -1281,12 +1281,12 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - IPv6 address for this AAAA record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordAAAA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordAAAA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing AAAA record for the given domain. This endpoint allows you to modify
      *     the properties of an existing AAAA record, including its name (subdomain), IPv6 address,
@@ -1296,28 +1296,28 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - IPv6 address for this AAAA record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordAAAA(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    updateRecordAAAA(domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     updateRecordAAAA(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 recordId: rest[0] as string,
                 name: rest[1] as string,
                 value: rest[2] as string,
-                ttl: rest[3] as number,
+                ttl: rest[3] as number | bigint,
                 comment: rest[4] as string            
             };
         }
@@ -1381,12 +1381,12 @@ export class Domains {
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name.
      * @param {string} params.value - Target domain for this ALIAS record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordAlias(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordAlias(params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Create a new ALIAS record for the given domain. This record type can be used to point your domain 
      *     to another domain name that will serve as an alias. This is particularly useful when you want to 
@@ -1395,27 +1395,27 @@ export class Domains {
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name.
      * @param {string} value - Target domain for this ALIAS record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordAlias(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    createRecordAlias(domainId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     createRecordAlias(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
-                ttl: rest[2] as number,
+                ttl: rest[2] as number | bigint,
                 comment: rest[3] as string            
             };
         }
@@ -1478,12 +1478,12 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name.
      * @param {string} params.value - Target domain for this ALIAS record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordAlias(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordAlias(params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing ALIAS record for the specified domain. This endpoint allows you to modify
      *     the properties of an existing ALIAS record including its name, target domain, TTL, and comment.
@@ -1495,28 +1495,28 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name.
      * @param {string} value - Target domain for this ALIAS record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordAlias(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    updateRecordAlias(domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     updateRecordAlias(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 recordId: rest[0] as string,
                 name: rest[1] as string,
                 value: rest[2] as string,
-                ttl: rest[3] as number,
+                ttl: rest[3] as number | bigint,
                 comment: rest[4] as string            
             };
         }
@@ -1579,12 +1579,12 @@ export class Domains {
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name.
      * @param {string} params.value - CAA value (e.g. issuer domain).
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordCAA(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordCAA(params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      * Create a new CAA record for the given domain. CAA records are used to specify which 
      * Certificate Authorities (CAs) are allowed to issue SSL/TLS certificates for your domain.
@@ -1592,27 +1592,27 @@ export class Domains {
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name.
      * @param {string} value - CAA value (e.g. issuer domain).
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordCAA(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    createRecordCAA(domainId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     createRecordCAA(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
-                ttl: rest[2] as number,
+                ttl: rest[2] as number | bigint,
                 comment: rest[3] as string            
             };
         }
@@ -1673,12 +1673,12 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name.
      * @param {string} params.value - CAA value (e.g. issuer domain).
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordCAA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordCAA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing CAA record for the given domain. A CAA (Certification Authority Authorization) 
      *     record is used to specify which certificate authorities (CAs) are authorized to issue certificates 
@@ -1688,28 +1688,28 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name.
      * @param {string} value - CAA value (e.g. issuer domain).
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordCAA(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    updateRecordCAA(domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     updateRecordCAA(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 recordId: rest[0] as string,
                 name: rest[1] as string,
                 value: rest[2] as string,
-                ttl: rest[3] as number,
+                ttl: rest[3] as number | bigint,
                 comment: rest[4] as string            
             };
         }
@@ -1775,12 +1775,12 @@ export class Domains {
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Canonical target for this CNAME record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordCNAME(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordCNAME(params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Create a new CNAME record for the given domain.
      *     
@@ -1791,27 +1791,27 @@ export class Domains {
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Canonical target for this CNAME record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordCNAME(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    createRecordCNAME(domainId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     createRecordCNAME(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
-                ttl: rest[2] as number,
+                ttl: rest[2] as number | bigint,
                 comment: rest[3] as string            
             };
         }
@@ -1870,12 +1870,12 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Canonical target for this CNAME record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordCNAME(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordCNAME(params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing CNAME record for the given domain.
      *
@@ -1883,28 +1883,28 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Canonical target for this CNAME record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordCNAME(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    updateRecordCNAME(domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     updateRecordCNAME(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 recordId: rest[0] as string,
                 name: rest[1] as string,
                 value: rest[2] as string,
-                ttl: rest[3] as number,
+                ttl: rest[3] as number | bigint,
                 comment: rest[4] as string            
             };
         }
@@ -1967,12 +1967,12 @@ export class Domains {
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Target for the HTTPS record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordHTTPS(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordHTTPS(params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Create a new HTTPS record for the given domain. This record is used to configure HTTPS 
      *     settings for your domain, enabling secure communication over SSL/TLS.
@@ -1980,27 +1980,27 @@ export class Domains {
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Target for the HTTPS record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordHTTPS(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    createRecordHTTPS(domainId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     createRecordHTTPS(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
-                ttl: rest[2] as number,
+                ttl: rest[2] as number | bigint,
                 comment: rest[3] as string            
             };
         }
@@ -2061,12 +2061,12 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Target for the HTTPS record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordHTTPS(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordHTTPS(params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      * Update an existing HTTPS record for the given domain. This endpoint allows you to modify 
      * the properties of an HTTPS record associated with your domain, including the name (subdomain), 
@@ -2076,28 +2076,28 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Target for the HTTPS record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordHTTPS(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    updateRecordHTTPS(domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     updateRecordHTTPS(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 recordId: rest[0] as string,
                 name: rest[1] as string,
                 value: rest[2] as string,
-                ttl: rest[3] as number,
+                ttl: rest[3] as number | bigint,
                 comment: rest[4] as string            
             };
         }
@@ -2162,13 +2162,13 @@ export class Domains {
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Mail server domain for this MX record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} params.priority - MX priority.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.priority - MX priority.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordMX(params: { domainId: string, name: string, value: string, ttl: number, priority: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordMX(params: { domainId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Create a new MX record for the given domain. MX records are used to define the mail servers responsible 
      *     for accepting email messages for the domain. Multiple MX records can be created with different priorities.
@@ -2178,29 +2178,29 @@ export class Domains {
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Mail server domain for this MX record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} priority - MX priority.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} priority - MX priority.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordMX(domainId: string, name: string, value: string, ttl: number, priority: number, comment?: string): Promise<Models.DnsRecord>;
+    createRecordMX(domainId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     createRecordMX(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, priority: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (number | bigint)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, priority: number, comment?: string };
+        let params: { domainId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, priority: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
-                ttl: rest[2] as number,
-                priority: rest[3] as number,
+                ttl: rest[2] as number | bigint,
+                priority: rest[3] as number | bigint,
                 comment: rest[4] as string            
             };
         }
@@ -2266,13 +2266,13 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Mail server domain for this MX record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} params.priority - MX priority.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.priority - MX priority.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordMX(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordMX(params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing MX record for the given domain.
      *
@@ -2280,30 +2280,30 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Mail server domain for this MX record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} priority - MX priority.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} priority - MX priority.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordMX(domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, comment?: string): Promise<Models.DnsRecord>;
+    updateRecordMX(domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     updateRecordMX(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number | bigint)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, comment?: string };
+        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 recordId: rest[0] as string,
                 name: rest[1] as string,
                 value: rest[2] as string,
-                ttl: rest[3] as number,
-                priority: rest[4] as number,
+                ttl: rest[3] as number | bigint,
+                priority: rest[4] as number | bigint,
                 comment: rest[5] as string            
             };
         }
@@ -2373,12 +2373,12 @@ export class Domains {
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Nameserver target for this NS record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordNS(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordNS(params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Create a new NS record for the given domain. NS records specify the nameservers that are used 
      *     to resolve the domain name to IP addresses. Each domain can have multiple NS records.
@@ -2386,27 +2386,27 @@ export class Domains {
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Nameserver target for this NS record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordNS(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    createRecordNS(domainId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     createRecordNS(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
-                ttl: rest[2] as number,
+                ttl: rest[2] as number | bigint,
                 comment: rest[3] as string            
             };
         }
@@ -2468,12 +2468,12 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Nameserver target for this NS record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordNS(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordNS(params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing NS record for the given domain. This endpoint allows you to modify 
      *     the properties of an NS (nameserver) record associated with your domain. You can update 
@@ -2484,28 +2484,28 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Nameserver target for this NS record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordNS(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    updateRecordNS(domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     updateRecordNS(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 recordId: rest[0] as string,
                 name: rest[1] as string,
                 value: rest[2] as string,
-                ttl: rest[3] as number,
+                ttl: rest[3] as number | bigint,
                 comment: rest[4] as string            
             };
         }
@@ -2569,15 +2569,15 @@ export class Domains {
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (service name).
      * @param {string} params.value - Target hostname for this SRV record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} params.priority - Record priority.
-     * @param {number} params.weight - Record weight.
-     * @param {number} params.port - Port number for the service.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.priority - Record priority.
+     * @param {number | bigint} params.weight - Record weight.
+     * @param {number | bigint} params.port - Port number for the service.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordSRV(params: { domainId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordSRV(params: { domainId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, weight: number | bigint, port: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Create a new SRV record for the given domain. SRV records are used to define the location 
      *     of servers for specific services. For example, they can be used to specify which server 
@@ -2586,33 +2586,33 @@ export class Domains {
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (service name).
      * @param {string} value - Target hostname for this SRV record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} priority - Record priority.
-     * @param {number} weight - Record weight.
-     * @param {number} port - Port number for the service.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} priority - Record priority.
+     * @param {number | bigint} weight - Record weight.
+     * @param {number | bigint} port - Port number for the service.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordSRV(domainId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string): Promise<Models.DnsRecord>;
+    createRecordSRV(domainId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, weight: number | bigint, port: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     createRecordSRV(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (number)?, (number)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, weight: number | bigint, port: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (number | bigint)?, (number | bigint)?, (number | bigint)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string };
+        let params: { domainId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, weight: number | bigint, port: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, weight: number | bigint, port: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
-                ttl: rest[2] as number,
-                priority: rest[3] as number,
-                weight: rest[4] as number,
-                port: rest[5] as number,
+                ttl: rest[2] as number | bigint,
+                priority: rest[3] as number | bigint,
+                weight: rest[4] as number | bigint,
+                port: rest[5] as number | bigint,
                 comment: rest[6] as string            
             };
         }
@@ -2705,15 +2705,15 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (service name).
      * @param {string} params.value - Target hostname for this SRV record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} params.priority - Record priority.
-     * @param {number} params.weight - Record weight.
-     * @param {number} params.port - Port number for the service.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.priority - Record priority.
+     * @param {number | bigint} params.weight - Record weight.
+     * @param {number | bigint} params.port - Port number for the service.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordSRV(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordSRV(params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, weight: number | bigint, port: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing SRV record for the given domain.
      *     
@@ -2734,34 +2734,34 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (service name).
      * @param {string} value - Target hostname for this SRV record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} priority - Record priority.
-     * @param {number} weight - Record weight.
-     * @param {number} port - Port number for the service.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} priority - Record priority.
+     * @param {number | bigint} weight - Record weight.
+     * @param {number | bigint} port - Port number for the service.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordSRV(domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string): Promise<Models.DnsRecord>;
+    updateRecordSRV(domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, weight: number | bigint, port: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     updateRecordSRV(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (number)?, (number)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, weight: number | bigint, port: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number | bigint)?, (number | bigint)?, (number | bigint)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string };
+        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, weight: number | bigint, port: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, priority: number | bigint, weight: number | bigint, port: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 recordId: rest[0] as string,
                 name: rest[1] as string,
                 value: rest[2] as string,
-                ttl: rest[3] as number,
-                priority: rest[4] as number,
-                weight: rest[5] as number,
-                port: rest[6] as number,
+                ttl: rest[3] as number | bigint,
+                priority: rest[4] as number | bigint,
+                weight: rest[5] as number | bigint,
+                port: rest[6] as number | bigint,
                 comment: rest[7] as string            
             };
         }
@@ -2845,13 +2845,13 @@ export class Domains {
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain) for the TXT record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.value - TXT record value.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordTXT(params: { domainId: string, name: string, ttl: number, value?: string, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordTXT(params: { domainId: string, name: string, ttl: number | bigint, value?: string, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Create a new TXT record for the given domain. TXT records can be used 
      *     to provide additional information about your domain, such as domain 
@@ -2859,27 +2859,27 @@ export class Domains {
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain) for the TXT record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} value - TXT record value.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordTXT(domainId: string, name: string, ttl: number, value?: string, comment?: string): Promise<Models.DnsRecord>;
+    createRecordTXT(domainId: string, name: string, ttl: number | bigint, value?: string, comment?: string): Promise<Models.DnsRecord>;
     createRecordTXT(
-        paramsOrFirst: { domainId: string, name: string, ttl: number, value?: string, comment?: string } | string,
-        ...rest: [(string)?, (number)?, (string)?, (string)?]    
+        paramsOrFirst: { domainId: string, name: string, ttl: number | bigint, value?: string, comment?: string } | string,
+        ...rest: [(string)?, (number | bigint)?, (string)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, ttl: number, value?: string, comment?: string };
+        let params: { domainId: string, name: string, ttl: number | bigint, value?: string, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, ttl: number, value?: string, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, name: string, ttl: number | bigint, value?: string, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
-                ttl: rest[1] as number,
+                ttl: rest[1] as number | bigint,
                 value: rest[2] as string,
                 comment: rest[3] as string            
             };
@@ -2939,12 +2939,12 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain) for the TXT record.
      * @param {string} params.value - TXT record value.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} params.ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordTXT(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordTXT(params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string  }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing TXT record for the given domain.
      *     
@@ -2955,28 +2955,28 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain) for the TXT record.
      * @param {string} value - TXT record value.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number | bigint} ttl - Time to live, in seconds. Must be greater than 0.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordTXT(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
+    updateRecordTXT(domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string): Promise<Models.DnsRecord>;
     updateRecordTXT(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number | bigint)?, (string)?]    
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number | bigint, comment?: string };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 recordId: rest[0] as string,
                 name: rest[1] as string,
                 value: rest[2] as string,
-                ttl: rest[3] as number,
+                ttl: rest[3] as number | bigint,
                 comment: rest[4] as string            
             };
         }
