@@ -586,11 +586,11 @@ export class Migrations {
      * @param {string} params.database - Source's Database Name
      * @param {string} params.username - Source's Database Username
      * @param {string} params.password - Source's Database Password
-     * @param {number | bigint} params.port - Source's Database Port
+     * @param {number} params.port - Source's Database Port
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createNHostMigration(params: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number | bigint  }): Promise<Models.Migration>;
+    createNHostMigration(params: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number  }): Promise<Models.Migration>;
     /**
      * Migrate data from an NHost project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from an NHost project. 
      *
@@ -601,20 +601,20 @@ export class Migrations {
      * @param {string} database - Source's Database Name
      * @param {string} username - Source's Database Username
      * @param {string} password - Source's Database Password
-     * @param {number | bigint} port - Source's Database Port
+     * @param {number} port - Source's Database Port
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createNHostMigration(resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number | bigint): Promise<Models.Migration>;
+    createNHostMigration(resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number): Promise<Models.Migration>;
     createNHostMigration(
-        paramsOrFirst: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number | bigint } | string[],
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number | bigint)?]    
+        paramsOrFirst: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number } | string[],
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Migration> {
-        let params: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number | bigint };
+        let params: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number | bigint };
+            params = (paramsOrFirst || {}) as { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
         } else {
             params = {
                 resources: paramsOrFirst as string[],
@@ -624,7 +624,7 @@ export class Migrations {
                 database: rest[3] as string,
                 username: rest[4] as string,
                 password: rest[5] as string,
-                port: rest[6] as number | bigint            
+                port: rest[6] as number            
             };
         }
         
@@ -709,11 +709,11 @@ export class Migrations {
      * @param {string} params.database - Source's Database Name.
      * @param {string} params.username - Source's Database Username.
      * @param {string} params.password - Source's Database Password.
-     * @param {number | bigint} params.port - Source's Database Port.
+     * @param {number} params.port - Source's Database Port.
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    getNHostReport(params: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number | bigint  }): Promise<Models.MigrationReport>;
+    getNHostReport(params: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number  }): Promise<Models.MigrationReport>;
     /**
      * Generate a detailed report of the data in an NHost project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
      *
@@ -724,20 +724,20 @@ export class Migrations {
      * @param {string} database - Source's Database Name.
      * @param {string} username - Source's Database Username.
      * @param {string} password - Source's Database Password.
-     * @param {number | bigint} port - Source's Database Port.
+     * @param {number} port - Source's Database Port.
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getNHostReport(resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number | bigint): Promise<Models.MigrationReport>;
+    getNHostReport(resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number): Promise<Models.MigrationReport>;
     getNHostReport(
-        paramsOrFirst: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number | bigint } | string[],
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number | bigint)?]    
+        paramsOrFirst: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number } | string[],
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
     ): Promise<Models.MigrationReport> {
-        let params: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number | bigint };
+        let params: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number | bigint };
+            params = (paramsOrFirst || {}) as { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
         } else {
             params = {
                 resources: paramsOrFirst as string[],
@@ -747,7 +747,7 @@ export class Migrations {
                 database: rest[3] as string,
                 username: rest[4] as string,
                 password: rest[5] as string,
-                port: rest[6] as number | bigint            
+                port: rest[6] as number            
             };
         }
         
@@ -830,11 +830,11 @@ export class Migrations {
      * @param {string} params.databaseHost - Source's Database Host
      * @param {string} params.username - Source's Database Username
      * @param {string} params.password - Source's Database Password
-     * @param {number | bigint} params.port - Source's Database Port
+     * @param {number} params.port - Source's Database Port
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createSupabaseMigration(params: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number | bigint  }): Promise<Models.Migration>;
+    createSupabaseMigration(params: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number  }): Promise<Models.Migration>;
     /**
      * Migrate data from a Supabase project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from a Supabase project. 
      *
@@ -844,20 +844,20 @@ export class Migrations {
      * @param {string} databaseHost - Source's Database Host
      * @param {string} username - Source's Database Username
      * @param {string} password - Source's Database Password
-     * @param {number | bigint} port - Source's Database Port
+     * @param {number} port - Source's Database Port
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSupabaseMigration(resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number | bigint): Promise<Models.Migration>;
+    createSupabaseMigration(resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number): Promise<Models.Migration>;
     createSupabaseMigration(
-        paramsOrFirst: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number | bigint } | string[],
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number | bigint)?]    
+        paramsOrFirst: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number } | string[],
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Migration> {
-        let params: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number | bigint };
+        let params: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number | bigint };
+            params = (paramsOrFirst || {}) as { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
         } else {
             params = {
                 resources: paramsOrFirst as string[],
@@ -866,7 +866,7 @@ export class Migrations {
                 databaseHost: rest[2] as string,
                 username: rest[3] as string,
                 password: rest[4] as string,
-                port: rest[5] as number | bigint            
+                port: rest[5] as number            
             };
         }
         
@@ -943,11 +943,11 @@ export class Migrations {
      * @param {string} params.databaseHost - Source's Database Host.
      * @param {string} params.username - Source's Database Username.
      * @param {string} params.password - Source's Database Password.
-     * @param {number | bigint} params.port - Source's Database Port.
+     * @param {number} params.port - Source's Database Port.
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    getSupabaseReport(params: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number | bigint  }): Promise<Models.MigrationReport>;
+    getSupabaseReport(params: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number  }): Promise<Models.MigrationReport>;
     /**
      * Generate a report of the data in a Supabase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
      *
@@ -957,20 +957,20 @@ export class Migrations {
      * @param {string} databaseHost - Source's Database Host.
      * @param {string} username - Source's Database Username.
      * @param {string} password - Source's Database Password.
-     * @param {number | bigint} port - Source's Database Port.
+     * @param {number} port - Source's Database Port.
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getSupabaseReport(resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number | bigint): Promise<Models.MigrationReport>;
+    getSupabaseReport(resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number): Promise<Models.MigrationReport>;
     getSupabaseReport(
-        paramsOrFirst: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number | bigint } | string[],
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number | bigint)?]    
+        paramsOrFirst: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number } | string[],
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
     ): Promise<Models.MigrationReport> {
-        let params: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number | bigint };
+        let params: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number | bigint };
+            params = (paramsOrFirst || {}) as { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
         } else {
             params = {
                 resources: paramsOrFirst as string[],
@@ -979,7 +979,7 @@ export class Migrations {
                 databaseHost: rest[2] as string,
                 username: rest[3] as string,
                 password: rest[4] as string,
-                port: rest[5] as number | bigint            
+                port: rest[5] as number            
             };
         }
         

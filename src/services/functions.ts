@@ -91,7 +91,7 @@ export class Functions {
      * @param {string[]} params.execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} params.events - Events list. Maximum of 100 events are allowed.
      * @param {string} params.schedule - Schedule CRON syntax.
-     * @param {number | bigint} params.timeout - Function maximum execution time in seconds.
+     * @param {number} params.timeout - Function maximum execution time in seconds.
      * @param {boolean} params.enabled - Is function enabled? When set to 'disabled', users cannot access the function but Server SDKs with and API key can still access the function. No data is lost when this is toggled.
      * @param {boolean} params.logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
      * @param {string} params.entrypoint - Entrypoint File. This path is relative to the "providerRootDirectory".
@@ -106,7 +106,7 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    create(params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number | bigint, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string  }): Promise<Models.Function>;
+    create(params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string  }): Promise<Models.Function>;
     /**
      * Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
      *
@@ -116,7 +116,7 @@ export class Functions {
      * @param {string[]} execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} events - Events list. Maximum of 100 events are allowed.
      * @param {string} schedule - Schedule CRON syntax.
-     * @param {number | bigint} timeout - Function maximum execution time in seconds.
+     * @param {number} timeout - Function maximum execution time in seconds.
      * @param {boolean} enabled - Is function enabled? When set to 'disabled', users cannot access the function but Server SDKs with and API key can still access the function. No data is lost when this is toggled.
      * @param {boolean} logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
      * @param {string} entrypoint - Entrypoint File. This path is relative to the "providerRootDirectory".
@@ -132,15 +132,15 @@ export class Functions {
      * @returns {Promise<Models.Function>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number | bigint, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string): Promise<Models.Function>;
+    create(functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string): Promise<Models.Function>;
     create(
-        paramsOrFirst: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number | bigint, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string } | string,
-        ...rest: [(string)?, (Runtime)?, (string[])?, (string[])?, (string)?, (number | bigint)?, (boolean)?, (boolean)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?]    
+        paramsOrFirst: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string } | string,
+        ...rest: [(string)?, (Runtime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?]    
     ): Promise<Models.Function> {
-        let params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number | bigint, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
+        let params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number | bigint, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
+            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
@@ -149,7 +149,7 @@ export class Functions {
                 execute: rest[2] as string[],
                 events: rest[3] as string[],
                 schedule: rest[4] as string,
-                timeout: rest[5] as number | bigint,
+                timeout: rest[5] as number,
                 enabled: rest[6] as boolean,
                 logging: rest[7] as boolean,
                 entrypoint: rest[8] as string,
@@ -314,40 +314,40 @@ export class Functions {
      *
      * @param {string[]} params.runtimes - List of runtimes allowed for filtering function templates. Maximum of 100 runtimes are allowed.
      * @param {string[]} params.useCases - List of use cases allowed for filtering function templates. Maximum of 100 use cases are allowed.
-     * @param {number | bigint} params.limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
-     * @param {number | bigint} params.offset - Offset the list of returned templates. Maximum offset is 5000.
+     * @param {number} params.limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
+     * @param {number} params.offset - Offset the list of returned templates. Maximum offset is 5000.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateFunctionList>}
      */
-    listTemplates(params?: { runtimes?: string[], useCases?: string[], limit?: number | bigint, offset?: number | bigint, total?: boolean  }): Promise<Models.TemplateFunctionList>;
+    listTemplates(params?: { runtimes?: string[], useCases?: string[], limit?: number, offset?: number, total?: boolean  }): Promise<Models.TemplateFunctionList>;
     /**
      * List available function templates. You can use template details in [createFunction](/docs/references/cloud/server-nodejs/functions#create) method.
      *
      * @param {string[]} runtimes - List of runtimes allowed for filtering function templates. Maximum of 100 runtimes are allowed.
      * @param {string[]} useCases - List of use cases allowed for filtering function templates. Maximum of 100 use cases are allowed.
-     * @param {number | bigint} limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
-     * @param {number | bigint} offset - Offset the list of returned templates. Maximum offset is 5000.
+     * @param {number} limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
+     * @param {number} offset - Offset the list of returned templates. Maximum offset is 5000.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateFunctionList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listTemplates(runtimes?: string[], useCases?: string[], limit?: number | bigint, offset?: number | bigint, total?: boolean): Promise<Models.TemplateFunctionList>;
+    listTemplates(runtimes?: string[], useCases?: string[], limit?: number, offset?: number, total?: boolean): Promise<Models.TemplateFunctionList>;
     listTemplates(
-        paramsOrFirst?: { runtimes?: string[], useCases?: string[], limit?: number | bigint, offset?: number | bigint, total?: boolean } | string[],
-        ...rest: [(string[])?, (number | bigint)?, (number | bigint)?, (boolean)?]    
+        paramsOrFirst?: { runtimes?: string[], useCases?: string[], limit?: number, offset?: number, total?: boolean } | string[],
+        ...rest: [(string[])?, (number)?, (number)?, (boolean)?]    
     ): Promise<Models.TemplateFunctionList> {
-        let params: { runtimes?: string[], useCases?: string[], limit?: number | bigint, offset?: number | bigint, total?: boolean };
+        let params: { runtimes?: string[], useCases?: string[], limit?: number, offset?: number, total?: boolean };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { runtimes?: string[], useCases?: string[], limit?: number | bigint, offset?: number | bigint, total?: boolean };
+            params = (paramsOrFirst || {}) as { runtimes?: string[], useCases?: string[], limit?: number, offset?: number, total?: boolean };
         } else {
             params = {
                 runtimes: paramsOrFirst as string[],
                 useCases: rest[0] as string[],
-                limit: rest[1] as number | bigint,
-                offset: rest[2] as number | bigint,
+                limit: rest[1] as number,
+                offset: rest[2] as number,
                 total: rest[3] as boolean            
             };
         }
@@ -551,7 +551,7 @@ export class Functions {
      * @param {string[]} params.execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} params.events - Events list. Maximum of 100 events are allowed.
      * @param {string} params.schedule - Schedule CRON syntax.
-     * @param {number | bigint} params.timeout - Maximum execution time in seconds.
+     * @param {number} params.timeout - Maximum execution time in seconds.
      * @param {boolean} params.enabled - Is function enabled? When set to 'disabled', users cannot access the function but Server SDKs with and API key can still access the function. No data is lost when this is toggled.
      * @param {boolean} params.logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
      * @param {string} params.entrypoint - Entrypoint File. This path is relative to the "providerRootDirectory".
@@ -566,7 +566,7 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    update(params: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number | bigint, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string  }): Promise<Models.Function>;
+    update(params: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string  }): Promise<Models.Function>;
     /**
      * Update function by its unique ID.
      *
@@ -576,7 +576,7 @@ export class Functions {
      * @param {string[]} execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} events - Events list. Maximum of 100 events are allowed.
      * @param {string} schedule - Schedule CRON syntax.
-     * @param {number | bigint} timeout - Maximum execution time in seconds.
+     * @param {number} timeout - Maximum execution time in seconds.
      * @param {boolean} enabled - Is function enabled? When set to 'disabled', users cannot access the function but Server SDKs with and API key can still access the function. No data is lost when this is toggled.
      * @param {boolean} logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
      * @param {string} entrypoint - Entrypoint File. This path is relative to the "providerRootDirectory".
@@ -592,15 +592,15 @@ export class Functions {
      * @returns {Promise<Models.Function>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number | bigint, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string): Promise<Models.Function>;
+    update(functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string): Promise<Models.Function>;
     update(
-        paramsOrFirst: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number | bigint, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string } | string,
-        ...rest: [(string)?, (Runtime)?, (string[])?, (string[])?, (string)?, (number | bigint)?, (boolean)?, (boolean)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?]    
+        paramsOrFirst: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string } | string,
+        ...rest: [(string)?, (Runtime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?]    
     ): Promise<Models.Function> {
-        let params: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number | bigint, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
+        let params: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number | bigint, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
+            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: string[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
@@ -609,7 +609,7 @@ export class Functions {
                 execute: rest[2] as string[],
                 events: rest[3] as string[],
                 schedule: rest[4] as string,
-                timeout: rest[5] as number | bigint,
+                timeout: rest[5] as number,
                 enabled: rest[6] as boolean,
                 logging: rest[7] as boolean,
                 entrypoint: rest[8] as string,

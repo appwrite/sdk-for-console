@@ -82,12 +82,12 @@ export class Organizations {
      * @param {string[]} params.invites - Additional member invites
      * @param {string} params.couponId - Coupon id
      * @param {string} params.taxId - Tax Id associated to billing.
-     * @param {number | bigint} params.budget - Budget limit for additional usage set for the organization
+     * @param {number} params.budget - Budget limit for additional usage set for the organization
      * @param {Platform} params.platform - Platform type
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>}
      */
-    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number | bigint, platform?: Platform  }): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
+    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform  }): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
     /**
      * Create a new organization.
      * 
@@ -100,21 +100,21 @@ export class Organizations {
      * @param {string[]} invites - Additional member invites
      * @param {string} couponId - Coupon id
      * @param {string} taxId - Tax Id associated to billing.
-     * @param {number | bigint} budget - Budget limit for additional usage set for the organization
+     * @param {number} budget - Budget limit for additional usage set for the organization
      * @param {Platform} platform - Platform type
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number | bigint, platform?: Platform): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
+    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
     create<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number | bigint, platform?: Platform } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number | bigint)?, (Platform)?]    
+        paramsOrFirst: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number)?, (Platform)?]    
     ): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication> {
-        let params: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number | bigint, platform?: Platform };
+        let params: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number | bigint, platform?: Platform };
+            params = (paramsOrFirst || {}) as { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
@@ -125,7 +125,7 @@ export class Organizations {
                 invites: rest[4] as string[],
                 couponId: rest[5] as string,
                 taxId: rest[6] as string,
-                budget: rest[7] as number | bigint,
+                budget: rest[7] as number,
                 platform: rest[8] as Platform            
             };
         }
@@ -397,38 +397,38 @@ export class Organizations {
      *
      * @param {string} params.organizationId - Organization ID
      * @param {string} params.aggregationId - Invoice unique ID
-     * @param {number | bigint} params.limit - Maximum number of project aggregations to return in response. By default will return maximum 5 results. Maximum of 10 results allowed per request.
-     * @param {number | bigint} params.offset - Offset value. The default value is 0. Use this param to manage pagination.
+     * @param {number} params.limit - Maximum number of project aggregations to return in response. By default will return maximum 5 results. Maximum of 10 results allowed per request.
+     * @param {number} params.offset - Offset value. The default value is 0. Use this param to manage pagination.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AggregationTeam>}
      */
-    getAggregation(params: { organizationId: string, aggregationId: string, limit?: number | bigint, offset?: number | bigint  }): Promise<Models.AggregationTeam>;
+    getAggregation(params: { organizationId: string, aggregationId: string, limit?: number, offset?: number  }): Promise<Models.AggregationTeam>;
     /**
      * Get a specific aggregation using it's aggregation ID.
      *
      * @param {string} organizationId - Organization ID
      * @param {string} aggregationId - Invoice unique ID
-     * @param {number | bigint} limit - Maximum number of project aggregations to return in response. By default will return maximum 5 results. Maximum of 10 results allowed per request.
-     * @param {number | bigint} offset - Offset value. The default value is 0. Use this param to manage pagination.
+     * @param {number} limit - Maximum number of project aggregations to return in response. By default will return maximum 5 results. Maximum of 10 results allowed per request.
+     * @param {number} offset - Offset value. The default value is 0. Use this param to manage pagination.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AggregationTeam>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getAggregation(organizationId: string, aggregationId: string, limit?: number | bigint, offset?: number | bigint): Promise<Models.AggregationTeam>;
+    getAggregation(organizationId: string, aggregationId: string, limit?: number, offset?: number): Promise<Models.AggregationTeam>;
     getAggregation(
-        paramsOrFirst: { organizationId: string, aggregationId: string, limit?: number | bigint, offset?: number | bigint } | string,
-        ...rest: [(string)?, (number | bigint)?, (number | bigint)?]    
+        paramsOrFirst: { organizationId: string, aggregationId: string, limit?: number, offset?: number } | string,
+        ...rest: [(string)?, (number)?, (number)?]    
     ): Promise<Models.AggregationTeam> {
-        let params: { organizationId: string, aggregationId: string, limit?: number | bigint, offset?: number | bigint };
+        let params: { organizationId: string, aggregationId: string, limit?: number, offset?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, aggregationId: string, limit?: number | bigint, offset?: number | bigint };
+            params = (paramsOrFirst || {}) as { organizationId: string, aggregationId: string, limit?: number, offset?: number };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 aggregationId: rest[0] as string,
-                limit: rest[1] as number | bigint,
-                offset: rest[2] as number | bigint            
+                limit: rest[1] as number,
+                offset: rest[2] as number            
             };
         }
         
@@ -706,36 +706,36 @@ export class Organizations {
      * Update the budget limit for an organization.
      *
      * @param {string} params.organizationId - Organization Unique ID
-     * @param {number | bigint} params.budget - Budget limit for additional usage set for the organization
-     * @param {number | bigint[]} params.alerts - Budget alert limit percentage
+     * @param {number} params.budget - Budget limit for additional usage set for the organization
+     * @param {number[]} params.alerts - Budget alert limit percentage
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    updateBudget<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, budget?: number | bigint, alerts?: number | bigint[]  }): Promise<Models.Organization<Preferences>>;
+    updateBudget<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, budget?: number, alerts?: number[]  }): Promise<Models.Organization<Preferences>>;
     /**
      * Update the budget limit for an organization.
      *
      * @param {string} organizationId - Organization Unique ID
-     * @param {number | bigint} budget - Budget limit for additional usage set for the organization
-     * @param {number | bigint[]} alerts - Budget alert limit percentage
+     * @param {number} budget - Budget limit for additional usage set for the organization
+     * @param {number[]} alerts - Budget alert limit percentage
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateBudget<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, budget?: number | bigint, alerts?: number | bigint[]): Promise<Models.Organization<Preferences>>;
+    updateBudget<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, budget?: number, alerts?: number[]): Promise<Models.Organization<Preferences>>;
     updateBudget<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, budget?: number | bigint, alerts?: number | bigint[] } | string,
-        ...rest: [(number | bigint)?, (number | bigint[])?]    
+        paramsOrFirst: { organizationId: string, budget?: number, alerts?: number[] } | string,
+        ...rest: [(number)?, (number[])?]    
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, budget?: number | bigint, alerts?: number | bigint[] };
+        let params: { organizationId: string, budget?: number, alerts?: number[] };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, budget?: number | bigint, alerts?: number | bigint[] };
+            params = (paramsOrFirst || {}) as { organizationId: string, budget?: number, alerts?: number[] };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                budget: rest[0] as number | bigint,
-                alerts: rest[1] as number | bigint[]            
+                budget: rest[0] as number,
+                alerts: rest[1] as number[]            
             };
         }
         
@@ -1948,11 +1948,11 @@ export class Organizations {
      * @param {string[]} params.invites - Additional member invites
      * @param {string} params.couponId - Coupon id
      * @param {string} params.taxId - Tax Id associated to billing.
-     * @param {number | bigint} params.budget - Budget limit for additional usage set for the organization
+     * @param {number} params.budget - Budget limit for additional usage set for the organization
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number | bigint  }): Promise<Models.Organization<Preferences>>;
+    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number  }): Promise<Models.Organization<Preferences>>;
     /**
      * Update the billing plan for an organization.
      *
@@ -1963,20 +1963,20 @@ export class Organizations {
      * @param {string[]} invites - Additional member invites
      * @param {string} couponId - Coupon id
      * @param {string} taxId - Tax Id associated to billing.
-     * @param {number | bigint} budget - Budget limit for additional usage set for the organization
+     * @param {number} budget - Budget limit for additional usage set for the organization
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number | bigint): Promise<Models.Organization<Preferences>>;
+    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>>;
     updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number | bigint } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number | bigint)?]    
+        paramsOrFirst: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number | bigint };
+        let params: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number | bigint };
+            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
@@ -1986,7 +1986,7 @@ export class Organizations {
                 invites: rest[3] as string[],
                 couponId: rest[4] as string,
                 taxId: rest[5] as string,
-                budget: rest[6] as number | bigint            
+                budget: rest[6] as number            
             };
         }
         

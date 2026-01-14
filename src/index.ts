@@ -52,6 +52,7 @@ export { UsageRange } from './enums/usage-range';
 export { RelationshipType } from './enums/relationship-type';
 export { RelationMutate } from './enums/relation-mutate';
 export { IndexType } from './enums/index-type';
+export { FilterType } from './enums/filter-type';
 export { Runtime } from './enums/runtime';
 export { TemplateReferenceType } from './enums/template-reference-type';
 export { VCSReferenceType } from './enums/vcs-reference-type';
