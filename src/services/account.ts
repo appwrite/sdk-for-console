@@ -784,30 +784,30 @@ export class Account {
     /**
      * Use this endpoint to create a JSON Web Token. You can use the resulting JWT to authenticate on behalf of the current user when working with the Appwrite server-side API and SDKs. The JWT secret is valid for 15 minutes from its creation and will be invalid if the user will logout in that time frame.
      *
-     * @param {number | bigint} params.duration - Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
+     * @param {number} params.duration - Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Jwt>}
      */
-    createJWT(params?: { duration?: number | bigint  }): Promise<Models.Jwt>;
+    createJWT(params?: { duration?: number  }): Promise<Models.Jwt>;
     /**
      * Use this endpoint to create a JSON Web Token. You can use the resulting JWT to authenticate on behalf of the current user when working with the Appwrite server-side API and SDKs. The JWT secret is valid for 15 minutes from its creation and will be invalid if the user will logout in that time frame.
      *
-     * @param {number | bigint} duration - Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
+     * @param {number} duration - Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Jwt>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createJWT(duration?: number | bigint): Promise<Models.Jwt>;
+    createJWT(duration?: number): Promise<Models.Jwt>;
     createJWT(
-        paramsOrFirst?: { duration?: number | bigint } | number | bigint    
+        paramsOrFirst?: { duration?: number } | number    
     ): Promise<Models.Jwt> {
-        let params: { duration?: number | bigint };
+        let params: { duration?: number };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { duration?: number | bigint };
+            params = (paramsOrFirst || {}) as { duration?: number };
         } else {
             params = {
-                duration: paramsOrFirst as number | bigint            
+                duration: paramsOrFirst as number            
             };
         }
         
@@ -1968,38 +1968,38 @@ export class Account {
      * Update a new payment method for the current user account.
      *
      * @param {string} params.paymentMethodId - Unique ID of payment method
-     * @param {number | bigint} params.expiryMonth - Payment expiry month
-     * @param {number | bigint} params.expiryYear - Expiry year
+     * @param {number} params.expiryMonth - Payment expiry month
+     * @param {number} params.expiryYear - Expiry year
      * @param {string} params.state - State of the payment method country
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      */
-    updatePaymentMethod(params: { paymentMethodId: string, expiryMonth: number | bigint, expiryYear: number | bigint, state?: string  }): Promise<Models.PaymentMethod>;
+    updatePaymentMethod(params: { paymentMethodId: string, expiryMonth: number, expiryYear: number, state?: string  }): Promise<Models.PaymentMethod>;
     /**
      * Update a new payment method for the current user account.
      *
      * @param {string} paymentMethodId - Unique ID of payment method
-     * @param {number | bigint} expiryMonth - Payment expiry month
-     * @param {number | bigint} expiryYear - Expiry year
+     * @param {number} expiryMonth - Payment expiry month
+     * @param {number} expiryYear - Expiry year
      * @param {string} state - State of the payment method country
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePaymentMethod(paymentMethodId: string, expiryMonth: number | bigint, expiryYear: number | bigint, state?: string): Promise<Models.PaymentMethod>;
+    updatePaymentMethod(paymentMethodId: string, expiryMonth: number, expiryYear: number, state?: string): Promise<Models.PaymentMethod>;
     updatePaymentMethod(
-        paramsOrFirst: { paymentMethodId: string, expiryMonth: number | bigint, expiryYear: number | bigint, state?: string } | string,
-        ...rest: [(number | bigint)?, (number | bigint)?, (string)?]    
+        paramsOrFirst: { paymentMethodId: string, expiryMonth: number, expiryYear: number, state?: string } | string,
+        ...rest: [(number)?, (number)?, (string)?]    
     ): Promise<Models.PaymentMethod> {
-        let params: { paymentMethodId: string, expiryMonth: number | bigint, expiryYear: number | bigint, state?: string };
+        let params: { paymentMethodId: string, expiryMonth: number, expiryYear: number, state?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { paymentMethodId: string, expiryMonth: number | bigint, expiryYear: number | bigint, state?: string };
+            params = (paramsOrFirst || {}) as { paymentMethodId: string, expiryMonth: number, expiryYear: number, state?: string };
         } else {
             params = {
                 paymentMethodId: paramsOrFirst as string,
-                expiryMonth: rest[0] as number | bigint,
-                expiryYear: rest[1] as number | bigint,
+                expiryMonth: rest[0] as number,
+                expiryYear: rest[1] as number,
                 state: rest[2] as string            
             };
         }

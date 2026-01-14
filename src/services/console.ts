@@ -525,40 +525,40 @@ export class Console {
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.tableId - Table ID.
      * @param {string} params.context - Optional user provided context to refine suggestions.
-     * @param {number | bigint} params.min - Minimum number of suggestions to generate.
-     * @param {number | bigint} params.max - Maximum number of suggestions to generate.
+     * @param {number} params.min - Minimum number of suggestions to generate.
+     * @param {number} params.max - Maximum number of suggestions to generate.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnList>}
      */
-    suggestColumns(params: { databaseId: string, tableId: string, context?: string, min?: number | bigint, max?: number | bigint  }): Promise<Models.ColumnList>;
+    suggestColumns(params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number  }): Promise<Models.ColumnList>;
     /**
      * Suggests column names and their size limits based on the provided table name. The API will also analyze other tables in the same database to provide context-aware suggestions, ensuring consistency across schema design. Users may optionally provide custom context to further refine the suggestions.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} tableId - Table ID.
      * @param {string} context - Optional user provided context to refine suggestions.
-     * @param {number | bigint} min - Minimum number of suggestions to generate.
-     * @param {number | bigint} max - Maximum number of suggestions to generate.
+     * @param {number} min - Minimum number of suggestions to generate.
+     * @param {number} max - Maximum number of suggestions to generate.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    suggestColumns(databaseId: string, tableId: string, context?: string, min?: number | bigint, max?: number | bigint): Promise<Models.ColumnList>;
+    suggestColumns(databaseId: string, tableId: string, context?: string, min?: number, max?: number): Promise<Models.ColumnList>;
     suggestColumns(
-        paramsOrFirst: { databaseId: string, tableId: string, context?: string, min?: number | bigint, max?: number | bigint } | string,
-        ...rest: [(string)?, (string)?, (number | bigint)?, (number | bigint)?]    
+        paramsOrFirst: { databaseId: string, tableId: string, context?: string, min?: number, max?: number } | string,
+        ...rest: [(string)?, (string)?, (number)?, (number)?]    
     ): Promise<Models.ColumnList> {
-        let params: { databaseId: string, tableId: string, context?: string, min?: number | bigint, max?: number | bigint };
+        let params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, context?: string, min?: number | bigint, max?: number | bigint };
+            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, context?: string, min?: number, max?: number };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 context: rest[1] as string,
-                min: rest[2] as number | bigint,
-                max: rest[3] as number | bigint            
+                min: rest[2] as number,
+                max: rest[3] as number            
             };
         }
         
@@ -610,38 +610,38 @@ export class Console {
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.tableId - Table ID.
-     * @param {number | bigint} params.min - Minimum number of suggestions to generate.
-     * @param {number | bigint} params.max - Maximum number of suggestions to generate.
+     * @param {number} params.min - Minimum number of suggestions to generate.
+     * @param {number} params.max - Maximum number of suggestions to generate.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnIndexList>}
      */
-    suggestIndexes(params: { databaseId: string, tableId: string, min?: number | bigint, max?: number | bigint  }): Promise<Models.ColumnIndexList>;
+    suggestIndexes(params: { databaseId: string, tableId: string, min?: number, max?: number  }): Promise<Models.ColumnIndexList>;
     /**
      * Suggests database indexes for table columns based on the provided table structure and existing columns. The API will also analyze the table's column types, names, and patterns to recommend optimal indexes that improve query performance for common database operations like filtering, sorting, and searching.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} tableId - Table ID.
-     * @param {number | bigint} min - Minimum number of suggestions to generate.
-     * @param {number | bigint} max - Maximum number of suggestions to generate.
+     * @param {number} min - Minimum number of suggestions to generate.
+     * @param {number} max - Maximum number of suggestions to generate.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnIndexList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    suggestIndexes(databaseId: string, tableId: string, min?: number | bigint, max?: number | bigint): Promise<Models.ColumnIndexList>;
+    suggestIndexes(databaseId: string, tableId: string, min?: number, max?: number): Promise<Models.ColumnIndexList>;
     suggestIndexes(
-        paramsOrFirst: { databaseId: string, tableId: string, min?: number | bigint, max?: number | bigint } | string,
-        ...rest: [(string)?, (number | bigint)?, (number | bigint)?]    
+        paramsOrFirst: { databaseId: string, tableId: string, min?: number, max?: number } | string,
+        ...rest: [(string)?, (number)?, (number)?]    
     ): Promise<Models.ColumnIndexList> {
-        let params: { databaseId: string, tableId: string, min?: number | bigint, max?: number | bigint };
+        let params: { databaseId: string, tableId: string, min?: number, max?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, min?: number | bigint, max?: number | bigint };
+            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, min?: number, max?: number };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
-                min: rest[1] as number | bigint,
-                max: rest[2] as number | bigint            
+                min: rest[1] as number,
+                max: rest[2] as number            
             };
         }
         
