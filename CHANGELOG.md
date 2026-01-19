@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.1.3
+
+Fix bigint and float parsing in SDK.
+
 ## 2.1.2
 
 * Fix only use `bigint` for min, max and default attributes

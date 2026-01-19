@@ -36,6 +36,7 @@ export type { QueryTypes, QueryTypesList } from './query';
 export { Permission } from './permission';
 export { Role } from './role';
 export { ID } from './id';
+export { Channel } from './channel';
 export { Operator, Condition } from './operator';
 export { AuthenticatorType } from './enums/authenticator-type';
 export { AuthenticationFactor } from './enums/authentication-factor';
