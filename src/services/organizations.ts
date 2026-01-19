@@ -2,6 +2,7 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
+import { BillingPlan } from '../enums/billing-plan';
 import { Platform } from '../enums/platform';
 
 export class Organizations {
@@ -76,7 +77,7 @@ export class Organizations {
      *
      * @param {string} params.organizationId - Organization ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Organization name. Max length: 128 chars.
-     * @param {string} params.billingPlan - Organization billing plan chosen
+     * @param {BillingPlan} params.billingPlan - Organization billing plan chosen
      * @param {string} params.paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string} params.billingAddressId - Unique ID of billing address
      * @param {string[]} params.invites - Additional member invites
@@ -87,14 +88,14 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>}
      */
-    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform  }): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
+    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform  }): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
     /**
      * Create a new organization.
      * 
      *
      * @param {string} organizationId - Organization ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Organization name. Max length: 128 chars.
-     * @param {string} billingPlan - Organization billing plan chosen
+     * @param {BillingPlan} billingPlan - Organization billing plan chosen
      * @param {string} paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string} billingAddressId - Unique ID of billing address
      * @param {string[]} invites - Additional member invites
@@ -106,20 +107,20 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
+    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
     create<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number)?, (Platform)?]    
+        paramsOrFirst: { organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform } | string,
+        ...rest: [(string)?, (BillingPlan)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number)?, (Platform)?]    
     ): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication> {
-        let params: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform };
+        let params: { organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform };
+            params = (paramsOrFirst || {}) as { organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 name: rest[0] as string,
-                billingPlan: rest[1] as string,
+                billingPlan: rest[1] as BillingPlan,
                 paymentMethodId: rest[2] as string,
                 billingAddressId: rest[3] as string,
                 invites: rest[4] as string[],
@@ -200,7 +201,7 @@ export class Organizations {
     /**
      * Get estimation for creating an organization.
      *
-     * @param {string} params.billingPlan - Organization billing plan chosen
+     * @param {BillingPlan} params.billingPlan - Organization billing plan chosen
      * @param {string} params.paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string[]} params.invites - Additional member invites
      * @param {string} params.couponId - Coupon id
@@ -208,11 +209,11 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Estimation>}
      */
-    estimationCreateOrganization(params: { billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform  }): Promise<Models.Estimation>;
+    estimationCreateOrganization(params: { billingPlan: BillingPlan, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform  }): Promise<Models.Estimation>;
     /**
      * Get estimation for creating an organization.
      *
-     * @param {string} billingPlan - Organization billing plan chosen
+     * @param {BillingPlan} billingPlan - Organization billing plan chosen
      * @param {string} paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string[]} invites - Additional member invites
      * @param {string} couponId - Coupon id
@@ -221,18 +222,18 @@ export class Organizations {
      * @returns {Promise<Models.Estimation>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    estimationCreateOrganization(billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform): Promise<Models.Estimation>;
+    estimationCreateOrganization(billingPlan: BillingPlan, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform): Promise<Models.Estimation>;
     estimationCreateOrganization(
-        paramsOrFirst: { billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform } | string,
+        paramsOrFirst: { billingPlan: BillingPlan, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform } | BillingPlan,
         ...rest: [(string)?, (string[])?, (string)?, (Platform)?]    
     ): Promise<Models.Estimation> {
-        let params: { billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform };
+        let params: { billingPlan: BillingPlan, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform };
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'billingPlan' in paramsOrFirst)) {
+            params = (paramsOrFirst || {}) as { billingPlan: BillingPlan, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform };
         } else {
             params = {
-                billingPlan: paramsOrFirst as string,
+                billingPlan: paramsOrFirst as BillingPlan,
                 paymentMethodId: rest[0] as string,
                 invites: rest[1] as string[],
                 couponId: rest[2] as string,
@@ -1062,37 +1063,37 @@ export class Organizations {
      * Get estimation for updating the organization plan.
      *
      * @param {string} params.organizationId - Organization ID
-     * @param {string} params.billingPlan - Organization billing plan chosen
+     * @param {BillingPlan} params.billingPlan - Organization billing plan chosen
      * @param {string[]} params.invites - Additional member invites
      * @param {string} params.couponId - Coupon id
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationUpdatePlan>}
      */
-    estimationUpdatePlan(params: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string  }): Promise<Models.EstimationUpdatePlan>;
+    estimationUpdatePlan(params: { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string  }): Promise<Models.EstimationUpdatePlan>;
     /**
      * Get estimation for updating the organization plan.
      *
      * @param {string} organizationId - Organization ID
-     * @param {string} billingPlan - Organization billing plan chosen
+     * @param {BillingPlan} billingPlan - Organization billing plan chosen
      * @param {string[]} invites - Additional member invites
      * @param {string} couponId - Coupon id
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationUpdatePlan>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    estimationUpdatePlan(organizationId: string, billingPlan: string, invites?: string[], couponId?: string): Promise<Models.EstimationUpdatePlan>;
+    estimationUpdatePlan(organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string): Promise<Models.EstimationUpdatePlan>;
     estimationUpdatePlan(
-        paramsOrFirst: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string } | string,
-        ...rest: [(string)?, (string[])?, (string)?]    
+        paramsOrFirst: { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string } | string,
+        ...rest: [(BillingPlan)?, (string[])?, (string)?]    
     ): Promise<Models.EstimationUpdatePlan> {
-        let params: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string };
+        let params: { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: string, invites?: string[], couponId?: string };
+            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                billingPlan: rest[0] as string,
+                billingPlan: rest[0] as BillingPlan,
                 invites: rest[1] as string[],
                 couponId: rest[2] as string            
             };
@@ -1942,7 +1943,7 @@ export class Organizations {
      * Update the billing plan for an organization.
      *
      * @param {string} params.organizationId - Organization Unique ID
-     * @param {string} params.billingPlan - Organization billing plan chosen
+     * @param {BillingPlan} params.billingPlan - Organization billing plan chosen
      * @param {string} params.paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string} params.billingAddressId - Unique ID of billing address
      * @param {string[]} params.invites - Additional member invites
@@ -1952,12 +1953,12 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number  }): Promise<Models.Organization<Preferences>>;
+    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number  }): Promise<Models.Organization<Preferences>>;
     /**
      * Update the billing plan for an organization.
      *
      * @param {string} organizationId - Organization Unique ID
-     * @param {string} billingPlan - Organization billing plan chosen
+     * @param {BillingPlan} billingPlan - Organization billing plan chosen
      * @param {string} paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string} billingAddressId - Unique ID of billing address
      * @param {string[]} invites - Additional member invites
@@ -1968,19 +1969,19 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>>;
+    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>>;
     updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number)?]    
+        paramsOrFirst: { organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number } | string,
+        ...rest: [(BillingPlan)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number };
+        let params: { organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number };
+            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                billingPlan: rest[0] as string,
+                billingPlan: rest[0] as BillingPlan,
                 paymentMethodId: rest[1] as string,
                 billingAddressId: rest[2] as string,
                 invites: rest[3] as string[],

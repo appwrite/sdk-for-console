@@ -38,8 +38,6 @@ export enum OAuthProvider {
     Yandex = 'yandex',
     Zoho = 'zoho',
     Zoom = 'zoom',
-    Mock = 'mock',
-    Mockunverified = 'mock-unverified',
     GithubImagine = 'githubImagine',
     GoogleImagine = 'googleImagine',
 }

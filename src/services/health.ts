@@ -61,9 +61,9 @@ export class Health {
      * Check the Appwrite in-memory cache servers are up and connection is successful.
      *
      * @throws {AppwriteException}
-     * @returns {Promise<Models.HealthStatus>}
+     * @returns {Promise<Models.HealthStatusList>}
      */
-    getCache(): Promise<Models.HealthStatus> {
+    getCache(): Promise<Models.HealthStatusList> {
 
         const apiPath = '/health/cache';
         const payload: Payload = {};
@@ -135,9 +135,9 @@ export class Health {
      * Check the Appwrite database servers are up and connection is successful.
      *
      * @throws {AppwriteException}
-     * @returns {Promise<Models.HealthStatus>}
+     * @returns {Promise<Models.HealthStatusList>}
      */
-    getDB(): Promise<Models.HealthStatus> {
+    getDB(): Promise<Models.HealthStatusList> {
 
         const apiPath = '/health/db';
         const payload: Payload = {};
@@ -158,12 +158,61 @@ export class Health {
      * Check the Appwrite pub-sub servers are up and connection is successful.
      *
      * @throws {AppwriteException}
-     * @returns {Promise<Models.HealthStatus>}
+     * @returns {Promise<Models.HealthStatusList>}
      */
-    getPubSub(): Promise<Models.HealthStatus> {
+    getPubSub(): Promise<Models.HealthStatusList> {
 
         const apiPath = '/health/pubsub';
         const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     *
+     * @param {number} params.threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthQueue>}
+     */
+    getQueueAudits(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    /**
+     *
+     * @param {number} threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthQueue>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getQueueAudits(threshold?: number): Promise<Models.HealthQueue>;
+    getQueueAudits(
+        paramsOrFirst?: { threshold?: number } | number    
+    ): Promise<Models.HealthQueue> {
+        let params: { threshold?: number };
+        
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { threshold?: number };
+        } else {
+            params = {
+                threshold: paramsOrFirst as number            
+            };
+        }
+        
+        const threshold = params.threshold;
+
+
+        const apiPath = '/health/queue/audits';
+        const payload: Payload = {};
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {

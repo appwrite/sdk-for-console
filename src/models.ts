@@ -567,6 +567,20 @@ export namespace Models {
     }
 
     /**
+     * Status List
+     */
+    export type HealthStatusList = {
+        /**
+         * Total number of statuses that matched your query.
+         */
+        total: number;
+        /**
+         * List of statuses.
+         */
+        statuses: HealthStatus[];
+    }
+
+    /**
      * Rule List
      */
     export type ProxyRuleList = {
@@ -907,11 +921,11 @@ export namespace Models {
         /**
          * Minimum value to enforce for new documents.
          */
-        min?: number;
+        min?: number | bigint;
         /**
          * Maximum value to enforce for new documents.
          */
-        max?: number;
+        max?: number | bigint;
         /**
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
@@ -1581,11 +1595,11 @@ export namespace Models {
         /**
          * Minimum value to enforce for new documents.
          */
-        min?: number;
+        min?: number | bigint;
         /**
          * Maximum value to enforce for new documents.
          */
-        max?: number;
+        max?: number | bigint;
         /**
          * Default value for column when not provided. Cannot be set when column is required.
          */
@@ -2873,6 +2887,14 @@ export namespace Models {
          * Total number of chunks uploaded
          */
         chunksUploaded: number;
+        /**
+         * Whether file contents are encrypted at rest.
+         */
+        encryption: boolean;
+        /**
+         * Compression algorithm used for the file. Will be one of none, [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd).
+         */
+        compression: string;
     }
 
     /**
@@ -6707,6 +6729,10 @@ export namespace Models {
          * Function executions
          */
         executions: number;
+        /**
+         * Rolling max executions retained per function/site
+         */
+        executionsRetentionCount: number;
         /**
          * GB hours for functions
          */

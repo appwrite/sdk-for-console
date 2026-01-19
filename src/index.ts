@@ -61,6 +61,7 @@ export { ExecutionMethod } from './enums/execution-method';
 export { Name } from './enums/name';
 export { MessagePriority } from './enums/message-priority';
 export { SmtpEncryption } from './enums/smtp-encryption';
+export { BillingPlan } from './enums/billing-plan';
 export { ProjectUsageRange } from './enums/project-usage-range';
 export { Region } from './enums/region';
 export { Api } from './enums/api';

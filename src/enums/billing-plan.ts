@@ -1,0 +1,17 @@
+export enum BillingPlan {
+    Tier0 = 'tier-0',
+    Tier1 = 'tier-1',
+    Tier2 = 'tier-2',
+    Imaginetier0 = 'imagine-tier-0',
+    Imaginetier1 = 'imagine-tier-1',
+    Imaginetier150 = 'imagine-tier-1-50',
+    Imaginetier1100 = 'imagine-tier-1-100',
+    Imaginetier1200 = 'imagine-tier-1-200',
+    Imaginetier1290 = 'imagine-tier-1-290',
+    Imaginetier1480 = 'imagine-tier-1-480',
+    Imaginetier1700 = 'imagine-tier-1-700',
+    Imaginetier1900 = 'imagine-tier-1-900',
+    Imaginetier11100 = 'imagine-tier-1-1100',
+    Imaginetier11650 = 'imagine-tier-1-1650',
+    Imaginetier12200 = 'imagine-tier-1-2200',
+}
