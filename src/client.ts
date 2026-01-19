@@ -1,6 +1,57 @@
 import { Models } from './models';
+import { Channel, ActionableChannel, ResolvedChannel } from './channel';
 import JSONbigModule from 'json-bigint';
-const JSONbig = JSONbigModule({ useNativeBigInt: true });
+import BigNumber from 'bignumber.js';
+const JSONbigParser = JSONbigModule({ storeAsString: false });
+const JSONbigSerializer = JSONbigModule({ useNativeBigInt: true });
+
+/**
+ * Converts BigNumber objects from json-bigint to native types.
+ * - Integer BigNumbers → BigInt (if unsafe) or number (if safe)
+ * - Float BigNumbers → number
+ * - Strings remain strings (never converted to BigNumber by json-bigint)
+ */
+const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
+const MIN_SAFE = BigInt(Number.MIN_SAFE_INTEGER);
+
+function convertBigNumbers(value: any): any {
+    if (value === null || value === undefined) return value;
+
+    if (Array.isArray(value)) {
+        return value.map(convertBigNumbers);
+    }
+
+    if (BigNumber.isBigNumber(value)) {
+        if (value.isInteger()) {
+            const str = value.toFixed();
+            const bi = BigInt(str);
+
+            if (bi >= MIN_SAFE && bi <= MAX_SAFE) {
+                return Number(str);
+            }
+
+            return bi;
+        }
+
+        // float
+        return value.toNumber();
+    }
+
+    if (typeof value === 'object') {
+        const result: any = {};
+        for (const [k, v] of Object.entries(value)) {
+            result[k] = convertBigNumbers(v);
+        }
+        return result;
+    }
+
+    return value;
+}
+
+const JSONbig = {
+    parse: (text: string) => convertBigNumbers(JSONbigParser.parse(text)),
+    stringify: JSONbigSerializer.stringify
+};
 
 /**
  * Payload type representing a key-value pair with string keys and any values.
@@ -334,7 +385,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '2.1.2',
+        'x-sdk-version': '2.1.3',
         'X-Appwrite-Response-Format': '1.8.0',
     };
 
@@ -654,8 +705,8 @@ class Client {
      * @deprecated Use the Realtime service instead.
      * @see Realtime
      *
-     * @param {string|string[]} channels
-     * Channel to subscribe - pass a single channel as a string or multiple with an array of strings.
+     * @param {string|string[]|Channel<any>|ActionableChannel|ResolvedChannel|(Channel<any>|ActionableChannel|ResolvedChannel)[]} channels
+     * Channel to subscribe - pass a single channel as a string or Channel builder instance, or multiple with an array.
      *
      * Possible channels are:
      * - account
@@ -673,16 +724,35 @@ class Client {
      * - teams.[ID]
      * - memberships
      * - memberships.[ID]
+     * 
+     * You can also use Channel builders:
+     * - Channel.database('db').collection('col').document('doc').create()
+     * - Channel.bucket('bucket').file('file').update()
+     * - Channel.function('func').execution('exec').delete()
+     * - Channel.team('team').create()
+     * - Channel.membership('membership').update()
      * @param {(payload: RealtimeMessage) => void} callback Is called on every realtime update.
      * @returns {() => void} Unsubscribes from events.
      */
-    subscribe<T extends unknown>(channels: string | string[], callback: (payload: RealtimeResponseEvent<T>) => void): () => void {
-        let channelArray = typeof channels === 'string' ? [channels] : channels;
-        channelArray.forEach(channel => this.realtime.channels.add(channel));
+    subscribe<T extends unknown>(channels: string | string[] | Channel<any> | ActionableChannel | ResolvedChannel | (Channel<any> | ActionableChannel | ResolvedChannel)[], callback: (payload: RealtimeResponseEvent<T>) => void): () => void {
+        const channelArray = Array.isArray(channels) ? channels : [channels];
+        // Convert Channel instances to strings
+        const channelStrings = channelArray.map(ch => {
+            if (typeof ch === 'string') {
+                return ch;
+            }
+            // All Channel instances have toString() method
+            if (ch && typeof (ch as Channel<any>).toString === 'function') {
+                return (ch as Channel<any>).toString();
+            }
+            // Fallback to generic string conversion
+            return String(ch);
+        });
+        channelStrings.forEach(channel => this.realtime.channels.add(channel));
 
         const counter = this.realtime.subscriptionsCounter++;
         this.realtime.subscriptions.set(counter, {
-            channels: channelArray,
+            channels: channelStrings,
             callback
         });
 
@@ -690,7 +760,7 @@ class Client {
 
         return () => {
             this.realtime.subscriptions.delete(counter);
-            this.realtime.cleanUp(channelArray);
+            this.realtime.cleanUp(channelStrings);
             this.realtime.connect();
         }
     }
