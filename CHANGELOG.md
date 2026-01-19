@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.1.2
+
+* Fix only use `bigint` for min, max and default attributes
+
 ## 2.1.1
 
 * Allow `bigint` to be passed in all methods that previously only accepted `number`
