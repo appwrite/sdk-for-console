@@ -1,4 +1,4 @@
-import { Client, Organizations, BillingPlan } from "@appwrite.io/console";
+import { Client, Organizations } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const organizations = new Organizations(client);
 
 const result = await organizations.updatePlan({
     organizationId: '<ORGANIZATION_ID>',
-    billingPlan: BillingPlan.Tier0,
+    billingPlan: 'tier-0',
     paymentMethodId: '<PAYMENT_METHOD_ID>', // optional
     billingAddressId: '<BILLING_ADDRESS_ID>', // optional
     invites: [], // optional

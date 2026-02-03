@@ -2,6 +2,7 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
+import { Resources } from '../enums/resources';
 
 export class Migrations {
     client: Client;
@@ -19,7 +20,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationList>}
      */
-    list(params?: { queries?: string[], search?: string, total?: boolean  }): Promise<Models.MigrationList>;
+    list(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.MigrationList>;
     /**
      * List all migrations in the current project. This endpoint returns a list of all migrations including their status, progress, and any errors that occurred during the migration process.
      *
@@ -79,18 +80,18 @@ export class Migrations {
     /**
      * Migrate data from another Appwrite project to your current project. This endpoint allows you to migrate resources like databases, collections, documents, users, and files from an existing Appwrite project. 
      *
-     * @param {string[]} params.resources - List of resources to migrate
+     * @param {Resources[]} params.resources - List of resources to migrate
      * @param {string} params.endpoint - Source Appwrite endpoint
      * @param {string} params.projectId - Source Project ID
      * @param {string} params.apiKey - Source API Key
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createAppwriteMigration(params: { resources: string[], endpoint: string, projectId: string, apiKey: string  }): Promise<Models.Migration>;
+    createAppwriteMigration(params: { resources: Resources[], endpoint: string, projectId: string, apiKey: string }): Promise<Models.Migration>;
     /**
      * Migrate data from another Appwrite project to your current project. This endpoint allows you to migrate resources like databases, collections, documents, users, and files from an existing Appwrite project. 
      *
-     * @param {string[]} resources - List of resources to migrate
+     * @param {Resources[]} resources - List of resources to migrate
      * @param {string} endpoint - Source Appwrite endpoint
      * @param {string} projectId - Source Project ID
      * @param {string} apiKey - Source API Key
@@ -98,18 +99,18 @@ export class Migrations {
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createAppwriteMigration(resources: string[], endpoint: string, projectId: string, apiKey: string): Promise<Models.Migration>;
+    createAppwriteMigration(resources: Resources[], endpoint: string, projectId: string, apiKey: string): Promise<Models.Migration>;
     createAppwriteMigration(
-        paramsOrFirst: { resources: string[], endpoint: string, projectId: string, apiKey: string } | string[],
+        paramsOrFirst: { resources: Resources[], endpoint: string, projectId: string, apiKey: string } | Resources[],
         ...rest: [(string)?, (string)?, (string)?]    
     ): Promise<Models.Migration> {
-        let params: { resources: string[], endpoint: string, projectId: string, apiKey: string };
+        let params: { resources: Resources[], endpoint: string, projectId: string, apiKey: string };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: string[], endpoint: string, projectId: string, apiKey: string };
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+            params = (paramsOrFirst || {}) as { resources: Resources[], endpoint: string, projectId: string, apiKey: string };
         } else {
             params = {
-                resources: paramsOrFirst as string[],
+                resources: paramsOrFirst as Resources[],
                 endpoint: rest[0] as string,
                 projectId: rest[1] as string,
                 apiKey: rest[2] as string            
@@ -165,18 +166,18 @@ export class Migrations {
     /**
      * Generate a report of the data in an Appwrite project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
-     * @param {string[]} params.resources - List of resources to migrate
+     * @param {Resources[]} params.resources - List of resources to migrate
      * @param {string} params.endpoint - Source's Appwrite Endpoint
      * @param {string} params.projectID - Source's Project ID
      * @param {string} params.key - Source's API Key
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    getAppwriteReport(params: { resources: string[], endpoint: string, projectID: string, key: string  }): Promise<Models.MigrationReport>;
+    getAppwriteReport(params: { resources: Resources[], endpoint: string, projectID: string, key: string }): Promise<Models.MigrationReport>;
     /**
      * Generate a report of the data in an Appwrite project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
-     * @param {string[]} resources - List of resources to migrate
+     * @param {Resources[]} resources - List of resources to migrate
      * @param {string} endpoint - Source's Appwrite Endpoint
      * @param {string} projectID - Source's Project ID
      * @param {string} key - Source's API Key
@@ -184,18 +185,18 @@ export class Migrations {
      * @returns {Promise<Models.MigrationReport>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getAppwriteReport(resources: string[], endpoint: string, projectID: string, key: string): Promise<Models.MigrationReport>;
+    getAppwriteReport(resources: Resources[], endpoint: string, projectID: string, key: string): Promise<Models.MigrationReport>;
     getAppwriteReport(
-        paramsOrFirst: { resources: string[], endpoint: string, projectID: string, key: string } | string[],
+        paramsOrFirst: { resources: Resources[], endpoint: string, projectID: string, key: string } | Resources[],
         ...rest: [(string)?, (string)?, (string)?]    
     ): Promise<Models.MigrationReport> {
-        let params: { resources: string[], endpoint: string, projectID: string, key: string };
+        let params: { resources: Resources[], endpoint: string, projectID: string, key: string };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: string[], endpoint: string, projectID: string, key: string };
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+            params = (paramsOrFirst || {}) as { resources: Resources[], endpoint: string, projectID: string, key: string };
         } else {
             params = {
-                resources: paramsOrFirst as string[],
+                resources: paramsOrFirst as Resources[],
                 endpoint: rest[0] as string,
                 projectID: rest[1] as string,
                 key: rest[2] as string            
@@ -262,7 +263,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createCSVExport(params: { resourceId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean  }): Promise<Models.Migration>;
+    createCSVExport(params: { resourceId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean }): Promise<Models.Migration>;
     /**
      * Export documents to a CSV file from your Appwrite database. This endpoint allows you to export documents to a CSV file stored in a secure internal bucket. You'll receive an email with a download link when the export is complete.
      *
@@ -372,7 +373,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createCSVImport(params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean  }): Promise<Models.Migration>;
+    createCSVImport(params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean }): Promise<Models.Migration>;
     /**
      * Import documents from a CSV file into your Appwrite database. This endpoint allows you to import documents from a CSV file uploaded to Appwrite Storage bucket.
      *
@@ -448,33 +449,33 @@ export class Migrations {
     /**
      * Migrate data from a Firebase project to your Appwrite project. This endpoint allows you to migrate resources like authentication and other supported services from a Firebase project. 
      *
-     * @param {string[]} params.resources - List of resources to migrate
+     * @param {Resources[]} params.resources - List of resources to migrate
      * @param {string} params.serviceAccount - JSON of the Firebase service account credentials
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createFirebaseMigration(params: { resources: string[], serviceAccount: string  }): Promise<Models.Migration>;
+    createFirebaseMigration(params: { resources: Resources[], serviceAccount: string }): Promise<Models.Migration>;
     /**
      * Migrate data from a Firebase project to your Appwrite project. This endpoint allows you to migrate resources like authentication and other supported services from a Firebase project. 
      *
-     * @param {string[]} resources - List of resources to migrate
+     * @param {Resources[]} resources - List of resources to migrate
      * @param {string} serviceAccount - JSON of the Firebase service account credentials
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createFirebaseMigration(resources: string[], serviceAccount: string): Promise<Models.Migration>;
+    createFirebaseMigration(resources: Resources[], serviceAccount: string): Promise<Models.Migration>;
     createFirebaseMigration(
-        paramsOrFirst: { resources: string[], serviceAccount: string } | string[],
+        paramsOrFirst: { resources: Resources[], serviceAccount: string } | Resources[],
         ...rest: [(string)?]    
     ): Promise<Models.Migration> {
-        let params: { resources: string[], serviceAccount: string };
+        let params: { resources: Resources[], serviceAccount: string };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: string[], serviceAccount: string };
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+            params = (paramsOrFirst || {}) as { resources: Resources[], serviceAccount: string };
         } else {
             params = {
-                resources: paramsOrFirst as string[],
+                resources: paramsOrFirst as Resources[],
                 serviceAccount: rest[0] as string            
             };
         }
@@ -514,33 +515,33 @@ export class Migrations {
     /**
      * Generate a report of the data in a Firebase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
-     * @param {string[]} params.resources - List of resources to migrate
+     * @param {Resources[]} params.resources - List of resources to migrate
      * @param {string} params.serviceAccount - JSON of the Firebase service account credentials
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    getFirebaseReport(params: { resources: string[], serviceAccount: string  }): Promise<Models.MigrationReport>;
+    getFirebaseReport(params: { resources: Resources[], serviceAccount: string }): Promise<Models.MigrationReport>;
     /**
      * Generate a report of the data in a Firebase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
-     * @param {string[]} resources - List of resources to migrate
+     * @param {Resources[]} resources - List of resources to migrate
      * @param {string} serviceAccount - JSON of the Firebase service account credentials
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getFirebaseReport(resources: string[], serviceAccount: string): Promise<Models.MigrationReport>;
+    getFirebaseReport(resources: Resources[], serviceAccount: string): Promise<Models.MigrationReport>;
     getFirebaseReport(
-        paramsOrFirst: { resources: string[], serviceAccount: string } | string[],
+        paramsOrFirst: { resources: Resources[], serviceAccount: string } | Resources[],
         ...rest: [(string)?]    
     ): Promise<Models.MigrationReport> {
-        let params: { resources: string[], serviceAccount: string };
+        let params: { resources: Resources[], serviceAccount: string };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: string[], serviceAccount: string };
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+            params = (paramsOrFirst || {}) as { resources: Resources[], serviceAccount: string };
         } else {
             params = {
-                resources: paramsOrFirst as string[],
+                resources: paramsOrFirst as Resources[],
                 serviceAccount: rest[0] as string            
             };
         }
@@ -579,7 +580,7 @@ export class Migrations {
     /**
      * Migrate data from an NHost project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from an NHost project. 
      *
-     * @param {string[]} params.resources - List of resources to migrate
+     * @param {Resources[]} params.resources - List of resources to migrate
      * @param {string} params.subdomain - Source's Subdomain
      * @param {string} params.region - Source's Region
      * @param {string} params.adminSecret - Source's Admin Secret
@@ -590,11 +591,11 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createNHostMigration(params: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number  }): Promise<Models.Migration>;
+    createNHostMigration(params: { resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number }): Promise<Models.Migration>;
     /**
      * Migrate data from an NHost project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from an NHost project. 
      *
-     * @param {string[]} resources - List of resources to migrate
+     * @param {Resources[]} resources - List of resources to migrate
      * @param {string} subdomain - Source's Subdomain
      * @param {string} region - Source's Region
      * @param {string} adminSecret - Source's Admin Secret
@@ -606,18 +607,18 @@ export class Migrations {
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createNHostMigration(resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number): Promise<Models.Migration>;
+    createNHostMigration(resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number): Promise<Models.Migration>;
     createNHostMigration(
-        paramsOrFirst: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number } | string[],
+        paramsOrFirst: { resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number } | Resources[],
         ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Migration> {
-        let params: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
+        let params: { resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+            params = (paramsOrFirst || {}) as { resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
         } else {
             params = {
-                resources: paramsOrFirst as string[],
+                resources: paramsOrFirst as Resources[],
                 subdomain: rest[0] as string,
                 region: rest[1] as string,
                 adminSecret: rest[2] as string,
@@ -702,7 +703,7 @@ export class Migrations {
     /**
      * Generate a detailed report of the data in an NHost project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
      *
-     * @param {string[]} params.resources - List of resources to migrate.
+     * @param {Resources[]} params.resources - List of resources to migrate.
      * @param {string} params.subdomain - Source's Subdomain.
      * @param {string} params.region - Source's Region.
      * @param {string} params.adminSecret - Source's Admin Secret.
@@ -713,11 +714,11 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    getNHostReport(params: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number  }): Promise<Models.MigrationReport>;
+    getNHostReport(params: { resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number }): Promise<Models.MigrationReport>;
     /**
      * Generate a detailed report of the data in an NHost project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
      *
-     * @param {string[]} resources - List of resources to migrate.
+     * @param {Resources[]} resources - List of resources to migrate.
      * @param {string} subdomain - Source's Subdomain.
      * @param {string} region - Source's Region.
      * @param {string} adminSecret - Source's Admin Secret.
@@ -729,18 +730,18 @@ export class Migrations {
      * @returns {Promise<Models.MigrationReport>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getNHostReport(resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number): Promise<Models.MigrationReport>;
+    getNHostReport(resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number): Promise<Models.MigrationReport>;
     getNHostReport(
-        paramsOrFirst: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number } | string[],
+        paramsOrFirst: { resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number } | Resources[],
         ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
     ): Promise<Models.MigrationReport> {
-        let params: { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
+        let params: { resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: string[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+            params = (paramsOrFirst || {}) as { resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
         } else {
             params = {
-                resources: paramsOrFirst as string[],
+                resources: paramsOrFirst as Resources[],
                 subdomain: rest[0] as string,
                 region: rest[1] as string,
                 adminSecret: rest[2] as string,
@@ -824,7 +825,7 @@ export class Migrations {
     /**
      * Migrate data from a Supabase project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from a Supabase project. 
      *
-     * @param {string[]} params.resources - List of resources to migrate
+     * @param {Resources[]} params.resources - List of resources to migrate
      * @param {string} params.endpoint - Source's Supabase Endpoint
      * @param {string} params.apiKey - Source's API Key
      * @param {string} params.databaseHost - Source's Database Host
@@ -834,11 +835,11 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createSupabaseMigration(params: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number  }): Promise<Models.Migration>;
+    createSupabaseMigration(params: { resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number }): Promise<Models.Migration>;
     /**
      * Migrate data from a Supabase project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from a Supabase project. 
      *
-     * @param {string[]} resources - List of resources to migrate
+     * @param {Resources[]} resources - List of resources to migrate
      * @param {string} endpoint - Source's Supabase Endpoint
      * @param {string} apiKey - Source's API Key
      * @param {string} databaseHost - Source's Database Host
@@ -849,18 +850,18 @@ export class Migrations {
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSupabaseMigration(resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number): Promise<Models.Migration>;
+    createSupabaseMigration(resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number): Promise<Models.Migration>;
     createSupabaseMigration(
-        paramsOrFirst: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number } | string[],
+        paramsOrFirst: { resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number } | Resources[],
         ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Migration> {
-        let params: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
+        let params: { resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+            params = (paramsOrFirst || {}) as { resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
         } else {
             params = {
-                resources: paramsOrFirst as string[],
+                resources: paramsOrFirst as Resources[],
                 endpoint: rest[0] as string,
                 apiKey: rest[1] as string,
                 databaseHost: rest[2] as string,
@@ -937,7 +938,7 @@ export class Migrations {
     /**
      * Generate a report of the data in a Supabase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
      *
-     * @param {string[]} params.resources - List of resources to migrate
+     * @param {Resources[]} params.resources - List of resources to migrate
      * @param {string} params.endpoint - Source's Supabase Endpoint.
      * @param {string} params.apiKey - Source's API Key.
      * @param {string} params.databaseHost - Source's Database Host.
@@ -947,11 +948,11 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    getSupabaseReport(params: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number  }): Promise<Models.MigrationReport>;
+    getSupabaseReport(params: { resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number }): Promise<Models.MigrationReport>;
     /**
      * Generate a report of the data in a Supabase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
      *
-     * @param {string[]} resources - List of resources to migrate
+     * @param {Resources[]} resources - List of resources to migrate
      * @param {string} endpoint - Source's Supabase Endpoint.
      * @param {string} apiKey - Source's API Key.
      * @param {string} databaseHost - Source's Database Host.
@@ -962,18 +963,18 @@ export class Migrations {
      * @returns {Promise<Models.MigrationReport>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getSupabaseReport(resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number): Promise<Models.MigrationReport>;
+    getSupabaseReport(resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number): Promise<Models.MigrationReport>;
     getSupabaseReport(
-        paramsOrFirst: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number } | string[],
+        paramsOrFirst: { resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number } | Resources[],
         ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
     ): Promise<Models.MigrationReport> {
-        let params: { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
+        let params: { resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: string[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+            params = (paramsOrFirst || {}) as { resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
         } else {
             params = {
-                resources: paramsOrFirst as string[],
+                resources: paramsOrFirst as Resources[],
                 endpoint: rest[0] as string,
                 apiKey: rest[1] as string,
                 databaseHost: rest[2] as string,
@@ -1053,7 +1054,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    get(params: { migrationId: string  }): Promise<Models.Migration>;
+    get(params: { migrationId: string }): Promise<Models.Migration>;
     /**
      * Get a migration by its unique ID. This endpoint returns detailed information about a specific migration including its current status, progress, and any errors that occurred during the migration process. 
      *
@@ -1104,7 +1105,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    retry(params: { migrationId: string  }): Promise<Models.Migration>;
+    retry(params: { migrationId: string }): Promise<Models.Migration>;
     /**
      * Retry a failed migration. This endpoint allows you to retry a migration that has previously failed.
      *
@@ -1156,7 +1157,7 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    delete(params: { migrationId: string  }): Promise<{}>;
+    delete(params: { migrationId: string }): Promise<{}>;
     /**
      * Delete a migration by its unique ID. This endpoint allows you to remove a migration from your project's migration history. 
      *

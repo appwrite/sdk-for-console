@@ -20,7 +20,7 @@ export class Project {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageProject>}
      */
-    getUsage(params: { startDate: string, endDate: string, period?: ProjectUsageRange  }): Promise<Models.UsageProject>;
+    getUsage(params: { startDate: string, endDate: string, period?: ProjectUsageRange }): Promise<Models.UsageProject>;
     /**
      * Get comprehensive usage statistics for your project. View metrics including network requests, bandwidth, storage, function executions, database usage, and user activity. Specify a time range with startDate and endDate, and optionally set the data granularity with period (1h or 1d). The response includes both total counts and detailed breakdowns by resource, along with historical data over the specified period.
      *
@@ -115,7 +115,7 @@ export class Project {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    createVariable(params: { key: string, value: string, secret?: boolean  }): Promise<Models.Variable>;
+    createVariable(params: { key: string, value: string, secret?: boolean }): Promise<Models.Variable>;
     /**
      * Create a new project variable. This variable will be accessible in all Appwrite Functions at runtime.
      *
@@ -186,7 +186,7 @@ export class Project {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    getVariable(params: { variableId: string  }): Promise<Models.Variable>;
+    getVariable(params: { variableId: string }): Promise<Models.Variable>;
     /**
      * Get a project variable by its unique ID.
      *
@@ -240,7 +240,7 @@ export class Project {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    updateVariable(params: { variableId: string, key: string, value?: string, secret?: boolean  }): Promise<Models.Variable>;
+    updateVariable(params: { variableId: string, key: string, value?: string, secret?: boolean }): Promise<Models.Variable>;
     /**
      * Update project variable by its unique ID. This variable will be accessible in all Appwrite Functions at runtime.
      *
@@ -314,7 +314,7 @@ export class Project {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteVariable(params: { variableId: string  }): Promise<{}>;
+    deleteVariable(params: { variableId: string }): Promise<{}>;
     /**
      * Delete a project variable by its unique ID. 
      *

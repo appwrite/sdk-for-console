@@ -23,7 +23,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BucketList>}
      */
-    listBuckets(params?: { queries?: string[], search?: string, total?: boolean  }): Promise<Models.BucketList>;
+    listBuckets(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.BucketList>;
     /**
      * Get a list of all the storage buckets. You can use the query params to filter your results.
      *
@@ -97,7 +97,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Bucket>}
      */
-    createBucket(params: { bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: Compression, encryption?: boolean, antivirus?: boolean, transformations?: boolean  }): Promise<Models.Bucket>;
+    createBucket(params: { bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: Compression, encryption?: boolean, antivirus?: boolean, transformations?: boolean }): Promise<Models.Bucket>;
     /**
      * Create a new storage bucket.
      *
@@ -216,7 +216,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Bucket>}
      */
-    getBucket(params: { bucketId: string  }): Promise<Models.Bucket>;
+    getBucket(params: { bucketId: string }): Promise<Models.Bucket>;
     /**
      * Get a storage bucket by its unique ID. This endpoint response returns a JSON object with the storage bucket metadata.
      *
@@ -277,7 +277,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Bucket>}
      */
-    updateBucket(params: { bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: Compression, encryption?: boolean, antivirus?: boolean, transformations?: boolean  }): Promise<Models.Bucket>;
+    updateBucket(params: { bucketId: string, name: string, permissions?: string[], fileSecurity?: boolean, enabled?: boolean, maximumFileSize?: number, allowedFileExtensions?: string[], compression?: Compression, encryption?: boolean, antivirus?: boolean, transformations?: boolean }): Promise<Models.Bucket>;
     /**
      * Update a storage bucket by its unique ID.
      *
@@ -393,7 +393,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteBucket(params: { bucketId: string  }): Promise<{}>;
+    deleteBucket(params: { bucketId: string }): Promise<{}>;
     /**
      * Delete a storage bucket by its unique ID.
      *
@@ -448,7 +448,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.FileList>}
      */
-    listFiles(params: { bucketId: string, queries?: string[], search?: string, total?: boolean  }): Promise<Models.FileList>;
+    listFiles(params: { bucketId: string, queries?: string[], search?: string, total?: boolean }): Promise<Models.FileList>;
     /**
      * Get a list of all the user files. You can use the query params to filter your results.
      *
@@ -528,7 +528,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.File>}
      */
-    createFile(params: { bucketId: string, fileId: string, file: File, permissions?: string[] , onProgress?: (progress: UploadProgress) => void }): Promise<Models.File>;
+    createFile(params: { bucketId: string, fileId: string, file: File, permissions?: string[], onProgress?: (progress: UploadProgress) => void }): Promise<Models.File>;
     /**
      * Create a new file. Before using this route, you should create a new bucket resource using either a [server integration](https://appwrite.io/docs/server/storage#storageCreateBucket) API or directly from your Appwrite console.
      * 
@@ -549,7 +549,7 @@ export class Storage {
      */
     createFile(bucketId: string, fileId: string, file: File, permissions?: string[], onProgress?: (progress: UploadProgress) => void): Promise<Models.File>;
     createFile(
-        paramsOrFirst: { bucketId: string, fileId: string, file: File, permissions?: string[], onProgress?: (progress: UploadProgress) => void  } | string,
+        paramsOrFirst: { bucketId: string, fileId: string, file: File, permissions?: string[], onProgress?: (progress: UploadProgress) => void } | string,
         ...rest: [(string)?, (File)?, (string[])?,((progress: UploadProgress) => void)?]    
     ): Promise<Models.File> {
         let params: { bucketId: string, fileId: string, file: File, permissions?: string[] };
@@ -617,7 +617,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.File>}
      */
-    getFile(params: { bucketId: string, fileId: string  }): Promise<Models.File>;
+    getFile(params: { bucketId: string, fileId: string }): Promise<Models.File>;
     /**
      * Get a file by its unique ID. This endpoint response returns a JSON object with the file metadata.
      *
@@ -678,7 +678,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.File>}
      */
-    updateFile(params: { bucketId: string, fileId: string, name?: string, permissions?: string[]  }): Promise<Models.File>;
+    updateFile(params: { bucketId: string, fileId: string, name?: string, permissions?: string[] }): Promise<Models.File>;
     /**
      * Update a file by its unique ID. Only users with write permissions have access to update this resource.
      *
@@ -750,7 +750,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteFile(params: { bucketId: string, fileId: string  }): Promise<{}>;
+    deleteFile(params: { bucketId: string, fileId: string }): Promise<{}>;
     /**
      * Delete a file by its unique ID. Only users with write permissions have access to delete this resource.
      *
@@ -811,7 +811,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {string}
      */
-    getFileDownload(params: { bucketId: string, fileId: string, token?: string  }): string;
+    getFileDownload(params: { bucketId: string, fileId: string, token?: string }): string;
     /**
      * Get a file content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
      *
@@ -889,7 +889,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {string}
      */
-    getFilePreview(params: { bucketId: string, fileId: string, width?: number, height?: number, gravity?: ImageGravity, quality?: number, borderWidth?: number, borderColor?: string, borderRadius?: number, opacity?: number, rotation?: number, background?: string, output?: ImageFormat, token?: string  }): string;
+    getFilePreview(params: { bucketId: string, fileId: string, width?: number, height?: number, gravity?: ImageGravity, quality?: number, borderWidth?: number, borderColor?: string, borderRadius?: number, opacity?: number, rotation?: number, background?: string, output?: ImageFormat, token?: string }): string;
     /**
      * Get a file preview image. Currently, this method supports preview for image files (jpg, png, and gif), other supported formats, like pdf, docs, slides, and spreadsheets, will return the file icon image. You can also pass query string arguments for cutting and resizing your preview image. Preview is supported only for image files smaller than 10MB.
      *
@@ -1022,7 +1022,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {string}
      */
-    getFileView(params: { bucketId: string, fileId: string, token?: string  }): string;
+    getFileView(params: { bucketId: string, fileId: string, token?: string }): string;
     /**
      * Get a file content by its unique ID. This endpoint is similar to the download method but returns with no  'Content-Disposition: attachment' header.
      *
@@ -1088,7 +1088,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageStorage>}
      */
-    getUsage(params?: { range?: UsageRange  }): Promise<Models.UsageStorage>;
+    getUsage(params?: { range?: UsageRange }): Promise<Models.UsageStorage>;
     /**
      * Get usage metrics and statistics for all buckets in the project. You can view the total number of buckets, files, storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      * 
@@ -1142,7 +1142,7 @@ export class Storage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageBuckets>}
      */
-    getBucketUsage(params: { bucketId: string, range?: UsageRange  }): Promise<Models.UsageBuckets>;
+    getBucketUsage(params: { bucketId: string, range?: UsageRange }): Promise<Models.UsageBuckets>;
     /**
      * Get usage metrics and statistics a specific bucket in the project. You can view the total number of files, storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      * 

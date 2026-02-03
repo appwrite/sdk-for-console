@@ -6,6 +6,7 @@ import { UsageRange } from '../enums/usage-range';
 import { RelationshipType } from '../enums/relationship-type';
 import { RelationMutate } from '../enums/relation-mutate';
 import { IndexType } from '../enums/index-type';
+import { OrderBy } from '../enums/order-by';
 
 export class Databases {
     client: Client;
@@ -24,7 +25,7 @@ export class Databases {
      * @returns {Promise<Models.DatabaseList>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.list` instead.
      */
-    list(params?: { queries?: string[], search?: string, total?: boolean  }): Promise<Models.DatabaseList>;
+    list(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.DatabaseList>;
     /**
      * Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
      *
@@ -92,7 +93,7 @@ export class Databases {
      * @returns {Promise<Models.Database>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.create` instead.
      */
-    create(params: { databaseId: string, name: string, enabled?: boolean  }): Promise<Models.Database>;
+    create(params: { databaseId: string, name: string, enabled?: boolean }): Promise<Models.Database>;
     /**
      * Create a new Database.
      * 
@@ -164,7 +165,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Models.TransactionList>}
      */
-    listTransactions(params?: { queries?: string[]  }): Promise<Models.TransactionList>;
+    listTransactions(params?: { queries?: string[] }): Promise<Models.TransactionList>;
     /**
      * List transactions across all databases.
      *
@@ -215,7 +216,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Transaction>}
      */
-    createTransaction(params?: { ttl?: number  }): Promise<Models.Transaction>;
+    createTransaction(params?: { ttl?: number }): Promise<Models.Transaction>;
     /**
      * Create a new transaction.
      *
@@ -267,7 +268,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Transaction>}
      */
-    getTransaction(params: { transactionId: string  }): Promise<Models.Transaction>;
+    getTransaction(params: { transactionId: string }): Promise<Models.Transaction>;
     /**
      * Get a transaction by its unique ID.
      *
@@ -320,7 +321,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Transaction>}
      */
-    updateTransaction(params: { transactionId: string, commit?: boolean, rollback?: boolean  }): Promise<Models.Transaction>;
+    updateTransaction(params: { transactionId: string, commit?: boolean, rollback?: boolean }): Promise<Models.Transaction>;
     /**
      * Update a transaction, to either commit or roll back its operations.
      *
@@ -385,7 +386,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteTransaction(params: { transactionId: string  }): Promise<{}>;
+    deleteTransaction(params: { transactionId: string }): Promise<{}>;
     /**
      * Delete a transaction by its unique ID.
      *
@@ -438,7 +439,7 @@ export class Databases {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Transaction>}
      */
-    createOperations(params: { transactionId: string, operations?: object[]  }): Promise<Models.Transaction>;
+    createOperations(params: { transactionId: string, operations?: object[] }): Promise<Models.Transaction>;
     /**
      * Create multiple operations in a single transaction.
      *
@@ -498,7 +499,7 @@ export class Databases {
      * @returns {Promise<Models.UsageDatabases>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.listUsage` instead.
      */
-    listUsage(params?: { range?: UsageRange  }): Promise<Models.UsageDatabases>;
+    listUsage(params?: { range?: UsageRange }): Promise<Models.UsageDatabases>;
     /**
      * List usage metrics and statistics for all databases in the project. You can view the total number of databases, collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
@@ -550,7 +551,7 @@ export class Databases {
      * @returns {Promise<Models.Database>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.get` instead.
      */
-    get(params: { databaseId: string  }): Promise<Models.Database>;
+    get(params: { databaseId: string }): Promise<Models.Database>;
     /**
      * Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
      *
@@ -604,7 +605,7 @@ export class Databases {
      * @returns {Promise<Models.Database>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.update` instead.
      */
-    update(params: { databaseId: string, name: string, enabled?: boolean  }): Promise<Models.Database>;
+    update(params: { databaseId: string, name?: string, enabled?: boolean }): Promise<Models.Database>;
     /**
      * Update a database by its unique ID.
      *
@@ -615,15 +616,15 @@ export class Databases {
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(databaseId: string, name: string, enabled?: boolean): Promise<Models.Database>;
+    update(databaseId: string, name?: string, enabled?: boolean): Promise<Models.Database>;
     update(
-        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean } | string,
+        paramsOrFirst: { databaseId: string, name?: string, enabled?: boolean } | string,
         ...rest: [(string)?, (boolean)?]    
     ): Promise<Models.Database> {
-        let params: { databaseId: string, name: string, enabled?: boolean };
+        let params: { databaseId: string, name?: string, enabled?: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean };
+            params = (paramsOrFirst || {}) as { databaseId: string, name?: string, enabled?: boolean };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -638,9 +639,6 @@ export class Databases {
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-        if (typeof name === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "name"');
         }
 
         const apiPath = '/databases/{databaseId}'.replace('{databaseId}', databaseId);
@@ -673,7 +671,7 @@ export class Databases {
      * @returns {Promise<{}>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.delete` instead.
      */
-    delete(params: { databaseId: string  }): Promise<{}>;
+    delete(params: { databaseId: string }): Promise<{}>;
     /**
      * Delete a database by its unique ID. Only API keys with with databases.write scope can delete a database.
      *
@@ -729,7 +727,7 @@ export class Databases {
      * @returns {Promise<Models.CollectionList>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.listTables` instead.
      */
-    listCollections(params: { databaseId: string, queries?: string[], search?: string, total?: boolean  }): Promise<Models.CollectionList>;
+    listCollections(params: { databaseId: string, queries?: string[], search?: string, total?: boolean }): Promise<Models.CollectionList>;
     /**
      * Get a list of all collections that belong to the provided databaseId. You can use the search parameter to filter your results.
      *
@@ -807,7 +805,7 @@ export class Databases {
      * @returns {Promise<Models.Collection>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createTable` instead.
      */
-    createCollection(params: { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean, attributes?: object[], indexes?: object[]  }): Promise<Models.Collection>;
+    createCollection(params: { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean, attributes?: object[], indexes?: object[] }): Promise<Models.Collection>;
     /**
      * Create a new Collection. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
      *
@@ -910,7 +908,7 @@ export class Databases {
      * @returns {Promise<Models.Collection>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.getTable` instead.
      */
-    getCollection(params: { databaseId: string, collectionId: string  }): Promise<Models.Collection>;
+    getCollection(params: { databaseId: string, collectionId: string }): Promise<Models.Collection>;
     /**
      * Get a collection by its unique ID. This endpoint response returns a JSON object with the collection metadata.
      *
@@ -974,7 +972,7 @@ export class Databases {
      * @returns {Promise<Models.Collection>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateTable` instead.
      */
-    updateCollection(params: { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean  }): Promise<Models.Collection>;
+    updateCollection(params: { databaseId: string, collectionId: string, name?: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean }): Promise<Models.Collection>;
     /**
      * Update a collection by its unique ID.
      *
@@ -988,15 +986,15 @@ export class Databases {
      * @returns {Promise<Models.Collection>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateCollection(databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean): Promise<Models.Collection>;
+    updateCollection(databaseId: string, collectionId: string, name?: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean): Promise<Models.Collection>;
     updateCollection(
-        paramsOrFirst: { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean } | string,
+        paramsOrFirst: { databaseId: string, collectionId: string, name?: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean } | string,
         ...rest: [(string)?, (string)?, (string[])?, (boolean)?, (boolean)?]    
     ): Promise<Models.Collection> {
-        let params: { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean };
+        let params: { databaseId: string, collectionId: string, name?: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean };
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, name?: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -1020,9 +1018,6 @@ export class Databases {
         }
         if (typeof collectionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "collectionId"');
-        }
-        if (typeof name === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "name"');
         }
 
         const apiPath = '/databases/{databaseId}/collections/{collectionId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
@@ -1062,7 +1057,7 @@ export class Databases {
      * @returns {Promise<{}>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.deleteTable` instead.
      */
-    deleteCollection(params: { databaseId: string, collectionId: string  }): Promise<{}>;
+    deleteCollection(params: { databaseId: string, collectionId: string }): Promise<{}>;
     /**
      * Delete a collection by its unique ID. Only users with write permissions have access to delete this resource.
      *
@@ -1125,7 +1120,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeList>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.listColumns` instead.
      */
-    listAttributes(params: { databaseId: string, collectionId: string, queries?: string[], total?: boolean  }): Promise<Models.AttributeList>;
+    listAttributes(params: { databaseId: string, collectionId: string, queries?: string[], total?: boolean }): Promise<Models.AttributeList>;
     /**
      * List attributes in the collection.
      *
@@ -1202,7 +1197,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeBoolean>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createBooleanColumn` instead.
      */
-    createBooleanAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: boolean, array?: boolean  }): Promise<Models.AttributeBoolean>;
+    createBooleanAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: boolean, array?: boolean }): Promise<Models.AttributeBoolean>;
     /**
      * Create a boolean attribute.
      * 
@@ -1298,7 +1293,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeBoolean>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateBooleanColumn` instead.
      */
-    updateBooleanAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: boolean, newKey?: string  }): Promise<Models.AttributeBoolean>;
+    updateBooleanAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: boolean, newKey?: string }): Promise<Models.AttributeBoolean>;
     /**
      * Update a boolean attribute. Changing the `default` value will not update already existing documents.
      *
@@ -1393,7 +1388,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeDatetime>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createDatetimeColumn` instead.
      */
-    createDatetimeAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean  }): Promise<Models.AttributeDatetime>;
+    createDatetimeAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean }): Promise<Models.AttributeDatetime>;
     /**
      * Create a date time attribute according to the ISO 8601 standard.
      *
@@ -1488,7 +1483,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeDatetime>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateDatetimeColumn` instead.
      */
-    updateDatetimeAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string  }): Promise<Models.AttributeDatetime>;
+    updateDatetimeAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string }): Promise<Models.AttributeDatetime>;
     /**
      * Update a date time attribute. Changing the `default` value will not update already existing documents.
      *
@@ -1584,7 +1579,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeEmail>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createEmailColumn` instead.
      */
-    createEmailAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean  }): Promise<Models.AttributeEmail>;
+    createEmailAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean }): Promise<Models.AttributeEmail>;
     /**
      * Create an email attribute.
      * 
@@ -1681,7 +1676,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeEmail>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateEmailColumn` instead.
      */
-    updateEmailAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string  }): Promise<Models.AttributeEmail>;
+    updateEmailAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string }): Promise<Models.AttributeEmail>;
     /**
      * Update an email attribute. Changing the `default` value will not update already existing documents.
      * 
@@ -1779,7 +1774,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeEnum>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createEnumColumn` instead.
      */
-    createEnumAttribute(params: { databaseId: string, collectionId: string, key: string, elements: string[], required: boolean, xdefault?: string, array?: boolean  }): Promise<Models.AttributeEnum>;
+    createEnumAttribute(params: { databaseId: string, collectionId: string, key: string, elements: string[], required: boolean, xdefault?: string, array?: boolean }): Promise<Models.AttributeEnum>;
     /**
      * Create an enum attribute. The `elements` param acts as a white-list of accepted values for this attribute. 
      * 
@@ -1886,7 +1881,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeEnum>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateEnumColumn` instead.
      */
-    updateEnumAttribute(params: { databaseId: string, collectionId: string, key: string, elements: string[], required: boolean, xdefault?: string, newKey?: string  }): Promise<Models.AttributeEnum>;
+    updateEnumAttribute(params: { databaseId: string, collectionId: string, key: string, elements: string[], required: boolean, xdefault?: string, newKey?: string }): Promise<Models.AttributeEnum>;
     /**
      * Update an enum attribute. Changing the `default` value will not update already existing documents.
      * 
@@ -1994,7 +1989,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeFloat>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createFloatColumn` instead.
      */
-    createFloatAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, min?: number, max?: number, xdefault?: number, array?: boolean  }): Promise<Models.AttributeFloat>;
+    createFloatAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, min?: number, max?: number, xdefault?: number, array?: boolean }): Promise<Models.AttributeFloat>;
     /**
      * Create a float attribute. Optionally, minimum and maximum values can be provided.
      * 
@@ -2105,7 +2100,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeFloat>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateFloatColumn` instead.
      */
-    updateFloatAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: number, min?: number, max?: number, newKey?: string  }): Promise<Models.AttributeFloat>;
+    updateFloatAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: number, min?: number, max?: number, newKey?: string }): Promise<Models.AttributeFloat>;
     /**
      * Update a float attribute. Changing the `default` value will not update already existing documents.
      * 
@@ -2216,7 +2211,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeInteger>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createIntegerColumn` instead.
      */
-    createIntegerAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, min?: number | bigint, max?: number | bigint, xdefault?: number | bigint, array?: boolean  }): Promise<Models.AttributeInteger>;
+    createIntegerAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, min?: number | bigint, max?: number | bigint, xdefault?: number | bigint, array?: boolean }): Promise<Models.AttributeInteger>;
     /**
      * Create an integer attribute. Optionally, minimum and maximum values can be provided.
      * 
@@ -2327,7 +2322,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeInteger>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateIntegerColumn` instead.
      */
-    updateIntegerAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: number | bigint, min?: number | bigint, max?: number | bigint, newKey?: string  }): Promise<Models.AttributeInteger>;
+    updateIntegerAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: number | bigint, min?: number | bigint, max?: number | bigint, newKey?: string }): Promise<Models.AttributeInteger>;
     /**
      * Update an integer attribute. Changing the `default` value will not update already existing documents.
      * 
@@ -2436,7 +2431,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeIp>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createIpColumn` instead.
      */
-    createIpAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean  }): Promise<Models.AttributeIp>;
+    createIpAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean }): Promise<Models.AttributeIp>;
     /**
      * Create IP address attribute.
      * 
@@ -2533,7 +2528,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeIp>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateIpColumn` instead.
      */
-    updateIpAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string  }): Promise<Models.AttributeIp>;
+    updateIpAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string }): Promise<Models.AttributeIp>;
     /**
      * Update an ip attribute. Changing the `default` value will not update already existing documents.
      * 
@@ -2628,7 +2623,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeLine>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createLineColumn` instead.
      */
-    createLineAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: any[]  }): Promise<Models.AttributeLine>;
+    createLineAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: any[] }): Promise<Models.AttributeLine>;
     /**
      * Create a geometric line attribute.
      *
@@ -2717,7 +2712,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeLine>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateLineColumn` instead.
      */
-    updateLineAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: any[], newKey?: string  }): Promise<Models.AttributeLine>;
+    updateLineAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: any[], newKey?: string }): Promise<Models.AttributeLine>;
     /**
      * Update a line attribute. Changing the `default` value will not update already existing documents.
      *
@@ -2797,6 +2792,390 @@ export class Databases {
     }
 
     /**
+     * Create a longtext attribute.
+     * 
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} params.key - Attribute Key.
+     * @param {boolean} params.required - Is attribute required?
+     * @param {string} params.xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {boolean} params.array - Is attribute an array?
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeLongtext>}
+     */
+    createLongtextAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean }): Promise<Models.AttributeLongtext>;
+    /**
+     * Create a longtext attribute.
+     * 
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} key - Attribute Key.
+     * @param {boolean} required - Is attribute required?
+     * @param {string} xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {boolean} array - Is attribute an array?
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeLongtext>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createLongtextAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeLongtext>;
+    createLongtextAttribute(
+        paramsOrFirst: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean } | string,
+        ...rest: [(string)?, (string)?, (boolean)?, (string)?, (boolean)?]    
+    ): Promise<Models.AttributeLongtext> {
+        let params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                key: rest[1] as string,
+                required: rest[2] as boolean,
+                xdefault: rest[3] as string,
+                array: rest[4] as boolean            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
+        const key = params.key;
+        const required = params.required;
+        const xdefault = params.xdefault;
+        const array = params.array;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof key === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "key"');
+        }
+        if (typeof required === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "required"');
+        }
+
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/longtext'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
+        if (typeof key !== 'undefined') {
+            payload['key'] = key;
+        }
+        if (typeof required !== 'undefined') {
+            payload['required'] = required;
+        }
+        if (typeof xdefault !== 'undefined') {
+            payload['default'] = xdefault;
+        }
+        if (typeof array !== 'undefined') {
+            payload['array'] = array;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update a longtext attribute. Changing the `default` value will not update already existing documents.
+     * 
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} params.key - Attribute Key.
+     * @param {boolean} params.required - Is attribute required?
+     * @param {string} params.xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {string} params.newKey - New Attribute Key.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeLongtext>}
+     */
+    updateLongtextAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string }): Promise<Models.AttributeLongtext>;
+    /**
+     * Update a longtext attribute. Changing the `default` value will not update already existing documents.
+     * 
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} key - Attribute Key.
+     * @param {boolean} required - Is attribute required?
+     * @param {string} xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {string} newKey - New Attribute Key.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeLongtext>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateLongtextAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string): Promise<Models.AttributeLongtext>;
+    updateLongtextAttribute(
+        paramsOrFirst: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string } | string,
+        ...rest: [(string)?, (string)?, (boolean)?, (string)?, (string)?]    
+    ): Promise<Models.AttributeLongtext> {
+        let params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                key: rest[1] as string,
+                required: rest[2] as boolean,
+                xdefault: rest[3] as string,
+                newKey: rest[4] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
+        const key = params.key;
+        const required = params.required;
+        const xdefault = params.xdefault;
+        const newKey = params.newKey;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof key === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "key"');
+        }
+        if (typeof required === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "required"');
+        }
+        if (typeof xdefault === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "xdefault"');
+        }
+
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/longtext/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
+        if (typeof required !== 'undefined') {
+            payload['required'] = required;
+        }
+        if (typeof xdefault !== 'undefined') {
+            payload['default'] = xdefault;
+        }
+        if (typeof newKey !== 'undefined') {
+            payload['newKey'] = newKey;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a mediumtext attribute.
+     * 
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} params.key - Attribute Key.
+     * @param {boolean} params.required - Is attribute required?
+     * @param {string} params.xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {boolean} params.array - Is attribute an array?
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeMediumtext>}
+     */
+    createMediumtextAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean }): Promise<Models.AttributeMediumtext>;
+    /**
+     * Create a mediumtext attribute.
+     * 
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} key - Attribute Key.
+     * @param {boolean} required - Is attribute required?
+     * @param {string} xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {boolean} array - Is attribute an array?
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeMediumtext>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createMediumtextAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeMediumtext>;
+    createMediumtextAttribute(
+        paramsOrFirst: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean } | string,
+        ...rest: [(string)?, (string)?, (boolean)?, (string)?, (boolean)?]    
+    ): Promise<Models.AttributeMediumtext> {
+        let params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                key: rest[1] as string,
+                required: rest[2] as boolean,
+                xdefault: rest[3] as string,
+                array: rest[4] as boolean            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
+        const key = params.key;
+        const required = params.required;
+        const xdefault = params.xdefault;
+        const array = params.array;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof key === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "key"');
+        }
+        if (typeof required === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "required"');
+        }
+
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/mediumtext'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
+        if (typeof key !== 'undefined') {
+            payload['key'] = key;
+        }
+        if (typeof required !== 'undefined') {
+            payload['required'] = required;
+        }
+        if (typeof xdefault !== 'undefined') {
+            payload['default'] = xdefault;
+        }
+        if (typeof array !== 'undefined') {
+            payload['array'] = array;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update a mediumtext attribute. Changing the `default` value will not update already existing documents.
+     * 
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} params.key - Attribute Key.
+     * @param {boolean} params.required - Is attribute required?
+     * @param {string} params.xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {string} params.newKey - New Attribute Key.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeMediumtext>}
+     */
+    updateMediumtextAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string }): Promise<Models.AttributeMediumtext>;
+    /**
+     * Update a mediumtext attribute. Changing the `default` value will not update already existing documents.
+     * 
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} key - Attribute Key.
+     * @param {boolean} required - Is attribute required?
+     * @param {string} xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {string} newKey - New Attribute Key.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeMediumtext>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateMediumtextAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string): Promise<Models.AttributeMediumtext>;
+    updateMediumtextAttribute(
+        paramsOrFirst: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string } | string,
+        ...rest: [(string)?, (string)?, (boolean)?, (string)?, (string)?]    
+    ): Promise<Models.AttributeMediumtext> {
+        let params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                key: rest[1] as string,
+                required: rest[2] as boolean,
+                xdefault: rest[3] as string,
+                newKey: rest[4] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
+        const key = params.key;
+        const required = params.required;
+        const xdefault = params.xdefault;
+        const newKey = params.newKey;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof key === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "key"');
+        }
+        if (typeof required === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "required"');
+        }
+        if (typeof xdefault === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "xdefault"');
+        }
+
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/mediumtext/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
+        if (typeof required !== 'undefined') {
+            payload['required'] = required;
+        }
+        if (typeof xdefault !== 'undefined') {
+            payload['default'] = xdefault;
+        }
+        if (typeof newKey !== 'undefined') {
+            payload['newKey'] = newKey;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Create a geometric point attribute.
      *
      * @param {string} params.databaseId - Database ID.
@@ -2808,7 +3187,7 @@ export class Databases {
      * @returns {Promise<Models.AttributePoint>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createPointColumn` instead.
      */
-    createPointAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: any[]  }): Promise<Models.AttributePoint>;
+    createPointAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: any[] }): Promise<Models.AttributePoint>;
     /**
      * Create a geometric point attribute.
      *
@@ -2897,7 +3276,7 @@ export class Databases {
      * @returns {Promise<Models.AttributePoint>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updatePointColumn` instead.
      */
-    updatePointAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: any[], newKey?: string  }): Promise<Models.AttributePoint>;
+    updatePointAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: any[], newKey?: string }): Promise<Models.AttributePoint>;
     /**
      * Update a point attribute. Changing the `default` value will not update already existing documents.
      *
@@ -2988,7 +3367,7 @@ export class Databases {
      * @returns {Promise<Models.AttributePolygon>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createPolygonColumn` instead.
      */
-    createPolygonAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: any[]  }): Promise<Models.AttributePolygon>;
+    createPolygonAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: any[] }): Promise<Models.AttributePolygon>;
     /**
      * Create a geometric polygon attribute.
      *
@@ -3077,7 +3456,7 @@ export class Databases {
      * @returns {Promise<Models.AttributePolygon>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updatePolygonColumn` instead.
      */
-    updatePolygonAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: any[], newKey?: string  }): Promise<Models.AttributePolygon>;
+    updatePolygonAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: any[], newKey?: string }): Promise<Models.AttributePolygon>;
     /**
      * Update a polygon attribute. Changing the `default` value will not update already existing documents.
      *
@@ -3172,7 +3551,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeRelationship>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createRelationshipColumn` instead.
      */
-    createRelationshipAttribute(params: { databaseId: string, collectionId: string, relatedCollectionId: string, type: RelationshipType, twoWay?: boolean, key?: string, twoWayKey?: string, onDelete?: RelationMutate  }): Promise<Models.AttributeRelationship>;
+    createRelationshipAttribute(params: { databaseId: string, collectionId: string, relatedCollectionId: string, type: RelationshipType, twoWay?: boolean, key?: string, twoWayKey?: string, onDelete?: RelationMutate }): Promise<Models.AttributeRelationship>;
     /**
      * Create relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
      * 
@@ -3283,7 +3662,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeString>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createStringColumn` instead.
      */
-    createStringAttribute(params: { databaseId: string, collectionId: string, key: string, size: number, required: boolean, xdefault?: string, array?: boolean, encrypt?: boolean  }): Promise<Models.AttributeString>;
+    createStringAttribute(params: { databaseId: string, collectionId: string, key: string, size: number, required: boolean, xdefault?: string, array?: boolean, encrypt?: boolean }): Promise<Models.AttributeString>;
     /**
      * Create a string attribute.
      * 
@@ -3396,7 +3775,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeString>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateStringColumn` instead.
      */
-    updateStringAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, size?: number, newKey?: string  }): Promise<Models.AttributeString>;
+    updateStringAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, size?: number, newKey?: string }): Promise<Models.AttributeString>;
     /**
      * Update a string attribute. Changing the `default` value will not update already existing documents.
      * 
@@ -3486,6 +3865,198 @@ export class Databases {
     }
 
     /**
+     * Create a text attribute.
+     * 
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} params.key - Attribute Key.
+     * @param {boolean} params.required - Is attribute required?
+     * @param {string} params.xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {boolean} params.array - Is attribute an array?
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeText>}
+     */
+    createTextAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean }): Promise<Models.AttributeText>;
+    /**
+     * Create a text attribute.
+     * 
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} key - Attribute Key.
+     * @param {boolean} required - Is attribute required?
+     * @param {string} xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {boolean} array - Is attribute an array?
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeText>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createTextAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeText>;
+    createTextAttribute(
+        paramsOrFirst: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean } | string,
+        ...rest: [(string)?, (string)?, (boolean)?, (string)?, (boolean)?]    
+    ): Promise<Models.AttributeText> {
+        let params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                key: rest[1] as string,
+                required: rest[2] as boolean,
+                xdefault: rest[3] as string,
+                array: rest[4] as boolean            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
+        const key = params.key;
+        const required = params.required;
+        const xdefault = params.xdefault;
+        const array = params.array;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof key === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "key"');
+        }
+        if (typeof required === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "required"');
+        }
+
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/text'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
+        if (typeof key !== 'undefined') {
+            payload['key'] = key;
+        }
+        if (typeof required !== 'undefined') {
+            payload['required'] = required;
+        }
+        if (typeof xdefault !== 'undefined') {
+            payload['default'] = xdefault;
+        }
+        if (typeof array !== 'undefined') {
+            payload['array'] = array;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update a text attribute. Changing the `default` value will not update already existing documents.
+     * 
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} params.key - Attribute Key.
+     * @param {boolean} params.required - Is attribute required?
+     * @param {string} params.xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {string} params.newKey - New Attribute Key.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeText>}
+     */
+    updateTextAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string }): Promise<Models.AttributeText>;
+    /**
+     * Update a text attribute. Changing the `default` value will not update already existing documents.
+     * 
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} key - Attribute Key.
+     * @param {boolean} required - Is attribute required?
+     * @param {string} xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {string} newKey - New Attribute Key.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeText>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateTextAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string): Promise<Models.AttributeText>;
+    updateTextAttribute(
+        paramsOrFirst: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string } | string,
+        ...rest: [(string)?, (string)?, (boolean)?, (string)?, (string)?]    
+    ): Promise<Models.AttributeText> {
+        let params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                key: rest[1] as string,
+                required: rest[2] as boolean,
+                xdefault: rest[3] as string,
+                newKey: rest[4] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
+        const key = params.key;
+        const required = params.required;
+        const xdefault = params.xdefault;
+        const newKey = params.newKey;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof key === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "key"');
+        }
+        if (typeof required === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "required"');
+        }
+        if (typeof xdefault === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "xdefault"');
+        }
+
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/text/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
+        if (typeof required !== 'undefined') {
+            payload['required'] = required;
+        }
+        if (typeof xdefault !== 'undefined') {
+            payload['default'] = xdefault;
+        }
+        if (typeof newKey !== 'undefined') {
+            payload['newKey'] = newKey;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Create a URL attribute.
      * 
      *
@@ -3499,7 +4070,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeUrl>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createUrlColumn` instead.
      */
-    createUrlAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean  }): Promise<Models.AttributeUrl>;
+    createUrlAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean }): Promise<Models.AttributeUrl>;
     /**
      * Create a URL attribute.
      * 
@@ -3596,7 +4167,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeUrl>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateUrlColumn` instead.
      */
-    updateUrlAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string  }): Promise<Models.AttributeUrl>;
+    updateUrlAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string }): Promise<Models.AttributeUrl>;
     /**
      * Update an url attribute. Changing the `default` value will not update already existing documents.
      * 
@@ -3680,6 +4251,215 @@ export class Databases {
     }
 
     /**
+     * Create a varchar attribute.
+     * 
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} params.key - Attribute Key.
+     * @param {number} params.size - Attribute size for varchar attributes, in number of characters. Maximum size is 16381.
+     * @param {boolean} params.required - Is attribute required?
+     * @param {string} params.xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {boolean} params.array - Is attribute an array?
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeVarchar>}
+     */
+    createVarcharAttribute(params: { databaseId: string, collectionId: string, key: string, size: number, required: boolean, xdefault?: string, array?: boolean }): Promise<Models.AttributeVarchar>;
+    /**
+     * Create a varchar attribute.
+     * 
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} key - Attribute Key.
+     * @param {number} size - Attribute size for varchar attributes, in number of characters. Maximum size is 16381.
+     * @param {boolean} required - Is attribute required?
+     * @param {string} xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {boolean} array - Is attribute an array?
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeVarchar>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createVarcharAttribute(databaseId: string, collectionId: string, key: string, size: number, required: boolean, xdefault?: string, array?: boolean): Promise<Models.AttributeVarchar>;
+    createVarcharAttribute(
+        paramsOrFirst: { databaseId: string, collectionId: string, key: string, size: number, required: boolean, xdefault?: string, array?: boolean } | string,
+        ...rest: [(string)?, (string)?, (number)?, (boolean)?, (string)?, (boolean)?]    
+    ): Promise<Models.AttributeVarchar> {
+        let params: { databaseId: string, collectionId: string, key: string, size: number, required: boolean, xdefault?: string, array?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, key: string, size: number, required: boolean, xdefault?: string, array?: boolean };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                key: rest[1] as string,
+                size: rest[2] as number,
+                required: rest[3] as boolean,
+                xdefault: rest[4] as string,
+                array: rest[5] as boolean            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
+        const key = params.key;
+        const size = params.size;
+        const required = params.required;
+        const xdefault = params.xdefault;
+        const array = params.array;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof key === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "key"');
+        }
+        if (typeof size === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "size"');
+        }
+        if (typeof required === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "required"');
+        }
+
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/varchar'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const payload: Payload = {};
+        if (typeof key !== 'undefined') {
+            payload['key'] = key;
+        }
+        if (typeof size !== 'undefined') {
+            payload['size'] = size;
+        }
+        if (typeof required !== 'undefined') {
+            payload['required'] = required;
+        }
+        if (typeof xdefault !== 'undefined') {
+            payload['default'] = xdefault;
+        }
+        if (typeof array !== 'undefined') {
+            payload['array'] = array;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update a varchar attribute. Changing the `default` value will not update already existing documents.
+     * 
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} params.key - Attribute Key.
+     * @param {boolean} params.required - Is attribute required?
+     * @param {string} params.xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {number} params.size - Maximum size of the varchar attribute.
+     * @param {string} params.newKey - New Attribute Key.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeVarchar>}
+     */
+    updateVarcharAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, size?: number, newKey?: string }): Promise<Models.AttributeVarchar>;
+    /**
+     * Update a varchar attribute. Changing the `default` value will not update already existing documents.
+     * 
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} key - Attribute Key.
+     * @param {boolean} required - Is attribute required?
+     * @param {string} xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
+     * @param {number} size - Maximum size of the varchar attribute.
+     * @param {string} newKey - New Attribute Key.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeVarchar>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateVarcharAttribute(databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, size?: number, newKey?: string): Promise<Models.AttributeVarchar>;
+    updateVarcharAttribute(
+        paramsOrFirst: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, size?: number, newKey?: string } | string,
+        ...rest: [(string)?, (string)?, (boolean)?, (string)?, (number)?, (string)?]    
+    ): Promise<Models.AttributeVarchar> {
+        let params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, size?: number, newKey?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, size?: number, newKey?: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                key: rest[1] as string,
+                required: rest[2] as boolean,
+                xdefault: rest[3] as string,
+                size: rest[4] as number,
+                newKey: rest[5] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
+        const key = params.key;
+        const required = params.required;
+        const xdefault = params.xdefault;
+        const size = params.size;
+        const newKey = params.newKey;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof key === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "key"');
+        }
+        if (typeof required === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "required"');
+        }
+        if (typeof xdefault === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "xdefault"');
+        }
+
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/varchar/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
+        if (typeof required !== 'undefined') {
+            payload['required'] = required;
+        }
+        if (typeof xdefault !== 'undefined') {
+            payload['default'] = xdefault;
+        }
+        if (typeof size !== 'undefined') {
+            payload['size'] = size;
+        }
+        if (typeof newKey !== 'undefined') {
+            payload['newKey'] = newKey;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Get attribute by ID.
      *
      * @param {string} params.databaseId - Database ID.
@@ -3689,7 +4469,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributeString>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.getColumn` instead.
      */
-    getAttribute(params: { databaseId: string, collectionId: string, key: string  }): Promise<Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributeString>;
+    getAttribute(params: { databaseId: string, collectionId: string, key: string }): Promise<Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributeString>;
     /**
      * Get attribute by ID.
      *
@@ -3756,7 +4536,7 @@ export class Databases {
      * @returns {Promise<{}>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.deleteColumn` instead.
      */
-    deleteAttribute(params: { databaseId: string, collectionId: string, key: string  }): Promise<{}>;
+    deleteAttribute(params: { databaseId: string, collectionId: string, key: string }): Promise<{}>;
     /**
      * Deletes an attribute.
      *
@@ -3827,7 +4607,7 @@ export class Databases {
      * @returns {Promise<Models.AttributeRelationship>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateRelationshipColumn` instead.
      */
-    updateRelationshipAttribute(params: { databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate, newKey?: string  }): Promise<Models.AttributeRelationship>;
+    updateRelationshipAttribute(params: { databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate, newKey?: string }): Promise<Models.AttributeRelationship>;
     /**
      * Update relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
      * 
@@ -3910,7 +4690,7 @@ export class Databases {
      * @returns {Promise<Models.DocumentList<Document>>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.listRows` instead.
      */
-    listDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, queries?: string[], transactionId?: string, total?: boolean  }): Promise<Models.DocumentList<Document>>;
+    listDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, queries?: string[], transactionId?: string, total?: boolean }): Promise<Models.DocumentList<Document>>;
     /**
      * Get a list of all the user's documents in a given collection. You can use the query params to filter your results.
      *
@@ -3992,7 +4772,7 @@ export class Databases {
      * @returns {Promise<Document>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createRow` instead.
      */
-    createDocument<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, data: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Omit<Document, keyof Models.Document>, permissions?: string[], transactionId?: string  }): Promise<Document>;
+    createDocument<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, data: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Omit<Document, keyof Models.Document>, permissions?: string[], transactionId?: string }): Promise<Document>;
     /**
      * Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
      *
@@ -4085,7 +4865,7 @@ export class Databases {
      * @returns {Promise<Models.DocumentList<Document>>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createRows` instead.
      */
-    createDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documents: object[], transactionId?: string  }): Promise<Models.DocumentList<Document>>;
+    createDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documents: object[], transactionId?: string }): Promise<Models.DocumentList<Document>>;
     /**
      * Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
      *
@@ -4164,7 +4944,7 @@ export class Databases {
      * @returns {Promise<Models.DocumentList<Document>>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.upsertRows` instead.
      */
-    upsertDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documents: object[], transactionId?: string  }): Promise<Models.DocumentList<Document>>;
+    upsertDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documents: object[], transactionId?: string }): Promise<Models.DocumentList<Document>>;
     /**
      * Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
      * 
@@ -4244,7 +5024,7 @@ export class Databases {
      * @returns {Promise<Models.DocumentList<Document>>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateRows` instead.
      */
-    updateDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, data?: object, queries?: string[], transactionId?: string  }): Promise<Models.DocumentList<Document>>;
+    updateDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, data?: object, queries?: string[], transactionId?: string }): Promise<Models.DocumentList<Document>>;
     /**
      * Update all documents that match your queries, if no queries are submitted then all documents are updated. You can pass only specific fields to be updated.
      *
@@ -4325,7 +5105,7 @@ export class Databases {
      * @returns {Promise<Models.DocumentList<Document>>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.deleteRows` instead.
      */
-    deleteDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, queries?: string[], transactionId?: string  }): Promise<Models.DocumentList<Document>>;
+    deleteDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, queries?: string[], transactionId?: string }): Promise<Models.DocumentList<Document>>;
     /**
      * Bulk delete documents using queries, if no queries are passed then all documents are deleted.
      *
@@ -4401,7 +5181,7 @@ export class Databases {
      * @returns {Promise<Document>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.getRow` instead.
      */
-    getDocument<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, queries?: string[], transactionId?: string  }): Promise<Document>;
+    getDocument<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, queries?: string[], transactionId?: string }): Promise<Document>;
     /**
      * Get a document by its unique ID. This endpoint response returns a JSON object with the document data.
      *
@@ -4483,7 +5263,7 @@ export class Databases {
      * @returns {Promise<Document>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.upsertRow` instead.
      */
-    upsertDocument<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, data?: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Partial<Omit<Document, keyof Models.Document>>, permissions?: string[], transactionId?: string  }): Promise<Document>;
+    upsertDocument<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, data?: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Partial<Omit<Document, keyof Models.Document>>, permissions?: string[], transactionId?: string }): Promise<Document>;
     /**
      * Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection) API or directly from your database console.
      *
@@ -4572,7 +5352,7 @@ export class Databases {
      * @returns {Promise<Document>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateRow` instead.
      */
-    updateDocument<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, data?: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Partial<Omit<Document, keyof Models.Document>>, permissions?: string[], transactionId?: string  }): Promise<Document>;
+    updateDocument<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, data?: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Partial<Omit<Document, keyof Models.Document>>, permissions?: string[], transactionId?: string }): Promise<Document>;
     /**
      * Update a document by its unique ID. Using the patch method you can pass only specific fields that will get updated.
      *
@@ -4659,7 +5439,7 @@ export class Databases {
      * @returns {Promise<{}>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.deleteRow` instead.
      */
-    deleteDocument(params: { databaseId: string, collectionId: string, documentId: string, transactionId?: string  }): Promise<{}>;
+    deleteDocument(params: { databaseId: string, collectionId: string, documentId: string, transactionId?: string }): Promise<{}>;
     /**
      * Delete a document by its unique ID.
      *
@@ -4734,7 +5514,7 @@ export class Databases {
      * @returns {Promise<Models.LogList>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.listRowLogs` instead.
      */
-    listDocumentLogs(params: { databaseId: string, collectionId: string, documentId: string, queries?: string[]  }): Promise<Models.LogList>;
+    listDocumentLogs(params: { databaseId: string, collectionId: string, documentId: string, queries?: string[] }): Promise<Models.LogList>;
     /**
      * Get the document activity logs list by its unique ID.
      *
@@ -4811,7 +5591,7 @@ export class Databases {
      * @returns {Promise<Document>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.decrementRowColumn` instead.
      */
-    decrementDocumentAttribute<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, attribute: string, value?: number, min?: number, transactionId?: string  }): Promise<Document>;
+    decrementDocumentAttribute<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, attribute: string, value?: number, min?: number, transactionId?: string }): Promise<Document>;
     /**
      * Decrement a specific attribute of a document by a given value.
      *
@@ -4907,7 +5687,7 @@ export class Databases {
      * @returns {Promise<Document>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.incrementRowColumn` instead.
      */
-    incrementDocumentAttribute<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, attribute: string, value?: number, max?: number, transactionId?: string  }): Promise<Document>;
+    incrementDocumentAttribute<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, attribute: string, value?: number, max?: number, transactionId?: string }): Promise<Document>;
     /**
      * Increment a specific attribute of a document by a given value.
      *
@@ -5000,7 +5780,7 @@ export class Databases {
      * @returns {Promise<Models.IndexList>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.listIndexes` instead.
      */
-    listIndexes(params: { databaseId: string, collectionId: string, queries?: string[], total?: boolean  }): Promise<Models.IndexList>;
+    listIndexes(params: { databaseId: string, collectionId: string, queries?: string[], total?: boolean }): Promise<Models.IndexList>;
     /**
      * List indexes in the collection.
      *
@@ -5072,13 +5852,13 @@ export class Databases {
      * @param {string} params.key - Index Key.
      * @param {IndexType} params.type - Index type.
      * @param {string[]} params.attributes - Array of attributes to index. Maximum of 100 attributes are allowed, each 32 characters long.
-     * @param {string[]} params.orders - Array of index orders. Maximum of 100 orders are allowed.
+     * @param {OrderBy[]} params.orders - Array of index orders. Maximum of 100 orders are allowed.
      * @param {number[]} params.lengths - Length of index. Maximum of 100
      * @throws {AppwriteException}
      * @returns {Promise<Models.Index>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createIndex` instead.
      */
-    createIndex(params: { databaseId: string, collectionId: string, key: string, type: IndexType, attributes: string[], orders?: string[], lengths?: number[]  }): Promise<Models.Index>;
+    createIndex(params: { databaseId: string, collectionId: string, key: string, type: IndexType, attributes: string[], orders?: OrderBy[], lengths?: number[] }): Promise<Models.Index>;
     /**
      * Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
      * Attributes can be `key`, `fulltext`, and `unique`.
@@ -5088,21 +5868,21 @@ export class Databases {
      * @param {string} key - Index Key.
      * @param {IndexType} type - Index type.
      * @param {string[]} attributes - Array of attributes to index. Maximum of 100 attributes are allowed, each 32 characters long.
-     * @param {string[]} orders - Array of index orders. Maximum of 100 orders are allowed.
+     * @param {OrderBy[]} orders - Array of index orders. Maximum of 100 orders are allowed.
      * @param {number[]} lengths - Length of index. Maximum of 100
      * @throws {AppwriteException}
      * @returns {Promise<Models.Index>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createIndex(databaseId: string, collectionId: string, key: string, type: IndexType, attributes: string[], orders?: string[], lengths?: number[]): Promise<Models.Index>;
+    createIndex(databaseId: string, collectionId: string, key: string, type: IndexType, attributes: string[], orders?: OrderBy[], lengths?: number[]): Promise<Models.Index>;
     createIndex(
-        paramsOrFirst: { databaseId: string, collectionId: string, key: string, type: IndexType, attributes: string[], orders?: string[], lengths?: number[] } | string,
-        ...rest: [(string)?, (string)?, (IndexType)?, (string[])?, (string[])?, (number[])?]    
+        paramsOrFirst: { databaseId: string, collectionId: string, key: string, type: IndexType, attributes: string[], orders?: OrderBy[], lengths?: number[] } | string,
+        ...rest: [(string)?, (string)?, (IndexType)?, (string[])?, (OrderBy[])?, (number[])?]    
     ): Promise<Models.Index> {
-        let params: { databaseId: string, collectionId: string, key: string, type: IndexType, attributes: string[], orders?: string[], lengths?: number[] };
+        let params: { databaseId: string, collectionId: string, key: string, type: IndexType, attributes: string[], orders?: OrderBy[], lengths?: number[] };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, key: string, type: IndexType, attributes: string[], orders?: string[], lengths?: number[] };
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, key: string, type: IndexType, attributes: string[], orders?: OrderBy[], lengths?: number[] };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -5110,7 +5890,7 @@ export class Databases {
                 key: rest[1] as string,
                 type: rest[2] as IndexType,
                 attributes: rest[3] as string[],
-                orders: rest[4] as string[],
+                orders: rest[4] as OrderBy[],
                 lengths: rest[5] as number[]            
             };
         }
@@ -5180,7 +5960,7 @@ export class Databases {
      * @returns {Promise<Models.Index>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.getIndex` instead.
      */
-    getIndex(params: { databaseId: string, collectionId: string, key: string  }): Promise<Models.Index>;
+    getIndex(params: { databaseId: string, collectionId: string, key: string }): Promise<Models.Index>;
     /**
      * Get an index by its unique ID.
      *
@@ -5247,7 +6027,7 @@ export class Databases {
      * @returns {Promise<{}>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.deleteIndex` instead.
      */
-    deleteIndex(params: { databaseId: string, collectionId: string, key: string  }): Promise<{}>;
+    deleteIndex(params: { databaseId: string, collectionId: string, key: string }): Promise<{}>;
     /**
      * Delete an index.
      *
@@ -5315,7 +6095,7 @@ export class Databases {
      * @returns {Promise<Models.LogList>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.listTableLogs` instead.
      */
-    listCollectionLogs(params: { databaseId: string, collectionId: string, queries?: string[]  }): Promise<Models.LogList>;
+    listCollectionLogs(params: { databaseId: string, collectionId: string, queries?: string[] }): Promise<Models.LogList>;
     /**
      * Get the collection activity logs list by its unique ID.
      *
@@ -5382,7 +6162,7 @@ export class Databases {
      * @returns {Promise<Models.UsageCollection>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.getTableUsage` instead.
      */
-    getCollectionUsage(params: { databaseId: string, collectionId: string, range?: UsageRange  }): Promise<Models.UsageCollection>;
+    getCollectionUsage(params: { databaseId: string, collectionId: string, range?: UsageRange }): Promise<Models.UsageCollection>;
     /**
      * Get usage metrics and statistics for a collection. Returning the total number of documents. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
@@ -5448,7 +6228,7 @@ export class Databases {
      * @returns {Promise<Models.LogList>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.listDatabaseLogs` instead.
      */
-    listLogs(params: { databaseId: string, queries?: string[]  }): Promise<Models.LogList>;
+    listLogs(params: { databaseId: string, queries?: string[] }): Promise<Models.LogList>;
     /**
      * Get the database activity logs list by its unique ID.
      *
@@ -5508,7 +6288,7 @@ export class Databases {
      * @returns {Promise<Models.UsageDatabase>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.getUsage` instead.
      */
-    getUsage(params: { databaseId: string, range?: UsageRange  }): Promise<Models.UsageDatabase>;
+    getUsage(params: { databaseId: string, range?: UsageRange }): Promise<Models.UsageDatabase>;
     /**
      * Get usage metrics and statistics for a database. You can view the total number of collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *

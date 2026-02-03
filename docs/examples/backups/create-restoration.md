@@ -1,4 +1,4 @@
-import { Client, Backups } from "@appwrite.io/console";
+import { Client, Backups, Services } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const backups = new Backups(client);
 
 const result = await backups.createRestoration({
     archiveId: '<ARCHIVE_ID>',
-    services: [],
+    services: [Services.Databases],
     newResourceId: '<NEW_RESOURCE_ID>', // optional
     newResourceName: '<NEW_RESOURCE_NAME>' // optional
 });

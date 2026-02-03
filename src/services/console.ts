@@ -19,7 +19,7 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Campaign>}
      */
-    getCampaign(params: { campaignId: string  }): Promise<Models.Campaign>;
+    getCampaign(params: { campaignId: string }): Promise<Models.Campaign>;
     /**
      * Receive the details of a campaign using its ID.
      *
@@ -70,7 +70,7 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Coupon>}
      */
-    getCoupon(params: { couponId: string  }): Promise<Models.Coupon>;
+    getCoupon(params: { couponId: string }): Promise<Models.Coupon>;
     /**
      * Get the details of a coupon using it's coupon ID.
      *
@@ -121,7 +121,7 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingPlanList>}
      */
-    getPlans(params?: { platform?: Platform  }): Promise<Models.BillingPlanList>;
+    getPlans(params?: { platform?: Platform }): Promise<Models.BillingPlanList>;
     /**
      * Return a list of all available plans.
      *
@@ -172,7 +172,7 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingPlan>}
      */
-    getPlan(params: { planId: string  }): Promise<Models.BillingPlan>;
+    getPlan(params: { planId: string }): Promise<Models.BillingPlan>;
     /**
      * Get the details of a plan using its plan ID.
      *
@@ -223,7 +223,7 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Program>}
      */
-    getProgram(params: { programId: string  }): Promise<Models.Program>;
+    getProgram(params: { programId: string }): Promise<Models.Program>;
     /**
      * Receive the details of a program using its ID.
      *
@@ -274,7 +274,7 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    createProgramMembership<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { programId: string  }): Promise<Models.Organization<Preferences>>;
+    createProgramMembership<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { programId: string }): Promise<Models.Organization<Preferences>>;
     /**
      * Create a new membership for an account to a program.
      *
@@ -322,44 +322,13 @@ export class Console {
     /**
      * Get all available regions for the console.
      *
-     * @param {string} params.organizationId - Team ID.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ConsoleRegionList>}
      */
-    getRegions(params: { organizationId: string  }): Promise<Models.ConsoleRegionList>;
-    /**
-     * Get all available regions for the console.
-     *
-     * @param {string} organizationId - Team ID.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.ConsoleRegionList>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getRegions(organizationId: string): Promise<Models.ConsoleRegionList>;
-    getRegions(
-        paramsOrFirst: { organizationId: string } | string    
-    ): Promise<Models.ConsoleRegionList> {
-        let params: { organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string };
-        } else {
-            params = {
-                organizationId: paramsOrFirst as string            
-            };
-        }
-        
-        const organizationId = params.organizationId;
-
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
-        }
+    listRegions(): Promise<Models.ConsoleRegionList> {
 
         const apiPath = '/console/regions';
         const payload: Payload = {};
-        if (typeof organizationId !== 'undefined') {
-            payload['organizationId'] = organizationId;
-        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -381,7 +350,7 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    getResource(params: { value: string, type: ConsoleResourceType  }): Promise<{}>;
+    getResource(params: { value: string, type: ConsoleResourceType }): Promise<{}>;
     /**
      * Check if a resource ID is available.
      *
@@ -449,7 +418,7 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    createSource(params?: { ref?: string, referrer?: string, utmSource?: string, utmCampaign?: string, utmMedium?: string  }): Promise<{}>;
+    createSource(params?: { ref?: string, referrer?: string, utmSource?: string, utmCampaign?: string, utmMedium?: string }): Promise<{}>;
     /**
      * Create a new source.
      *
@@ -530,7 +499,7 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnList>}
      */
-    suggestColumns(params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number  }): Promise<Models.ColumnList>;
+    suggestColumns(params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number }): Promise<Models.ColumnList>;
     /**
      * Suggests column names and their size limits based on the provided table name. The API will also analyze other tables in the same database to provide context-aware suggestions, ensuring consistency across schema design. Users may optionally provide custom context to further refine the suggestions.
      *
@@ -615,7 +584,7 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnIndexList>}
      */
-    suggestIndexes(params: { databaseId: string, tableId: string, min?: number, max?: number  }): Promise<Models.ColumnIndexList>;
+    suggestIndexes(params: { databaseId: string, tableId: string, min?: number, max?: number }): Promise<Models.ColumnIndexList>;
     /**
      * Suggests database indexes for table columns based on the provided table structure and existing columns. The API will also analyze the table's column types, names, and patterns to recommend optimal indexes that improve query performance for common database operations like filtering, sorting, and searching.
      *

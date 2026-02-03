@@ -2,8 +2,8 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { BillingPlan } from '../enums/billing-plan';
 import { Platform } from '../enums/platform';
+import { Scopes } from '../enums/scopes';
 
 export class Organizations {
     client: Client;
@@ -20,7 +20,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.OrganizationList<Preferences>>}
      */
-    list<Preferences extends Models.Preferences = Models.DefaultPreferences>(params?: { queries?: string[], search?: string  }): Promise<Models.OrganizationList<Preferences>>;
+    list<Preferences extends Models.Preferences = Models.DefaultPreferences>(params?: { queries?: string[], search?: string }): Promise<Models.OrganizationList<Preferences>>;
     /**
      * Get a list of all the teams in which the current user is a member. You can use the parameters to filter your results.
      *
@@ -77,7 +77,7 @@ export class Organizations {
      *
      * @param {string} params.organizationId - Organization ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Organization name. Max length: 128 chars.
-     * @param {BillingPlan} params.billingPlan - Organization billing plan chosen
+     * @param {string} params.billingPlan - Organization billing plan chosen
      * @param {string} params.paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string} params.billingAddressId - Unique ID of billing address
      * @param {string[]} params.invites - Additional member invites
@@ -88,14 +88,14 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>}
      */
-    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform  }): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
+    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform }): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
     /**
      * Create a new organization.
      * 
      *
      * @param {string} organizationId - Organization ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Organization name. Max length: 128 chars.
-     * @param {BillingPlan} billingPlan - Organization billing plan chosen
+     * @param {string} billingPlan - Organization billing plan chosen
      * @param {string} paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string} billingAddressId - Unique ID of billing address
      * @param {string[]} invites - Additional member invites
@@ -107,20 +107,20 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
+    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
     create<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform } | string,
-        ...rest: [(string)?, (BillingPlan)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number)?, (Platform)?]    
+        paramsOrFirst: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number)?, (Platform)?]    
     ): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication> {
-        let params: { organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform };
+        let params: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, name: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform };
+            params = (paramsOrFirst || {}) as { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 name: rest[0] as string,
-                billingPlan: rest[1] as BillingPlan,
+                billingPlan: rest[1] as string,
                 paymentMethodId: rest[2] as string,
                 billingAddressId: rest[3] as string,
                 invites: rest[4] as string[],
@@ -201,7 +201,7 @@ export class Organizations {
     /**
      * Get estimation for creating an organization.
      *
-     * @param {BillingPlan} params.billingPlan - Organization billing plan chosen
+     * @param {string} params.billingPlan - Organization billing plan chosen
      * @param {string} params.paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string[]} params.invites - Additional member invites
      * @param {string} params.couponId - Coupon id
@@ -209,11 +209,11 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Estimation>}
      */
-    estimationCreateOrganization(params: { billingPlan: BillingPlan, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform  }): Promise<Models.Estimation>;
+    estimationCreateOrganization(params: { billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform }): Promise<Models.Estimation>;
     /**
      * Get estimation for creating an organization.
      *
-     * @param {BillingPlan} billingPlan - Organization billing plan chosen
+     * @param {string} billingPlan - Organization billing plan chosen
      * @param {string} paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string[]} invites - Additional member invites
      * @param {string} couponId - Coupon id
@@ -222,18 +222,18 @@ export class Organizations {
      * @returns {Promise<Models.Estimation>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    estimationCreateOrganization(billingPlan: BillingPlan, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform): Promise<Models.Estimation>;
+    estimationCreateOrganization(billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform): Promise<Models.Estimation>;
     estimationCreateOrganization(
-        paramsOrFirst: { billingPlan: BillingPlan, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform } | BillingPlan,
+        paramsOrFirst: { billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform } | string,
         ...rest: [(string)?, (string[])?, (string)?, (Platform)?]    
     ): Promise<Models.Estimation> {
-        let params: { billingPlan: BillingPlan, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform };
+        let params: { billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'billingPlan' in paramsOrFirst)) {
-            params = (paramsOrFirst || {}) as { billingPlan: BillingPlan, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform };
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform };
         } else {
             params = {
-                billingPlan: paramsOrFirst as BillingPlan,
+                billingPlan: paramsOrFirst as string,
                 paymentMethodId: rest[0] as string,
                 invites: rest[1] as string[],
                 couponId: rest[2] as string,
@@ -289,7 +289,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    delete(params: { organizationId: string  }): Promise<{}>;
+    delete(params: { organizationId: string }): Promise<{}>;
     /**
      * Delete an organization.
      *
@@ -342,7 +342,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.AggregationTeamList>}
      */
-    listAggregations(params: { organizationId: string, queries?: string[]  }): Promise<Models.AggregationTeamList>;
+    listAggregations(params: { organizationId: string, queries?: string[] }): Promise<Models.AggregationTeamList>;
     /**
      * Get a list of all aggregations for an organization.
      *
@@ -403,7 +403,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.AggregationTeam>}
      */
-    getAggregation(params: { organizationId: string, aggregationId: string, limit?: number, offset?: number  }): Promise<Models.AggregationTeam>;
+    getAggregation(params: { organizationId: string, aggregationId: string, limit?: number, offset?: number }): Promise<Models.AggregationTeam>;
     /**
      * Get a specific aggregation using it's aggregation ID.
      *
@@ -474,7 +474,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setBillingAddress<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, billingAddressId: string  }): Promise<Models.Organization<Preferences>>;
+    setBillingAddress<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, billingAddressId: string }): Promise<Models.Organization<Preferences>>;
     /**
      * Set a billing address for an organization.
      *
@@ -536,7 +536,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteBillingAddress(params: { organizationId: string  }): Promise<{}>;
+    deleteBillingAddress(params: { organizationId: string }): Promise<{}>;
     /**
      * Delete a team's billing address.
      *
@@ -589,7 +589,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      */
-    getBillingAddress(params: { organizationId: string, billingAddressId: string  }): Promise<Models.BillingAddress>;
+    getBillingAddress(params: { organizationId: string, billingAddressId: string }): Promise<Models.BillingAddress>;
     /**
      * Get a billing address using it's ID.
      *
@@ -648,7 +648,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setBillingEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, billingEmail: string  }): Promise<Models.Organization<Preferences>>;
+    setBillingEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, billingEmail: string }): Promise<Models.Organization<Preferences>>;
     /**
      * Set the current billing email for the organization.
      *
@@ -712,7 +712,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    updateBudget<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, budget?: number, alerts?: number[]  }): Promise<Models.Organization<Preferences>>;
+    updateBudget<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, budget?: number, alerts?: number[] }): Promise<Models.Organization<Preferences>>;
     /**
      * Update the budget limit for an organization.
      *
@@ -782,7 +782,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.CreditList>}
      */
-    listCredits(params: { organizationId: string, queries?: string[]  }): Promise<Models.CreditList>;
+    listCredits(params: { organizationId: string, queries?: string[] }): Promise<Models.CreditList>;
     /**
      * List all credits for an organization.
      * 
@@ -842,7 +842,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Credit>}
      */
-    addCredit(params: { organizationId: string, couponId: string  }): Promise<Models.Credit>;
+    addCredit(params: { organizationId: string, couponId: string }): Promise<Models.Credit>;
     /**
      * Add credit to an organization using a coupon.
      *
@@ -904,7 +904,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.CreditAvailable>}
      */
-    getAvailableCredits(params: { organizationId: string  }): Promise<Models.CreditAvailable>;
+    getAvailableCredits(params: { organizationId: string }): Promise<Models.CreditAvailable>;
     /**
      * Get total available valid credits for an organization.
      *
@@ -956,7 +956,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Credit>}
      */
-    getCredit(params: { organizationId: string, creditId: string  }): Promise<Models.Credit>;
+    getCredit(params: { organizationId: string, creditId: string }): Promise<Models.Credit>;
     /**
      * Get credit details.
      *
@@ -1014,7 +1014,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationDeleteOrganization>}
      */
-    estimationDeleteOrganization(params: { organizationId: string  }): Promise<Models.EstimationDeleteOrganization>;
+    estimationDeleteOrganization(params: { organizationId: string }): Promise<Models.EstimationDeleteOrganization>;
     /**
      * Get estimation for deleting an organization.
      *
@@ -1063,37 +1063,37 @@ export class Organizations {
      * Get estimation for updating the organization plan.
      *
      * @param {string} params.organizationId - Organization ID
-     * @param {BillingPlan} params.billingPlan - Organization billing plan chosen
+     * @param {string} params.billingPlan - Organization billing plan chosen
      * @param {string[]} params.invites - Additional member invites
      * @param {string} params.couponId - Coupon id
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationUpdatePlan>}
      */
-    estimationUpdatePlan(params: { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string  }): Promise<Models.EstimationUpdatePlan>;
+    estimationUpdatePlan(params: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string }): Promise<Models.EstimationUpdatePlan>;
     /**
      * Get estimation for updating the organization plan.
      *
      * @param {string} organizationId - Organization ID
-     * @param {BillingPlan} billingPlan - Organization billing plan chosen
+     * @param {string} billingPlan - Organization billing plan chosen
      * @param {string[]} invites - Additional member invites
      * @param {string} couponId - Coupon id
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationUpdatePlan>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    estimationUpdatePlan(organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string): Promise<Models.EstimationUpdatePlan>;
+    estimationUpdatePlan(organizationId: string, billingPlan: string, invites?: string[], couponId?: string): Promise<Models.EstimationUpdatePlan>;
     estimationUpdatePlan(
-        paramsOrFirst: { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string } | string,
-        ...rest: [(BillingPlan)?, (string[])?, (string)?]    
+        paramsOrFirst: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string } | string,
+        ...rest: [(string)?, (string[])?, (string)?]    
     ): Promise<Models.EstimationUpdatePlan> {
-        let params: { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string };
+        let params: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string };
+            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: string, invites?: string[], couponId?: string };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                billingPlan: rest[0] as BillingPlan,
+                billingPlan: rest[0] as string,
                 invites: rest[1] as string[],
                 couponId: rest[2] as string            
             };
@@ -1148,7 +1148,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DowngradeFeedback>}
      */
-    createDowngradeFeedback(params: { organizationId: string, reason: string, message: string, fromPlanId: string, toPlanId: string  }): Promise<Models.DowngradeFeedback>;
+    createDowngradeFeedback(params: { organizationId: string, reason: string, message: string, fromPlanId: string, toPlanId: string }): Promise<Models.DowngradeFeedback>;
     /**
      * Submit feedback about downgrading from a paid plan to a lower tier. This helps the team understand user experience and improve the platform.
      * 
@@ -1239,7 +1239,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.InvoiceList>}
      */
-    listInvoices(params: { organizationId: string, queries?: string[]  }): Promise<Models.InvoiceList>;
+    listInvoices(params: { organizationId: string, queries?: string[] }): Promise<Models.InvoiceList>;
     /**
      * List all invoices for an organization.
      *
@@ -1298,7 +1298,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Invoice>}
      */
-    getInvoice(params: { organizationId: string, invoiceId: string  }): Promise<Models.Invoice>;
+    getInvoice(params: { organizationId: string, invoiceId: string }): Promise<Models.Invoice>;
     /**
      * Get an invoice by its unique ID.
      *
@@ -1357,7 +1357,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      */
-    getInvoiceDownload(params: { organizationId: string, invoiceId: string  }): Promise<Models.PaymentMethod>;
+    getInvoiceDownload(params: { organizationId: string, invoiceId: string }): Promise<Models.PaymentMethod>;
     /**
      * Download invoice in PDF
      *
@@ -1417,7 +1417,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Invoice>}
      */
-    createInvoicePayment(params: { organizationId: string, invoiceId: string, paymentMethodId: string  }): Promise<Models.Invoice>;
+    createInvoicePayment(params: { organizationId: string, invoiceId: string, paymentMethodId: string }): Promise<Models.Invoice>;
     /**
      * Initiate payment for failed invoice to pay live from console
      *
@@ -1486,7 +1486,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Invoice>}
      */
-    validateInvoice(params: { organizationId: string, invoiceId: string  }): Promise<Models.Invoice>;
+    validateInvoice(params: { organizationId: string, invoiceId: string }): Promise<Models.Invoice>;
     /**
      * Validates the payment linked with the invoice and updates the invoice status if the payment status is changed.
      *
@@ -1546,7 +1546,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      */
-    getInvoiceView(params: { organizationId: string, invoiceId: string  }): Promise<Models.PaymentMethod>;
+    getInvoiceView(params: { organizationId: string, invoiceId: string }): Promise<Models.PaymentMethod>;
     /**
      * View invoice in PDF
      *
@@ -1598,6 +1598,351 @@ export class Organizations {
     }
 
     /**
+     * Get a list of all API keys from the current organization. 
+     *
+     * @param {string} params.organizationId - Organization Unique ID
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.KeyList>}
+     */
+    listKeys(params: { organizationId: string, total?: boolean }): Promise<Models.KeyList>;
+    /**
+     * Get a list of all API keys from the current organization. 
+     *
+     * @param {string} organizationId - Organization Unique ID
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.KeyList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listKeys(organizationId: string, total?: boolean): Promise<Models.KeyList>;
+    listKeys(
+        paramsOrFirst: { organizationId: string, total?: boolean } | string,
+        ...rest: [(boolean)?]    
+    ): Promise<Models.KeyList> {
+        let params: { organizationId: string, total?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string, total?: boolean };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                total: rest[0] as boolean            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+        const total = params.total;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/keys'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        if (typeof total !== 'undefined') {
+            payload['total'] = total;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a new organization API key.
+     *
+     * @param {string} params.organizationId - Organization Unique ID
+     * @param {string} params.name - Key name. Max length: 128 chars.
+     * @param {Scopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Key>}
+     */
+    createKey(params: { organizationId: string, name: string, scopes: Scopes[], expire?: string }): Promise<Models.Key>;
+    /**
+     * Create a new organization API key.
+     *
+     * @param {string} organizationId - Organization Unique ID
+     * @param {string} name - Key name. Max length: 128 chars.
+     * @param {Scopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Key>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createKey(organizationId: string, name: string, scopes: Scopes[], expire?: string): Promise<Models.Key>;
+    createKey(
+        paramsOrFirst: { organizationId: string, name: string, scopes: Scopes[], expire?: string } | string,
+        ...rest: [(string)?, (Scopes[])?, (string)?]    
+    ): Promise<Models.Key> {
+        let params: { organizationId: string, name: string, scopes: Scopes[], expire?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string, name: string, scopes: Scopes[], expire?: string };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                name: rest[0] as string,
+                scopes: rest[1] as Scopes[],
+                expire: rest[2] as string            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+        const name = params.name;
+        const scopes = params.scopes;
+        const expire = params.expire;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof scopes === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "scopes"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/keys'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof scopes !== 'undefined') {
+            payload['scopes'] = scopes;
+        }
+        if (typeof expire !== 'undefined') {
+            payload['expire'] = expire;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get a key by its unique ID. This endpoint returns details about a specific API key in your organization including it's scopes.
+     *
+     * @param {string} params.organizationId - Organization Unique ID
+     * @param {string} params.keyId - Key unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Key>}
+     */
+    getKey(params: { organizationId: string, keyId: string }): Promise<Models.Key>;
+    /**
+     * Get a key by its unique ID. This endpoint returns details about a specific API key in your organization including it's scopes.
+     *
+     * @param {string} organizationId - Organization Unique ID
+     * @param {string} keyId - Key unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Key>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getKey(organizationId: string, keyId: string): Promise<Models.Key>;
+    getKey(
+        paramsOrFirst: { organizationId: string, keyId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.Key> {
+        let params: { organizationId: string, keyId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string, keyId: string };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                keyId: rest[0] as string            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+        const keyId = params.keyId;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/keys/{keyId}'.replace('{organizationId}', organizationId).replace('{keyId}', keyId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
+     *
+     * @param {string} params.organizationId - Organization Unique ID
+     * @param {string} params.keyId - Key unique ID.
+     * @param {string} params.name - Key name. Max length: 128 chars.
+     * @param {Scopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Key>}
+     */
+    updateKey(params: { organizationId: string, keyId: string, name: string, scopes: Scopes[], expire?: string }): Promise<Models.Key>;
+    /**
+     * Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
+     *
+     * @param {string} organizationId - Organization Unique ID
+     * @param {string} keyId - Key unique ID.
+     * @param {string} name - Key name. Max length: 128 chars.
+     * @param {Scopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Key>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateKey(organizationId: string, keyId: string, name: string, scopes: Scopes[], expire?: string): Promise<Models.Key>;
+    updateKey(
+        paramsOrFirst: { organizationId: string, keyId: string, name: string, scopes: Scopes[], expire?: string } | string,
+        ...rest: [(string)?, (string)?, (Scopes[])?, (string)?]    
+    ): Promise<Models.Key> {
+        let params: { organizationId: string, keyId: string, name: string, scopes: Scopes[], expire?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string, keyId: string, name: string, scopes: Scopes[], expire?: string };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                keyId: rest[0] as string,
+                name: rest[1] as string,
+                scopes: rest[2] as Scopes[],
+                expire: rest[3] as string            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+        const keyId = params.keyId;
+        const name = params.name;
+        const scopes = params.scopes;
+        const expire = params.expire;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof scopes === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "scopes"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/keys/{keyId}'.replace('{organizationId}', organizationId).replace('{keyId}', keyId);
+        const payload: Payload = {};
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof scopes !== 'undefined') {
+            payload['scopes'] = scopes;
+        }
+        if (typeof expire !== 'undefined') {
+            payload['expire'] = expire;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'put',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Delete a key by its unique ID. Once deleted, the key can no longer be used to authenticate API calls.
+     *
+     * @param {string} params.organizationId - Organization Unique ID
+     * @param {string} params.keyId - Key unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteKey(params: { organizationId: string, keyId: string }): Promise<{}>;
+    /**
+     * Delete a key by its unique ID. Once deleted, the key can no longer be used to authenticate API calls.
+     *
+     * @param {string} organizationId - Organization Unique ID
+     * @param {string} keyId - Key unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteKey(organizationId: string, keyId: string): Promise<{}>;
+    deleteKey(
+        paramsOrFirst: { organizationId: string, keyId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<{}> {
+        let params: { organizationId: string, keyId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string, keyId: string };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                keyId: rest[0] as string            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+        const keyId = params.keyId;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/keys/{keyId}'.replace('{organizationId}', organizationId).replace('{keyId}', keyId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Set a organization's default payment method.
      *
      * @param {string} params.organizationId - Organization ID
@@ -1605,7 +1950,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setDefaultPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, paymentMethodId: string  }): Promise<Models.Organization<Preferences>>;
+    setDefaultPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, paymentMethodId: string }): Promise<Models.Organization<Preferences>>;
     /**
      * Set a organization's default payment method.
      *
@@ -1667,7 +2012,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    deleteDefaultPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string  }): Promise<Models.Organization<Preferences>>;
+    deleteDefaultPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string }): Promise<Models.Organization<Preferences>>;
     /**
      * Delete the default payment method for an organization.
      *
@@ -1721,7 +2066,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setBackupPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, paymentMethodId: string  }): Promise<Models.Organization<Preferences>>;
+    setBackupPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, paymentMethodId: string }): Promise<Models.Organization<Preferences>>;
     /**
      * Set an organization's backup payment method.
      * 
@@ -1784,7 +2129,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    deleteBackupPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string  }): Promise<Models.Organization<Preferences>>;
+    deleteBackupPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string }): Promise<Models.Organization<Preferences>>;
     /**
      * Delete a backup payment method for an organization.
      *
@@ -1837,7 +2182,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      */
-    getPaymentMethod(params: { organizationId: string, paymentMethodId: string  }): Promise<Models.PaymentMethod>;
+    getPaymentMethod(params: { organizationId: string, paymentMethodId: string }): Promise<Models.PaymentMethod>;
     /**
      * Get an organization's payment method using it's payment method ID.
      *
@@ -1895,7 +2240,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingPlan>}
      */
-    getPlan(params: { organizationId: string  }): Promise<Models.BillingPlan>;
+    getPlan(params: { organizationId: string }): Promise<Models.BillingPlan>;
     /**
      * Get the details of the current billing plan for an organization.
      *
@@ -1943,7 +2288,7 @@ export class Organizations {
      * Update the billing plan for an organization.
      *
      * @param {string} params.organizationId - Organization Unique ID
-     * @param {BillingPlan} params.billingPlan - Organization billing plan chosen
+     * @param {string} params.billingPlan - Organization billing plan chosen
      * @param {string} params.paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string} params.billingAddressId - Unique ID of billing address
      * @param {string[]} params.invites - Additional member invites
@@ -1953,12 +2298,12 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number  }): Promise<Models.Organization<Preferences>>;
+    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number }): Promise<Models.Organization<Preferences>>;
     /**
      * Update the billing plan for an organization.
      *
      * @param {string} organizationId - Organization Unique ID
-     * @param {BillingPlan} billingPlan - Organization billing plan chosen
+     * @param {string} billingPlan - Organization billing plan chosen
      * @param {string} paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string} billingAddressId - Unique ID of billing address
      * @param {string[]} invites - Additional member invites
@@ -1969,19 +2314,19 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>>;
+    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>>;
     updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number } | string,
-        ...rest: [(BillingPlan)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number)?]    
+        paramsOrFirst: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number };
+        let params: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: BillingPlan, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number };
+            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                billingPlan: rest[0] as BillingPlan,
+                billingPlan: rest[0] as string,
                 paymentMethodId: rest[1] as string,
                 billingAddressId: rest[2] as string,
                 invites: rest[3] as string[],
@@ -2051,7 +2396,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    cancelDowngrade<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string  }): Promise<Models.Organization<Preferences>>;
+    cancelDowngrade<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string }): Promise<Models.Organization<Preferences>>;
     /**
      * Cancel the downgrade initiated for an organization.
      *
@@ -2104,7 +2449,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    updateProjects<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, projects?: string[]  }): Promise<Models.Organization<Preferences>>;
+    updateProjects<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, projects?: string[] }): Promise<Models.Organization<Preferences>>;
     /**
      * Update selected projects to keep in the organization.
      *
@@ -2157,13 +2502,64 @@ export class Organizations {
     }
 
     /**
+     * Get all available regions for an organization.
+     *
+     * @param {string} params.organizationId - Team ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ConsoleRegionList>}
+     */
+    listRegions(params: { organizationId: string }): Promise<Models.ConsoleRegionList>;
+    /**
+     * Get all available regions for an organization.
+     *
+     * @param {string} organizationId - Team ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ConsoleRegionList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listRegions(organizationId: string): Promise<Models.ConsoleRegionList>;
+    listRegions(
+        paramsOrFirst: { organizationId: string } | string    
+    ): Promise<Models.ConsoleRegionList> {
+        let params: { organizationId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/regions'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Get Scopes
      *
      * @param {string} params.organizationId - Organization id
      * @throws {AppwriteException}
      * @returns {Promise<Models.Roles>}
      */
-    getScopes(params: { organizationId: string  }): Promise<Models.Roles>;
+    getScopes(params: { organizationId: string }): Promise<Models.Roles>;
     /**
      * Get Scopes
      *
@@ -2215,7 +2611,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, taxId: string  }): Promise<Models.Organization<Preferences>>;
+    setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, taxId: string }): Promise<Models.Organization<Preferences>>;
     /**
      * Set an organization's billing tax ID.
      *
@@ -2279,7 +2675,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageOrganization>}
      */
-    getUsage(params: { organizationId: string, startDate?: string, endDate?: string  }): Promise<Models.UsageOrganization>;
+    getUsage(params: { organizationId: string, startDate?: string, endDate?: string }): Promise<Models.UsageOrganization>;
     /**
      * Get the usage data for an organization.
      *
@@ -2344,7 +2740,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    validatePayment<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, invites?: string[]  }): Promise<Models.Organization<Preferences>>;
+    validatePayment<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, invites?: string[] }): Promise<Models.Organization<Preferences>>;
     /**
      * Validate payment for team after creation or upgrade.
      *
