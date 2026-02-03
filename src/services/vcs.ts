@@ -21,7 +21,7 @@ export class Vcs {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DetectionFramework>}
      */
-    createRepositoryDetection(params: { installationId: string, providerRepositoryId: string, type: VCSDetectionType, providerRootDirectory?: string  }): Promise<Models.DetectionFramework>;
+    createRepositoryDetection(params: { installationId: string, providerRepositoryId: string, type: VCSDetectionType, providerRootDirectory?: string }): Promise<Models.DetectionFramework>;
     /**
      * Analyze a GitHub repository to automatically detect the programming language and runtime environment. This endpoint scans the repository's files and language statistics to determine the appropriate runtime settings for your function. The GitHub installation must be properly configured and the repository must be accessible through your installation for this endpoint to work.
      *
@@ -101,7 +101,7 @@ export class Vcs {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProviderRepositoryFrameworkList>}
      */
-    listRepositories(params: { installationId: string, type: VCSDetectionType, search?: string, queries?: string[]  }): Promise<Models.ProviderRepositoryFrameworkList>;
+    listRepositories(params: { installationId: string, type: VCSDetectionType, search?: string, queries?: string[] }): Promise<Models.ProviderRepositoryFrameworkList>;
     /**
      * Get a list of GitHub repositories available through your installation. This endpoint returns repositories with their basic information, detected runtime environments, and latest push dates. You can optionally filter repositories using a search term. Each repository's runtime is automatically detected based on its contents and language statistics. The GitHub installation must be properly configured for this endpoint to work.
      *
@@ -176,7 +176,7 @@ export class Vcs {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProviderRepository>}
      */
-    createRepository(params: { installationId: string, name: string, xprivate: boolean  }): Promise<Models.ProviderRepository>;
+    createRepository(params: { installationId: string, name: string, xprivate: boolean }): Promise<Models.ProviderRepository>;
     /**
      * Create a new GitHub repository through your installation. This endpoint allows you to create either a public or private repository by specifying a name and visibility setting. The repository will be created under your GitHub user account or organization, depending on your installation type. The GitHub installation must be properly configured and have the necessary permissions for repository creation.
      *
@@ -248,7 +248,7 @@ export class Vcs {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProviderRepository>}
      */
-    getRepository(params: { installationId: string, providerRepositoryId: string  }): Promise<Models.ProviderRepository>;
+    getRepository(params: { installationId: string, providerRepositoryId: string }): Promise<Models.ProviderRepository>;
     /**
      * Get detailed information about a specific GitHub repository from your installation. This endpoint returns repository details including its ID, name, visibility status, organization, and latest push date. The GitHub installation must be properly configured and have access to the requested repository for this endpoint to work.
      *
@@ -308,7 +308,7 @@ export class Vcs {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BranchList>}
      */
-    listRepositoryBranches(params: { installationId: string, providerRepositoryId: string  }): Promise<Models.BranchList>;
+    listRepositoryBranches(params: { installationId: string, providerRepositoryId: string }): Promise<Models.BranchList>;
     /**
      * Get a list of all branches from a GitHub repository in your installation. This endpoint returns the names of all branches in the repository and their total count. The GitHub installation must be properly configured and have access to the requested repository for this endpoint to work.
      * 
@@ -370,7 +370,7 @@ export class Vcs {
      * @throws {AppwriteException}
      * @returns {Promise<Models.VcsContentList>}
      */
-    getRepositoryContents(params: { installationId: string, providerRepositoryId: string, providerRootDirectory?: string, providerReference?: string  }): Promise<Models.VcsContentList>;
+    getRepositoryContents(params: { installationId: string, providerRepositoryId: string, providerRootDirectory?: string, providerReference?: string }): Promise<Models.VcsContentList>;
     /**
      * Get a list of files and directories from a GitHub repository connected to your project. This endpoint returns the contents of a specified repository path, including file names, sizes, and whether each item is a file or directory. The GitHub installation must be properly configured and the repository must be accessible through your installation for this endpoint to work.
      *
@@ -442,7 +442,7 @@ export class Vcs {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    updateExternalDeployments(params: { installationId: string, repositoryId: string, providerPullRequestId: string  }): Promise<{}>;
+    updateExternalDeployments(params: { installationId: string, repositoryId: string, providerPullRequestId: string }): Promise<{}>;
     /**
      * Authorize and create deployments for a GitHub pull request in your project. This endpoint allows external contributions by creating deployments from pull requests, enabling preview environments for code review. The pull request must be open and not previously authorized. The GitHub installation must be properly configured and have access to both the repository and pull request for this endpoint to work.
      *
@@ -513,7 +513,7 @@ export class Vcs {
      * @throws {AppwriteException}
      * @returns {Promise<Models.InstallationList>}
      */
-    listInstallations(params?: { queries?: string[], search?: string, total?: boolean  }): Promise<Models.InstallationList>;
+    listInstallations(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.InstallationList>;
     /**
      * List all VCS installations configured for the current project. This endpoint returns a list of installations including their provider, organization, and other configuration details.
      * 
@@ -578,7 +578,7 @@ export class Vcs {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Installation>}
      */
-    getInstallation(params: { installationId: string  }): Promise<Models.Installation>;
+    getInstallation(params: { installationId: string }): Promise<Models.Installation>;
     /**
      * Get a VCS installation by its unique ID. This endpoint returns the installation's details including its provider, organization, and configuration. 
      *
@@ -629,7 +629,7 @@ export class Vcs {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteInstallation(params: { installationId: string  }): Promise<{}>;
+    deleteInstallation(params: { installationId: string }): Promise<{}>;
     /**
      * Delete a VCS installation by its unique ID. This endpoint removes the installation and all its associated repositories from the project.
      *

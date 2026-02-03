@@ -21,7 +21,7 @@ export class Proxy {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRuleList>}
      */
-    listRules(params?: { queries?: string[], search?: string, total?: boolean  }): Promise<Models.ProxyRuleList>;
+    listRules(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.ProxyRuleList>;
     /**
      * Get a list of all the proxy rules. You can use the query params to filter your results.
      *
@@ -85,7 +85,7 @@ export class Proxy {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    createAPIRule(params: { domain: string  }): Promise<Models.ProxyRule>;
+    createAPIRule(params: { domain: string }): Promise<Models.ProxyRule>;
     /**
      * Create a new proxy rule for serving Appwrite's API on custom domain.
      *
@@ -142,7 +142,7 @@ export class Proxy {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    createFunctionRule(params: { domain: string, functionId: string, branch?: string  }): Promise<Models.ProxyRule>;
+    createFunctionRule(params: { domain: string, functionId: string, branch?: string }): Promise<Models.ProxyRule>;
     /**
      * Create a new proxy rule for executing Appwrite Function on custom domain.
      *
@@ -217,7 +217,7 @@ export class Proxy {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    createRedirectRule(params: { domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType  }): Promise<Models.ProxyRule>;
+    createRedirectRule(params: { domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType }): Promise<Models.ProxyRule>;
     /**
      * Create a new proxy rule for to redirect from custom domain to another domain.
      *
@@ -311,7 +311,7 @@ export class Proxy {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    createSiteRule(params: { domain: string, siteId: string, branch?: string  }): Promise<Models.ProxyRule>;
+    createSiteRule(params: { domain: string, siteId: string, branch?: string }): Promise<Models.ProxyRule>;
     /**
      * Create a new proxy rule for serving Appwrite Site on custom domain.
      *
@@ -382,7 +382,7 @@ export class Proxy {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    getRule(params: { ruleId: string  }): Promise<Models.ProxyRule>;
+    getRule(params: { ruleId: string }): Promise<Models.ProxyRule>;
     /**
      * Get a proxy rule by its unique ID.
      *
@@ -433,7 +433,7 @@ export class Proxy {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteRule(params: { ruleId: string  }): Promise<{}>;
+    deleteRule(params: { ruleId: string }): Promise<{}>;
     /**
      * Delete a proxy rule by its unique ID.
      *
@@ -485,7 +485,7 @@ export class Proxy {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    updateRuleVerification(params: { ruleId: string  }): Promise<Models.ProxyRule>;
+    updateRuleVerification(params: { ruleId: string }): Promise<Models.ProxyRule>;
     /**
      * Retry getting verification process of a proxy rule. This endpoint triggers domain verification by checking DNS records (CNAME) against the configured target domain. If verification is successful, a TLS certificate will be automatically provisioned for the domain.
      *

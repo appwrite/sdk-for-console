@@ -19,7 +19,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainsList>}
      */
-    list(params?: { queries?: string[], search?: string  }): Promise<Models.DomainsList>;
+    list(params?: { queries?: string[], search?: string }): Promise<Models.DomainsList>;
     /**
      *     List all domains registered for this project. This endpoint supports pagination.
      *
@@ -78,7 +78,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Domain>}
      */
-    create(params: { teamId: string, domain: string  }): Promise<Models.Domain>;
+    create(params: { teamId: string, domain: string }): Promise<Models.Domain>;
     /**
      *     Create a new domain. Before creating a domain, you need to ensure that your DNS provider is properly configured. After creating the domain, you can use the verification endpoint to check if the domain is ready to be used.
      *
@@ -148,7 +148,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainSuggestionsList>}
      */
-    listSuggestions(params: { query: string, tlds?: string[], limit?: number, filterType?: FilterType, priceMax?: number, priceMin?: number  }): Promise<Models.DomainSuggestionsList>;
+    listSuggestions(params: { query: string, tlds?: string[], limit?: number, filterType?: FilterType, priceMax?: number, priceMin?: number }): Promise<Models.DomainSuggestionsList>;
     /**
      *     List domain suggestions.
      *
@@ -233,7 +233,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Domain>}
      */
-    get(params: { domainId: string  }): Promise<Models.Domain>;
+    get(params: { domainId: string }): Promise<Models.Domain>;
     /**
      *     Get a domain by its unique ID.
      *
@@ -285,7 +285,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    delete(params: { domainId: string  }): Promise<{}>;
+    delete(params: { domainId: string }): Promise<{}>;
     /**
      * Delete a domain by its unique ID. This endpoint can be used to delete a domain from your project.
      * Once deleted, the domain will no longer be available for use and all associated resources will be removed.
@@ -340,7 +340,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Domain>}
      */
-    updateNameservers(params: { domainId: string  }): Promise<Models.Domain>;
+    updateNameservers(params: { domainId: string }): Promise<Models.Domain>;
     /**
      *     Verify which NS records are used and update the domain accordingly. This will check the domain's
      *     nameservers and update the domain's status based on whether the nameservers match the expected
@@ -394,7 +394,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    getPresetGoogleWorkspace(params: { domainId: string  }): Promise<Models.DnsRecordsList>;
+    getPresetGoogleWorkspace(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
      *     List Google Workspace DNS records.
      *
@@ -446,7 +446,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    createPresetGoogleWorkspace(params: { domainId: string  }): Promise<Models.DnsRecordsList>;
+    createPresetGoogleWorkspace(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
      *     Add Google Workspace DNS records to the domain. This will create the required MX records 
      *     for Google Workspace email hosting.
@@ -499,7 +499,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    getPresetICloud(params: { domainId: string  }): Promise<Models.DnsRecordsList>;
+    getPresetICloud(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
      *     List iCloud DNS records.
      *
@@ -551,7 +551,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    createPresetICloud(params: { domainId: string  }): Promise<Models.DnsRecordsList>;
+    createPresetICloud(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
      *     Add iCloud DNS records to the domain. This will create the required MX and SPF records
      *     for using iCloud email services with your domain.
@@ -604,7 +604,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    getPresetMailgun(params: { domainId: string  }): Promise<Models.DnsRecordsList>;
+    getPresetMailgun(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
      *     List Mailgun DNS records.
      *
@@ -656,7 +656,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    createPresetMailgun(params: { domainId: string  }): Promise<Models.DnsRecordsList>;
+    createPresetMailgun(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
      *     Add Mailgun DNS records to the domain. This endpoint will create the required DNS records 
      *     for Mailgun in the specified domain.
@@ -709,7 +709,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    getPresetOutlook(params: { domainId: string  }): Promise<Models.DnsRecordsList>;
+    getPresetOutlook(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
      *     List Outlook DNS records.
      *
@@ -761,7 +761,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    createPresetOutlook(params: { domainId: string  }): Promise<Models.DnsRecordsList>;
+    createPresetOutlook(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
      *     Add Outlook DNS records to the domain. This will create the required MX records
      *     for setting up Outlook email hosting for your domain.
@@ -814,7 +814,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    getPresetProtonMail(params: { domainId: string  }): Promise<Models.DnsRecordsList>;
+    getPresetProtonMail(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
      *     List ProtonMail DNS records.
      *
@@ -866,7 +866,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    createPresetProtonMail(params: { domainId: string  }): Promise<Models.DnsRecordsList>;
+    createPresetProtonMail(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
      *     Add ProtonMail DNS records to the domain. This will create the required MX records
      *     for using ProtonMail with your custom domain.
@@ -919,7 +919,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    getPresetZoho(params: { domainId: string  }): Promise<Models.DnsRecordsList>;
+    getPresetZoho(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
      *     List Zoho DNS records.
      *
@@ -971,7 +971,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    createPresetZoho(params: { domainId: string  }): Promise<Models.DnsRecordsList>;
+    createPresetZoho(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
      *     Add Zoho Mail DNS records to the domain. This will create the required MX records
      *     for setting up Zoho Mail on your domain.
@@ -1026,7 +1026,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    listRecords(params: { domainId: string, queries?: string[]  }): Promise<Models.DnsRecordsList>;
+    listRecords(params: { domainId: string, queries?: string[] }): Promise<Models.DnsRecordsList>;
     /**
      *     List DNS records for a given domain. You can use this endpoint to list all the DNS records
      *     associated with your domain.
@@ -1090,7 +1090,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordA(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordA(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      * Create a new A record for the given domain. A records are used to point a domain name 
      * to an IPv4 address. The record value should be a valid IPv4 address.
@@ -1184,7 +1184,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing A record for the given domain. This endpoint allows you to modify 
      *     the properties of an A record including its name (subdomain), IPv4 address, TTL, 
@@ -1283,7 +1283,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordAAAA(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordAAAA(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Create a new AAAA record for the given domain. This endpoint allows you to add a new IPv6 DNS record 
      *     to your domain. The record will be used to point a hostname to an IPv6 address.
@@ -1377,7 +1377,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordAAAA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordAAAA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing AAAA record for the given domain. This endpoint allows you to modify
      *     the properties of an existing AAAA record, including its name (subdomain), IPv6 address,
@@ -1477,7 +1477,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordAlias(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordAlias(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Create a new ALIAS record for the given domain. This record type can be used to point your domain 
      *     to another domain name that will serve as an alias. This is particularly useful when you want to 
@@ -1574,7 +1574,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordAlias(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordAlias(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing ALIAS record for the specified domain. This endpoint allows you to modify
      *     the properties of an existing ALIAS record including its name, target domain, TTL, and comment.
@@ -1675,7 +1675,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordCAA(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordCAA(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      * Create a new CAA record for the given domain. CAA records are used to specify which 
      * Certificate Authorities (CAs) are allowed to issue SSL/TLS certificates for your domain.
@@ -1769,7 +1769,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordCAA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordCAA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing CAA record for the given domain. A CAA (Certification Authority Authorization) 
      *     record is used to specify which certificate authorities (CAs) are authorized to issue certificates 
@@ -1871,7 +1871,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordCNAME(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordCNAME(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Create a new CNAME record for the given domain.
      *     
@@ -1966,7 +1966,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordCNAME(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordCNAME(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing CNAME record for the given domain.
      *
@@ -2063,7 +2063,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordHTTPS(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordHTTPS(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Create a new HTTPS record for the given domain. This record is used to configure HTTPS 
      *     settings for your domain, enabling secure communication over SSL/TLS.
@@ -2157,7 +2157,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordHTTPS(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordHTTPS(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      * Update an existing HTTPS record for the given domain. This endpoint allows you to modify 
      * the properties of an HTTPS record associated with your domain, including the name (subdomain), 
@@ -2259,7 +2259,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordMX(params: { domainId: string, name: string, value: string, ttl: number, priority: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordMX(params: { domainId: string, name: string, value: string, ttl: number, priority: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Create a new MX record for the given domain. MX records are used to define the mail servers responsible 
      *     for accepting email messages for the domain. Multiple MX records can be created with different priorities.
@@ -2363,7 +2363,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordMX(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordMX(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing MX record for the given domain.
      *
@@ -2469,7 +2469,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordNS(params: { domainId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordNS(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Create a new NS record for the given domain. NS records specify the nameservers that are used 
      *     to resolve the domain name to IP addresses. Each domain can have multiple NS records.
@@ -2564,7 +2564,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordNS(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordNS(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing NS record for the given domain. This endpoint allows you to modify 
      *     the properties of an NS (nameserver) record associated with your domain. You can update 
@@ -2668,7 +2668,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordSRV(params: { domainId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordSRV(params: { domainId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Create a new SRV record for the given domain. SRV records are used to define the location 
      *     of servers for specific services. For example, they can be used to specify which server 
@@ -2804,7 +2804,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordSRV(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordSRV(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing SRV record for the given domain.
      *     
@@ -2942,7 +2942,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordTXT(params: { domainId: string, name: string, ttl: number, value?: string, comment?: string  }): Promise<Models.DnsRecord>;
+    createRecordTXT(params: { domainId: string, name: string, ttl: number, value?: string, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Create a new TXT record for the given domain. TXT records can be used 
      *     to provide additional information about your domain, such as domain 
@@ -3035,7 +3035,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordTXT(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string  }): Promise<Models.DnsRecord>;
+    updateRecordTXT(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
      *     Update an existing TXT record for the given domain.
      *     
@@ -3135,7 +3135,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    getRecord(params: { domainId: string, recordId: string  }): Promise<Models.DnsRecord>;
+    getRecord(params: { domainId: string, recordId: string }): Promise<Models.DnsRecord>;
     /**
      *     Get a single DNS record for a given domain by record ID.
      *     
@@ -3199,7 +3199,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteRecord(params: { domainId: string, recordId: string  }): Promise<{}>;
+    deleteRecord(params: { domainId: string, recordId: string }): Promise<{}>;
     /**
      *     Delete a DNS record for the given domain. This endpoint allows you to delete an existing DNS record 
      *     from a specific domain.
@@ -3263,7 +3263,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Domain>}
      */
-    updateTeam(params: { domainId: string, teamId: string  }): Promise<Models.Domain>;
+    updateTeam(params: { domainId: string, teamId: string }): Promise<Models.Domain>;
     /**
      *     Update the team ID for a specific domain. This endpoint requires admin access.
      *     
@@ -3329,7 +3329,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    getZone(params: { domainId: string  }): Promise<{}>;
+    getZone(params: { domainId: string }): Promise<{}>;
     /**
      *     Retrieve the DNS zone file for the given domain. This endpoint will return the DNS
      *     zone file in a standardized format that can be used to configure DNS servers.
@@ -3383,7 +3383,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Domain>}
      */
-    updateZone(params: { domainId: string, content: string  }): Promise<Models.Domain>;
+    updateZone(params: { domainId: string, content: string }): Promise<Models.Domain>;
     /**
      * Update the DNS zone for the given domain using the provided zone file content.
      * All parsed records are imported and then the main domain document is returned.

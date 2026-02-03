@@ -5,6 +5,7 @@ import type { Models } from '../models';
 import { Region } from '../enums/region';
 import { Api } from '../enums/api';
 import { AuthMethod } from '../enums/auth-method';
+import { Scopes } from '../enums/scopes';
 import { OAuthProvider } from '../enums/o-auth-provider';
 import { PlatformType } from '../enums/platform-type';
 import { ApiService } from '../enums/api-service';
@@ -31,7 +32,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProjectList>}
      */
-    list(params?: { queries?: string[], search?: string, total?: boolean  }): Promise<Models.ProjectList>;
+    list(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.ProjectList>;
     /**
      * Get a list of all projects. You can use the query params to filter your results. 
      *
@@ -107,7 +108,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    create(params: { projectId: string, name: string, teamId: string, region?: Region, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string  }): Promise<Models.Project>;
+    create(params: { projectId: string, name: string, teamId: string, region?: Region, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string }): Promise<Models.Project>;
     /**
      * Create a new project. You can create a maximum of 100 projects per account. 
      *
@@ -241,7 +242,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    get(params: { projectId: string  }): Promise<Models.Project>;
+    get(params: { projectId: string }): Promise<Models.Project>;
     /**
      * Get a project by its unique ID. This endpoint allows you to retrieve the project's details, including its name, description, team, region, and other metadata. 
      *
@@ -302,7 +303,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    update(params: { projectId: string, name: string, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string  }): Promise<Models.Project>;
+    update(params: { projectId: string, name: string, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string }): Promise<Models.Project>;
     /**
      * Update a project by its unique ID.
      *
@@ -418,7 +419,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    delete(params: { projectId: string  }): Promise<{}>;
+    delete(params: { projectId: string }): Promise<{}>;
     /**
      * Delete a project by its unique ID.
      *
@@ -473,7 +474,7 @@ export class Projects {
      * @returns {Promise<Models.Project>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Projects.updateAPIStatus` instead.
      */
-    updateApiStatus(params: { projectId: string, api: Api, status: boolean  }): Promise<Models.Project>;
+    updateApiStatus(params: { projectId: string, api: Api, status: boolean }): Promise<Models.Project>;
     /**
      * Update the status of a specific API type. Use this endpoint to enable or disable API types such as REST, GraphQL and Realtime.
      *
@@ -546,7 +547,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAPIStatus(params: { projectId: string, api: Api, status: boolean  }): Promise<Models.Project>;
+    updateAPIStatus(params: { projectId: string, api: Api, status: boolean }): Promise<Models.Project>;
     /**
      * Update the status of a specific API type. Use this endpoint to enable or disable API types such as REST, GraphQL and Realtime.
      *
@@ -619,7 +620,7 @@ export class Projects {
      * @returns {Promise<Models.Project>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Projects.updateAPIStatusAll` instead.
      */
-    updateApiStatusAll(params: { projectId: string, status: boolean  }): Promise<Models.Project>;
+    updateApiStatusAll(params: { projectId: string, status: boolean }): Promise<Models.Project>;
     /**
      * Update the status of all API types. Use this endpoint to enable or disable API types such as REST, GraphQL and Realtime all at once.
      *
@@ -682,7 +683,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAPIStatusAll(params: { projectId: string, status: boolean  }): Promise<Models.Project>;
+    updateAPIStatusAll(params: { projectId: string, status: boolean }): Promise<Models.Project>;
     /**
      * Update the status of all API types. Use this endpoint to enable or disable API types such as REST, GraphQL and Realtime all at once.
      *
@@ -745,7 +746,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAuthDuration(params: { projectId: string, duration: number  }): Promise<Models.Project>;
+    updateAuthDuration(params: { projectId: string, duration: number }): Promise<Models.Project>;
     /**
      * Update how long sessions created within a project should stay active for.
      *
@@ -808,7 +809,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAuthLimit(params: { projectId: string, limit: number  }): Promise<Models.Project>;
+    updateAuthLimit(params: { projectId: string, limit: number }): Promise<Models.Project>;
     /**
      * Update the maximum number of users allowed in this project. Set to 0 for unlimited users. 
      *
@@ -871,7 +872,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAuthSessionsLimit(params: { projectId: string, limit: number  }): Promise<Models.Project>;
+    updateAuthSessionsLimit(params: { projectId: string, limit: number }): Promise<Models.Project>;
     /**
      * Update the maximum number of sessions allowed per user within the project, if the limit is hit the oldest session will be deleted to make room for new sessions.
      *
@@ -936,7 +937,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateMembershipsPrivacy(params: { projectId: string, userName: boolean, userEmail: boolean, mfa: boolean  }): Promise<Models.Project>;
+    updateMembershipsPrivacy(params: { projectId: string, userName: boolean, userEmail: boolean, mfa: boolean }): Promise<Models.Project>;
     /**
      * Update project membership privacy settings. Use this endpoint to control what user information is visible to other team members, such as user name, email, and MFA status. 
      *
@@ -1017,7 +1018,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateMockNumbers(params: { projectId: string, numbers: object[]  }): Promise<Models.Project>;
+    updateMockNumbers(params: { projectId: string, numbers: object[] }): Promise<Models.Project>;
     /**
      * Update the list of mock phone numbers for testing. Use these numbers to bypass SMS verification in development. 
      *
@@ -1080,7 +1081,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAuthPasswordDictionary(params: { projectId: string, enabled: boolean  }): Promise<Models.Project>;
+    updateAuthPasswordDictionary(params: { projectId: string, enabled: boolean }): Promise<Models.Project>;
     /**
      * Enable or disable checking user passwords against common passwords dictionary. This helps ensure users don't use common and insecure passwords. 
      *
@@ -1143,7 +1144,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAuthPasswordHistory(params: { projectId: string, limit: number  }): Promise<Models.Project>;
+    updateAuthPasswordHistory(params: { projectId: string, limit: number }): Promise<Models.Project>;
     /**
      * Update the authentication password history requirement. Use this endpoint to require new passwords to be different than the last X amount of previously used ones.
      *
@@ -1206,7 +1207,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updatePersonalDataCheck(params: { projectId: string, enabled: boolean  }): Promise<Models.Project>;
+    updatePersonalDataCheck(params: { projectId: string, enabled: boolean }): Promise<Models.Project>;
     /**
      * Enable or disable checking user passwords against their personal data. This helps prevent users from using personal information in their passwords. 
      *
@@ -1269,7 +1270,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateSessionAlerts(params: { projectId: string, alerts: boolean  }): Promise<Models.Project>;
+    updateSessionAlerts(params: { projectId: string, alerts: boolean }): Promise<Models.Project>;
     /**
      * Enable or disable session email alerts. When enabled, users will receive email notifications when new sessions are created.
      *
@@ -1332,7 +1333,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateSessionInvalidation(params: { projectId: string, enabled: boolean  }): Promise<Models.Project>;
+    updateSessionInvalidation(params: { projectId: string, enabled: boolean }): Promise<Models.Project>;
     /**
      * Invalidate all existing sessions. An optional auth security setting for projects, and enabled by default for console project.
      *
@@ -1396,7 +1397,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAuthStatus(params: { projectId: string, method: AuthMethod, status: boolean  }): Promise<Models.Project>;
+    updateAuthStatus(params: { projectId: string, method: AuthMethod, status: boolean }): Promise<Models.Project>;
     /**
      * Update the status of a specific authentication method. Use this endpoint to enable or disable different authentication methods such as email, magic urls or sms in your project. 
      *
@@ -1465,7 +1466,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DevKeyList>}
      */
-    listDevKeys(params: { projectId: string, queries?: string[]  }): Promise<Models.DevKeyList>;
+    listDevKeys(params: { projectId: string, queries?: string[] }): Promise<Models.DevKeyList>;
     /**
      * List all the project\'s dev keys. Dev keys are project specific and allow you to bypass rate limits and get better error logging during development.'
      *
@@ -1525,7 +1526,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DevKey>}
      */
-    createDevKey(params: { projectId: string, name: string, expire: string  }): Promise<Models.DevKey>;
+    createDevKey(params: { projectId: string, name: string, expire: string }): Promise<Models.DevKey>;
     /**
      * Create a new project dev key. Dev keys are project specific and allow you to bypass rate limits and get better error logging during development. Strictly meant for development purposes only.
      *
@@ -1597,7 +1598,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DevKey>}
      */
-    getDevKey(params: { projectId: string, keyId: string  }): Promise<Models.DevKey>;
+    getDevKey(params: { projectId: string, keyId: string }): Promise<Models.DevKey>;
     /**
      * Get a project\'s dev key by its unique ID. Dev keys are project specific and allow you to bypass rate limits and get better error logging during development.
      *
@@ -1658,7 +1659,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DevKey>}
      */
-    updateDevKey(params: { projectId: string, keyId: string, name: string, expire: string  }): Promise<Models.DevKey>;
+    updateDevKey(params: { projectId: string, keyId: string, name: string, expire: string }): Promise<Models.DevKey>;
     /**
      * Update a project\'s dev key by its unique ID. Use this endpoint to update a project\'s dev key name or expiration time.'
      *
@@ -1736,7 +1737,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteDevKey(params: { projectId: string, keyId: string  }): Promise<{}>;
+    deleteDevKey(params: { projectId: string, keyId: string }): Promise<{}>;
     /**
      * Delete a project\'s dev key by its unique ID. Once deleted, the key will no longer allow bypassing of rate limits and better logging of errors.
      *
@@ -1792,35 +1793,35 @@ export class Projects {
      * Create a new JWT token. This token can be used to authenticate users with custom scopes and expiration time. 
      *
      * @param {string} params.projectId - Project unique ID.
-     * @param {string[]} params.scopes - List of scopes allowed for JWT key. Maximum of 100 scopes are allowed.
+     * @param {Scopes[]} params.scopes - List of scopes allowed for JWT key. Maximum of 100 scopes are allowed.
      * @param {number} params.duration - Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Jwt>}
      */
-    createJWT(params: { projectId: string, scopes: string[], duration?: number  }): Promise<Models.Jwt>;
+    createJWT(params: { projectId: string, scopes: Scopes[], duration?: number }): Promise<Models.Jwt>;
     /**
      * Create a new JWT token. This token can be used to authenticate users with custom scopes and expiration time. 
      *
      * @param {string} projectId - Project unique ID.
-     * @param {string[]} scopes - List of scopes allowed for JWT key. Maximum of 100 scopes are allowed.
+     * @param {Scopes[]} scopes - List of scopes allowed for JWT key. Maximum of 100 scopes are allowed.
      * @param {number} duration - Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Jwt>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createJWT(projectId: string, scopes: string[], duration?: number): Promise<Models.Jwt>;
+    createJWT(projectId: string, scopes: Scopes[], duration?: number): Promise<Models.Jwt>;
     createJWT(
-        paramsOrFirst: { projectId: string, scopes: string[], duration?: number } | string,
-        ...rest: [(string[])?, (number)?]    
+        paramsOrFirst: { projectId: string, scopes: Scopes[], duration?: number } | string,
+        ...rest: [(Scopes[])?, (number)?]    
     ): Promise<Models.Jwt> {
-        let params: { projectId: string, scopes: string[], duration?: number };
+        let params: { projectId: string, scopes: Scopes[], duration?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, scopes: string[], duration?: number };
+            params = (paramsOrFirst || {}) as { projectId: string, scopes: Scopes[], duration?: number };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                scopes: rest[0] as string[],
+                scopes: rest[0] as Scopes[],
                 duration: rest[1] as number            
             };
         }
@@ -1866,7 +1867,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.KeyList>}
      */
-    listKeys(params: { projectId: string, total?: boolean  }): Promise<Models.KeyList>;
+    listKeys(params: { projectId: string, total?: boolean }): Promise<Models.KeyList>;
     /**
      * Get a list of all API keys from the current project. 
      *
@@ -1922,37 +1923,37 @@ export class Projects {
      *
      * @param {string} params.projectId - Project unique ID.
      * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {string[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {Scopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
      * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
-    createKey(params: { projectId: string, name: string, scopes?: string[], expire?: string  }): Promise<Models.Key>;
+    createKey(params: { projectId: string, name: string, scopes?: Scopes[], expire?: string }): Promise<Models.Key>;
     /**
      * Create a new API key. It's recommended to have multiple API keys with strict scopes for separate functions within your project.
      *
      * @param {string} projectId - Project unique ID.
      * @param {string} name - Key name. Max length: 128 chars.
-     * @param {string[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {Scopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
      * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createKey(projectId: string, name: string, scopes?: string[], expire?: string): Promise<Models.Key>;
+    createKey(projectId: string, name: string, scopes?: Scopes[], expire?: string): Promise<Models.Key>;
     createKey(
-        paramsOrFirst: { projectId: string, name: string, scopes?: string[], expire?: string } | string,
-        ...rest: [(string)?, (string[])?, (string)?]    
+        paramsOrFirst: { projectId: string, name: string, scopes?: Scopes[], expire?: string } | string,
+        ...rest: [(string)?, (Scopes[])?, (string)?]    
     ): Promise<Models.Key> {
-        let params: { projectId: string, name: string, scopes?: string[], expire?: string };
+        let params: { projectId: string, name: string, scopes?: Scopes[], expire?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, name: string, scopes?: string[], expire?: string };
+            params = (paramsOrFirst || {}) as { projectId: string, name: string, scopes?: Scopes[], expire?: string };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
                 name: rest[0] as string,
-                scopes: rest[1] as string[],
+                scopes: rest[1] as Scopes[],
                 expire: rest[2] as string            
             };
         }
@@ -2005,7 +2006,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
-    getKey(params: { projectId: string, keyId: string  }): Promise<Models.Key>;
+    getKey(params: { projectId: string, keyId: string }): Promise<Models.Key>;
     /**
      * Get a key by its unique ID. This endpoint returns details about a specific API key in your project including it's scopes.
      *
@@ -2062,39 +2063,39 @@ export class Projects {
      * @param {string} params.projectId - Project unique ID.
      * @param {string} params.keyId - Key unique ID.
      * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {string[]} params.scopes - Key scopes list. Maximum of 100 events are allowed.
+     * @param {Scopes[]} params.scopes - Key scopes list. Maximum of 100 events are allowed.
      * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
-    updateKey(params: { projectId: string, keyId: string, name: string, scopes?: string[], expire?: string  }): Promise<Models.Key>;
+    updateKey(params: { projectId: string, keyId: string, name: string, scopes?: Scopes[], expire?: string }): Promise<Models.Key>;
     /**
      * Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key. 
      *
      * @param {string} projectId - Project unique ID.
      * @param {string} keyId - Key unique ID.
      * @param {string} name - Key name. Max length: 128 chars.
-     * @param {string[]} scopes - Key scopes list. Maximum of 100 events are allowed.
+     * @param {Scopes[]} scopes - Key scopes list. Maximum of 100 events are allowed.
      * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateKey(projectId: string, keyId: string, name: string, scopes?: string[], expire?: string): Promise<Models.Key>;
+    updateKey(projectId: string, keyId: string, name: string, scopes?: Scopes[], expire?: string): Promise<Models.Key>;
     updateKey(
-        paramsOrFirst: { projectId: string, keyId: string, name: string, scopes?: string[], expire?: string } | string,
-        ...rest: [(string)?, (string)?, (string[])?, (string)?]    
+        paramsOrFirst: { projectId: string, keyId: string, name: string, scopes?: Scopes[], expire?: string } | string,
+        ...rest: [(string)?, (string)?, (Scopes[])?, (string)?]    
     ): Promise<Models.Key> {
-        let params: { projectId: string, keyId: string, name: string, scopes?: string[], expire?: string };
+        let params: { projectId: string, keyId: string, name: string, scopes?: Scopes[], expire?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, keyId: string, name: string, scopes?: string[], expire?: string };
+            params = (paramsOrFirst || {}) as { projectId: string, keyId: string, name: string, scopes?: Scopes[], expire?: string };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
                 keyId: rest[0] as string,
                 name: rest[1] as string,
-                scopes: rest[2] as string[],
+                scopes: rest[2] as Scopes[],
                 expire: rest[3] as string            
             };
         }
@@ -2151,7 +2152,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteKey(params: { projectId: string, keyId: string  }): Promise<{}>;
+    deleteKey(params: { projectId: string, keyId: string }): Promise<{}>;
     /**
      * Delete a key by its unique ID. Once deleted, the key can no longer be used to authenticate API calls. 
      *
@@ -2211,7 +2212,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateLabels(params: { projectId: string, labels: string[]  }): Promise<Models.Project>;
+    updateLabels(params: { projectId: string, labels: string[] }): Promise<Models.Project>;
     /**
      * Update the project labels by its unique ID. Labels can be used to easily filter projects in an organization.
      *
@@ -2277,7 +2278,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateOAuth2(params: { projectId: string, provider: OAuthProvider, appId?: string, secret?: string, enabled?: boolean  }): Promise<Models.Project>;
+    updateOAuth2(params: { projectId: string, provider: OAuthProvider, appId?: string, secret?: string, enabled?: boolean }): Promise<Models.Project>;
     /**
      * Update the OAuth2 provider configurations. Use this endpoint to set up or update the OAuth2 provider credentials or enable/disable providers. 
      *
@@ -2358,7 +2359,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PlatformList>}
      */
-    listPlatforms(params: { projectId: string, total?: boolean  }): Promise<Models.PlatformList>;
+    listPlatforms(params: { projectId: string, total?: boolean }): Promise<Models.PlatformList>;
     /**
      * Get a list of all platforms in the project. This endpoint returns an array of all platforms and their configurations. 
      *
@@ -2421,7 +2422,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Platform>}
      */
-    createPlatform(params: { projectId: string, type: PlatformType, name: string, key?: string, store?: string, hostname?: string  }): Promise<Models.Platform>;
+    createPlatform(params: { projectId: string, type: PlatformType, name: string, key?: string, store?: string, hostname?: string }): Promise<Models.Platform>;
     /**
      * Create a new platform for your project. Use this endpoint to register a new platform where your users will run your application which will interact with the Appwrite API.
      *
@@ -2511,7 +2512,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Platform>}
      */
-    getPlatform(params: { projectId: string, platformId: string  }): Promise<Models.Platform>;
+    getPlatform(params: { projectId: string, platformId: string }): Promise<Models.Platform>;
     /**
      * Get a platform by its unique ID. This endpoint returns the platform's details, including its name, type, and key configurations. 
      *
@@ -2574,7 +2575,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Platform>}
      */
-    updatePlatform(params: { projectId: string, platformId: string, name: string, key?: string, store?: string, hostname?: string  }): Promise<Models.Platform>;
+    updatePlatform(params: { projectId: string, platformId: string, name: string, key?: string, store?: string, hostname?: string }): Promise<Models.Platform>;
     /**
      * Update a platform by its unique ID. Use this endpoint to update the platform's name, key, platform store ID, or hostname. 
      *
@@ -2661,7 +2662,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deletePlatform(params: { projectId: string, platformId: string  }): Promise<{}>;
+    deletePlatform(params: { projectId: string, platformId: string }): Promise<{}>;
     /**
      * Delete a platform by its unique ID. This endpoint removes the platform and all its configurations from the project. 
      *
@@ -2722,7 +2723,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateServiceStatus(params: { projectId: string, service: ApiService, status: boolean  }): Promise<Models.Project>;
+    updateServiceStatus(params: { projectId: string, service: ApiService, status: boolean }): Promise<Models.Project>;
     /**
      * Update the status of a specific service. Use this endpoint to enable or disable a service in your project. 
      *
@@ -2794,7 +2795,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateServiceStatusAll(params: { projectId: string, status: boolean  }): Promise<Models.Project>;
+    updateServiceStatusAll(params: { projectId: string, status: boolean }): Promise<Models.Project>;
     /**
      * Update the status of all services. Use this endpoint to enable or disable all optional services at once. 
      *
@@ -2866,7 +2867,7 @@ export class Projects {
      * @returns {Promise<Models.Project>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Projects.updateSMTP` instead.
      */
-    updateSmtp(params: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure  }): Promise<Models.Project>;
+    updateSmtp(params: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure }): Promise<Models.Project>;
     /**
      * Update the SMTP configuration for your project. Use this endpoint to configure your project's SMTP provider with your custom settings for sending transactional emails. 
      *
@@ -2985,7 +2986,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateSMTP(params: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure  }): Promise<Models.Project>;
+    updateSMTP(params: { projectId: string, enabled: boolean, senderName?: string, senderEmail?: string, replyTo?: string, host?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure }): Promise<Models.Project>;
     /**
      * Update the SMTP configuration for your project. Use this endpoint to configure your project's SMTP provider with your custom settings for sending transactional emails. 
      *
@@ -3105,7 +3106,7 @@ export class Projects {
      * @returns {Promise<{}>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Projects.createSMTPTest` instead.
      */
-    createSmtpTest(params: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure  }): Promise<{}>;
+    createSmtpTest(params: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure }): Promise<{}>;
     /**
      * Send a test email to verify SMTP configuration. 
      *
@@ -3233,7 +3234,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    createSMTPTest(params: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure  }): Promise<{}>;
+    createSMTPTest(params: { projectId: string, emails: string[], senderName: string, senderEmail: string, host: string, replyTo?: string, port?: number, username?: string, password?: string, secure?: SMTPSecure }): Promise<{}>;
     /**
      * Send a test email to verify SMTP configuration. 
      *
@@ -3353,7 +3354,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    updateStatus(params: { projectId: string, status: Status  }): Promise<{}>;
+    updateStatus(params: { projectId: string, status: Status }): Promise<{}>;
     /**
      * Update the status of a project
      *
@@ -3416,7 +3417,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateTeam(params: { projectId: string, teamId: string  }): Promise<Models.Project>;
+    updateTeam(params: { projectId: string, teamId: string }): Promise<Models.Project>;
     /**
      * Update the team ID of a project allowing for it to be transferred to another team.
      *
@@ -3480,7 +3481,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
      */
-    getEmailTemplate(params: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale  }): Promise<Models.EmailTemplate>;
+    getEmailTemplate(params: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale }): Promise<Models.EmailTemplate>;
     /**
      * Get a custom email template for the specified locale and type. This endpoint returns the template content, subject, and other configuration details. 
      *
@@ -3551,7 +3552,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
      */
-    updateEmailTemplate(params: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale, subject: string, message: string, senderName?: string, senderEmail?: string, replyTo?: string  }): Promise<Models.EmailTemplate>;
+    updateEmailTemplate(params: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale, subject: string, message: string, senderName?: string, senderEmail?: string, replyTo?: string }): Promise<Models.EmailTemplate>;
     /**
      * Update a custom email template for the specified locale and type. Use this endpoint to modify the content of your email templates.
      *
@@ -3654,7 +3655,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
      */
-    deleteEmailTemplate(params: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale  }): Promise<Models.EmailTemplate>;
+    deleteEmailTemplate(params: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale }): Promise<Models.EmailTemplate>;
     /**
      * Reset a custom email template to its default value. This endpoint removes any custom content and restores the template to its original state. 
      *
@@ -3722,7 +3723,7 @@ export class Projects {
      * @returns {Promise<Models.SmsTemplate>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Projects.getSMSTemplate` instead.
      */
-    getSmsTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale  }): Promise<Models.SmsTemplate>;
+    getSmsTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale }): Promise<Models.SmsTemplate>;
     /**
      * Get a custom SMS template for the specified locale and type returning it's contents.
      *
@@ -3788,7 +3789,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.SmsTemplate>}
      */
-    getSMSTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale  }): Promise<Models.SmsTemplate>;
+    getSMSTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale }): Promise<Models.SmsTemplate>;
     /**
      * Get a custom SMS template for the specified locale and type returning it's contents.
      *
@@ -3856,7 +3857,7 @@ export class Projects {
      * @returns {Promise<Models.SmsTemplate>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Projects.updateSMSTemplate` instead.
      */
-    updateSmsTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string  }): Promise<Models.SmsTemplate>;
+    updateSmsTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string }): Promise<Models.SmsTemplate>;
     /**
      * Update a custom SMS template for the specified locale and type. Use this endpoint to modify the content of your SMS templates. 
      *
@@ -3933,7 +3934,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.SmsTemplate>}
      */
-    updateSMSTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string  }): Promise<Models.SmsTemplate>;
+    updateSMSTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string }): Promise<Models.SmsTemplate>;
     /**
      * Update a custom SMS template for the specified locale and type. Use this endpoint to modify the content of your SMS templates. 
      *
@@ -4010,7 +4011,7 @@ export class Projects {
      * @returns {Promise<Models.SmsTemplate>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Projects.deleteSMSTemplate` instead.
      */
-    deleteSmsTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale  }): Promise<Models.SmsTemplate>;
+    deleteSmsTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale }): Promise<Models.SmsTemplate>;
     /**
      * Reset a custom SMS template to its default value. This endpoint removes any custom message and restores the template to its original state. 
      *
@@ -4077,7 +4078,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.SmsTemplate>}
      */
-    deleteSMSTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale  }): Promise<Models.SmsTemplate>;
+    deleteSMSTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale }): Promise<Models.SmsTemplate>;
     /**
      * Reset a custom SMS template to its default value. This endpoint removes any custom message and restores the template to its original state. 
      *
@@ -4143,7 +4144,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.WebhookList>}
      */
-    listWebhooks(params: { projectId: string, total?: boolean  }): Promise<Models.WebhookList>;
+    listWebhooks(params: { projectId: string, total?: boolean }): Promise<Models.WebhookList>;
     /**
      * Get a list of all webhooks belonging to the project. You can use the query params to filter your results. 
      *
@@ -4208,7 +4209,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Webhook>}
      */
-    createWebhook(params: { projectId: string, name: string, events: string[], url: string, security: boolean, enabled?: boolean, httpUser?: string, httpPass?: string  }): Promise<Models.Webhook>;
+    createWebhook(params: { projectId: string, name: string, events: string[], url: string, security: boolean, enabled?: boolean, httpUser?: string, httpPass?: string }): Promise<Models.Webhook>;
     /**
      * Create a new webhook. Use this endpoint to configure a URL that will receive events from Appwrite when specific events occur. 
      *
@@ -4316,7 +4317,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Webhook>}
      */
-    getWebhook(params: { projectId: string, webhookId: string  }): Promise<Models.Webhook>;
+    getWebhook(params: { projectId: string, webhookId: string }): Promise<Models.Webhook>;
     /**
      * Get a webhook by its unique ID. This endpoint returns details about a specific webhook configured for a project. 
      *
@@ -4382,7 +4383,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Webhook>}
      */
-    updateWebhook(params: { projectId: string, webhookId: string, name: string, events: string[], url: string, security: boolean, enabled?: boolean, httpUser?: string, httpPass?: string  }): Promise<Models.Webhook>;
+    updateWebhook(params: { projectId: string, webhookId: string, name: string, events: string[], url: string, security: boolean, enabled?: boolean, httpUser?: string, httpPass?: string }): Promise<Models.Webhook>;
     /**
      * Update a webhook by its unique ID. Use this endpoint to update the URL, events, or status of an existing webhook. 
      *
@@ -4496,7 +4497,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteWebhook(params: { projectId: string, webhookId: string  }): Promise<{}>;
+    deleteWebhook(params: { projectId: string, webhookId: string }): Promise<{}>;
     /**
      * Delete a webhook by its unique ID. Once deleted, the webhook will no longer receive project events. 
      *
@@ -4556,7 +4557,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Webhook>}
      */
-    updateWebhookSignature(params: { projectId: string, webhookId: string  }): Promise<Models.Webhook>;
+    updateWebhookSignature(params: { projectId: string, webhookId: string }): Promise<Models.Webhook>;
     /**
      * Update the webhook signature key. This endpoint can be used to regenerate the signature key used to sign and validate payload deliveries for a specific webhook. 
      *

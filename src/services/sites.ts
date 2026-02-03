@@ -5,6 +5,8 @@ import type { Models } from '../models';
 import { Framework } from '../enums/framework';
 import { BuildRuntime } from '../enums/build-runtime';
 import { Adapter } from '../enums/adapter';
+import { Frameworks } from '../enums/frameworks';
+import { UseCases } from '../enums/use-cases';
 import { UsageRange } from '../enums/usage-range';
 import { TemplateReferenceType } from '../enums/template-reference-type';
 import { VCSReferenceType } from '../enums/vcs-reference-type';
@@ -26,7 +28,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.SiteList>}
      */
-    list(params?: { queries?: string[], search?: string, total?: boolean  }): Promise<Models.SiteList>;
+    list(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.SiteList>;
     /**
      * Get a list of all the project's sites. You can use the query params to filter your results.
      *
@@ -107,7 +109,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      */
-    create(params: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string  }): Promise<Models.Site>;
+    create(params: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string }): Promise<Models.Site>;
     /**
      * Create a new site.
      *
@@ -316,38 +318,38 @@ export class Sites {
     /**
      * List available site templates. You can use template details in [createSite](/docs/references/cloud/server-nodejs/sites#create) method.
      *
-     * @param {string[]} params.frameworks - List of frameworks allowed for filtering site templates. Maximum of 100 frameworks are allowed.
-     * @param {string[]} params.useCases - List of use cases allowed for filtering site templates. Maximum of 100 use cases are allowed.
+     * @param {Frameworks[]} params.frameworks - List of frameworks allowed for filtering site templates. Maximum of 100 frameworks are allowed.
+     * @param {UseCases[]} params.useCases - List of use cases allowed for filtering site templates. Maximum of 100 use cases are allowed.
      * @param {number} params.limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
      * @param {number} params.offset - Offset the list of returned templates. Maximum offset is 5000.
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateSiteList>}
      */
-    listTemplates(params?: { frameworks?: string[], useCases?: string[], limit?: number, offset?: number  }): Promise<Models.TemplateSiteList>;
+    listTemplates(params?: { frameworks?: Frameworks[], useCases?: UseCases[], limit?: number, offset?: number }): Promise<Models.TemplateSiteList>;
     /**
      * List available site templates. You can use template details in [createSite](/docs/references/cloud/server-nodejs/sites#create) method.
      *
-     * @param {string[]} frameworks - List of frameworks allowed for filtering site templates. Maximum of 100 frameworks are allowed.
-     * @param {string[]} useCases - List of use cases allowed for filtering site templates. Maximum of 100 use cases are allowed.
+     * @param {Frameworks[]} frameworks - List of frameworks allowed for filtering site templates. Maximum of 100 frameworks are allowed.
+     * @param {UseCases[]} useCases - List of use cases allowed for filtering site templates. Maximum of 100 use cases are allowed.
      * @param {number} limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
      * @param {number} offset - Offset the list of returned templates. Maximum offset is 5000.
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateSiteList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listTemplates(frameworks?: string[], useCases?: string[], limit?: number, offset?: number): Promise<Models.TemplateSiteList>;
+    listTemplates(frameworks?: Frameworks[], useCases?: UseCases[], limit?: number, offset?: number): Promise<Models.TemplateSiteList>;
     listTemplates(
-        paramsOrFirst?: { frameworks?: string[], useCases?: string[], limit?: number, offset?: number } | string[],
-        ...rest: [(string[])?, (number)?, (number)?]    
+        paramsOrFirst?: { frameworks?: Frameworks[], useCases?: UseCases[], limit?: number, offset?: number } | Frameworks[],
+        ...rest: [(UseCases[])?, (number)?, (number)?]    
     ): Promise<Models.TemplateSiteList> {
-        let params: { frameworks?: string[], useCases?: string[], limit?: number, offset?: number };
+        let params: { frameworks?: Frameworks[], useCases?: UseCases[], limit?: number, offset?: number };
         
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { frameworks?: string[], useCases?: string[], limit?: number, offset?: number };
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'frameworks' in paramsOrFirst)) {
+            params = (paramsOrFirst || {}) as { frameworks?: Frameworks[], useCases?: UseCases[], limit?: number, offset?: number };
         } else {
             params = {
-                frameworks: paramsOrFirst as string[],
-                useCases: rest[0] as string[],
+                frameworks: paramsOrFirst as Frameworks[],
+                useCases: rest[0] as UseCases[],
                 limit: rest[1] as number,
                 offset: rest[2] as number            
             };
@@ -393,7 +395,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateSite>}
      */
-    getTemplate(params: { templateId: string  }): Promise<Models.TemplateSite>;
+    getTemplate(params: { templateId: string }): Promise<Models.TemplateSite>;
     /**
      * Get a site template using ID. You can use template details in [createSite](/docs/references/cloud/server-nodejs/sites#create) method.
      *
@@ -444,7 +446,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageSites>}
      */
-    listUsage(params?: { range?: UsageRange  }): Promise<Models.UsageSites>;
+    listUsage(params?: { range?: UsageRange }): Promise<Models.UsageSites>;
     /**
      * Get usage metrics and statistics for all sites in the project. View statistics including total deployments, builds, logs, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
      *
@@ -495,7 +497,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      */
-    get(params: { siteId: string  }): Promise<Models.Site>;
+    get(params: { siteId: string }): Promise<Models.Site>;
     /**
      * Get a site by its unique ID.
      *
@@ -563,7 +565,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      */
-    update(params: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string  }): Promise<Models.Site>;
+    update(params: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string }): Promise<Models.Site>;
     /**
      * Update site by its unique ID.
      *
@@ -724,7 +726,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    delete(params: { siteId: string  }): Promise<{}>;
+    delete(params: { siteId: string }): Promise<{}>;
     /**
      * Delete a site by its unique ID.
      *
@@ -777,7 +779,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      */
-    updateSiteDeployment(params: { siteId: string, deploymentId: string  }): Promise<Models.Site>;
+    updateSiteDeployment(params: { siteId: string, deploymentId: string }): Promise<Models.Site>;
     /**
      * Update the site active deployment. Use this endpoint to switch the code deployment that should be used when visitor opens your site.
      *
@@ -842,7 +844,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DeploymentList>}
      */
-    listDeployments(params: { siteId: string, queries?: string[], search?: string, total?: boolean  }): Promise<Models.DeploymentList>;
+    listDeployments(params: { siteId: string, queries?: string[], search?: string, total?: boolean }): Promise<Models.DeploymentList>;
     /**
      * Get a list of all the site's code deployments. You can use the query params to filter your results.
      *
@@ -917,7 +919,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    createDeployment(params: { siteId: string, code: File, activate: boolean, installCommand?: string, buildCommand?: string, outputDirectory?: string , onProgress?: (progress: UploadProgress) => void }): Promise<Models.Deployment>;
+    createDeployment(params: { siteId: string, code: File, activate: boolean, installCommand?: string, buildCommand?: string, outputDirectory?: string, onProgress?: (progress: UploadProgress) => void }): Promise<Models.Deployment>;
     /**
      * Create a new site code deployment. Use this endpoint to upload a new version of your site code. To activate your newly uploaded code, you'll need to update the site's deployment to use your new deployment ID.
      *
@@ -933,7 +935,7 @@ export class Sites {
      */
     createDeployment(siteId: string, code: File, activate: boolean, installCommand?: string, buildCommand?: string, outputDirectory?: string, onProgress?: (progress: UploadProgress) => void): Promise<Models.Deployment>;
     createDeployment(
-        paramsOrFirst: { siteId: string, code: File, activate: boolean, installCommand?: string, buildCommand?: string, outputDirectory?: string, onProgress?: (progress: UploadProgress) => void  } | string,
+        paramsOrFirst: { siteId: string, code: File, activate: boolean, installCommand?: string, buildCommand?: string, outputDirectory?: string, onProgress?: (progress: UploadProgress) => void } | string,
         ...rest: [(File)?, (boolean)?, (string)?, (string)?, (string)?,((progress: UploadProgress) => void)?]    
     ): Promise<Models.Deployment> {
         let params: { siteId: string, code: File, activate: boolean, installCommand?: string, buildCommand?: string, outputDirectory?: string };
@@ -1011,7 +1013,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    createDuplicateDeployment(params: { siteId: string, deploymentId: string  }): Promise<Models.Deployment>;
+    createDuplicateDeployment(params: { siteId: string, deploymentId: string }): Promise<Models.Deployment>;
     /**
      * Create a new build for an existing site deployment. This endpoint allows you to rebuild a deployment with the updated site configuration, including its commands and output directory if they have been modified. The build process will be queued and executed asynchronously. The original deployment's code will be preserved and used for the new build.
      *
@@ -1081,7 +1083,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    createTemplateDeployment(params: { siteId: string, repository: string, owner: string, rootDirectory: string, type: TemplateReferenceType, reference: string, activate?: boolean  }): Promise<Models.Deployment>;
+    createTemplateDeployment(params: { siteId: string, repository: string, owner: string, rootDirectory: string, type: TemplateReferenceType, reference: string, activate?: boolean }): Promise<Models.Deployment>;
     /**
      * Create a deployment based on a template.
      * 
@@ -1192,7 +1194,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    createVcsDeployment(params: { siteId: string, type: VCSReferenceType, reference: string, activate?: boolean  }): Promise<Models.Deployment>;
+    createVcsDeployment(params: { siteId: string, type: VCSReferenceType, reference: string, activate?: boolean }): Promise<Models.Deployment>;
     /**
      * Create a deployment when a site is connected to VCS.
      * 
@@ -1272,7 +1274,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    getDeployment(params: { siteId: string, deploymentId: string  }): Promise<Models.Deployment>;
+    getDeployment(params: { siteId: string, deploymentId: string }): Promise<Models.Deployment>;
     /**
      * Get a site deployment by its unique ID.
      *
@@ -1331,7 +1333,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteDeployment(params: { siteId: string, deploymentId: string  }): Promise<{}>;
+    deleteDeployment(params: { siteId: string, deploymentId: string }): Promise<{}>;
     /**
      * Delete a site deployment by its unique ID.
      *
@@ -1392,7 +1394,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {string}
      */
-    getDeploymentDownload(params: { siteId: string, deploymentId: string, type?: DeploymentDownloadType  }): string;
+    getDeploymentDownload(params: { siteId: string, deploymentId: string, type?: DeploymentDownloadType }): string;
     /**
      * Get a site deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
      *
@@ -1458,7 +1460,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    updateDeploymentStatus(params: { siteId: string, deploymentId: string  }): Promise<Models.Deployment>;
+    updateDeploymentStatus(params: { siteId: string, deploymentId: string }): Promise<Models.Deployment>;
     /**
      * Cancel an ongoing site deployment build. If the build is already in progress, it will be stopped and marked as canceled. If the build hasn't started yet, it will be marked as canceled without executing. You cannot cancel builds that have already completed (status 'ready') or failed. The response includes the final build status and details.
      *
@@ -1519,7 +1521,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ExecutionList>}
      */
-    listLogs(params: { siteId: string, queries?: string[], total?: boolean  }): Promise<Models.ExecutionList>;
+    listLogs(params: { siteId: string, queries?: string[], total?: boolean }): Promise<Models.ExecutionList>;
     /**
      * Get a list of all site logs. You can use the query params to filter your results.
      *
@@ -1584,7 +1586,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Execution>}
      */
-    getLog(params: { siteId: string, logId: string  }): Promise<Models.Execution>;
+    getLog(params: { siteId: string, logId: string }): Promise<Models.Execution>;
     /**
      * Get a site request log by its unique ID.
      *
@@ -1643,7 +1645,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteLog(params: { siteId: string, logId: string  }): Promise<{}>;
+    deleteLog(params: { siteId: string, logId: string }): Promise<{}>;
     /**
      * Delete a site log by its unique ID.
      *
@@ -1703,7 +1705,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageSite>}
      */
-    getUsage(params: { siteId: string, range?: UsageRange  }): Promise<Models.UsageSite>;
+    getUsage(params: { siteId: string, range?: UsageRange }): Promise<Models.UsageSite>;
     /**
      * Get usage metrics and statistics for a for a specific site. View statistics including total deployments, builds, executions, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
      *
@@ -1761,7 +1763,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.VariableList>}
      */
-    listVariables(params: { siteId: string  }): Promise<Models.VariableList>;
+    listVariables(params: { siteId: string }): Promise<Models.VariableList>;
     /**
      * Get a list of all variables of a specific site.
      *
@@ -1815,7 +1817,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    createVariable(params: { siteId: string, key: string, value: string, secret?: boolean  }): Promise<Models.Variable>;
+    createVariable(params: { siteId: string, key: string, value: string, secret?: boolean }): Promise<Models.Variable>;
     /**
      * Create a new site variable. These variables can be accessed during build and runtime (server-side rendering) as environment variables.
      *
@@ -1893,7 +1895,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    getVariable(params: { siteId: string, variableId: string  }): Promise<Models.Variable>;
+    getVariable(params: { siteId: string, variableId: string }): Promise<Models.Variable>;
     /**
      * Get a variable by its unique ID.
      *
@@ -1955,7 +1957,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    updateVariable(params: { siteId: string, variableId: string, key: string, value?: string, secret?: boolean  }): Promise<Models.Variable>;
+    updateVariable(params: { siteId: string, variableId: string, key: string, value?: string, secret?: boolean }): Promise<Models.Variable>;
     /**
      * Update variable by its unique ID.
      *
@@ -2036,7 +2038,7 @@ export class Sites {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteVariable(params: { siteId: string, variableId: string  }): Promise<{}>;
+    deleteVariable(params: { siteId: string, variableId: string }): Promise<{}>;
     /**
      * Delete a variable by its unique ID.
      *

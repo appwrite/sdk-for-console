@@ -23,7 +23,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UserList<Preferences>>}
      */
-    list<Preferences extends Models.Preferences = Models.DefaultPreferences>(params?: { queries?: string[], search?: string, total?: boolean  }): Promise<Models.UserList<Preferences>>;
+    list<Preferences extends Models.Preferences = Models.DefaultPreferences>(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.UserList<Preferences>>;
     /**
      * Get a list of all the project's users. You can use the query params to filter your results.
      *
@@ -91,7 +91,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email?: string, phone?: string, password?: string, name?: string  }): Promise<Models.User<Preferences>>;
+    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email?: string, phone?: string, password?: string, name?: string }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user.
      *
@@ -174,7 +174,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createArgon2User<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string  }): Promise<Models.User<Preferences>>;
+    createArgon2User<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [Argon2](https://en.wikipedia.org/wiki/Argon2) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -257,7 +257,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createBcryptUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string  }): Promise<Models.User<Preferences>>;
+    createBcryptUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -339,7 +339,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.IdentityList>}
      */
-    listIdentities(params?: { queries?: string[], search?: string, total?: boolean  }): Promise<Models.IdentityList>;
+    listIdentities(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.IdentityList>;
     /**
      * Get identities for all users.
      *
@@ -403,7 +403,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteIdentity(params: { identityId: string  }): Promise<{}>;
+    deleteIdentity(params: { identityId: string }): Promise<{}>;
     /**
      * Delete an identity by its unique ID.
      *
@@ -458,7 +458,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createMD5User<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string  }): Promise<Models.User<Preferences>>;
+    createMD5User<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [MD5](https://en.wikipedia.org/wiki/MD5) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -541,7 +541,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createPHPassUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string  }): Promise<Models.User<Preferences>>;
+    createPHPassUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [PHPass](https://www.openwall.com/phpass/) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -629,7 +629,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createScryptUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, passwordSalt: string, passwordCpu: number, passwordMemory: number, passwordParallel: number, passwordLength: number, name?: string  }): Promise<Models.User<Preferences>>;
+    createScryptUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, passwordSalt: string, passwordCpu: number, passwordMemory: number, passwordParallel: number, passwordLength: number, name?: string }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [Scrypt](https://github.com/Tarsnap/scrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -760,7 +760,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createScryptModifiedUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, passwordSalt: string, passwordSaltSeparator: string, passwordSignerKey: string, name?: string  }): Promise<Models.User<Preferences>>;
+    createScryptModifiedUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, passwordSalt: string, passwordSaltSeparator: string, passwordSignerKey: string, name?: string }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [Scrypt Modified](https://gist.github.com/Meldiron/eecf84a0225eccb5a378d45bb27462cc) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -871,7 +871,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createSHAUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, passwordVersion?: PasswordHash, name?: string  }): Promise<Models.User<Preferences>>;
+    createSHAUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, passwordVersion?: PasswordHash, name?: string }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [SHA](https://en.wikipedia.org/wiki/Secure_Hash_Algorithm) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -958,7 +958,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageUsers>}
      */
-    getUsage(params?: { range?: UsageRange  }): Promise<Models.UsageUsers>;
+    getUsage(params?: { range?: UsageRange }): Promise<Models.UsageUsers>;
     /**
      * Get usage metrics and statistics for all users in the project. You can view the total number of users and sessions. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      * 
@@ -1010,7 +1010,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    get<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string  }): Promise<Models.User<Preferences>>;
+    get<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string }): Promise<Models.User<Preferences>>;
     /**
      * Get a user by its unique ID.
      *
@@ -1061,7 +1061,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    delete(params: { userId: string  }): Promise<{}>;
+    delete(params: { userId: string }): Promise<{}>;
     /**
      * Delete a user by its unique ID, thereby releasing it's ID. Since ID is released and can be reused, all user-related resources like documents or storage files should be deleted before user deletion. If you want to keep ID reserved, use the [updateStatus](https://appwrite.io/docs/server/users#usersUpdateStatus) endpoint instead.
      *
@@ -1114,7 +1114,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string  }): Promise<Models.User<Preferences>>;
+    updateEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string }): Promise<Models.User<Preferences>>;
     /**
      * Update the user email by its unique ID.
      *
@@ -1178,7 +1178,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Jwt>}
      */
-    createJWT(params: { userId: string, sessionId?: string, duration?: number  }): Promise<Models.Jwt>;
+    createJWT(params: { userId: string, sessionId?: string, duration?: number }): Promise<Models.Jwt>;
     /**
      * Use this endpoint to create a JSON Web Token for user by its unique ID. You can use the resulting JWT to authenticate on behalf of the user. The JWT secret will become invalid if the session it uses gets deleted.
      *
@@ -1246,7 +1246,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateLabels<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, labels: string[]  }): Promise<Models.User<Preferences>>;
+    updateLabels<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, labels: string[] }): Promise<Models.User<Preferences>>;
     /**
      * Update the user labels by its unique ID. 
      * 
@@ -1312,7 +1312,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.LogList>}
      */
-    listLogs(params: { userId: string, queries?: string[], total?: boolean  }): Promise<Models.LogList>;
+    listLogs(params: { userId: string, queries?: string[], total?: boolean }): Promise<Models.LogList>;
     /**
      * Get the user activity logs list by its unique ID.
      *
@@ -1379,7 +1379,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MembershipList>}
      */
-    listMemberships(params: { userId: string, queries?: string[], search?: string, total?: boolean  }): Promise<Models.MembershipList>;
+    listMemberships(params: { userId: string, queries?: string[], search?: string, total?: boolean }): Promise<Models.MembershipList>;
     /**
      * Get the user membership list by its unique ID.
      *
@@ -1451,7 +1451,7 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Users.updateMFA` instead.
      */
-    updateMfa<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, mfa: boolean  }): Promise<Models.User<Preferences>>;
+    updateMfa<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, mfa: boolean }): Promise<Models.User<Preferences>>;
     /**
      * Enable or disable MFA on a user account.
      *
@@ -1514,7 +1514,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateMFA<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, mfa: boolean  }): Promise<Models.User<Preferences>>;
+    updateMFA<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, mfa: boolean }): Promise<Models.User<Preferences>>;
     /**
      * Enable or disable MFA on a user account.
      *
@@ -1578,7 +1578,7 @@ export class Users {
      * @returns {Promise<{}>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Users.deleteMFAAuthenticator` instead.
      */
-    deleteMfaAuthenticator(params: { userId: string, type: AuthenticatorType  }): Promise<{}>;
+    deleteMfaAuthenticator(params: { userId: string, type: AuthenticatorType }): Promise<{}>;
     /**
      * Delete an authenticator app.
      *
@@ -1638,7 +1638,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteMFAAuthenticator(params: { userId: string, type: AuthenticatorType  }): Promise<{}>;
+    deleteMFAAuthenticator(params: { userId: string, type: AuthenticatorType }): Promise<{}>;
     /**
      * Delete an authenticator app.
      *
@@ -1698,7 +1698,7 @@ export class Users {
      * @returns {Promise<Models.MfaFactors>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Users.listMFAFactors` instead.
      */
-    listMfaFactors(params: { userId: string  }): Promise<Models.MfaFactors>;
+    listMfaFactors(params: { userId: string }): Promise<Models.MfaFactors>;
     /**
      * List the factors available on the account to be used as a MFA challange.
      *
@@ -1749,7 +1749,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MfaFactors>}
      */
-    listMFAFactors(params: { userId: string  }): Promise<Models.MfaFactors>;
+    listMFAFactors(params: { userId: string }): Promise<Models.MfaFactors>;
     /**
      * List the factors available on the account to be used as a MFA challange.
      *
@@ -1801,7 +1801,7 @@ export class Users {
      * @returns {Promise<Models.MfaRecoveryCodes>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Users.getMFARecoveryCodes` instead.
      */
-    getMfaRecoveryCodes(params: { userId: string  }): Promise<Models.MfaRecoveryCodes>;
+    getMfaRecoveryCodes(params: { userId: string }): Promise<Models.MfaRecoveryCodes>;
     /**
      * Get recovery codes that can be used as backup for MFA flow by User ID. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
      *
@@ -1852,7 +1852,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MfaRecoveryCodes>}
      */
-    getMFARecoveryCodes(params: { userId: string  }): Promise<Models.MfaRecoveryCodes>;
+    getMFARecoveryCodes(params: { userId: string }): Promise<Models.MfaRecoveryCodes>;
     /**
      * Get recovery codes that can be used as backup for MFA flow by User ID. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
      *
@@ -1904,7 +1904,7 @@ export class Users {
      * @returns {Promise<Models.MfaRecoveryCodes>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Users.updateMFARecoveryCodes` instead.
      */
-    updateMfaRecoveryCodes(params: { userId: string  }): Promise<Models.MfaRecoveryCodes>;
+    updateMfaRecoveryCodes(params: { userId: string }): Promise<Models.MfaRecoveryCodes>;
     /**
      * Regenerate recovery codes that can be used as backup for MFA flow by User ID. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
      *
@@ -1956,7 +1956,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MfaRecoveryCodes>}
      */
-    updateMFARecoveryCodes(params: { userId: string  }): Promise<Models.MfaRecoveryCodes>;
+    updateMFARecoveryCodes(params: { userId: string }): Promise<Models.MfaRecoveryCodes>;
     /**
      * Regenerate recovery codes that can be used as backup for MFA flow by User ID. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
      *
@@ -2009,7 +2009,7 @@ export class Users {
      * @returns {Promise<Models.MfaRecoveryCodes>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Users.createMFARecoveryCodes` instead.
      */
-    createMfaRecoveryCodes(params: { userId: string  }): Promise<Models.MfaRecoveryCodes>;
+    createMfaRecoveryCodes(params: { userId: string }): Promise<Models.MfaRecoveryCodes>;
     /**
      * Generate recovery codes used as backup for MFA flow for User ID. Recovery codes can be used as a MFA verification type in [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method by client SDK.
      *
@@ -2061,7 +2061,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MfaRecoveryCodes>}
      */
-    createMFARecoveryCodes(params: { userId: string  }): Promise<Models.MfaRecoveryCodes>;
+    createMFARecoveryCodes(params: { userId: string }): Promise<Models.MfaRecoveryCodes>;
     /**
      * Generate recovery codes used as backup for MFA flow for User ID. Recovery codes can be used as a MFA verification type in [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method by client SDK.
      *
@@ -2114,7 +2114,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateName<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, name: string  }): Promise<Models.User<Preferences>>;
+    updateName<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, name: string }): Promise<Models.User<Preferences>>;
     /**
      * Update the user name by its unique ID.
      *
@@ -2177,7 +2177,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updatePassword<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, password: string  }): Promise<Models.User<Preferences>>;
+    updatePassword<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, password: string }): Promise<Models.User<Preferences>>;
     /**
      * Update the user password by its unique ID.
      *
@@ -2240,7 +2240,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updatePhone<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, number: string  }): Promise<Models.User<Preferences>>;
+    updatePhone<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, number: string }): Promise<Models.User<Preferences>>;
     /**
      * Update the user phone by its unique ID.
      *
@@ -2302,7 +2302,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Preferences>}
      */
-    getPrefs<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string  }): Promise<Preferences>;
+    getPrefs<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string }): Promise<Preferences>;
     /**
      * Get the user preferences by its unique ID.
      *
@@ -2354,7 +2354,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Preferences>}
      */
-    updatePrefs<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, prefs: object  }): Promise<Preferences>;
+    updatePrefs<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, prefs: object }): Promise<Preferences>;
     /**
      * Update the user preferences by its unique ID. The object you pass is stored as is, and replaces any previous value. The maximum allowed prefs size is 64kB and throws error if exceeded.
      *
@@ -2417,7 +2417,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.SessionList>}
      */
-    listSessions(params: { userId: string, total?: boolean  }): Promise<Models.SessionList>;
+    listSessions(params: { userId: string, total?: boolean }): Promise<Models.SessionList>;
     /**
      * Get the user sessions list by its unique ID.
      *
@@ -2477,7 +2477,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Session>}
      */
-    createSession(params: { userId: string  }): Promise<Models.Session>;
+    createSession(params: { userId: string }): Promise<Models.Session>;
     /**
      * Creates a session for a user. Returns an immediately usable session object.
      * 
@@ -2531,7 +2531,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteSessions(params: { userId: string  }): Promise<{}>;
+    deleteSessions(params: { userId: string }): Promise<{}>;
     /**
      * Delete all user's sessions by using the user's unique ID.
      *
@@ -2584,7 +2584,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteSession(params: { userId: string, sessionId: string  }): Promise<{}>;
+    deleteSession(params: { userId: string, sessionId: string }): Promise<{}>;
     /**
      * Delete a user sessions by its unique ID.
      *
@@ -2644,7 +2644,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateStatus<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, status: boolean  }): Promise<Models.User<Preferences>>;
+    updateStatus<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, status: boolean }): Promise<Models.User<Preferences>>;
     /**
      * Update the user status by its unique ID. Use this endpoint as an alternative to deleting a user if you want to keep user's ID reserved.
      *
@@ -2708,7 +2708,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.TargetList>}
      */
-    listTargets(params: { userId: string, queries?: string[], total?: boolean  }): Promise<Models.TargetList>;
+    listTargets(params: { userId: string, queries?: string[], total?: boolean }): Promise<Models.TargetList>;
     /**
      * List the messaging targets that are associated with a user.
      *
@@ -2777,7 +2777,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      */
-    createTarget(params: { userId: string, targetId: string, providerType: MessagingProviderType, identifier: string, providerId?: string, name?: string  }): Promise<Models.Target>;
+    createTarget(params: { userId: string, targetId: string, providerType: MessagingProviderType, identifier: string, providerId?: string, name?: string }): Promise<Models.Target>;
     /**
      * Create a messaging target.
      *
@@ -2870,7 +2870,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      */
-    getTarget(params: { userId: string, targetId: string  }): Promise<Models.Target>;
+    getTarget(params: { userId: string, targetId: string }): Promise<Models.Target>;
     /**
      * Get a user's push notification target by ID.
      *
@@ -2932,7 +2932,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      */
-    updateTarget(params: { userId: string, targetId: string, identifier?: string, providerId?: string, name?: string  }): Promise<Models.Target>;
+    updateTarget(params: { userId: string, targetId: string, identifier?: string, providerId?: string, name?: string }): Promise<Models.Target>;
     /**
      * Update a messaging target.
      *
@@ -3010,7 +3010,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteTarget(params: { userId: string, targetId: string  }): Promise<{}>;
+    deleteTarget(params: { userId: string, targetId: string }): Promise<{}>;
     /**
      * Delete a messaging target.
      *
@@ -3072,7 +3072,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Token>}
      */
-    createToken(params: { userId: string, length?: number, expire?: number  }): Promise<Models.Token>;
+    createToken(params: { userId: string, length?: number, expire?: number }): Promise<Models.Token>;
     /**
      * Returns a token with a secret key for creating a session. Use the user ID and secret and submit a request to the [PUT /account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process.
      * 
@@ -3139,7 +3139,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateEmailVerification<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, emailVerification: boolean  }): Promise<Models.User<Preferences>>;
+    updateEmailVerification<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, emailVerification: boolean }): Promise<Models.User<Preferences>>;
     /**
      * Update the user email verification status by its unique ID.
      *
@@ -3202,7 +3202,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updatePhoneVerification<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, phoneVerification: boolean  }): Promise<Models.User<Preferences>>;
+    updatePhoneVerification<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, phoneVerification: boolean }): Promise<Models.User<Preferences>>;
     /**
      * Update the user phone verification status by its unique ID.
      *

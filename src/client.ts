@@ -5,51 +5,26 @@ import BigNumber from 'bignumber.js';
 const JSONbigParser = JSONbigModule({ storeAsString: false });
 const JSONbigSerializer = JSONbigModule({ useNativeBigInt: true });
 
-/**
- * Converts BigNumber objects from json-bigint to native types.
- * - Integer BigNumbers → BigInt (if unsafe) or number (if safe)
- * - Float BigNumbers → number
- * - Strings remain strings (never converted to BigNumber by json-bigint)
- */
 const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
 const MIN_SAFE = BigInt(Number.MIN_SAFE_INTEGER);
 
-function convertBigNumbers(value: any): any {
-    if (value === null || value === undefined) return value;
-
-    if (Array.isArray(value)) {
-        return value.map(convertBigNumbers);
-    }
-
+function reviver(_key: string, value: any): any {
     if (BigNumber.isBigNumber(value)) {
         if (value.isInteger()) {
             const str = value.toFixed();
             const bi = BigInt(str);
-
             if (bi >= MIN_SAFE && bi <= MAX_SAFE) {
                 return Number(str);
             }
-
             return bi;
         }
-
-        // float
         return value.toNumber();
     }
-
-    if (typeof value === 'object') {
-        const result: any = {};
-        for (const [k, v] of Object.entries(value)) {
-            result[k] = convertBigNumbers(v);
-        }
-        return result;
-    }
-
     return value;
 }
 
 const JSONbig = {
-    parse: (text: string) => convertBigNumbers(JSONbigParser.parse(text)),
+    parse: (text: string) => JSONbigParser.parse(text, reviver),
     stringify: JSONbigSerializer.stringify
 };
 
@@ -385,7 +360,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '2.1.3',
+        'x-sdk-version': '2.2.0',
         'X-Appwrite-Response-Format': '1.8.0',
     };
 

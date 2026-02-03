@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.2.0
+
+* Add array-based enum parameters (e.g., `permissions: BrowserPermission[]`).
+* Breaking change: `Output` enum has been removed; use `ImageFormat` instead.
+* Add `Channel` helpers for Realtime.
+* Add `getQueueAudits` support to `Health` service.
+* Add longtext/mediumtext/text/varchar attribute and column helpers to `Databases` and `TablesDB` services.
+
 ## 2.1.3
 
 Fix bigint and float parsing in SDK.
@@ -11,6 +19,10 @@ Fix bigint and float parsing in SDK.
 ## 2.1.1
 
 * Allow `bigint` to be passed in all methods that previously only accepted `number`
+
+## 2.1.0
+
+* Add `setSelfSigned` and `setCookie` methods to `Client` class
 
 ## 2.1.0
 

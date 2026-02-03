@@ -2,6 +2,7 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
+import { Scopes } from '../enums/scopes';
 import { AuthenticatorType } from '../enums/authenticator-type';
 import { AuthenticationFactor } from '../enums/authentication-factor';
 import { OAuthProvider } from '../enums/o-auth-provider';
@@ -46,7 +47,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string  }): Promise<Models.User<Preferences>>;
+    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string }): Promise<Models.User<Preferences>>;
     /**
      * Use this endpoint to allow a new user to register a new account in your project. After the user registration completes successfully, you can use the [/account/verfication](https://appwrite.io/docs/references/cloud/client-web/account#createVerification) route to start verifying the user email address. To allow the new user to login to their new account, you need to create a new [account session](https://appwrite.io/docs/references/cloud/client-web/account#createEmailSession).
      *
@@ -150,7 +151,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddressList>}
      */
-    listBillingAddresses(params?: { queries?: string[]  }): Promise<Models.BillingAddressList>;
+    listBillingAddresses(params?: { queries?: string[] }): Promise<Models.BillingAddressList>;
     /**
      * List all billing addresses for a user.
      *
@@ -206,7 +207,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      */
-    createBillingAddress(params: { country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string  }): Promise<Models.BillingAddress>;
+    createBillingAddress(params: { country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string }): Promise<Models.BillingAddress>;
     /**
      * Add a new billing address to a user's account.
      *
@@ -298,7 +299,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      */
-    getBillingAddress(params: { billingAddressId: string  }): Promise<Models.BillingAddress>;
+    getBillingAddress(params: { billingAddressId: string }): Promise<Models.BillingAddress>;
     /**
      * Get a specific billing address for a user using it's ID.
      *
@@ -355,7 +356,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      */
-    updateBillingAddress(params: { billingAddressId: string, country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string  }): Promise<Models.BillingAddress>;
+    updateBillingAddress(params: { billingAddressId: string, country: string, city: string, streetAddress: string, addressLine2?: string, state?: string, postalCode?: string }): Promise<Models.BillingAddress>;
     /**
      * Update a specific billing address using it's ID.
      *
@@ -453,7 +454,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteBillingAddress(params: { billingAddressId: string  }): Promise<{}>;
+    deleteBillingAddress(params: { billingAddressId: string }): Promise<{}>;
     /**
      * Delete a specific billing address using it's ID.
      *
@@ -505,7 +506,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Coupon>}
      */
-    getCoupon(params: { couponId: string  }): Promise<Models.Coupon>;
+    getCoupon(params: { couponId: string }): Promise<Models.Coupon>;
     /**
      * Get coupon details for an account.
      *
@@ -559,7 +560,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { email: string, password: string  }): Promise<Models.User<Preferences>>;
+    updateEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { email: string, password: string }): Promise<Models.User<Preferences>>;
     /**
      * Update currently logged in user account email address. After changing user address, the user confirmation status will get reset. A new confirmation email is not sent automatically however you can use the send confirmation email endpoint again to send the confirmation email. For security measures, user password is required to complete this request.
      * This endpoint can also be used to convert an anonymous account to a normal one, by passing an email address and a new password.
@@ -627,7 +628,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.IdentityList>}
      */
-    listIdentities(params?: { queries?: string[], total?: boolean  }): Promise<Models.IdentityList>;
+    listIdentities(params?: { queries?: string[], total?: boolean }): Promise<Models.IdentityList>;
     /**
      * Get the list of identities for the currently logged in user.
      *
@@ -685,7 +686,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteIdentity(params: { identityId: string  }): Promise<{}>;
+    deleteIdentity(params: { identityId: string }): Promise<{}>;
     /**
      * Delete an identity by its unique ID.
      *
@@ -737,7 +738,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.InvoiceList>}
      */
-    listInvoices(params?: { queries?: string[]  }): Promise<Models.InvoiceList>;
+    listInvoices(params?: { queries?: string[] }): Promise<Models.InvoiceList>;
     /**
      * List all invoices tied to an account.
      *
@@ -788,7 +789,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Jwt>}
      */
-    createJWT(params?: { duration?: number  }): Promise<Models.Jwt>;
+    createJWT(params?: { duration?: number }): Promise<Models.Jwt>;
     /**
      * Use this endpoint to create a JSON Web Token. You can use the resulting JWT to authenticate on behalf of the current user when working with the Appwrite server-side API and SDKs. The JWT secret is valid for 15 minutes from its creation and will be invalid if the user will logout in that time frame.
      *
@@ -834,6 +835,313 @@ export class Account {
     }
 
     /**
+     * Get a list of all API keys from the current account. 
+     *
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.KeyList>}
+     */
+    listKeys(params?: { total?: boolean }): Promise<Models.KeyList>;
+    /**
+     * Get a list of all API keys from the current account. 
+     *
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.KeyList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listKeys(total?: boolean): Promise<Models.KeyList>;
+    listKeys(
+        paramsOrFirst?: { total?: boolean } | boolean    
+    ): Promise<Models.KeyList> {
+        let params: { total?: boolean };
+        
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { total?: boolean };
+        } else {
+            params = {
+                total: paramsOrFirst as boolean            
+            };
+        }
+        
+        const total = params.total;
+
+
+        const apiPath = '/account/keys';
+        const payload: Payload = {};
+        if (typeof total !== 'undefined') {
+            payload['total'] = total;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a new account API key.
+     *
+     * @param {string} params.name - Key name. Max length: 128 chars.
+     * @param {Scopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Key>}
+     */
+    createKey(params: { name: string, scopes: Scopes[], expire?: string }): Promise<Models.Key>;
+    /**
+     * Create a new account API key.
+     *
+     * @param {string} name - Key name. Max length: 128 chars.
+     * @param {Scopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Key>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createKey(name: string, scopes: Scopes[], expire?: string): Promise<Models.Key>;
+    createKey(
+        paramsOrFirst: { name: string, scopes: Scopes[], expire?: string } | string,
+        ...rest: [(Scopes[])?, (string)?]    
+    ): Promise<Models.Key> {
+        let params: { name: string, scopes: Scopes[], expire?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { name: string, scopes: Scopes[], expire?: string };
+        } else {
+            params = {
+                name: paramsOrFirst as string,
+                scopes: rest[0] as Scopes[],
+                expire: rest[1] as string            
+            };
+        }
+        
+        const name = params.name;
+        const scopes = params.scopes;
+        const expire = params.expire;
+
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof scopes === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "scopes"');
+        }
+
+        const apiPath = '/account/keys';
+        const payload: Payload = {};
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof scopes !== 'undefined') {
+            payload['scopes'] = scopes;
+        }
+        if (typeof expire !== 'undefined') {
+            payload['expire'] = expire;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get a key by its unique ID. This endpoint returns details about a specific API key in your account including it's scopes.
+     *
+     * @param {string} params.keyId - Key unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Key>}
+     */
+    getKey(params: { keyId: string }): Promise<Models.Key>;
+    /**
+     * Get a key by its unique ID. This endpoint returns details about a specific API key in your account including it's scopes.
+     *
+     * @param {string} keyId - Key unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Key>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getKey(keyId: string): Promise<Models.Key>;
+    getKey(
+        paramsOrFirst: { keyId: string } | string    
+    ): Promise<Models.Key> {
+        let params: { keyId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { keyId: string };
+        } else {
+            params = {
+                keyId: paramsOrFirst as string            
+            };
+        }
+        
+        const keyId = params.keyId;
+
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+
+        const apiPath = '/account/keys/{keyId}'.replace('{keyId}', keyId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
+     *
+     * @param {string} params.keyId - Key unique ID.
+     * @param {string} params.name - Key name. Max length: 128 chars.
+     * @param {Scopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Key>}
+     */
+    updateKey(params: { keyId: string, name: string, scopes: Scopes[], expire?: string }): Promise<Models.Key>;
+    /**
+     * Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
+     *
+     * @param {string} keyId - Key unique ID.
+     * @param {string} name - Key name. Max length: 128 chars.
+     * @param {Scopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Key>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateKey(keyId: string, name: string, scopes: Scopes[], expire?: string): Promise<Models.Key>;
+    updateKey(
+        paramsOrFirst: { keyId: string, name: string, scopes: Scopes[], expire?: string } | string,
+        ...rest: [(string)?, (Scopes[])?, (string)?]    
+    ): Promise<Models.Key> {
+        let params: { keyId: string, name: string, scopes: Scopes[], expire?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { keyId: string, name: string, scopes: Scopes[], expire?: string };
+        } else {
+            params = {
+                keyId: paramsOrFirst as string,
+                name: rest[0] as string,
+                scopes: rest[1] as Scopes[],
+                expire: rest[2] as string            
+            };
+        }
+        
+        const keyId = params.keyId;
+        const name = params.name;
+        const scopes = params.scopes;
+        const expire = params.expire;
+
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof scopes === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "scopes"');
+        }
+
+        const apiPath = '/account/keys/{keyId}'.replace('{keyId}', keyId);
+        const payload: Payload = {};
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof scopes !== 'undefined') {
+            payload['scopes'] = scopes;
+        }
+        if (typeof expire !== 'undefined') {
+            payload['expire'] = expire;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'put',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Delete a key by its unique ID. Once deleted, the key can no longer be used to authenticate API calls.
+     *
+     * @param {string} params.keyId - Key unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteKey(params: { keyId: string }): Promise<{}>;
+    /**
+     * Delete a key by its unique ID. Once deleted, the key can no longer be used to authenticate API calls.
+     *
+     * @param {string} keyId - Key unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteKey(keyId: string): Promise<{}>;
+    deleteKey(
+        paramsOrFirst: { keyId: string } | string    
+    ): Promise<{}> {
+        let params: { keyId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { keyId: string };
+        } else {
+            params = {
+                keyId: paramsOrFirst as string            
+            };
+        }
+        
+        const keyId = params.keyId;
+
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+
+        const apiPath = '/account/keys/{keyId}'.replace('{keyId}', keyId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Get the list of latest security activity logs for the currently logged in user. Each log returns user IP address, location and date and time of log.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
@@ -841,7 +1149,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.LogList>}
      */
-    listLogs(params?: { queries?: string[], total?: boolean  }): Promise<Models.LogList>;
+    listLogs(params?: { queries?: string[], total?: boolean }): Promise<Models.LogList>;
     /**
      * Get the list of latest security activity logs for the currently logged in user. Each log returns user IP address, location and date and time of log.
      *
@@ -899,7 +1207,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateMFA<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { mfa: boolean  }): Promise<Models.User<Preferences>>;
+    updateMFA<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { mfa: boolean }): Promise<Models.User<Preferences>>;
     /**
      * Enable or disable MFA on an account.
      *
@@ -955,7 +1263,7 @@ export class Account {
      * @returns {Promise<Models.MfaType>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Account.createMFAAuthenticator` instead.
      */
-    createMfaAuthenticator(params: { type: AuthenticatorType  }): Promise<Models.MfaType>;
+    createMfaAuthenticator(params: { type: AuthenticatorType }): Promise<Models.MfaType>;
     /**
      * Add an authenticator app to be used as an MFA factor. Verify the authenticator using the [verify authenticator](/docs/references/cloud/client-web/account#updateMfaAuthenticator) method.
      *
@@ -1007,7 +1315,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MfaType>}
      */
-    createMFAAuthenticator(params: { type: AuthenticatorType  }): Promise<Models.MfaType>;
+    createMFAAuthenticator(params: { type: AuthenticatorType }): Promise<Models.MfaType>;
     /**
      * Add an authenticator app to be used as an MFA factor. Verify the authenticator using the [verify authenticator](/docs/references/cloud/client-web/account#updateMfaAuthenticator) method.
      *
@@ -1061,7 +1369,7 @@ export class Account {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Account.updateMFAAuthenticator` instead.
      */
-    updateMfaAuthenticator<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { type: AuthenticatorType, otp: string  }): Promise<Models.User<Preferences>>;
+    updateMfaAuthenticator<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { type: AuthenticatorType, otp: string }): Promise<Models.User<Preferences>>;
     /**
      * Verify an authenticator app after adding it using the [add authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator) method.
      *
@@ -1124,7 +1432,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateMFAAuthenticator<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { type: AuthenticatorType, otp: string  }): Promise<Models.User<Preferences>>;
+    updateMFAAuthenticator<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { type: AuthenticatorType, otp: string }): Promise<Models.User<Preferences>>;
     /**
      * Verify an authenticator app after adding it using the [add authenticator](/docs/references/cloud/client-web/account#createMfaAuthenticator) method.
      *
@@ -1187,7 +1495,7 @@ export class Account {
      * @returns {Promise<{}>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Account.deleteMFAAuthenticator` instead.
      */
-    deleteMfaAuthenticator(params: { type: AuthenticatorType  }): Promise<{}>;
+    deleteMfaAuthenticator(params: { type: AuthenticatorType }): Promise<{}>;
     /**
      * Delete an authenticator for a user by ID.
      *
@@ -1239,7 +1547,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteMFAAuthenticator(params: { type: AuthenticatorType  }): Promise<{}>;
+    deleteMFAAuthenticator(params: { type: AuthenticatorType }): Promise<{}>;
     /**
      * Delete an authenticator for a user by ID.
      *
@@ -1292,7 +1600,7 @@ export class Account {
      * @returns {Promise<Models.MfaChallenge>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Account.createMFAChallenge` instead.
      */
-    createMfaChallenge(params: { factor: AuthenticationFactor  }): Promise<Models.MfaChallenge>;
+    createMfaChallenge(params: { factor: AuthenticationFactor }): Promise<Models.MfaChallenge>;
     /**
      * Begin the process of MFA verification after sign-in. Finish the flow with [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge) method.
      *
@@ -1347,7 +1655,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MfaChallenge>}
      */
-    createMFAChallenge(params: { factor: AuthenticationFactor  }): Promise<Models.MfaChallenge>;
+    createMFAChallenge(params: { factor: AuthenticationFactor }): Promise<Models.MfaChallenge>;
     /**
      * Begin the process of MFA verification after sign-in. Finish the flow with [updateMfaChallenge](/docs/references/cloud/client-web/account#updateMfaChallenge) method.
      *
@@ -1404,7 +1712,7 @@ export class Account {
      * @returns {Promise<Models.Session>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Account.updateMFAChallenge` instead.
      */
-    updateMfaChallenge(params: { challengeId: string, otp: string  }): Promise<Models.Session>;
+    updateMfaChallenge(params: { challengeId: string, otp: string }): Promise<Models.Session>;
     /**
      * Complete the MFA challenge by providing the one-time password. Finish the process of MFA verification by providing the one-time password. To begin the flow, use [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method.
      *
@@ -1470,7 +1778,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Session>}
      */
-    updateMFAChallenge(params: { challengeId: string, otp: string  }): Promise<Models.Session>;
+    updateMFAChallenge(params: { challengeId: string, otp: string }): Promise<Models.Session>;
     /**
      * Complete the MFA challenge by providing the one-time password. Finish the process of MFA verification by providing the one-time password. To begin the flow, use [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method.
      *
@@ -1727,7 +2035,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateName<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { name: string  }): Promise<Models.User<Preferences>>;
+    updateName<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { name: string }): Promise<Models.User<Preferences>>;
     /**
      * Update currently logged in user account name.
      *
@@ -1783,7 +2091,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updatePassword<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { password: string, oldPassword?: string  }): Promise<Models.User<Preferences>>;
+    updatePassword<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { password: string, oldPassword?: string }): Promise<Models.User<Preferences>>;
     /**
      * Update currently logged in user password. For validation, user is required to pass in the new password, and the old password. For users created with OAuth, Team Invites and Magic URL, oldPassword is optional.
      *
@@ -1845,7 +2153,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethodList>}
      */
-    listPaymentMethods(params?: { queries?: string[]  }): Promise<Models.PaymentMethodList>;
+    listPaymentMethods(params?: { queries?: string[] }): Promise<Models.PaymentMethodList>;
     /**
      * List payment methods for this account.
      *
@@ -1920,7 +2228,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      */
-    getPaymentMethod(params: { paymentMethodId: string  }): Promise<Models.PaymentMethod>;
+    getPaymentMethod(params: { paymentMethodId: string }): Promise<Models.PaymentMethod>;
     /**
      * Get a specific payment method for the user.
      *
@@ -1974,7 +2282,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      */
-    updatePaymentMethod(params: { paymentMethodId: string, expiryMonth: number, expiryYear: number, state?: string  }): Promise<Models.PaymentMethod>;
+    updatePaymentMethod(params: { paymentMethodId: string, expiryMonth: number, expiryYear: number, state?: string }): Promise<Models.PaymentMethod>;
     /**
      * Update a new payment method for the current user account.
      *
@@ -2051,7 +2359,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deletePaymentMethod(params: { paymentMethodId: string  }): Promise<{}>;
+    deletePaymentMethod(params: { paymentMethodId: string }): Promise<{}>;
     /**
      * Delete a specific payment method from a user's account.
      *
@@ -2106,7 +2414,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      */
-    updatePaymentMethodProvider(params: { paymentMethodId: string, providerMethodId: string, name: string, state?: string  }): Promise<Models.PaymentMethod>;
+    updatePaymentMethodProvider(params: { paymentMethodId: string, providerMethodId: string, name: string, state?: string }): Promise<Models.PaymentMethod>;
     /**
      * Update payment method provider.
      *
@@ -2183,7 +2491,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      */
-    updatePaymentMethodMandateOptions(params: { paymentMethodId: string  }): Promise<Models.PaymentMethod>;
+    updatePaymentMethodMandateOptions(params: { paymentMethodId: string }): Promise<Models.PaymentMethod>;
     /**
      * Update payment method mandate options.
      *
@@ -2236,7 +2544,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updatePhone<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { phone: string, password: string  }): Promise<Models.User<Preferences>>;
+    updatePhone<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { phone: string, password: string }): Promise<Models.User<Preferences>>;
     /**
      * Update the currently logged in user's phone number. After updating the phone number, the phone verification status will be reset. A confirmation SMS is not sent automatically, however you can use the [POST /account/verification/phone](https://appwrite.io/docs/references/cloud/client-web/account#createPhoneVerification) endpoint to send a confirmation SMS.
      *
@@ -2324,7 +2632,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updatePrefs<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { prefs: Partial<Preferences>  }): Promise<Models.User<Preferences>>;
+    updatePrefs<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { prefs: Partial<Preferences> }): Promise<Models.User<Preferences>>;
     /**
      * Update currently logged in user account preferences. The object you pass is stored as is, and replaces any previous value. The maximum allowed prefs size is 64kB and throws error if exceeded.
      *
@@ -2380,7 +2688,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Token>}
      */
-    createRecovery(params: { email: string, url: string  }): Promise<Models.Token>;
+    createRecovery(params: { email: string, url: string }): Promise<Models.Token>;
     /**
      * Sends the user an email with a temporary secret key for password reset. When the user clicks the confirmation link he is redirected back to your app password reset URL with the secret key and email address values attached to the URL query string. Use the query string params to submit a request to the [PUT /account/recovery](https://appwrite.io/docs/references/cloud/client-web/account#updateRecovery) endpoint to complete the process. The verification link sent to the user's email address is valid for 1 hour.
      *
@@ -2449,7 +2757,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Token>}
      */
-    updateRecovery(params: { userId: string, secret: string, password: string  }): Promise<Models.Token>;
+    updateRecovery(params: { userId: string, secret: string, password: string }): Promise<Models.Token>;
     /**
      * Use this endpoint to complete the user account password reset. Both the **userId** and **secret** arguments will be passed as query parameters to the redirect URL you have provided when sending your request to the [POST /account/recovery](https://appwrite.io/docs/references/cloud/client-web/account#createRecovery) endpoint.
      * 
@@ -2599,7 +2907,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Session>}
      */
-    createEmailPasswordSession(params: { email: string, password: string  }): Promise<Models.Session>;
+    createEmailPasswordSession(params: { email: string, password: string }): Promise<Models.Session>;
     /**
      * Allow the user to login into their account by providing a valid email and password combination. This route will create a new session for the user.
      * 
@@ -2668,7 +2976,7 @@ export class Account {
      * @returns {Promise<Models.Session>}
      * @deprecated This API has been deprecated since 1.6.0. Please use `Account.createSession` instead.
      */
-    updateMagicURLSession(params: { userId: string, secret: string  }): Promise<Models.Session>;
+    updateMagicURLSession(params: { userId: string, secret: string }): Promise<Models.Session>;
     /**
      * Use this endpoint to create a session from token. Provide the **userId** and **secret** parameters from the successful response of authentication flows initiated by token creation. For example, magic URL and phone login.
      *
@@ -2741,7 +3049,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {void | string}
      */
-    createOAuth2Session(params: { provider: OAuthProvider, success?: string, failure?: string, scopes?: string[]  }): void | string;
+    createOAuth2Session(params: { provider: OAuthProvider, success?: string, failure?: string, scopes?: string[] }): void | string;
     /**
      * Allow the user to login to their account using the OAuth2 provider of their choice. Each OAuth2 provider should be enabled from the Appwrite console first. Use the success and failure arguments to provide a redirect URL's back to your app when login is completed.
      * 
@@ -2824,7 +3132,7 @@ export class Account {
      * @returns {Promise<Models.Session>}
      * @deprecated This API has been deprecated since 1.6.0. Please use `Account.createSession` instead.
      */
-    updatePhoneSession(params: { userId: string, secret: string  }): Promise<Models.Session>;
+    updatePhoneSession(params: { userId: string, secret: string }): Promise<Models.Session>;
     /**
      * Use this endpoint to create a session from token. Provide the **userId** and **secret** parameters from the successful response of authentication flows initiated by token creation. For example, magic URL and phone login.
      *
@@ -2890,7 +3198,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Session>}
      */
-    createSession(params: { userId: string, secret: string  }): Promise<Models.Session>;
+    createSession(params: { userId: string, secret: string }): Promise<Models.Session>;
     /**
      * Use this endpoint to create a session from token. Provide the **userId** and **secret** parameters from the successful response of authentication flows initiated by token creation. For example, magic URL and phone login.
      *
@@ -2955,7 +3263,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Session>}
      */
-    getSession(params: { sessionId: string  }): Promise<Models.Session>;
+    getSession(params: { sessionId: string }): Promise<Models.Session>;
     /**
      * Use this endpoint to get a logged in user's session using a Session ID. Inputting 'current' will return the current session being used.
      *
@@ -3006,7 +3314,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Session>}
      */
-    updateSession(params: { sessionId: string  }): Promise<Models.Session>;
+    updateSession(params: { sessionId: string }): Promise<Models.Session>;
     /**
      * Use this endpoint to extend a session's length. Extending a session is useful when session expiry is short. If the session was created using an OAuth provider, this endpoint refreshes the access token from the provider.
      *
@@ -3058,7 +3366,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteSession(params: { sessionId: string  }): Promise<{}>;
+    deleteSession(params: { sessionId: string }): Promise<{}>;
     /**
      * Logout the user. Use 'current' as the session ID to logout on this device, use a session ID to logout on another device. If you're looking to logout the user on all devices, use [Delete Sessions](https://appwrite.io/docs/references/cloud/client-web/account#deleteSessions) instead.
      *
@@ -3136,7 +3444,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      */
-    createPushTarget(params: { targetId: string, identifier: string, providerId?: string  }): Promise<Models.Target>;
+    createPushTarget(params: { targetId: string, identifier: string, providerId?: string }): Promise<Models.Target>;
     /**
      * Use this endpoint to register a device for push notifications. Provide a target ID (custom or generated using ID.unique()), a device identifier (usually a device token), and optionally specify which provider should send notifications to this target. The target is automatically linked to the current session and includes device information like brand and model.
      *
@@ -3208,7 +3516,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      */
-    updatePushTarget(params: { targetId: string, identifier: string  }): Promise<Models.Target>;
+    updatePushTarget(params: { targetId: string, identifier: string }): Promise<Models.Target>;
     /**
      * Update the currently logged in user's push notification target. You can modify the target's identifier (device token) and provider ID (token, email, phone etc.). The target must exist and belong to the current user. If you change the provider ID, notifications will be sent through the new messaging provider instead.
      *
@@ -3270,7 +3578,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deletePushTarget(params: { targetId: string  }): Promise<{}>;
+    deletePushTarget(params: { targetId: string }): Promise<{}>;
     /**
      * Delete a push notification target for the currently logged in user. After deletion, the device will no longer receive push notifications. The target must exist and belong to the current user.
      *
@@ -3327,7 +3635,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Token>}
      */
-    createEmailToken(params: { userId: string, email: string, phrase?: boolean  }): Promise<Models.Token>;
+    createEmailToken(params: { userId: string, email: string, phrase?: boolean }): Promise<Models.Token>;
     /**
      * Sends the user an email with a secret key for creating a session. If the email address has never been used, a **new account is created** using the provided `userId`. Otherwise, if the email address is already attached to an account, the **user ID is ignored**. Then, the user will receive an email with the one-time password. Use the returned user ID and secret and submit a request to the [POST /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process. The secret sent to the user's email is valid for 15 minutes.
      * 
@@ -3407,7 +3715,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Token>}
      */
-    createMagicURLToken(params: { userId: string, email: string, url?: string, phrase?: boolean  }): Promise<Models.Token>;
+    createMagicURLToken(params: { userId: string, email: string, url?: string, phrase?: boolean }): Promise<Models.Token>;
     /**
      * Sends the user an email with a secret key for creating a session. If the provided user ID has not been registered, a new user will be created. When the user clicks the link in the email, the user is redirected back to the URL you provided with the secret key and userId values attached to the URL query string. Use the query string parameters to submit a request to the [POST /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process. The link sent to the user's email address is valid for 1 hour.
      * 
@@ -3494,7 +3802,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {void | string}
      */
-    createOAuth2Token(params: { provider: OAuthProvider, success?: string, failure?: string, scopes?: string[]  }): void | string;
+    createOAuth2Token(params: { provider: OAuthProvider, success?: string, failure?: string, scopes?: string[] }): void | string;
     /**
      * Allow the user to login to their account using the OAuth2 provider of their choice. Each OAuth2 provider should be enabled from the Appwrite console first. Use the success and failure arguments to provide a redirect URL's back to your app when login is completed. 
      * 
@@ -3577,7 +3885,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Token>}
      */
-    createPhoneToken(params: { userId: string, phone: string  }): Promise<Models.Token>;
+    createPhoneToken(params: { userId: string, phone: string }): Promise<Models.Token>;
     /**
      * Sends the user an SMS with a secret key for creating a session. If the provided user ID has not be registered, a new user will be created. Use the returned user ID and secret and submit a request to the [POST /v1/account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process. The secret sent to the user's phone is valid for 15 minutes.
      * 
@@ -3647,7 +3955,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Token>}
      */
-    createEmailVerification(params: { url: string  }): Promise<Models.Token>;
+    createEmailVerification(params: { url: string }): Promise<Models.Token>;
     /**
      * Use this endpoint to send a verification message to your user email address to confirm they are the valid owners of that address. Both the **userId** and **secret** arguments will be passed as query parameters to the URL you have provided to be attached to the verification email. The provided URL should redirect the user back to your app and allow you to complete the verification process by verifying both the **userId** and **secret** parameters. Learn more about how to [complete the verification process](https://appwrite.io/docs/references/cloud/client-web/account#updateVerification). The verification link sent to the user's email address is valid for 7 days.
      * 
@@ -3709,7 +4017,7 @@ export class Account {
      * @returns {Promise<Models.Token>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Account.createEmailVerification` instead.
      */
-    createVerification(params: { url: string  }): Promise<Models.Token>;
+    createVerification(params: { url: string }): Promise<Models.Token>;
     /**
      * Use this endpoint to send a verification message to your user email address to confirm they are the valid owners of that address. Both the **userId** and **secret** arguments will be passed as query parameters to the URL you have provided to be attached to the verification email. The provided URL should redirect the user back to your app and allow you to complete the verification process by verifying both the **userId** and **secret** parameters. Learn more about how to [complete the verification process](https://appwrite.io/docs/references/cloud/client-web/account#updateVerification). The verification link sent to the user's email address is valid for 7 days.
      * 
@@ -3768,7 +4076,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Token>}
      */
-    updateEmailVerification(params: { userId: string, secret: string  }): Promise<Models.Token>;
+    updateEmailVerification(params: { userId: string, secret: string }): Promise<Models.Token>;
     /**
      * Use this endpoint to complete the user email verification process. Use both the **userId** and **secret** parameters that were attached to your app URL to verify the user email ownership. If confirmed this route will return a 200 status code.
      *
@@ -3835,7 +4143,7 @@ export class Account {
      * @returns {Promise<Models.Token>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Account.updateEmailVerification` instead.
      */
-    updateVerification(params: { userId: string, secret: string  }): Promise<Models.Token>;
+    updateVerification(params: { userId: string, secret: string }): Promise<Models.Token>;
     /**
      * Use this endpoint to complete the user email verification process. Use both the **userId** and **secret** parameters that were attached to your app URL to verify the user email ownership. If confirmed this route will return a 200 status code.
      *
@@ -3925,7 +4233,7 @@ export class Account {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Token>}
      */
-    updatePhoneVerification(params: { userId: string, secret: string  }): Promise<Models.Token>;
+    updatePhoneVerification(params: { userId: string, secret: string }): Promise<Models.Token>;
     /**
      * Use this endpoint to complete the user phone verification process. Use the **userId** and **secret** that were sent to your user's phone number to verify the user email ownership. If confirmed this route will return a 200 status code.
      *

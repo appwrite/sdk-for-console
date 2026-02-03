@@ -87,7 +87,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthCertificate>}
      */
-    getCertificate(params?: { domain?: string  }): Promise<Models.HealthCertificate>;
+    getCertificate(params?: { domain?: string }): Promise<Models.HealthCertificate>;
     /**
      * Get the SSL certificate for a domain
      *
@@ -178,13 +178,15 @@ export class Health {
     }
 
     /**
+     * Get the number of audit logs that are waiting to be processed in the Appwrite internal queue server.
      *
      * @param {number} params.threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueAudits(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueAudits(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
+     * Get the number of audit logs that are waiting to be processed in the Appwrite internal queue server.
      *
      * @param {number} threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
      * @throws {AppwriteException}
@@ -233,7 +235,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueBillingProjectAggregation(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueBillingProjectAggregation(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get billing project aggregation queue.
      *
@@ -284,7 +286,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueBillingTeamAggregation(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueBillingTeamAggregation(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get billing team aggregation queue.
      *
@@ -335,7 +337,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueBuilds(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueBuilds(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the number of builds that are waiting to be processed in the Appwrite internal queue server.
      *
@@ -386,7 +388,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueuePriorityBuilds(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueuePriorityBuilds(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the priority builds queue size.
      *
@@ -437,7 +439,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueCertificates(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueCertificates(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the number of certificates that are waiting to be issued against [Letsencrypt](https://letsencrypt.org/) in the Appwrite internal queue server.
      *
@@ -489,7 +491,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueDatabases(params?: { name?: string, threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueDatabases(params?: { name?: string, threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the number of database changes that are waiting to be processed in the Appwrite internal queue server.
      *
@@ -547,7 +549,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueDeletes(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueDeletes(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the number of background destructive changes that are waiting to be processed in the Appwrite internal queue server.
      *
@@ -600,7 +602,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getFailedJobs(params: { name: Name, threshold?: number  }): Promise<Models.HealthQueue>;
+    getFailedJobs(params: { name: Name, threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Returns the amount of failed jobs in a given queue.
      * 
@@ -659,7 +661,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueFunctions(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueFunctions(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the number of function executions that are waiting to be processed in the Appwrite internal queue server.
      *
@@ -710,7 +712,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueLogs(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueLogs(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the number of logs that are waiting to be processed in the Appwrite internal queue server.
      *
@@ -761,7 +763,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueMails(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueMails(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the number of mails that are waiting to be processed in the Appwrite internal queue server.
      *
@@ -812,7 +814,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueMessaging(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueMessaging(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the number of messages that are waiting to be processed in the Appwrite internal queue server.
      *
@@ -863,7 +865,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueMigrations(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueMigrations(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the number of migrations that are waiting to be processed in the Appwrite internal queue server.
      *
@@ -914,7 +916,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueRegionManager(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueRegionManager(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get region manager queue.
      *
@@ -965,7 +967,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueStatsResources(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueStatsResources(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the number of metrics that are waiting to be processed in the Appwrite stats resources queue.
      *
@@ -1016,7 +1018,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueUsage(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueUsage(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the number of metrics that are waiting to be processed in the Appwrite internal queue server.
      *
@@ -1067,7 +1069,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueThreats(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueThreats(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get threats queue.
      *
@@ -1118,7 +1120,7 @@ export class Health {
      * @throws {AppwriteException}
      * @returns {Promise<Models.HealthQueue>}
      */
-    getQueueWebhooks(params?: { threshold?: number  }): Promise<Models.HealthQueue>;
+    getQueueWebhooks(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the number of webhooks that are waiting to be processed in the Appwrite internal queue server.
      *
