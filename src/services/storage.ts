@@ -1104,7 +1104,7 @@ export class Storage {
     ): Promise<Models.UsageStorage> {
         let params: { range?: UsageRange };
         
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'range' in paramsOrFirst)) {
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('range' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { range?: UsageRange };
         } else {
             params = {

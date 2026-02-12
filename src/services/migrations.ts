@@ -106,7 +106,7 @@ export class Migrations {
     ): Promise<Models.Migration> {
         let params: { resources: Resources[], endpoint: string, projectId: string, apiKey: string };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'endpoint' in paramsOrFirst || 'projectId' in paramsOrFirst || 'apiKey' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { resources: Resources[], endpoint: string, projectId: string, apiKey: string };
         } else {
             params = {
@@ -192,7 +192,7 @@ export class Migrations {
     ): Promise<Models.MigrationReport> {
         let params: { resources: Resources[], endpoint: string, projectID: string, key: string };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'endpoint' in paramsOrFirst || 'projectID' in paramsOrFirst || 'key' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { resources: Resources[], endpoint: string, projectID: string, key: string };
         } else {
             params = {
@@ -471,7 +471,7 @@ export class Migrations {
     ): Promise<Models.Migration> {
         let params: { resources: Resources[], serviceAccount: string };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'serviceAccount' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { resources: Resources[], serviceAccount: string };
         } else {
             params = {
@@ -537,7 +537,7 @@ export class Migrations {
     ): Promise<Models.MigrationReport> {
         let params: { resources: Resources[], serviceAccount: string };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'serviceAccount' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { resources: Resources[], serviceAccount: string };
         } else {
             params = {
@@ -614,7 +614,7 @@ export class Migrations {
     ): Promise<Models.Migration> {
         let params: { resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'subdomain' in paramsOrFirst || 'region' in paramsOrFirst || 'adminSecret' in paramsOrFirst || 'database' in paramsOrFirst || 'username' in paramsOrFirst || 'password' in paramsOrFirst || 'port' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
         } else {
             params = {
@@ -737,7 +737,7 @@ export class Migrations {
     ): Promise<Models.MigrationReport> {
         let params: { resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'subdomain' in paramsOrFirst || 'region' in paramsOrFirst || 'adminSecret' in paramsOrFirst || 'database' in paramsOrFirst || 'username' in paramsOrFirst || 'password' in paramsOrFirst || 'port' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { resources: Resources[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
         } else {
             params = {
@@ -857,7 +857,7 @@ export class Migrations {
     ): Promise<Models.Migration> {
         let params: { resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'endpoint' in paramsOrFirst || 'apiKey' in paramsOrFirst || 'databaseHost' in paramsOrFirst || 'username' in paramsOrFirst || 'password' in paramsOrFirst || 'port' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
         } else {
             params = {
@@ -970,7 +970,7 @@ export class Migrations {
     ): Promise<Models.MigrationReport> {
         let params: { resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'resources' in paramsOrFirst)) {
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'endpoint' in paramsOrFirst || 'apiKey' in paramsOrFirst || 'databaseHost' in paramsOrFirst || 'username' in paramsOrFirst || 'password' in paramsOrFirst || 'port' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { resources: Resources[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
         } else {
             params = {

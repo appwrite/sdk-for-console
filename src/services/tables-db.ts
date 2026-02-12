@@ -511,7 +511,7 @@ export class TablesDB {
     ): Promise<Models.UsageDatabases> {
         let params: { range?: UsageRange };
         
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'range' in paramsOrFirst)) {
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('range' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { range?: UsageRange };
         } else {
             params = {

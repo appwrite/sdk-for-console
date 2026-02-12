@@ -1,3 +1,4 @@
+```javascript
 import { Client, Organizations } from "@appwrite.io/console";
 
 const client = new Client()
@@ -12,3 +13,4 @@ const result = await organizations.listInvoices({
 });
 
 console.log(result);
+```

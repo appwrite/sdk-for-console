@@ -1,3 +1,4 @@
+```javascript
 import { Client, Projects, Scopes } from "@appwrite.io/console";
 
 const client = new Client()
@@ -10,7 +11,9 @@ const result = await projects.createKey({
     projectId: '<PROJECT_ID>',
     name: '<NAME>',
     scopes: [Scopes.SessionsWrite],
+    keyId: '<KEY_ID>', // optional
     expire: '' // optional
 });
 
 console.log(result);
+```

@@ -2,6 +2,7 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
+import { RegistrationType } from '../enums/registration-type';
 import { FilterType } from '../enums/filter-type';
 
 export class Domains {
@@ -130,6 +131,75 @@ export class Domains {
 
         return this.client.call(
             'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     *     Get the registration price for a domain name.
+     *
+     * @param {string} params.domain - Domain name to get price for.
+     * @param {number} params.periodYears - Number of years to calculate the domain price for. Must be at least 1.
+     * @param {RegistrationType} params.registrationType - Type of registration pricing to fetch. Allowed values: new, transfer, renewal, trade.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DomainPrice>}
+     */
+    getPrice(params: { domain: string, periodYears?: number, registrationType?: RegistrationType }): Promise<Models.DomainPrice>;
+    /**
+     *     Get the registration price for a domain name.
+     *
+     * @param {string} domain - Domain name to get price for.
+     * @param {number} periodYears - Number of years to calculate the domain price for. Must be at least 1.
+     * @param {RegistrationType} registrationType - Type of registration pricing to fetch. Allowed values: new, transfer, renewal, trade.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DomainPrice>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getPrice(domain: string, periodYears?: number, registrationType?: RegistrationType): Promise<Models.DomainPrice>;
+    getPrice(
+        paramsOrFirst: { domain: string, periodYears?: number, registrationType?: RegistrationType } | string,
+        ...rest: [(number)?, (RegistrationType)?]    
+    ): Promise<Models.DomainPrice> {
+        let params: { domain: string, periodYears?: number, registrationType?: RegistrationType };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { domain: string, periodYears?: number, registrationType?: RegistrationType };
+        } else {
+            params = {
+                domain: paramsOrFirst as string,
+                periodYears: rest[0] as number,
+                registrationType: rest[1] as RegistrationType            
+            };
+        }
+        
+        const domain = params.domain;
+        const periodYears = params.periodYears;
+        const registrationType = params.registrationType;
+
+        if (typeof domain === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "domain"');
+        }
+
+        const apiPath = '/domains/price';
+        const payload: Payload = {};
+        if (typeof domain !== 'undefined') {
+            payload['domain'] = domain;
+        }
+        if (typeof periodYears !== 'undefined') {
+            payload['periodYears'] = periodYears;
+        }
+        if (typeof registrationType !== 'undefined') {
+            payload['registrationType'] = registrationType;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
             uri,
             apiHeaders,
             payload
