@@ -1,3 +1,4 @@
+```javascript
 import { Client, Account } from "@appwrite.io/console";
 
 const client = new Client()
@@ -16,3 +17,4 @@ const result = await account.createBillingAddress({
 });
 
 console.log(result);
+```

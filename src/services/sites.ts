@@ -344,7 +344,7 @@ export class Sites {
     ): Promise<Models.TemplateSiteList> {
         let params: { frameworks?: Frameworks[], useCases?: UseCases[], limit?: number, offset?: number };
         
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'frameworks' in paramsOrFirst)) {
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('frameworks' in paramsOrFirst || 'useCases' in paramsOrFirst || 'limit' in paramsOrFirst || 'offset' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { frameworks?: Frameworks[], useCases?: UseCases[], limit?: number, offset?: number };
         } else {
             params = {
@@ -461,7 +461,7 @@ export class Sites {
     ): Promise<Models.UsageSites> {
         let params: { range?: UsageRange };
         
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'range' in paramsOrFirst)) {
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('range' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { range?: UsageRange };
         } else {
             params = {

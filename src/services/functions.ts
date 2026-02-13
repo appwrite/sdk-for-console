@@ -343,7 +343,7 @@ export class Functions {
     ): Promise<Models.TemplateFunctionList> {
         let params: { runtimes?: Runtimes[], useCases?: UseCases[], limit?: number, offset?: number, total?: boolean };
         
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'runtimes' in paramsOrFirst)) {
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('runtimes' in paramsOrFirst || 'useCases' in paramsOrFirst || 'limit' in paramsOrFirst || 'offset' in paramsOrFirst || 'total' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { runtimes?: Runtimes[], useCases?: UseCases[], limit?: number, offset?: number, total?: boolean };
         } else {
             params = {
@@ -465,7 +465,7 @@ export class Functions {
     ): Promise<Models.UsageFunctions> {
         let params: { range?: UsageRange };
         
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'range' in paramsOrFirst)) {
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('range' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { range?: UsageRange };
         } else {
             params = {

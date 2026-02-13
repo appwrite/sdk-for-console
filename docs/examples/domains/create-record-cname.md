@@ -1,3 +1,4 @@
+```javascript
 import { Client, Domains } from "@appwrite.io/console";
 
 const client = new Client()
@@ -15,3 +16,4 @@ const result = await domains.createRecordCNAME({
 });
 
 console.log(result);
+```
