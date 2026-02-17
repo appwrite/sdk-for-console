@@ -1,6 +1,6 @@
 # Change Log
 
-## 22.1.0
+## 2.3.0
 
 * Add `queries` parameter to `Realtime.subscribe()` and `client.subscribe()` for server-side query filtering
 * Add slot-based subscription management with subscription ID mappings from backend
@@ -10,75 +10,79 @@
 * Fix WebSocket connection handling with stale connection guards and improved close/reconnect logic
 * Fix doc examples wrapped in markdown code fences
 
-## 22.0.0
+## 2.2.0
 
 * Add array-based enum parameters (e.g., `permissions: BrowserPermission[]`).
 * Breaking change: `Output` enum has been removed; use `ImageFormat` instead.
 * Add `Channel` helpers for Realtime.
+* Add `getQueueAudits` support to `Health` service.
+* Add longtext/mediumtext/text/varchar attribute and column helpers to `Databases` and `TablesDB` services.
 
-## 21.5.0
+## 2.1.3
 
-* Add `getScreenshot` method to `Avatars` service
-* Add `Theme`, `Timezone` and `Output` enums
+Fix bigint and float parsing in SDK.
 
-## 21.4.0
+## 2.1.2
 
-* Add `total` parameter to list queries allowing skipping counting rows in a table for improved performance
-* Add `Operator` class for atomic modification of rows via update, bulk update, upsert, and bulk upsert operations
+* Fix only use `bigint` for min, max and default attributes
 
-## 21.3.0
+## 2.1.1
 
-* Add new `Realtime` service with methods for subscribing to channels and receiving messages
-* Fix `client.setSession` not working when using realtime
-* Deprecate `client.subscribe` method in favor of `Realtime` service
+* Allow `bigint` to be passed in all methods that previously only accepted `number`
 
-> Note: Deprecated methods are still available for backwards compatibility, but might be removed in future versions.
+## 2.1.0
 
-## 21.2.1
+* Add `setSelfSigned` and `setCookie` methods to `Client` class
 
-* Add transaction support for Databases and TablesDB
+## 2.0.0
 
-## 21.1.0
+* Update SDK examples to use object-based parameters instead of positional arguments
+* Align all service method usage with the new API signature style
+* Update publish workflow to use trusted publishing mechanism
 
-* Deprecate `createVerification` method in `Account` service
-* Add `createEmailVerification` method in `Account` service
+## 1.10.0
 
-## 18.2.0
-
-* Add `incrementDocumentAttribute` and `decrementDocumentAttribute` support to `Databases` service
-* Add `gif` support to `ImageFormat` enum
-* Fix undefined `fileParam` error in `chunkedUpload` method
 * Fix autocompletion not working for `Document` model even when generic is passed
+* Add `getAvailableCredits` and `updateProjects` methods to `Organizations` service
+* Allow internal attributes to be passed in `data` parameter of `createDocument`, `updateDocument` etc. methods
+* Formatting changes
 
-## 18.1.1
+## 1.9.0
 
-* Fix using `devKeys` resulting in an error by conditionally removing credentials
+* Add `1.8.x` support
 
-## 18.1.0
+## 1.8.0
 
-* Add `devKeys` support to `Client` service
-* Add `upsertDocument` support to `Databases` service
+* Add encrypt to string attribute model
+* Add upsert document method
+* Add max deployment size and max build size plan attributes
+* Remove `templateRepository`, `templateOwner`, `templateRootDirectory`, `templateVersion` from `functions.create`
 
-## 18.0.0
+## 1.7.0
 
-* Add `<REGION>` to doc examples due to the new multi region endpoints
-* Remove `Gif` from ImageFormat enum
-* Remove `search` param from `listExecutions` method
-* Add `token` param to `getFilePreview` and `getFileView` for File tokens usage
-* Improve CORS error catching in `client.call` method
+* Update docs to use `https://<REGION>.cloud.appwrite.io/v1` instead of `https://cloud.appwrite.io/v1`
+* Add `1.7.x` support
 
-## 17.0.2
+## 1.6.0
 
-* Fix requests failing by removing `Content-Type` header from `GET` and `HEAD` requests
+* Updates checking and then setting of cloud and realtime endpoint.
+* Remove unnecessary asyncs and awaits.
+* Adds and fixes lot of the billing related models and return types.
+* Fixes typing for attributes type in Collection class.
+* Removes method.title for multiplexing of endpoints.
+* Removes unnecessary adding of project to payload.
+* Ensures AppwriteException's "response" attribute is always string
+* Adds check for file not found in chuckedUpload method
+* Adds figma oauth adapter
 
-## 17.0.1
+## 1.5.2
 
-* Remove unnecessary titles from method descriptions
-* Fix duplicate adding of payload params
-* Remove unnecessary awaits and asyncs
-* Ensure `AppwriteException` response is always string
+* Adds image transformations usages to project, bucket and org. usages.
 
-## 17.0.0
+## 1.5.1
 
-* Fix pong response & chunked upload
-* Add `ping` support to `Realtime` service
+* Add some model vars that were left out and were required for DB read & writes.
+
+## 1.5.0
+
+* Adds support for `databasesReadsTotal` and `databasesWritesTotal` attributes

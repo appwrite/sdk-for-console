@@ -2442,66 +2442,6 @@ export class Organizations {
     }
 
     /**
-     * Update selected projects to keep in the organization.
-     *
-     * @param {string} params.organizationId - Organization Unique ID
-     * @param {string[]} params.projects - List of project IDs to be selected for the organization
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Organization<Preferences>>}
-     */
-    updateProjects<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, projects?: string[] }): Promise<Models.Organization<Preferences>>;
-    /**
-     * Update selected projects to keep in the organization.
-     *
-     * @param {string} organizationId - Organization Unique ID
-     * @param {string[]} projects - List of project IDs to be selected for the organization
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Organization<Preferences>>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    updateProjects<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, projects?: string[]): Promise<Models.Organization<Preferences>>;
-    updateProjects<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, projects?: string[] } | string,
-        ...rest: [(string[])?]    
-    ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, projects?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, projects?: string[] };
-        } else {
-            params = {
-                organizationId: paramsOrFirst as string,
-                projects: rest[0] as string[]            
-            };
-        }
-        
-        const organizationId = params.organizationId;
-        const projects = params.projects;
-
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
-        }
-
-        const apiPath = '/organizations/{organizationId}/projects'.replace('{organizationId}', organizationId);
-        const payload: Payload = {};
-        if (typeof projects !== 'undefined') {
-            payload['projects'] = projects;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
      * Get all available regions for an organization.
      *
      * @param {string} params.organizationId - Team ID.

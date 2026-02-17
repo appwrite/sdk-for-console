@@ -77,7 +77,6 @@ export { AuthMethod } from './enums/auth-method';
 export { PlatformType } from './enums/platform-type';
 export { ApiService } from './enums/api-service';
 export { SMTPSecure } from './enums/smtp-secure';
-export { Status } from './enums/status';
 export { EmailTemplateType } from './enums/email-template-type';
 export { EmailTemplateLocale } from './enums/email-template-locale';
 export { SmsTemplateType } from './enums/sms-template-type';

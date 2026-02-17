@@ -10,7 +10,6 @@ import { OAuthProvider } from '../enums/o-auth-provider';
 import { PlatformType } from '../enums/platform-type';
 import { ApiService } from '../enums/api-service';
 import { SMTPSecure } from '../enums/smtp-secure';
-import { Status } from '../enums/status';
 import { EmailTemplateType } from '../enums/email-template-type';
 import { EmailTemplateLocale } from '../enums/email-template-locale';
 import { SmsTemplateType } from '../enums/sms-template-type';
@@ -3354,69 +3353,6 @@ export class Projects {
 
         return this.client.call(
             'post',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Update the status of a project
-     *
-     * @param {string} params.projectId - Project ID
-     * @param {Status} params.status - New status for the project
-     * @throws {AppwriteException}
-     * @returns {Promise<{}>}
-     */
-    updateStatus(params: { projectId: string, status: Status }): Promise<{}>;
-    /**
-     * Update the status of a project
-     *
-     * @param {string} projectId - Project ID
-     * @param {Status} status - New status for the project
-     * @throws {AppwriteException}
-     * @returns {Promise<{}>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    updateStatus(projectId: string, status: Status): Promise<{}>;
-    updateStatus(
-        paramsOrFirst: { projectId: string, status: Status } | string,
-        ...rest: [(Status)?]    
-    ): Promise<{}> {
-        let params: { projectId: string, status: Status };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, status: Status };
-        } else {
-            params = {
-                projectId: paramsOrFirst as string,
-                status: rest[0] as Status            
-            };
-        }
-        
-        const projectId = params.projectId;
-        const status = params.status;
-
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof status === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "status"');
-        }
-
-        const apiPath = '/projects/{projectId}/status'.replace('{projectId}', projectId);
-        const payload: Payload = {};
-        if (typeof status !== 'undefined') {
-            payload['status'] = status;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'patch',
             uri,
             apiHeaders,
             payload
