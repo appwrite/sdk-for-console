@@ -10,7 +10,6 @@ import { OAuthProvider } from '../enums/o-auth-provider';
 import { PlatformType } from '../enums/platform-type';
 import { ApiService } from '../enums/api-service';
 import { SMTPSecure } from '../enums/smtp-secure';
-import { Status } from '../enums/status';
 import { EmailTemplateType } from '../enums/email-template-type';
 import { EmailTemplateLocale } from '../enums/email-template-locale';
 import { SmsTemplateType } from '../enums/sms-template-type';
@@ -1863,37 +1862,41 @@ export class Projects {
      * Get a list of all API keys from the current project. 
      *
      * @param {string} params.projectId - Project unique ID.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: expire, accessedAt, name, scopes
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.KeyList>}
      */
-    listKeys(params: { projectId: string, total?: boolean }): Promise<Models.KeyList>;
+    listKeys(params: { projectId: string, queries?: string[], total?: boolean }): Promise<Models.KeyList>;
     /**
      * Get a list of all API keys from the current project. 
      *
      * @param {string} projectId - Project unique ID.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: expire, accessedAt, name, scopes
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.KeyList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listKeys(projectId: string, total?: boolean): Promise<Models.KeyList>;
+    listKeys(projectId: string, queries?: string[], total?: boolean): Promise<Models.KeyList>;
     listKeys(
-        paramsOrFirst: { projectId: string, total?: boolean } | string,
-        ...rest: [(boolean)?]    
+        paramsOrFirst: { projectId: string, queries?: string[], total?: boolean } | string,
+        ...rest: [(string[])?, (boolean)?]    
     ): Promise<Models.KeyList> {
-        let params: { projectId: string, total?: boolean };
+        let params: { projectId: string, queries?: string[], total?: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, total?: boolean };
+            params = (paramsOrFirst || {}) as { projectId: string, queries?: string[], total?: boolean };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                total: rest[0] as boolean            
+                queries: rest[0] as string[],
+                total: rest[1] as boolean            
             };
         }
         
         const projectId = params.projectId;
+        const queries = params.queries;
         const total = params.total;
 
         if (typeof projectId === 'undefined') {
@@ -1902,6 +1905,9 @@ export class Projects {
 
         const apiPath = '/projects/{projectId}/keys'.replace('{projectId}', projectId);
         const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
         if (typeof total !== 'undefined') {
             payload['total'] = total;
         }
@@ -1924,43 +1930,47 @@ export class Projects {
      * @param {string} params.projectId - Project unique ID.
      * @param {string} params.name - Key name. Max length: 128 chars.
      * @param {Scopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {string} params.keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
-    createKey(params: { projectId: string, name: string, scopes?: Scopes[], expire?: string }): Promise<Models.Key>;
+    createKey(params: { projectId: string, name: string, scopes?: Scopes[], keyId?: string, expire?: string }): Promise<Models.Key>;
     /**
      * Create a new API key. It's recommended to have multiple API keys with strict scopes for separate functions within your project.
      *
      * @param {string} projectId - Project unique ID.
      * @param {string} name - Key name. Max length: 128 chars.
      * @param {Scopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {string} keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createKey(projectId: string, name: string, scopes?: Scopes[], expire?: string): Promise<Models.Key>;
+    createKey(projectId: string, name: string, scopes?: Scopes[], keyId?: string, expire?: string): Promise<Models.Key>;
     createKey(
-        paramsOrFirst: { projectId: string, name: string, scopes?: Scopes[], expire?: string } | string,
-        ...rest: [(string)?, (Scopes[])?, (string)?]    
+        paramsOrFirst: { projectId: string, name: string, scopes?: Scopes[], keyId?: string, expire?: string } | string,
+        ...rest: [(string)?, (Scopes[])?, (string)?, (string)?]    
     ): Promise<Models.Key> {
-        let params: { projectId: string, name: string, scopes?: Scopes[], expire?: string };
+        let params: { projectId: string, name: string, scopes?: Scopes[], keyId?: string, expire?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, name: string, scopes?: Scopes[], expire?: string };
+            params = (paramsOrFirst || {}) as { projectId: string, name: string, scopes?: Scopes[], keyId?: string, expire?: string };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
                 name: rest[0] as string,
                 scopes: rest[1] as Scopes[],
-                expire: rest[2] as string            
+                keyId: rest[2] as string,
+                expire: rest[3] as string            
             };
         }
         
         const projectId = params.projectId;
         const name = params.name;
         const scopes = params.scopes;
+        const keyId = params.keyId;
         const expire = params.expire;
 
         if (typeof projectId === 'undefined') {
@@ -1975,6 +1985,9 @@ export class Projects {
 
         const apiPath = '/projects/{projectId}/keys'.replace('{projectId}', projectId);
         const payload: Payload = {};
+        if (typeof keyId !== 'undefined') {
+            payload['keyId'] = keyId;
+        }
         if (typeof name !== 'undefined') {
             payload['name'] = name;
         }
@@ -3340,69 +3353,6 @@ export class Projects {
 
         return this.client.call(
             'post',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Update the status of a project
-     *
-     * @param {string} params.projectId - Project ID
-     * @param {Status} params.status - New status for the project
-     * @throws {AppwriteException}
-     * @returns {Promise<{}>}
-     */
-    updateStatus(params: { projectId: string, status: Status }): Promise<{}>;
-    /**
-     * Update the status of a project
-     *
-     * @param {string} projectId - Project ID
-     * @param {Status} status - New status for the project
-     * @throws {AppwriteException}
-     * @returns {Promise<{}>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    updateStatus(projectId: string, status: Status): Promise<{}>;
-    updateStatus(
-        paramsOrFirst: { projectId: string, status: Status } | string,
-        ...rest: [(Status)?]    
-    ): Promise<{}> {
-        let params: { projectId: string, status: Status };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, status: Status };
-        } else {
-            params = {
-                projectId: paramsOrFirst as string,
-                status: rest[0] as Status            
-            };
-        }
-        
-        const projectId = params.projectId;
-        const status = params.status;
-
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof status === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "status"');
-        }
-
-        const apiPath = '/projects/{projectId}/status'.replace('{projectId}', projectId);
-        const payload: Payload = {};
-        if (typeof status !== 'undefined') {
-            payload['status'] = status;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'patch',
             uri,
             apiHeaders,
             payload

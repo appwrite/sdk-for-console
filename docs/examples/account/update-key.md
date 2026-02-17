@@ -1,3 +1,4 @@
+```javascript
 import { Client, Account, Scopes } from "@appwrite.io/console";
 
 const client = new Client()
@@ -14,3 +15,4 @@ const result = await account.updateKey({
 });
 
 console.log(result);
+```

@@ -136,7 +136,7 @@ export class Console {
     ): Promise<Models.BillingPlanList> {
         let params: { platform?: Platform };
         
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && 'platform' in paramsOrFirst)) {
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('platform' in paramsOrFirst))) {
             params = (paramsOrFirst || {}) as { platform?: Platform };
         } else {
             params = {

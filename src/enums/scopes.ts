@@ -62,4 +62,5 @@ export enum Scopes {
     RestorationsWrite = 'restorations.write',
     DomainsRead = 'domains.read',
     DomainsWrite = 'domains.write',
+    EventsRead = 'events.read',
 }

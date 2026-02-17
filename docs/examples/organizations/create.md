@@ -1,3 +1,4 @@
+```javascript
 import { Client, Organizations, Platform } from "@appwrite.io/console";
 
 const client = new Client()
@@ -20,3 +21,4 @@ const result = await organizations.create({
 });
 
 console.log(result);
+```
