@@ -8,6 +8,7 @@ import { AuthMethod } from '../enums/auth-method';
 import { Scopes } from '../enums/scopes';
 import { OAuthProvider } from '../enums/o-auth-provider';
 import { PlatformType } from '../enums/platform-type';
+import { ResourceType } from '../enums/resource-type';
 import { ApiService } from '../enums/api-service';
 import { SMTPSecure } from '../enums/smtp-secure';
 import { EmailTemplateType } from '../enums/email-template-type';
@@ -2721,6 +2722,228 @@ export class Projects {
 
         return this.client.call(
             'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get a list of all the project's schedules. You can use the query params to filter your results.
+     *
+     * @param {string} params.projectId - Project unique ID.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: resourceType, resourceId, projectId, schedule, active, region
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ScheduleList>}
+     */
+    listSchedules(params: { projectId: string, queries?: string[], total?: boolean }): Promise<Models.ScheduleList>;
+    /**
+     * Get a list of all the project's schedules. You can use the query params to filter your results.
+     *
+     * @param {string} projectId - Project unique ID.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: resourceType, resourceId, projectId, schedule, active, region
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ScheduleList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listSchedules(projectId: string, queries?: string[], total?: boolean): Promise<Models.ScheduleList>;
+    listSchedules(
+        paramsOrFirst: { projectId: string, queries?: string[], total?: boolean } | string,
+        ...rest: [(string[])?, (boolean)?]    
+    ): Promise<Models.ScheduleList> {
+        let params: { projectId: string, queries?: string[], total?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string, queries?: string[], total?: boolean };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string,
+                queries: rest[0] as string[],
+                total: rest[1] as boolean            
+            };
+        }
+        
+        const projectId = params.projectId;
+        const queries = params.queries;
+        const total = params.total;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        const apiPath = '/projects/{projectId}/schedules'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            payload['total'] = total;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a new schedule for a resource.
+     *
+     * @param {string} params.projectId - Project unique ID.
+     * @param {ResourceType} params.resourceType - The resource type for the schedule. Possible values: function, execution, message, backup.
+     * @param {string} params.resourceId - The resource ID to associate with this schedule.
+     * @param {string} params.schedule - Schedule CRON expression.
+     * @param {boolean} params.active - Whether the schedule is active.
+     * @param {object} params.data - Schedule data as a JSON string. Used to store resource-specific context needed for execution.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Schedule>}
+     */
+    createSchedule(params: { projectId: string, resourceType: ResourceType, resourceId: string, schedule: string, active?: boolean, data?: object }): Promise<Models.Schedule>;
+    /**
+     * Create a new schedule for a resource.
+     *
+     * @param {string} projectId - Project unique ID.
+     * @param {ResourceType} resourceType - The resource type for the schedule. Possible values: function, execution, message, backup.
+     * @param {string} resourceId - The resource ID to associate with this schedule.
+     * @param {string} schedule - Schedule CRON expression.
+     * @param {boolean} active - Whether the schedule is active.
+     * @param {object} data - Schedule data as a JSON string. Used to store resource-specific context needed for execution.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Schedule>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createSchedule(projectId: string, resourceType: ResourceType, resourceId: string, schedule: string, active?: boolean, data?: object): Promise<Models.Schedule>;
+    createSchedule(
+        paramsOrFirst: { projectId: string, resourceType: ResourceType, resourceId: string, schedule: string, active?: boolean, data?: object } | string,
+        ...rest: [(ResourceType)?, (string)?, (string)?, (boolean)?, (object)?]    
+    ): Promise<Models.Schedule> {
+        let params: { projectId: string, resourceType: ResourceType, resourceId: string, schedule: string, active?: boolean, data?: object };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string, resourceType: ResourceType, resourceId: string, schedule: string, active?: boolean, data?: object };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string,
+                resourceType: rest[0] as ResourceType,
+                resourceId: rest[1] as string,
+                schedule: rest[2] as string,
+                active: rest[3] as boolean,
+                data: rest[4] as object            
+            };
+        }
+        
+        const projectId = params.projectId;
+        const resourceType = params.resourceType;
+        const resourceId = params.resourceId;
+        const schedule = params.schedule;
+        const active = params.active;
+        const data = params.data;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof resourceType === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "resourceType"');
+        }
+        if (typeof resourceId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "resourceId"');
+        }
+        if (typeof schedule === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "schedule"');
+        }
+
+        const apiPath = '/projects/{projectId}/schedules'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+        if (typeof resourceType !== 'undefined') {
+            payload['resourceType'] = resourceType;
+        }
+        if (typeof resourceId !== 'undefined') {
+            payload['resourceId'] = resourceId;
+        }
+        if (typeof schedule !== 'undefined') {
+            payload['schedule'] = schedule;
+        }
+        if (typeof active !== 'undefined') {
+            payload['active'] = active;
+        }
+        if (typeof data !== 'undefined') {
+            payload['data'] = data;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get a schedule by its unique ID.
+     *
+     * @param {string} params.projectId - Project unique ID.
+     * @param {string} params.scheduleId - Schedule ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Schedule>}
+     */
+    getSchedule(params: { projectId: string, scheduleId: string }): Promise<Models.Schedule>;
+    /**
+     * Get a schedule by its unique ID.
+     *
+     * @param {string} projectId - Project unique ID.
+     * @param {string} scheduleId - Schedule ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Schedule>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getSchedule(projectId: string, scheduleId: string): Promise<Models.Schedule>;
+    getSchedule(
+        paramsOrFirst: { projectId: string, scheduleId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.Schedule> {
+        let params: { projectId: string, scheduleId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string, scheduleId: string };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string,
+                scheduleId: rest[0] as string            
+            };
+        }
+        
+        const projectId = params.projectId;
+        const scheduleId = params.scheduleId;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof scheduleId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "scheduleId"');
+        }
+
+        const apiPath = '/projects/{projectId}/schedules/{scheduleId}'.replace('{projectId}', projectId).replace('{scheduleId}', scheduleId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
             uri,
             apiHeaders,
             payload
