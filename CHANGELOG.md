@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.3.1
+
+* Add missing `queries` parameter to new string type attributes
+
 ## 2.3.0
 
 * Add `queries` parameter to `Realtime.subscribe()` and `client.subscribe()` for server-side query filtering

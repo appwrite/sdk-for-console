@@ -595,6 +595,20 @@ export namespace Models {
     }
 
     /**
+     * Schedules List
+     */
+    export type ScheduleList = {
+        /**
+         * Total number of schedules that matched your query.
+         */
+        total: number;
+        /**
+         * List of schedules.
+         */
+        schedules: Schedule[];
+    }
+
+    /**
      * Locale codes list
      */
     export type LocaleCodeList = {
@@ -4644,6 +4658,10 @@ export namespace Models {
          */
         labels: string[];
         /**
+         * Project status
+         */
+        status: string;
+        /**
          * Email/Password auth method status
          */
         authEmailPassword: boolean;
@@ -4727,10 +4745,6 @@ export namespace Models {
          * Project region
          */
         region: string;
-        /**
-         * Project status
-         */
-        status: string;
         /**
          * Billing limits reached
          */
@@ -6219,6 +6233,56 @@ export namespace Models {
          * Certificate auto-renewal date in ISO 8601 format.
          */
         renewAt: string;
+    }
+
+    /**
+     * Schedule
+     */
+    export type Schedule = {
+        /**
+         * Schedule ID.
+         */
+        $id: string;
+        /**
+         * Schedule creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Schedule update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * The resource type associated with this schedule.
+         */
+        resourceType: string;
+        /**
+         * The resource ID associated with this schedule.
+         */
+        resourceId: string;
+        /**
+         * Change-tracking timestamp used by the scheduler to detect resource changes in ISO 8601 format.
+         */
+        resourceUpdatedAt: string;
+        /**
+         * The project ID associated with this schedule.
+         */
+        projectId: string;
+        /**
+         * The CRON schedule expression.
+         */
+        schedule: string;
+        /**
+         * Schedule data used to store resource-specific context needed for execution.
+         */
+        data: object;
+        /**
+         * Whether the schedule is active.
+         */
+        active: boolean;
+        /**
+         * The region where the schedule is deployed.
+         */
+        region: string;
     }
 
     /**
