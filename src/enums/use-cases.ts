@@ -1,11 +1,16 @@
 export enum UseCases {
-    Portfolio = 'portfolio',
     Starter = 'starter',
+    Databases = 'databases',
+    Ai = 'ai',
+    Messaging = 'messaging',
+    Utilities = 'utilities',
+    Devtools = 'dev-tools',
+    Auth = 'auth',
+    Portfolio = 'portfolio',
     Events = 'events',
     Ecommerce = 'ecommerce',
     Documentation = 'documentation',
     Blog = 'blog',
-    Ai = 'ai',
     Forms = 'forms',
     Dashboard = 'dashboard',
 }

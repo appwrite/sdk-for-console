@@ -1,5 +1,7 @@
 export enum Resources {
     User = 'user',
+    Team = 'team',
+    Membership = 'membership',
     Database = 'database',
     Table = 'table',
     Column = 'column',
@@ -10,4 +12,10 @@ export enum Resources {
     Collection = 'collection',
     Bucket = 'bucket',
     File = 'file',
+    Function = 'function',
+    Deployment = 'deployment',
+    Environmentvariable = 'environment-variable',
+    Site = 'site',
+    Sitedeployment = 'site-deployment',
+    Sitevariable = 'site-variable',
 }
