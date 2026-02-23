@@ -1,5 +1,10 @@
 # Change Log
 
+## 3.1.0
+
+* Add support for `createPurchase` method in `Domains` service
+* Fix very large double values (for example 1.7976931348623157e+308) from being expanded into giant integer literals
+
 ## 3.0.0
 
 * Breaking: EmailTemplateType enum values renamed and updated (Magicsession -> MagicSession, Mfachallenge -> MfaChallenge, Sessionalert -> SessionAlert, Otpsession -> OtpSession) and their underlying string values changed accordingly, which may affect existing integrations.

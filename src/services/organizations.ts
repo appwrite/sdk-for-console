@@ -2496,33 +2496,38 @@ export class Organizations {
      * Get Scopes
      *
      * @param {string} params.organizationId - Organization id
+     * @param {string} params.projectId - Project id
      * @throws {AppwriteException}
      * @returns {Promise<Models.Roles>}
      */
-    getScopes(params: { organizationId: string }): Promise<Models.Roles>;
+    getScopes(params: { organizationId: string, projectId?: string }): Promise<Models.Roles>;
     /**
      * Get Scopes
      *
      * @param {string} organizationId - Organization id
+     * @param {string} projectId - Project id
      * @throws {AppwriteException}
      * @returns {Promise<Models.Roles>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getScopes(organizationId: string): Promise<Models.Roles>;
+    getScopes(organizationId: string, projectId?: string): Promise<Models.Roles>;
     getScopes(
-        paramsOrFirst: { organizationId: string } | string    
+        paramsOrFirst: { organizationId: string, projectId?: string } | string,
+        ...rest: [(string)?]    
     ): Promise<Models.Roles> {
-        let params: { organizationId: string };
+        let params: { organizationId: string, projectId?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string };
+            params = (paramsOrFirst || {}) as { organizationId: string, projectId?: string };
         } else {
             params = {
-                organizationId: paramsOrFirst as string            
+                organizationId: paramsOrFirst as string,
+                projectId: rest[0] as string            
             };
         }
         
         const organizationId = params.organizationId;
+        const projectId = params.projectId;
 
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
@@ -2530,6 +2535,9 @@ export class Organizations {
 
         const apiPath = '/organizations/{organizationId}/roles'.replace('{organizationId}', organizationId);
         const payload: Payload = {};
+        if (typeof projectId !== 'undefined') {
+            payload['projectId'] = projectId;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {

@@ -207,6 +207,153 @@ export class Domains {
     }
 
     /**
+     *     Create a domain purchase with registrant information.
+     *
+     * @param {string} params.domain - Fully qualified domain name to purchase (for example, example.com).
+     * @param {string} params.teamId - Team ID that will own the domain.
+     * @param {string} params.firstName - Registrant first name used for domain registration.
+     * @param {string} params.lastName - Registrant last name used for domain registration.
+     * @param {string} params.email - Registrant email address for registration and notices.
+     * @param {string} params.phone - Registrant phone number in E.164 format (for example, +15555551234).
+     * @param {string} params.billingAddressId - Billing address ID used for registration contact details.
+     * @param {string} params.paymentMethodId - Payment method ID to authorize and capture the purchase.
+     * @param {string} params.addressLine3 - Additional address line for the registrant (line 3).
+     * @param {string} params.companyName - Company or organization name for the registrant.
+     * @param {number} params.periodYears - Registration term in years (1-10).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     */
+    createPurchase(params: { domain: string, teamId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number }): Promise<Models.Domain>;
+    /**
+     *     Create a domain purchase with registrant information.
+     *
+     * @param {string} domain - Fully qualified domain name to purchase (for example, example.com).
+     * @param {string} teamId - Team ID that will own the domain.
+     * @param {string} firstName - Registrant first name used for domain registration.
+     * @param {string} lastName - Registrant last name used for domain registration.
+     * @param {string} email - Registrant email address for registration and notices.
+     * @param {string} phone - Registrant phone number in E.164 format (for example, +15555551234).
+     * @param {string} billingAddressId - Billing address ID used for registration contact details.
+     * @param {string} paymentMethodId - Payment method ID to authorize and capture the purchase.
+     * @param {string} addressLine3 - Additional address line for the registrant (line 3).
+     * @param {string} companyName - Company or organization name for the registrant.
+     * @param {number} periodYears - Registration term in years (1-10).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createPurchase(domain: string, teamId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number): Promise<Models.Domain>;
+    createPurchase(
+        paramsOrFirst: { domain: string, teamId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
+    ): Promise<Models.Domain> {
+        let params: { domain: string, teamId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { domain: string, teamId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number };
+        } else {
+            params = {
+                domain: paramsOrFirst as string,
+                teamId: rest[0] as string,
+                firstName: rest[1] as string,
+                lastName: rest[2] as string,
+                email: rest[3] as string,
+                phone: rest[4] as string,
+                billingAddressId: rest[5] as string,
+                paymentMethodId: rest[6] as string,
+                addressLine3: rest[7] as string,
+                companyName: rest[8] as string,
+                periodYears: rest[9] as number            
+            };
+        }
+        
+        const domain = params.domain;
+        const teamId = params.teamId;
+        const firstName = params.firstName;
+        const lastName = params.lastName;
+        const email = params.email;
+        const phone = params.phone;
+        const billingAddressId = params.billingAddressId;
+        const paymentMethodId = params.paymentMethodId;
+        const addressLine3 = params.addressLine3;
+        const companyName = params.companyName;
+        const periodYears = params.periodYears;
+
+        if (typeof domain === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "domain"');
+        }
+        if (typeof teamId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "teamId"');
+        }
+        if (typeof firstName === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "firstName"');
+        }
+        if (typeof lastName === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "lastName"');
+        }
+        if (typeof email === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "email"');
+        }
+        if (typeof phone === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "phone"');
+        }
+        if (typeof billingAddressId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "billingAddressId"');
+        }
+        if (typeof paymentMethodId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
+        }
+
+        const apiPath = '/domains/purchases';
+        const payload: Payload = {};
+        if (typeof domain !== 'undefined') {
+            payload['domain'] = domain;
+        }
+        if (typeof teamId !== 'undefined') {
+            payload['teamId'] = teamId;
+        }
+        if (typeof firstName !== 'undefined') {
+            payload['firstName'] = firstName;
+        }
+        if (typeof lastName !== 'undefined') {
+            payload['lastName'] = lastName;
+        }
+        if (typeof email !== 'undefined') {
+            payload['email'] = email;
+        }
+        if (typeof phone !== 'undefined') {
+            payload['phone'] = phone;
+        }
+        if (typeof billingAddressId !== 'undefined') {
+            payload['billingAddressId'] = billingAddressId;
+        }
+        if (typeof addressLine3 !== 'undefined') {
+            payload['addressLine3'] = addressLine3;
+        }
+        if (typeof companyName !== 'undefined') {
+            payload['companyName'] = companyName;
+        }
+        if (typeof periodYears !== 'undefined') {
+            payload['periodYears'] = periodYears;
+        }
+        if (typeof paymentMethodId !== 'undefined') {
+            payload['paymentMethodId'] = paymentMethodId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      *     List domain suggestions.
      *
      * @param {string} params.query - Query to find available domains and suggestions. Max length: 256 chars.
