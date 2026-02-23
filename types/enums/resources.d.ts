@@ -1,0 +1,21 @@
+export declare enum Resources {
+    User = "user",
+    Team = "team",
+    Membership = "membership",
+    Database = "database",
+    Table = "table",
+    Column = "column",
+    Index = "index",
+    Row = "row",
+    Document = "document",
+    Attribute = "attribute",
+    Collection = "collection",
+    Bucket = "bucket",
+    File = "file",
+    Function = "function",
+    Deployment = "deployment",
+    Environmentvariable = "environment-variable",
+    Site = "site",
+    Sitedeployment = "site-deployment",
+    Sitevariable = "site-variable"
+}

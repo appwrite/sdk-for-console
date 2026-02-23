@@ -1,0 +1,442 @@
+declare type QueryTypesSingle = string | number | bigint | boolean;
+export declare type QueryTypesList = string[] | number[] | bigint[] | boolean[] | Query[] | any[];
+export declare type QueryTypes = QueryTypesSingle | QueryTypesList;
+declare type AttributesTypes = string | string[];
+/**
+ * Helper class to generate query strings.
+ */
+export declare class Query {
+    method: string;
+    attribute: AttributesTypes | undefined;
+    values: QueryTypesList | undefined;
+    /**
+     * Constructor for Query class.
+     *
+     * @param {string} method
+     * @param {AttributesTypes} attribute
+     * @param {QueryTypes} values
+     */
+    constructor(method: string, attribute?: AttributesTypes, values?: QueryTypes);
+    /**
+     * Convert the query object to a JSON string.
+     *
+     * @returns {string}
+     */
+    toString(): string;
+    /**
+     * Filter resources where attribute is equal to value.
+     *
+     * @param {string} attribute
+     * @param {QueryTypes} value
+     * @returns {string}
+     */
+    static equal: (attribute: string, value: QueryTypes) => string;
+    /**
+     * Filter resources where attribute is not equal to value.
+     *
+     * @param {string} attribute
+     * @param {QueryTypes} value
+     * @returns {string}
+     */
+    static notEqual: (attribute: string, value: QueryTypes) => string;
+    /**
+     * Filter resources where attribute matches a regular expression pattern.
+     *
+     * @param {string} attribute The attribute to filter on.
+     * @param {string} pattern The regular expression pattern to match.
+     * @returns {string}
+     */
+    static regex: (attribute: string, pattern: string) => string;
+    /**
+     * Filter resources where attribute is less than value.
+     *
+     * @param {string} attribute
+     * @param {QueryTypes} value
+     * @returns {string}
+     */
+    static lessThan: (attribute: string, value: QueryTypes) => string;
+    /**
+     * Filter resources where attribute is less than or equal to value.
+     *
+     * @param {string} attribute
+     * @param {QueryTypes} value
+     * @returns {string}
+     */
+    static lessThanEqual: (attribute: string, value: QueryTypes) => string;
+    /**
+     * Filter resources where attribute is greater than value.
+     *
+     * @param {string} attribute
+     * @param {QueryTypes} value
+     * @returns {string}
+     */
+    static greaterThan: (attribute: string, value: QueryTypes) => string;
+    /**
+     * Filter resources where attribute is greater than or equal to value.
+     *
+     * @param {string} attribute
+     * @param {QueryTypes} value
+     * @returns {string}
+     */
+    static greaterThanEqual: (attribute: string, value: QueryTypes) => string;
+    /**
+     * Filter resources where attribute is null.
+     *
+     * @param {string} attribute
+     * @returns {string}
+     */
+    static isNull: (attribute: string) => string;
+    /**
+     * Filter resources where attribute is not null.
+     *
+     * @param {string} attribute
+     * @returns {string}
+     */
+    static isNotNull: (attribute: string) => string;
+    /**
+     * Filter resources where the specified attributes exist.
+     *
+     * @param {string[]} attributes The list of attributes that must exist.
+     * @returns {string}
+     */
+    static exists: (attributes: string[]) => string;
+    /**
+     * Filter resources where the specified attributes do not exist.
+     *
+     * @param {string[]} attributes The list of attributes that must not exist.
+     * @returns {string}
+     */
+    static notExists: (attributes: string[]) => string;
+    /**
+     * Filter resources where attribute is between start and end (inclusive).
+     *
+     * @param {string} attribute
+     * @param {string | number | bigint} start
+     * @param {string | number | bigint} end
+     * @returns {string}
+     */
+    static between: (attribute: string, start: string | number | bigint, end: string | number | bigint) => string;
+    /**
+     * Filter resources where attribute starts with value.
+     *
+     * @param {string} attribute
+     * @param {string} value
+     * @returns {string}
+     */
+    static startsWith: (attribute: string, value: string) => string;
+    /**
+     * Filter resources where attribute ends with value.
+     *
+     * @param {string} attribute
+     * @param {string} value
+     * @returns {string}
+     */
+    static endsWith: (attribute: string, value: string) => string;
+    /**
+     * Specify which attributes should be returned by the API call.
+     *
+     * @param {string[]} attributes
+     * @returns {string}
+     */
+    static select: (attributes: string[]) => string;
+    /**
+     * Filter resources by searching attribute for value.
+     * A fulltext index on attribute is required for this query to work.
+     *
+     * @param {string} attribute
+     * @param {string} value
+     * @returns {string}
+     */
+    static search: (attribute: string, value: string) => string;
+    /**
+     * Sort results by attribute descending.
+     *
+     * @param {string} attribute
+     * @returns {string}
+     */
+    static orderDesc: (attribute: string) => string;
+    /**
+     * Sort results by attribute ascending.
+     *
+     * @param {string} attribute
+     * @returns {string}
+     */
+    static orderAsc: (attribute: string) => string;
+    /**
+     * Sort results randomly.
+     *
+     * @returns {string}
+     */
+    static orderRandom: () => string;
+    /**
+     * Return results after documentId.
+     *
+     * @param {string} documentId
+     * @returns {string}
+     */
+    static cursorAfter: (documentId: string) => string;
+    /**
+     * Return results before documentId.
+     *
+     * @param {string} documentId
+     * @returns {string}
+     */
+    static cursorBefore: (documentId: string) => string;
+    /**
+     * Return only limit results.
+     *
+     * @param {number} limit
+     * @returns {string}
+     */
+    static limit: (limit: number) => string;
+    /**
+     * Filter resources by skipping the first offset results.
+     *
+     * @param {number} offset
+     * @returns {string}
+     */
+    static offset: (offset: number) => string;
+    /**
+     * Filter resources where attribute contains the specified value.
+     * For string attributes, checks if the string contains the substring.
+     *
+     * Note: For array attributes, use {@link containsAny} or {@link containsAll} instead.
+     * @param {string} attribute
+     * @param {string | string[]} value
+     * @returns {string}
+     */
+    static contains: (attribute: string, value: string | any[]) => string;
+    /**
+     * Filter resources where attribute contains ANY of the specified values.
+     * For array and relationship attributes, matches documents where the attribute
+     * contains at least one of the given values.
+     *
+     * @param {string} attribute
+     * @param {any[]} value
+     * @returns {string}
+     */
+    static containsAny: (attribute: string, value: any[]) => string;
+    /**
+     * Filter resources where attribute contains ALL of the specified values.
+     * For array and relationship attributes, matches documents where the attribute
+     * contains every one of the given values.
+     *
+     * @param {string} attribute
+     * @param {any[]} value
+     * @returns {string}
+     */
+    static containsAll: (attribute: string, value: any[]) => string;
+    /**
+     * Filter resources where attribute does not contain the specified value.
+     *
+     * @param {string} attribute
+     * @param {string | any[]} value
+     * @returns {string}
+     */
+    static notContains: (attribute: string, value: string | any[]) => string;
+    /**
+     * Filter resources by searching attribute for value (inverse of search).
+     * A fulltext index on attribute is required for this query to work.
+     *
+     * @param {string} attribute
+     * @param {string} value
+     * @returns {string}
+     */
+    static notSearch: (attribute: string, value: string) => string;
+    /**
+     * Filter resources where attribute is not between start and end (exclusive).
+     *
+     * @param {string} attribute
+     * @param {string | number | bigint} start
+     * @param {string | number | bigint} end
+     * @returns {string}
+     */
+    static notBetween: (attribute: string, start: string | number | bigint, end: string | number | bigint) => string;
+    /**
+     * Filter resources where attribute does not start with value.
+     *
+     * @param {string} attribute
+     * @param {string} value
+     * @returns {string}
+     */
+    static notStartsWith: (attribute: string, value: string) => string;
+    /**
+     * Filter resources where attribute does not end with value.
+     *
+     * @param {string} attribute
+     * @param {string} value
+     * @returns {string}
+     */
+    static notEndsWith: (attribute: string, value: string) => string;
+    /**
+     * Filter resources where document was created before date.
+     *
+     * @param {string} value
+     * @returns {string}
+     */
+    static createdBefore: (value: string) => string;
+    /**
+     * Filter resources where document was created after date.
+     *
+     * @param {string} value
+     * @returns {string}
+     */
+    static createdAfter: (value: string) => string;
+    /**
+     * Filter resources where document was created between dates.
+     *
+     * @param {string} start
+     * @param {string} end
+     * @returns {string}
+     */
+    static createdBetween: (start: string, end: string) => string;
+    /**
+     * Filter resources where document was updated before date.
+     *
+     * @param {string} value
+     * @returns {string}
+     */
+    static updatedBefore: (value: string) => string;
+    /**
+     * Filter resources where document was updated after date.
+     *
+     * @param {string} value
+     * @returns {string}
+     */
+    static updatedAfter: (value: string) => string;
+    /**
+     * Filter resources where document was updated between dates.
+     *
+     * @param {string} start
+     * @param {string} end
+     * @returns {string}
+     */
+    static updatedBetween: (start: string, end: string) => string;
+    /**
+     * Combine multiple queries using logical OR operator.
+     *
+     * @param {string[]} queries
+     * @returns {string}
+     */
+    static or: (queries: string[]) => string;
+    /**
+     * Combine multiple queries using logical AND operator.
+     *
+     * @param {string[]} queries
+     * @returns {string}
+     */
+    static and: (queries: string[]) => string;
+    /**
+     * Filter array elements where at least one element matches all the specified queries.
+     *
+     * @param {string} attribute The attribute containing the array to filter on.
+     * @param {string[]} queries The list of query strings to match against array elements.
+     * @returns {string}
+     */
+    static elemMatch: (attribute: string, queries: string[]) => string;
+    /**
+     * Filter resources where attribute is at a specific distance from the given coordinates.
+     *
+     * @param {string} attribute
+     * @param {any[]} values
+     * @param {number} distance
+     * @param {boolean} meters
+     * @returns {string}
+     */
+    static distanceEqual: (attribute: string, values: any[], distance: number, meters?: boolean) => string;
+    /**
+     * Filter resources where attribute is not at a specific distance from the given coordinates.
+     *
+     * @param {string} attribute
+     * @param {any[]} values
+     * @param {number} distance
+     * @param {boolean} meters
+     * @returns {string}
+     */
+    static distanceNotEqual: (attribute: string, values: any[], distance: number, meters?: boolean) => string;
+    /**
+     * Filter resources where attribute is at a distance greater than the specified value from the given coordinates.
+     *
+     * @param {string} attribute
+     * @param {any[]} values
+     * @param {number} distance
+     * @param {boolean} meters
+     * @returns {string}
+     */
+    static distanceGreaterThan: (attribute: string, values: any[], distance: number, meters?: boolean) => string;
+    /**
+     * Filter resources where attribute is at a distance less than the specified value from the given coordinates.
+     *
+     * @param {string} attribute
+     * @param {any[]} values
+     * @param {number} distance
+     * @param {boolean} meters
+     * @returns {string}
+     */
+    static distanceLessThan: (attribute: string, values: any[], distance: number, meters?: boolean) => string;
+    /**
+     * Filter resources where attribute intersects with the given geometry.
+     *
+     * @param {string} attribute
+     * @param {any[]} values
+     * @returns {string}
+     */
+    static intersects: (attribute: string, values: any[]) => string;
+    /**
+     * Filter resources where attribute does not intersect with the given geometry.
+     *
+     * @param {string} attribute
+     * @param {any[]} values
+     * @returns {string}
+     */
+    static notIntersects: (attribute: string, values: any[]) => string;
+    /**
+     * Filter resources where attribute crosses the given geometry.
+     *
+     * @param {string} attribute
+     * @param {any[]} values
+     * @returns {string}
+     */
+    static crosses: (attribute: string, values: any[]) => string;
+    /**
+     * Filter resources where attribute does not cross the given geometry.
+     *
+     * @param {string} attribute
+     * @param {any[]} values
+     * @returns {string}
+     */
+    static notCrosses: (attribute: string, values: any[]) => string;
+    /**
+     * Filter resources where attribute overlaps with the given geometry.
+     *
+     * @param {string} attribute
+     * @param {any[]} values
+     * @returns {string}
+     */
+    static overlaps: (attribute: string, values: any[]) => string;
+    /**
+     * Filter resources where attribute does not overlap with the given geometry.
+     *
+     * @param {string} attribute
+     * @param {any[]} values
+     * @returns {string}
+     */
+    static notOverlaps: (attribute: string, values: any[]) => string;
+    /**
+     * Filter resources where attribute touches the given geometry.
+     *
+     * @param {string} attribute
+     * @param {any[]} values
+     * @returns {string}
+     */
+    static touches: (attribute: string, values: any[]) => string;
+    /**
+     * Filter resources where attribute does not touch the given geometry.
+     *
+     * @param {string} attribute
+     * @param {any[]} values
+     * @returns {string}
+     */
+    static notTouches: (attribute: string, values: any[]) => string;
+}
+export {};

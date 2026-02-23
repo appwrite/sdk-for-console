@@ -337,7 +337,7 @@ class AppwriteException extends Error {
 
     /**
      * Error type.
-     * See [Error Types](https://appwrite.io/docs/response-codes#errorTypes) for more information.
+     * See [Error Types](https://example.com/docs/response-codes#errorTypes) for more information.
      */
     type: string;
 
@@ -397,10 +397,10 @@ class Client {
      * Custom headers for API requests.
      */
     headers: Headers = {
-        'x-sdk-name': 'Console',
+        'x-sdk-name': 'NAME',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '3.2.0',
+        'x-sdk-version': '0.0.0',
         'X-Appwrite-Response-Format': '1.8.0',
     };
 
