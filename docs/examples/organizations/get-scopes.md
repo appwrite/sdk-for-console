@@ -8,7 +8,8 @@ const client = new Client()
 const organizations = new Organizations(client);
 
 const result = await organizations.getScopes({
-    organizationId: '<ORGANIZATION_ID>'
+    organizationId: '<ORGANIZATION_ID>',
+    projectId: '<PROJECT_ID>' // optional
 });
 
 console.log(result);

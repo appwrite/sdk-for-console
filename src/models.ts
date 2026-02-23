@@ -8568,6 +8568,10 @@ export namespace Models {
          */
         registrar: string;
         /**
+         * Payment status for domain purchase.
+         */
+        paymentStatus: string;
+        /**
          * Nameservers setting. "Appwrite" or empty string.
          */
         nameservers: string;
@@ -8584,7 +8588,7 @@ export namespace Models {
          */
         autoRenewal: boolean;
         /**
-         * Renewal price (in USD).
+         * Renewal price (in cents).
          */
         renewalPrice: number;
         /**
