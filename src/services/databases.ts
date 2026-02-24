@@ -1188,7 +1188,7 @@ export class Databases {
      * 
      *
      * @param {string} params.databaseId - Database ID.
-     * @param {string} params.collectionId - Collection ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
      * @param {string} params.key - Attribute Key.
      * @param {boolean} params.required - Is attribute required?
      * @param {boolean} params.xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
@@ -1203,7 +1203,7 @@ export class Databases {
      * 
      *
      * @param {string} databaseId - Database ID.
-     * @param {string} collectionId - Collection ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
      * @param {string} key - Attribute Key.
      * @param {boolean} required - Is attribute required?
      * @param {boolean} xdefault - Default value for attribute when not provided. Cannot be set when attribute is required.
@@ -3661,6 +3661,90 @@ export class Databases {
     }
 
     /**
+     * Update relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
+     * 
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.collectionId - Collection ID.
+     * @param {string} params.key - Attribute Key.
+     * @param {RelationMutate} params.onDelete - Constraints option
+     * @param {string} params.newKey - New Attribute Key.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeRelationship>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateRelationshipColumn` instead.
+     */
+    updateRelationshipAttribute(params: { databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate, newKey?: string }): Promise<Models.AttributeRelationship>;
+    /**
+     * Update relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
+     * 
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} collectionId - Collection ID.
+     * @param {string} key - Attribute Key.
+     * @param {RelationMutate} onDelete - Constraints option
+     * @param {string} newKey - New Attribute Key.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AttributeRelationship>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateRelationshipAttribute(databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate, newKey?: string): Promise<Models.AttributeRelationship>;
+    updateRelationshipAttribute(
+        paramsOrFirst: { databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate, newKey?: string } | string,
+        ...rest: [(string)?, (string)?, (RelationMutate)?, (string)?]    
+    ): Promise<Models.AttributeRelationship> {
+        let params: { databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate, newKey?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate, newKey?: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                key: rest[1] as string,
+                onDelete: rest[2] as RelationMutate,
+                newKey: rest[3] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
+        const key = params.key;
+        const onDelete = params.onDelete;
+        const newKey = params.newKey;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof key === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "key"');
+        }
+
+        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/relationship/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const payload: Payload = {};
+        if (typeof onDelete !== 'undefined') {
+            payload['onDelete'] = onDelete;
+        }
+        if (typeof newKey !== 'undefined') {
+            payload['newKey'] = newKey;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Create a string attribute.
      * 
      *
@@ -4616,90 +4700,6 @@ export class Databases {
 
         return this.client.call(
             'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Update relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
-     * 
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.collectionId - Collection ID.
-     * @param {string} params.key - Attribute Key.
-     * @param {RelationMutate} params.onDelete - Constraints option
-     * @param {string} params.newKey - New Attribute Key.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.AttributeRelationship>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateRelationshipColumn` instead.
-     */
-    updateRelationshipAttribute(params: { databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate, newKey?: string }): Promise<Models.AttributeRelationship>;
-    /**
-     * Update relationship attribute. [Learn more about relationship attributes](https://appwrite.io/docs/databases-relationships#relationship-attributes).
-     * 
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} collectionId - Collection ID.
-     * @param {string} key - Attribute Key.
-     * @param {RelationMutate} onDelete - Constraints option
-     * @param {string} newKey - New Attribute Key.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.AttributeRelationship>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    updateRelationshipAttribute(databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate, newKey?: string): Promise<Models.AttributeRelationship>;
-    updateRelationshipAttribute(
-        paramsOrFirst: { databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate, newKey?: string } | string,
-        ...rest: [(string)?, (string)?, (RelationMutate)?, (string)?]    
-    ): Promise<Models.AttributeRelationship> {
-        let params: { databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate, newKey?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, key: string, onDelete?: RelationMutate, newKey?: string };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                collectionId: rest[0] as string,
-                key: rest[1] as string,
-                onDelete: rest[2] as RelationMutate,
-                newKey: rest[3] as string            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const collectionId = params.collectionId;
-        const key = params.key;
-        const onDelete = params.onDelete;
-        const newKey = params.newKey;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-        if (typeof collectionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "collectionId"');
-        }
-        if (typeof key === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "key"');
-        }
-
-        const apiPath = '/databases/{databaseId}/collections/{collectionId}/attributes/{key}/relationship'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
-        const payload: Payload = {};
-        if (typeof onDelete !== 'undefined') {
-            payload['onDelete'] = onDelete;
-        }
-        if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'patch',
             uri,
             apiHeaders,
             payload

@@ -1,4 +1,4 @@
-export enum Resources {
+export enum NHostMigrationResource {
     User = 'user',
     Database = 'database',
     Table = 'table',
