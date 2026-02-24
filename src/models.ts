@@ -6854,6 +6854,14 @@ export namespace Models {
          */
         function: number;
         /**
+         * Number of deployments to be migrated.
+         */
+        deployment: number;
+        /**
+         * Number of environment variables to be migrated.
+         */
+        environmentVariable: number;
+        /**
          * Number of sites to be migrated.
          */
         site: number;
