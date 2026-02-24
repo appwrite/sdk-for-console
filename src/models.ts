@@ -6860,11 +6860,11 @@ export namespace Models {
         /**
          * Number of site deployments to be migrated.
          */
-        siteDeployment: number;
+        site_deployment: number;
         /**
          * Number of site variables to be migrated.
          */
-        siteVariable: number;
+        site_variable: number;
         /**
          * Size of files to be migrated in mb.
          */
