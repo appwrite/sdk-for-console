@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Migrations, Resources } from "@appwrite.io/console";
+import { Client, Migrations, NHostMigrationResource } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const migrations = new Migrations(client);
 
 const result = await migrations.createNHostMigration({
-    resources: [Resources.User],
+    resources: [NHostMigrationResource.User],
     subdomain: '<SUBDOMAIN>',
     region: '<REGION>',
     adminSecret: '<ADMIN_SECRET>',
