@@ -14,8 +14,8 @@ export enum AppwriteMigrationResource {
     File = 'file',
     Function = 'function',
     Deployment = 'deployment',
-    EnvironmentVariable = 'environmentVariable',
+    Environmentvariable = 'environment-variable',
     Site = 'site',
-    SiteDeployment = 'siteDeployment',
-    SiteVariable = 'siteVariable',
+    Sitedeployment = 'site-deployment',
+    Sitevariable = 'site-variable',
 }
