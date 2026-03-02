@@ -2627,7 +2627,7 @@ export namespace Models {
          */
         $id: string;
         /**
-         * Row automatically incrementing ID.
+         * Row sequence ID.
          */
         $sequence: number;
         /**
@@ -2666,7 +2666,7 @@ export namespace Models {
          */
         $id: string;
         /**
-         * Document automatically incrementing ID.
+         * Document sequence ID.
          */
         $sequence: number;
         /**
@@ -6401,6 +6401,50 @@ export namespace Models {
          * Comma-separated list of nameservers.
          */
         _APP_DOMAINS_NAMESERVERS: string;
+        /**
+         * Database adapter in use.
+         */
+        _APP_DB_ADAPTER: string;
+        /**
+         * Whether the database adapter supports relationships.
+         */
+        supportForRelationships: boolean;
+        /**
+         * Whether the database adapter supports operators.
+         */
+        supportForOperators: boolean;
+        /**
+         * Whether the database adapter supports spatial attributes.
+         */
+        supportForSpatials: boolean;
+        /**
+         * Whether the database adapter supports spatial indexes on nullable columns.
+         */
+        supportForSpatialIndexNull: boolean;
+        /**
+         * Whether the database adapter supports fulltext wildcard search.
+         */
+        supportForFulltextWildcard: boolean;
+        /**
+         * Whether the database adapter supports multiple fulltext indexes per collection.
+         */
+        supportForMultipleFulltextIndexes: boolean;
+        /**
+         * Whether the database adapter supports resizing attributes.
+         */
+        supportForAttributeResizing: boolean;
+        /**
+         * Whether the database adapter supports fixed schemas with row width limits.
+         */
+        supportForSchemas: boolean;
+        /**
+         * Maximum index length supported by the database adapter.
+         */
+        maxIndexLength: number;
+        /**
+         * Whether the database adapter uses integer sequence IDs.
+         */
+        supportForIntegerIds: boolean;
     }
 
     /**
@@ -6813,6 +6857,10 @@ export namespace Models {
          * Number of functions to be migrated.
          */
         function: number;
+        /**
+         * Number of sites to be migrated.
+         */
+        site: number;
         /**
          * Size of files to be migrated in mb.
          */
