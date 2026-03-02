@@ -2629,7 +2629,7 @@ export namespace Models {
         /**
          * Row sequence ID.
          */
-        $sequence: string;
+        $sequence: number;
         /**
          * Table ID.
          */
@@ -2668,7 +2668,7 @@ export namespace Models {
         /**
          * Document sequence ID.
          */
-        $sequence: string;
+        $sequence: number;
         /**
          * Collection ID.
          */
@@ -6441,6 +6441,10 @@ export namespace Models {
          * Maximum index length supported by the database adapter.
          */
         maxIndexLength: number;
+        /**
+         * Whether the database adapter uses integer sequence IDs.
+         */
+        supportForIntegerIds: boolean;
     }
 
     /**
