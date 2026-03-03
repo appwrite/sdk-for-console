@@ -1,5 +1,24 @@
 # Change Log
 
+## 5.0.0
+
+* Breaking: Channel.collection() and Channel.table() now require explicit IDs
+* Added DomainTransferStatusStatus enum
+* Added migration resource enums: AppwriteMigrationResource, FirebaseMigrationResource, NHostMigrationResource, SupabaseMigrationResource
+* Added ttl option to listDocuments and listRows
+* Added new docs/examples across domains, health, migrations, projects, sites
+* Updated docs and examples to reflect new resources and transfers
+* Updated README compatibility note to latest server version
+
+## 4.0.0
+
+* Breaking: Channel.collection() and Channel.table() now require explicit IDs
+* Added migration resource enums: AppwriteMigrationResource, FirebaseMigrationResource, NHostMigrationResource, SupabaseMigrationResource
+* Added DomainTransferStatusStatus enum
+* Added ttl option to listDocuments and listRows
+* Added new docs/examples across domains, health, migrations, projects, sites
+* Updated docs and examples to reflect new resources and transfers
+
 ## 3.1.0
 
 * Add support for `createPurchase` method in `Domains` service
