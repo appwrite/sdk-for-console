@@ -12,6 +12,7 @@ import { ProxyRuleDeploymentResourceType } from "./enums/proxy-rule-deployment-r
 import { ProxyRuleStatus } from "./enums/proxy-rule-status"
 import { MessageStatus } from "./enums/message-status"
 import { BillingPlanGroup } from "./enums/billing-plan-group"
+import { DomainTransferStatusStatus } from "./enums/domain-transfer-status-status"
 
 /**
  * Appwrite Models
@@ -4016,6 +4017,14 @@ export namespace Models {
          */
         defaultBranch: string;
         /**
+         * VCS (Version Control System) installation ID.
+         */
+        providerInstallationId: string;
+        /**
+         * Is VCS (Version Control System) repository authorized for the installation?
+         */
+        authorized: boolean;
+        /**
          * Last commit date in ISO 8601 format.
          */
         pushedAt: string;
@@ -4053,6 +4062,14 @@ export namespace Models {
          * VCS (Version Control System) repository's default branch name.
          */
         defaultBranch: string;
+        /**
+         * VCS (Version Control System) installation ID.
+         */
+        providerInstallationId: string;
+        /**
+         * Is VCS (Version Control System) repository authorized for the installation?
+         */
+        authorized: boolean;
         /**
          * Last commit date in ISO 8601 format.
          */
@@ -4095,6 +4112,14 @@ export namespace Models {
          * VCS (Version Control System) repository's default branch name.
          */
         defaultBranch: string;
+        /**
+         * VCS (Version Control System) installation ID.
+         */
+        providerInstallationId: string;
+        /**
+         * Is VCS (Version Control System) repository authorized for the installation?
+         */
+        authorized: boolean;
         /**
          * Last commit date in ISO 8601 format.
          */
@@ -4753,6 +4778,10 @@ export namespace Models {
          * Project blocks information
          */
         blocks: Block[];
+        /**
+         * Last time the project was accessed via console. Used with plan's projectInactivityDays to determine if project is paused.
+         */
+        consoleAccessedAt: string;
     }
 
     /**
@@ -7404,6 +7433,10 @@ export namespace Models {
          */
         logs: number;
         /**
+         * Number of days of console inactivity before a project is paused. 0 means pausing is disabled.
+         */
+        projectInactivityDays: number;
+        /**
          * Alert threshold percentage
          */
         alertLimit: number;
@@ -8647,6 +8680,10 @@ export namespace Models {
          * Dns records
          */
         dnsRecords: DnsRecord[];
+        /**
+         * Domain transfer status (e.g., "pending", "completed", "failed").
+         */
+        transferStatus: string;
     }
 
     /**
@@ -8903,6 +8940,10 @@ export namespace Models {
          * Price period in years.
          */
         periodYears: number;
+        /**
+         * Whether the domain is a premium domain.
+         */
+        premium: boolean;
     }
 
     /**
@@ -8925,6 +8966,34 @@ export namespace Models {
          * Is the domain available?
          */
         available: boolean;
+    }
+
+    /**
+     * domainTransferOut
+     */
+    export type DomainTransferOut = {
+        /**
+         * Domain transfer authorization code.
+         */
+        authCode: string;
+    }
+
+    /**
+     * domainTransferStatus
+     */
+    export type DomainTransferStatus = {
+        /**
+         * Transfer status.
+         */
+        status: DomainTransferStatusStatus;
+        /**
+         * Additional transfer status information.
+         */
+        reason: string;
+        /**
+         * Transfer status timestamp in ISO 8601 format.
+         */
+        timestamp: string;
     }
 
     /**

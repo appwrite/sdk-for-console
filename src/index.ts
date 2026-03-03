@@ -83,6 +83,7 @@ export { PlatformType } from './enums/platform-type';
 export { ResourceType } from './enums/resource-type';
 export { ApiService } from './enums/api-service';
 export { SMTPSecure } from './enums/smtp-secure';
+export { Status } from './enums/status';
 export { EmailTemplateType } from './enums/email-template-type';
 export { EmailTemplateLocale } from './enums/email-template-locale';
 export { SmsTemplateType } from './enums/sms-template-type';
@@ -111,3 +112,4 @@ export { ProxyRuleDeploymentResourceType } from './enums/proxy-rule-deployment-r
 export { ProxyRuleStatus } from './enums/proxy-rule-status';
 export { MessageStatus } from './enums/message-status';
 export { BillingPlanGroup } from './enums/billing-plan-group';
+export { DomainTransferStatusStatus } from './enums/domain-transfer-status-status';

@@ -9,7 +9,7 @@ const domains = new Domains(client);
 
 const result = await domains.createPurchase({
     domain: '',
-    teamId: '<TEAM_ID>',
+    organizationId: '<ORGANIZATION_ID>',
     firstName: '<FIRST_NAME>',
     lastName: '<LAST_NAME>',
     email: 'email@example.com',
