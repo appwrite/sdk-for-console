@@ -210,7 +210,7 @@ export class Domains {
      *     Create a domain purchase with registrant information.
      *
      * @param {string} params.domain - Fully qualified domain name to purchase (for example, example.com).
-     * @param {string} params.teamId - Team ID that will own the domain.
+     * @param {string} params.organizationId - Team ID that will own the domain.
      * @param {string} params.firstName - Registrant first name used for domain registration.
      * @param {string} params.lastName - Registrant last name used for domain registration.
      * @param {string} params.email - Registrant email address for registration and notices.
@@ -223,12 +223,12 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Domain>}
      */
-    createPurchase(params: { domain: string, teamId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number }): Promise<Models.Domain>;
+    createPurchase(params: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number }): Promise<Models.Domain>;
     /**
      *     Create a domain purchase with registrant information.
      *
      * @param {string} domain - Fully qualified domain name to purchase (for example, example.com).
-     * @param {string} teamId - Team ID that will own the domain.
+     * @param {string} organizationId - Team ID that will own the domain.
      * @param {string} firstName - Registrant first name used for domain registration.
      * @param {string} lastName - Registrant last name used for domain registration.
      * @param {string} email - Registrant email address for registration and notices.
@@ -242,19 +242,19 @@ export class Domains {
      * @returns {Promise<Models.Domain>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPurchase(domain: string, teamId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number): Promise<Models.Domain>;
+    createPurchase(domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number): Promise<Models.Domain>;
     createPurchase(
-        paramsOrFirst: { domain: string, teamId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number } | string,
+        paramsOrFirst: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number } | string,
         ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Domain> {
-        let params: { domain: string, teamId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number };
+        let params: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domain: string, teamId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number };
+            params = (paramsOrFirst || {}) as { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number };
         } else {
             params = {
                 domain: paramsOrFirst as string,
-                teamId: rest[0] as string,
+                organizationId: rest[0] as string,
                 firstName: rest[1] as string,
                 lastName: rest[2] as string,
                 email: rest[3] as string,
@@ -268,7 +268,7 @@ export class Domains {
         }
         
         const domain = params.domain;
-        const teamId = params.teamId;
+        const organizationId = params.organizationId;
         const firstName = params.firstName;
         const lastName = params.lastName;
         const email = params.email;
@@ -282,8 +282,8 @@ export class Domains {
         if (typeof domain === 'undefined') {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
-        if (typeof teamId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "teamId"');
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
         }
         if (typeof firstName === 'undefined') {
             throw new AppwriteException('Missing required parameter: "firstName"');
@@ -309,8 +309,8 @@ export class Domains {
         if (typeof domain !== 'undefined') {
             payload['domain'] = domain;
         }
-        if (typeof teamId !== 'undefined') {
-            payload['teamId'] = teamId;
+        if (typeof organizationId !== 'undefined') {
+            payload['organizationId'] = organizationId;
         }
         if (typeof firstName !== 'undefined') {
             payload['firstName'] = firstName;
@@ -437,6 +437,158 @@ export class Domains {
 
         return this.client.call(
             'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     *     Create a domain transfer in with authorization code and registrant information.
+     *
+     * @param {string} params.domain - Domain name to transfer in.
+     * @param {string} params.organizationId - Organization ID that this domain will belong to.
+     * @param {string} params.authCode - Authorization code for the domain transfer.
+     * @param {string} params.paymentMethodId - Payment method ID to authorize and capture the transfer.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     */
+    createTransferIn(params: { domain: string, organizationId: string, authCode: string, paymentMethodId: string }): Promise<Models.Domain>;
+    /**
+     *     Create a domain transfer in with authorization code and registrant information.
+     *
+     * @param {string} domain - Domain name to transfer in.
+     * @param {string} organizationId - Organization ID that this domain will belong to.
+     * @param {string} authCode - Authorization code for the domain transfer.
+     * @param {string} paymentMethodId - Payment method ID to authorize and capture the transfer.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createTransferIn(domain: string, organizationId: string, authCode: string, paymentMethodId: string): Promise<Models.Domain>;
+    createTransferIn(
+        paramsOrFirst: { domain: string, organizationId: string, authCode: string, paymentMethodId: string } | string,
+        ...rest: [(string)?, (string)?, (string)?]    
+    ): Promise<Models.Domain> {
+        let params: { domain: string, organizationId: string, authCode: string, paymentMethodId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { domain: string, organizationId: string, authCode: string, paymentMethodId: string };
+        } else {
+            params = {
+                domain: paramsOrFirst as string,
+                organizationId: rest[0] as string,
+                authCode: rest[1] as string,
+                paymentMethodId: rest[2] as string            
+            };
+        }
+        
+        const domain = params.domain;
+        const organizationId = params.organizationId;
+        const authCode = params.authCode;
+        const paymentMethodId = params.paymentMethodId;
+
+        if (typeof domain === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "domain"');
+        }
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof authCode === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "authCode"');
+        }
+        if (typeof paymentMethodId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
+        }
+
+        const apiPath = '/domains/transfers/in';
+        const payload: Payload = {};
+        if (typeof domain !== 'undefined') {
+            payload['domain'] = domain;
+        }
+        if (typeof organizationId !== 'undefined') {
+            payload['organizationId'] = organizationId;
+        }
+        if (typeof authCode !== 'undefined') {
+            payload['authCode'] = authCode;
+        }
+        if (typeof paymentMethodId !== 'undefined') {
+            payload['paymentMethodId'] = paymentMethodId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     *     Create a domain transfer out and return the authorization code.
+     *
+     * @param {string} params.domainId - Domain unique ID.
+     * @param {string} params.organizationId - Organization ID that this domain belongs to.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DomainTransferOut>}
+     */
+    createTransferOut(params: { domainId: string, organizationId: string }): Promise<Models.DomainTransferOut>;
+    /**
+     *     Create a domain transfer out and return the authorization code.
+     *
+     * @param {string} domainId - Domain unique ID.
+     * @param {string} organizationId - Organization ID that this domain belongs to.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DomainTransferOut>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createTransferOut(domainId: string, organizationId: string): Promise<Models.DomainTransferOut>;
+    createTransferOut(
+        paramsOrFirst: { domainId: string, organizationId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.DomainTransferOut> {
+        let params: { domainId: string, organizationId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { domainId: string, organizationId: string };
+        } else {
+            params = {
+                domainId: paramsOrFirst as string,
+                organizationId: rest[0] as string            
+            };
+        }
+        
+        const domainId = params.domainId;
+        const organizationId = params.organizationId;
+
+        if (typeof domainId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "domainId"');
+        }
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+
+        const apiPath = '/domains/transfers/out';
+        const payload: Payload = {};
+        if (typeof domainId !== 'undefined') {
+            payload['domainId'] = domainId;
+        }
+        if (typeof organizationId !== 'undefined') {
+            payload['organizationId'] = organizationId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
             uri,
             apiHeaders,
             payload
@@ -3532,6 +3684,57 @@ export class Domains {
 
         return this.client.call(
             'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     *     Get the transfer status for a domain.
+     *
+     * @param {string} params.domainId - Domain unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DomainTransferStatus>}
+     */
+    getTransferStatus(params: { domainId: string }): Promise<Models.DomainTransferStatus>;
+    /**
+     *     Get the transfer status for a domain.
+     *
+     * @param {string} domainId - Domain unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DomainTransferStatus>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getTransferStatus(domainId: string): Promise<Models.DomainTransferStatus>;
+    getTransferStatus(
+        paramsOrFirst: { domainId: string } | string    
+    ): Promise<Models.DomainTransferStatus> {
+        let params: { domainId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { domainId: string };
+        } else {
+            params = {
+                domainId: paramsOrFirst as string            
+            };
+        }
+        
+        const domainId = params.domainId;
+
+        if (typeof domainId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "domainId"');
+        }
+
+        const apiPath = '/domains/{domainId}/transfers/status'.replace('{domainId}', domainId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
             uri,
             apiHeaders,
             payload

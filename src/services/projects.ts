@@ -11,6 +11,7 @@ import { PlatformType } from '../enums/platform-type';
 import { ResourceType } from '../enums/resource-type';
 import { ApiService } from '../enums/api-service';
 import { SMTPSecure } from '../enums/smtp-secure';
+import { Status } from '../enums/status';
 import { EmailTemplateType } from '../enums/email-template-type';
 import { EmailTemplateLocale } from '../enums/email-template-locale';
 import { SmsTemplateType } from '../enums/sms-template-type';
@@ -1444,6 +1445,60 @@ export class Projects {
         if (typeof status !== 'undefined') {
             payload['status'] = status;
         }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Record console access to a project. This endpoint updates the last accessed timestamp for the project to track console activity.
+     * 
+     *
+     * @param {string} params.projectId - Project ID
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    updateConsoleAccess(params: { projectId: string }): Promise<{}>;
+    /**
+     * Record console access to a project. This endpoint updates the last accessed timestamp for the project to track console activity.
+     * 
+     *
+     * @param {string} projectId - Project ID
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateConsoleAccess(projectId: string): Promise<{}>;
+    updateConsoleAccess(
+        paramsOrFirst: { projectId: string } | string    
+    ): Promise<{}> {
+        let params: { projectId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string            
+            };
+        }
+        
+        const projectId = params.projectId;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        const apiPath = '/projects/{projectId}/console-access'.replace('{projectId}', projectId);
+        const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3576,6 +3631,71 @@ export class Projects {
 
         return this.client.call(
             'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update the status of a project. Can be used to archive/restore projects, and to restore paused projects. When restoring a paused project, the console fingerprint header must be provided and the project must not be blocked for any reason other than inactivity.
+     * 
+     *
+     * @param {string} params.projectId - Project ID
+     * @param {Status} params.status - New status for the project
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    updateStatus(params: { projectId: string, status: Status }): Promise<{}>;
+    /**
+     * Update the status of a project. Can be used to archive/restore projects, and to restore paused projects. When restoring a paused project, the console fingerprint header must be provided and the project must not be blocked for any reason other than inactivity.
+     * 
+     *
+     * @param {string} projectId - Project ID
+     * @param {Status} status - New status for the project
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateStatus(projectId: string, status: Status): Promise<{}>;
+    updateStatus(
+        paramsOrFirst: { projectId: string, status: Status } | string,
+        ...rest: [(Status)?]    
+    ): Promise<{}> {
+        let params: { projectId: string, status: Status };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string, status: Status };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string,
+                status: rest[0] as Status            
+            };
+        }
+        
+        const projectId = params.projectId;
+        const status = params.status;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof status === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "status"');
+        }
+
+        const apiPath = '/projects/{projectId}/status'.replace('{projectId}', projectId);
+        const payload: Payload = {};
+        if (typeof status !== 'undefined') {
+            payload['status'] = status;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
             uri,
             apiHeaders,
             payload

@@ -12,6 +12,7 @@ import { ProxyRuleDeploymentResourceType } from "./enums/proxy-rule-deployment-r
 import { ProxyRuleStatus } from "./enums/proxy-rule-status"
 import { MessageStatus } from "./enums/message-status"
 import { BillingPlanGroup } from "./enums/billing-plan-group"
+import { DomainTransferStatusStatus } from "./enums/domain-transfer-status-status"
 
 /**
  * Appwrite Models
@@ -2627,7 +2628,7 @@ export namespace Models {
          */
         $id: string;
         /**
-         * Row automatically incrementing ID.
+         * Row sequence ID.
          */
         $sequence: number;
         /**
@@ -2666,7 +2667,7 @@ export namespace Models {
          */
         $id: string;
         /**
-         * Document automatically incrementing ID.
+         * Document sequence ID.
          */
         $sequence: number;
         /**
@@ -4016,6 +4017,14 @@ export namespace Models {
          */
         defaultBranch: string;
         /**
+         * VCS (Version Control System) installation ID.
+         */
+        providerInstallationId: string;
+        /**
+         * Is VCS (Version Control System) repository authorized for the installation?
+         */
+        authorized: boolean;
+        /**
          * Last commit date in ISO 8601 format.
          */
         pushedAt: string;
@@ -4053,6 +4062,14 @@ export namespace Models {
          * VCS (Version Control System) repository's default branch name.
          */
         defaultBranch: string;
+        /**
+         * VCS (Version Control System) installation ID.
+         */
+        providerInstallationId: string;
+        /**
+         * Is VCS (Version Control System) repository authorized for the installation?
+         */
+        authorized: boolean;
         /**
          * Last commit date in ISO 8601 format.
          */
@@ -4095,6 +4112,14 @@ export namespace Models {
          * VCS (Version Control System) repository's default branch name.
          */
         defaultBranch: string;
+        /**
+         * VCS (Version Control System) installation ID.
+         */
+        providerInstallationId: string;
+        /**
+         * Is VCS (Version Control System) repository authorized for the installation?
+         */
+        authorized: boolean;
         /**
          * Last commit date in ISO 8601 format.
          */
@@ -4753,6 +4778,10 @@ export namespace Models {
          * Project blocks information
          */
         blocks: Block[];
+        /**
+         * Last time the project was accessed via console. Used with plan's projectInactivityDays to determine if project is paused.
+         */
+        consoleAccessedAt: string;
     }
 
     /**
@@ -6401,6 +6430,50 @@ export namespace Models {
          * Comma-separated list of nameservers.
          */
         _APP_DOMAINS_NAMESERVERS: string;
+        /**
+         * Database adapter in use.
+         */
+        _APP_DB_ADAPTER: string;
+        /**
+         * Whether the database adapter supports relationships.
+         */
+        supportForRelationships: boolean;
+        /**
+         * Whether the database adapter supports operators.
+         */
+        supportForOperators: boolean;
+        /**
+         * Whether the database adapter supports spatial attributes.
+         */
+        supportForSpatials: boolean;
+        /**
+         * Whether the database adapter supports spatial indexes on nullable columns.
+         */
+        supportForSpatialIndexNull: boolean;
+        /**
+         * Whether the database adapter supports fulltext wildcard search.
+         */
+        supportForFulltextWildcard: boolean;
+        /**
+         * Whether the database adapter supports multiple fulltext indexes per collection.
+         */
+        supportForMultipleFulltextIndexes: boolean;
+        /**
+         * Whether the database adapter supports resizing attributes.
+         */
+        supportForAttributeResizing: boolean;
+        /**
+         * Whether the database adapter supports fixed schemas with row width limits.
+         */
+        supportForSchemas: boolean;
+        /**
+         * Maximum index length supported by the database adapter.
+         */
+        maxIndexLength: number;
+        /**
+         * Whether the database adapter uses integer sequence IDs.
+         */
+        supportForIntegerIds: boolean;
     }
 
     /**
@@ -6813,6 +6886,10 @@ export namespace Models {
          * Number of functions to be migrated.
          */
         function: number;
+        /**
+         * Number of sites to be migrated.
+         */
+        site: number;
         /**
          * Size of files to be migrated in mb.
          */
@@ -7355,6 +7432,10 @@ export namespace Models {
          * Log days
          */
         logs: number;
+        /**
+         * Number of days of console inactivity before a project is paused. 0 means pausing is disabled.
+         */
+        projectInactivityDays: number;
         /**
          * Alert threshold percentage
          */
@@ -8599,6 +8680,10 @@ export namespace Models {
          * Dns records
          */
         dnsRecords: DnsRecord[];
+        /**
+         * Domain transfer status (e.g., "pending", "completed", "failed").
+         */
+        transferStatus: string;
     }
 
     /**
@@ -8855,6 +8940,10 @@ export namespace Models {
          * Price period in years.
          */
         periodYears: number;
+        /**
+         * Whether the domain is a premium domain.
+         */
+        premium: boolean;
     }
 
     /**
@@ -8877,6 +8966,34 @@ export namespace Models {
          * Is the domain available?
          */
         available: boolean;
+    }
+
+    /**
+     * domainTransferOut
+     */
+    export type DomainTransferOut = {
+        /**
+         * Domain transfer authorization code.
+         */
+        authCode: string;
+    }
+
+    /**
+     * domainTransferStatus
+     */
+    export type DomainTransferStatus = {
+        /**
+         * Transfer status.
+         */
+        status: DomainTransferStatusStatus;
+        /**
+         * Additional transfer status information.
+         */
+        reason: string;
+        /**
+         * Transfer status timestamp in ISO 8601 format.
+         */
+        timestamp: string;
     }
 
     /**

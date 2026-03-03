@@ -835,7 +835,7 @@ export class Account {
     }
 
     /**
-     * Get a list of all API keys from the current account. 
+     * Get a list of all API keys from the current account.
      *
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -843,7 +843,7 @@ export class Account {
      */
     listKeys(params?: { total?: boolean }): Promise<Models.KeyList>;
     /**
-     * Get a list of all API keys from the current account. 
+     * Get a list of all API keys from the current account.
      *
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
