@@ -12,6 +12,7 @@ import { ProxyRuleDeploymentResourceType } from "./enums/proxy-rule-deployment-r
 import { ProxyRuleStatus } from "./enums/proxy-rule-status"
 import { MessageStatus } from "./enums/message-status"
 import { BillingPlanGroup } from "./enums/billing-plan-group"
+import { DomainPurchasePaymentStatus } from "./enums/domain-purchase-payment-status"
 import { DomainTransferStatusStatus } from "./enums/domain-transfer-status-status"
 
 /**
@@ -3525,6 +3526,10 @@ export namespace Models {
          */
         framework: string;
         /**
+         * How many days to keep the non-active deployments before they will be automatically deleted.
+         */
+        deploymentRetention: number;
+        /**
          * Site's active deployment ID.
          */
         deploymentId: string;
@@ -3569,6 +3574,10 @@ export namespace Models {
          */
         buildCommand: string;
         /**
+         * Custom command to use when starting site runtime.
+         */
+        startCommand: string;
+        /**
          * The directory where the site build output is located.
          */
         outputDirectory: string;
@@ -3593,9 +3602,13 @@ export namespace Models {
          */
         providerSilentMode: boolean;
         /**
-         * Machine specification for builds and executions.
+         * Machine specification for deployment builds.
          */
-        specification: string;
+        buildSpecification: string;
+        /**
+         * Machine specification for SSR executions.
+         */
+        runtimeSpecification: string;
         /**
          * Site build runtime.
          */
@@ -3751,6 +3764,10 @@ export namespace Models {
          */
         runtime: string;
         /**
+         * How many days to keep the non-active deployments before they will be automatically deleted.
+         */
+        deploymentRetention: number;
+        /**
          * Function's active deployment ID.
          */
         deploymentId: string;
@@ -3823,9 +3840,13 @@ export namespace Models {
          */
         providerSilentMode: boolean;
         /**
-         * Machine specification for builds and executions.
+         * Machine specification for deployment builds.
          */
-        specification: string;
+        buildSpecification: string;
+        /**
+         * Machine specification for executions.
+         */
+        runtimeSpecification: string;
     }
 
     /**
@@ -6137,6 +6158,22 @@ export namespace Models {
          */
         imageTransformationsTotal: number;
         /**
+         * Aggregated number of function executions per period.
+         */
+        functionsExecutions: Metric[];
+        /**
+         * Total aggregated number of function executions.
+         */
+        functionsExecutionsTotal: number;
+        /**
+         * Aggregated number of site executions per period.
+         */
+        sitesExecutions: Metric[];
+        /**
+         * Total aggregated number of site executions.
+         */
+        sitesExecutionsTotal: number;
+        /**
          * Aggregated stats for total network bandwidth.
          */
         networkTotal: number;
@@ -6160,6 +6197,30 @@ export namespace Models {
          * Total aggregated number of Imagine credits.
          */
         imagineCreditsTotal: number;
+        /**
+         * Current aggregated number of open Realtime connections.
+         */
+        realtimeConnectionsTotal: number;
+        /**
+         * Total number of Realtime messages sent to clients.
+         */
+        realtimeMessagesTotal: number;
+        /**
+         * Total consumed Realtime bandwidth (in bytes).
+         */
+        realtimeBandwidthTotal: number;
+        /**
+         * Aggregated number of open Realtime connections per period.
+         */
+        realtimeConnections: Metric[];
+        /**
+         * Aggregated number of Realtime messages sent to clients per period.
+         */
+        realtimeMessages: Metric[];
+        /**
+         * Aggregated consumed Realtime bandwidth (in bytes) per period.
+         */
+        realtimeBandwidth: Metric[];
     }
 
     /**
@@ -6890,6 +6951,22 @@ export namespace Models {
          * Number of sites to be migrated.
          */
         site: number;
+        /**
+         * Number of providers to be migrated.
+         */
+        provider: number;
+        /**
+         * Number of topics to be migrated.
+         */
+        topic: number;
+        /**
+         * Number of subscribers to be migrated.
+         */
+        subscriber: number;
+        /**
+         * Number of messages to be migrated.
+         */
+        message: number;
         /**
          * Size of files to be migrated in mb.
          */
@@ -8651,7 +8728,11 @@ export namespace Models {
         /**
          * Payment status for domain purchase.
          */
-        paymentStatus: string;
+        paymentStatus: DomainPurchasePaymentStatus;
+        /**
+         * Client secret for payment confirmation. Present only when paymentStatus is pending_confirmation.
+         */
+        clientSecret: string;
         /**
          * Nameservers setting. "Appwrite" or empty string.
          */
@@ -8684,6 +8765,10 @@ export namespace Models {
          * Domain transfer status (e.g., "pending", "completed", "failed").
          */
         transferStatus: string;
+        /**
+         * Retry attempts for the current domain payment flow. Development only.
+         */
+        attempts: number;
     }
 
     /**
