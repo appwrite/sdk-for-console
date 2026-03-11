@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.0.1
+
+* Added messaging migration resource types: Provider, Topic, Subscriber, Message
+* Added deployment retention support for functions and sites
+* Added domain purchase and transfer confirmation endpoints
+
 ## 4.0.0
 
 * Breaking: Channel.collection() and Channel.table() now require explicit IDs
