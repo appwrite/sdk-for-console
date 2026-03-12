@@ -400,7 +400,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '23.0.0',
+        'x-sdk-version': '5.0.0',
         'X-Appwrite-Response-Format': '1.8.0',
     };
 
@@ -993,6 +993,10 @@ class Client {
         if (typeof window !== 'undefined' && window.localStorage && cookieFallback) {
             window.console.warn('Appwrite is using localStorage for session management. Increase your security by adding a custom domain as your API endpoint.');
             window.localStorage.setItem('cookieFallback', cookieFallback);
+        }
+
+        if (data && typeof data === 'object') {
+            data.toString = () => JSONbig.stringify(data);
         }
 
         return data;

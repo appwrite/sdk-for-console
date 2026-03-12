@@ -2,13 +2,12 @@
 
 ## 5.0.0
 
-* Breaking: Channel.collection() and Channel.table() now require explicit IDs
-* Added DomainTransferStatusStatus enum
-* Added migration resource enums: AppwriteMigrationResource, FirebaseMigrationResource, NHostMigrationResource, SupabaseMigrationResource
-* Added ttl option to listDocuments and listRows
-* Added new docs/examples across domains, health, migrations, projects, sites
-* Updated docs and examples to reflect new resources and transfers
-* Updated README compatibility note to latest server version
+* Breaking: Functions and Sites now require `specification` parameter and support `deploymentRetention`
+* Breaking: New `buildSpecification` and `runtimeSpecification` parameters for functions
+* Added messaging migration resource types: Provider, Topic, Subscriber, Message
+* Added new build runtimes and runtime versions
+* Added domain purchase and transfer confirmation endpoints
+* Added `DomainPurchasePaymentStatus` enum
 
 ## 4.0.0
 

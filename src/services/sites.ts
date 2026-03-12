@@ -97,6 +97,7 @@ export class Sites {
      * @param {number} params.timeout - Maximum request time in seconds.
      * @param {string} params.installCommand - Install Command.
      * @param {string} params.buildCommand - Build Command.
+     * @param {string} params.startCommand - Custom start command. Leave empty to use default.
      * @param {string} params.outputDirectory - Output Directory for site.
      * @param {Adapter} params.adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
      * @param {string} params.installationId - Appwrite Installation ID for VCS (Version Control System) deployment.
@@ -105,11 +106,13 @@ export class Sites {
      * @param {string} params.providerBranch - Production branch for the repo linked to the site.
      * @param {boolean} params.providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} params.providerRootDirectory - Path to site code in the linked repo.
-     * @param {string} params.specification - Framework specification for the site and builds.
+     * @param {string} params.buildSpecification - Build specification for the site deployments.
+     * @param {string} params.runtimeSpecification - Runtime specification for the SSR executions.
+     * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      */
-    create(params: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string }): Promise<Models.Site>;
+    create(params: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Site>;
     /**
      * Create a new site.
      *
@@ -122,6 +125,7 @@ export class Sites {
      * @param {number} timeout - Maximum request time in seconds.
      * @param {string} installCommand - Install Command.
      * @param {string} buildCommand - Build Command.
+     * @param {string} startCommand - Custom start command. Leave empty to use default.
      * @param {string} outputDirectory - Output Directory for site.
      * @param {Adapter} adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
      * @param {string} installationId - Appwrite Installation ID for VCS (Version Control System) deployment.
@@ -130,20 +134,22 @@ export class Sites {
      * @param {string} providerBranch - Production branch for the repo linked to the site.
      * @param {boolean} providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} providerRootDirectory - Path to site code in the linked repo.
-     * @param {string} specification - Framework specification for the site and builds.
+     * @param {string} buildSpecification - Build specification for the site deployments.
+     * @param {string} runtimeSpecification - Runtime specification for the SSR executions.
+     * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string): Promise<Models.Site>;
+    create(siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Site>;
     create(
-        paramsOrFirst: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string } | string,
-        ...rest: [(string)?, (Framework)?, (BuildRuntime)?, (boolean)?, (boolean)?, (number)?, (string)?, (string)?, (string)?, (Adapter)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?]    
+        paramsOrFirst: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
+        ...rest: [(string)?, (Framework)?, (BuildRuntime)?, (boolean)?, (boolean)?, (number)?, (string)?, (string)?, (string)?, (string)?, (Adapter)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Site> {
-        let params: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
+        let params: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
+            params = (paramsOrFirst || {}) as { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         } else {
             params = {
                 siteId: paramsOrFirst as string,
@@ -155,15 +161,18 @@ export class Sites {
                 timeout: rest[5] as number,
                 installCommand: rest[6] as string,
                 buildCommand: rest[7] as string,
-                outputDirectory: rest[8] as string,
-                adapter: rest[9] as Adapter,
-                installationId: rest[10] as string,
-                fallbackFile: rest[11] as string,
-                providerRepositoryId: rest[12] as string,
-                providerBranch: rest[13] as string,
-                providerSilentMode: rest[14] as boolean,
-                providerRootDirectory: rest[15] as string,
-                specification: rest[16] as string            
+                startCommand: rest[8] as string,
+                outputDirectory: rest[9] as string,
+                adapter: rest[10] as Adapter,
+                installationId: rest[11] as string,
+                fallbackFile: rest[12] as string,
+                providerRepositoryId: rest[13] as string,
+                providerBranch: rest[14] as string,
+                providerSilentMode: rest[15] as boolean,
+                providerRootDirectory: rest[16] as string,
+                buildSpecification: rest[17] as string,
+                runtimeSpecification: rest[18] as string,
+                deploymentRetention: rest[19] as number            
             };
         }
         
@@ -176,6 +185,7 @@ export class Sites {
         const timeout = params.timeout;
         const installCommand = params.installCommand;
         const buildCommand = params.buildCommand;
+        const startCommand = params.startCommand;
         const outputDirectory = params.outputDirectory;
         const adapter = params.adapter;
         const installationId = params.installationId;
@@ -184,7 +194,9 @@ export class Sites {
         const providerBranch = params.providerBranch;
         const providerSilentMode = params.providerSilentMode;
         const providerRootDirectory = params.providerRootDirectory;
-        const specification = params.specification;
+        const buildSpecification = params.buildSpecification;
+        const runtimeSpecification = params.runtimeSpecification;
+        const deploymentRetention = params.deploymentRetention;
 
         if (typeof siteId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "siteId"');
@@ -225,6 +237,9 @@ export class Sites {
         if (typeof buildCommand !== 'undefined') {
             payload['buildCommand'] = buildCommand;
         }
+        if (typeof startCommand !== 'undefined') {
+            payload['startCommand'] = startCommand;
+        }
         if (typeof outputDirectory !== 'undefined') {
             payload['outputDirectory'] = outputDirectory;
         }
@@ -252,8 +267,14 @@ export class Sites {
         if (typeof providerRootDirectory !== 'undefined') {
             payload['providerRootDirectory'] = providerRootDirectory;
         }
-        if (typeof specification !== 'undefined') {
-            payload['specification'] = specification;
+        if (typeof buildSpecification !== 'undefined') {
+            payload['buildSpecification'] = buildSpecification;
+        }
+        if (typeof runtimeSpecification !== 'undefined') {
+            payload['runtimeSpecification'] = runtimeSpecification;
+        }
+        if (typeof deploymentRetention !== 'undefined') {
+            payload['deploymentRetention'] = deploymentRetention;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -552,6 +573,7 @@ export class Sites {
      * @param {number} params.timeout - Maximum request time in seconds.
      * @param {string} params.installCommand - Install Command.
      * @param {string} params.buildCommand - Build Command.
+     * @param {string} params.startCommand - Custom start command. Leave empty to use default.
      * @param {string} params.outputDirectory - Output Directory for site.
      * @param {BuildRuntime} params.buildRuntime - Runtime to use during build step.
      * @param {Adapter} params.adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
@@ -561,11 +583,13 @@ export class Sites {
      * @param {string} params.providerBranch - Production branch for the repo linked to the site.
      * @param {boolean} params.providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} params.providerRootDirectory - Path to site code in the linked repo.
-     * @param {string} params.specification - Framework specification for the site and builds.
+     * @param {string} params.buildSpecification - Build specification for the site deployments.
+     * @param {string} params.runtimeSpecification - Runtime specification for the SSR executions.
+     * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      */
-    update(params: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string }): Promise<Models.Site>;
+    update(params: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Site>;
     /**
      * Update site by its unique ID.
      *
@@ -577,6 +601,7 @@ export class Sites {
      * @param {number} timeout - Maximum request time in seconds.
      * @param {string} installCommand - Install Command.
      * @param {string} buildCommand - Build Command.
+     * @param {string} startCommand - Custom start command. Leave empty to use default.
      * @param {string} outputDirectory - Output Directory for site.
      * @param {BuildRuntime} buildRuntime - Runtime to use during build step.
      * @param {Adapter} adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
@@ -586,20 +611,22 @@ export class Sites {
      * @param {string} providerBranch - Production branch for the repo linked to the site.
      * @param {boolean} providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} providerRootDirectory - Path to site code in the linked repo.
-     * @param {string} specification - Framework specification for the site and builds.
+     * @param {string} buildSpecification - Build specification for the site deployments.
+     * @param {string} runtimeSpecification - Runtime specification for the SSR executions.
+     * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string): Promise<Models.Site>;
+    update(siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Site>;
     update(
-        paramsOrFirst: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string } | string,
-        ...rest: [(string)?, (Framework)?, (boolean)?, (boolean)?, (number)?, (string)?, (string)?, (string)?, (BuildRuntime)?, (Adapter)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?]    
+        paramsOrFirst: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
+        ...rest: [(string)?, (Framework)?, (boolean)?, (boolean)?, (number)?, (string)?, (string)?, (string)?, (string)?, (BuildRuntime)?, (Adapter)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Site> {
-        let params: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
+        let params: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, specification?: string };
+            params = (paramsOrFirst || {}) as { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         } else {
             params = {
                 siteId: paramsOrFirst as string,
@@ -610,16 +637,19 @@ export class Sites {
                 timeout: rest[4] as number,
                 installCommand: rest[5] as string,
                 buildCommand: rest[6] as string,
-                outputDirectory: rest[7] as string,
-                buildRuntime: rest[8] as BuildRuntime,
-                adapter: rest[9] as Adapter,
-                fallbackFile: rest[10] as string,
-                installationId: rest[11] as string,
-                providerRepositoryId: rest[12] as string,
-                providerBranch: rest[13] as string,
-                providerSilentMode: rest[14] as boolean,
-                providerRootDirectory: rest[15] as string,
-                specification: rest[16] as string            
+                startCommand: rest[7] as string,
+                outputDirectory: rest[8] as string,
+                buildRuntime: rest[9] as BuildRuntime,
+                adapter: rest[10] as Adapter,
+                fallbackFile: rest[11] as string,
+                installationId: rest[12] as string,
+                providerRepositoryId: rest[13] as string,
+                providerBranch: rest[14] as string,
+                providerSilentMode: rest[15] as boolean,
+                providerRootDirectory: rest[16] as string,
+                buildSpecification: rest[17] as string,
+                runtimeSpecification: rest[18] as string,
+                deploymentRetention: rest[19] as number            
             };
         }
         
@@ -631,6 +661,7 @@ export class Sites {
         const timeout = params.timeout;
         const installCommand = params.installCommand;
         const buildCommand = params.buildCommand;
+        const startCommand = params.startCommand;
         const outputDirectory = params.outputDirectory;
         const buildRuntime = params.buildRuntime;
         const adapter = params.adapter;
@@ -640,7 +671,9 @@ export class Sites {
         const providerBranch = params.providerBranch;
         const providerSilentMode = params.providerSilentMode;
         const providerRootDirectory = params.providerRootDirectory;
-        const specification = params.specification;
+        const buildSpecification = params.buildSpecification;
+        const runtimeSpecification = params.runtimeSpecification;
+        const deploymentRetention = params.deploymentRetention;
 
         if (typeof siteId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "siteId"');
@@ -675,6 +708,9 @@ export class Sites {
         if (typeof buildCommand !== 'undefined') {
             payload['buildCommand'] = buildCommand;
         }
+        if (typeof startCommand !== 'undefined') {
+            payload['startCommand'] = startCommand;
+        }
         if (typeof outputDirectory !== 'undefined') {
             payload['outputDirectory'] = outputDirectory;
         }
@@ -702,8 +738,14 @@ export class Sites {
         if (typeof providerRootDirectory !== 'undefined') {
             payload['providerRootDirectory'] = providerRootDirectory;
         }
-        if (typeof specification !== 'undefined') {
-            payload['specification'] = specification;
+        if (typeof buildSpecification !== 'undefined') {
+            payload['buildSpecification'] = buildSpecification;
+        }
+        if (typeof runtimeSpecification !== 'undefined') {
+            payload['runtimeSpecification'] = runtimeSpecification;
+        }
+        if (typeof deploymentRetention !== 'undefined') {
+            payload['deploymentRetention'] = deploymentRetention;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

@@ -354,6 +354,69 @@ export class Domains {
     }
 
     /**
+     *     Confirm a domain purchase after payment authentication. Call this after the client has confirmed the payment via Stripe.js.
+     *
+     * @param {string} params.domainId - Domain ID to confirm purchase for.
+     * @param {string} params.organizationId - Team ID that owns the domain.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     */
+    confirmPurchase(params: { domainId: string, organizationId: string }): Promise<Models.Domain>;
+    /**
+     *     Confirm a domain purchase after payment authentication. Call this after the client has confirmed the payment via Stripe.js.
+     *
+     * @param {string} domainId - Domain ID to confirm purchase for.
+     * @param {string} organizationId - Team ID that owns the domain.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    confirmPurchase(domainId: string, organizationId: string): Promise<Models.Domain>;
+    confirmPurchase(
+        paramsOrFirst: { domainId: string, organizationId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.Domain> {
+        let params: { domainId: string, organizationId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { domainId: string, organizationId: string };
+        } else {
+            params = {
+                domainId: paramsOrFirst as string,
+                organizationId: rest[0] as string            
+            };
+        }
+        
+        const domainId = params.domainId;
+        const organizationId = params.organizationId;
+
+        if (typeof domainId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "domainId"');
+        }
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+
+        const apiPath = '/domains/purchases/{domainId}/confirm'.replace('{domainId}', domainId);
+        const payload: Payload = {};
+        if (typeof organizationId !== 'undefined') {
+            payload['organizationId'] = organizationId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      *     List domain suggestions.
      *
      * @param {string} params.query - Query to find available domains and suggestions. Max length: 256 chars.
@@ -514,6 +577,69 @@ export class Domains {
         }
         if (typeof paymentMethodId !== 'undefined') {
             payload['paymentMethodId'] = paymentMethodId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     *     Confirm a domain transfer in after payment authentication. Call this after the client has confirmed the payment via Stripe.js.
+     *
+     * @param {string} params.domainId - Domain ID to confirm transfer for.
+     * @param {string} params.organizationId - Team ID that owns the domain.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     */
+    confirmTransferIn(params: { domainId: string, organizationId: string }): Promise<Models.Domain>;
+    /**
+     *     Confirm a domain transfer in after payment authentication. Call this after the client has confirmed the payment via Stripe.js.
+     *
+     * @param {string} domainId - Domain ID to confirm transfer for.
+     * @param {string} organizationId - Team ID that owns the domain.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    confirmTransferIn(domainId: string, organizationId: string): Promise<Models.Domain>;
+    confirmTransferIn(
+        paramsOrFirst: { domainId: string, organizationId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.Domain> {
+        let params: { domainId: string, organizationId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { domainId: string, organizationId: string };
+        } else {
+            params = {
+                domainId: paramsOrFirst as string,
+                organizationId: rest[0] as string            
+            };
+        }
+        
+        const domainId = params.domainId;
+        const organizationId = params.organizationId;
+
+        if (typeof domainId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "domainId"');
+        }
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+
+        const apiPath = '/domains/transfers/in/{domainId}/confirm'.replace('{domainId}', domainId);
+        const payload: Payload = {};
+        if (typeof organizationId !== 'undefined') {
+            payload['organizationId'] = organizationId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

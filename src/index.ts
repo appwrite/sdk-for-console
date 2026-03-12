@@ -112,4 +112,5 @@ export { ProxyRuleDeploymentResourceType } from './enums/proxy-rule-deployment-r
 export { ProxyRuleStatus } from './enums/proxy-rule-status';
 export { MessageStatus } from './enums/message-status';
 export { BillingPlanGroup } from './enums/billing-plan-group';
+export { DomainPurchasePaymentStatus } from './enums/domain-purchase-payment-status';
 export { DomainTransferStatusStatus } from './enums/domain-transfer-status-status';
