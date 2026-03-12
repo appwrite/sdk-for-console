@@ -1,10 +1,13 @@
 # Change Log
 
-## 4.0.1
+## 5.0.0
 
+* Breaking: Functions and Sites now require `specification` parameter and support `deploymentRetention`
+* Breaking: New `buildSpecification` and `runtimeSpecification` parameters for functions
 * Added messaging migration resource types: Provider, Topic, Subscriber, Message
-* Added deployment retention support for functions and sites
+* Added new build runtimes and runtime versions
 * Added domain purchase and transfer confirmation endpoints
+* Added `DomainPurchasePaymentStatus` enum
 
 ## 4.0.0
 
