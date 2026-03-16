@@ -1,13 +1,9 @@
 # Change Log
 
-## 5.0.0
+## 4.1.0
 
-* Breaking: Functions and Sites now require `specification` parameter and support `deploymentRetention`
-* Breaking: New `buildSpecification` and `runtimeSpecification` parameters for functions
-* Added messaging migration resource types: Provider, Topic, Subscriber, Message
-* Added new build runtimes and runtime versions
-* Added domain purchase and transfer confirmation endpoints
-* Added `DomainPurchasePaymentStatus` enum
+* Added new runtime RC values to `BuildRuntime`, `Runtime`, and `Runtimes` enums
+* Updated CDN script to load `@appwrite.io/console` version 4.0.0
 
 ## 4.0.0
 
