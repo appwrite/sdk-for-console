@@ -1,5 +1,6 @@
 export declare enum DatabaseType {
     Legacy = "legacy",
     Tablesdb = "tablesdb",
-    Documentsdb = "documentsdb"
+    Documentsdb = "documentsdb",
+    Vectorsdb = "vectorsdb"
 }

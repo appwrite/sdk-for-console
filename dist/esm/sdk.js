@@ -4255,7 +4255,8 @@ class Console {
                 tableId: rest[0],
                 context: rest[1],
                 min: rest[2],
-                max: rest[3]
+                max: rest[3],
+                databaseType: rest[4]
             };
         }
         const databaseId = params.databaseId;
@@ -4263,6 +4264,7 @@ class Console {
         const context = params.context;
         const min = params.min;
         const max = params.max;
+        const databaseType = params.databaseType;
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -4285,6 +4287,9 @@ class Console {
         }
         if (typeof max !== 'undefined') {
             payload['max'] = max;
+        }
+        if (typeof databaseType !== 'undefined') {
+            payload['databaseType'] = databaseType;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
         const apiHeaders = {};
@@ -30946,6 +30951,14 @@ var ConsoleResourceType;
     ConsoleResourceType["Rules"] = "rules";
 })(ConsoleResourceType || (ConsoleResourceType = {}));
 
+var DatabaseType;
+(function (DatabaseType) {
+    DatabaseType["Legacy"] = "legacy";
+    DatabaseType["Tablesdb"] = "tablesdb";
+    DatabaseType["Documentsdb"] = "documentsdb";
+    DatabaseType["Vectorsdb"] = "vectorsdb";
+})(DatabaseType || (DatabaseType = {}));
+
 var UsageRange;
 (function (UsageRange) {
     UsageRange["TwentyFourHours"] = "24h";
@@ -31931,13 +31944,6 @@ var VectorsDBIndexType;
     VectorsDBIndexType["Key"] = "key";
     VectorsDBIndexType["Unique"] = "unique";
 })(VectorsDBIndexType || (VectorsDBIndexType = {}));
-
-var DatabaseType;
-(function (DatabaseType) {
-    DatabaseType["Legacy"] = "legacy";
-    DatabaseType["Tablesdb"] = "tablesdb";
-    DatabaseType["Documentsdb"] = "documentsdb";
-})(DatabaseType || (DatabaseType = {}));
 
 var AttributeStatus;
 (function (AttributeStatus) {
