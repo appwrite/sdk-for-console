@@ -31,6 +31,7 @@ export { Teams } from './services/teams';
 export { Tokens } from './services/tokens';
 export { Users } from './services/users';
 export { Vcs } from './services/vcs';
+export { Webhooks } from './services/webhooks';
 export { Realtime } from './services/realtime';
 export type { Models, Payload, RealtimeResponseEvent, UploadProgress } from './client';
 export type { RealtimeSubscription } from './services/realtime';
@@ -112,5 +113,5 @@ export { ProxyRuleDeploymentResourceType } from './enums/proxy-rule-deployment-r
 export { ProxyRuleStatus } from './enums/proxy-rule-status';
 export { MessageStatus } from './enums/message-status';
 export { BillingPlanGroup } from './enums/billing-plan-group';
-export { DomainPurchasePaymentStatus } from './enums/domain-purchase-payment-status';
-export { DomainTransferStatusStatus } from './enums/domain-transfer-status-status';
+export { DomainTransferStatus } from './enums/domain-transfer-status';
+export { DomainPurchaseStatus } from './enums/domain-purchase-status';

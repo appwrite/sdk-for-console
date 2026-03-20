@@ -1,9 +1,26 @@
 # Change Log
 
-## 4.1.0
+## 6.0.0
 
-* Added new runtime RC values to `BuildRuntime`, `Runtime`, and `Runtimes` enums
-* Updated CDN script to load `@appwrite.io/console` version 4.0.0
+* Breaking: Renamed `domains.confirmPurchase()` to `domains.updatePurchase()`
+* Breaking: Renamed `domains.confirmTransferIn()` to `domains.updateTransferIn()`
+* Breaking: Replaced `Projects` API with `Webhooks` for webhook usage
+* Breaking: Renamed `updateWebhook()` to `update()` on `Webhooks`
+* Breaking: Renamed `listWebhooks()` to `list()` on `Webhooks`
+* Breaking: Replaced `DomainPurchasePaymentStatus` with `DomainPurchaseStatus`
+* Breaking: Renamed `DomainTransferStatusStatus` to `DomainTransferStatus`
+* Breaking: Removed `Deno121`, `Deno124`, `Deno135` from `BuildRuntime`/`Runtime` enums
+* Updated README badge to API version `1.8.2`
+* Added `queries` option to `webhooks.list()`
+
+## 5.0.0
+
+* Breaking: Functions and Sites now require `specification` parameter and support `deploymentRetention`
+* Breaking: New `buildSpecification` and `runtimeSpecification` parameters for functions
+* Added messaging migration resource types: Provider, Topic, Subscriber, Message
+* Added new build runtimes and runtime versions
+* Added domain purchase and transfer confirmation endpoints
+* Added `DomainPurchasePaymentStatus` enum
 
 ## 4.0.0
 

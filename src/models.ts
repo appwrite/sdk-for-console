@@ -12,8 +12,8 @@ import { ProxyRuleDeploymentResourceType } from "./enums/proxy-rule-deployment-r
 import { ProxyRuleStatus } from "./enums/proxy-rule-status"
 import { MessageStatus } from "./enums/message-status"
 import { BillingPlanGroup } from "./enums/billing-plan-group"
-import { DomainPurchasePaymentStatus } from "./enums/domain-purchase-payment-status"
-import { DomainTransferStatusStatus } from "./enums/domain-transfer-status-status"
+import { DomainTransferStatus } from "./enums/domain-transfer-status"
+import { DomainPurchaseStatus } from "./enums/domain-purchase-status"
 
 /**
  * Appwrite Models
@@ -7206,9 +7206,17 @@ export namespace Models {
          */
         usageBandwidth: number;
         /**
-         * Total realtime usage for the billing period
+         * Peak concurrent realtime connections for the billing period
          */
         usageRealtime: number;
+        /**
+         * Total realtime messages sent for the billing period
+         */
+        usageRealtimeMessages: number;
+        /**
+         * Total realtime bandwidth usage for the billing period
+         */
+        usageRealtimeBandwidth: number;
         /**
          * Additional members
          */
@@ -8726,14 +8734,6 @@ export namespace Models {
          */
         registrar: string;
         /**
-         * Payment status for domain purchase.
-         */
-        paymentStatus: DomainPurchasePaymentStatus;
-        /**
-         * Client secret for payment confirmation. Present only when paymentStatus is pending_confirmation.
-         */
-        clientSecret: string;
-        /**
          * Nameservers setting. "Appwrite" or empty string.
          */
         nameservers: string;
@@ -8754,6 +8754,10 @@ export namespace Models {
          */
         renewalPrice: number;
         /**
+         * Transfer status for domains being transferred in.
+         */
+        transferStatus: DomainTransferStatus;
+        /**
          * Team ID.
          */
         teamId: string;
@@ -8761,14 +8765,52 @@ export namespace Models {
          * Dns records
          */
         dnsRecords: DnsRecord[];
+    }
+
+    /**
+     * DomainPurchase
+     */
+    export type DomainPurchase = {
         /**
-         * Domain transfer status (e.g., "pending", "completed", "failed").
+         * Purchase/invoice ID.
          */
-        transferStatus: string;
+        $id: string;
         /**
-         * Retry attempts for the current domain payment flow. Development only.
+         * Purchase creation time in ISO 8601 format.
          */
-        attempts: number;
+        $createdAt: string;
+        /**
+         * Purchase update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Domain document ID.
+         */
+        domainId: string;
+        /**
+         * Domain name.
+         */
+        domain: string;
+        /**
+         * Team ID that owns the domain.
+         */
+        organizationId: string;
+        /**
+         * Domain purchase status.
+         */
+        status: DomainPurchaseStatus;
+        /**
+         * Stripe client secret for 3DS; empty when not applicable.
+         */
+        clientSecret: string;
+        /**
+         * Purchase amount.
+         */
+        amount: number;
+        /**
+         * Currency code.
+         */
+        currency: string;
     }
 
     /**
@@ -9070,7 +9112,7 @@ export namespace Models {
         /**
          * Transfer status.
          */
-        status: DomainTransferStatusStatus;
+        status: DomainTransferStatus;
         /**
          * Additional transfer status information.
          */
