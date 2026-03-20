@@ -1,15 +1,15 @@
 ```javascript
-import { Client, Projects } from "@appwrite.io/console";
+import { Client, Domains } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const projects = new Projects(client);
+const domains = new Domains(client);
 
-const result = await projects.getWebhook({
-    projectId: '<PROJECT_ID>',
-    webhookId: '<WEBHOOK_ID>'
+const result = await domains.updatePurchase({
+    domainId: '<DOMAIN_ID>',
+    organizationId: '<ORGANIZATION_ID>'
 });
 
 console.log(result);

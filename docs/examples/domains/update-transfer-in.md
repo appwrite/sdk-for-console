@@ -7,7 +7,7 @@ const client = new Client()
 
 const domains = new Domains(client);
 
-const result = await domains.confirmTransferIn({
+const result = await domains.updateTransferIn({
     domainId: '<DOMAIN_ID>',
     organizationId: '<ORGANIZATION_ID>'
 });
