@@ -1,5 +1,12 @@
 # Change Log
 
+## 7.0.0
+
+* Breaking: Updated `$sequence` type from `number` to `string` for rows and documents.
+* Updated: Compatibility note now refers to Appwrite server `1.9.x`.
+* Updated: README badge shows API version `1.9.0`.
+* Updated: Set header `X-Appwrite-Response-Format` to `1.9.0`.
+
 ## 6.0.0
 
 * Breaking: Renamed `domains.confirmPurchase()` to `domains.updatePurchase()`
