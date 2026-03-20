@@ -2631,7 +2631,7 @@ export namespace Models {
         /**
          * Row sequence ID.
          */
-        $sequence: number;
+        $sequence: string;
         /**
          * Table ID.
          */
@@ -2670,7 +2670,7 @@ export namespace Models {
         /**
          * Document sequence ID.
          */
-        $sequence: number;
+        $sequence: string;
         /**
          * Collection ID.
          */
