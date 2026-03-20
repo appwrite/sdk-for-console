@@ -1,4 +1,4 @@
-export enum DomainTransferStatus {
+export enum DomainTransferStatusEnum {
     Transferrable = 'transferrable',
     NotTransferrable = 'not_transferrable',
     PendingOwner = 'pending_owner',

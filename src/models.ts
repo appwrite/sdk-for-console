@@ -12,7 +12,7 @@ import { ProxyRuleDeploymentResourceType } from "./enums/proxy-rule-deployment-r
 import { ProxyRuleStatus } from "./enums/proxy-rule-status"
 import { MessageStatus } from "./enums/message-status"
 import { BillingPlanGroup } from "./enums/billing-plan-group"
-import { DomainTransferStatus } from "./enums/domain-transfer-status"
+import { DomainTransferStatusEnum } from "./enums/domain-transfer-status-enum"
 import { DomainPurchaseStatus } from "./enums/domain-purchase-status"
 
 /**
@@ -8756,7 +8756,7 @@ export namespace Models {
         /**
          * Transfer status for domains being transferred in.
          */
-        transferStatus: DomainTransferStatus;
+        transferStatus: DomainTransferStatusEnum;
         /**
          * Team ID.
          */
@@ -9112,7 +9112,7 @@ export namespace Models {
         /**
          * Transfer status.
          */
-        status: DomainTransferStatus;
+        status: DomainTransferStatusEnum;
         /**
          * Additional transfer status information.
          */
