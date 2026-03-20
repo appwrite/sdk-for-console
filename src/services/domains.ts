@@ -221,9 +221,9 @@ export class Domains {
      * @param {string} params.companyName - Company or organization name for the registrant.
      * @param {number} params.periodYears - Registration term in years (1-10).
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      */
-    createPurchase(params: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number }): Promise<Models.Domain>;
+    createPurchase(params: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number }): Promise<Models.DomainPurchase>;
     /**
      *     Create a domain purchase with registrant information.
      *
@@ -239,14 +239,14 @@ export class Domains {
      * @param {string} companyName - Company or organization name for the registrant.
      * @param {number} periodYears - Registration term in years (1-10).
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPurchase(domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number): Promise<Models.Domain>;
+    createPurchase(domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number): Promise<Models.DomainPurchase>;
     createPurchase(
         paramsOrFirst: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number } | string,
         ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
-    ): Promise<Models.Domain> {
+    ): Promise<Models.DomainPurchase> {
         let params: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
@@ -354,28 +354,28 @@ export class Domains {
     }
 
     /**
-     *     Confirm a domain purchase after payment authentication. Call this after the client has confirmed the payment via Stripe.js.
+     *     Confirm and complete a domain purchase after payment authentication.
      *
      * @param {string} params.domainId - Domain ID to confirm purchase for.
      * @param {string} params.organizationId - Team ID that owns the domain.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      */
-    confirmPurchase(params: { domainId: string, organizationId: string }): Promise<Models.Domain>;
+    updatePurchase(params: { domainId: string, organizationId: string }): Promise<Models.DomainPurchase>;
     /**
-     *     Confirm a domain purchase after payment authentication. Call this after the client has confirmed the payment via Stripe.js.
+     *     Confirm and complete a domain purchase after payment authentication.
      *
      * @param {string} domainId - Domain ID to confirm purchase for.
      * @param {string} organizationId - Team ID that owns the domain.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    confirmPurchase(domainId: string, organizationId: string): Promise<Models.Domain>;
-    confirmPurchase(
+    updatePurchase(domainId: string, organizationId: string): Promise<Models.DomainPurchase>;
+    updatePurchase(
         paramsOrFirst: { domainId: string, organizationId: string } | string,
         ...rest: [(string)?]    
-    ): Promise<Models.Domain> {
+    ): Promise<Models.DomainPurchase> {
         let params: { domainId: string, organizationId: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
@@ -397,7 +397,7 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/domains/purchases/{domainId}/confirm'.replace('{domainId}', domainId);
+        const apiPath = '/domains/purchases/{domainId}'.replace('{domainId}', domainId);
         const payload: Payload = {};
         if (typeof organizationId !== 'undefined') {
             payload['organizationId'] = organizationId;
@@ -409,7 +409,7 @@ export class Domains {
         }
 
         return this.client.call(
-            'post',
+            'patch',
             uri,
             apiHeaders,
             payload
@@ -514,9 +514,9 @@ export class Domains {
      * @param {string} params.authCode - Authorization code for the domain transfer.
      * @param {string} params.paymentMethodId - Payment method ID to authorize and capture the transfer.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      */
-    createTransferIn(params: { domain: string, organizationId: string, authCode: string, paymentMethodId: string }): Promise<Models.Domain>;
+    createTransferIn(params: { domain: string, organizationId: string, authCode: string, paymentMethodId: string }): Promise<Models.DomainPurchase>;
     /**
      *     Create a domain transfer in with authorization code and registrant information.
      *
@@ -525,14 +525,14 @@ export class Domains {
      * @param {string} authCode - Authorization code for the domain transfer.
      * @param {string} paymentMethodId - Payment method ID to authorize and capture the transfer.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createTransferIn(domain: string, organizationId: string, authCode: string, paymentMethodId: string): Promise<Models.Domain>;
+    createTransferIn(domain: string, organizationId: string, authCode: string, paymentMethodId: string): Promise<Models.DomainPurchase>;
     createTransferIn(
         paramsOrFirst: { domain: string, organizationId: string, authCode: string, paymentMethodId: string } | string,
         ...rest: [(string)?, (string)?, (string)?]    
-    ): Promise<Models.Domain> {
+    ): Promise<Models.DomainPurchase> {
         let params: { domain: string, organizationId: string, authCode: string, paymentMethodId: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
@@ -593,28 +593,28 @@ export class Domains {
     }
 
     /**
-     *     Confirm a domain transfer in after payment authentication. Call this after the client has confirmed the payment via Stripe.js.
+     *     Confirm and complete a domain transfer in after payment authentication.
      *
      * @param {string} params.domainId - Domain ID to confirm transfer for.
      * @param {string} params.organizationId - Team ID that owns the domain.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      */
-    confirmTransferIn(params: { domainId: string, organizationId: string }): Promise<Models.Domain>;
+    updateTransferIn(params: { domainId: string, organizationId: string }): Promise<Models.DomainPurchase>;
     /**
-     *     Confirm a domain transfer in after payment authentication. Call this after the client has confirmed the payment via Stripe.js.
+     *     Confirm and complete a domain transfer in after payment authentication.
      *
      * @param {string} domainId - Domain ID to confirm transfer for.
      * @param {string} organizationId - Team ID that owns the domain.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    confirmTransferIn(domainId: string, organizationId: string): Promise<Models.Domain>;
-    confirmTransferIn(
+    updateTransferIn(domainId: string, organizationId: string): Promise<Models.DomainPurchase>;
+    updateTransferIn(
         paramsOrFirst: { domainId: string, organizationId: string } | string,
         ...rest: [(string)?]    
-    ): Promise<Models.Domain> {
+    ): Promise<Models.DomainPurchase> {
         let params: { domainId: string, organizationId: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
@@ -636,7 +636,7 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/domains/transfers/in/{domainId}/confirm'.replace('{domainId}', domainId);
+        const apiPath = '/domains/transfers/in/{domainId}'.replace('{domainId}', domainId);
         const payload: Payload = {};
         if (typeof organizationId !== 'undefined') {
             payload['organizationId'] = organizationId;
@@ -648,7 +648,7 @@ export class Domains {
         }
 
         return this.client.call(
-            'post',
+            'patch',
             uri,
             apiHeaders,
             payload

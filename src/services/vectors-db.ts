@@ -2,6 +2,7 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
+import { Model } from '../enums/model';
 import { UsageRange } from '../enums/usage-range';
 import { VectorsDBIndexType } from '../enums/vectors-db-index-type';
 import { OrderBy } from '../enums/order-by';
@@ -150,13 +151,51 @@ export class VectorsDB {
 
     /**
      *
+     * @param {string[]} params.texts - Array of text to generate embeddings.
+     * @param {Model} params.model - The embedding model to use for generating vector embeddings.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmbeddingList>}
      */
-    createTextEmbeddings(): Promise<Models.EmbeddingList> {
+    createTextEmbeddings(params: { texts: string[], model?: Model }): Promise<Models.EmbeddingList>;
+    /**
+     *
+     * @param {string[]} texts - Array of text to generate embeddings.
+     * @param {Model} model - The embedding model to use for generating vector embeddings.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.EmbeddingList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createTextEmbeddings(texts: string[], model?: Model): Promise<Models.EmbeddingList>;
+    createTextEmbeddings(
+        paramsOrFirst: { texts: string[], model?: Model } | string[],
+        ...rest: [(Model)?]    
+    ): Promise<Models.EmbeddingList> {
+        let params: { texts: string[], model?: Model };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { texts: string[], model?: Model };
+        } else {
+            params = {
+                texts: paramsOrFirst as string[],
+                model: rest[0] as Model            
+            };
+        }
+        
+        const texts = params.texts;
+        const model = params.model;
+
+        if (typeof texts === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "texts"');
+        }
 
         const apiPath = '/vectorsdb/embeddings/text';
         const payload: Payload = {};
+        if (typeof texts !== 'undefined') {
+            payload['texts'] = texts;
+        }
+        if (typeof model !== 'undefined') {
+            payload['model'] = model;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {

@@ -1,7 +1,7 @@
 /**
  * Appwrite Console SDK
  *
- * This SDK is compatible with Appwrite server version 1.8.x. 
+ * This SDK is compatible with Appwrite server version 1.9.x. 
  * For older versions, please check
  * [previous releases](https://github.com/appwrite/sdk-for-console/releases).
  */
@@ -33,6 +33,7 @@ export { Tokens } from './services/tokens';
 export { Users } from './services/users';
 export { Vcs } from './services/vcs';
 export { VectorsDB } from './services/vectors-db';
+export { Webhooks } from './services/webhooks';
 export { Realtime } from './services/realtime';
 export type { Models, Payload, RealtimeResponseEvent, UploadProgress } from './client';
 export type { RealtimeSubscription } from './services/realtime';
@@ -56,7 +57,6 @@ export { ImageFormat } from './enums/image-format';
 export { BackupServices } from './enums/backup-services';
 export { Platform } from './enums/platform';
 export { ConsoleResourceType } from './enums/console-resource-type';
-export { DatabaseType } from './enums/database-type';
 export { UsageRange } from './enums/usage-range';
 export { RelationshipType } from './enums/relationship-type';
 export { RelationMutate } from './enums/relation-mutate';
@@ -104,7 +104,9 @@ export { TablesDBIndexType } from './enums/tables-db-index-type';
 export { PasswordHash } from './enums/password-hash';
 export { MessagingProviderType } from './enums/messaging-provider-type';
 export { VCSDetectionType } from './enums/vcs-detection-type';
+export { Model } from './enums/model';
 export { VectorsDBIndexType } from './enums/vectors-db-index-type';
+export { DatabaseType } from './enums/database-type';
 export { AttributeStatus } from './enums/attribute-status';
 export { ColumnStatus } from './enums/column-status';
 export { IndexStatus } from './enums/index-status';
@@ -117,5 +119,5 @@ export { ProxyRuleDeploymentResourceType } from './enums/proxy-rule-deployment-r
 export { ProxyRuleStatus } from './enums/proxy-rule-status';
 export { MessageStatus } from './enums/message-status';
 export { BillingPlanGroup } from './enums/billing-plan-group';
-export { DomainPurchasePaymentStatus } from './enums/domain-purchase-payment-status';
-export { DomainTransferStatusStatus } from './enums/domain-transfer-status-status';
+export { DomainTransferStatusEnum } from './enums/domain-transfer-status-enum';
+export { DomainPurchaseStatus } from './enums/domain-purchase-status';
