@@ -4332,7 +4332,7 @@
                 'x-sdk-name': 'Console',
                 'x-sdk-platform': 'console',
                 'x-sdk-language': 'web',
-                'x-sdk-version': '4.0.0',
+                'x-sdk-version': '6.0.0',
                 'X-Appwrite-Response-Format': '1.8.0',
             };
             this.realtime = {
@@ -8019,8 +8019,7 @@
                     tableId: rest[0],
                     context: rest[1],
                     min: rest[2],
-                    max: rest[3],
-                    databaseType: rest[4]
+                    max: rest[3]
                 };
             }
             const databaseId = params.databaseId;
@@ -8028,7 +8027,6 @@
             const context = params.context;
             const min = params.min;
             const max = params.max;
-            const databaseType = params.databaseType;
             if (typeof databaseId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "databaseId"');
             }
@@ -8051,9 +8049,6 @@
             }
             if (typeof max !== 'undefined') {
                 payload['max'] = max;
-            }
-            if (typeof databaseType !== 'undefined') {
-                payload['databaseType'] = databaseType;
             }
             const uri = new URL(this.client.config.endpoint + apiPath);
             const apiHeaders = {};
@@ -12917,7 +12912,7 @@
             };
             return this.client.call('post', uri, apiHeaders, payload);
         }
-        confirmPurchase(paramsOrFirst, ...rest) {
+        updatePurchase(paramsOrFirst, ...rest) {
             let params;
             if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
                 params = (paramsOrFirst || {});
@@ -12936,7 +12931,7 @@
             if (typeof organizationId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "organizationId"');
             }
-            const apiPath = '/domains/purchases/{domainId}/confirm'.replace('{domainId}', domainId);
+            const apiPath = '/domains/purchases/{domainId}'.replace('{domainId}', domainId);
             const payload = {};
             if (typeof organizationId !== 'undefined') {
                 payload['organizationId'] = organizationId;
@@ -12945,7 +12940,7 @@
             const apiHeaders = {
                 'content-type': 'application/json',
             };
-            return this.client.call('post', uri, apiHeaders, payload);
+            return this.client.call('patch', uri, apiHeaders, payload);
         }
         listSuggestions(paramsOrFirst, ...rest) {
             let params;
@@ -13044,7 +13039,7 @@
             };
             return this.client.call('post', uri, apiHeaders, payload);
         }
-        confirmTransferIn(paramsOrFirst, ...rest) {
+        updateTransferIn(paramsOrFirst, ...rest) {
             let params;
             if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
                 params = (paramsOrFirst || {});
@@ -13063,7 +13058,7 @@
             if (typeof organizationId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "organizationId"');
             }
-            const apiPath = '/domains/transfers/in/{domainId}/confirm'.replace('{domainId}', domainId);
+            const apiPath = '/domains/transfers/in/{domainId}'.replace('{domainId}', domainId);
             const payload = {};
             if (typeof organizationId !== 'undefined') {
                 payload['organizationId'] = organizationId;
@@ -13072,7 +13067,7 @@
             const apiHeaders = {
                 'content-type': 'application/json',
             };
-            return this.client.call('post', uri, apiHeaders, payload);
+            return this.client.call('patch', uri, apiHeaders, payload);
         }
         createTransferOut(paramsOrFirst, ...rest) {
             let params;
@@ -23762,253 +23757,6 @@
             };
             return this.client.call('delete', uri, apiHeaders, payload);
         }
-        listWebhooks(paramsOrFirst, ...rest) {
-            let params;
-            if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-                params = (paramsOrFirst || {});
-            }
-            else {
-                params = {
-                    projectId: paramsOrFirst,
-                    total: rest[0]
-                };
-            }
-            const projectId = params.projectId;
-            const total = params.total;
-            if (typeof projectId === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "projectId"');
-            }
-            const apiPath = '/projects/{projectId}/webhooks'.replace('{projectId}', projectId);
-            const payload = {};
-            if (typeof total !== 'undefined') {
-                payload['total'] = total;
-            }
-            const uri = new URL(this.client.config.endpoint + apiPath);
-            const apiHeaders = {};
-            return this.client.call('get', uri, apiHeaders, payload);
-        }
-        createWebhook(paramsOrFirst, ...rest) {
-            let params;
-            if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-                params = (paramsOrFirst || {});
-            }
-            else {
-                params = {
-                    projectId: paramsOrFirst,
-                    name: rest[0],
-                    events: rest[1],
-                    url: rest[2],
-                    security: rest[3],
-                    enabled: rest[4],
-                    httpUser: rest[5],
-                    httpPass: rest[6]
-                };
-            }
-            const projectId = params.projectId;
-            const name = params.name;
-            const events = params.events;
-            const url = params.url;
-            const security = params.security;
-            const enabled = params.enabled;
-            const httpUser = params.httpUser;
-            const httpPass = params.httpPass;
-            if (typeof projectId === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "projectId"');
-            }
-            if (typeof name === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "name"');
-            }
-            if (typeof events === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "events"');
-            }
-            if (typeof url === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "url"');
-            }
-            if (typeof security === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "security"');
-            }
-            const apiPath = '/projects/{projectId}/webhooks'.replace('{projectId}', projectId);
-            const payload = {};
-            if (typeof name !== 'undefined') {
-                payload['name'] = name;
-            }
-            if (typeof enabled !== 'undefined') {
-                payload['enabled'] = enabled;
-            }
-            if (typeof events !== 'undefined') {
-                payload['events'] = events;
-            }
-            if (typeof url !== 'undefined') {
-                payload['url'] = url;
-            }
-            if (typeof security !== 'undefined') {
-                payload['security'] = security;
-            }
-            if (typeof httpUser !== 'undefined') {
-                payload['httpUser'] = httpUser;
-            }
-            if (typeof httpPass !== 'undefined') {
-                payload['httpPass'] = httpPass;
-            }
-            const uri = new URL(this.client.config.endpoint + apiPath);
-            const apiHeaders = {
-                'content-type': 'application/json',
-            };
-            return this.client.call('post', uri, apiHeaders, payload);
-        }
-        getWebhook(paramsOrFirst, ...rest) {
-            let params;
-            if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-                params = (paramsOrFirst || {});
-            }
-            else {
-                params = {
-                    projectId: paramsOrFirst,
-                    webhookId: rest[0]
-                };
-            }
-            const projectId = params.projectId;
-            const webhookId = params.webhookId;
-            if (typeof projectId === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "projectId"');
-            }
-            if (typeof webhookId === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "webhookId"');
-            }
-            const apiPath = '/projects/{projectId}/webhooks/{webhookId}'.replace('{projectId}', projectId).replace('{webhookId}', webhookId);
-            const payload = {};
-            const uri = new URL(this.client.config.endpoint + apiPath);
-            const apiHeaders = {};
-            return this.client.call('get', uri, apiHeaders, payload);
-        }
-        updateWebhook(paramsOrFirst, ...rest) {
-            let params;
-            if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-                params = (paramsOrFirst || {});
-            }
-            else {
-                params = {
-                    projectId: paramsOrFirst,
-                    webhookId: rest[0],
-                    name: rest[1],
-                    events: rest[2],
-                    url: rest[3],
-                    security: rest[4],
-                    enabled: rest[5],
-                    httpUser: rest[6],
-                    httpPass: rest[7]
-                };
-            }
-            const projectId = params.projectId;
-            const webhookId = params.webhookId;
-            const name = params.name;
-            const events = params.events;
-            const url = params.url;
-            const security = params.security;
-            const enabled = params.enabled;
-            const httpUser = params.httpUser;
-            const httpPass = params.httpPass;
-            if (typeof projectId === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "projectId"');
-            }
-            if (typeof webhookId === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "webhookId"');
-            }
-            if (typeof name === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "name"');
-            }
-            if (typeof events === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "events"');
-            }
-            if (typeof url === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "url"');
-            }
-            if (typeof security === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "security"');
-            }
-            const apiPath = '/projects/{projectId}/webhooks/{webhookId}'.replace('{projectId}', projectId).replace('{webhookId}', webhookId);
-            const payload = {};
-            if (typeof name !== 'undefined') {
-                payload['name'] = name;
-            }
-            if (typeof enabled !== 'undefined') {
-                payload['enabled'] = enabled;
-            }
-            if (typeof events !== 'undefined') {
-                payload['events'] = events;
-            }
-            if (typeof url !== 'undefined') {
-                payload['url'] = url;
-            }
-            if (typeof security !== 'undefined') {
-                payload['security'] = security;
-            }
-            if (typeof httpUser !== 'undefined') {
-                payload['httpUser'] = httpUser;
-            }
-            if (typeof httpPass !== 'undefined') {
-                payload['httpPass'] = httpPass;
-            }
-            const uri = new URL(this.client.config.endpoint + apiPath);
-            const apiHeaders = {
-                'content-type': 'application/json',
-            };
-            return this.client.call('put', uri, apiHeaders, payload);
-        }
-        deleteWebhook(paramsOrFirst, ...rest) {
-            let params;
-            if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-                params = (paramsOrFirst || {});
-            }
-            else {
-                params = {
-                    projectId: paramsOrFirst,
-                    webhookId: rest[0]
-                };
-            }
-            const projectId = params.projectId;
-            const webhookId = params.webhookId;
-            if (typeof projectId === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "projectId"');
-            }
-            if (typeof webhookId === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "webhookId"');
-            }
-            const apiPath = '/projects/{projectId}/webhooks/{webhookId}'.replace('{projectId}', projectId).replace('{webhookId}', webhookId);
-            const payload = {};
-            const uri = new URL(this.client.config.endpoint + apiPath);
-            const apiHeaders = {
-                'content-type': 'application/json',
-            };
-            return this.client.call('delete', uri, apiHeaders, payload);
-        }
-        updateWebhookSignature(paramsOrFirst, ...rest) {
-            let params;
-            if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-                params = (paramsOrFirst || {});
-            }
-            else {
-                params = {
-                    projectId: paramsOrFirst,
-                    webhookId: rest[0]
-                };
-            }
-            const projectId = params.projectId;
-            const webhookId = params.webhookId;
-            if (typeof projectId === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "projectId"');
-            }
-            if (typeof webhookId === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "webhookId"');
-            }
-            const apiPath = '/projects/{projectId}/webhooks/{webhookId}/signature'.replace('{projectId}', projectId).replace('{webhookId}', webhookId);
-            const payload = {};
-            const uri = new URL(this.client.config.endpoint + apiPath);
-            const apiHeaders = {
-                'content-type': 'application/json',
-            };
-            return this.client.call('patch', uri, apiHeaders, payload);
-        }
     }
 
     class Proxy {
@@ -31786,14 +31534,30 @@
             };
             return this.client.call('post', uri, apiHeaders, payload);
         }
-        /**
-         *
-         * @throws {AppwriteException}
-         * @returns {Promise<Models.EmbeddingList>}
-         */
-        createTextEmbeddings() {
+        createTextEmbeddings(paramsOrFirst, ...rest) {
+            let params;
+            if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+                params = (paramsOrFirst || {});
+            }
+            else {
+                params = {
+                    texts: paramsOrFirst,
+                    model: rest[0]
+                };
+            }
+            const texts = params.texts;
+            const model = params.model;
+            if (typeof texts === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "texts"');
+            }
             const apiPath = '/vectorsdb/embeddings/text';
             const payload = {};
+            if (typeof texts !== 'undefined') {
+                payload['texts'] = texts;
+            }
+            if (typeof model !== 'undefined') {
+                payload['model'] = model;
+            }
             const uri = new URL(this.client.config.endpoint + apiPath);
             const apiHeaders = {
                 'content-type': 'application/json',
@@ -32906,6 +32670,236 @@
         }
     }
 
+    class Webhooks {
+        constructor(client) {
+            this.client = client;
+        }
+        list(paramsOrFirst, ...rest) {
+            let params;
+            if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+                params = (paramsOrFirst || {});
+            }
+            else {
+                params = {
+                    queries: paramsOrFirst,
+                    total: rest[0]
+                };
+            }
+            const queries = params.queries;
+            const total = params.total;
+            const apiPath = '/webhooks';
+            const payload = {};
+            if (typeof queries !== 'undefined') {
+                payload['queries'] = queries;
+            }
+            if (typeof total !== 'undefined') {
+                payload['total'] = total;
+            }
+            const uri = new URL(this.client.config.endpoint + apiPath);
+            const apiHeaders = {};
+            return this.client.call('get', uri, apiHeaders, payload);
+        }
+        create(paramsOrFirst, ...rest) {
+            let params;
+            if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+                params = (paramsOrFirst || {});
+            }
+            else {
+                params = {
+                    webhookId: paramsOrFirst,
+                    url: rest[0],
+                    name: rest[1],
+                    events: rest[2],
+                    enabled: rest[3],
+                    security: rest[4],
+                    httpUser: rest[5],
+                    httpPass: rest[6]
+                };
+            }
+            const webhookId = params.webhookId;
+            const url = params.url;
+            const name = params.name;
+            const events = params.events;
+            const enabled = params.enabled;
+            const security = params.security;
+            const httpUser = params.httpUser;
+            const httpPass = params.httpPass;
+            if (typeof webhookId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "webhookId"');
+            }
+            if (typeof url === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "url"');
+            }
+            if (typeof name === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "name"');
+            }
+            if (typeof events === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "events"');
+            }
+            const apiPath = '/webhooks';
+            const payload = {};
+            if (typeof webhookId !== 'undefined') {
+                payload['webhookId'] = webhookId;
+            }
+            if (typeof url !== 'undefined') {
+                payload['url'] = url;
+            }
+            if (typeof name !== 'undefined') {
+                payload['name'] = name;
+            }
+            if (typeof events !== 'undefined') {
+                payload['events'] = events;
+            }
+            if (typeof enabled !== 'undefined') {
+                payload['enabled'] = enabled;
+            }
+            if (typeof security !== 'undefined') {
+                payload['security'] = security;
+            }
+            if (typeof httpUser !== 'undefined') {
+                payload['httpUser'] = httpUser;
+            }
+            if (typeof httpPass !== 'undefined') {
+                payload['httpPass'] = httpPass;
+            }
+            const uri = new URL(this.client.config.endpoint + apiPath);
+            const apiHeaders = {
+                'content-type': 'application/json',
+            };
+            return this.client.call('post', uri, apiHeaders, payload);
+        }
+        get(paramsOrFirst) {
+            let params;
+            if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+                params = (paramsOrFirst || {});
+            }
+            else {
+                params = {
+                    webhookId: paramsOrFirst
+                };
+            }
+            const webhookId = params.webhookId;
+            if (typeof webhookId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "webhookId"');
+            }
+            const apiPath = '/webhooks/{webhookId}'.replace('{webhookId}', webhookId);
+            const payload = {};
+            const uri = new URL(this.client.config.endpoint + apiPath);
+            const apiHeaders = {};
+            return this.client.call('get', uri, apiHeaders, payload);
+        }
+        update(paramsOrFirst, ...rest) {
+            let params;
+            if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+                params = (paramsOrFirst || {});
+            }
+            else {
+                params = {
+                    webhookId: paramsOrFirst,
+                    name: rest[0],
+                    url: rest[1],
+                    events: rest[2],
+                    enabled: rest[3],
+                    security: rest[4],
+                    httpUser: rest[5],
+                    httpPass: rest[6]
+                };
+            }
+            const webhookId = params.webhookId;
+            const name = params.name;
+            const url = params.url;
+            const events = params.events;
+            const enabled = params.enabled;
+            const security = params.security;
+            const httpUser = params.httpUser;
+            const httpPass = params.httpPass;
+            if (typeof webhookId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "webhookId"');
+            }
+            if (typeof name === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "name"');
+            }
+            if (typeof url === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "url"');
+            }
+            if (typeof events === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "events"');
+            }
+            const apiPath = '/webhooks/{webhookId}'.replace('{webhookId}', webhookId);
+            const payload = {};
+            if (typeof name !== 'undefined') {
+                payload['name'] = name;
+            }
+            if (typeof url !== 'undefined') {
+                payload['url'] = url;
+            }
+            if (typeof events !== 'undefined') {
+                payload['events'] = events;
+            }
+            if (typeof enabled !== 'undefined') {
+                payload['enabled'] = enabled;
+            }
+            if (typeof security !== 'undefined') {
+                payload['security'] = security;
+            }
+            if (typeof httpUser !== 'undefined') {
+                payload['httpUser'] = httpUser;
+            }
+            if (typeof httpPass !== 'undefined') {
+                payload['httpPass'] = httpPass;
+            }
+            const uri = new URL(this.client.config.endpoint + apiPath);
+            const apiHeaders = {
+                'content-type': 'application/json',
+            };
+            return this.client.call('put', uri, apiHeaders, payload);
+        }
+        delete(paramsOrFirst) {
+            let params;
+            if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+                params = (paramsOrFirst || {});
+            }
+            else {
+                params = {
+                    webhookId: paramsOrFirst
+                };
+            }
+            const webhookId = params.webhookId;
+            if (typeof webhookId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "webhookId"');
+            }
+            const apiPath = '/webhooks/{webhookId}'.replace('{webhookId}', webhookId);
+            const payload = {};
+            const uri = new URL(this.client.config.endpoint + apiPath);
+            const apiHeaders = {
+                'content-type': 'application/json',
+            };
+            return this.client.call('delete', uri, apiHeaders, payload);
+        }
+        updateSignature(paramsOrFirst) {
+            let params;
+            if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+                params = (paramsOrFirst || {});
+            }
+            else {
+                params = {
+                    webhookId: paramsOrFirst
+                };
+            }
+            const webhookId = params.webhookId;
+            if (typeof webhookId === 'undefined') {
+                throw new AppwriteException('Missing required parameter: "webhookId"');
+            }
+            const apiPath = '/webhooks/{webhookId}/signature'.replace('{webhookId}', webhookId);
+            const payload = {};
+            const uri = new URL(this.client.config.endpoint + apiPath);
+            const apiHeaders = {
+                'content-type': 'application/json',
+            };
+            return this.client.call('patch', uri, apiHeaders, payload);
+        }
+    }
+
     var RealtimeCode;
     (function (RealtimeCode) {
         RealtimeCode[RealtimeCode["NORMAL_CLOSURE"] = 1000] = "NORMAL_CLOSURE";
@@ -33925,6 +33919,8 @@
         Scopes["AssistantRead"] = "assistant.read";
         Scopes["TokensRead"] = "tokens.read";
         Scopes["TokensWrite"] = "tokens.write";
+        Scopes["WebhooksRead"] = "webhooks.read";
+        Scopes["WebhooksWrite"] = "webhooks.write";
         Scopes["PoliciesWrite"] = "policies.write";
         Scopes["PoliciesRead"] = "policies.read";
         Scopes["ArchivesRead"] = "archives.read";
@@ -34715,14 +34711,6 @@
         ConsoleResourceType["Rules"] = "rules";
     })(exports.ConsoleResourceType || (exports.ConsoleResourceType = {}));
 
-    exports.DatabaseType = void 0;
-    (function (DatabaseType) {
-        DatabaseType["Legacy"] = "legacy";
-        DatabaseType["Tablesdb"] = "tablesdb";
-        DatabaseType["Documentsdb"] = "documentsdb";
-        DatabaseType["Vectorsdb"] = "vectorsdb";
-    })(exports.DatabaseType || (exports.DatabaseType = {}));
-
     exports.UsageRange = void 0;
     (function (UsageRange) {
         UsageRange["TwentyFourHours"] = "24h";
@@ -34872,6 +34860,95 @@
         Runtime["Flutter332"] = "flutter-3.32";
         Runtime["Flutter335"] = "flutter-3.35";
         Runtime["Flutter338"] = "flutter-3.38";
+        Runtime["Node145rc"] = "node-14.5-rc";
+        Runtime["Node160rc"] = "node-16.0-rc";
+        Runtime["Node180rc"] = "node-18.0-rc";
+        Runtime["Node190rc"] = "node-19.0-rc";
+        Runtime["Node200rc"] = "node-20.0-rc";
+        Runtime["Node210rc"] = "node-21.0-rc";
+        Runtime["Node22rc"] = "node-22-rc";
+        Runtime["Node23rc"] = "node-23-rc";
+        Runtime["Node24rc"] = "node-24-rc";
+        Runtime["Node25rc"] = "node-25-rc";
+        Runtime["Php80rc"] = "php-8.0-rc";
+        Runtime["Php81rc"] = "php-8.1-rc";
+        Runtime["Php82rc"] = "php-8.2-rc";
+        Runtime["Php83rc"] = "php-8.3-rc";
+        Runtime["Php84rc"] = "php-8.4-rc";
+        Runtime["Ruby30rc"] = "ruby-3.0-rc";
+        Runtime["Ruby31rc"] = "ruby-3.1-rc";
+        Runtime["Ruby32rc"] = "ruby-3.2-rc";
+        Runtime["Ruby33rc"] = "ruby-3.3-rc";
+        Runtime["Ruby34rc"] = "ruby-3.4-rc";
+        Runtime["Ruby40rc"] = "ruby-4.0-rc";
+        Runtime["Python38rc"] = "python-3.8-rc";
+        Runtime["Python39rc"] = "python-3.9-rc";
+        Runtime["Python310rc"] = "python-3.10-rc";
+        Runtime["Python311rc"] = "python-3.11-rc";
+        Runtime["Python312rc"] = "python-3.12-rc";
+        Runtime["Python313rc"] = "python-3.13-rc";
+        Runtime["Python314rc"] = "python-3.14-rc";
+        Runtime["Pythonml311rc"] = "python-ml-3.11-rc";
+        Runtime["Pythonml312rc"] = "python-ml-3.12-rc";
+        Runtime["Pythonml313rc"] = "python-ml-3.13-rc";
+        Runtime["Deno121rc"] = "deno-1.21-rc";
+        Runtime["Deno124rc"] = "deno-1.24-rc";
+        Runtime["Deno135rc"] = "deno-1.35-rc";
+        Runtime["Deno140rc"] = "deno-1.40-rc";
+        Runtime["Deno146rc"] = "deno-1.46-rc";
+        Runtime["Deno20rc"] = "deno-2.0-rc";
+        Runtime["Deno25rc"] = "deno-2.5-rc";
+        Runtime["Deno26rc"] = "deno-2.6-rc";
+        Runtime["Dart215rc"] = "dart-2.15-rc";
+        Runtime["Dart216rc"] = "dart-2.16-rc";
+        Runtime["Dart217rc"] = "dart-2.17-rc";
+        Runtime["Dart218rc"] = "dart-2.18-rc";
+        Runtime["Dart219rc"] = "dart-2.19-rc";
+        Runtime["Dart30rc"] = "dart-3.0-rc";
+        Runtime["Dart31rc"] = "dart-3.1-rc";
+        Runtime["Dart33rc"] = "dart-3.3-rc";
+        Runtime["Dart35rc"] = "dart-3.5-rc";
+        Runtime["Dart38rc"] = "dart-3.8-rc";
+        Runtime["Dart39rc"] = "dart-3.9-rc";
+        Runtime["Dart310rc"] = "dart-3.10-rc";
+        Runtime["Dotnet60rc"] = "dotnet-6.0-rc";
+        Runtime["Dotnet70rc"] = "dotnet-7.0-rc";
+        Runtime["Dotnet80rc"] = "dotnet-8.0-rc";
+        Runtime["Dotnet10rc"] = "dotnet-10-rc";
+        Runtime["Java80rc"] = "java-8.0-rc";
+        Runtime["Java110rc"] = "java-11.0-rc";
+        Runtime["Java170rc"] = "java-17.0-rc";
+        Runtime["Java180rc"] = "java-18.0-rc";
+        Runtime["Java210rc"] = "java-21.0-rc";
+        Runtime["Java22rc"] = "java-22-rc";
+        Runtime["Java25rc"] = "java-25-rc";
+        Runtime["Swift55rc"] = "swift-5.5-rc";
+        Runtime["Swift58rc"] = "swift-5.8-rc";
+        Runtime["Swift59rc"] = "swift-5.9-rc";
+        Runtime["Swift510rc"] = "swift-5.10-rc";
+        Runtime["Swift62rc"] = "swift-6.2-rc";
+        Runtime["Kotlin16rc"] = "kotlin-1.6-rc";
+        Runtime["Kotlin18rc"] = "kotlin-1.8-rc";
+        Runtime["Kotlin19rc"] = "kotlin-1.9-rc";
+        Runtime["Kotlin20rc"] = "kotlin-2.0-rc";
+        Runtime["Kotlin23rc"] = "kotlin-2.3-rc";
+        Runtime["Cpp17rc"] = "cpp-17-rc";
+        Runtime["Cpp20rc"] = "cpp-20-rc";
+        Runtime["Bun10rc"] = "bun-1.0-rc";
+        Runtime["Bun11rc"] = "bun-1.1-rc";
+        Runtime["Bun12rc"] = "bun-1.2-rc";
+        Runtime["Bun13rc"] = "bun-1.3-rc";
+        Runtime["Go123rc"] = "go-1.23-rc";
+        Runtime["Go124rc"] = "go-1.24-rc";
+        Runtime["Go125rc"] = "go-1.25-rc";
+        Runtime["Go126rc"] = "go-1.26-rc";
+        Runtime["Static1rc"] = "static-1-rc";
+        Runtime["Flutter324rc"] = "flutter-3.24-rc";
+        Runtime["Flutter327rc"] = "flutter-3.27-rc";
+        Runtime["Flutter329rc"] = "flutter-3.29-rc";
+        Runtime["Flutter332rc"] = "flutter-3.32-rc";
+        Runtime["Flutter335rc"] = "flutter-3.35-rc";
+        Runtime["Flutter338rc"] = "flutter-3.38-rc";
     })(exports.Runtime || (exports.Runtime = {}));
 
     exports.Runtimes = void 0;
@@ -34965,6 +35042,95 @@
         Runtimes["Flutter332"] = "flutter-3.32";
         Runtimes["Flutter335"] = "flutter-3.35";
         Runtimes["Flutter338"] = "flutter-3.38";
+        Runtimes["Node145rc"] = "node-14.5-rc";
+        Runtimes["Node160rc"] = "node-16.0-rc";
+        Runtimes["Node180rc"] = "node-18.0-rc";
+        Runtimes["Node190rc"] = "node-19.0-rc";
+        Runtimes["Node200rc"] = "node-20.0-rc";
+        Runtimes["Node210rc"] = "node-21.0-rc";
+        Runtimes["Node22rc"] = "node-22-rc";
+        Runtimes["Node23rc"] = "node-23-rc";
+        Runtimes["Node24rc"] = "node-24-rc";
+        Runtimes["Node25rc"] = "node-25-rc";
+        Runtimes["Php80rc"] = "php-8.0-rc";
+        Runtimes["Php81rc"] = "php-8.1-rc";
+        Runtimes["Php82rc"] = "php-8.2-rc";
+        Runtimes["Php83rc"] = "php-8.3-rc";
+        Runtimes["Php84rc"] = "php-8.4-rc";
+        Runtimes["Ruby30rc"] = "ruby-3.0-rc";
+        Runtimes["Ruby31rc"] = "ruby-3.1-rc";
+        Runtimes["Ruby32rc"] = "ruby-3.2-rc";
+        Runtimes["Ruby33rc"] = "ruby-3.3-rc";
+        Runtimes["Ruby34rc"] = "ruby-3.4-rc";
+        Runtimes["Ruby40rc"] = "ruby-4.0-rc";
+        Runtimes["Python38rc"] = "python-3.8-rc";
+        Runtimes["Python39rc"] = "python-3.9-rc";
+        Runtimes["Python310rc"] = "python-3.10-rc";
+        Runtimes["Python311rc"] = "python-3.11-rc";
+        Runtimes["Python312rc"] = "python-3.12-rc";
+        Runtimes["Python313rc"] = "python-3.13-rc";
+        Runtimes["Python314rc"] = "python-3.14-rc";
+        Runtimes["Pythonml311rc"] = "python-ml-3.11-rc";
+        Runtimes["Pythonml312rc"] = "python-ml-3.12-rc";
+        Runtimes["Pythonml313rc"] = "python-ml-3.13-rc";
+        Runtimes["Deno121rc"] = "deno-1.21-rc";
+        Runtimes["Deno124rc"] = "deno-1.24-rc";
+        Runtimes["Deno135rc"] = "deno-1.35-rc";
+        Runtimes["Deno140rc"] = "deno-1.40-rc";
+        Runtimes["Deno146rc"] = "deno-1.46-rc";
+        Runtimes["Deno20rc"] = "deno-2.0-rc";
+        Runtimes["Deno25rc"] = "deno-2.5-rc";
+        Runtimes["Deno26rc"] = "deno-2.6-rc";
+        Runtimes["Dart215rc"] = "dart-2.15-rc";
+        Runtimes["Dart216rc"] = "dart-2.16-rc";
+        Runtimes["Dart217rc"] = "dart-2.17-rc";
+        Runtimes["Dart218rc"] = "dart-2.18-rc";
+        Runtimes["Dart219rc"] = "dart-2.19-rc";
+        Runtimes["Dart30rc"] = "dart-3.0-rc";
+        Runtimes["Dart31rc"] = "dart-3.1-rc";
+        Runtimes["Dart33rc"] = "dart-3.3-rc";
+        Runtimes["Dart35rc"] = "dart-3.5-rc";
+        Runtimes["Dart38rc"] = "dart-3.8-rc";
+        Runtimes["Dart39rc"] = "dart-3.9-rc";
+        Runtimes["Dart310rc"] = "dart-3.10-rc";
+        Runtimes["Dotnet60rc"] = "dotnet-6.0-rc";
+        Runtimes["Dotnet70rc"] = "dotnet-7.0-rc";
+        Runtimes["Dotnet80rc"] = "dotnet-8.0-rc";
+        Runtimes["Dotnet10rc"] = "dotnet-10-rc";
+        Runtimes["Java80rc"] = "java-8.0-rc";
+        Runtimes["Java110rc"] = "java-11.0-rc";
+        Runtimes["Java170rc"] = "java-17.0-rc";
+        Runtimes["Java180rc"] = "java-18.0-rc";
+        Runtimes["Java210rc"] = "java-21.0-rc";
+        Runtimes["Java22rc"] = "java-22-rc";
+        Runtimes["Java25rc"] = "java-25-rc";
+        Runtimes["Swift55rc"] = "swift-5.5-rc";
+        Runtimes["Swift58rc"] = "swift-5.8-rc";
+        Runtimes["Swift59rc"] = "swift-5.9-rc";
+        Runtimes["Swift510rc"] = "swift-5.10-rc";
+        Runtimes["Swift62rc"] = "swift-6.2-rc";
+        Runtimes["Kotlin16rc"] = "kotlin-1.6-rc";
+        Runtimes["Kotlin18rc"] = "kotlin-1.8-rc";
+        Runtimes["Kotlin19rc"] = "kotlin-1.9-rc";
+        Runtimes["Kotlin20rc"] = "kotlin-2.0-rc";
+        Runtimes["Kotlin23rc"] = "kotlin-2.3-rc";
+        Runtimes["Cpp17rc"] = "cpp-17-rc";
+        Runtimes["Cpp20rc"] = "cpp-20-rc";
+        Runtimes["Bun10rc"] = "bun-1.0-rc";
+        Runtimes["Bun11rc"] = "bun-1.1-rc";
+        Runtimes["Bun12rc"] = "bun-1.2-rc";
+        Runtimes["Bun13rc"] = "bun-1.3-rc";
+        Runtimes["Go123rc"] = "go-1.23-rc";
+        Runtimes["Go124rc"] = "go-1.24-rc";
+        Runtimes["Go125rc"] = "go-1.25-rc";
+        Runtimes["Go126rc"] = "go-1.26-rc";
+        Runtimes["Static1rc"] = "static-1-rc";
+        Runtimes["Flutter324rc"] = "flutter-3.24-rc";
+        Runtimes["Flutter327rc"] = "flutter-3.27-rc";
+        Runtimes["Flutter329rc"] = "flutter-3.29-rc";
+        Runtimes["Flutter332rc"] = "flutter-3.32-rc";
+        Runtimes["Flutter335rc"] = "flutter-3.35-rc";
+        Runtimes["Flutter338rc"] = "flutter-3.38-rc";
     })(exports.Runtimes || (exports.Runtimes = {}));
 
     exports.UseCases = void 0;
@@ -35616,6 +35782,95 @@
         BuildRuntime["Flutter332"] = "flutter-3.32";
         BuildRuntime["Flutter335"] = "flutter-3.35";
         BuildRuntime["Flutter338"] = "flutter-3.38";
+        BuildRuntime["Node145rc"] = "node-14.5-rc";
+        BuildRuntime["Node160rc"] = "node-16.0-rc";
+        BuildRuntime["Node180rc"] = "node-18.0-rc";
+        BuildRuntime["Node190rc"] = "node-19.0-rc";
+        BuildRuntime["Node200rc"] = "node-20.0-rc";
+        BuildRuntime["Node210rc"] = "node-21.0-rc";
+        BuildRuntime["Node22rc"] = "node-22-rc";
+        BuildRuntime["Node23rc"] = "node-23-rc";
+        BuildRuntime["Node24rc"] = "node-24-rc";
+        BuildRuntime["Node25rc"] = "node-25-rc";
+        BuildRuntime["Php80rc"] = "php-8.0-rc";
+        BuildRuntime["Php81rc"] = "php-8.1-rc";
+        BuildRuntime["Php82rc"] = "php-8.2-rc";
+        BuildRuntime["Php83rc"] = "php-8.3-rc";
+        BuildRuntime["Php84rc"] = "php-8.4-rc";
+        BuildRuntime["Ruby30rc"] = "ruby-3.0-rc";
+        BuildRuntime["Ruby31rc"] = "ruby-3.1-rc";
+        BuildRuntime["Ruby32rc"] = "ruby-3.2-rc";
+        BuildRuntime["Ruby33rc"] = "ruby-3.3-rc";
+        BuildRuntime["Ruby34rc"] = "ruby-3.4-rc";
+        BuildRuntime["Ruby40rc"] = "ruby-4.0-rc";
+        BuildRuntime["Python38rc"] = "python-3.8-rc";
+        BuildRuntime["Python39rc"] = "python-3.9-rc";
+        BuildRuntime["Python310rc"] = "python-3.10-rc";
+        BuildRuntime["Python311rc"] = "python-3.11-rc";
+        BuildRuntime["Python312rc"] = "python-3.12-rc";
+        BuildRuntime["Python313rc"] = "python-3.13-rc";
+        BuildRuntime["Python314rc"] = "python-3.14-rc";
+        BuildRuntime["Pythonml311rc"] = "python-ml-3.11-rc";
+        BuildRuntime["Pythonml312rc"] = "python-ml-3.12-rc";
+        BuildRuntime["Pythonml313rc"] = "python-ml-3.13-rc";
+        BuildRuntime["Deno121rc"] = "deno-1.21-rc";
+        BuildRuntime["Deno124rc"] = "deno-1.24-rc";
+        BuildRuntime["Deno135rc"] = "deno-1.35-rc";
+        BuildRuntime["Deno140rc"] = "deno-1.40-rc";
+        BuildRuntime["Deno146rc"] = "deno-1.46-rc";
+        BuildRuntime["Deno20rc"] = "deno-2.0-rc";
+        BuildRuntime["Deno25rc"] = "deno-2.5-rc";
+        BuildRuntime["Deno26rc"] = "deno-2.6-rc";
+        BuildRuntime["Dart215rc"] = "dart-2.15-rc";
+        BuildRuntime["Dart216rc"] = "dart-2.16-rc";
+        BuildRuntime["Dart217rc"] = "dart-2.17-rc";
+        BuildRuntime["Dart218rc"] = "dart-2.18-rc";
+        BuildRuntime["Dart219rc"] = "dart-2.19-rc";
+        BuildRuntime["Dart30rc"] = "dart-3.0-rc";
+        BuildRuntime["Dart31rc"] = "dart-3.1-rc";
+        BuildRuntime["Dart33rc"] = "dart-3.3-rc";
+        BuildRuntime["Dart35rc"] = "dart-3.5-rc";
+        BuildRuntime["Dart38rc"] = "dart-3.8-rc";
+        BuildRuntime["Dart39rc"] = "dart-3.9-rc";
+        BuildRuntime["Dart310rc"] = "dart-3.10-rc";
+        BuildRuntime["Dotnet60rc"] = "dotnet-6.0-rc";
+        BuildRuntime["Dotnet70rc"] = "dotnet-7.0-rc";
+        BuildRuntime["Dotnet80rc"] = "dotnet-8.0-rc";
+        BuildRuntime["Dotnet10rc"] = "dotnet-10-rc";
+        BuildRuntime["Java80rc"] = "java-8.0-rc";
+        BuildRuntime["Java110rc"] = "java-11.0-rc";
+        BuildRuntime["Java170rc"] = "java-17.0-rc";
+        BuildRuntime["Java180rc"] = "java-18.0-rc";
+        BuildRuntime["Java210rc"] = "java-21.0-rc";
+        BuildRuntime["Java22rc"] = "java-22-rc";
+        BuildRuntime["Java25rc"] = "java-25-rc";
+        BuildRuntime["Swift55rc"] = "swift-5.5-rc";
+        BuildRuntime["Swift58rc"] = "swift-5.8-rc";
+        BuildRuntime["Swift59rc"] = "swift-5.9-rc";
+        BuildRuntime["Swift510rc"] = "swift-5.10-rc";
+        BuildRuntime["Swift62rc"] = "swift-6.2-rc";
+        BuildRuntime["Kotlin16rc"] = "kotlin-1.6-rc";
+        BuildRuntime["Kotlin18rc"] = "kotlin-1.8-rc";
+        BuildRuntime["Kotlin19rc"] = "kotlin-1.9-rc";
+        BuildRuntime["Kotlin20rc"] = "kotlin-2.0-rc";
+        BuildRuntime["Kotlin23rc"] = "kotlin-2.3-rc";
+        BuildRuntime["Cpp17rc"] = "cpp-17-rc";
+        BuildRuntime["Cpp20rc"] = "cpp-20-rc";
+        BuildRuntime["Bun10rc"] = "bun-1.0-rc";
+        BuildRuntime["Bun11rc"] = "bun-1.1-rc";
+        BuildRuntime["Bun12rc"] = "bun-1.2-rc";
+        BuildRuntime["Bun13rc"] = "bun-1.3-rc";
+        BuildRuntime["Go123rc"] = "go-1.23-rc";
+        BuildRuntime["Go124rc"] = "go-1.24-rc";
+        BuildRuntime["Go125rc"] = "go-1.25-rc";
+        BuildRuntime["Go126rc"] = "go-1.26-rc";
+        BuildRuntime["Static1rc"] = "static-1-rc";
+        BuildRuntime["Flutter324rc"] = "flutter-3.24-rc";
+        BuildRuntime["Flutter327rc"] = "flutter-3.27-rc";
+        BuildRuntime["Flutter329rc"] = "flutter-3.29-rc";
+        BuildRuntime["Flutter332rc"] = "flutter-3.32-rc";
+        BuildRuntime["Flutter335rc"] = "flutter-3.35-rc";
+        BuildRuntime["Flutter338rc"] = "flutter-3.38-rc";
     })(exports.BuildRuntime || (exports.BuildRuntime = {}));
 
     exports.Adapter = void 0;
@@ -35699,6 +35954,11 @@
         VCSDetectionType["Framework"] = "framework";
     })(exports.VCSDetectionType || (exports.VCSDetectionType = {}));
 
+    exports.Model = void 0;
+    (function (Model) {
+        Model["Embeddinggemma"] = "embeddinggemma";
+    })(exports.Model || (exports.Model = {}));
+
     exports.VectorsDBIndexType = void 0;
     (function (VectorsDBIndexType) {
         VectorsDBIndexType["HnswEuclidean"] = "hnsw_euclidean";
@@ -35708,6 +35968,14 @@
         VectorsDBIndexType["Key"] = "key";
         VectorsDBIndexType["Unique"] = "unique";
     })(exports.VectorsDBIndexType || (exports.VectorsDBIndexType = {}));
+
+    exports.DatabaseType = void 0;
+    (function (DatabaseType) {
+        DatabaseType["Legacy"] = "legacy";
+        DatabaseType["Tablesdb"] = "tablesdb";
+        DatabaseType["Documentsdb"] = "documentsdb";
+        DatabaseType["Vectorsdb"] = "vectorsdb";
+    })(exports.DatabaseType || (exports.DatabaseType = {}));
 
     exports.AttributeStatus = void 0;
     (function (AttributeStatus) {
@@ -35805,29 +36073,25 @@
         BillingPlanGroup["Scale"] = "scale";
     })(exports.BillingPlanGroup || (exports.BillingPlanGroup = {}));
 
-    exports.DomainPurchasePaymentStatus = void 0;
-    (function (DomainPurchasePaymentStatus) {
-        DomainPurchasePaymentStatus["Pending"] = "pending";
-        DomainPurchasePaymentStatus["PendingConfirmation"] = "pending_confirmation";
-        DomainPurchasePaymentStatus["PendingPaymentProcessing"] = "pending_payment_processing";
-        DomainPurchasePaymentStatus["Authorized"] = "authorized";
-        DomainPurchasePaymentStatus["Captured"] = "captured";
-        DomainPurchasePaymentStatus["Failed"] = "failed";
-        DomainPurchasePaymentStatus["CaptureFailed"] = "capture_failed";
-        DomainPurchasePaymentStatus["RenewalCaptureFailed"] = "renewal_capture_failed";
-    })(exports.DomainPurchasePaymentStatus || (exports.DomainPurchasePaymentStatus = {}));
+    exports.DomainTransferStatusEnum = void 0;
+    (function (DomainTransferStatusEnum) {
+        DomainTransferStatusEnum["Transferrable"] = "transferrable";
+        DomainTransferStatusEnum["NotTransferrable"] = "not_transferrable";
+        DomainTransferStatusEnum["PendingOwner"] = "pending_owner";
+        DomainTransferStatusEnum["PendingAdmin"] = "pending_admin";
+        DomainTransferStatusEnum["PendingRegistry"] = "pending_registry";
+        DomainTransferStatusEnum["Completed"] = "completed";
+        DomainTransferStatusEnum["Cancelled"] = "cancelled";
+        DomainTransferStatusEnum["ServiceUnavailable"] = "service_unavailable";
+    })(exports.DomainTransferStatusEnum || (exports.DomainTransferStatusEnum = {}));
 
-    exports.DomainTransferStatusStatus = void 0;
-    (function (DomainTransferStatusStatus) {
-        DomainTransferStatusStatus["Transferrable"] = "transferrable";
-        DomainTransferStatusStatus["NotTransferrable"] = "not_transferrable";
-        DomainTransferStatusStatus["PendingOwner"] = "pending_owner";
-        DomainTransferStatusStatus["PendingAdmin"] = "pending_admin";
-        DomainTransferStatusStatus["PendingRegistry"] = "pending_registry";
-        DomainTransferStatusStatus["Completed"] = "completed";
-        DomainTransferStatusStatus["Cancelled"] = "cancelled";
-        DomainTransferStatusStatus["ServiceUnavailable"] = "service_unavailable";
-    })(exports.DomainTransferStatusStatus || (exports.DomainTransferStatusStatus = {}));
+    exports.DomainPurchaseStatus = void 0;
+    (function (DomainPurchaseStatus) {
+        DomainPurchaseStatus["Pending"] = "pending";
+        DomainPurchaseStatus["Succeeded"] = "succeeded";
+        DomainPurchaseStatus["Failed"] = "failed";
+        DomainPurchaseStatus["Cancelled"] = "cancelled";
+    })(exports.DomainPurchaseStatus || (exports.DomainPurchaseStatus = {}));
 
     exports.Account = Account;
     exports.Activities = Activities;
@@ -35865,6 +36129,7 @@
     exports.Users = Users;
     exports.Vcs = Vcs;
     exports.VectorsDB = VectorsDB;
+    exports.Webhooks = Webhooks;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
