@@ -56,6 +56,8 @@ export declare enum Scopes {
     AssistantRead = "assistant.read",
     TokensRead = "tokens.read",
     TokensWrite = "tokens.write",
+    WebhooksRead = "webhooks.read",
+    WebhooksWrite = "webhooks.write",
     PoliciesWrite = "policies.write",
     PoliciesRead = "policies.read",
     ArchivesRead = "archives.read",

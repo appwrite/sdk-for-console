@@ -89,7 +89,7 @@ export declare class Domains {
      * @param {string} params.companyName - Company or organization name for the registrant.
      * @param {number} params.periodYears - Registration term in years (1-10).
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      */
     createPurchase(params: {
         domain: string;
@@ -103,7 +103,7 @@ export declare class Domains {
         addressLine3?: string;
         companyName?: string;
         periodYears?: number;
-    }): Promise<Models.Domain>;
+    }): Promise<Models.DomainPurchase>;
     /**
      *     Create a domain purchase with registrant information.
      *
@@ -119,32 +119,32 @@ export declare class Domains {
      * @param {string} companyName - Company or organization name for the registrant.
      * @param {number} periodYears - Registration term in years (1-10).
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPurchase(domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number): Promise<Models.Domain>;
+    createPurchase(domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number): Promise<Models.DomainPurchase>;
     /**
-     *     Confirm a domain purchase after payment authentication. Call this after the client has confirmed the payment via Stripe.js.
+     *     Confirm and complete a domain purchase after payment authentication.
      *
      * @param {string} params.domainId - Domain ID to confirm purchase for.
      * @param {string} params.organizationId - Team ID that owns the domain.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      */
-    confirmPurchase(params: {
+    updatePurchase(params: {
         domainId: string;
         organizationId: string;
-    }): Promise<Models.Domain>;
+    }): Promise<Models.DomainPurchase>;
     /**
-     *     Confirm a domain purchase after payment authentication. Call this after the client has confirmed the payment via Stripe.js.
+     *     Confirm and complete a domain purchase after payment authentication.
      *
      * @param {string} domainId - Domain ID to confirm purchase for.
      * @param {string} organizationId - Team ID that owns the domain.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    confirmPurchase(domainId: string, organizationId: string): Promise<Models.Domain>;
+    updatePurchase(domainId: string, organizationId: string): Promise<Models.DomainPurchase>;
     /**
      *     List domain suggestions.
      *
@@ -187,14 +187,14 @@ export declare class Domains {
      * @param {string} params.authCode - Authorization code for the domain transfer.
      * @param {string} params.paymentMethodId - Payment method ID to authorize and capture the transfer.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      */
     createTransferIn(params: {
         domain: string;
         organizationId: string;
         authCode: string;
         paymentMethodId: string;
-    }): Promise<Models.Domain>;
+    }): Promise<Models.DomainPurchase>;
     /**
      *     Create a domain transfer in with authorization code and registrant information.
      *
@@ -203,32 +203,32 @@ export declare class Domains {
      * @param {string} authCode - Authorization code for the domain transfer.
      * @param {string} paymentMethodId - Payment method ID to authorize and capture the transfer.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createTransferIn(domain: string, organizationId: string, authCode: string, paymentMethodId: string): Promise<Models.Domain>;
+    createTransferIn(domain: string, organizationId: string, authCode: string, paymentMethodId: string): Promise<Models.DomainPurchase>;
     /**
-     *     Confirm a domain transfer in after payment authentication. Call this after the client has confirmed the payment via Stripe.js.
+     *     Confirm and complete a domain transfer in after payment authentication.
      *
      * @param {string} params.domainId - Domain ID to confirm transfer for.
      * @param {string} params.organizationId - Team ID that owns the domain.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      */
-    confirmTransferIn(params: {
+    updateTransferIn(params: {
         domainId: string;
         organizationId: string;
-    }): Promise<Models.Domain>;
+    }): Promise<Models.DomainPurchase>;
     /**
-     *     Confirm a domain transfer in after payment authentication. Call this after the client has confirmed the payment via Stripe.js.
+     *     Confirm and complete a domain transfer in after payment authentication.
      *
      * @param {string} domainId - Domain ID to confirm transfer for.
      * @param {string} organizationId - Team ID that owns the domain.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Domain>}
+     * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    confirmTransferIn(domainId: string, organizationId: string): Promise<Models.Domain>;
+    updateTransferIn(domainId: string, organizationId: string): Promise<Models.DomainPurchase>;
     /**
      *     Create a domain transfer out and return the authorization code.
      *

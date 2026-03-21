@@ -1,5 +1,6 @@
 import { Client } from '../client';
 import type { Models } from '../models';
+import { Model } from '../enums/model';
 import { UsageRange } from '../enums/usage-range';
 import { VectorsDBIndexType } from '../enums/vectors-db-index-type';
 import { OrderBy } from '../enums/order-by';
@@ -54,10 +55,24 @@ export declare class VectorsDB {
     create(databaseId: string, name: string, enabled?: boolean): Promise<Models.Database>;
     /**
      *
+     * @param {string[]} params.texts - Array of text to generate embeddings.
+     * @param {Model} params.model - The embedding model to use for generating vector embeddings.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmbeddingList>}
      */
-    createTextEmbeddings(): Promise<Models.EmbeddingList>;
+    createTextEmbeddings(params: {
+        texts: string[];
+        model?: Model;
+    }): Promise<Models.EmbeddingList>;
+    /**
+     *
+     * @param {string[]} texts - Array of text to generate embeddings.
+     * @param {Model} model - The embedding model to use for generating vector embeddings.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.EmbeddingList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createTextEmbeddings(texts: string[], model?: Model): Promise<Models.EmbeddingList>;
     /**
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
