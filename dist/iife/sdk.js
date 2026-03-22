@@ -8019,7 +8019,8 @@
                     tableId: rest[0],
                     context: rest[1],
                     min: rest[2],
-                    max: rest[3]
+                    max: rest[3],
+                    databaseType: rest[4]
                 };
             }
             const databaseId = params.databaseId;
@@ -8027,6 +8028,7 @@
             const context = params.context;
             const min = params.min;
             const max = params.max;
+            const databaseType = params.databaseType;
             if (typeof databaseId === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "databaseId"');
             }
@@ -8049,6 +8051,9 @@
             }
             if (typeof max !== 'undefined') {
                 payload['max'] = max;
+            }
+            if (typeof databaseType !== 'undefined') {
+                payload['databaseType'] = databaseType;
             }
             const uri = new URL(this.client.config.endpoint + apiPath);
             const apiHeaders = {};
@@ -34711,6 +34716,14 @@
         ConsoleResourceType["Rules"] = "rules";
     })(exports.ConsoleResourceType || (exports.ConsoleResourceType = {}));
 
+    exports.DatabaseType = void 0;
+    (function (DatabaseType) {
+        DatabaseType["Legacy"] = "legacy";
+        DatabaseType["Tablesdb"] = "tablesdb";
+        DatabaseType["Documentsdb"] = "documentsdb";
+        DatabaseType["Vectorsdb"] = "vectorsdb";
+    })(exports.DatabaseType || (exports.DatabaseType = {}));
+
     exports.UsageRange = void 0;
     (function (UsageRange) {
         UsageRange["TwentyFourHours"] = "24h";
@@ -35968,14 +35981,6 @@
         VectorsDBIndexType["Key"] = "key";
         VectorsDBIndexType["Unique"] = "unique";
     })(exports.VectorsDBIndexType || (exports.VectorsDBIndexType = {}));
-
-    exports.DatabaseType = void 0;
-    (function (DatabaseType) {
-        DatabaseType["Legacy"] = "legacy";
-        DatabaseType["Tablesdb"] = "tablesdb";
-        DatabaseType["Documentsdb"] = "documentsdb";
-        DatabaseType["Vectorsdb"] = "vectorsdb";
-    })(exports.DatabaseType || (exports.DatabaseType = {}));
 
     exports.AttributeStatus = void 0;
     (function (AttributeStatus) {
