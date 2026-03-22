@@ -1920,6 +1920,77 @@ export class VectorsDB {
     /**
      *
      * @param {string} params.databaseId - Database ID.
+     * @param {string} params.collectionId - Collection ID.
+     * @param {string} params.documentId - Document ID.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.LogList>}
+     */
+    listDocumentLogs(params: { databaseId: string, collectionId: string, documentId: string, queries?: string[] }): Promise<Models.LogList>;
+    /**
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} collectionId - Collection ID.
+     * @param {string} documentId - Document ID.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.LogList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listDocumentLogs(databaseId: string, collectionId: string, documentId: string, queries?: string[]): Promise<Models.LogList>;
+    listDocumentLogs(
+        paramsOrFirst: { databaseId: string, collectionId: string, documentId: string, queries?: string[] } | string,
+        ...rest: [(string)?, (string)?, (string[])?]    
+    ): Promise<Models.LogList> {
+        let params: { databaseId: string, collectionId: string, documentId: string, queries?: string[] };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, documentId: string, queries?: string[] };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                documentId: rest[1] as string,
+                queries: rest[2] as string[]            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
+        const documentId = params.documentId;
+        const queries = params.queries;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof documentId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "documentId"');
+        }
+
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/logs'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     *
+     * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: key, type, status, attributes, error
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.

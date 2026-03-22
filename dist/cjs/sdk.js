@@ -28672,6 +28672,41 @@ class VectorsDB {
         };
         return this.client.call('delete', uri, apiHeaders, payload);
     }
+    listDocumentLogs(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                databaseId: paramsOrFirst,
+                collectionId: rest[0],
+                documentId: rest[1],
+                queries: rest[2]
+            };
+        }
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
+        const documentId = params.documentId;
+        const queries = params.queries;
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
+        }
+        if (typeof documentId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "documentId"');
+        }
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/logs'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {};
+        return this.client.call('get', uri, apiHeaders, payload);
+    }
     listIndexes(paramsOrFirst, ...rest) {
         let params;
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
