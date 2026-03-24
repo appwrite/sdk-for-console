@@ -14,6 +14,8 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
+/* global Reflect, Promise, SuppressedError, Symbol, Iterator */
+
 
 function __awaiter(thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -30,6 +32,11 @@ function __classPrivateFieldGet(receiver, state, kind, f) {
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 }
+
+typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+    var e = new Error(message);
+    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};
 
 const JSONbig$1 = JSONbigModule({ useNativeBigInt: true });
 /**
@@ -557,6 +564,9 @@ class Client {
             locale: '',
             mode: '',
             cookie: '',
+            impersonateuserid: '',
+            impersonateuseremail: '',
+            impersonateuserphone: '',
             platform: '',
             selfSigned: false,
             session: undefined,
@@ -568,8 +578,8 @@ class Client {
             'x-sdk-name': 'Console',
             'x-sdk-platform': 'console',
             'x-sdk-language': 'web',
-            'x-sdk-version': '6.0.0',
-            'X-Appwrite-Response-Format': '1.8.0',
+            'x-sdk-version': '7.0.0',
+            'X-Appwrite-Response-Format': '1.9.0',
         };
         this.realtime = {
             socket: undefined,
@@ -900,6 +910,48 @@ class Client {
         return this;
     }
     /**
+     * Set ImpersonateUserId
+     *
+     * Impersonate a user by ID on an already user-authenticated request. Requires the current request to be authenticated as a user with impersonator capability; X-Appwrite-Key alone is not sufficient. Impersonator users are intentionally granted users.read so they can discover a target before impersonation begins. Internal audit logs still attribute actions to the original impersonator and record the impersonated target only in internal audit payload data.
+     *
+     * @param value string
+     *
+     * @return {this}
+     */
+    setImpersonateUserId(value) {
+        this.headers['X-Appwrite-Impersonate-User-Id'] = value;
+        this.config.impersonateuserid = value;
+        return this;
+    }
+    /**
+     * Set ImpersonateUserEmail
+     *
+     * Impersonate a user by email on an already user-authenticated request. Requires the current request to be authenticated as a user with impersonator capability; X-Appwrite-Key alone is not sufficient. Impersonator users are intentionally granted users.read so they can discover a target before impersonation begins. Internal audit logs still attribute actions to the original impersonator and record the impersonated target only in internal audit payload data.
+     *
+     * @param value string
+     *
+     * @return {this}
+     */
+    setImpersonateUserEmail(value) {
+        this.headers['X-Appwrite-Impersonate-User-Email'] = value;
+        this.config.impersonateuseremail = value;
+        return this;
+    }
+    /**
+     * Set ImpersonateUserPhone
+     *
+     * Impersonate a user by phone on an already user-authenticated request. Requires the current request to be authenticated as a user with impersonator capability; X-Appwrite-Key alone is not sufficient. Impersonator users are intentionally granted users.read so they can discover a target before impersonation begins. Internal audit logs still attribute actions to the original impersonator and record the impersonated target only in internal audit payload data.
+     *
+     * @param value string
+     *
+     * @return {this}
+     */
+    setImpersonateUserPhone(value) {
+        this.headers['X-Appwrite-Impersonate-User-Phone'] = value;
+        this.config.impersonateuserphone = value;
+        return this;
+    }
+    /**
      * Set Platform
      *
      * The platform type (Appwrite or Imagine)
@@ -1026,9 +1078,9 @@ class Client {
         }
         return { uri: url.toString(), options };
     }
-    chunkedUpload(method, url, headers = {}, originalPayload = {}, onProgress) {
-        var _a;
-        return __awaiter(this, void 0, void 0, function* () {
+    chunkedUpload(method_1, url_1) {
+        return __awaiter(this, arguments, void 0, function* (method, url, headers = {}, originalPayload = {}, onProgress) {
+            var _a;
             const [fileParam, file] = (_a = Object.entries(originalPayload).find(([_, value]) => value instanceof File)) !== null && _a !== void 0 ? _a : [];
             if (!file || !fileParam) {
                 throw new Error('File not found in payload');
@@ -1070,9 +1122,9 @@ class Client {
             return this.call('GET', new URL(this.config.endpoint + '/ping'));
         });
     }
-    call(method, url, headers = {}, params = {}, responseType = 'json') {
-        var _a, _b;
-        return __awaiter(this, void 0, void 0, function* () {
+    call(method_1, url_1) {
+        return __awaiter(this, arguments, void 0, function* (method, url, headers = {}, params = {}, responseType = 'json') {
+            var _a, _b;
             const { uri, options } = this.prepareRequest(method, url, headers, params);
             let data = null;
             const response = yield fetch(uri, options);
@@ -17620,15 +17672,27 @@ class Project {
         const apiHeaders = {};
         return this.client.call('get', uri, apiHeaders, payload);
     }
-    /**
-     * Get a list of all project variables. These variables will be accessible in all Appwrite Functions at runtime.
-     *
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.VariableList>}
-     */
-    listVariables() {
+    listVariables(paramsOrFirst, ...rest) {
+        let params;
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                queries: paramsOrFirst,
+                total: rest[0]
+            };
+        }
+        const queries = params.queries;
+        const total = params.total;
         const apiPath = '/project/variables';
         const payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            payload['total'] = total;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
         const apiHeaders = {};
         return this.client.call('get', uri, apiHeaders, payload);
@@ -17640,14 +17704,19 @@ class Project {
         }
         else {
             params = {
-                key: paramsOrFirst,
-                value: rest[0],
-                secret: rest[1]
+                variableId: paramsOrFirst,
+                key: rest[0],
+                value: rest[1],
+                secret: rest[2]
             };
         }
+        const variableId = params.variableId;
         const key = params.key;
         const value = params.value;
         const secret = params.secret;
+        if (typeof variableId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "variableId"');
+        }
         if (typeof key === 'undefined') {
             throw new AppwriteException('Missing required parameter: "key"');
         }
@@ -17656,6 +17725,9 @@ class Project {
         }
         const apiPath = '/project/variables';
         const payload = {};
+        if (typeof variableId !== 'undefined') {
+            payload['variableId'] = variableId;
+        }
         if (typeof key !== 'undefined') {
             payload['key'] = key;
         }
@@ -17710,9 +17782,6 @@ class Project {
         const secret = params.secret;
         if (typeof variableId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "variableId"');
-        }
-        if (typeof key === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "key"');
         }
         const apiPath = '/project/variables/{variableId}'.replace('{variableId}', variableId);
         const payload = {};
@@ -26437,6 +26506,36 @@ class Users {
         };
         return this.client.call('patch', uri, apiHeaders, payload);
     }
+    updateImpersonator(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                userId: paramsOrFirst,
+                impersonator: rest[0]
+            };
+        }
+        const userId = params.userId;
+        const impersonator = params.impersonator;
+        if (typeof userId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+        if (typeof impersonator === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "impersonator"');
+        }
+        const apiPath = '/users/{userId}/impersonator'.replace('{userId}', userId);
+        const payload = {};
+        if (typeof impersonator !== 'undefined') {
+            payload['impersonator'] = impersonator;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('patch', uri, apiHeaders, payload);
+    }
     createJWT(paramsOrFirst, ...rest) {
         let params;
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
@@ -29423,8 +29522,8 @@ class Realtime {
         }
         return String(channel);
     }
-    subscribe(channelsOrChannel, callback, queries = []) {
-        return __awaiter(this, void 0, void 0, function* () {
+    subscribe(channelsOrChannel_1, callback_1) {
+        return __awaiter(this, arguments, void 0, function* (channelsOrChannel, callback, queries = []) {
             const channelArray = Array.isArray(channelsOrChannel)
                 ? channelsOrChannel
                 : [channelsOrChannel];
@@ -29744,7 +29843,7 @@ class ID {
      */
     static unique(padding = 7) {
         // Generate a unique ID with padding to have a longer ID
-        const baseId = __classPrivateFieldGet(ID, _a, "m", _ID_hexTimestamp).call(ID);
+        const baseId = __classPrivateFieldGet(_a, _a, "m", _ID_hexTimestamp).call(_a);
         let randomPadding = '';
         for (let i = 0; i < padding; i++) {
             const randomHexDigit = Math.floor(Math.random() * 16).toString(16);
@@ -30197,6 +30296,8 @@ var Scopes;
     Scopes["TokensWrite"] = "tokens.write";
     Scopes["WebhooksRead"] = "webhooks.read";
     Scopes["WebhooksWrite"] = "webhooks.write";
+    Scopes["ProjectRead"] = "project.read";
+    Scopes["ProjectWrite"] = "project.write";
     Scopes["PoliciesWrite"] = "policies.write";
     Scopes["PoliciesRead"] = "policies.read";
     Scopes["ArchivesRead"] = "archives.read";
@@ -30986,14 +31087,6 @@ var ConsoleResourceType;
 (function (ConsoleResourceType) {
     ConsoleResourceType["Rules"] = "rules";
 })(ConsoleResourceType || (ConsoleResourceType = {}));
-
-var DatabaseType;
-(function (DatabaseType) {
-    DatabaseType["Legacy"] = "legacy";
-    DatabaseType["Tablesdb"] = "tablesdb";
-    DatabaseType["Documentsdb"] = "documentsdb";
-    DatabaseType["Vectorsdb"] = "vectorsdb";
-})(DatabaseType || (DatabaseType = {}));
 
 var UsageRange;
 (function (UsageRange) {
@@ -32252,6 +32345,14 @@ var VectorsDBIndexType;
     VectorsDBIndexType["Key"] = "key";
     VectorsDBIndexType["Unique"] = "unique";
 })(VectorsDBIndexType || (VectorsDBIndexType = {}));
+
+var DatabaseType;
+(function (DatabaseType) {
+    DatabaseType["Legacy"] = "legacy";
+    DatabaseType["Tablesdb"] = "tablesdb";
+    DatabaseType["Documentsdb"] = "documentsdb";
+    DatabaseType["Vectorsdb"] = "vectorsdb";
+})(DatabaseType || (DatabaseType = {}));
 
 var AttributeStatus;
 (function (AttributeStatus) {

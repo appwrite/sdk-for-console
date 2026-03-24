@@ -10,7 +10,7 @@ export declare class Users {
     /**
      * Get a list of all the project's users. You can use the query params to filter your results.
      *
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, email, phone, status, passwordUpdate, registration, emailVerification, phoneVerification, labels
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, email, phone, status, passwordUpdate, registration, emailVerification, phoneVerification, labels, impersonator
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -24,7 +24,7 @@ export declare class Users {
     /**
      * Get a list of all the project's users. You can use the query params to filter your results.
      *
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, email, phone, status, passwordUpdate, registration, emailVerification, phoneVerification, labels
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, email, phone, status, passwordUpdate, registration, emailVerification, phoneVerification, labels, impersonator
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -411,6 +411,30 @@ export declare class Users {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     updateEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, email: string): Promise<Models.User<Preferences>>;
+    /**
+     * Enable or disable whether a user can impersonate other users. When impersonation headers are used, the request runs as the target user for API behavior, while internal audit logs still attribute the action to the original impersonator and store the impersonated target details only in internal audit payload data.
+     *
+     *
+     * @param {string} params.userId - User ID.
+     * @param {boolean} params.impersonator - Whether the user can impersonate other users. When true, the user can browse project users to choose a target and can pass impersonation headers to act as that user. Internal audit logs still attribute impersonated actions to the original impersonator and store the target user details only in internal audit payload data.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.User<Preferences>>}
+     */
+    updateImpersonator<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: {
+        userId: string;
+        impersonator: boolean;
+    }): Promise<Models.User<Preferences>>;
+    /**
+     * Enable or disable whether a user can impersonate other users. When impersonation headers are used, the request runs as the target user for API behavior, while internal audit logs still attribute the action to the original impersonator and store the impersonated target details only in internal audit payload data.
+     *
+     *
+     * @param {string} userId - User ID.
+     * @param {boolean} impersonator - Whether the user can impersonate other users. When true, the user can browse project users to choose a target and can pass impersonation headers to act as that user. Internal audit logs still attribute impersonated actions to the original impersonator and store the target user details only in internal audit payload data.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.User<Preferences>>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateImpersonator<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, impersonator: boolean): Promise<Models.User<Preferences>>;
     /**
      * Use this endpoint to create a JSON Web Token for user by its unique ID. You can use the resulting JWT to authenticate on behalf of the user. The JWT secret will become invalid if the session it uses gets deleted.
      *

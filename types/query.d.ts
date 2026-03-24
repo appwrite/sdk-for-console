@@ -1,7 +1,7 @@
-declare type QueryTypesSingle = string | number | bigint | boolean;
-export declare type QueryTypesList = string[] | number[] | bigint[] | boolean[] | Query[] | any[];
-export declare type QueryTypes = QueryTypesSingle | QueryTypesList;
-declare type AttributesTypes = string | string[];
+type QueryTypesSingle = string | number | bigint | boolean;
+export type QueryTypesList = string[] | number[] | bigint[] | boolean[] | Query[] | any[];
+export type QueryTypes = QueryTypesSingle | QueryTypesList;
+type AttributesTypes = string | string[];
 /**
  * Helper class to generate query strings.
  */

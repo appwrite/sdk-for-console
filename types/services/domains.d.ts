@@ -75,7 +75,7 @@ export declare class Domains {
      */
     getPrice(domain: string, periodYears?: number, registrationType?: RegistrationType): Promise<Models.DomainPrice>;
     /**
-     *     Create a domain purchase with registrant information.
+     *     Initiate a domain purchase by providing registrant details and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Purchase endpoint to capture the payment and finalize the purchase.
      *
      * @param {string} params.domain - Fully qualified domain name to purchase (for example, example.com).
      * @param {string} params.organizationId - Team ID that will own the domain.
@@ -105,7 +105,7 @@ export declare class Domains {
         periodYears?: number;
     }): Promise<Models.DomainPurchase>;
     /**
-     *     Create a domain purchase with registrant information.
+     *     Initiate a domain purchase by providing registrant details and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Purchase endpoint to capture the payment and finalize the purchase.
      *
      * @param {string} domain - Fully qualified domain name to purchase (for example, example.com).
      * @param {string} organizationId - Team ID that will own the domain.
@@ -124,7 +124,7 @@ export declare class Domains {
      */
     createPurchase(domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number): Promise<Models.DomainPurchase>;
     /**
-     *     Confirm and complete a domain purchase after payment authentication.
+     *     Finalize a domain purchase initiated with Create Purchase. Verifies that any required 3D Secure authentication is complete, registers the domain, captures the payment, and provisions default DNS records. Returns a 402 error if authentication is still pending.
      *
      * @param {string} params.domainId - Domain ID to confirm purchase for.
      * @param {string} params.organizationId - Team ID that owns the domain.
@@ -136,7 +136,7 @@ export declare class Domains {
         organizationId: string;
     }): Promise<Models.DomainPurchase>;
     /**
-     *     Confirm and complete a domain purchase after payment authentication.
+     *     Finalize a domain purchase initiated with Create Purchase. Verifies that any required 3D Secure authentication is complete, registers the domain, captures the payment, and provisions default DNS records. Returns a 402 error if authentication is still pending.
      *
      * @param {string} domainId - Domain ID to confirm purchase for.
      * @param {string} organizationId - Team ID that owns the domain.
@@ -180,7 +180,7 @@ export declare class Domains {
      */
     listSuggestions(query: string, tlds?: string[], limit?: number, filterType?: FilterType, priceMax?: number, priceMin?: number): Promise<Models.DomainSuggestionsList>;
     /**
-     *     Create a domain transfer in with authorization code and registrant information.
+     *     Initiate a domain transfer-in by providing an authorization code, registrant details, and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Transfer In endpoint to capture the payment and submit the transfer.
      *
      * @param {string} params.domain - Domain name to transfer in.
      * @param {string} params.organizationId - Organization ID that this domain will belong to.
@@ -196,7 +196,7 @@ export declare class Domains {
         paymentMethodId: string;
     }): Promise<Models.DomainPurchase>;
     /**
-     *     Create a domain transfer in with authorization code and registrant information.
+     *     Initiate a domain transfer-in by providing an authorization code, registrant details, and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Transfer In endpoint to capture the payment and submit the transfer.
      *
      * @param {string} domain - Domain name to transfer in.
      * @param {string} organizationId - Organization ID that this domain will belong to.
@@ -208,7 +208,7 @@ export declare class Domains {
      */
     createTransferIn(domain: string, organizationId: string, authCode: string, paymentMethodId: string): Promise<Models.DomainPurchase>;
     /**
-     *     Confirm and complete a domain transfer in after payment authentication.
+     *     Finalize a domain transfer-in initiated with Create Transfer In. Verifies that any required 3D Secure authentication is complete, submits the transfer with the authorization code, captures the payment, and sends a confirmation email. Returns a 402 error if authentication is still pending.
      *
      * @param {string} params.domainId - Domain ID to confirm transfer for.
      * @param {string} params.organizationId - Team ID that owns the domain.
@@ -220,7 +220,7 @@ export declare class Domains {
         organizationId: string;
     }): Promise<Models.DomainPurchase>;
     /**
-     *     Confirm and complete a domain transfer in after payment authentication.
+     *     Finalize a domain transfer-in initiated with Create Transfer In. Verifies that any required 3D Secure authentication is complete, submits the transfer with the authorization code, captures the payment, and sends a confirmation email. Returns a 402 error if authentication is still pending.
      *
      * @param {string} domainId - Domain ID to confirm transfer for.
      * @param {string} organizationId - Team ID that owns the domain.
@@ -230,7 +230,7 @@ export declare class Domains {
      */
     updateTransferIn(domainId: string, organizationId: string): Promise<Models.DomainPurchase>;
     /**
-     *     Create a domain transfer out and return the authorization code.
+     *     Initiate a domain transfer-out by generating an authorization code for the specified domain. The returned `authCode` should be provided to the gaining provider to complete the transfer. If the domain has auto-renewal enabled, it will be automatically disabled as part of this operation.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.organizationId - Organization ID that this domain belongs to.
@@ -242,7 +242,7 @@ export declare class Domains {
         organizationId: string;
     }): Promise<Models.DomainTransferOut>;
     /**
-     *     Create a domain transfer out and return the authorization code.
+     *     Initiate a domain transfer-out by generating an authorization code for the specified domain. The returned `authCode` should be provided to the gaining provider to complete the transfer. If the domain has auto-renewal enabled, it will be automatically disabled as part of this operation.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} organizationId - Organization ID that this domain belongs to.
@@ -1433,7 +1433,7 @@ export declare class Domains {
      */
     updateTeam(domainId: string, teamId: string): Promise<Models.Domain>;
     /**
-     *     Get the transfer status for a domain.
+     *     Retrieve the current transfer status for a domain. Returns the status, an optional reason, and a timestamp of the last status change.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1443,7 +1443,7 @@ export declare class Domains {
         domainId: string;
     }): Promise<Models.DomainTransferStatus>;
     /**
-     *     Get the transfer status for a domain.
+     *     Retrieve the current transfer status for a domain. Returns the status, an optional reason, and a timestamp of the last status change.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}

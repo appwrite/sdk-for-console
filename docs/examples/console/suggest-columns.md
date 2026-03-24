@@ -12,7 +12,8 @@ const result = await console.suggestColumns({
     tableId: '<TABLE_ID>',
     context: '<CONTEXT>', // optional
     min: 1, // optional
-    max: 1 // optional
+    max: 1, // optional
+    databaseType: '<DATABASE_TYPE>' // optional
 });
 
 console.log(result);

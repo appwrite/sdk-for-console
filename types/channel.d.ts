@@ -37,7 +37,7 @@ interface Membership {
 interface Resolved {
     _res: any;
 }
-declare type Actionable = Document | Row | File | Team | Membership;
+type Actionable = Document | Row | File | Team | Membership;
 export declare class Channel<T> {
     private readonly segments;
     _type: T;
@@ -69,6 +69,6 @@ export declare class Channel<T> {
     static teams(): string;
     static memberships(): string;
 }
-export declare type ActionableChannel = Channel<Document> | Channel<Row> | Channel<File> | Channel<Execution> | Channel<Team> | Channel<Membership>;
-export declare type ResolvedChannel = Channel<Resolved>;
+export type ActionableChannel = Channel<Document> | Channel<Row> | Channel<File> | Channel<Execution> | Channel<Team> | Channel<Membership>;
+export type ResolvedChannel = Channel<Resolved>;
 export {};

@@ -7,7 +7,10 @@ const client = new Client()
 
 const project = new Project(client);
 
-const result = await project.listVariables();
+const result = await project.listVariables({
+    queries: [], // optional
+    total: false // optional
+});
 
 console.log(result);
 ```

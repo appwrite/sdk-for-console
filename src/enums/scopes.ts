@@ -58,6 +58,8 @@ export enum Scopes {
     TokensWrite = 'tokens.write',
     WebhooksRead = 'webhooks.read',
     WebhooksWrite = 'webhooks.write',
+    ProjectRead = 'project.read',
+    ProjectWrite = 'project.write',
     PoliciesWrite = 'policies.write',
     PoliciesRead = 'policies.read',
     ArchivesRead = 'archives.read',

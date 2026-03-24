@@ -1,6 +1,6 @@
-declare type OperatorValuesSingle = string | number | boolean;
-export declare type OperatorValuesList = string[] | number[] | boolean[] | any[];
-export declare type OperatorValues = OperatorValuesSingle | OperatorValuesList;
+type OperatorValuesSingle = string | number | boolean;
+export type OperatorValuesList = string[] | number[] | boolean[] | any[];
+export type OperatorValues = OperatorValuesSingle | OperatorValuesList;
 export declare enum Condition {
     Equal = "equal",
     NotEqual = "notEqual",

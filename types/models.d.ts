@@ -2944,15 +2944,15 @@ export declare namespace Models {
          */
         event: string;
         /**
-         * User ID.
+         * User ID of the actor recorded for this log. During impersonation, this is the original impersonator, not the impersonated target user.
          */
         userId: string;
         /**
-         * User Email.
+         * User email of the actor recorded for this log. During impersonation, this is the original impersonator.
          */
         userEmail: string;
         /**
-         * User Name.
+         * User name of the actor recorded for this log. During impersonation, this is the original impersonator.
          */
         userName: string;
         /**
@@ -3104,6 +3104,14 @@ export declare namespace Models {
          * Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
          */
         accessedAt: string;
+        /**
+         * Whether the user can impersonate other users.
+         */
+        impersonator?: boolean;
+        /**
+         * ID of the original actor performing the impersonation. Present only when the current request is impersonating another user. Internal audit logs attribute the action to this user, while the impersonated target is recorded only in internal audit payload data.
+         */
+        impersonatorUserId?: string;
     };
     /**
      * AlgoMD5
@@ -7746,6 +7754,10 @@ export declare namespace Models {
          */
         realtime: number;
         /**
+         * Realtime messages
+         */
+        realtimeMessages: number;
+        /**
          * Messages per month
          */
         messages: number;
@@ -9137,6 +9149,14 @@ export declare namespace Models {
          * Realtime additional resources
          */
         realtime: AdditionalResource;
+        /**
+         * Realtime messages additional resources
+         */
+        realtimeMessages: AdditionalResource;
+        /**
+         * Realtime bandwidth additional resources
+         */
+        realtimeBandwidth: AdditionalResource;
         /**
          * Storage additional resources
          */

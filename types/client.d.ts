@@ -4,19 +4,19 @@ import { Query } from './query';
 /**
  * Payload type representing a key-value pair with string keys and any values.
  */
-declare type Payload = {
+type Payload = {
     [key: string]: any;
 };
 /**
  * Headers type representing a key-value pair with string keys and string values.
  */
-declare type Headers = {
+type Headers = {
     [key: string]: string;
 };
 /**
  * Realtime event response structure with generic payload type.
  */
-declare type RealtimeResponseEvent<T extends unknown> = {
+type RealtimeResponseEvent<T extends unknown> = {
     /**
      * List of event names associated with the response.
      */
@@ -41,7 +41,7 @@ declare type RealtimeResponseEvent<T extends unknown> = {
 /**
  * Type representing upload progress information.
  */
-declare type UploadProgress = {
+type UploadProgress = {
     /**
      * Identifier for the upload progress.
      */
@@ -107,6 +107,9 @@ declare class Client {
         locale: string;
         mode: string;
         cookie: string;
+        impersonateuserid: string;
+        impersonateuseremail: string;
+        impersonateuserphone: string;
         platform: string;
         selfSigned: boolean;
         session?: string;
@@ -197,6 +200,36 @@ declare class Client {
      * @return {this}
      */
     setCookie(value: string): this;
+    /**
+     * Set ImpersonateUserId
+     *
+     * Impersonate a user by ID on an already user-authenticated request. Requires the current request to be authenticated as a user with impersonator capability; X-Appwrite-Key alone is not sufficient. Impersonator users are intentionally granted users.read so they can discover a target before impersonation begins. Internal audit logs still attribute actions to the original impersonator and record the impersonated target only in internal audit payload data.
+     *
+     * @param value string
+     *
+     * @return {this}
+     */
+    setImpersonateUserId(value: string): this;
+    /**
+     * Set ImpersonateUserEmail
+     *
+     * Impersonate a user by email on an already user-authenticated request. Requires the current request to be authenticated as a user with impersonator capability; X-Appwrite-Key alone is not sufficient. Impersonator users are intentionally granted users.read so they can discover a target before impersonation begins. Internal audit logs still attribute actions to the original impersonator and record the impersonated target only in internal audit payload data.
+     *
+     * @param value string
+     *
+     * @return {this}
+     */
+    setImpersonateUserEmail(value: string): this;
+    /**
+     * Set ImpersonateUserPhone
+     *
+     * Impersonate a user by phone on an already user-authenticated request. Requires the current request to be authenticated as a user with impersonator capability; X-Appwrite-Key alone is not sufficient. Impersonator users are intentionally granted users.read so they can discover a target before impersonation begins. Internal audit logs still attribute actions to the original impersonator and record the impersonated target only in internal audit payload data.
+     *
+     * @param value string
+     *
+     * @return {this}
+     */
+    setImpersonateUserPhone(value: string): this;
     /**
      * Set Platform
      *

@@ -1,33 +1,33 @@
 import { Client } from '../client';
 import { Channel, ActionableChannel, ResolvedChannel } from '../channel';
 import { Query } from '../query';
-export declare type RealtimeSubscription = {
+export type RealtimeSubscription = {
     close: () => Promise<void>;
 };
-export declare type RealtimeCallback<T = any> = {
+export type RealtimeCallback<T = any> = {
     channels: Set<string>;
     queries: string[];
     callback: (event: RealtimeResponseEvent<T>) => void;
 };
-export declare type RealtimeResponse = {
+export type RealtimeResponse = {
     type: string;
     data?: any;
 };
-export declare type RealtimeResponseEvent<T = any> = {
+export type RealtimeResponseEvent<T = any> = {
     events: string[];
     channels: string[];
     timestamp: string;
     payload: T;
     subscriptions: string[];
 };
-export declare type RealtimeResponseConnected = {
+export type RealtimeResponseConnected = {
     channels: string[];
     user?: object;
     subscriptions?: {
         [slot: string]: string;
     };
 };
-export declare type RealtimeRequest = {
+export type RealtimeRequest = {
     type: 'authentication';
     data: {
         session: string;

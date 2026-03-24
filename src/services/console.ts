@@ -4,7 +4,6 @@ import type { Models } from '../models';
 
 import { Platform } from '../enums/platform';
 import { ConsoleResourceType } from '../enums/console-resource-type';
-import { DatabaseType } from '../enums/database-type';
 
 export class Console {
     client: Client;
@@ -497,11 +496,11 @@ export class Console {
      * @param {string} params.context - Optional user provided context to refine suggestions.
      * @param {number} params.min - Minimum number of suggestions to generate.
      * @param {number} params.max - Maximum number of suggestions to generate.
-     * @param {DatabaseType} params.databaseType - Database type.
+     * @param {string} params.databaseType - Database type (tablesdb, documentsdb, vectorsdb).
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnList>}
      */
-    suggestColumns(params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: DatabaseType }): Promise<Models.ColumnList>;
+    suggestColumns(params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: string }): Promise<Models.ColumnList>;
     /**
      * Suggests column names and their size limits based on the provided table name. The API will also analyze other tables in the same database to provide context-aware suggestions, ensuring consistency across schema design. Users may optionally provide custom context to further refine the suggestions.
      *
@@ -510,20 +509,20 @@ export class Console {
      * @param {string} context - Optional user provided context to refine suggestions.
      * @param {number} min - Minimum number of suggestions to generate.
      * @param {number} max - Maximum number of suggestions to generate.
-     * @param {DatabaseType} databaseType - Database type.
+     * @param {string} databaseType - Database type (tablesdb, documentsdb, vectorsdb).
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    suggestColumns(databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: DatabaseType): Promise<Models.ColumnList>;
+    suggestColumns(databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: string): Promise<Models.ColumnList>;
     suggestColumns(
-        paramsOrFirst: { databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: DatabaseType } | string,
-        ...rest: [(string)?, (string)?, (number)?, (number)?, (DatabaseType)?]    
+        paramsOrFirst: { databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: string } | string,
+        ...rest: [(string)?, (string)?, (number)?, (number)?, (string)?]    
     ): Promise<Models.ColumnList> {
-        let params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: DatabaseType };
+        let params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: DatabaseType };
+            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: string };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -531,7 +530,7 @@ export class Console {
                 context: rest[1] as string,
                 min: rest[2] as number,
                 max: rest[3] as number,
-                databaseType: rest[4] as DatabaseType            
+                databaseType: rest[4] as string            
             };
         }
         
