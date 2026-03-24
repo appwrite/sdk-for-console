@@ -8,6 +8,7 @@ const client = new Client()
 const project = new Project(client);
 
 const result = await project.createVariable({
+    variableId: '<VARIABLE_ID>',
     key: '<KEY>',
     value: '<VALUE>',
     secret: false // optional

@@ -751,6 +751,34 @@ export namespace Models {
     }
 
     /**
+     * VectorsDB Collections List
+     */
+    export type VectorsdbCollectionList = {
+        /**
+         * Total number of collections that matched your query.
+         */
+        total: number;
+        /**
+         * List of collections.
+         */
+        collections: VectorsdbCollection[];
+    }
+
+    /**
+     * Embedding list
+     */
+    export type EmbeddingList = {
+        /**
+         * Total number of embeddings that matched your query.
+         */
+        total: number;
+        /**
+         * List of embeddings.
+         */
+        embeddings: Embedding[];
+    }
+
+    /**
      * Database
      */
     export type Database = {
@@ -786,6 +814,28 @@ export namespace Models {
          * Database backup archives.
          */
         archives: Collection[];
+    }
+
+    /**
+     * Embedding
+     */
+    export type Embedding = {
+        /**
+         * Embedding model used to generate embeddings.
+         */
+        model: string;
+        /**
+         * Number of dimensions for each embedding vector.
+         */
+        dimension: number;
+        /**
+         * Embedding vector values. If an error occurs, this will be an empty array.
+         */
+        embedding: number[];
+        /**
+         * Error message if embedding generation fails. Empty string if no error.
+         */
+        error: string;
     }
 
     /**
@@ -1656,6 +1706,302 @@ export namespace Models {
          * Defines whether this attribute is encrypted or not.
          */
         encrypt?: boolean;
+    }
+
+    /**
+     * UsageDocumentsDB
+     */
+    export type UsageDocumentsDB = {
+        /**
+         * Time range of the usage stats.
+         */
+        range: string;
+        /**
+         * Total aggregated number of collections.
+         */
+        collectionsTotal: number;
+        /**
+         * Total aggregated number of documents.
+         */
+        documentsTotal: number;
+        /**
+         * Total aggregated storage used in bytes.
+         */
+        storageTotal: number;
+        /**
+         * Total number of database reads.
+         */
+        databaseReadsTotal: number;
+        /**
+         * Total number of database writes.
+         */
+        databaseWritesTotal: number;
+        /**
+         * Aggregated number of collections per period.
+         */
+        collections: Metric[];
+        /**
+         * Aggregated number of documents per period.
+         */
+        documents: Metric[];
+        /**
+         * Aggregated storage used in bytes per period.
+         */
+        storage: Metric[];
+        /**
+         * An array of aggregated number of database reads.
+         */
+        databaseReads: Metric[];
+        /**
+         * An array of aggregated number of database writes.
+         */
+        databaseWrites: Metric[];
+    }
+
+    /**
+     * VectorsDB Collection
+     */
+    export type VectorsdbCollection = {
+        /**
+         * Collection ID.
+         */
+        $id: string;
+        /**
+         * Collection creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Collection update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Collection permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * Database ID.
+         */
+        databaseId: string;
+        /**
+         * Collection name.
+         */
+        name: string;
+        /**
+         * Collection enabled. Can be 'enabled' or 'disabled'. When disabled, the collection is inaccessible to users, but remains accessible to Server SDKs using API keys.
+         */
+        enabled: boolean;
+        /**
+         * Whether document-level permissions are enabled. [Learn more about permissions](https://appwrite.io/docs/permissions).
+         */
+        documentSecurity: boolean;
+        /**
+         * Collection attributes.
+         */
+        attributes: (Models.AttributeObject | Models.AttributeVector)[];
+        /**
+         * Collection indexes.
+         */
+        indexes: Index[];
+        /**
+         * Maximum document size in bytes. Returns 0 when no limit applies.
+         */
+        bytesMax: number;
+        /**
+         * Currently used document size in bytes based on defined attributes.
+         */
+        bytesUsed: number;
+        /**
+         * Embedding dimension.
+         */
+        dimension: number;
+    }
+
+    /**
+     * AttributeObject
+     */
+    export type AttributeObject = {
+        /**
+         * Attribute Key.
+         */
+        key: string;
+        /**
+         * Attribute type.
+         */
+        type: string;
+        /**
+         * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: AttributeStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an attribute.
+         */
+        error: string;
+        /**
+         * Is attribute required?
+         */
+        required: boolean;
+        /**
+         * Is attribute an array?
+         */
+        array?: boolean;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+    }
+
+    /**
+     * AttributeVector
+     */
+    export type AttributeVector = {
+        /**
+         * Attribute Key.
+         */
+        key: string;
+        /**
+         * Attribute type.
+         */
+        type: string;
+        /**
+         * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: AttributeStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an attribute.
+         */
+        error: string;
+        /**
+         * Is attribute required?
+         */
+        required: boolean;
+        /**
+         * Is attribute an array?
+         */
+        array?: boolean;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Vector dimensions.
+         */
+        size: number;
+    }
+
+    /**
+     * UsageVectorsDBs
+     */
+    export type UsageVectorsDBs = {
+        /**
+         * Time range of the usage stats.
+         */
+        range: string;
+        /**
+         * Total aggregated number of VectorsDB databases.
+         */
+        databasesTotal: number;
+        /**
+         * Total aggregated number of collections.
+         */
+        collectionsTotal: number;
+        /**
+         * Total aggregated number of documents.
+         */
+        documentsTotal: number;
+        /**
+         * Total aggregated storage in bytes.
+         */
+        storageTotal: number;
+        /**
+         * Total number of database reads.
+         */
+        databasesReadsTotal: number;
+        /**
+         * Total number of database writes.
+         */
+        databasesWritesTotal: number;
+        /**
+         * Aggregated number of databases per period.
+         */
+        databases: Metric[];
+        /**
+         * Aggregated number of collections per period.
+         */
+        collections: Metric[];
+        /**
+         * Aggregated number of documents per period.
+         */
+        documents: Metric[];
+        /**
+         * Aggregated storage in bytes per period.
+         */
+        storage: Metric[];
+        /**
+         * An array of aggregated number of database reads.
+         */
+        databasesReads: Metric[];
+        /**
+         * An array of aggregated number of database writes.
+         */
+        databasesWrites: Metric[];
+    }
+
+    /**
+     * UsageVectorsDB
+     */
+    export type UsageVectorsDB = {
+        /**
+         * Time range of the usage stats.
+         */
+        range: string;
+        /**
+         * Total aggregated number of collections.
+         */
+        collectionsTotal: number;
+        /**
+         * Total aggregated number of documents.
+         */
+        documentsTotal: number;
+        /**
+         * Total aggregated storage used in bytes.
+         */
+        storageTotal: number;
+        /**
+         * Total number of database reads.
+         */
+        databaseReadsTotal: number;
+        /**
+         * Total number of database writes.
+         */
+        databaseWritesTotal: number;
+        /**
+         * Aggregated number of collections per period.
+         */
+        collections: Metric[];
+        /**
+         * Aggregated number of documents per period.
+         */
+        documents: Metric[];
+        /**
+         * Aggregated storage used in bytes per period.
+         */
+        storage: Metric[];
+        /**
+         * An array of aggregated number of database reads.
+         */
+        databaseReads: Metric[];
+        /**
+         * An array of aggregated number of database writes.
+         */
+        databaseWrites: Metric[];
     }
 
     /**
@@ -2707,15 +3053,15 @@ export namespace Models {
          */
         event: string;
         /**
-         * User ID.
+         * User ID of the actor recorded for this log. During impersonation, this is the original impersonator, not the impersonated target user.
          */
         userId: string;
         /**
-         * User Email.
+         * User email of the actor recorded for this log. During impersonation, this is the original impersonator.
          */
         userEmail: string;
         /**
-         * User Name.
+         * User name of the actor recorded for this log. During impersonation, this is the original impersonator.
          */
         userName: string;
         /**
@@ -2868,6 +3214,14 @@ export namespace Models {
          * Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
          */
         accessedAt: string;
+        /**
+         * Whether the user can impersonate other users.
+         */
+        impersonator?: boolean;
+        /**
+         * ID of the original actor performing the impersonation. Present only when the current request is impersonating another user. Internal audit logs attribute the action to this user, while the impersonated target is recorded only in internal audit payload data.
+         */
+        impersonatorUserId?: string;
     }
 
     /**
@@ -6034,9 +6388,13 @@ export namespace Models {
          */
         executionsTotal: number;
         /**
-         * Total aggregated  number of documents.
+         * Total aggregated  number of documents in legacy/tablesdb.
          */
         documentsTotal: number;
+        /**
+         * Total aggregated  number of documents in documentsdb.
+         */
+        documentsdbDocumentsTotal: number;
         /**
          * Total aggregated  number of rows.
          */
@@ -6046,9 +6404,17 @@ export namespace Models {
          */
         databasesTotal: number;
         /**
+         * Total aggregated number of documentsdb.
+         */
+        documentsdbTotal: number;
+        /**
          * Total aggregated sum of databases storage size (in bytes).
          */
         databasesStorageTotal: number;
+        /**
+         * Total aggregated sum of documentsdb databases storage size (in bytes).
+         */
+        documentsdbDatabasesStorageTotal: number;
         /**
          * Total aggregated number of users.
          */
@@ -6089,6 +6455,14 @@ export namespace Models {
          * Aggregated stats for total databases writes.
          */
         databasesWritesTotal: number;
+        /**
+         * Total number of documentsdb databases reads.
+         */
+        documentsdbDatabasesReadsTotal: number;
+        /**
+         * Total number of documentsdb databases writes.
+         */
+        documentsdbDatabasesWritesTotal: number;
         /**
          * Aggregated  number of requests per period.
          */
@@ -6150,6 +6524,18 @@ export namespace Models {
          */
         databasesWrites: Metric[];
         /**
+         * An array of aggregated number of documentsdb database reads.
+         */
+        documentsdbDatabasesReads: Metric[];
+        /**
+         * An array of aggregated number of documentsdb database writes.
+         */
+        documentsdbDatabasesWrites: Metric[];
+        /**
+         * An array of aggregated sum of documentsdb databases storage size (in bytes) per period.
+         */
+        documentsdbDatabasesStorage: Metric[];
+        /**
          * An array of aggregated number of image transformations.
          */
         imageTransformations: Metric[];
@@ -6157,6 +6543,86 @@ export namespace Models {
          * Total aggregated number of image transformations.
          */
         imageTransformationsTotal: number;
+        /**
+         * Total aggregated number of VectorsDB databases.
+         */
+        vectorsdbDatabasesTotal: number;
+        /**
+         * Total aggregated number of VectorsDB collections.
+         */
+        vectorsdbCollectionsTotal: number;
+        /**
+         * Total aggregated number of VectorsDB documents.
+         */
+        vectorsdbDocumentsTotal: number;
+        /**
+         * Total aggregated VectorsDB storage (bytes).
+         */
+        vectorsdbDatabasesStorageTotal: number;
+        /**
+         * Total aggregated number of VectorsDB reads.
+         */
+        vectorsdbDatabasesReadsTotal: number;
+        /**
+         * Total aggregated number of VectorsDB writes.
+         */
+        vectorsdbDatabasesWritesTotal: number;
+        /**
+         * Aggregated VectorsDB databases per period.
+         */
+        vectorsdbDatabases: Metric[];
+        /**
+         * Aggregated VectorsDB collections per period.
+         */
+        vectorsdbCollections: Metric[];
+        /**
+         * Aggregated VectorsDB documents per period.
+         */
+        vectorsdbDocuments: Metric[];
+        /**
+         * Aggregated VectorsDB storage per period.
+         */
+        vectorsdbDatabasesStorage: Metric[];
+        /**
+         * Aggregated VectorsDB reads per period.
+         */
+        vectorsdbDatabasesReads: Metric[];
+        /**
+         * Aggregated VectorsDB writes per period.
+         */
+        vectorsdbDatabasesWrites: Metric[];
+        /**
+         * Aggregated number of text embedding calls per period.
+         */
+        embeddingsText: Metric;
+        /**
+         * Aggregated number of tokens processed by text embeddings per period.
+         */
+        embeddingsTextTokens: Metric;
+        /**
+         * Aggregated duration spent generating text embeddings per period.
+         */
+        embeddingsTextDuration: Metric;
+        /**
+         * Aggregated number of errors while generating text embeddings per period.
+         */
+        embeddingsTextErrors: Metric;
+        /**
+         * Total aggregated number of text embedding calls.
+         */
+        embeddingsTextTotal: Metric;
+        /**
+         * Total aggregated number of tokens processed by text.
+         */
+        embeddingsTextTokensTotal: Metric;
+        /**
+         * Total aggregated duration spent generating text embeddings.
+         */
+        embeddingsTextDurationTotal: Metric;
+        /**
+         * Total aggregated number of errors while generating text embeddings.
+         */
+        embeddingsTextErrorsTotal: Metric;
         /**
          * Aggregated number of function executions per period.
          */
@@ -7497,6 +7963,10 @@ export namespace Models {
          * Realtime connections
          */
         realtime: number;
+        /**
+         * Realtime messages
+         */
+        realtimeMessages: number;
         /**
          * Messages per month
          */
@@ -8917,6 +9387,14 @@ export namespace Models {
          * Realtime additional resources
          */
         realtime: AdditionalResource;
+        /**
+         * Realtime messages additional resources
+         */
+        realtimeMessages: AdditionalResource;
+        /**
+         * Realtime bandwidth additional resources
+         */
+        realtimeBandwidth: AdditionalResource;
         /**
          * Storage additional resources
          */

@@ -10,6 +10,8 @@ export enum AppwriteMigrationResource {
     Document = 'document',
     Attribute = 'attribute',
     Collection = 'collection',
+    Documentsdb = 'documentsdb',
+    Vectorsdb = 'vectorsdb',
     Bucket = 'bucket',
     File = 'file',
     Function = 'function',
