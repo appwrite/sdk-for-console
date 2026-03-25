@@ -6,4 +6,11 @@ export enum UseCases {
     Utilities = 'utilities',
     Devtools = 'dev-tools',
     Auth = 'auth',
+    Portfolio = 'portfolio',
+    Events = 'events',
+    Ecommerce = 'ecommerce',
+    Documentation = 'documentation',
+    Blog = 'blog',
+    Forms = 'forms',
+    Dashboard = 'dashboard',
 }
