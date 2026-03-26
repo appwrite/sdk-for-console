@@ -1,15 +1,15 @@
 ```javascript
-import { Client, Project } from "@appwrite.io/console";
+import { Client, Domains } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const project = new Project(client);
+const domains = new Domains(client);
 
-const result = await project.listVariables({
-    queries: [], // optional
-    total: false // optional
+const result = await domains.updateAutoRenewal({
+    domainId: '<DOMAIN_ID>',
+    autoRenewal: false
 });
 
 console.log(result);

@@ -11,7 +11,8 @@ const result = await domains.createTransferIn({
     domain: '',
     organizationId: '<ORGANIZATION_ID>',
     authCode: '<AUTH_CODE>',
-    paymentMethodId: '<PAYMENT_METHOD_ID>'
+    paymentMethodId: '<PAYMENT_METHOD_ID>',
+    autoRenewal: false // optional
 });
 
 console.log(result);

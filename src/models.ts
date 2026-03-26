@@ -331,20 +331,6 @@ export namespace Models {
     }
 
     /**
-     * Runtime Provider Repositories List
-     */
-    export type ProviderRepositoryRuntimeList = {
-        /**
-         * Total number of runtimeProviderRepositories that matched your query.
-         */
-        total: number;
-        /**
-         * List of runtimeProviderRepositories.
-         */
-        runtimeProviderRepositories: ProviderRepositoryRuntime[];
-    }
-
-    /**
      * Branches List
      */
     export type BranchList = {
@@ -2707,15 +2693,15 @@ export namespace Models {
          */
         event: string;
         /**
-         * User ID.
+         * User ID of the actor recorded for this log. During impersonation, this is the original impersonator, not the impersonated target user.
          */
         userId: string;
         /**
-         * User Email.
+         * User email of the actor recorded for this log. During impersonation, this is the original impersonator.
          */
         userEmail: string;
         /**
-         * User Name.
+         * User name of the actor recorded for this log. During impersonation, this is the original impersonator.
          */
         userName: string;
         /**
@@ -2868,6 +2854,14 @@ export namespace Models {
          * Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
          */
         accessedAt: string;
+        /**
+         * Whether the user can impersonate other users.
+         */
+        impersonator?: boolean;
+        /**
+         * ID of the original actor performing the impersonation. Present only when the current request is impersonating another user. Internal audit logs attribute the action to this user, while the impersonated target is recorded only in internal audit payload data.
+         */
+        impersonatorUserId?: string;
     }
 
     /**
@@ -4106,56 +4100,6 @@ export namespace Models {
     }
 
     /**
-     * ProviderRepositoryRuntime
-     */
-    export type ProviderRepositoryRuntime = {
-        /**
-         * VCS (Version Control System) repository ID.
-         */
-        id: string;
-        /**
-         * VCS (Version Control System) repository name.
-         */
-        name: string;
-        /**
-         * VCS (Version Control System) organization name
-         */
-        organization: string;
-        /**
-         * VCS (Version Control System) provider name.
-         */
-        provider: string;
-        /**
-         * Is VCS (Version Control System) repository private?
-         */
-        private: boolean;
-        /**
-         * VCS (Version Control System) repository's default branch name.
-         */
-        defaultBranch: string;
-        /**
-         * VCS (Version Control System) installation ID.
-         */
-        providerInstallationId: string;
-        /**
-         * Is VCS (Version Control System) repository authorized for the installation?
-         */
-        authorized: boolean;
-        /**
-         * Last commit date in ISO 8601 format.
-         */
-        pushedAt: string;
-        /**
-         * Environment variables found in .env files
-         */
-        variables: string[];
-        /**
-         * Auto-detected runtime. Empty if type is not "runtime".
-         */
-        runtime: string;
-    }
-
-    /**
      * DetectionFramework
      */
     export type DetectionFramework = {
@@ -4179,28 +4123,6 @@ export namespace Models {
          * Site Output Directory
          */
         outputDirectory: string;
-    }
-
-    /**
-     * DetectionRuntime
-     */
-    export type DetectionRuntime = {
-        /**
-         * Environment variables found in .env files
-         */
-        variables?: DetectionVariable[];
-        /**
-         * Runtime
-         */
-        runtime: string;
-        /**
-         * Function Entrypoint
-         */
-        entrypoint: string;
-        /**
-         * Function install and build commands
-         */
-        commands: string;
     }
 
     /**
@@ -6034,9 +5956,13 @@ export namespace Models {
          */
         executionsTotal: number;
         /**
-         * Total aggregated  number of documents.
+         * Total aggregated  number of documents in legacy/tablesdb.
          */
         documentsTotal: number;
+        /**
+         * Total aggregated  number of documents in documentsdb.
+         */
+        documentsdbDocumentsTotal: number;
         /**
          * Total aggregated  number of rows.
          */
@@ -6046,9 +5972,17 @@ export namespace Models {
          */
         databasesTotal: number;
         /**
+         * Total aggregated number of documentsdb.
+         */
+        documentsdbTotal: number;
+        /**
          * Total aggregated sum of databases storage size (in bytes).
          */
         databasesStorageTotal: number;
+        /**
+         * Total aggregated sum of documentsdb databases storage size (in bytes).
+         */
+        documentsdbDatabasesStorageTotal: number;
         /**
          * Total aggregated number of users.
          */
@@ -6089,6 +6023,14 @@ export namespace Models {
          * Aggregated stats for total databases writes.
          */
         databasesWritesTotal: number;
+        /**
+         * Total number of documentsdb databases reads.
+         */
+        documentsdbDatabasesReadsTotal: number;
+        /**
+         * Total number of documentsdb databases writes.
+         */
+        documentsdbDatabasesWritesTotal: number;
         /**
          * Aggregated  number of requests per period.
          */
@@ -6150,6 +6092,18 @@ export namespace Models {
          */
         databasesWrites: Metric[];
         /**
+         * An array of aggregated number of documentsdb database reads.
+         */
+        documentsdbDatabasesReads: Metric[];
+        /**
+         * An array of aggregated number of documentsdb database writes.
+         */
+        documentsdbDatabasesWrites: Metric[];
+        /**
+         * An array of aggregated sum of documentsdb databases storage size (in bytes) per period.
+         */
+        documentsdbDatabasesStorage: Metric[];
+        /**
          * An array of aggregated number of image transformations.
          */
         imageTransformations: Metric[];
@@ -6157,6 +6111,86 @@ export namespace Models {
          * Total aggregated number of image transformations.
          */
         imageTransformationsTotal: number;
+        /**
+         * Total aggregated number of VectorsDB databases.
+         */
+        vectorsdbDatabasesTotal: number;
+        /**
+         * Total aggregated number of VectorsDB collections.
+         */
+        vectorsdbCollectionsTotal: number;
+        /**
+         * Total aggregated number of VectorsDB documents.
+         */
+        vectorsdbDocumentsTotal: number;
+        /**
+         * Total aggregated VectorsDB storage (bytes).
+         */
+        vectorsdbDatabasesStorageTotal: number;
+        /**
+         * Total aggregated number of VectorsDB reads.
+         */
+        vectorsdbDatabasesReadsTotal: number;
+        /**
+         * Total aggregated number of VectorsDB writes.
+         */
+        vectorsdbDatabasesWritesTotal: number;
+        /**
+         * Aggregated VectorsDB databases per period.
+         */
+        vectorsdbDatabases: Metric[];
+        /**
+         * Aggregated VectorsDB collections per period.
+         */
+        vectorsdbCollections: Metric[];
+        /**
+         * Aggregated VectorsDB documents per period.
+         */
+        vectorsdbDocuments: Metric[];
+        /**
+         * Aggregated VectorsDB storage per period.
+         */
+        vectorsdbDatabasesStorage: Metric[];
+        /**
+         * Aggregated VectorsDB reads per period.
+         */
+        vectorsdbDatabasesReads: Metric[];
+        /**
+         * Aggregated VectorsDB writes per period.
+         */
+        vectorsdbDatabasesWrites: Metric[];
+        /**
+         * Aggregated number of text embedding calls per period.
+         */
+        embeddingsText: Metric;
+        /**
+         * Aggregated number of tokens processed by text embeddings per period.
+         */
+        embeddingsTextTokens: Metric;
+        /**
+         * Aggregated duration spent generating text embeddings per period.
+         */
+        embeddingsTextDuration: Metric;
+        /**
+         * Aggregated number of errors while generating text embeddings per period.
+         */
+        embeddingsTextErrors: Metric;
+        /**
+         * Total aggregated number of text embedding calls.
+         */
+        embeddingsTextTotal: Metric;
+        /**
+         * Total aggregated number of tokens processed by text.
+         */
+        embeddingsTextTokensTotal: Metric;
+        /**
+         * Total aggregated duration spent generating text embeddings.
+         */
+        embeddingsTextDurationTotal: Metric;
+        /**
+         * Total aggregated number of errors while generating text embeddings.
+         */
+        embeddingsTextErrorsTotal: Metric;
         /**
          * Aggregated number of function executions per period.
          */
@@ -7497,6 +7531,10 @@ export namespace Models {
          * Realtime connections
          */
         realtime: number;
+        /**
+         * Realtime messages
+         */
+        realtimeMessages: number;
         /**
          * Messages per month
          */
@@ -8917,6 +8955,14 @@ export namespace Models {
          * Realtime additional resources
          */
         realtime: AdditionalResource;
+        /**
+         * Realtime messages additional resources
+         */
+        realtimeMessages: AdditionalResource;
+        /**
+         * Realtime bandwidth additional resources
+         */
+        realtimeBandwidth: AdditionalResource;
         /**
          * Storage additional resources
          */

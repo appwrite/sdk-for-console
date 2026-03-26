@@ -1,15 +1,15 @@
 ```javascript
-import { Client, Project } from "@appwrite.io/console";
+import { Client, Users } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const project = new Project(client);
+const users = new Users(client);
 
-const result = await project.listVariables({
-    queries: [], // optional
-    total: false // optional
+const result = await users.updateImpersonator({
+    userId: '<USER_ID>',
+    impersonator: false
 });
 
 console.log(result);
