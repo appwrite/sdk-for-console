@@ -1,6 +1,6 @@
 # Change Log
 
-## 7.0.0
+## 8.0.0
 
 * [BREAKING] Changed `$sequence` type from `number` to `string` for `Row` and `Document` models
 * [BREAKING] Renamed `IndexType` enum: split into `DatabasesIndexType` (for Databases) and `TablesDBIndexType` (for TablesDB)
