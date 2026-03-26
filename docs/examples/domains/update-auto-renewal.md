@@ -7,12 +7,9 @@ const client = new Client()
 
 const domains = new Domains(client);
 
-const result = await domains.createTransferIn({
-    domain: '',
-    organizationId: '<ORGANIZATION_ID>',
-    authCode: '<AUTH_CODE>',
-    paymentMethodId: '<PAYMENT_METHOD_ID>',
-    autoRenewal: false // optional
+const result = await domains.updateAutoRenewal({
+    domainId: '<DOMAIN_ID>',
+    autoRenewal: false
 });
 
 console.log(result);

@@ -18,7 +18,8 @@ const result = await domains.createPurchase({
     paymentMethodId: '<PAYMENT_METHOD_ID>',
     addressLine3: '<ADDRESS_LINE3>', // optional
     companyName: '<COMPANY_NAME>', // optional
-    periodYears: 1 // optional
+    periodYears: 1, // optional
+    autoRenewal: false // optional
 });
 
 console.log(result);

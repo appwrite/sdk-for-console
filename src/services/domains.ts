@@ -220,10 +220,11 @@ export class Domains {
      * @param {string} params.addressLine3 - Additional address line for the registrant (line 3).
      * @param {string} params.companyName - Company or organization name for the registrant.
      * @param {number} params.periodYears - Registration term in years (1-10).
+     * @param {boolean} params.autoRenewal - Whether the domain should renew automatically after purchase.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      */
-    createPurchase(params: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number }): Promise<Models.DomainPurchase>;
+    createPurchase(params: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number, autoRenewal?: boolean }): Promise<Models.DomainPurchase>;
     /**
      *     Initiate a domain purchase by providing registrant details and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Purchase endpoint to capture the payment and finalize the purchase.
      *
@@ -238,19 +239,20 @@ export class Domains {
      * @param {string} addressLine3 - Additional address line for the registrant (line 3).
      * @param {string} companyName - Company or organization name for the registrant.
      * @param {number} periodYears - Registration term in years (1-10).
+     * @param {boolean} autoRenewal - Whether the domain should renew automatically after purchase.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPurchase(domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number): Promise<Models.DomainPurchase>;
+    createPurchase(domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number, autoRenewal?: boolean): Promise<Models.DomainPurchase>;
     createPurchase(
-        paramsOrFirst: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
+        paramsOrFirst: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number, autoRenewal?: boolean } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (boolean)?]    
     ): Promise<Models.DomainPurchase> {
-        let params: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number };
+        let params: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number, autoRenewal?: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number };
+            params = (paramsOrFirst || {}) as { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number, autoRenewal?: boolean };
         } else {
             params = {
                 domain: paramsOrFirst as string,
@@ -263,7 +265,8 @@ export class Domains {
                 paymentMethodId: rest[6] as string,
                 addressLine3: rest[7] as string,
                 companyName: rest[8] as string,
-                periodYears: rest[9] as number            
+                periodYears: rest[9] as number,
+                autoRenewal: rest[10] as boolean            
             };
         }
         
@@ -278,6 +281,7 @@ export class Domains {
         const addressLine3 = params.addressLine3;
         const companyName = params.companyName;
         const periodYears = params.periodYears;
+        const autoRenewal = params.autoRenewal;
 
         if (typeof domain === 'undefined') {
             throw new AppwriteException('Missing required parameter: "domain"');
@@ -335,6 +339,9 @@ export class Domains {
         }
         if (typeof periodYears !== 'undefined') {
             payload['periodYears'] = periodYears;
+        }
+        if (typeof autoRenewal !== 'undefined') {
+            payload['autoRenewal'] = autoRenewal;
         }
         if (typeof paymentMethodId !== 'undefined') {
             payload['paymentMethodId'] = paymentMethodId;
@@ -513,10 +520,11 @@ export class Domains {
      * @param {string} params.organizationId - Organization ID that this domain will belong to.
      * @param {string} params.authCode - Authorization code for the domain transfer.
      * @param {string} params.paymentMethodId - Payment method ID to authorize and capture the transfer.
+     * @param {boolean} params.autoRenewal - Whether the domain should renew automatically after transfer.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      */
-    createTransferIn(params: { domain: string, organizationId: string, authCode: string, paymentMethodId: string }): Promise<Models.DomainPurchase>;
+    createTransferIn(params: { domain: string, organizationId: string, authCode: string, paymentMethodId: string, autoRenewal?: boolean }): Promise<Models.DomainPurchase>;
     /**
      *     Initiate a domain transfer-in by providing an authorization code, registrant details, and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Transfer In endpoint to capture the payment and submit the transfer.
      *
@@ -524,25 +532,27 @@ export class Domains {
      * @param {string} organizationId - Organization ID that this domain will belong to.
      * @param {string} authCode - Authorization code for the domain transfer.
      * @param {string} paymentMethodId - Payment method ID to authorize and capture the transfer.
+     * @param {boolean} autoRenewal - Whether the domain should renew automatically after transfer.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createTransferIn(domain: string, organizationId: string, authCode: string, paymentMethodId: string): Promise<Models.DomainPurchase>;
+    createTransferIn(domain: string, organizationId: string, authCode: string, paymentMethodId: string, autoRenewal?: boolean): Promise<Models.DomainPurchase>;
     createTransferIn(
-        paramsOrFirst: { domain: string, organizationId: string, authCode: string, paymentMethodId: string } | string,
-        ...rest: [(string)?, (string)?, (string)?]    
+        paramsOrFirst: { domain: string, organizationId: string, authCode: string, paymentMethodId: string, autoRenewal?: boolean } | string,
+        ...rest: [(string)?, (string)?, (string)?, (boolean)?]    
     ): Promise<Models.DomainPurchase> {
-        let params: { domain: string, organizationId: string, authCode: string, paymentMethodId: string };
+        let params: { domain: string, organizationId: string, authCode: string, paymentMethodId: string, autoRenewal?: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domain: string, organizationId: string, authCode: string, paymentMethodId: string };
+            params = (paramsOrFirst || {}) as { domain: string, organizationId: string, authCode: string, paymentMethodId: string, autoRenewal?: boolean };
         } else {
             params = {
                 domain: paramsOrFirst as string,
                 organizationId: rest[0] as string,
                 authCode: rest[1] as string,
-                paymentMethodId: rest[2] as string            
+                paymentMethodId: rest[2] as string,
+                autoRenewal: rest[3] as boolean            
             };
         }
         
@@ -550,6 +560,7 @@ export class Domains {
         const organizationId = params.organizationId;
         const authCode = params.authCode;
         const paymentMethodId = params.paymentMethodId;
+        const autoRenewal = params.autoRenewal;
 
         if (typeof domain === 'undefined') {
             throw new AppwriteException('Missing required parameter: "domain"');
@@ -574,6 +585,9 @@ export class Domains {
         }
         if (typeof authCode !== 'undefined') {
             payload['authCode'] = authCode;
+        }
+        if (typeof autoRenewal !== 'undefined') {
+            payload['autoRenewal'] = autoRenewal;
         }
         if (typeof paymentMethodId !== 'undefined') {
             payload['paymentMethodId'] = paymentMethodId;
@@ -820,6 +834,69 @@ export class Domains {
 
         return this.client.call(
             'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     *     Enable or disable auto-renewal for a domain.
+     *
+     * @param {string} params.domainId - Domain unique ID.
+     * @param {boolean} params.autoRenewal - Whether the domain should renew automatically.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     */
+    updateAutoRenewal(params: { domainId: string, autoRenewal: boolean }): Promise<Models.Domain>;
+    /**
+     *     Enable or disable auto-renewal for a domain.
+     *
+     * @param {string} domainId - Domain unique ID.
+     * @param {boolean} autoRenewal - Whether the domain should renew automatically.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateAutoRenewal(domainId: string, autoRenewal: boolean): Promise<Models.Domain>;
+    updateAutoRenewal(
+        paramsOrFirst: { domainId: string, autoRenewal: boolean } | string,
+        ...rest: [(boolean)?]    
+    ): Promise<Models.Domain> {
+        let params: { domainId: string, autoRenewal: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { domainId: string, autoRenewal: boolean };
+        } else {
+            params = {
+                domainId: paramsOrFirst as string,
+                autoRenewal: rest[0] as boolean            
+            };
+        }
+        
+        const domainId = params.domainId;
+        const autoRenewal = params.autoRenewal;
+
+        if (typeof domainId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "domainId"');
+        }
+        if (typeof autoRenewal === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "autoRenewal"');
+        }
+
+        const apiPath = '/domains/{domainId}/auto-renewal'.replace('{domainId}', domainId);
+        const payload: Payload = {};
+        if (typeof autoRenewal !== 'undefined') {
+            payload['autoRenewal'] = autoRenewal;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
             uri,
             apiHeaders,
             payload
