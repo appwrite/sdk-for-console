@@ -2,10 +2,26 @@
 
 ## 7.0.0
 
-* Breaking: Updated `$sequence` type from `number` to `string` for rows and documents.
-* Updated: Compatibility note now refers to Appwrite server `1.9.x`.
-* Updated: README badge shows API version `1.9.0`.
-* Updated: Set header `X-Appwrite-Response-Format` to `1.9.0`.
+* [BREAKING] Changed `$sequence` type from `number` to `string` for `Row` and `Document` models
+* [BREAKING] Renamed `IndexType` enum: split into `DatabasesIndexType` (for Databases) and `TablesDBIndexType` (for TablesDB)
+* [BREAKING] `Project.createVariable` now requires `variableId` as a new first parameter
+* [BREAKING] Removed `ProviderRepositoryRuntime`, `ProviderRepositoryRuntimeList`, and `DetectionRuntime` models
+* [BREAKING] Removed all RC (release candidate) runtime variants from `Runtime`, `Runtimes`, and `BuildRuntime` enums
+* Added new `Domains.updateAutoRenewal()` method for enabling/disabling domain auto-renewal
+* Added new `Users.updateImpersonator()` method for enabling/disabling user impersonation
+* Added impersonation support: `setImpersonateUserId()`, `setImpersonateUserEmail()`, `setImpersonateUserPhone()` on `Client`
+* Added `impersonator` and `impersonatorUserId` optional fields to `User` model
+* Added `autoRenewal` optional parameter to `Domains.createPurchase()` and `Domains.createTransferIn()`
+* Added optional `queries` and `total` parameters to `Project.listVariables()`
+* Added `Documentsdb` and `Vectorsdb` values to `DatabaseType` and `BackupServices` enums
+* Added new scopes: `Account`, `ProjectRead`, `ProjectWrite`, `PlatformsRead`, `PlatformsWrite`, `ProjectsRead`, `ProjectsWrite`, `KeysRead`, `KeysWrite`, `DevKeysRead`, `DevKeysWrite`
+* Added VectorsDB and DocumentsDB usage metrics to `UsagePeriod` model
+* Added embeddings metrics (`embeddingsText*`) to `UsagePeriod` model
+* Added `realtimeMessages` and `realtimeBandwidth` fields to `Plan` model
+* Changed `Project.updateVariable` `key` parameter from required to optional
+* Updated `Log` model field descriptions to clarify impersonation behavior
+* Updated `X-Appwrite-Response-Format` header to `1.9.0`
+* Updated devDependencies: Rollup 2→3, TypeScript 4.7→5.7, and related plugin upgrades
 
 ## 6.0.0
 
