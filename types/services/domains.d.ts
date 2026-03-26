@@ -88,6 +88,7 @@ export declare class Domains {
      * @param {string} params.addressLine3 - Additional address line for the registrant (line 3).
      * @param {string} params.companyName - Company or organization name for the registrant.
      * @param {number} params.periodYears - Registration term in years (1-10).
+     * @param {boolean} params.autoRenewal - Whether the domain should renew automatically after purchase.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      */
@@ -103,6 +104,7 @@ export declare class Domains {
         addressLine3?: string;
         companyName?: string;
         periodYears?: number;
+        autoRenewal?: boolean;
     }): Promise<Models.DomainPurchase>;
     /**
      *     Initiate a domain purchase by providing registrant details and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Purchase endpoint to capture the payment and finalize the purchase.
@@ -118,11 +120,12 @@ export declare class Domains {
      * @param {string} addressLine3 - Additional address line for the registrant (line 3).
      * @param {string} companyName - Company or organization name for the registrant.
      * @param {number} periodYears - Registration term in years (1-10).
+     * @param {boolean} autoRenewal - Whether the domain should renew automatically after purchase.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPurchase(domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number): Promise<Models.DomainPurchase>;
+    createPurchase(domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number, autoRenewal?: boolean): Promise<Models.DomainPurchase>;
     /**
      *     Finalize a domain purchase initiated with Create Purchase. Verifies that any required 3D Secure authentication is complete, registers the domain, captures the payment, and provisions default DNS records. Returns a 402 error if authentication is still pending.
      *
@@ -186,6 +189,7 @@ export declare class Domains {
      * @param {string} params.organizationId - Organization ID that this domain will belong to.
      * @param {string} params.authCode - Authorization code for the domain transfer.
      * @param {string} params.paymentMethodId - Payment method ID to authorize and capture the transfer.
+     * @param {boolean} params.autoRenewal - Whether the domain should renew automatically after transfer.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      */
@@ -194,6 +198,7 @@ export declare class Domains {
         organizationId: string;
         authCode: string;
         paymentMethodId: string;
+        autoRenewal?: boolean;
     }): Promise<Models.DomainPurchase>;
     /**
      *     Initiate a domain transfer-in by providing an authorization code, registrant details, and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Transfer In endpoint to capture the payment and submit the transfer.
@@ -202,11 +207,12 @@ export declare class Domains {
      * @param {string} organizationId - Organization ID that this domain will belong to.
      * @param {string} authCode - Authorization code for the domain transfer.
      * @param {string} paymentMethodId - Payment method ID to authorize and capture the transfer.
+     * @param {boolean} autoRenewal - Whether the domain should renew automatically after transfer.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createTransferIn(domain: string, organizationId: string, authCode: string, paymentMethodId: string): Promise<Models.DomainPurchase>;
+    createTransferIn(domain: string, organizationId: string, authCode: string, paymentMethodId: string, autoRenewal?: boolean): Promise<Models.DomainPurchase>;
     /**
      *     Finalize a domain transfer-in initiated with Create Transfer In. Verifies that any required 3D Secure authentication is complete, submits the transfer with the authorization code, captures the payment, and sends a confirmation email. Returns a 402 error if authentication is still pending.
      *
@@ -291,6 +297,28 @@ export declare class Domains {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     delete(domainId: string): Promise<{}>;
+    /**
+     *     Enable or disable auto-renewal for a domain.
+     *
+     * @param {string} params.domainId - Domain unique ID.
+     * @param {boolean} params.autoRenewal - Whether the domain should renew automatically.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     */
+    updateAutoRenewal(params: {
+        domainId: string;
+        autoRenewal: boolean;
+    }): Promise<Models.Domain>;
+    /**
+     *     Enable or disable auto-renewal for a domain.
+     *
+     * @param {string} domainId - Domain unique ID.
+     * @param {boolean} autoRenewal - Whether the domain should renew automatically.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateAutoRenewal(domainId: string, autoRenewal: boolean): Promise<Models.Domain>;
     /**
      *     Verify which NS records are used and update the domain accordingly. This will check the domain's
      *     nameservers and update the domain's status based on whether the nameservers match the expected

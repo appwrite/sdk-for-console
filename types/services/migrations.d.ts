@@ -204,6 +204,61 @@ export declare class Migrations {
      */
     getFirebaseReport(resources: FirebaseMigrationResource[], serviceAccount: string): Promise<Models.MigrationReport>;
     /**
+     *
+     * @param {string} params.resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database to export.
+     * @param {string} params.filename - The name of the file to be created for the export, excluding the .json extension.
+     * @param {string[]} params.columns - List of attributes to export. If empty, all attributes will be exported. You can use the `*` wildcard to export all attributes from the collection.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK to filter documents to export. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} params.notify - Set to true to receive an email when the export is complete. Default is true.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Migration>}
+     */
+    createJSONExport(params: {
+        resourceId: string;
+        filename: string;
+        columns?: string[];
+        queries?: string[];
+        notify?: boolean;
+    }): Promise<Models.Migration>;
+    /**
+     *
+     * @param {string} resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database to export.
+     * @param {string} filename - The name of the file to be created for the export, excluding the .json extension.
+     * @param {string[]} columns - List of attributes to export. If empty, all attributes will be exported. You can use the `*` wildcard to export all attributes from the collection.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK to filter documents to export. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} notify - Set to true to receive an email when the export is complete. Default is true.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Migration>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createJSONExport(resourceId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean): Promise<Models.Migration>;
+    /**
+     *
+     * @param {string} params.bucketId - Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
+     * @param {string} params.fileId - File ID.
+     * @param {string} params.resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database.
+     * @param {boolean} params.internalFile - Is the file stored in an internal bucket?
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Migration>}
+     */
+    createJSONImport(params: {
+        bucketId: string;
+        fileId: string;
+        resourceId: string;
+        internalFile?: boolean;
+    }): Promise<Models.Migration>;
+    /**
+     *
+     * @param {string} bucketId - Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
+     * @param {string} fileId - File ID.
+     * @param {string} resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database.
+     * @param {boolean} internalFile - Is the file stored in an internal bucket?
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Migration>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createJSONImport(bucketId: string, fileId: string, resourceId: string, internalFile?: boolean): Promise<Models.Migration>;
+    /**
      * Migrate data from an NHost project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from an NHost project.
      *
      * @param {NHostMigrationResource[]} params.resources - List of resources to migrate

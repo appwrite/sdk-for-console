@@ -59,6 +59,7 @@ export declare class DocumentsDB {
      */
     create(databaseId: string, name: string, enabled?: boolean): Promise<Models.Database>;
     /**
+     * List transactions across all databases.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
      * @throws {AppwriteException}
@@ -68,6 +69,7 @@ export declare class DocumentsDB {
         queries?: string[];
     }): Promise<Models.TransactionList>;
     /**
+     * List transactions across all databases.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
      * @throws {AppwriteException}
@@ -76,6 +78,7 @@ export declare class DocumentsDB {
      */
     listTransactions(queries?: string[]): Promise<Models.TransactionList>;
     /**
+     * Create a new transaction.
      *
      * @param {number} params.ttl - Seconds before the transaction expires.
      * @throws {AppwriteException}
@@ -85,6 +88,7 @@ export declare class DocumentsDB {
         ttl?: number;
     }): Promise<Models.Transaction>;
     /**
+     * Create a new transaction.
      *
      * @param {number} ttl - Seconds before the transaction expires.
      * @throws {AppwriteException}
@@ -93,6 +97,7 @@ export declare class DocumentsDB {
      */
     createTransaction(ttl?: number): Promise<Models.Transaction>;
     /**
+     * Get a transaction by its unique ID.
      *
      * @param {string} params.transactionId - Transaction ID.
      * @throws {AppwriteException}
@@ -102,6 +107,7 @@ export declare class DocumentsDB {
         transactionId: string;
     }): Promise<Models.Transaction>;
     /**
+     * Get a transaction by its unique ID.
      *
      * @param {string} transactionId - Transaction ID.
      * @throws {AppwriteException}
@@ -110,6 +116,7 @@ export declare class DocumentsDB {
      */
     getTransaction(transactionId: string): Promise<Models.Transaction>;
     /**
+     * Update a transaction, to either commit or roll back its operations.
      *
      * @param {string} params.transactionId - Transaction ID.
      * @param {boolean} params.commit - Commit transaction?
@@ -123,6 +130,7 @@ export declare class DocumentsDB {
         rollback?: boolean;
     }): Promise<Models.Transaction>;
     /**
+     * Update a transaction, to either commit or roll back its operations.
      *
      * @param {string} transactionId - Transaction ID.
      * @param {boolean} commit - Commit transaction?
@@ -133,6 +141,7 @@ export declare class DocumentsDB {
      */
     updateTransaction(transactionId: string, commit?: boolean, rollback?: boolean): Promise<Models.Transaction>;
     /**
+     * Delete a transaction by its unique ID.
      *
      * @param {string} params.transactionId - Transaction ID.
      * @throws {AppwriteException}
@@ -142,6 +151,7 @@ export declare class DocumentsDB {
         transactionId: string;
     }): Promise<{}>;
     /**
+     * Delete a transaction by its unique ID.
      *
      * @param {string} transactionId - Transaction ID.
      * @throws {AppwriteException}

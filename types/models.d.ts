@@ -306,19 +306,6 @@ export declare namespace Models {
         frameworkProviderRepositories: ProviderRepositoryFramework[];
     };
     /**
-     * Runtime Provider Repositories List
-     */
-    export type ProviderRepositoryRuntimeList = {
-        /**
-         * Total number of runtimeProviderRepositories that matched your query.
-         */
-        total: number;
-        /**
-         * List of runtimeProviderRepositories.
-         */
-        runtimeProviderRepositories: ProviderRepositoryRuntime[];
-    };
-    /**
      * Branches List
      */
     export type BranchList = {
@@ -4318,55 +4305,6 @@ export declare namespace Models {
         framework: string;
     };
     /**
-     * ProviderRepositoryRuntime
-     */
-    export type ProviderRepositoryRuntime = {
-        /**
-         * VCS (Version Control System) repository ID.
-         */
-        id: string;
-        /**
-         * VCS (Version Control System) repository name.
-         */
-        name: string;
-        /**
-         * VCS (Version Control System) organization name
-         */
-        organization: string;
-        /**
-         * VCS (Version Control System) provider name.
-         */
-        provider: string;
-        /**
-         * Is VCS (Version Control System) repository private?
-         */
-        private: boolean;
-        /**
-         * VCS (Version Control System) repository's default branch name.
-         */
-        defaultBranch: string;
-        /**
-         * VCS (Version Control System) installation ID.
-         */
-        providerInstallationId: string;
-        /**
-         * Is VCS (Version Control System) repository authorized for the installation?
-         */
-        authorized: boolean;
-        /**
-         * Last commit date in ISO 8601 format.
-         */
-        pushedAt: string;
-        /**
-         * Environment variables found in .env files
-         */
-        variables: string[];
-        /**
-         * Auto-detected runtime. Empty if type is not "runtime".
-         */
-        runtime: string;
-    };
-    /**
      * DetectionFramework
      */
     export type DetectionFramework = {
@@ -4390,27 +4328,6 @@ export declare namespace Models {
          * Site Output Directory
          */
         outputDirectory: string;
-    };
-    /**
-     * DetectionRuntime
-     */
-    export type DetectionRuntime = {
-        /**
-         * Environment variables found in .env files
-         */
-        variables?: DetectionVariable[];
-        /**
-         * Runtime
-         */
-        runtime: string;
-        /**
-         * Function Entrypoint
-         */
-        entrypoint: string;
-        /**
-         * Function install and build commands
-         */
-        commands: string;
     };
     /**
      * DetectionVariable

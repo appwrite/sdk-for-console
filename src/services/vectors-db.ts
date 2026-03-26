@@ -15,6 +15,7 @@ export class VectorsDB {
     }
 
     /**
+     * Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
@@ -24,6 +25,7 @@ export class VectorsDB {
      */
     list(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.DatabaseList>;
     /**
+     * Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
@@ -79,6 +81,8 @@ export class VectorsDB {
     }
 
     /**
+     * Create a new Database.
+     * 
      *
      * @param {string} params.databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Database name. Max length: 128 chars.
@@ -88,6 +92,8 @@ export class VectorsDB {
      */
     create(params: { databaseId: string, name: string, enabled?: boolean }): Promise<Models.Database>;
     /**
+     * Create a new Database.
+     * 
      *
      * @param {string} databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Database name. Max length: 128 chars.
@@ -150,6 +156,7 @@ export class VectorsDB {
     }
 
     /**
+     * Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
      *
      * @param {string[]} params.texts - Array of text to generate embeddings.
      * @param {Model} params.model - The embedding model to use for generating vector embeddings.
@@ -158,6 +165,7 @@ export class VectorsDB {
      */
     createTextEmbeddings(params: { texts: string[], model?: Model }): Promise<Models.EmbeddingList>;
     /**
+     * Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
      *
      * @param {string[]} texts - Array of text to generate embeddings.
      * @param {Model} model - The embedding model to use for generating vector embeddings.
@@ -211,6 +219,7 @@ export class VectorsDB {
     }
 
     /**
+     * List transactions across all databases.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
      * @throws {AppwriteException}
@@ -218,6 +227,7 @@ export class VectorsDB {
      */
     listTransactions(params?: { queries?: string[] }): Promise<Models.TransactionList>;
     /**
+     * List transactions across all databases.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
      * @throws {AppwriteException}
@@ -260,6 +270,7 @@ export class VectorsDB {
     }
 
     /**
+     * Create a new transaction.
      *
      * @param {number} params.ttl - Seconds before the transaction expires.
      * @throws {AppwriteException}
@@ -267,6 +278,7 @@ export class VectorsDB {
      */
     createTransaction(params?: { ttl?: number }): Promise<Models.Transaction>;
     /**
+     * Create a new transaction.
      *
      * @param {number} ttl - Seconds before the transaction expires.
      * @throws {AppwriteException}
@@ -310,6 +322,7 @@ export class VectorsDB {
     }
 
     /**
+     * Get a transaction by its unique ID.
      *
      * @param {string} params.transactionId - Transaction ID.
      * @throws {AppwriteException}
@@ -317,6 +330,7 @@ export class VectorsDB {
      */
     getTransaction(params: { transactionId: string }): Promise<Models.Transaction>;
     /**
+     * Get a transaction by its unique ID.
      *
      * @param {string} transactionId - Transaction ID.
      * @throws {AppwriteException}
@@ -359,6 +373,7 @@ export class VectorsDB {
     }
 
     /**
+     * Update a transaction, to either commit or roll back its operations.
      *
      * @param {string} params.transactionId - Transaction ID.
      * @param {boolean} params.commit - Commit transaction?
@@ -368,6 +383,7 @@ export class VectorsDB {
      */
     updateTransaction(params: { transactionId: string, commit?: boolean, rollback?: boolean }): Promise<Models.Transaction>;
     /**
+     * Update a transaction, to either commit or roll back its operations.
      *
      * @param {string} transactionId - Transaction ID.
      * @param {boolean} commit - Commit transaction?
@@ -424,6 +440,7 @@ export class VectorsDB {
     }
 
     /**
+     * Delete a transaction by its unique ID.
      *
      * @param {string} params.transactionId - Transaction ID.
      * @throws {AppwriteException}
@@ -431,6 +448,7 @@ export class VectorsDB {
      */
     deleteTransaction(params: { transactionId: string }): Promise<{}>;
     /**
+     * Delete a transaction by its unique ID.
      *
      * @param {string} transactionId - Transaction ID.
      * @throws {AppwriteException}
@@ -474,6 +492,7 @@ export class VectorsDB {
     }
 
     /**
+     * Create multiple operations in a single transaction.
      *
      * @param {string} params.transactionId - Transaction ID.
      * @param {object[]} params.operations - Array of staged operations.
@@ -482,6 +501,7 @@ export class VectorsDB {
      */
     createOperations(params: { transactionId: string, operations?: object[] }): Promise<Models.Transaction>;
     /**
+     * Create multiple operations in a single transaction.
      *
      * @param {string} transactionId - Transaction ID.
      * @param {object[]} operations - Array of staged operations.
@@ -532,6 +552,7 @@ export class VectorsDB {
     }
 
     /**
+     * List usage metrics and statistics for all databases in the project. You can view the total number of databases, collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
      * @param {UsageRange} params.range - Date range.
      * @throws {AppwriteException}
@@ -539,6 +560,7 @@ export class VectorsDB {
      */
     listUsage(params?: { range?: UsageRange }): Promise<Models.UsageVectorsDBs>;
     /**
+     * List usage metrics and statistics for all databases in the project. You can view the total number of databases, collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
      * @param {UsageRange} range - Date range.
      * @throws {AppwriteException}
@@ -581,6 +603,7 @@ export class VectorsDB {
     }
 
     /**
+     * Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
      *
      * @param {string} params.databaseId - Database ID.
      * @throws {AppwriteException}
@@ -588,6 +611,7 @@ export class VectorsDB {
      */
     get(params: { databaseId: string }): Promise<Models.Database>;
     /**
+     * Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
      *
      * @param {string} databaseId - Database ID.
      * @throws {AppwriteException}
@@ -630,6 +654,7 @@ export class VectorsDB {
     }
 
     /**
+     * Update a database by its unique ID.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.name - Database name. Max length: 128 chars.
@@ -639,6 +664,7 @@ export class VectorsDB {
      */
     update(params: { databaseId: string, name: string, enabled?: boolean }): Promise<Models.Database>;
     /**
+     * Update a database by its unique ID.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} name - Database name. Max length: 128 chars.
@@ -698,6 +724,7 @@ export class VectorsDB {
     }
 
     /**
+     * Delete a database by its unique ID. Only API keys with with databases.write scope can delete a database.
      *
      * @param {string} params.databaseId - Database ID.
      * @throws {AppwriteException}
@@ -705,6 +732,7 @@ export class VectorsDB {
      */
     delete(params: { databaseId: string }): Promise<{}>;
     /**
+     * Delete a database by its unique ID. Only API keys with with databases.write scope can delete a database.
      *
      * @param {string} databaseId - Database ID.
      * @throws {AppwriteException}
@@ -748,6 +776,7 @@ export class VectorsDB {
     }
 
     /**
+     * Get a list of all collections that belong to the provided databaseId. You can use the search parameter to filter your results.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, enabled, documentSecurity
@@ -758,6 +787,7 @@ export class VectorsDB {
      */
     listCollections(params: { databaseId: string, queries?: string[], search?: string, total?: boolean }): Promise<Models.VectorsdbCollectionList>;
     /**
+     * Get a list of all collections that belong to the provided databaseId. You can use the search parameter to filter your results.
      *
      * @param {string} databaseId - Database ID.
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, enabled, documentSecurity
@@ -819,6 +849,7 @@ export class VectorsDB {
     }
 
     /**
+     * Create a new Collection. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
@@ -832,6 +863,7 @@ export class VectorsDB {
      */
     createCollection(params: { databaseId: string, collectionId: string, name: string, dimension: number, permissions?: string[], documentSecurity?: boolean, enabled?: boolean }): Promise<Models.VectorsdbCollection>;
     /**
+     * Create a new Collection. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
@@ -921,6 +953,7 @@ export class VectorsDB {
     }
 
     /**
+     * Get a collection by its unique ID. This endpoint response returns a JSON object with the collection metadata.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID.
@@ -929,6 +962,7 @@ export class VectorsDB {
      */
     getCollection(params: { databaseId: string, collectionId: string }): Promise<Models.VectorsdbCollection>;
     /**
+     * Get a collection by its unique ID. This endpoint response returns a JSON object with the collection metadata.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID.
@@ -978,6 +1012,7 @@ export class VectorsDB {
     }
 
     /**
+     * Update a collection by its unique ID.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID.
@@ -991,6 +1026,7 @@ export class VectorsDB {
      */
     updateCollection(params: { databaseId: string, collectionId: string, name: string, dimension?: number, permissions?: string[], documentSecurity?: boolean, enabled?: boolean }): Promise<Models.VectorsdbCollection>;
     /**
+     * Update a collection by its unique ID.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID.
@@ -1074,6 +1110,7 @@ export class VectorsDB {
     }
 
     /**
+     * Delete a collection by its unique ID. Only users with write permissions have access to delete this resource.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID.
@@ -1082,6 +1119,7 @@ export class VectorsDB {
      */
     deleteCollection(params: { databaseId: string, collectionId: string }): Promise<{}>;
     /**
+     * Delete a collection by its unique ID. Only users with write permissions have access to delete this resource.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID.
@@ -1132,6 +1170,7 @@ export class VectorsDB {
     }
 
     /**
+     * Get a list of all the user's documents in a given collection. You can use the query params to filter your results.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -1144,6 +1183,7 @@ export class VectorsDB {
      */
     listDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, queries?: string[], transactionId?: string, total?: boolean, ttl?: number }): Promise<Models.DocumentList<Document>>;
     /**
+     * Get a list of all the user's documents in a given collection. You can use the query params to filter your results.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -1217,6 +1257,7 @@ export class VectorsDB {
     }
 
     /**
+     * Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection). Make sure to define attributes before creating documents.
@@ -1228,6 +1269,7 @@ export class VectorsDB {
      */
     createDocument<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, data: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Omit<Document, keyof Models.Document>, permissions?: string[] }): Promise<Document>;
     /**
+     * Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection). Make sure to define attributes before creating documents.
@@ -1302,6 +1344,7 @@ export class VectorsDB {
     }
 
     /**
+     * Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection). Make sure to define attributes before creating documents.
@@ -1311,6 +1354,7 @@ export class VectorsDB {
      */
     createDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documents: object[] }): Promise<Models.DocumentList<Document>>;
     /**
+     * Create new Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection). Make sure to define attributes before creating documents.
@@ -1370,6 +1414,8 @@ export class VectorsDB {
     }
 
     /**
+     * Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
+     * 
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID.
@@ -1380,6 +1426,8 @@ export class VectorsDB {
      */
     upsertDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documents: object[], transactionId?: string }): Promise<Models.DocumentList<Document>>;
     /**
+     * Create or update Documents. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
+     * 
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID.
@@ -1445,6 +1493,7 @@ export class VectorsDB {
     }
 
     /**
+     * Update all documents that match your queries, if no queries are submitted then all documents are updated. You can pass only specific fields to be updated.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID.
@@ -1456,6 +1505,7 @@ export class VectorsDB {
      */
     updateDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, data?: object, queries?: string[], transactionId?: string }): Promise<Models.DocumentList<Document>>;
     /**
+     * Update all documents that match your queries, if no queries are submitted then all documents are updated. You can pass only specific fields to be updated.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID.
@@ -1524,6 +1574,7 @@ export class VectorsDB {
     }
 
     /**
+     * Bulk delete documents using queries, if no queries are passed then all documents are deleted.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -1534,6 +1585,7 @@ export class VectorsDB {
      */
     deleteDocuments<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, queries?: string[], transactionId?: string }): Promise<Models.DocumentList<Document>>;
     /**
+     * Bulk delete documents using queries, if no queries are passed then all documents are deleted.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -1596,6 +1648,7 @@ export class VectorsDB {
     }
 
     /**
+     * Get a document by its unique ID. This endpoint response returns a JSON object with the document data.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -1607,6 +1660,7 @@ export class VectorsDB {
      */
     getDocument<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, queries?: string[], transactionId?: string }): Promise<Document>;
     /**
+     * Get a document by its unique ID. This endpoint response returns a JSON object with the document data.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -1674,6 +1728,7 @@ export class VectorsDB {
     }
 
     /**
+     * Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID.
@@ -1686,6 +1741,7 @@ export class VectorsDB {
      */
     upsertDocument<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, data?: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Partial<Omit<Document, keyof Models.Document>>, permissions?: string[], transactionId?: string }): Promise<Document>;
     /**
+     * Create or update a Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID.
@@ -1760,6 +1816,7 @@ export class VectorsDB {
     }
 
     /**
+     * Update a document by its unique ID. Using the patch method you can pass only specific fields that will get updated.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID.
@@ -1772,6 +1829,7 @@ export class VectorsDB {
      */
     updateDocument<Document extends Models.Document = Models.DefaultDocument>(params: { databaseId: string, collectionId: string, documentId: string, data?: Document extends Models.DefaultDocument ? Partial<Models.Document> & Record<string, any> : Partial<Models.Document> & Partial<Omit<Document, keyof Models.Document>>, permissions?: string[], transactionId?: string }): Promise<Document>;
     /**
+     * Update a document by its unique ID. Using the patch method you can pass only specific fields that will get updated.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID.
@@ -1846,6 +1904,7 @@ export class VectorsDB {
     }
 
     /**
+     * Delete a document by its unique ID.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -1856,6 +1915,7 @@ export class VectorsDB {
      */
     deleteDocument(params: { databaseId: string, collectionId: string, documentId: string, transactionId?: string }): Promise<{}>;
     /**
+     * Delete a document by its unique ID.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -1918,6 +1978,7 @@ export class VectorsDB {
     }
 
     /**
+     * Get the document activity logs list by its unique ID.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID.
@@ -1928,6 +1989,7 @@ export class VectorsDB {
      */
     listDocumentLogs(params: { databaseId: string, collectionId: string, documentId: string, queries?: string[] }): Promise<Models.LogList>;
     /**
+     * Get the document activity logs list by its unique ID.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID.
@@ -1989,6 +2051,7 @@ export class VectorsDB {
     }
 
     /**
+     * List indexes in the collection.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -1999,6 +2062,7 @@ export class VectorsDB {
      */
     listIndexes(params: { databaseId: string, collectionId: string, queries?: string[], total?: boolean }): Promise<Models.IndexList>;
     /**
+     * List indexes in the collection.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -2060,6 +2124,8 @@ export class VectorsDB {
     }
 
     /**
+     * Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
+     * Attributes can be `key`, `fulltext`, and `unique`.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -2073,6 +2139,8 @@ export class VectorsDB {
      */
     createIndex(params: { databaseId: string, collectionId: string, key: string, type: VectorsDBIndexType, attributes: string[], orders?: OrderBy[], lengths?: number[] }): Promise<Models.Index>;
     /**
+     * Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
+     * Attributes can be `key`, `fulltext`, and `unique`.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -2162,6 +2230,7 @@ export class VectorsDB {
     }
 
     /**
+     * Get index by ID.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -2171,6 +2240,7 @@ export class VectorsDB {
      */
     getIndex(params: { databaseId: string, collectionId: string, key: string }): Promise<Models.Index>;
     /**
+     * Get index by ID.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -2226,6 +2296,7 @@ export class VectorsDB {
     }
 
     /**
+     * Delete an index.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -2235,6 +2306,7 @@ export class VectorsDB {
      */
     deleteIndex(params: { databaseId: string, collectionId: string, key: string }): Promise<{}>;
     /**
+     * Delete an index.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -2291,6 +2363,7 @@ export class VectorsDB {
     }
 
     /**
+     * Get the collection activity logs list by its unique ID.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID.
@@ -2300,6 +2373,7 @@ export class VectorsDB {
      */
     listCollectionLogs(params: { databaseId: string, collectionId: string, queries?: string[] }): Promise<Models.LogList>;
     /**
+     * Get the collection activity logs list by its unique ID.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID.
@@ -2355,6 +2429,7 @@ export class VectorsDB {
     }
 
     /**
+     * Get usage metrics and statistics for a collection. Returning the total number of documents. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID.
@@ -2364,6 +2439,7 @@ export class VectorsDB {
      */
     getCollectionUsage(params: { databaseId: string, collectionId: string, range?: UsageRange }): Promise<Models.UsageCollection>;
     /**
+     * Get usage metrics and statistics for a collection. Returning the total number of documents. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID.
@@ -2419,6 +2495,7 @@ export class VectorsDB {
     }
 
     /**
+     * Get usage metrics and statistics for a database. You can view the total number of collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {UsageRange} params.range - Date range.
@@ -2427,6 +2504,7 @@ export class VectorsDB {
      */
     getUsage(params: { databaseId: string, range?: UsageRange }): Promise<Models.UsageVectorsDB>;
     /**
+     * Get usage metrics and statistics for a database. You can view the total number of collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
      * @param {string} databaseId - Database ID.
      * @param {UsageRange} range - Date range.

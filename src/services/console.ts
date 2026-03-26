@@ -496,11 +496,10 @@ export class Console {
      * @param {string} params.context - Optional user provided context to refine suggestions.
      * @param {number} params.min - Minimum number of suggestions to generate.
      * @param {number} params.max - Maximum number of suggestions to generate.
-     * @param {string} params.databaseType - Database type (tablesdb, documentsdb, vectorsdb).
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnList>}
      */
-    suggestColumns(params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: string }): Promise<Models.ColumnList>;
+    suggestColumns(params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number }): Promise<Models.ColumnList>;
     /**
      * Suggests column names and their size limits based on the provided table name. The API will also analyze other tables in the same database to provide context-aware suggestions, ensuring consistency across schema design. Users may optionally provide custom context to further refine the suggestions.
      *
@@ -509,28 +508,26 @@ export class Console {
      * @param {string} context - Optional user provided context to refine suggestions.
      * @param {number} min - Minimum number of suggestions to generate.
      * @param {number} max - Maximum number of suggestions to generate.
-     * @param {string} databaseType - Database type (tablesdb, documentsdb, vectorsdb).
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    suggestColumns(databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: string): Promise<Models.ColumnList>;
+    suggestColumns(databaseId: string, tableId: string, context?: string, min?: number, max?: number): Promise<Models.ColumnList>;
     suggestColumns(
-        paramsOrFirst: { databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (number)?, (string)?]    
+        paramsOrFirst: { databaseId: string, tableId: string, context?: string, min?: number, max?: number } | string,
+        ...rest: [(string)?, (string)?, (number)?, (number)?]    
     ): Promise<Models.ColumnList> {
-        let params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: string };
+        let params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: string };
+            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, context?: string, min?: number, max?: number };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 context: rest[1] as string,
                 min: rest[2] as number,
-                max: rest[3] as number,
-                databaseType: rest[4] as string            
+                max: rest[3] as number            
             };
         }
         
@@ -539,7 +536,6 @@ export class Console {
         const context = params.context;
         const min = params.min;
         const max = params.max;
-        const databaseType = params.databaseType;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
@@ -564,9 +560,6 @@ export class Console {
         }
         if (typeof max !== 'undefined') {
             payload['max'] = max;
-        }
-        if (typeof databaseType !== 'undefined') {
-            payload['databaseType'] = databaseType;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

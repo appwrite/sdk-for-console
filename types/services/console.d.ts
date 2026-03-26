@@ -187,7 +187,6 @@ export declare class Console {
      * @param {string} params.context - Optional user provided context to refine suggestions.
      * @param {number} params.min - Minimum number of suggestions to generate.
      * @param {number} params.max - Maximum number of suggestions to generate.
-     * @param {string} params.databaseType - Database type (tablesdb, documentsdb, vectorsdb).
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnList>}
      */
@@ -197,7 +196,6 @@ export declare class Console {
         context?: string;
         min?: number;
         max?: number;
-        databaseType?: string;
     }): Promise<Models.ColumnList>;
     /**
      * Suggests column names and their size limits based on the provided table name. The API will also analyze other tables in the same database to provide context-aware suggestions, ensuring consistency across schema design. Users may optionally provide custom context to further refine the suggestions.
@@ -207,12 +205,11 @@ export declare class Console {
      * @param {string} context - Optional user provided context to refine suggestions.
      * @param {number} min - Minimum number of suggestions to generate.
      * @param {number} max - Maximum number of suggestions to generate.
-     * @param {string} databaseType - Database type (tablesdb, documentsdb, vectorsdb).
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    suggestColumns(databaseId: string, tableId: string, context?: string, min?: number, max?: number, databaseType?: string): Promise<Models.ColumnList>;
+    suggestColumns(databaseId: string, tableId: string, context?: string, min?: number, max?: number): Promise<Models.ColumnList>;
     /**
      * Suggests database indexes for table columns based on the provided table structure and existing columns. The API will also analyze the table's column types, names, and patterns to recommend optimal indexes that improve query performance for common database operations like filtering, sorting, and searching.
      *
