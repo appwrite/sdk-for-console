@@ -4353,7 +4353,7 @@
                 'x-sdk-name': 'Console',
                 'x-sdk-platform': 'console',
                 'x-sdk-language': 'web',
-                'x-sdk-version': '8.0.0',
+                'x-sdk-version': '7.0.0',
                 'X-Appwrite-Response-Format': '1.9.0',
             };
             this.realtime = {
@@ -12896,8 +12896,7 @@
                     paymentMethodId: rest[6],
                     addressLine3: rest[7],
                     companyName: rest[8],
-                    periodYears: rest[9],
-                    autoRenewal: rest[10]
+                    periodYears: rest[9]
                 };
             }
             const domain = params.domain;
@@ -12911,7 +12910,6 @@
             const addressLine3 = params.addressLine3;
             const companyName = params.companyName;
             const periodYears = params.periodYears;
-            const autoRenewal = params.autoRenewal;
             if (typeof domain === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "domain"');
             }
@@ -12967,9 +12965,6 @@
             }
             if (typeof periodYears !== 'undefined') {
                 payload['periodYears'] = periodYears;
-            }
-            if (typeof autoRenewal !== 'undefined') {
-                payload['autoRenewal'] = autoRenewal;
             }
             if (typeof paymentMethodId !== 'undefined') {
                 payload['paymentMethodId'] = paymentMethodId;
@@ -13068,15 +13063,13 @@
                     domain: paramsOrFirst,
                     organizationId: rest[0],
                     authCode: rest[1],
-                    paymentMethodId: rest[2],
-                    autoRenewal: rest[3]
+                    paymentMethodId: rest[2]
                 };
             }
             const domain = params.domain;
             const organizationId = params.organizationId;
             const authCode = params.authCode;
             const paymentMethodId = params.paymentMethodId;
-            const autoRenewal = params.autoRenewal;
             if (typeof domain === 'undefined') {
                 throw new AppwriteException('Missing required parameter: "domain"');
             }
@@ -13099,9 +13092,6 @@
             }
             if (typeof authCode !== 'undefined') {
                 payload['authCode'] = authCode;
-            }
-            if (typeof autoRenewal !== 'undefined') {
-                payload['autoRenewal'] = autoRenewal;
             }
             if (typeof paymentMethodId !== 'undefined') {
                 payload['paymentMethodId'] = paymentMethodId;
@@ -13216,36 +13206,6 @@
                 'content-type': 'application/json',
             };
             return this.client.call('delete', uri, apiHeaders, payload);
-        }
-        updateAutoRenewal(paramsOrFirst, ...rest) {
-            let params;
-            if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-                params = (paramsOrFirst || {});
-            }
-            else {
-                params = {
-                    domainId: paramsOrFirst,
-                    autoRenewal: rest[0]
-                };
-            }
-            const domainId = params.domainId;
-            const autoRenewal = params.autoRenewal;
-            if (typeof domainId === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "domainId"');
-            }
-            if (typeof autoRenewal === 'undefined') {
-                throw new AppwriteException('Missing required parameter: "autoRenewal"');
-            }
-            const apiPath = '/domains/{domainId}/auto-renewal'.replace('{domainId}', domainId);
-            const payload = {};
-            if (typeof autoRenewal !== 'undefined') {
-                payload['autoRenewal'] = autoRenewal;
-            }
-            const uri = new URL(this.client.config.endpoint + apiPath);
-            const apiHeaders = {
-                'content-type': 'application/json',
-            };
-            return this.client.call('patch', uri, apiHeaders, payload);
         }
         updateNameservers(paramsOrFirst) {
             let params;
@@ -34141,12 +34101,11 @@
 
     exports.Scopes = void 0;
     (function (Scopes) {
-        Scopes["Account"] = "account";
-        Scopes["TeamsRead"] = "teams.read";
-        Scopes["TeamsWrite"] = "teams.write";
         Scopes["SessionsWrite"] = "sessions.write";
         Scopes["UsersRead"] = "users.read";
         Scopes["UsersWrite"] = "users.write";
+        Scopes["TeamsRead"] = "teams.read";
+        Scopes["TeamsWrite"] = "teams.write";
         Scopes["DatabasesRead"] = "databases.read";
         Scopes["DatabasesWrite"] = "databases.write";
         Scopes["CollectionsRead"] = "collections.read";
@@ -34212,14 +34171,6 @@
         Scopes["DomainsRead"] = "domains.read";
         Scopes["DomainsWrite"] = "domains.write";
         Scopes["EventsRead"] = "events.read";
-        Scopes["PlatformsRead"] = "platforms.read";
-        Scopes["PlatformsWrite"] = "platforms.write";
-        Scopes["ProjectsRead"] = "projects.read";
-        Scopes["ProjectsWrite"] = "projects.write";
-        Scopes["KeysRead"] = "keys.read";
-        Scopes["KeysWrite"] = "keys.write";
-        Scopes["DevKeysRead"] = "devKeys.read";
-        Scopes["DevKeysWrite"] = "devKeys.write";
     })(exports.Scopes || (exports.Scopes = {}));
 
     exports.AuthenticatorType = void 0;
@@ -35150,6 +35101,95 @@
         Runtime["Flutter332"] = "flutter-3.32";
         Runtime["Flutter335"] = "flutter-3.35";
         Runtime["Flutter338"] = "flutter-3.38";
+        Runtime["Node145rc"] = "node-14.5-rc";
+        Runtime["Node160rc"] = "node-16.0-rc";
+        Runtime["Node180rc"] = "node-18.0-rc";
+        Runtime["Node190rc"] = "node-19.0-rc";
+        Runtime["Node200rc"] = "node-20.0-rc";
+        Runtime["Node210rc"] = "node-21.0-rc";
+        Runtime["Node22rc"] = "node-22-rc";
+        Runtime["Node23rc"] = "node-23-rc";
+        Runtime["Node24rc"] = "node-24-rc";
+        Runtime["Node25rc"] = "node-25-rc";
+        Runtime["Php80rc"] = "php-8.0-rc";
+        Runtime["Php81rc"] = "php-8.1-rc";
+        Runtime["Php82rc"] = "php-8.2-rc";
+        Runtime["Php83rc"] = "php-8.3-rc";
+        Runtime["Php84rc"] = "php-8.4-rc";
+        Runtime["Ruby30rc"] = "ruby-3.0-rc";
+        Runtime["Ruby31rc"] = "ruby-3.1-rc";
+        Runtime["Ruby32rc"] = "ruby-3.2-rc";
+        Runtime["Ruby33rc"] = "ruby-3.3-rc";
+        Runtime["Ruby34rc"] = "ruby-3.4-rc";
+        Runtime["Ruby40rc"] = "ruby-4.0-rc";
+        Runtime["Python38rc"] = "python-3.8-rc";
+        Runtime["Python39rc"] = "python-3.9-rc";
+        Runtime["Python310rc"] = "python-3.10-rc";
+        Runtime["Python311rc"] = "python-3.11-rc";
+        Runtime["Python312rc"] = "python-3.12-rc";
+        Runtime["Python313rc"] = "python-3.13-rc";
+        Runtime["Python314rc"] = "python-3.14-rc";
+        Runtime["Pythonml311rc"] = "python-ml-3.11-rc";
+        Runtime["Pythonml312rc"] = "python-ml-3.12-rc";
+        Runtime["Pythonml313rc"] = "python-ml-3.13-rc";
+        Runtime["Deno121rc"] = "deno-1.21-rc";
+        Runtime["Deno124rc"] = "deno-1.24-rc";
+        Runtime["Deno135rc"] = "deno-1.35-rc";
+        Runtime["Deno140rc"] = "deno-1.40-rc";
+        Runtime["Deno146rc"] = "deno-1.46-rc";
+        Runtime["Deno20rc"] = "deno-2.0-rc";
+        Runtime["Deno25rc"] = "deno-2.5-rc";
+        Runtime["Deno26rc"] = "deno-2.6-rc";
+        Runtime["Dart215rc"] = "dart-2.15-rc";
+        Runtime["Dart216rc"] = "dart-2.16-rc";
+        Runtime["Dart217rc"] = "dart-2.17-rc";
+        Runtime["Dart218rc"] = "dart-2.18-rc";
+        Runtime["Dart219rc"] = "dart-2.19-rc";
+        Runtime["Dart30rc"] = "dart-3.0-rc";
+        Runtime["Dart31rc"] = "dart-3.1-rc";
+        Runtime["Dart33rc"] = "dart-3.3-rc";
+        Runtime["Dart35rc"] = "dart-3.5-rc";
+        Runtime["Dart38rc"] = "dart-3.8-rc";
+        Runtime["Dart39rc"] = "dart-3.9-rc";
+        Runtime["Dart310rc"] = "dart-3.10-rc";
+        Runtime["Dotnet60rc"] = "dotnet-6.0-rc";
+        Runtime["Dotnet70rc"] = "dotnet-7.0-rc";
+        Runtime["Dotnet80rc"] = "dotnet-8.0-rc";
+        Runtime["Dotnet10rc"] = "dotnet-10-rc";
+        Runtime["Java80rc"] = "java-8.0-rc";
+        Runtime["Java110rc"] = "java-11.0-rc";
+        Runtime["Java170rc"] = "java-17.0-rc";
+        Runtime["Java180rc"] = "java-18.0-rc";
+        Runtime["Java210rc"] = "java-21.0-rc";
+        Runtime["Java22rc"] = "java-22-rc";
+        Runtime["Java25rc"] = "java-25-rc";
+        Runtime["Swift55rc"] = "swift-5.5-rc";
+        Runtime["Swift58rc"] = "swift-5.8-rc";
+        Runtime["Swift59rc"] = "swift-5.9-rc";
+        Runtime["Swift510rc"] = "swift-5.10-rc";
+        Runtime["Swift62rc"] = "swift-6.2-rc";
+        Runtime["Kotlin16rc"] = "kotlin-1.6-rc";
+        Runtime["Kotlin18rc"] = "kotlin-1.8-rc";
+        Runtime["Kotlin19rc"] = "kotlin-1.9-rc";
+        Runtime["Kotlin20rc"] = "kotlin-2.0-rc";
+        Runtime["Kotlin23rc"] = "kotlin-2.3-rc";
+        Runtime["Cpp17rc"] = "cpp-17-rc";
+        Runtime["Cpp20rc"] = "cpp-20-rc";
+        Runtime["Bun10rc"] = "bun-1.0-rc";
+        Runtime["Bun11rc"] = "bun-1.1-rc";
+        Runtime["Bun12rc"] = "bun-1.2-rc";
+        Runtime["Bun13rc"] = "bun-1.3-rc";
+        Runtime["Go123rc"] = "go-1.23-rc";
+        Runtime["Go124rc"] = "go-1.24-rc";
+        Runtime["Go125rc"] = "go-1.25-rc";
+        Runtime["Go126rc"] = "go-1.26-rc";
+        Runtime["Static1rc"] = "static-1-rc";
+        Runtime["Flutter324rc"] = "flutter-3.24-rc";
+        Runtime["Flutter327rc"] = "flutter-3.27-rc";
+        Runtime["Flutter329rc"] = "flutter-3.29-rc";
+        Runtime["Flutter332rc"] = "flutter-3.32-rc";
+        Runtime["Flutter335rc"] = "flutter-3.35-rc";
+        Runtime["Flutter338rc"] = "flutter-3.38-rc";
     })(exports.Runtime || (exports.Runtime = {}));
 
     exports.Runtimes = void 0;
@@ -35243,30 +35283,114 @@
         Runtimes["Flutter332"] = "flutter-3.32";
         Runtimes["Flutter335"] = "flutter-3.35";
         Runtimes["Flutter338"] = "flutter-3.38";
+        Runtimes["Node145rc"] = "node-14.5-rc";
+        Runtimes["Node160rc"] = "node-16.0-rc";
+        Runtimes["Node180rc"] = "node-18.0-rc";
+        Runtimes["Node190rc"] = "node-19.0-rc";
+        Runtimes["Node200rc"] = "node-20.0-rc";
+        Runtimes["Node210rc"] = "node-21.0-rc";
+        Runtimes["Node22rc"] = "node-22-rc";
+        Runtimes["Node23rc"] = "node-23-rc";
+        Runtimes["Node24rc"] = "node-24-rc";
+        Runtimes["Node25rc"] = "node-25-rc";
+        Runtimes["Php80rc"] = "php-8.0-rc";
+        Runtimes["Php81rc"] = "php-8.1-rc";
+        Runtimes["Php82rc"] = "php-8.2-rc";
+        Runtimes["Php83rc"] = "php-8.3-rc";
+        Runtimes["Php84rc"] = "php-8.4-rc";
+        Runtimes["Ruby30rc"] = "ruby-3.0-rc";
+        Runtimes["Ruby31rc"] = "ruby-3.1-rc";
+        Runtimes["Ruby32rc"] = "ruby-3.2-rc";
+        Runtimes["Ruby33rc"] = "ruby-3.3-rc";
+        Runtimes["Ruby34rc"] = "ruby-3.4-rc";
+        Runtimes["Ruby40rc"] = "ruby-4.0-rc";
+        Runtimes["Python38rc"] = "python-3.8-rc";
+        Runtimes["Python39rc"] = "python-3.9-rc";
+        Runtimes["Python310rc"] = "python-3.10-rc";
+        Runtimes["Python311rc"] = "python-3.11-rc";
+        Runtimes["Python312rc"] = "python-3.12-rc";
+        Runtimes["Python313rc"] = "python-3.13-rc";
+        Runtimes["Python314rc"] = "python-3.14-rc";
+        Runtimes["Pythonml311rc"] = "python-ml-3.11-rc";
+        Runtimes["Pythonml312rc"] = "python-ml-3.12-rc";
+        Runtimes["Pythonml313rc"] = "python-ml-3.13-rc";
+        Runtimes["Deno121rc"] = "deno-1.21-rc";
+        Runtimes["Deno124rc"] = "deno-1.24-rc";
+        Runtimes["Deno135rc"] = "deno-1.35-rc";
+        Runtimes["Deno140rc"] = "deno-1.40-rc";
+        Runtimes["Deno146rc"] = "deno-1.46-rc";
+        Runtimes["Deno20rc"] = "deno-2.0-rc";
+        Runtimes["Deno25rc"] = "deno-2.5-rc";
+        Runtimes["Deno26rc"] = "deno-2.6-rc";
+        Runtimes["Dart215rc"] = "dart-2.15-rc";
+        Runtimes["Dart216rc"] = "dart-2.16-rc";
+        Runtimes["Dart217rc"] = "dart-2.17-rc";
+        Runtimes["Dart218rc"] = "dart-2.18-rc";
+        Runtimes["Dart219rc"] = "dart-2.19-rc";
+        Runtimes["Dart30rc"] = "dart-3.0-rc";
+        Runtimes["Dart31rc"] = "dart-3.1-rc";
+        Runtimes["Dart33rc"] = "dart-3.3-rc";
+        Runtimes["Dart35rc"] = "dart-3.5-rc";
+        Runtimes["Dart38rc"] = "dart-3.8-rc";
+        Runtimes["Dart39rc"] = "dart-3.9-rc";
+        Runtimes["Dart310rc"] = "dart-3.10-rc";
+        Runtimes["Dotnet60rc"] = "dotnet-6.0-rc";
+        Runtimes["Dotnet70rc"] = "dotnet-7.0-rc";
+        Runtimes["Dotnet80rc"] = "dotnet-8.0-rc";
+        Runtimes["Dotnet10rc"] = "dotnet-10-rc";
+        Runtimes["Java80rc"] = "java-8.0-rc";
+        Runtimes["Java110rc"] = "java-11.0-rc";
+        Runtimes["Java170rc"] = "java-17.0-rc";
+        Runtimes["Java180rc"] = "java-18.0-rc";
+        Runtimes["Java210rc"] = "java-21.0-rc";
+        Runtimes["Java22rc"] = "java-22-rc";
+        Runtimes["Java25rc"] = "java-25-rc";
+        Runtimes["Swift55rc"] = "swift-5.5-rc";
+        Runtimes["Swift58rc"] = "swift-5.8-rc";
+        Runtimes["Swift59rc"] = "swift-5.9-rc";
+        Runtimes["Swift510rc"] = "swift-5.10-rc";
+        Runtimes["Swift62rc"] = "swift-6.2-rc";
+        Runtimes["Kotlin16rc"] = "kotlin-1.6-rc";
+        Runtimes["Kotlin18rc"] = "kotlin-1.8-rc";
+        Runtimes["Kotlin19rc"] = "kotlin-1.9-rc";
+        Runtimes["Kotlin20rc"] = "kotlin-2.0-rc";
+        Runtimes["Kotlin23rc"] = "kotlin-2.3-rc";
+        Runtimes["Cpp17rc"] = "cpp-17-rc";
+        Runtimes["Cpp20rc"] = "cpp-20-rc";
+        Runtimes["Bun10rc"] = "bun-1.0-rc";
+        Runtimes["Bun11rc"] = "bun-1.1-rc";
+        Runtimes["Bun12rc"] = "bun-1.2-rc";
+        Runtimes["Bun13rc"] = "bun-1.3-rc";
+        Runtimes["Go123rc"] = "go-1.23-rc";
+        Runtimes["Go124rc"] = "go-1.24-rc";
+        Runtimes["Go125rc"] = "go-1.25-rc";
+        Runtimes["Go126rc"] = "go-1.26-rc";
+        Runtimes["Static1rc"] = "static-1-rc";
+        Runtimes["Flutter324rc"] = "flutter-3.24-rc";
+        Runtimes["Flutter327rc"] = "flutter-3.27-rc";
+        Runtimes["Flutter329rc"] = "flutter-3.29-rc";
+        Runtimes["Flutter332rc"] = "flutter-3.32-rc";
+        Runtimes["Flutter335rc"] = "flutter-3.35-rc";
+        Runtimes["Flutter338rc"] = "flutter-3.38-rc";
     })(exports.Runtimes || (exports.Runtimes = {}));
 
     exports.UseCases = void 0;
     (function (UseCases) {
-        UseCases["Starter"] = "starter";
-        UseCases["Databases"] = "databases";
-        UseCases["Ai"] = "ai";
-        UseCases["Messaging"] = "messaging";
-        UseCases["Utilities"] = "utilities";
-        UseCases["Devtools"] = "dev-tools";
-        UseCases["Auth"] = "auth";
         UseCases["Portfolio"] = "portfolio";
+        UseCases["Starter"] = "starter";
         UseCases["Events"] = "events";
         UseCases["Ecommerce"] = "ecommerce";
         UseCases["Documentation"] = "documentation";
         UseCases["Blog"] = "blog";
+        UseCases["Ai"] = "ai";
         UseCases["Forms"] = "forms";
         UseCases["Dashboard"] = "dashboard";
     })(exports.UseCases || (exports.UseCases = {}));
 
     exports.TemplateReferenceType = void 0;
     (function (TemplateReferenceType) {
-        TemplateReferenceType["Commit"] = "commit";
         TemplateReferenceType["Branch"] = "branch";
+        TemplateReferenceType["Commit"] = "commit";
         TemplateReferenceType["Tag"] = "tag";
     })(exports.TemplateReferenceType || (exports.TemplateReferenceType = {}));
 
@@ -35899,6 +36023,95 @@
         BuildRuntime["Flutter332"] = "flutter-3.32";
         BuildRuntime["Flutter335"] = "flutter-3.35";
         BuildRuntime["Flutter338"] = "flutter-3.38";
+        BuildRuntime["Node145rc"] = "node-14.5-rc";
+        BuildRuntime["Node160rc"] = "node-16.0-rc";
+        BuildRuntime["Node180rc"] = "node-18.0-rc";
+        BuildRuntime["Node190rc"] = "node-19.0-rc";
+        BuildRuntime["Node200rc"] = "node-20.0-rc";
+        BuildRuntime["Node210rc"] = "node-21.0-rc";
+        BuildRuntime["Node22rc"] = "node-22-rc";
+        BuildRuntime["Node23rc"] = "node-23-rc";
+        BuildRuntime["Node24rc"] = "node-24-rc";
+        BuildRuntime["Node25rc"] = "node-25-rc";
+        BuildRuntime["Php80rc"] = "php-8.0-rc";
+        BuildRuntime["Php81rc"] = "php-8.1-rc";
+        BuildRuntime["Php82rc"] = "php-8.2-rc";
+        BuildRuntime["Php83rc"] = "php-8.3-rc";
+        BuildRuntime["Php84rc"] = "php-8.4-rc";
+        BuildRuntime["Ruby30rc"] = "ruby-3.0-rc";
+        BuildRuntime["Ruby31rc"] = "ruby-3.1-rc";
+        BuildRuntime["Ruby32rc"] = "ruby-3.2-rc";
+        BuildRuntime["Ruby33rc"] = "ruby-3.3-rc";
+        BuildRuntime["Ruby34rc"] = "ruby-3.4-rc";
+        BuildRuntime["Ruby40rc"] = "ruby-4.0-rc";
+        BuildRuntime["Python38rc"] = "python-3.8-rc";
+        BuildRuntime["Python39rc"] = "python-3.9-rc";
+        BuildRuntime["Python310rc"] = "python-3.10-rc";
+        BuildRuntime["Python311rc"] = "python-3.11-rc";
+        BuildRuntime["Python312rc"] = "python-3.12-rc";
+        BuildRuntime["Python313rc"] = "python-3.13-rc";
+        BuildRuntime["Python314rc"] = "python-3.14-rc";
+        BuildRuntime["Pythonml311rc"] = "python-ml-3.11-rc";
+        BuildRuntime["Pythonml312rc"] = "python-ml-3.12-rc";
+        BuildRuntime["Pythonml313rc"] = "python-ml-3.13-rc";
+        BuildRuntime["Deno121rc"] = "deno-1.21-rc";
+        BuildRuntime["Deno124rc"] = "deno-1.24-rc";
+        BuildRuntime["Deno135rc"] = "deno-1.35-rc";
+        BuildRuntime["Deno140rc"] = "deno-1.40-rc";
+        BuildRuntime["Deno146rc"] = "deno-1.46-rc";
+        BuildRuntime["Deno20rc"] = "deno-2.0-rc";
+        BuildRuntime["Deno25rc"] = "deno-2.5-rc";
+        BuildRuntime["Deno26rc"] = "deno-2.6-rc";
+        BuildRuntime["Dart215rc"] = "dart-2.15-rc";
+        BuildRuntime["Dart216rc"] = "dart-2.16-rc";
+        BuildRuntime["Dart217rc"] = "dart-2.17-rc";
+        BuildRuntime["Dart218rc"] = "dart-2.18-rc";
+        BuildRuntime["Dart219rc"] = "dart-2.19-rc";
+        BuildRuntime["Dart30rc"] = "dart-3.0-rc";
+        BuildRuntime["Dart31rc"] = "dart-3.1-rc";
+        BuildRuntime["Dart33rc"] = "dart-3.3-rc";
+        BuildRuntime["Dart35rc"] = "dart-3.5-rc";
+        BuildRuntime["Dart38rc"] = "dart-3.8-rc";
+        BuildRuntime["Dart39rc"] = "dart-3.9-rc";
+        BuildRuntime["Dart310rc"] = "dart-3.10-rc";
+        BuildRuntime["Dotnet60rc"] = "dotnet-6.0-rc";
+        BuildRuntime["Dotnet70rc"] = "dotnet-7.0-rc";
+        BuildRuntime["Dotnet80rc"] = "dotnet-8.0-rc";
+        BuildRuntime["Dotnet10rc"] = "dotnet-10-rc";
+        BuildRuntime["Java80rc"] = "java-8.0-rc";
+        BuildRuntime["Java110rc"] = "java-11.0-rc";
+        BuildRuntime["Java170rc"] = "java-17.0-rc";
+        BuildRuntime["Java180rc"] = "java-18.0-rc";
+        BuildRuntime["Java210rc"] = "java-21.0-rc";
+        BuildRuntime["Java22rc"] = "java-22-rc";
+        BuildRuntime["Java25rc"] = "java-25-rc";
+        BuildRuntime["Swift55rc"] = "swift-5.5-rc";
+        BuildRuntime["Swift58rc"] = "swift-5.8-rc";
+        BuildRuntime["Swift59rc"] = "swift-5.9-rc";
+        BuildRuntime["Swift510rc"] = "swift-5.10-rc";
+        BuildRuntime["Swift62rc"] = "swift-6.2-rc";
+        BuildRuntime["Kotlin16rc"] = "kotlin-1.6-rc";
+        BuildRuntime["Kotlin18rc"] = "kotlin-1.8-rc";
+        BuildRuntime["Kotlin19rc"] = "kotlin-1.9-rc";
+        BuildRuntime["Kotlin20rc"] = "kotlin-2.0-rc";
+        BuildRuntime["Kotlin23rc"] = "kotlin-2.3-rc";
+        BuildRuntime["Cpp17rc"] = "cpp-17-rc";
+        BuildRuntime["Cpp20rc"] = "cpp-20-rc";
+        BuildRuntime["Bun10rc"] = "bun-1.0-rc";
+        BuildRuntime["Bun11rc"] = "bun-1.1-rc";
+        BuildRuntime["Bun12rc"] = "bun-1.2-rc";
+        BuildRuntime["Bun13rc"] = "bun-1.3-rc";
+        BuildRuntime["Go123rc"] = "go-1.23-rc";
+        BuildRuntime["Go124rc"] = "go-1.24-rc";
+        BuildRuntime["Go125rc"] = "go-1.25-rc";
+        BuildRuntime["Go126rc"] = "go-1.26-rc";
+        BuildRuntime["Static1rc"] = "static-1-rc";
+        BuildRuntime["Flutter324rc"] = "flutter-3.24-rc";
+        BuildRuntime["Flutter327rc"] = "flutter-3.27-rc";
+        BuildRuntime["Flutter329rc"] = "flutter-3.29-rc";
+        BuildRuntime["Flutter332rc"] = "flutter-3.32-rc";
+        BuildRuntime["Flutter335rc"] = "flutter-3.35-rc";
+        BuildRuntime["Flutter338rc"] = "flutter-3.38-rc";
     })(exports.BuildRuntime || (exports.BuildRuntime = {}));
 
     exports.Adapter = void 0;

@@ -1,5 +1,5 @@
 export declare enum TemplateReferenceType {
-    Commit = "commit",
     Branch = "branch",
+    Commit = "commit",
     Tag = "tag"
 }

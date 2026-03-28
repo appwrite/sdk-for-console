@@ -1,16 +1,11 @@
 export declare enum UseCases {
-    Starter = "starter",
-    Databases = "databases",
-    Ai = "ai",
-    Messaging = "messaging",
-    Utilities = "utilities",
-    Devtools = "dev-tools",
-    Auth = "auth",
     Portfolio = "portfolio",
+    Starter = "starter",
     Events = "events",
     Ecommerce = "ecommerce",
     Documentation = "documentation",
     Blog = "blog",
+    Ai = "ai",
     Forms = "forms",
     Dashboard = "dashboard"
 }
