@@ -406,9 +406,13 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '8.0.0',
+        'x-sdk-version': '8.1.0',
         'X-Appwrite-Response-Format': '1.9.0',
     };
+
+    getHeaders(): Headers {
+        return { ...this.headers };
+    }
 
     /**
      * Set Endpoint

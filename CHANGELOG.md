@@ -1,5 +1,13 @@
 # Change Log
 
+## 8.1.0
+
+* Added: Added `getHeaders()` method to `Client` to expose current request headers
+* Added: Added `ProviderRepositoryRuntime` and `ProviderRepositoryRuntimeList` models
+* Updated: `createRepositoryDetection()` return type now includes `DetectionRuntime`
+* Updated: `listRepositories()` return type now includes `ProviderRepositoryRuntimeList`
+* Added: Added `package-lock.json` to track dependency lockfile in version control
+
 ## 8.0.0
 
 * [BREAKING] Changed `$sequence` type from `number` to `string` for `Row` and `Document` models
