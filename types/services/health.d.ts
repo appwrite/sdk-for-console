@@ -83,7 +83,8 @@ export declare class Health {
      */
     getPubSub(): Promise<Models.HealthStatusList>;
     /**
-     * Get the number of audits that are waiting to be processed in the Appwrite internal queue server.
+     * Get the number of audit logs that are waiting to be processed in the Appwrite internal queue server.
+     *
      *
      * @param {number} params.threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
      * @throws {AppwriteException}
@@ -93,7 +94,8 @@ export declare class Health {
         threshold?: number;
     }): Promise<Models.HealthQueue>;
     /**
-     * Get the number of audits that are waiting to be processed in the Appwrite internal queue server.
+     * Get the number of audit logs that are waiting to be processed in the Appwrite internal queue server.
+     *
      *
      * @param {number} threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
      * @throws {AppwriteException}

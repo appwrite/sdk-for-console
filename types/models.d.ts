@@ -8867,6 +8867,30 @@ export declare namespace Models {
          * Aggregated stats for each projects.
          */
         projects: UsageOrganizationProject[];
+        /**
+         * Aggregated stats for realtime connections.
+         */
+        realtimeConnections: Metric[];
+        /**
+         * Aggregated stats for total realtime connections.
+         */
+        realtimeConnectionsTotal: number;
+        /**
+         * Aggregated stats for realtime messages.
+         */
+        realtimeMessages: Metric[];
+        /**
+         * Aggregated stats for total realtime messages.
+         */
+        realtimeMessagesTotal: number;
+        /**
+         * Aggregated stats for realtime bandwidth.
+         */
+        realtimeBandwidth: Metric[];
+        /**
+         * Aggregated stats for total realtime bandwidth.
+         */
+        realtimeBandwidthTotal: number;
     };
     /**
      * UsageOrganizationProject
@@ -8944,6 +8968,18 @@ export declare namespace Models {
          * Aggregated stats for imagine credits.
          */
         imagineCredits: number;
+        /**
+         * Aggregated stats for realtime connections.
+         */
+        realtimeConnections: number;
+        /**
+         * Aggregated stats for realtime messages.
+         */
+        realtimeMessages: number;
+        /**
+         * Aggregated stats for realtime bandwidth.
+         */
+        realtimeBandwidth: number;
     };
     /**
      * Domain

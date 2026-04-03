@@ -1,9 +1,10 @@
 export declare enum Scopes {
+    Account = "account",
+    TeamsRead = "teams.read",
+    TeamsWrite = "teams.write",
     SessionsWrite = "sessions.write",
     UsersRead = "users.read",
     UsersWrite = "users.write",
-    TeamsRead = "teams.read",
-    TeamsWrite = "teams.write",
     DatabasesRead = "databases.read",
     DatabasesWrite = "databases.write",
     CollectionsRead = "collections.read",
@@ -68,5 +69,13 @@ export declare enum Scopes {
     RestorationsWrite = "restorations.write",
     DomainsRead = "domains.read",
     DomainsWrite = "domains.write",
-    EventsRead = "events.read"
+    EventsRead = "events.read",
+    PlatformsRead = "platforms.read",
+    PlatformsWrite = "platforms.write",
+    ProjectsRead = "projects.read",
+    ProjectsWrite = "projects.write",
+    KeysRead = "keys.read",
+    KeysWrite = "keys.write",
+    DevKeysRead = "devKeys.read",
+    DevKeysWrite = "devKeys.write"
 }

@@ -119,6 +119,15 @@ declare class Client {
      */
     headers: Headers;
     /**
+     * Get Headers
+     *
+     * Returns a copy of the current request headers, including any
+     * authentication headers. Handle with care.
+     *
+     * @returns {Headers}
+     */
+    getHeaders(): Headers;
+    /**
      * Set Endpoint
      *
      * Your project endpoint

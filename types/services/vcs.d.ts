@@ -12,14 +12,14 @@ export declare class Vcs {
      * @param {VCSDetectionType} params.type - Detector type. Must be one of the following: runtime, framework
      * @param {string} params.providerRootDirectory - Path to Root Directory
      * @throws {AppwriteException}
-     * @returns {Promise<Models.DetectionFramework>}
+     * @returns {Promise<Models.DetectionRuntime | Models.DetectionFramework>}
      */
     createRepositoryDetection(params: {
         installationId: string;
         providerRepositoryId: string;
         type: VCSDetectionType;
         providerRootDirectory?: string;
-    }): Promise<Models.DetectionFramework>;
+    }): Promise<Models.DetectionRuntime | Models.DetectionFramework>;
     /**
      * Analyze a GitHub repository to automatically detect the programming language and runtime environment. This endpoint scans the repository's files and language statistics to determine the appropriate runtime settings for your function. The GitHub installation must be properly configured and the repository must be accessible through your installation for this endpoint to work.
      *
@@ -28,10 +28,10 @@ export declare class Vcs {
      * @param {VCSDetectionType} type - Detector type. Must be one of the following: runtime, framework
      * @param {string} providerRootDirectory - Path to Root Directory
      * @throws {AppwriteException}
-     * @returns {Promise<Models.DetectionFramework>}
+     * @returns {Promise<Models.DetectionRuntime | Models.DetectionFramework>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRepositoryDetection(installationId: string, providerRepositoryId: string, type: VCSDetectionType, providerRootDirectory?: string): Promise<Models.DetectionFramework>;
+    createRepositoryDetection(installationId: string, providerRepositoryId: string, type: VCSDetectionType, providerRootDirectory?: string): Promise<Models.DetectionRuntime | Models.DetectionFramework>;
     /**
      * Get a list of GitHub repositories available through your installation. This endpoint returns repositories with their basic information, detected runtime environments, and latest push dates. You can optionally filter repositories using a search term. Each repository's runtime is automatically detected based on its contents and language statistics. The GitHub installation must be properly configured for this endpoint to work.
      *
@@ -40,14 +40,14 @@ export declare class Vcs {
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
      * @throws {AppwriteException}
-     * @returns {Promise<Models.ProviderRepositoryFrameworkList>}
+     * @returns {Promise<Models.ProviderRepositoryRuntimeList | Models.ProviderRepositoryFrameworkList>}
      */
     listRepositories(params: {
         installationId: string;
         type: VCSDetectionType;
         search?: string;
         queries?: string[];
-    }): Promise<Models.ProviderRepositoryFrameworkList>;
+    }): Promise<Models.ProviderRepositoryRuntimeList | Models.ProviderRepositoryFrameworkList>;
     /**
      * Get a list of GitHub repositories available through your installation. This endpoint returns repositories with their basic information, detected runtime environments, and latest push dates. You can optionally filter repositories using a search term. Each repository's runtime is automatically detected based on its contents and language statistics. The GitHub installation must be properly configured for this endpoint to work.
      *
@@ -56,10 +56,10 @@ export declare class Vcs {
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
      * @throws {AppwriteException}
-     * @returns {Promise<Models.ProviderRepositoryFrameworkList>}
+     * @returns {Promise<Models.ProviderRepositoryRuntimeList | Models.ProviderRepositoryFrameworkList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listRepositories(installationId: string, type: VCSDetectionType, search?: string, queries?: string[]): Promise<Models.ProviderRepositoryFrameworkList>;
+    listRepositories(installationId: string, type: VCSDetectionType, search?: string, queries?: string[]): Promise<Models.ProviderRepositoryRuntimeList | Models.ProviderRepositoryFrameworkList>;
     /**
      * Create a new GitHub repository through your installation. This endpoint allows you to create either a public or private repository by specifying a name and visibility setting. The repository will be created under your GitHub user account or organization, depending on your installation type. The GitHub installation must be properly configured and have the necessary permissions for repository creation.
      *
