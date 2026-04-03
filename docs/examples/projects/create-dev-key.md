@@ -10,7 +10,7 @@ const projects = new Projects(client);
 const result = await projects.createDevKey({
     projectId: '<PROJECT_ID>',
     name: '<NAME>',
-    expire: ''
+    expire: '2020-10-15T06:38:00.000+00:00'
 });
 
 console.log(result);

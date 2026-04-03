@@ -8,8 +8,8 @@ const client = new Client()
 const project = new Project(client);
 
 const result = await project.getUsage({
-    startDate: '',
-    endDate: '',
+    startDate: '2020-10-15T06:38:00.000+00:00',
+    endDate: '2020-10-15T06:38:00.000+00:00',
     period: ProjectUsageRange.OneHour // optional
 });
 

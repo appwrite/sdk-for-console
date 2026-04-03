@@ -12,7 +12,7 @@ const result = await projects.createKey({
     name: '<NAME>',
     scopes: [Scopes.SessionsWrite],
     keyId: '<KEY_ID>', // optional
-    expire: '' // optional
+    expire: '2020-10-15T06:38:00.000+00:00' // optional
 });
 
 console.log(result);

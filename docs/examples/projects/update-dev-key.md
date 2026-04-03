@@ -11,7 +11,7 @@ const result = await projects.updateDevKey({
     projectId: '<PROJECT_ID>',
     keyId: '<KEY_ID>',
     name: '<NAME>',
-    expire: ''
+    expire: '2020-10-15T06:38:00.000+00:00'
 });
 
 console.log(result);
