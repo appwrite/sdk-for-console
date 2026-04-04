@@ -581,6 +581,172 @@ export class Migrations {
     }
 
     /**
+     *
+     * @param {string} params.resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database to export.
+     * @param {string} params.filename - The name of the file to be created for the export, excluding the .json extension.
+     * @param {string[]} params.columns - List of attributes to export. If empty, all attributes will be exported. You can use the `*` wildcard to export all attributes from the collection.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK to filter documents to export. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} params.notify - Set to true to receive an email when the export is complete. Default is true.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Migration>}
+     */
+    createJSONExport(params: { resourceId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean }): Promise<Models.Migration>;
+    /**
+     *
+     * @param {string} resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database to export.
+     * @param {string} filename - The name of the file to be created for the export, excluding the .json extension.
+     * @param {string[]} columns - List of attributes to export. If empty, all attributes will be exported. You can use the `*` wildcard to export all attributes from the collection.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK to filter documents to export. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} notify - Set to true to receive an email when the export is complete. Default is true.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Migration>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createJSONExport(resourceId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean): Promise<Models.Migration>;
+    createJSONExport(
+        paramsOrFirst: { resourceId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean } | string,
+        ...rest: [(string)?, (string[])?, (string[])?, (boolean)?]    
+    ): Promise<Models.Migration> {
+        let params: { resourceId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { resourceId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean };
+        } else {
+            params = {
+                resourceId: paramsOrFirst as string,
+                filename: rest[0] as string,
+                columns: rest[1] as string[],
+                queries: rest[2] as string[],
+                notify: rest[3] as boolean            
+            };
+        }
+        
+        const resourceId = params.resourceId;
+        const filename = params.filename;
+        const columns = params.columns;
+        const queries = params.queries;
+        const notify = params.notify;
+
+        if (typeof resourceId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "resourceId"');
+        }
+        if (typeof filename === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "filename"');
+        }
+
+        const apiPath = '/migrations/json/exports';
+        const payload: Payload = {};
+        if (typeof resourceId !== 'undefined') {
+            payload['resourceId'] = resourceId;
+        }
+        if (typeof filename !== 'undefined') {
+            payload['filename'] = filename;
+        }
+        if (typeof columns !== 'undefined') {
+            payload['columns'] = columns;
+        }
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        if (typeof notify !== 'undefined') {
+            payload['notify'] = notify;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     *
+     * @param {string} params.bucketId - Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
+     * @param {string} params.fileId - File ID.
+     * @param {string} params.resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database.
+     * @param {boolean} params.internalFile - Is the file stored in an internal bucket?
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Migration>}
+     */
+    createJSONImport(params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean }): Promise<Models.Migration>;
+    /**
+     *
+     * @param {string} bucketId - Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
+     * @param {string} fileId - File ID.
+     * @param {string} resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database.
+     * @param {boolean} internalFile - Is the file stored in an internal bucket?
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Migration>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createJSONImport(bucketId: string, fileId: string, resourceId: string, internalFile?: boolean): Promise<Models.Migration>;
+    createJSONImport(
+        paramsOrFirst: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean } | string,
+        ...rest: [(string)?, (string)?, (boolean)?]    
+    ): Promise<Models.Migration> {
+        let params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean };
+        } else {
+            params = {
+                bucketId: paramsOrFirst as string,
+                fileId: rest[0] as string,
+                resourceId: rest[1] as string,
+                internalFile: rest[2] as boolean            
+            };
+        }
+        
+        const bucketId = params.bucketId;
+        const fileId = params.fileId;
+        const resourceId = params.resourceId;
+        const internalFile = params.internalFile;
+
+        if (typeof bucketId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "bucketId"');
+        }
+        if (typeof fileId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "fileId"');
+        }
+        if (typeof resourceId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "resourceId"');
+        }
+
+        const apiPath = '/migrations/json/imports';
+        const payload: Payload = {};
+        if (typeof bucketId !== 'undefined') {
+            payload['bucketId'] = bucketId;
+        }
+        if (typeof fileId !== 'undefined') {
+            payload['fileId'] = fileId;
+        }
+        if (typeof resourceId !== 'undefined') {
+            payload['resourceId'] = resourceId;
+        }
+        if (typeof internalFile !== 'undefined') {
+            payload['internalFile'] = internalFile;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Migrate data from an NHost project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from an NHost project. 
      *
      * @param {NHostMigrationResource[]} params.resources - List of resources to migrate

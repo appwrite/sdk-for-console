@@ -1,5 +1,23 @@
 # Change Log
 
+## 8.2.0
+
+* Added: `createJSONExport()` and `createJSONImport()` methods to Migrations service
+* Added: `Dart311` and `Flutter341` runtime variants
+* Updated: `reason` and `expiredAt` fields on `Block` model are now optional
+* Updated: Improved `ProxyRule` field descriptions
+* Updated: Rollup upgraded to v4 with ESM config, Node >= 18 engine requirement
+
+## 17.3.0
+
+* Added: `create-json-export` and `create-json-import` migration commands
+* Added: `--activate` flag for site push to control deployment activation
+* Added: Deployment retention prompt during site initialization
+* Updated: Improved `.gitignore` handling with hierarchical ignore support
+* Updated: Function and site init now use safe directory names
+* Updated: Config writer prunes empty resource arrays and deprecated site fields
+* Fixed: Pinned `@appwrite.io/console` dependency to `~8.0.0`
+
 ## 8.1.1
 
 * Fixed: Added `files` field to `package.json` to publish only built artifacts to npm

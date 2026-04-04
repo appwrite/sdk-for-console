@@ -6408,27 +6408,27 @@ export namespace Models {
          */
         trigger: string;
         /**
-         * URL to redirect to. Used if type is "redirect"
+         * URL to redirect to. Only applicable if type is "redirect", otherwise empty string.
          */
         redirectUrl: string;
         /**
-         * Status code to apply during redirect. Used if type is "redirect"
+         * Status code to apply during redirect. Only applicable if type is "redirect", defaults to 301.
          */
         redirectStatusCode: number;
         /**
-         * ID of deployment. Used if type is "deployment"
+         * ID of deployment. Only applicable if type is "deployment", otherwise empty string.
          */
         deploymentId: string;
         /**
-         * Type of deployment. Possible values are "function", "site". Used if rule's type is "deployment".
+         * Type of deployment. Possible values are "function", "site". Only applicable if type is "deployment", otherwise empty string.
          */
         deploymentResourceType: ProxyRuleDeploymentResourceType;
         /**
-         * ID deployment's resource. Used if type is "deployment"
+         * ID of deployment's resource. Only applicable if type is "deployment", otherwise empty string.
          */
         deploymentResourceId: string;
         /**
-         * Name of Git branch that updates rule. Used if type is "deployment"
+         * Name of Git branch that updates rule. Only applicable if type is "deployment", otherwise empty string.
          */
         deploymentVcsProviderBranch: string;
         /**
@@ -7864,13 +7864,13 @@ export namespace Models {
          */
         resourceId: string;
         /**
-         * Reason for the block
+         * Reason for the block. Can be null if no reason was provided.
          */
-        reason: string;
+        reason?: string;
         /**
-         * Block expiration date in ISO 8601 format.
+         * Block expiration date in ISO 8601 format. Can be null if the block does not expire.
          */
-        expiredAt: string;
+        expiredAt?: string;
     }
 
     /**
