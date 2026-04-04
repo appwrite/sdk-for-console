@@ -1,5 +1,13 @@
 # Change Log
 
+## 8.2.0
+
+* Added: `createJSONExport()` and `createJSONImport()` methods to Migrations service
+* Added: `Dart311` and `Flutter341` runtime variants
+* Updated: `reason` and `expiredAt` fields on `Block` model are now optional
+* Updated: Improved `ProxyRule` field descriptions
+* Updated: Rollup upgraded to v4 with ESM config, Node >= 18 engine requirement
+
 ## 8.1.1
 
 * Fixed: Added `files` field to `package.json` to publish only built artifacts to npm

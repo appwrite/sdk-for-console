@@ -240,6 +240,7 @@ export class Health {
 
     /**
      * Get the number of audit logs that are waiting to be processed in the Appwrite internal queue server.
+     * 
      *
      * @param {number} params.threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
      * @throws {AppwriteException}
@@ -248,6 +249,7 @@ export class Health {
     getQueueAudits(params?: { threshold?: number }): Promise<Models.HealthQueue>;
     /**
      * Get the number of audit logs that are waiting to be processed in the Appwrite internal queue server.
+     * 
      *
      * @param {number} threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
      * @throws {AppwriteException}

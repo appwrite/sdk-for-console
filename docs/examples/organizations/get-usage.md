@@ -9,8 +9,8 @@ const organizations = new Organizations(client);
 
 const result = await organizations.getUsage({
     organizationId: '<ORGANIZATION_ID>',
-    startDate: '', // optional
-    endDate: '' // optional
+    startDate: '2020-10-15T06:38:00.000+00:00', // optional
+    endDate: '2020-10-15T06:38:00.000+00:00' // optional
 });
 
 console.log(result);
