@@ -3,6 +3,7 @@ import { AppwriteException, Client, type Payload, UploadProgress } from '../clie
 import type { Models } from '../models';
 
 import { Platform } from '../enums/platform';
+import { Addon } from '../enums/addon';
 import { Scopes } from '../enums/scopes';
 
 export class Organizations {
@@ -328,6 +329,359 @@ export class Organizations {
 
         return this.client.call(
             'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List all billing addons for an organization.
+     * 
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AddonList>}
+     */
+    listAddons(params: { organizationId: string }): Promise<Models.AddonList>;
+    /**
+     * List all billing addons for an organization.
+     * 
+     *
+     * @param {string} organizationId - Organization ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AddonList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listAddons(organizationId: string): Promise<Models.AddonList>;
+    listAddons(
+        paramsOrFirst: { organizationId: string } | string    
+    ): Promise<Models.AddonList> {
+        let params: { organizationId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/addons'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create the BAA billing addon for an organization.
+     * 
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     */
+    createBaaAddon(params: { organizationId: string }): Promise<Models.Addon>;
+    /**
+     * Create the BAA billing addon for an organization.
+     * 
+     *
+     * @param {string} organizationId - Organization ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createBaaAddon(organizationId: string): Promise<Models.Addon>;
+    createBaaAddon(
+        paramsOrFirst: { organizationId: string } | string    
+    ): Promise<Models.Addon> {
+        let params: { organizationId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/addons/baa'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get the details of a billing addon for an organization.
+     * 
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @param {string} params.addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     */
+    getAddon(params: { organizationId: string, addonId: string }): Promise<Models.Addon>;
+    /**
+     * Get the details of a billing addon for an organization.
+     * 
+     *
+     * @param {string} organizationId - Organization ID
+     * @param {string} addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getAddon(organizationId: string, addonId: string): Promise<Models.Addon>;
+    getAddon(
+        paramsOrFirst: { organizationId: string, addonId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.Addon> {
+        let params: { organizationId: string, addonId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string, addonId: string };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                addonId: rest[0] as string            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+        const addonId = params.addonId;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof addonId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "addonId"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/addons/{addonId}'.replace('{organizationId}', organizationId).replace('{addonId}', addonId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Delete a billing addon for an organization.
+     * 
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @param {string} params.addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteAddon(params: { organizationId: string, addonId: string }): Promise<{}>;
+    /**
+     * Delete a billing addon for an organization.
+     * 
+     *
+     * @param {string} organizationId - Organization ID
+     * @param {string} addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteAddon(organizationId: string, addonId: string): Promise<{}>;
+    deleteAddon(
+        paramsOrFirst: { organizationId: string, addonId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<{}> {
+        let params: { organizationId: string, addonId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string, addonId: string };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                addonId: rest[0] as string            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+        const addonId = params.addonId;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof addonId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "addonId"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/addons/{addonId}'.replace('{organizationId}', organizationId).replace('{addonId}', addonId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Confirm payment for a billing addon for an organization.
+     * 
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @param {string} params.addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     */
+    confirmAddonPayment(params: { organizationId: string, addonId: string }): Promise<Models.Addon>;
+    /**
+     * Confirm payment for a billing addon for an organization.
+     * 
+     *
+     * @param {string} organizationId - Organization ID
+     * @param {string} addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    confirmAddonPayment(organizationId: string, addonId: string): Promise<Models.Addon>;
+    confirmAddonPayment(
+        paramsOrFirst: { organizationId: string, addonId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.Addon> {
+        let params: { organizationId: string, addonId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string, addonId: string };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                addonId: rest[0] as string            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+        const addonId = params.addonId;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof addonId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "addonId"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/addons/{addonId}/confirmations'.replace('{organizationId}', organizationId).replace('{addonId}', addonId);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get the price details for a billing addon for an organization.
+     * 
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @param {Addon} params.addon - Addon key identifier (e.g. baa).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AddonPrice>}
+     */
+    getAddonPrice(params: { organizationId: string, addon: Addon }): Promise<Models.AddonPrice>;
+    /**
+     * Get the price details for a billing addon for an organization.
+     * 
+     *
+     * @param {string} organizationId - Organization ID
+     * @param {Addon} addon - Addon key identifier (e.g. baa).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AddonPrice>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getAddonPrice(organizationId: string, addon: Addon): Promise<Models.AddonPrice>;
+    getAddonPrice(
+        paramsOrFirst: { organizationId: string, addon: Addon } | string,
+        ...rest: [(Addon)?]    
+    ): Promise<Models.AddonPrice> {
+        let params: { organizationId: string, addon: Addon };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string, addon: Addon };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                addon: rest[0] as Addon            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+        const addon = params.addon;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof addon === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "addon"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/addons/{addon}/price'.replace('{organizationId}', organizationId).replace('{addon}', addon);
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
             uri,
             apiHeaders,
             payload
