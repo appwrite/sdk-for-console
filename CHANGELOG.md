@@ -1,5 +1,15 @@
 # Change Log
 
+## 8.3.0
+
+* Added addon management methods to Organizations service: `listAddons`, `createBaaAddon`, `getAddon`, `deleteAddon`, `confirmAddonPayment`, `getAddonPrice`
+* Added `Addon` enum and `BillingPlanSupportedAddons` model
+* Added `templateRepository`, `templateOwner`, `templateRootDirectory`, `templateVersion` optional parameters to `functions.create`
+* Added `authDisposableEmails`, `authCanonicalEmails`, `authFreeEmails` fields to Project model
+* Added `supportForIntegerIds` field to database adapter model
+* Added descriptions to `createJSONExport` and `createJSONImport` migration methods
+* Updated `ProxyRule` field descriptions for clarity
+
 ## 8.2.0
 
 * Added: `createJSONExport()` and `createJSONImport()` methods to Migrations service

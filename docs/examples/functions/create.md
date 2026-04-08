@@ -27,6 +27,10 @@ const result = await functions.create({
     providerRootDirectory: '<PROVIDER_ROOT_DIRECTORY>', // optional
     buildSpecification: '', // optional
     runtimeSpecification: '', // optional
+    templateRepository: '<TEMPLATE_REPOSITORY>', // optional
+    templateOwner: '<TEMPLATE_OWNER>', // optional
+    templateRootDirectory: '<TEMPLATE_ROOT_DIRECTORY>', // optional
+    templateVersion: '<TEMPLATE_VERSION>', // optional
     deploymentRetention: 0 // optional
 });
 

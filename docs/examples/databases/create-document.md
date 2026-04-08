@@ -11,13 +11,7 @@ const result = await databases.createDocument({
     databaseId: '<DATABASE_ID>',
     collectionId: '<COLLECTION_ID>',
     documentId: '<DOCUMENT_ID>',
-    data: {
-        "username": "walter.obrien",
-        "email": "walter.obrien@example.com",
-        "fullName": "Walter O'Brien",
-        "age": 30,
-        "isAdmin": false
-    },
+    data: {},
     permissions: [Permission.read(Role.any())], // optional
     transactionId: '<TRANSACTION_ID>' // optional
 });

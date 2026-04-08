@@ -76,6 +76,7 @@ export { AppwriteMigrationResource } from './enums/appwrite-migration-resource';
 export { FirebaseMigrationResource } from './enums/firebase-migration-resource';
 export { NHostMigrationResource } from './enums/n-host-migration-resource';
 export { SupabaseMigrationResource } from './enums/supabase-migration-resource';
+export { Addon } from './enums/addon';
 export { ProjectUsageRange } from './enums/project-usage-range';
 export { Region } from './enums/region';
 export { Api } from './enums/api';

@@ -107,11 +107,15 @@ export class Functions {
      * @param {string} params.providerRootDirectory - Path to function code in the linked repo.
      * @param {string} params.buildSpecification - Build specification for the function deployments.
      * @param {string} params.runtimeSpecification - Runtime specification for the function executions.
+     * @param {string} params.templateRepository - Repository name of the template.
+     * @param {string} params.templateOwner - The name of the owner of the template.
+     * @param {string} params.templateRootDirectory - Path to function code in the template repo.
+     * @param {string} params.templateVersion - Version (tag) for the repo linked to the function template.
      * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    create(params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Function>;
+    create(params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, templateRepository?: string, templateOwner?: string, templateRootDirectory?: string, templateVersion?: string, deploymentRetention?: number }): Promise<Models.Function>;
     /**
      * Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
      *
@@ -134,20 +138,24 @@ export class Functions {
      * @param {string} providerRootDirectory - Path to function code in the linked repo.
      * @param {string} buildSpecification - Build specification for the function deployments.
      * @param {string} runtimeSpecification - Runtime specification for the function executions.
+     * @param {string} templateRepository - Repository name of the template.
+     * @param {string} templateOwner - The name of the owner of the template.
+     * @param {string} templateRootDirectory - Path to function code in the template repo.
+     * @param {string} templateVersion - Version (tag) for the repo linked to the function template.
      * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Function>;
+    create(functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, templateRepository?: string, templateOwner?: string, templateRootDirectory?: string, templateVersion?: string, deploymentRetention?: number): Promise<Models.Function>;
     create(
-        paramsOrFirst: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
-        ...rest: [(string)?, (Runtime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (Scopes[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?, (string)?, (number)?]    
+        paramsOrFirst: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, templateRepository?: string, templateOwner?: string, templateRootDirectory?: string, templateVersion?: string, deploymentRetention?: number } | string,
+        ...rest: [(string)?, (Runtime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (Scopes[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Function> {
-        let params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+        let params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, templateRepository?: string, templateOwner?: string, templateRootDirectory?: string, templateVersion?: string, deploymentRetention?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, templateRepository?: string, templateOwner?: string, templateRootDirectory?: string, templateVersion?: string, deploymentRetention?: number };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
@@ -169,7 +177,11 @@ export class Functions {
                 providerRootDirectory: rest[15] as string,
                 buildSpecification: rest[16] as string,
                 runtimeSpecification: rest[17] as string,
-                deploymentRetention: rest[18] as number            
+                templateRepository: rest[18] as string,
+                templateOwner: rest[19] as string,
+                templateRootDirectory: rest[20] as string,
+                templateVersion: rest[21] as string,
+                deploymentRetention: rest[22] as number            
             };
         }
         
@@ -192,6 +204,10 @@ export class Functions {
         const providerRootDirectory = params.providerRootDirectory;
         const buildSpecification = params.buildSpecification;
         const runtimeSpecification = params.runtimeSpecification;
+        const templateRepository = params.templateRepository;
+        const templateOwner = params.templateOwner;
+        const templateRootDirectory = params.templateRootDirectory;
+        const templateVersion = params.templateVersion;
         const deploymentRetention = params.deploymentRetention;
 
         if (typeof functionId === 'undefined') {
@@ -262,6 +278,18 @@ export class Functions {
         }
         if (typeof runtimeSpecification !== 'undefined') {
             payload['runtimeSpecification'] = runtimeSpecification;
+        }
+        if (typeof templateRepository !== 'undefined') {
+            payload['templateRepository'] = templateRepository;
+        }
+        if (typeof templateOwner !== 'undefined') {
+            payload['templateOwner'] = templateOwner;
+        }
+        if (typeof templateRootDirectory !== 'undefined') {
+            payload['templateRootDirectory'] = templateRootDirectory;
+        }
+        if (typeof templateVersion !== 'undefined') {
+            payload['templateVersion'] = templateVersion;
         }
         if (typeof deploymentRetention !== 'undefined') {
             payload['deploymentRetention'] = deploymentRetention;

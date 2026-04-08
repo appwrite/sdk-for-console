@@ -4620,6 +4620,18 @@ export namespace Models {
          */
         authPersonalDataCheck: boolean;
         /**
+         * Whether or not to disallow disposable email addresses during signup and email updates.
+         */
+        authDisposableEmails: boolean;
+        /**
+         * Whether or not to require canonical email addresses during signup and email updates.
+         */
+        authCanonicalEmails: boolean;
+        /**
+         * Whether or not to disallow free email addresses during signup and email updates.
+         */
+        authFreeEmails: boolean;
+        /**
          * An array of mock numbers and their corresponding verification codes (OTPs).
          */
         authMockNumbers: MockNumber[];
@@ -6408,27 +6420,27 @@ export namespace Models {
          */
         trigger: string;
         /**
-         * URL to redirect to. Only applicable if type is "redirect", otherwise empty string.
+         * URL to redirect to. Used if type is "redirect"
          */
         redirectUrl: string;
         /**
-         * Status code to apply during redirect. Only applicable if type is "redirect", defaults to 301.
+         * Status code to apply during redirect. Used if type is "redirect"
          */
         redirectStatusCode: number;
         /**
-         * ID of deployment. Only applicable if type is "deployment", otherwise empty string.
+         * ID of deployment. Used if type is "deployment"
          */
         deploymentId: string;
         /**
-         * Type of deployment. Possible values are "function", "site". Only applicable if type is "deployment", otherwise empty string.
+         * Type of deployment. Possible values are "function", "site". Used if rule's type is "deployment".
          */
         deploymentResourceType: ProxyRuleDeploymentResourceType;
         /**
-         * ID of deployment's resource. Only applicable if type is "deployment", otherwise empty string.
+         * ID deployment's resource. Used if type is "deployment"
          */
         deploymentResourceId: string;
         /**
-         * Name of Git branch that updates rule. Only applicable if type is "deployment", otherwise empty string.
+         * Name of Git branch that updates rule. Used if type is "deployment"
          */
         deploymentVcsProviderBranch: string;
         /**
@@ -6655,6 +6667,10 @@ export namespace Models {
          * Whether the database adapter uses integer sequence IDs.
          */
         supportForIntegerIds: boolean;
+        /**
+         * Whether email verification for console users is required. Can be "true" or "false".
+         */
+        _APP_CONSOLE_EMAIL_VERIFICATION: string;
     }
 
     /**
@@ -7714,6 +7730,10 @@ export namespace Models {
          */
         usagePerProject: boolean;
         /**
+         * Supported addons for this plan
+         */
+        supportedAddons: BillingPlanSupportedAddons;
+        /**
          * How many policies does plan support
          */
         backupPolicies: number;
@@ -7807,6 +7827,16 @@ export namespace Models {
          * Daily credits limit (if applicable)
          */
         dailyCredits?: number;
+    }
+
+    /**
+     * BillingPlanSupportedAddons
+     */
+    export type BillingPlanSupportedAddons = {
+        /**
+         * Whether the plan supports BAA (Business Associate Agreement) addon
+         */
+        baa: boolean;
     }
 
     /**
@@ -8391,6 +8421,10 @@ export namespace Models {
          * Invoice ID against which the payment needs to be validated.
          */
         invoiceId: string;
+        /**
+         * Addon ID to use when calling the addon validate endpoint. Empty when authentication is not for an addon.
+         */
+        addonId: string;
     }
 
     /**
@@ -9264,6 +9298,90 @@ export namespace Models {
     }
 
     /**
+     * Addon
+     */
+    export type Addon = {
+        /**
+         * Addon ID.
+         */
+        $id: string;
+        /**
+         * Addon creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Addon update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Addon permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * Addon key
+         */
+        key: string;
+        /**
+         * Resource type (organization or project)
+         */
+        resourceType: string;
+        /**
+         * Resource ID
+         */
+        resourceId: string;
+        /**
+         * Payment status. Possible values: pending (awaiting payment confirmation e.g. 3DS), active (payment confirmed and addon is running).
+         */
+        status: string;
+        /**
+         * Current value for this billing cycle. For toggle addons: 1 (on) or 0 (off). For numeric addons: the active quantity.
+         */
+        currentValue: number;
+        /**
+         * Value to apply at the start of the next billing cycle. Null means no change is scheduled. For toggle addons, 0 means the addon will be removed at the next cycle.
+         */
+        nextValue?: number;
+    }
+
+    /**
+     * AddonPrice
+     */
+    export type AddonPrice = {
+        /**
+         * Addon key.
+         */
+        addonKey: string;
+        /**
+         * Addon display name.
+         */
+        name: string;
+        /**
+         * Full monthly price of the addon.
+         */
+        monthlyPrice: number;
+        /**
+         * Calculated prorated amount for the current billing cycle.
+         */
+        proratedAmount: number;
+        /**
+         * Days remaining in the current billing cycle.
+         */
+        remainingDays: number;
+        /**
+         * Total days in the billing cycle.
+         */
+        totalCycleDays: number;
+        /**
+         * Currency code.
+         */
+        currency: string;
+        /**
+         * When the current billing cycle ends.
+         */
+        billingCycleEnd: string;
+    }
+
+    /**
      * domainTransferOut
      */
     export type DomainTransferOut = {
@@ -9289,6 +9407,20 @@ export namespace Models {
          * Transfer status timestamp in ISO 8601 format.
          */
         timestamp: string;
+    }
+
+    /**
+     * Addons list
+     */
+    export type AddonList = {
+        /**
+         * Total number of addons that matched your query.
+         */
+        total: number;
+        /**
+         * List of addons.
+         */
+        addons: Addon[];
     }
 
     /**
