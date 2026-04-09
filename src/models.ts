@@ -5,7 +5,11 @@ import { IndexStatus } from "./enums/index-status"
 import { DeploymentStatus } from "./enums/deployment-status"
 import { ExecutionTrigger } from "./enums/execution-trigger"
 import { ExecutionStatus } from "./enums/execution-status"
-import { PlatformType } from "./enums/platform-type"
+import { PlatformWebType } from "./enums/platform-web-type"
+import { PlatformAppleType } from "./enums/platform-apple-type"
+import { PlatformAndroidType } from "./enums/platform-android-type"
+import { PlatformWindowsType } from "./enums/platform-windows-type"
+import { PlatformLinuxType } from "./enums/platform-linux-type"
 import { HealthAntivirusStatus } from "./enums/health-antivirus-status"
 import { HealthCheckStatus } from "./enums/health-check-status"
 import { ProxyRuleDeploymentResourceType } from "./enums/proxy-rule-deployment-resource-type"
@@ -468,20 +472,6 @@ export namespace Models {
          * List of devKeys.
          */
         devKeys: DevKey[];
-    }
-
-    /**
-     * Platforms List
-     */
-    export type PlatformList = {
-        /**
-         * Total number of platforms that matched your query.
-         */
-        total: number;
-        /**
-         * List of platforms.
-         */
-        platforms: Platform[];
     }
 
     /**
@@ -2723,6 +2713,10 @@ export namespace Models {
          */
         mode: string;
         /**
+         * User type who triggered the audit log. Possible values: user, admin, guest, keyProject, keyAccount, keyOrganization.
+         */
+        userType: string;
+        /**
          * IP session in use when the session was created.
          */
         ip: string;
@@ -4662,7 +4656,7 @@ export namespace Models {
         /**
          * List of Platforms.
          */
-        platforms: Platform[];
+        platforms: (Models.PlatformWeb | Models.PlatformApple | Models.PlatformAndroid | Models.PlatformWindows | Models.PlatformLinux)[];
         /**
          * List of Webhooks.
          */
@@ -5004,9 +4998,9 @@ export namespace Models {
     }
 
     /**
-     * Platform
+     * Platform Web
      */
-    export type Platform = {
+    export type PlatformWeb = {
         /**
          * Platform ID.
          */
@@ -5024,29 +5018,147 @@ export namespace Models {
          */
         name: string;
         /**
-         * Platform type. Possible values are: web, flutter-web, flutter-ios, flutter-android, flutter-linux, flutter-macos, flutter-windows, apple-ios, apple-macos, apple-watchos, apple-tvos, android, unity, react-native-ios, react-native-android.
+         * Platform type. Possible values are: windows, apple, android, linux, web.
          */
-        type: PlatformType;
-        /**
-         * Platform Key. iOS bundle ID or Android package name.  Empty string for other platforms.
-         */
-        key: string;
-        /**
-         * App store or Google Play store ID.
-         */
-        store: string;
+        type: PlatformWebType;
         /**
          * Web app hostname. Empty string for other platforms.
          */
         hostname: string;
+    }
+
+    /**
+     * Platform Apple
+     */
+    export type PlatformApple = {
         /**
-         * HTTP basic authentication username.
+         * Platform ID.
          */
-        httpUser: string;
+        $id: string;
         /**
-         * HTTP basic authentication password.
+         * Platform creation date in ISO 8601 format.
          */
-        httpPass: string;
+        $createdAt: string;
+        /**
+         * Platform update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Platform name.
+         */
+        name: string;
+        /**
+         * Platform type. Possible values are: windows, apple, android, linux, web.
+         */
+        type: PlatformAppleType;
+        /**
+         * Apple bundle identifier.
+         */
+        bundleIdentifier: string;
+    }
+
+    /**
+     * Platform Android
+     */
+    export type PlatformAndroid = {
+        /**
+         * Platform ID.
+         */
+        $id: string;
+        /**
+         * Platform creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Platform update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Platform name.
+         */
+        name: string;
+        /**
+         * Platform type. Possible values are: windows, apple, android, linux, web.
+         */
+        type: PlatformAndroidType;
+        /**
+         * Android application ID.
+         */
+        applicationId: string;
+    }
+
+    /**
+     * Platform Windows
+     */
+    export type PlatformWindows = {
+        /**
+         * Platform ID.
+         */
+        $id: string;
+        /**
+         * Platform creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Platform update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Platform name.
+         */
+        name: string;
+        /**
+         * Platform type. Possible values are: windows, apple, android, linux, web.
+         */
+        type: PlatformWindowsType;
+        /**
+         * Windows package identifier name.
+         */
+        packageIdentifierName: string;
+    }
+
+    /**
+     * Platform Linux
+     */
+    export type PlatformLinux = {
+        /**
+         * Platform ID.
+         */
+        $id: string;
+        /**
+         * Platform creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Platform update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Platform name.
+         */
+        name: string;
+        /**
+         * Platform type. Possible values are: windows, apple, android, linux, web.
+         */
+        type: PlatformLinuxType;
+        /**
+         * Linux package name.
+         */
+        packageName: string;
+    }
+
+    /**
+     * Platforms List
+     */
+    export type PlatformList = {
+        /**
+         * Total number of platforms in the given project.
+         */
+        total: number;
+        /**
+         * List of platforms.
+         */
+        platforms: (Models.PlatformWeb | Models.PlatformApple | Models.PlatformAndroid | Models.PlatformWindows | Models.PlatformLinux)[];
     }
 
     /**
@@ -7721,6 +7833,18 @@ export namespace Models {
          * Does plan support credit
          */
         supportsCredits: boolean;
+        /**
+         * Does plan support blocking disposable email addresses.
+         */
+        supportsDisposableEmailValidation: boolean;
+        /**
+         * Does plan support requiring canonical email addresses.
+         */
+        supportsCanonicalEmailValidation: boolean;
+        /**
+         * Does plan support blocking free email addresses.
+         */
+        supportsFreeEmailValidation: boolean;
         /**
          * Does plan support backup policies.
          */

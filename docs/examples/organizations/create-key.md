@@ -10,7 +10,7 @@ const organizations = new Organizations(client);
 const result = await organizations.createKey({
     organizationId: '<ORGANIZATION_ID>',
     name: '<NAME>',
-    scopes: [Scopes.PlatformsRead],
+    scopes: [Scopes.ProjectsRead],
     expire: '2020-10-15T06:38:00.000+00:00' // optional
 });
 

@@ -1,5 +1,19 @@
 # Change Log
 
+## 9.0.0
+
+* Breaking: Moved `keys`, `labels`, and `platforms` methods from `Projects` to `Project` service
+* Breaking: Replaced generic `Platform` model and `PlatformType` enum with typed models: `PlatformWeb`, `PlatformApple`, `PlatformAndroid`, `PlatformWindows`, `PlatformLinux`
+* Breaking: Replaced generic `createPlatform`/`updatePlatform` with platform-specific methods: `createAndroidPlatform`, `createApplePlatform`, `createLinuxPlatform`, `createWebPlatform`, `createWindowsPlatform` (and corresponding update variants). The `key` parameter was renamed to platform-specific terminology, such as `bundleIdentifier` or `packageName`
+* Breaking: Removed `PlatformList` model from `Projects` service (now returned by `Project` service)
+* Added `updateCanonicalEmails`, `updateDisposableEmails`, `updateFreeEmails` methods to `Project` service
+* Added `--purge` parameter to `databases.updateCollection` and `tablesDb.updateTable`
+* Added `x` (Twitter/X) to `OAuthProvider` enum
+* Added `keys.read`, `keys.write`, `platforms.read`, `platforms.write` to `Scopes` enum
+* Added `userType` field to audit log model
+* Added `supportsDisposableEmailValidation`, `supportsCanonicalEmailValidation`, `supportsFreeEmailValidation` fields to plan model
+* Updated `ttl` parameter description for `databases.listDocuments` and `tablesDb.listRows` with detailed caching behaviour
+
 ## 8.3.0
 
 * Added addon management methods to Organizations service: `listAddons`, `createBaaAddon`, `getAddon`, `deleteAddon`, `confirmAddonPayment`, `getAddonPrice`
