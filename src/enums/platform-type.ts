@@ -1,4 +1,4 @@
-export enum PlatformWebType {
+export enum PlatformType {
     Windows = 'windows',
     Apple = 'apple',
     Android = 'android',

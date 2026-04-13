@@ -5,11 +5,7 @@ import { IndexStatus } from "./enums/index-status"
 import { DeploymentStatus } from "./enums/deployment-status"
 import { ExecutionTrigger } from "./enums/execution-trigger"
 import { ExecutionStatus } from "./enums/execution-status"
-import { PlatformWebType } from "./enums/platform-web-type"
-import { PlatformAppleType } from "./enums/platform-apple-type"
-import { PlatformAndroidType } from "./enums/platform-android-type"
-import { PlatformWindowsType } from "./enums/platform-windows-type"
-import { PlatformLinuxType } from "./enums/platform-linux-type"
+import { PlatformType } from "./enums/platform-type"
 import { HealthAntivirusStatus } from "./enums/health-antivirus-status"
 import { HealthCheckStatus } from "./enums/health-check-status"
 import { ProxyRuleDeploymentResourceType } from "./enums/proxy-rule-deployment-resource-type"
@@ -4774,6 +4770,10 @@ export namespace Models {
          */
         serviceStatusForHealth: boolean;
         /**
+         * Project service status
+         */
+        serviceStatusForProject: boolean;
+        /**
          * Storage service status
          */
         serviceStatusForStorage: boolean;
@@ -4786,6 +4786,10 @@ export namespace Models {
          */
         serviceStatusForUsers: boolean;
         /**
+         * VCS service status
+         */
+        serviceStatusForVcs: boolean;
+        /**
          * Sites service status
          */
         serviceStatusForSites: boolean;
@@ -4794,13 +4798,33 @@ export namespace Models {
          */
         serviceStatusForFunctions: boolean;
         /**
+         * Proxy service status
+         */
+        serviceStatusForProxy: boolean;
+        /**
          * GraphQL service status
          */
         serviceStatusForGraphql: boolean;
         /**
+         * Migrations service status
+         */
+        serviceStatusForMigrations: boolean;
+        /**
          * Messaging service status
          */
         serviceStatusForMessaging: boolean;
+        /**
+         * REST protocol status
+         */
+        protocolStatusForRest: boolean;
+        /**
+         * GraphQL protocol status
+         */
+        protocolStatusForGraphql: boolean;
+        /**
+         * Websocket protocol status
+         */
+        protocolStatusForWebsocket: boolean;
         /**
          * Project region
          */
@@ -4848,21 +4872,21 @@ export namespace Models {
          */
         events: string[];
         /**
-         * Indicated if SSL / TLS Certificate verification is enabled.
+         * Indicates if SSL / TLS certificate verification is enabled.
          */
-        security: boolean;
+        tls: boolean;
         /**
          * HTTP basic authentication username.
          */
-        httpUser: string;
+        authUsername: string;
         /**
          * HTTP basic authentication password.
          */
-        httpPass: string;
+        authPassword: string;
         /**
-         * Signature key which can be used to validated incoming
+         * Signature key which can be used to validate incoming webhook payloads.
          */
-        signatureKey: string;
+        secret: string;
         /**
          * Indicates if this webhook is enabled.
          */
@@ -5020,7 +5044,7 @@ export namespace Models {
         /**
          * Platform type. Possible values are: windows, apple, android, linux, web.
          */
-        type: PlatformWebType;
+        type: PlatformType;
         /**
          * Web app hostname. Empty string for other platforms.
          */
@@ -5050,7 +5074,7 @@ export namespace Models {
         /**
          * Platform type. Possible values are: windows, apple, android, linux, web.
          */
-        type: PlatformAppleType;
+        type: PlatformType;
         /**
          * Apple bundle identifier.
          */
@@ -5080,7 +5104,7 @@ export namespace Models {
         /**
          * Platform type. Possible values are: windows, apple, android, linux, web.
          */
-        type: PlatformAndroidType;
+        type: PlatformType;
         /**
          * Android application ID.
          */
@@ -5110,7 +5134,7 @@ export namespace Models {
         /**
          * Platform type. Possible values are: windows, apple, android, linux, web.
          */
-        type: PlatformWindowsType;
+        type: PlatformType;
         /**
          * Windows package identifier name.
          */
@@ -5140,7 +5164,7 @@ export namespace Models {
         /**
          * Platform type. Possible values are: windows, apple, android, linux, web.
          */
-        type: PlatformLinuxType;
+        type: PlatformType;
         /**
          * Linux package name.
          */
@@ -6546,7 +6570,7 @@ export namespace Models {
         /**
          * Type of deployment. Possible values are "function", "site". Used if rule's type is "deployment".
          */
-        deploymentResourceType: ProxyRuleDeploymentResourceType;
+        deploymentResourceType?: ProxyRuleDeploymentResourceType;
         /**
          * ID deployment's resource. Used if type is "deployment"
          */

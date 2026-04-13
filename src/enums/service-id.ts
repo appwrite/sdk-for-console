@@ -1,15 +1,19 @@
-export enum ApiService {
+export enum ServiceId {
     Account = 'account',
     Avatars = 'avatars',
     Databases = 'databases',
     Tablesdb = 'tablesdb',
     Locale = 'locale',
     Health = 'health',
+    Project = 'project',
     Storage = 'storage',
     Teams = 'teams',
     Users = 'users',
+    Vcs = 'vcs',
     Sites = 'sites',
     Functions = 'functions',
+    Proxy = 'proxy',
     Graphql = 'graphql',
+    Migrations = 'migrations',
     Messaging = 'messaging',
 }

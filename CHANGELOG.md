@@ -6,11 +6,16 @@
 * Breaking: Replaced generic `Platform` model and `PlatformType` enum with typed models: `PlatformWeb`, `PlatformApple`, `PlatformAndroid`, `PlatformWindows`, `PlatformLinux`
 * Breaking: Replaced generic `createPlatform`/`updatePlatform` with platform-specific methods: `createAndroidPlatform`, `createApplePlatform`, `createLinuxPlatform`, `createWebPlatform`, `createWindowsPlatform` (and corresponding update variants). The `key` parameter was renamed to platform-specific terminology, such as `bundleIdentifier` or `packageName`
 * Breaking: Removed `PlatformList` model from `Projects` service (now returned by `Project` service)
+* Breaking: Removed `updateApiStatus`, `updateApiStatusAll`, `updateAPIStatus`, `updateAPIStatusAll` methods and `Api`, `ApiService` enums from `Projects` service
+* Breaking: Renamed webhook parameters `security` to `tls`, `httpUser` to `authUsername`, `httpPass` to `authPassword`, `signatureKey` to `secret`
+* Breaking: Renamed `updateSignature` to `updateSecret` in `Webhooks` service
 * Added `updateCanonicalEmails`, `updateDisposableEmails`, `updateFreeEmails` methods to `Project` service
-* Added `--purge` parameter to `databases.updateCollection` and `tablesDb.updateTable`
+* Added `updateProtocolStatus`, `updateServiceStatus` methods to `Project` service with new `ProtocolId` and `ServiceId` enums
+* Added `purge` parameter to `databases.updateCollection` and `tablesDb.updateTable`
 * Added `x` (Twitter/X) to `OAuthProvider` enum
 * Added `keys.read`, `keys.write`, `platforms.read`, `platforms.write` to `Scopes` enum
 * Added `userType` field to audit log model
+* Added service and protocol status fields to `Project` model
 * Added `supportsDisposableEmailValidation`, `supportsCanonicalEmailValidation`, `supportsFreeEmailValidation` fields to plan model
 * Updated `ttl` parameter description for `databases.listDocuments` and `tablesDb.listRows` with detailed caching behaviour
 

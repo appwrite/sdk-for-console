@@ -3,6 +3,8 @@ import { AppwriteException, Client, type Payload, UploadProgress } from '../clie
 import type { Models } from '../models';
 
 import { Scopes } from '../enums/scopes';
+import { ProtocolId } from '../enums/protocol-id';
+import { ServiceId } from '../enums/service-id';
 import { ProjectUsageRange } from '../enums/project-usage-range';
 
 export class Project {
@@ -246,7 +248,7 @@ export class Project {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
-    createKey(params: { keyId: string, name: string, scopes?: Scopes[], expire?: string }): Promise<Models.Key>;
+    createKey(params: { keyId: string, name: string, scopes: Scopes[], expire?: string }): Promise<Models.Key>;
     /**
      * Create a new API key. It's recommended to have multiple API keys with strict scopes for separate functions within your project.
      *
@@ -258,15 +260,15 @@ export class Project {
      * @returns {Promise<Models.Key>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createKey(keyId: string, name: string, scopes?: Scopes[], expire?: string): Promise<Models.Key>;
+    createKey(keyId: string, name: string, scopes: Scopes[], expire?: string): Promise<Models.Key>;
     createKey(
-        paramsOrFirst: { keyId: string, name: string, scopes?: Scopes[], expire?: string } | string,
+        paramsOrFirst: { keyId: string, name: string, scopes: Scopes[], expire?: string } | string,
         ...rest: [(string)?, (Scopes[])?, (string)?]    
     ): Promise<Models.Key> {
-        let params: { keyId: string, name: string, scopes?: Scopes[], expire?: string };
+        let params: { keyId: string, name: string, scopes: Scopes[], expire?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { keyId: string, name: string, scopes?: Scopes[], expire?: string };
+            params = (paramsOrFirst || {}) as { keyId: string, name: string, scopes: Scopes[], expire?: string };
         } else {
             params = {
                 keyId: paramsOrFirst as string,
@@ -380,7 +382,7 @@ export class Project {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
-    updateKey(params: { keyId: string, name: string, scopes?: Scopes[], expire?: string }): Promise<Models.Key>;
+    updateKey(params: { keyId: string, name: string, scopes: Scopes[], expire?: string }): Promise<Models.Key>;
     /**
      * Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
      *
@@ -392,15 +394,15 @@ export class Project {
      * @returns {Promise<Models.Key>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateKey(keyId: string, name: string, scopes?: Scopes[], expire?: string): Promise<Models.Key>;
+    updateKey(keyId: string, name: string, scopes: Scopes[], expire?: string): Promise<Models.Key>;
     updateKey(
-        paramsOrFirst: { keyId: string, name: string, scopes?: Scopes[], expire?: string } | string,
+        paramsOrFirst: { keyId: string, name: string, scopes: Scopes[], expire?: string } | string,
         ...rest: [(string)?, (Scopes[])?, (string)?]    
     ): Promise<Models.Key> {
-        let params: { keyId: string, name: string, scopes?: Scopes[], expire?: string };
+        let params: { keyId: string, name: string, scopes: Scopes[], expire?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { keyId: string, name: string, scopes?: Scopes[], expire?: string };
+            params = (paramsOrFirst || {}) as { keyId: string, name: string, scopes: Scopes[], expire?: string };
         } else {
             params = {
                 keyId: paramsOrFirst as string,
@@ -1072,7 +1074,7 @@ export class Project {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PlatformWeb>}
      */
-    createWebPlatform(params: { platformId: string, name: string, hostname?: string }): Promise<Models.PlatformWeb>;
+    createWebPlatform(params: { platformId: string, name: string, hostname: string }): Promise<Models.PlatformWeb>;
     /**
      * Create a new web platform for your project. Use this endpoint to register a new platform where your users will run your application which will interact with the Appwrite API.
      *
@@ -1083,15 +1085,15 @@ export class Project {
      * @returns {Promise<Models.PlatformWeb>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createWebPlatform(platformId: string, name: string, hostname?: string): Promise<Models.PlatformWeb>;
+    createWebPlatform(platformId: string, name: string, hostname: string): Promise<Models.PlatformWeb>;
     createWebPlatform(
-        paramsOrFirst: { platformId: string, name: string, hostname?: string } | string,
+        paramsOrFirst: { platformId: string, name: string, hostname: string } | string,
         ...rest: [(string)?, (string)?]    
     ): Promise<Models.PlatformWeb> {
-        let params: { platformId: string, name: string, hostname?: string };
+        let params: { platformId: string, name: string, hostname: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { platformId: string, name: string, hostname?: string };
+            params = (paramsOrFirst || {}) as { platformId: string, name: string, hostname: string };
         } else {
             params = {
                 platformId: paramsOrFirst as string,
@@ -1109,6 +1111,9 @@ export class Project {
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof hostname === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "hostname"');
         }
 
         const apiPath = '/project/platforms/web';
@@ -1145,7 +1150,7 @@ export class Project {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PlatformWeb>}
      */
-    updateWebPlatform(params: { platformId: string, name: string, hostname?: string }): Promise<Models.PlatformWeb>;
+    updateWebPlatform(params: { platformId: string, name: string, hostname: string }): Promise<Models.PlatformWeb>;
     /**
      * Update a web platform by its unique ID. Use this endpoint to update the platform's name or hostname.
      *
@@ -1156,15 +1161,15 @@ export class Project {
      * @returns {Promise<Models.PlatformWeb>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateWebPlatform(platformId: string, name: string, hostname?: string): Promise<Models.PlatformWeb>;
+    updateWebPlatform(platformId: string, name: string, hostname: string): Promise<Models.PlatformWeb>;
     updateWebPlatform(
-        paramsOrFirst: { platformId: string, name: string, hostname?: string } | string,
+        paramsOrFirst: { platformId: string, name: string, hostname: string } | string,
         ...rest: [(string)?, (string)?]    
     ): Promise<Models.PlatformWeb> {
-        let params: { platformId: string, name: string, hostname?: string };
+        let params: { platformId: string, name: string, hostname: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { platformId: string, name: string, hostname?: string };
+            params = (paramsOrFirst || {}) as { platformId: string, name: string, hostname: string };
         } else {
             params = {
                 platformId: paramsOrFirst as string,
@@ -1182,6 +1187,9 @@ export class Project {
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof hostname === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "hostname"');
         }
 
         const apiPath = '/project/platforms/web/{platformId}'.replace('{platformId}', platformId);
@@ -1452,6 +1460,132 @@ export class Project {
 
         return this.client.call(
             'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update the status of a specific protocol. Use this endpoint to enable or disable a protocol in your project. 
+     *
+     * @param {ProtocolId} params.protocolId - Protocol name. Can be one of: rest, graphql, websocket
+     * @param {boolean} params.enabled - Protocol status.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     */
+    updateProtocolStatus(params: { protocolId: ProtocolId, enabled: boolean }): Promise<Models.Project>;
+    /**
+     * Update the status of a specific protocol. Use this endpoint to enable or disable a protocol in your project. 
+     *
+     * @param {ProtocolId} protocolId - Protocol name. Can be one of: rest, graphql, websocket
+     * @param {boolean} enabled - Protocol status.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateProtocolStatus(protocolId: ProtocolId, enabled: boolean): Promise<Models.Project>;
+    updateProtocolStatus(
+        paramsOrFirst: { protocolId: ProtocolId, enabled: boolean } | ProtocolId,
+        ...rest: [(boolean)?]    
+    ): Promise<Models.Project> {
+        let params: { protocolId: ProtocolId, enabled: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('protocolId' in paramsOrFirst || 'enabled' in paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { protocolId: ProtocolId, enabled: boolean };
+        } else {
+            params = {
+                protocolId: paramsOrFirst as ProtocolId,
+                enabled: rest[0] as boolean            
+            };
+        }
+        
+        const protocolId = params.protocolId;
+        const enabled = params.enabled;
+
+        if (typeof protocolId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "protocolId"');
+        }
+        if (typeof enabled === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "enabled"');
+        }
+
+        const apiPath = '/project/protocols/{protocolId}/status'.replace('{protocolId}', protocolId);
+        const payload: Payload = {};
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update the status of a specific service. Use this endpoint to enable or disable a service in your project. 
+     *
+     * @param {ServiceId} params.serviceId - Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging
+     * @param {boolean} params.enabled - Service status.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     */
+    updateServiceStatus(params: { serviceId: ServiceId, enabled: boolean }): Promise<Models.Project>;
+    /**
+     * Update the status of a specific service. Use this endpoint to enable or disable a service in your project. 
+     *
+     * @param {ServiceId} serviceId - Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging
+     * @param {boolean} enabled - Service status.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateServiceStatus(serviceId: ServiceId, enabled: boolean): Promise<Models.Project>;
+    updateServiceStatus(
+        paramsOrFirst: { serviceId: ServiceId, enabled: boolean } | ServiceId,
+        ...rest: [(boolean)?]    
+    ): Promise<Models.Project> {
+        let params: { serviceId: ServiceId, enabled: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('serviceId' in paramsOrFirst || 'enabled' in paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { serviceId: ServiceId, enabled: boolean };
+        } else {
+            params = {
+                serviceId: paramsOrFirst as ServiceId,
+                enabled: rest[0] as boolean            
+            };
+        }
+        
+        const serviceId = params.serviceId;
+        const enabled = params.enabled;
+
+        if (typeof serviceId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "serviceId"');
+        }
+        if (typeof enabled === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "enabled"');
+        }
+
+        const apiPath = '/project/services/{serviceId}/status'.replace('{serviceId}', serviceId);
+        const payload: Payload = {};
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
             uri,
             apiHeaders,
             payload

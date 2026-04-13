@@ -10,7 +10,7 @@ const project = new Project(client);
 const result = await project.createWebPlatform({
     platformId: '<PLATFORM_ID>',
     name: '<NAME>',
-    hostname: '' // optional
+    hostname: 'app.example.com'
 });
 
 console.log(result);
