@@ -471,20 +471,6 @@ export namespace Models {
     }
 
     /**
-     * Platforms List
-     */
-    export type PlatformList = {
-        /**
-         * Total number of platforms that matched your query.
-         */
-        total: number;
-        /**
-         * List of platforms.
-         */
-        platforms: Platform[];
-    }
-
-    /**
      * Countries List
      */
     export type CountryList = {
@@ -2723,6 +2709,10 @@ export namespace Models {
          */
         mode: string;
         /**
+         * User type who triggered the audit log. Possible values: user, admin, guest, keyProject, keyAccount, keyOrganization.
+         */
+        userType: string;
+        /**
          * IP session in use when the session was created.
          */
         ip: string;
@@ -4662,7 +4652,7 @@ export namespace Models {
         /**
          * List of Platforms.
          */
-        platforms: Platform[];
+        platforms: (Models.PlatformWeb | Models.PlatformApple | Models.PlatformAndroid | Models.PlatformWindows | Models.PlatformLinux)[];
         /**
          * List of Webhooks.
          */
@@ -4780,6 +4770,10 @@ export namespace Models {
          */
         serviceStatusForHealth: boolean;
         /**
+         * Project service status
+         */
+        serviceStatusForProject: boolean;
+        /**
          * Storage service status
          */
         serviceStatusForStorage: boolean;
@@ -4792,6 +4786,10 @@ export namespace Models {
          */
         serviceStatusForUsers: boolean;
         /**
+         * VCS service status
+         */
+        serviceStatusForVcs: boolean;
+        /**
          * Sites service status
          */
         serviceStatusForSites: boolean;
@@ -4800,13 +4798,33 @@ export namespace Models {
          */
         serviceStatusForFunctions: boolean;
         /**
+         * Proxy service status
+         */
+        serviceStatusForProxy: boolean;
+        /**
          * GraphQL service status
          */
         serviceStatusForGraphql: boolean;
         /**
+         * Migrations service status
+         */
+        serviceStatusForMigrations: boolean;
+        /**
          * Messaging service status
          */
         serviceStatusForMessaging: boolean;
+        /**
+         * REST protocol status
+         */
+        protocolStatusForRest: boolean;
+        /**
+         * GraphQL protocol status
+         */
+        protocolStatusForGraphql: boolean;
+        /**
+         * Websocket protocol status
+         */
+        protocolStatusForWebsocket: boolean;
         /**
          * Project region
          */
@@ -4854,21 +4872,21 @@ export namespace Models {
          */
         events: string[];
         /**
-         * Indicated if SSL / TLS Certificate verification is enabled.
+         * Indicates if SSL / TLS certificate verification is enabled.
          */
-        security: boolean;
+        tls: boolean;
         /**
          * HTTP basic authentication username.
          */
-        httpUser: string;
+        authUsername: string;
         /**
          * HTTP basic authentication password.
          */
-        httpPass: string;
+        authPassword: string;
         /**
-         * Signature key which can be used to validated incoming
+         * Signature key which can be used to validate incoming webhook payloads.
          */
-        signatureKey: string;
+        secret: string;
         /**
          * Indicates if this webhook is enabled.
          */
@@ -5004,9 +5022,9 @@ export namespace Models {
     }
 
     /**
-     * Platform
+     * Platform Web
      */
-    export type Platform = {
+    export type PlatformWeb = {
         /**
          * Platform ID.
          */
@@ -5024,29 +5042,147 @@ export namespace Models {
          */
         name: string;
         /**
-         * Platform type. Possible values are: web, flutter-web, flutter-ios, flutter-android, flutter-linux, flutter-macos, flutter-windows, apple-ios, apple-macos, apple-watchos, apple-tvos, android, unity, react-native-ios, react-native-android.
+         * Platform type. Possible values are: windows, apple, android, linux, web.
          */
         type: PlatformType;
-        /**
-         * Platform Key. iOS bundle ID or Android package name.  Empty string for other platforms.
-         */
-        key: string;
-        /**
-         * App store or Google Play store ID.
-         */
-        store: string;
         /**
          * Web app hostname. Empty string for other platforms.
          */
         hostname: string;
+    }
+
+    /**
+     * Platform Apple
+     */
+    export type PlatformApple = {
         /**
-         * HTTP basic authentication username.
+         * Platform ID.
          */
-        httpUser: string;
+        $id: string;
         /**
-         * HTTP basic authentication password.
+         * Platform creation date in ISO 8601 format.
          */
-        httpPass: string;
+        $createdAt: string;
+        /**
+         * Platform update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Platform name.
+         */
+        name: string;
+        /**
+         * Platform type. Possible values are: windows, apple, android, linux, web.
+         */
+        type: PlatformType;
+        /**
+         * Apple bundle identifier.
+         */
+        bundleIdentifier: string;
+    }
+
+    /**
+     * Platform Android
+     */
+    export type PlatformAndroid = {
+        /**
+         * Platform ID.
+         */
+        $id: string;
+        /**
+         * Platform creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Platform update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Platform name.
+         */
+        name: string;
+        /**
+         * Platform type. Possible values are: windows, apple, android, linux, web.
+         */
+        type: PlatformType;
+        /**
+         * Android application ID.
+         */
+        applicationId: string;
+    }
+
+    /**
+     * Platform Windows
+     */
+    export type PlatformWindows = {
+        /**
+         * Platform ID.
+         */
+        $id: string;
+        /**
+         * Platform creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Platform update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Platform name.
+         */
+        name: string;
+        /**
+         * Platform type. Possible values are: windows, apple, android, linux, web.
+         */
+        type: PlatformType;
+        /**
+         * Windows package identifier name.
+         */
+        packageIdentifierName: string;
+    }
+
+    /**
+     * Platform Linux
+     */
+    export type PlatformLinux = {
+        /**
+         * Platform ID.
+         */
+        $id: string;
+        /**
+         * Platform creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Platform update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Platform name.
+         */
+        name: string;
+        /**
+         * Platform type. Possible values are: windows, apple, android, linux, web.
+         */
+        type: PlatformType;
+        /**
+         * Linux package name.
+         */
+        packageName: string;
+    }
+
+    /**
+     * Platforms List
+     */
+    export type PlatformList = {
+        /**
+         * Total number of platforms in the given project.
+         */
+        total: number;
+        /**
+         * List of platforms.
+         */
+        platforms: (Models.PlatformWeb | Models.PlatformApple | Models.PlatformAndroid | Models.PlatformWindows | Models.PlatformLinux)[];
     }
 
     /**
@@ -6434,7 +6570,7 @@ export namespace Models {
         /**
          * Type of deployment. Possible values are "function", "site". Used if rule's type is "deployment".
          */
-        deploymentResourceType: ProxyRuleDeploymentResourceType;
+        deploymentResourceType?: ProxyRuleDeploymentResourceType;
         /**
          * ID deployment's resource. Used if type is "deployment"
          */
@@ -7721,6 +7857,18 @@ export namespace Models {
          * Does plan support credit
          */
         supportsCredits: boolean;
+        /**
+         * Does plan support blocking disposable email addresses.
+         */
+        supportsDisposableEmailValidation: boolean;
+        /**
+         * Does plan support requiring canonical email addresses.
+         */
+        supportsCanonicalEmailValidation: boolean;
+        /**
+         * Does plan support blocking free email addresses.
+         */
+        supportsFreeEmailValidation: boolean;
         /**
          * Does plan support backup policies.
          */

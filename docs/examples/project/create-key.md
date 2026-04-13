@@ -1,14 +1,13 @@
 ```javascript
-import { Client, Projects, Scopes } from "@appwrite.io/console";
+import { Client, Project, Scopes } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const projects = new Projects(client);
+const project = new Project(client);
 
-const result = await projects.updateKey({
-    projectId: '<PROJECT_ID>',
+const result = await project.createKey({
     keyId: '<KEY_ID>',
     name: '<NAME>',
     scopes: [Scopes.SessionsWrite],

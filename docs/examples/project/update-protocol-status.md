@@ -1,15 +1,15 @@
 ```javascript
-import { Client, Projects } from "@appwrite.io/console";
+import { Client, Project, ProtocolId } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const projects = new Projects(client);
+const project = new Project(client);
 
-const result = await projects.updateAPIStatusAll({
-    projectId: '<PROJECT_ID>',
-    status: false
+const result = await project.updateProtocolStatus({
+    protocolId: ProtocolId.Rest,
+    enabled: false
 });
 
 console.log(result);
