@@ -340,6 +340,7 @@ export declare class DocumentsDB {
      * @param {string[]} params.permissions - An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.documentSecurity - Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.enabled - Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
+     * @param {boolean} params.purge - When true, purge all cached list responses for this collection as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Collection>}
      */
@@ -350,6 +351,7 @@ export declare class DocumentsDB {
         permissions?: string[];
         documentSecurity?: boolean;
         enabled?: boolean;
+        purge?: boolean;
     }): Promise<Models.Collection>;
     /**
      * Update a collection by its unique ID.
@@ -360,11 +362,12 @@ export declare class DocumentsDB {
      * @param {string[]} permissions - An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} documentSecurity - Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} enabled - Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
+     * @param {boolean} purge - When true, purge all cached list responses for this collection as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Collection>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateCollection(databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean): Promise<Models.Collection>;
+    updateCollection(databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean, purge?: boolean): Promise<Models.Collection>;
     /**
      * Delete a collection by its unique ID. Only users with write permissions have access to delete this resource.
      *

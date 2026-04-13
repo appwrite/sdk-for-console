@@ -373,6 +373,7 @@ export declare class Databases {
      * @param {string[]} params.permissions - An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.documentSecurity - Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.enabled - Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
+     * @param {boolean} params.purge - When true, purge all cached list responses for this collection as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Collection>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateTable` instead.
@@ -384,6 +385,7 @@ export declare class Databases {
         permissions?: string[];
         documentSecurity?: boolean;
         enabled?: boolean;
+        purge?: boolean;
     }): Promise<Models.Collection>;
     /**
      * Update a collection by its unique ID.
@@ -394,11 +396,12 @@ export declare class Databases {
      * @param {string[]} permissions - An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} documentSecurity - Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} enabled - Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
+     * @param {boolean} purge - When true, purge all cached list responses for this collection as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Collection>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateCollection(databaseId: string, collectionId: string, name?: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean): Promise<Models.Collection>;
+    updateCollection(databaseId: string, collectionId: string, name?: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean, purge?: boolean): Promise<Models.Collection>;
     /**
      * Delete a collection by its unique ID. Only users with write permissions have access to delete this resource.
      *
@@ -1794,7 +1797,7 @@ export declare class Databases {
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
      * @param {string} params.transactionId - Transaction ID to read uncommitted changes within the transaction.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {number} params.ttl - TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
+     * @param {number} params.ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
      * @throws {AppwriteException}
      * @returns {Promise<Models.DocumentList<Document>>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.listRows` instead.
@@ -1815,7 +1818,7 @@ export declare class Databases {
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
      * @param {string} transactionId - Transaction ID to read uncommitted changes within the transaction.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {number} ttl - TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
+     * @param {number} ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
      * @throws {AppwriteException}
      * @returns {Promise<Models.DocumentList<Document>>}
      * @deprecated Use the object parameter style method for a better developer experience.

@@ -436,19 +436,6 @@ export declare namespace Models {
         devKeys: DevKey[];
     };
     /**
-     * Platforms List
-     */
-    export type PlatformList = {
-        /**
-         * Total number of platforms that matched your query.
-         */
-        total: number;
-        /**
-         * List of platforms.
-         */
-        platforms: Platform[];
-    };
-    /**
      * Countries List
      */
     export type CountryList = {
@@ -2960,6 +2947,10 @@ export declare namespace Models {
          */
         mode: string;
         /**
+         * User type who triggered the audit log. Possible values: user, admin, guest, keyProject, keyAccount, keyOrganization.
+         */
+        userType: string;
+        /**
          * IP session in use when the session was created.
          */
         ip: string;
@@ -4813,6 +4804,18 @@ export declare namespace Models {
          */
         authPersonalDataCheck: boolean;
         /**
+         * Whether or not to disallow disposable email addresses during signup and email updates.
+         */
+        authDisposableEmails: boolean;
+        /**
+         * Whether or not to require canonical email addresses during signup and email updates.
+         */
+        authCanonicalEmails: boolean;
+        /**
+         * Whether or not to disallow free email addresses during signup and email updates.
+         */
+        authFreeEmails: boolean;
+        /**
          * An array of mock numbers and their corresponding verification codes (OTPs).
          */
         authMockNumbers: MockNumber[];
@@ -4843,7 +4846,7 @@ export declare namespace Models {
         /**
          * List of Platforms.
          */
-        platforms: Platform[];
+        platforms: (Models.PlatformWeb | Models.PlatformApple | Models.PlatformAndroid | Models.PlatformWindows | Models.PlatformLinux)[];
         /**
          * List of Webhooks.
          */
@@ -4953,6 +4956,14 @@ export declare namespace Models {
          */
         serviceStatusForTablesdb: boolean;
         /**
+         * DocumentsDB service status
+         */
+        serviceStatusForDocumentsdb: boolean;
+        /**
+         * VectorsDB service status
+         */
+        serviceStatusForVectorsdb: boolean;
+        /**
          * Locale service status
          */
         serviceStatusForLocale: boolean;
@@ -4960,6 +4971,10 @@ export declare namespace Models {
          * Health service status
          */
         serviceStatusForHealth: boolean;
+        /**
+         * Project service status
+         */
+        serviceStatusForProject: boolean;
         /**
          * Storage service status
          */
@@ -4973,6 +4988,10 @@ export declare namespace Models {
          */
         serviceStatusForUsers: boolean;
         /**
+         * VCS service status
+         */
+        serviceStatusForVcs: boolean;
+        /**
          * Sites service status
          */
         serviceStatusForSites: boolean;
@@ -4981,13 +5000,33 @@ export declare namespace Models {
          */
         serviceStatusForFunctions: boolean;
         /**
+         * Proxy service status
+         */
+        serviceStatusForProxy: boolean;
+        /**
          * GraphQL service status
          */
         serviceStatusForGraphql: boolean;
         /**
+         * Migrations service status
+         */
+        serviceStatusForMigrations: boolean;
+        /**
          * Messaging service status
          */
         serviceStatusForMessaging: boolean;
+        /**
+         * REST protocol status
+         */
+        protocolStatusForRest: boolean;
+        /**
+         * GraphQL protocol status
+         */
+        protocolStatusForGraphql: boolean;
+        /**
+         * Websocket protocol status
+         */
+        protocolStatusForWebsocket: boolean;
         /**
          * Project region
          */
@@ -5034,21 +5073,21 @@ export declare namespace Models {
          */
         events: string[];
         /**
-         * Indicated if SSL / TLS Certificate verification is enabled.
+         * Indicates if SSL / TLS certificate verification is enabled.
          */
-        security: boolean;
+        tls: boolean;
         /**
          * HTTP basic authentication username.
          */
-        httpUser: string;
+        authUsername: string;
         /**
          * HTTP basic authentication password.
          */
-        httpPass: string;
+        authPassword: string;
         /**
-         * Signature key which can be used to validated incoming
+         * Signature key which can be used to validate incoming webhook payloads.
          */
-        signatureKey: string;
+        secret: string;
         /**
          * Indicates if this webhook is enabled.
          */
@@ -5179,9 +5218,9 @@ export declare namespace Models {
         enabled: boolean;
     };
     /**
-     * Platform
+     * Platform Web
      */
-    export type Platform = {
+    export type PlatformWeb = {
         /**
          * Platform ID.
          */
@@ -5199,29 +5238,142 @@ export declare namespace Models {
          */
         name: string;
         /**
-         * Platform type. Possible values are: web, flutter-web, flutter-ios, flutter-android, flutter-linux, flutter-macos, flutter-windows, apple-ios, apple-macos, apple-watchos, apple-tvos, android, unity, react-native-ios, react-native-android.
+         * Platform type. Possible values are: windows, apple, android, linux, web.
          */
         type: PlatformType;
-        /**
-         * Platform Key. iOS bundle ID or Android package name.  Empty string for other platforms.
-         */
-        key: string;
-        /**
-         * App store or Google Play store ID.
-         */
-        store: string;
         /**
          * Web app hostname. Empty string for other platforms.
          */
         hostname: string;
+    };
+    /**
+     * Platform Apple
+     */
+    export type PlatformApple = {
         /**
-         * HTTP basic authentication username.
+         * Platform ID.
          */
-        httpUser: string;
+        $id: string;
         /**
-         * HTTP basic authentication password.
+         * Platform creation date in ISO 8601 format.
          */
-        httpPass: string;
+        $createdAt: string;
+        /**
+         * Platform update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Platform name.
+         */
+        name: string;
+        /**
+         * Platform type. Possible values are: windows, apple, android, linux, web.
+         */
+        type: PlatformType;
+        /**
+         * Apple bundle identifier.
+         */
+        bundleIdentifier: string;
+    };
+    /**
+     * Platform Android
+     */
+    export type PlatformAndroid = {
+        /**
+         * Platform ID.
+         */
+        $id: string;
+        /**
+         * Platform creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Platform update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Platform name.
+         */
+        name: string;
+        /**
+         * Platform type. Possible values are: windows, apple, android, linux, web.
+         */
+        type: PlatformType;
+        /**
+         * Android application ID.
+         */
+        applicationId: string;
+    };
+    /**
+     * Platform Windows
+     */
+    export type PlatformWindows = {
+        /**
+         * Platform ID.
+         */
+        $id: string;
+        /**
+         * Platform creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Platform update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Platform name.
+         */
+        name: string;
+        /**
+         * Platform type. Possible values are: windows, apple, android, linux, web.
+         */
+        type: PlatformType;
+        /**
+         * Windows package identifier name.
+         */
+        packageIdentifierName: string;
+    };
+    /**
+     * Platform Linux
+     */
+    export type PlatformLinux = {
+        /**
+         * Platform ID.
+         */
+        $id: string;
+        /**
+         * Platform creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Platform update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Platform name.
+         */
+        name: string;
+        /**
+         * Platform type. Possible values are: windows, apple, android, linux, web.
+         */
+        type: PlatformType;
+        /**
+         * Linux package name.
+         */
+        packageName: string;
+    };
+    /**
+     * Platforms List
+     */
+    export type PlatformList = {
+        /**
+         * Total number of platforms in the given project.
+         */
+        total: number;
+        /**
+         * List of platforms.
+         */
+        platforms: (Models.PlatformWeb | Models.PlatformApple | Models.PlatformAndroid | Models.PlatformWindows | Models.PlatformLinux)[];
     };
     /**
      * Variable
@@ -6581,7 +6733,7 @@ export declare namespace Models {
         /**
          * Type of deployment. Possible values are "function", "site". Used if rule's type is "deployment".
          */
-        deploymentResourceType: ProxyRuleDeploymentResourceType;
+        deploymentResourceType?: ProxyRuleDeploymentResourceType;
         /**
          * ID deployment's resource. Used if type is "deployment"
          */
@@ -6810,6 +6962,10 @@ export declare namespace Models {
          * Whether the database adapter uses integer sequence IDs.
          */
         supportForIntegerIds: boolean;
+        /**
+         * Whether email verification for console users is required. Can be "true" or "false".
+         */
+        _APP_CONSOLE_EMAIL_VERIFICATION: string;
     };
     /**
      * MFA Challenge
@@ -7842,6 +7998,18 @@ export declare namespace Models {
          */
         supportsCredits: boolean;
         /**
+         * Does plan support blocking disposable email addresses.
+         */
+        supportsDisposableEmailValidation: boolean;
+        /**
+         * Does plan support requiring canonical email addresses.
+         */
+        supportsCanonicalEmailValidation: boolean;
+        /**
+         * Does plan support blocking free email addresses.
+         */
+        supportsFreeEmailValidation: boolean;
+        /**
          * Does plan support backup policies.
          */
         backupsEnabled: boolean;
@@ -7849,6 +8017,10 @@ export declare namespace Models {
          * Whether usage addons are calculated per project.
          */
         usagePerProject: boolean;
+        /**
+         * Supported addons for this plan
+         */
+        supportedAddons: BillingPlanSupportedAddons;
         /**
          * How many policies does plan support
          */
@@ -7942,6 +8114,15 @@ export declare namespace Models {
         dailyCredits?: number;
     };
     /**
+     * BillingPlanSupportedAddons
+     */
+    export type BillingPlanSupportedAddons = {
+        /**
+         * Whether the plan supports BAA (Business Associate Agreement) addon
+         */
+        baa: boolean;
+    };
+    /**
      * BillingLimits
      */
     export type BillingLimits = {
@@ -7995,13 +8176,13 @@ export declare namespace Models {
          */
         resourceId: string;
         /**
-         * Reason for the block
+         * Reason for the block. Can be null if no reason was provided.
          */
-        reason: string;
+        reason?: string;
         /**
-         * Block expiration date in ISO 8601 format.
+         * Block expiration date in ISO 8601 format. Can be null if the block does not expire.
          */
-        expiredAt: string;
+        expiredAt?: string;
     };
     /**
      * Campaign
@@ -8512,6 +8693,10 @@ export declare namespace Models {
          * Invoice ID against which the payment needs to be validated.
          */
         invoiceId: string;
+        /**
+         * Addon ID to use when calling the addon validate endpoint. Empty when authentication is not for an addon.
+         */
+        addonId: string;
     };
     /**
      * paymentMethod
@@ -9365,6 +9550,88 @@ export declare namespace Models {
         available: boolean;
     };
     /**
+     * Addon
+     */
+    export type Addon = {
+        /**
+         * Addon ID.
+         */
+        $id: string;
+        /**
+         * Addon creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Addon update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Addon permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * Addon key
+         */
+        key: string;
+        /**
+         * Resource type (organization or project)
+         */
+        resourceType: string;
+        /**
+         * Resource ID
+         */
+        resourceId: string;
+        /**
+         * Payment status. Possible values: pending (awaiting payment confirmation e.g. 3DS), active (payment confirmed and addon is running).
+         */
+        status: string;
+        /**
+         * Current value for this billing cycle. For toggle addons: 1 (on) or 0 (off). For numeric addons: the active quantity.
+         */
+        currentValue: number;
+        /**
+         * Value to apply at the start of the next billing cycle. Null means no change is scheduled. For toggle addons, 0 means the addon will be removed at the next cycle.
+         */
+        nextValue?: number;
+    };
+    /**
+     * AddonPrice
+     */
+    export type AddonPrice = {
+        /**
+         * Addon key.
+         */
+        addonKey: string;
+        /**
+         * Addon display name.
+         */
+        name: string;
+        /**
+         * Full monthly price of the addon.
+         */
+        monthlyPrice: number;
+        /**
+         * Calculated prorated amount for the current billing cycle.
+         */
+        proratedAmount: number;
+        /**
+         * Days remaining in the current billing cycle.
+         */
+        remainingDays: number;
+        /**
+         * Total days in the billing cycle.
+         */
+        totalCycleDays: number;
+        /**
+         * Currency code.
+         */
+        currency: string;
+        /**
+         * When the current billing cycle ends.
+         */
+        billingCycleEnd: string;
+    };
+    /**
      * domainTransferOut
      */
     export type DomainTransferOut = {
@@ -9389,6 +9656,19 @@ export declare namespace Models {
          * Transfer status timestamp in ISO 8601 format.
          */
         timestamp: string;
+    };
+    /**
+     * Addons list
+     */
+    export type AddonList = {
+        /**
+         * Total number of addons that matched your query.
+         */
+        total: number;
+        /**
+         * List of addons.
+         */
+        addons: Addon[];
     };
     /**
      * Activity event list

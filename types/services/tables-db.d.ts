@@ -364,6 +364,7 @@ export declare class TablesDB {
      * @param {string[]} params.permissions - An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.rowSecurity - Enables configuring permissions for individual rows. A user needs one of row or table-level permissions to access a row. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.enabled - Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
+     * @param {boolean} params.purge - When true, purge all cached list responses for this table as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Table>}
      */
@@ -374,6 +375,7 @@ export declare class TablesDB {
         permissions?: string[];
         rowSecurity?: boolean;
         enabled?: boolean;
+        purge?: boolean;
     }): Promise<Models.Table>;
     /**
      * Update a table by its unique ID.
@@ -384,11 +386,12 @@ export declare class TablesDB {
      * @param {string[]} permissions - An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} rowSecurity - Enables configuring permissions for individual rows. A user needs one of row or table-level permissions to access a row. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} enabled - Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
+     * @param {boolean} purge - When true, purge all cached list responses for this table as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Table>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateTable(databaseId: string, tableId: string, name?: string, permissions?: string[], rowSecurity?: boolean, enabled?: boolean): Promise<Models.Table>;
+    updateTable(databaseId: string, tableId: string, name?: string, permissions?: string[], rowSecurity?: boolean, enabled?: boolean, purge?: boolean): Promise<Models.Table>;
     /**
      * Delete a table by its unique ID. Only users with write permissions have access to delete this resource.
      *
@@ -1896,7 +1899,7 @@ export declare class TablesDB {
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
      * @param {string} params.transactionId - Transaction ID to read uncommitted changes within the transaction.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {number} params.ttl - TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
+     * @param {number} params.ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
      * @throws {AppwriteException}
      * @returns {Promise<Models.RowList<Row>>}
      */
@@ -1916,7 +1919,7 @@ export declare class TablesDB {
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
      * @param {string} transactionId - Transaction ID to read uncommitted changes within the transaction.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {number} ttl - TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
+     * @param {number} ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
      * @throws {AppwriteException}
      * @returns {Promise<Models.RowList<Row>>}
      * @deprecated Use the object parameter style method for a better developer experience.

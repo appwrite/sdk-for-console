@@ -13,7 +13,8 @@ const result = await documentsDB.updateCollection({
     name: '<NAME>',
     permissions: [Permission.read(Role.any())], // optional
     documentSecurity: false, // optional
-    enabled: false // optional
+    enabled: false, // optional
+    purge: false // optional
 });
 
 console.log(result);

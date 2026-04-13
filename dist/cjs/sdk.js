@@ -580,8 +580,8 @@ class Client {
             'x-sdk-name': 'Console',
             'x-sdk-platform': 'console',
             'x-sdk-language': 'web',
-            'x-sdk-version': '8.1.1',
-            'X-Appwrite-Response-Format': '1.9.0',
+            'x-sdk-version': '10.0.0',
+            'X-Appwrite-Response-Format': '1.9.1',
         };
         this.realtime = {
             socket: undefined,
@@ -4855,7 +4855,8 @@ class Databases {
                 name: rest[1],
                 permissions: rest[2],
                 documentSecurity: rest[3],
-                enabled: rest[4]
+                enabled: rest[4],
+                purge: rest[5]
             };
         }
         const databaseId = params.databaseId;
@@ -4864,6 +4865,7 @@ class Databases {
         const permissions = params.permissions;
         const documentSecurity = params.documentSecurity;
         const enabled = params.enabled;
+        const purge = params.purge;
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -4883,6 +4885,9 @@ class Databases {
         }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
+        }
+        if (typeof purge !== 'undefined') {
+            payload['purge'] = purge;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
         const apiHeaders = {
@@ -8155,7 +8160,8 @@ class DocumentsDB {
                 name: rest[1],
                 permissions: rest[2],
                 documentSecurity: rest[3],
-                enabled: rest[4]
+                enabled: rest[4],
+                purge: rest[5]
             };
         }
         const databaseId = params.databaseId;
@@ -8164,6 +8170,7 @@ class DocumentsDB {
         const permissions = params.permissions;
         const documentSecurity = params.documentSecurity;
         const enabled = params.enabled;
+        const purge = params.purge;
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -8186,6 +8193,9 @@ class DocumentsDB {
         }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
+        }
+        if (typeof purge !== 'undefined') {
+            payload['purge'] = purge;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
         const apiHeaders = {
@@ -16661,6 +16671,152 @@ class Organizations {
         };
         return this.client.call('delete', uri, apiHeaders, payload);
     }
+    listAddons(paramsOrFirst) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                organizationId: paramsOrFirst
+            };
+        }
+        const organizationId = params.organizationId;
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        const apiPath = '/organizations/{organizationId}/addons'.replace('{organizationId}', organizationId);
+        const payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {};
+        return this.client.call('get', uri, apiHeaders, payload);
+    }
+    createBaaAddon(paramsOrFirst) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                organizationId: paramsOrFirst
+            };
+        }
+        const organizationId = params.organizationId;
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        const apiPath = '/organizations/{organizationId}/addons/baa'.replace('{organizationId}', organizationId);
+        const payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('post', uri, apiHeaders, payload);
+    }
+    getAddon(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                organizationId: paramsOrFirst,
+                addonId: rest[0]
+            };
+        }
+        const organizationId = params.organizationId;
+        const addonId = params.addonId;
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof addonId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "addonId"');
+        }
+        const apiPath = '/organizations/{organizationId}/addons/{addonId}'.replace('{organizationId}', organizationId).replace('{addonId}', addonId);
+        const payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {};
+        return this.client.call('get', uri, apiHeaders, payload);
+    }
+    deleteAddon(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                organizationId: paramsOrFirst,
+                addonId: rest[0]
+            };
+        }
+        const organizationId = params.organizationId;
+        const addonId = params.addonId;
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof addonId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "addonId"');
+        }
+        const apiPath = '/organizations/{organizationId}/addons/{addonId}'.replace('{organizationId}', organizationId).replace('{addonId}', addonId);
+        const payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('delete', uri, apiHeaders, payload);
+    }
+    confirmAddonPayment(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                organizationId: paramsOrFirst,
+                addonId: rest[0]
+            };
+        }
+        const organizationId = params.organizationId;
+        const addonId = params.addonId;
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof addonId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "addonId"');
+        }
+        const apiPath = '/organizations/{organizationId}/addons/{addonId}/confirmations'.replace('{organizationId}', organizationId).replace('{addonId}', addonId);
+        const payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('post', uri, apiHeaders, payload);
+    }
+    getAddonPrice(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                organizationId: paramsOrFirst,
+                addon: rest[0]
+            };
+        }
+        const organizationId = params.organizationId;
+        const addon = params.addon;
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof addon === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "addon"');
+        }
+        const apiPath = '/organizations/{organizationId}/addons/{addon}/price'.replace('{organizationId}', organizationId).replace('{addon}', addon);
+        const payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {};
+        return this.client.call('get', uri, apiHeaders, payload);
+    }
     listAggregations(paramsOrFirst, ...rest) {
         let params;
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
@@ -17778,6 +17934,784 @@ class Project {
     constructor(client) {
         this.client = client;
     }
+    updateCanonicalEmails(paramsOrFirst) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                enabled: paramsOrFirst
+            };
+        }
+        const enabled = params.enabled;
+        if (typeof enabled === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "enabled"');
+        }
+        const apiPath = '/project/auth/canonical-emails';
+        const payload = {};
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('patch', uri, apiHeaders, payload);
+    }
+    updateDisposableEmails(paramsOrFirst) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                enabled: paramsOrFirst
+            };
+        }
+        const enabled = params.enabled;
+        if (typeof enabled === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "enabled"');
+        }
+        const apiPath = '/project/auth/disposable-emails';
+        const payload = {};
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('patch', uri, apiHeaders, payload);
+    }
+    updateFreeEmails(paramsOrFirst) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                enabled: paramsOrFirst
+            };
+        }
+        const enabled = params.enabled;
+        if (typeof enabled === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "enabled"');
+        }
+        const apiPath = '/project/auth/free-emails';
+        const payload = {};
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('patch', uri, apiHeaders, payload);
+    }
+    listKeys(paramsOrFirst, ...rest) {
+        let params;
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                queries: paramsOrFirst,
+                total: rest[0]
+            };
+        }
+        const queries = params.queries;
+        const total = params.total;
+        const apiPath = '/project/keys';
+        const payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            payload['total'] = total;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {};
+        return this.client.call('get', uri, apiHeaders, payload);
+    }
+    createKey(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                keyId: paramsOrFirst,
+                name: rest[0],
+                scopes: rest[1],
+                expire: rest[2]
+            };
+        }
+        const keyId = params.keyId;
+        const name = params.name;
+        const scopes = params.scopes;
+        const expire = params.expire;
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof scopes === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "scopes"');
+        }
+        const apiPath = '/project/keys';
+        const payload = {};
+        if (typeof keyId !== 'undefined') {
+            payload['keyId'] = keyId;
+        }
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof scopes !== 'undefined') {
+            payload['scopes'] = scopes;
+        }
+        if (typeof expire !== 'undefined') {
+            payload['expire'] = expire;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('post', uri, apiHeaders, payload);
+    }
+    getKey(paramsOrFirst) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                keyId: paramsOrFirst
+            };
+        }
+        const keyId = params.keyId;
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+        const apiPath = '/project/keys/{keyId}'.replace('{keyId}', keyId);
+        const payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {};
+        return this.client.call('get', uri, apiHeaders, payload);
+    }
+    updateKey(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                keyId: paramsOrFirst,
+                name: rest[0],
+                scopes: rest[1],
+                expire: rest[2]
+            };
+        }
+        const keyId = params.keyId;
+        const name = params.name;
+        const scopes = params.scopes;
+        const expire = params.expire;
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof scopes === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "scopes"');
+        }
+        const apiPath = '/project/keys/{keyId}'.replace('{keyId}', keyId);
+        const payload = {};
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof scopes !== 'undefined') {
+            payload['scopes'] = scopes;
+        }
+        if (typeof expire !== 'undefined') {
+            payload['expire'] = expire;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('put', uri, apiHeaders, payload);
+    }
+    deleteKey(paramsOrFirst) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                keyId: paramsOrFirst
+            };
+        }
+        const keyId = params.keyId;
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+        const apiPath = '/project/keys/{keyId}'.replace('{keyId}', keyId);
+        const payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('delete', uri, apiHeaders, payload);
+    }
+    updateLabels(paramsOrFirst) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                labels: paramsOrFirst
+            };
+        }
+        const labels = params.labels;
+        if (typeof labels === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "labels"');
+        }
+        const apiPath = '/project/labels';
+        const payload = {};
+        if (typeof labels !== 'undefined') {
+            payload['labels'] = labels;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('put', uri, apiHeaders, payload);
+    }
+    listPlatforms(paramsOrFirst, ...rest) {
+        let params;
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                queries: paramsOrFirst,
+                total: rest[0]
+            };
+        }
+        const queries = params.queries;
+        const total = params.total;
+        const apiPath = '/project/platforms';
+        const payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            payload['total'] = total;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {};
+        return this.client.call('get', uri, apiHeaders, payload);
+    }
+    createAndroidPlatform(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                platformId: paramsOrFirst,
+                name: rest[0],
+                applicationId: rest[1]
+            };
+        }
+        const platformId = params.platformId;
+        const name = params.name;
+        const applicationId = params.applicationId;
+        if (typeof platformId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "platformId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof applicationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "applicationId"');
+        }
+        const apiPath = '/project/platforms/android';
+        const payload = {};
+        if (typeof platformId !== 'undefined') {
+            payload['platformId'] = platformId;
+        }
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof applicationId !== 'undefined') {
+            payload['applicationId'] = applicationId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('post', uri, apiHeaders, payload);
+    }
+    updateAndroidPlatform(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                platformId: paramsOrFirst,
+                name: rest[0],
+                applicationId: rest[1]
+            };
+        }
+        const platformId = params.platformId;
+        const name = params.name;
+        const applicationId = params.applicationId;
+        if (typeof platformId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "platformId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof applicationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "applicationId"');
+        }
+        const apiPath = '/project/platforms/android/{platformId}'.replace('{platformId}', platformId);
+        const payload = {};
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof applicationId !== 'undefined') {
+            payload['applicationId'] = applicationId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('put', uri, apiHeaders, payload);
+    }
+    createApplePlatform(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                platformId: paramsOrFirst,
+                name: rest[0],
+                bundleIdentifier: rest[1]
+            };
+        }
+        const platformId = params.platformId;
+        const name = params.name;
+        const bundleIdentifier = params.bundleIdentifier;
+        if (typeof platformId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "platformId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof bundleIdentifier === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "bundleIdentifier"');
+        }
+        const apiPath = '/project/platforms/apple';
+        const payload = {};
+        if (typeof platformId !== 'undefined') {
+            payload['platformId'] = platformId;
+        }
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof bundleIdentifier !== 'undefined') {
+            payload['bundleIdentifier'] = bundleIdentifier;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('post', uri, apiHeaders, payload);
+    }
+    updateApplePlatform(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                platformId: paramsOrFirst,
+                name: rest[0],
+                bundleIdentifier: rest[1]
+            };
+        }
+        const platformId = params.platformId;
+        const name = params.name;
+        const bundleIdentifier = params.bundleIdentifier;
+        if (typeof platformId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "platformId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof bundleIdentifier === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "bundleIdentifier"');
+        }
+        const apiPath = '/project/platforms/apple/{platformId}'.replace('{platformId}', platformId);
+        const payload = {};
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof bundleIdentifier !== 'undefined') {
+            payload['bundleIdentifier'] = bundleIdentifier;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('put', uri, apiHeaders, payload);
+    }
+    createLinuxPlatform(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                platformId: paramsOrFirst,
+                name: rest[0],
+                packageName: rest[1]
+            };
+        }
+        const platformId = params.platformId;
+        const name = params.name;
+        const packageName = params.packageName;
+        if (typeof platformId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "platformId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof packageName === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "packageName"');
+        }
+        const apiPath = '/project/platforms/linux';
+        const payload = {};
+        if (typeof platformId !== 'undefined') {
+            payload['platformId'] = platformId;
+        }
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof packageName !== 'undefined') {
+            payload['packageName'] = packageName;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('post', uri, apiHeaders, payload);
+    }
+    updateLinuxPlatform(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                platformId: paramsOrFirst,
+                name: rest[0],
+                packageName: rest[1]
+            };
+        }
+        const platformId = params.platformId;
+        const name = params.name;
+        const packageName = params.packageName;
+        if (typeof platformId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "platformId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof packageName === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "packageName"');
+        }
+        const apiPath = '/project/platforms/linux/{platformId}'.replace('{platformId}', platformId);
+        const payload = {};
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof packageName !== 'undefined') {
+            payload['packageName'] = packageName;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('put', uri, apiHeaders, payload);
+    }
+    createWebPlatform(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                platformId: paramsOrFirst,
+                name: rest[0],
+                hostname: rest[1]
+            };
+        }
+        const platformId = params.platformId;
+        const name = params.name;
+        const hostname = params.hostname;
+        if (typeof platformId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "platformId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof hostname === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "hostname"');
+        }
+        const apiPath = '/project/platforms/web';
+        const payload = {};
+        if (typeof platformId !== 'undefined') {
+            payload['platformId'] = platformId;
+        }
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof hostname !== 'undefined') {
+            payload['hostname'] = hostname;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('post', uri, apiHeaders, payload);
+    }
+    updateWebPlatform(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                platformId: paramsOrFirst,
+                name: rest[0],
+                hostname: rest[1]
+            };
+        }
+        const platformId = params.platformId;
+        const name = params.name;
+        const hostname = params.hostname;
+        if (typeof platformId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "platformId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof hostname === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "hostname"');
+        }
+        const apiPath = '/project/platforms/web/{platformId}'.replace('{platformId}', platformId);
+        const payload = {};
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof hostname !== 'undefined') {
+            payload['hostname'] = hostname;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('put', uri, apiHeaders, payload);
+    }
+    createWindowsPlatform(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                platformId: paramsOrFirst,
+                name: rest[0],
+                packageIdentifierName: rest[1]
+            };
+        }
+        const platformId = params.platformId;
+        const name = params.name;
+        const packageIdentifierName = params.packageIdentifierName;
+        if (typeof platformId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "platformId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof packageIdentifierName === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "packageIdentifierName"');
+        }
+        const apiPath = '/project/platforms/windows';
+        const payload = {};
+        if (typeof platformId !== 'undefined') {
+            payload['platformId'] = platformId;
+        }
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof packageIdentifierName !== 'undefined') {
+            payload['packageIdentifierName'] = packageIdentifierName;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('post', uri, apiHeaders, payload);
+    }
+    updateWindowsPlatform(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                platformId: paramsOrFirst,
+                name: rest[0],
+                packageIdentifierName: rest[1]
+            };
+        }
+        const platformId = params.platformId;
+        const name = params.name;
+        const packageIdentifierName = params.packageIdentifierName;
+        if (typeof platformId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "platformId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof packageIdentifierName === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "packageIdentifierName"');
+        }
+        const apiPath = '/project/platforms/windows/{platformId}'.replace('{platformId}', platformId);
+        const payload = {};
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof packageIdentifierName !== 'undefined') {
+            payload['packageIdentifierName'] = packageIdentifierName;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('put', uri, apiHeaders, payload);
+    }
+    getPlatform(paramsOrFirst) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                platformId: paramsOrFirst
+            };
+        }
+        const platformId = params.platformId;
+        if (typeof platformId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "platformId"');
+        }
+        const apiPath = '/project/platforms/{platformId}'.replace('{platformId}', platformId);
+        const payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {};
+        return this.client.call('get', uri, apiHeaders, payload);
+    }
+    deletePlatform(paramsOrFirst) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                platformId: paramsOrFirst
+            };
+        }
+        const platformId = params.platformId;
+        if (typeof platformId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "platformId"');
+        }
+        const apiPath = '/project/platforms/{platformId}'.replace('{platformId}', platformId);
+        const payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('delete', uri, apiHeaders, payload);
+    }
+    updateProtocolStatus(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('protocolId' in paramsOrFirst || 'enabled' in paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                protocolId: paramsOrFirst,
+                enabled: rest[0]
+            };
+        }
+        const protocolId = params.protocolId;
+        const enabled = params.enabled;
+        if (typeof protocolId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "protocolId"');
+        }
+        if (typeof enabled === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "enabled"');
+        }
+        const apiPath = '/project/protocols/{protocolId}/status'.replace('{protocolId}', protocolId);
+        const payload = {};
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('patch', uri, apiHeaders, payload);
+    }
+    updateServiceStatus(paramsOrFirst, ...rest) {
+        let params;
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('serviceId' in paramsOrFirst || 'enabled' in paramsOrFirst))) {
+            params = (paramsOrFirst || {});
+        }
+        else {
+            params = {
+                serviceId: paramsOrFirst,
+                enabled: rest[0]
+            };
+        }
+        const serviceId = params.serviceId;
+        const enabled = params.enabled;
+        if (typeof serviceId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "serviceId"');
+        }
+        if (typeof enabled === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "enabled"');
+        }
+        const apiPath = '/project/services/{serviceId}/status'.replace('{serviceId}', serviceId);
+        const payload = {};
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+        const apiHeaders = {
+            'content-type': 'application/json',
+        };
+        return this.client.call('patch', uri, apiHeaders, payload);
+    }
     getUsage(paramsOrFirst, ...rest) {
         let params;
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
@@ -18207,142 +19141,6 @@ class Projects {
             'content-type': 'application/json',
         };
         return this.client.call('delete', uri, apiHeaders, payload);
-    }
-    updateApiStatus(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                api: rest[0],
-                status: rest[1]
-            };
-        }
-        const projectId = params.projectId;
-        const api = params.api;
-        const status = params.status;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof api === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "api"');
-        }
-        if (typeof status === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "status"');
-        }
-        const apiPath = '/projects/{projectId}/api'.replace('{projectId}', projectId);
-        const payload = {};
-        if (typeof api !== 'undefined') {
-            payload['api'] = api;
-        }
-        if (typeof status !== 'undefined') {
-            payload['status'] = status;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {
-            'content-type': 'application/json',
-        };
-        return this.client.call('patch', uri, apiHeaders, payload);
-    }
-    updateAPIStatus(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                api: rest[0],
-                status: rest[1]
-            };
-        }
-        const projectId = params.projectId;
-        const api = params.api;
-        const status = params.status;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof api === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "api"');
-        }
-        if (typeof status === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "status"');
-        }
-        const apiPath = '/projects/{projectId}/api'.replace('{projectId}', projectId);
-        const payload = {};
-        if (typeof api !== 'undefined') {
-            payload['api'] = api;
-        }
-        if (typeof status !== 'undefined') {
-            payload['status'] = status;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {
-            'content-type': 'application/json',
-        };
-        return this.client.call('patch', uri, apiHeaders, payload);
-    }
-    updateApiStatusAll(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                status: rest[0]
-            };
-        }
-        const projectId = params.projectId;
-        const status = params.status;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof status === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "status"');
-        }
-        const apiPath = '/projects/{projectId}/api/all'.replace('{projectId}', projectId);
-        const payload = {};
-        if (typeof status !== 'undefined') {
-            payload['status'] = status;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {
-            'content-type': 'application/json',
-        };
-        return this.client.call('patch', uri, apiHeaders, payload);
-    }
-    updateAPIStatusAll(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                status: rest[0]
-            };
-        }
-        const projectId = params.projectId;
-        const status = params.status;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof status === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "status"');
-        }
-        const apiPath = '/projects/{projectId}/api/all'.replace('{projectId}', projectId);
-        const payload = {};
-        if (typeof status !== 'undefined') {
-            payload['status'] = status;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {
-            'content-type': 'application/json',
-        };
-        return this.client.call('patch', uri, apiHeaders, payload);
     }
     updateAuthDuration(paramsOrFirst, ...rest) {
         let params;
@@ -18910,214 +19708,6 @@ class Projects {
         };
         return this.client.call('post', uri, apiHeaders, payload);
     }
-    listKeys(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                queries: rest[0],
-                total: rest[1]
-            };
-        }
-        const projectId = params.projectId;
-        const queries = params.queries;
-        const total = params.total;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        const apiPath = '/projects/{projectId}/keys'.replace('{projectId}', projectId);
-        const payload = {};
-        if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
-        }
-        if (typeof total !== 'undefined') {
-            payload['total'] = total;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {};
-        return this.client.call('get', uri, apiHeaders, payload);
-    }
-    createKey(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                name: rest[0],
-                scopes: rest[1],
-                keyId: rest[2],
-                expire: rest[3]
-            };
-        }
-        const projectId = params.projectId;
-        const name = params.name;
-        const scopes = params.scopes;
-        const keyId = params.keyId;
-        const expire = params.expire;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof name === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "name"');
-        }
-        if (typeof scopes === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "scopes"');
-        }
-        const apiPath = '/projects/{projectId}/keys'.replace('{projectId}', projectId);
-        const payload = {};
-        if (typeof keyId !== 'undefined') {
-            payload['keyId'] = keyId;
-        }
-        if (typeof name !== 'undefined') {
-            payload['name'] = name;
-        }
-        if (typeof scopes !== 'undefined') {
-            payload['scopes'] = scopes;
-        }
-        if (typeof expire !== 'undefined') {
-            payload['expire'] = expire;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {
-            'content-type': 'application/json',
-        };
-        return this.client.call('post', uri, apiHeaders, payload);
-    }
-    getKey(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                keyId: rest[0]
-            };
-        }
-        const projectId = params.projectId;
-        const keyId = params.keyId;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof keyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "keyId"');
-        }
-        const apiPath = '/projects/{projectId}/keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
-        const payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {};
-        return this.client.call('get', uri, apiHeaders, payload);
-    }
-    updateKey(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                keyId: rest[0],
-                name: rest[1],
-                scopes: rest[2],
-                expire: rest[3]
-            };
-        }
-        const projectId = params.projectId;
-        const keyId = params.keyId;
-        const name = params.name;
-        const scopes = params.scopes;
-        const expire = params.expire;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof keyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "keyId"');
-        }
-        if (typeof name === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "name"');
-        }
-        if (typeof scopes === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "scopes"');
-        }
-        const apiPath = '/projects/{projectId}/keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
-        const payload = {};
-        if (typeof name !== 'undefined') {
-            payload['name'] = name;
-        }
-        if (typeof scopes !== 'undefined') {
-            payload['scopes'] = scopes;
-        }
-        if (typeof expire !== 'undefined') {
-            payload['expire'] = expire;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {
-            'content-type': 'application/json',
-        };
-        return this.client.call('put', uri, apiHeaders, payload);
-    }
-    deleteKey(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                keyId: rest[0]
-            };
-        }
-        const projectId = params.projectId;
-        const keyId = params.keyId;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof keyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "keyId"');
-        }
-        const apiPath = '/projects/{projectId}/keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
-        const payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {
-            'content-type': 'application/json',
-        };
-        return this.client.call('delete', uri, apiHeaders, payload);
-    }
-    updateLabels(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                labels: rest[0]
-            };
-        }
-        const projectId = params.projectId;
-        const labels = params.labels;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof labels === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "labels"');
-        }
-        const apiPath = '/projects/{projectId}/labels'.replace('{projectId}', projectId);
-        const payload = {};
-        if (typeof labels !== 'undefined') {
-            payload['labels'] = labels;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {
-            'content-type': 'application/json',
-        };
-        return this.client.call('put', uri, apiHeaders, payload);
-    }
     updateOAuth2(paramsOrFirst, ...rest) {
         let params;
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
@@ -19162,186 +19752,6 @@ class Projects {
             'content-type': 'application/json',
         };
         return this.client.call('patch', uri, apiHeaders, payload);
-    }
-    listPlatforms(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                total: rest[0]
-            };
-        }
-        const projectId = params.projectId;
-        const total = params.total;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        const apiPath = '/projects/{projectId}/platforms'.replace('{projectId}', projectId);
-        const payload = {};
-        if (typeof total !== 'undefined') {
-            payload['total'] = total;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {};
-        return this.client.call('get', uri, apiHeaders, payload);
-    }
-    createPlatform(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                type: rest[0],
-                name: rest[1],
-                key: rest[2],
-                store: rest[3],
-                hostname: rest[4]
-            };
-        }
-        const projectId = params.projectId;
-        const type = params.type;
-        const name = params.name;
-        const key = params.key;
-        const store = params.store;
-        const hostname = params.hostname;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof type === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "type"');
-        }
-        if (typeof name === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "name"');
-        }
-        const apiPath = '/projects/{projectId}/platforms'.replace('{projectId}', projectId);
-        const payload = {};
-        if (typeof type !== 'undefined') {
-            payload['type'] = type;
-        }
-        if (typeof name !== 'undefined') {
-            payload['name'] = name;
-        }
-        if (typeof key !== 'undefined') {
-            payload['key'] = key;
-        }
-        if (typeof store !== 'undefined') {
-            payload['store'] = store;
-        }
-        if (typeof hostname !== 'undefined') {
-            payload['hostname'] = hostname;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {
-            'content-type': 'application/json',
-        };
-        return this.client.call('post', uri, apiHeaders, payload);
-    }
-    getPlatform(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                platformId: rest[0]
-            };
-        }
-        const projectId = params.projectId;
-        const platformId = params.platformId;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof platformId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "platformId"');
-        }
-        const apiPath = '/projects/{projectId}/platforms/{platformId}'.replace('{projectId}', projectId).replace('{platformId}', platformId);
-        const payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {};
-        return this.client.call('get', uri, apiHeaders, payload);
-    }
-    updatePlatform(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                platformId: rest[0],
-                name: rest[1],
-                key: rest[2],
-                store: rest[3],
-                hostname: rest[4]
-            };
-        }
-        const projectId = params.projectId;
-        const platformId = params.platformId;
-        const name = params.name;
-        const key = params.key;
-        const store = params.store;
-        const hostname = params.hostname;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof platformId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "platformId"');
-        }
-        if (typeof name === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "name"');
-        }
-        const apiPath = '/projects/{projectId}/platforms/{platformId}'.replace('{projectId}', projectId).replace('{platformId}', platformId);
-        const payload = {};
-        if (typeof name !== 'undefined') {
-            payload['name'] = name;
-        }
-        if (typeof key !== 'undefined') {
-            payload['key'] = key;
-        }
-        if (typeof store !== 'undefined') {
-            payload['store'] = store;
-        }
-        if (typeof hostname !== 'undefined') {
-            payload['hostname'] = hostname;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {
-            'content-type': 'application/json',
-        };
-        return this.client.call('put', uri, apiHeaders, payload);
-    }
-    deletePlatform(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                platformId: rest[0]
-            };
-        }
-        const projectId = params.projectId;
-        const platformId = params.platformId;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof platformId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "platformId"');
-        }
-        const apiPath = '/projects/{projectId}/platforms/{platformId}'.replace('{projectId}', projectId).replace('{platformId}', platformId);
-        const payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {
-            'content-type': 'application/json',
-        };
-        return this.client.call('delete', uri, apiHeaders, payload);
     }
     listSchedules(paramsOrFirst, ...rest) {
         let params;
@@ -19453,74 +19863,6 @@ class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
         const apiHeaders = {};
         return this.client.call('get', uri, apiHeaders, payload);
-    }
-    updateServiceStatus(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                service: rest[0],
-                status: rest[1]
-            };
-        }
-        const projectId = params.projectId;
-        const service = params.service;
-        const status = params.status;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof service === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "service"');
-        }
-        if (typeof status === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "status"');
-        }
-        const apiPath = '/projects/{projectId}/service'.replace('{projectId}', projectId);
-        const payload = {};
-        if (typeof service !== 'undefined') {
-            payload['service'] = service;
-        }
-        if (typeof status !== 'undefined') {
-            payload['status'] = status;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {
-            'content-type': 'application/json',
-        };
-        return this.client.call('patch', uri, apiHeaders, payload);
-    }
-    updateServiceStatusAll(paramsOrFirst, ...rest) {
-        let params;
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {});
-        }
-        else {
-            params = {
-                projectId: paramsOrFirst,
-                status: rest[0]
-            };
-        }
-        const projectId = params.projectId;
-        const status = params.status;
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof status === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "status"');
-        }
-        const apiPath = '/projects/{projectId}/service/all'.replace('{projectId}', projectId);
-        const payload = {};
-        if (typeof status !== 'undefined') {
-            payload['status'] = status;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-        const apiHeaders = {
-            'content-type': 'application/json',
-        };
-        return this.client.call('patch', uri, apiHeaders, payload);
     }
     updateSmtp(paramsOrFirst, ...rest) {
         let params;
@@ -22591,7 +22933,8 @@ class TablesDB {
                 name: rest[1],
                 permissions: rest[2],
                 rowSecurity: rest[3],
-                enabled: rest[4]
+                enabled: rest[4],
+                purge: rest[5]
             };
         }
         const databaseId = params.databaseId;
@@ -22600,6 +22943,7 @@ class TablesDB {
         const permissions = params.permissions;
         const rowSecurity = params.rowSecurity;
         const enabled = params.enabled;
+        const purge = params.purge;
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
@@ -22619,6 +22963,9 @@ class TablesDB {
         }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
+        }
+        if (typeof purge !== 'undefined') {
+            payload['purge'] = purge;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
         const apiHeaders = {
@@ -29228,9 +29575,9 @@ class Webhooks {
                 name: rest[1],
                 events: rest[2],
                 enabled: rest[3],
-                security: rest[4],
-                httpUser: rest[5],
-                httpPass: rest[6]
+                tls: rest[4],
+                authUsername: rest[5],
+                authPassword: rest[6]
             };
         }
         const webhookId = params.webhookId;
@@ -29238,9 +29585,9 @@ class Webhooks {
         const name = params.name;
         const events = params.events;
         const enabled = params.enabled;
-        const security = params.security;
-        const httpUser = params.httpUser;
-        const httpPass = params.httpPass;
+        const tls = params.tls;
+        const authUsername = params.authUsername;
+        const authPassword = params.authPassword;
         if (typeof webhookId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "webhookId"');
         }
@@ -29270,14 +29617,14 @@ class Webhooks {
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
         }
-        if (typeof security !== 'undefined') {
-            payload['security'] = security;
+        if (typeof tls !== 'undefined') {
+            payload['tls'] = tls;
         }
-        if (typeof httpUser !== 'undefined') {
-            payload['httpUser'] = httpUser;
+        if (typeof authUsername !== 'undefined') {
+            payload['authUsername'] = authUsername;
         }
-        if (typeof httpPass !== 'undefined') {
-            payload['httpPass'] = httpPass;
+        if (typeof authPassword !== 'undefined') {
+            payload['authPassword'] = authPassword;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
         const apiHeaders = {
@@ -29317,9 +29664,9 @@ class Webhooks {
                 url: rest[1],
                 events: rest[2],
                 enabled: rest[3],
-                security: rest[4],
-                httpUser: rest[5],
-                httpPass: rest[6]
+                tls: rest[4],
+                authUsername: rest[5],
+                authPassword: rest[6]
             };
         }
         const webhookId = params.webhookId;
@@ -29327,9 +29674,9 @@ class Webhooks {
         const url = params.url;
         const events = params.events;
         const enabled = params.enabled;
-        const security = params.security;
-        const httpUser = params.httpUser;
-        const httpPass = params.httpPass;
+        const tls = params.tls;
+        const authUsername = params.authUsername;
+        const authPassword = params.authPassword;
         if (typeof webhookId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "webhookId"');
         }
@@ -29356,14 +29703,14 @@ class Webhooks {
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
         }
-        if (typeof security !== 'undefined') {
-            payload['security'] = security;
+        if (typeof tls !== 'undefined') {
+            payload['tls'] = tls;
         }
-        if (typeof httpUser !== 'undefined') {
-            payload['httpUser'] = httpUser;
+        if (typeof authUsername !== 'undefined') {
+            payload['authUsername'] = authUsername;
         }
-        if (typeof httpPass !== 'undefined') {
-            payload['httpPass'] = httpPass;
+        if (typeof authPassword !== 'undefined') {
+            payload['authPassword'] = authPassword;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
         const apiHeaders = {
@@ -29393,7 +29740,7 @@ class Webhooks {
         };
         return this.client.call('delete', uri, apiHeaders, payload);
     }
-    updateSignature(paramsOrFirst) {
+    updateSecret(paramsOrFirst) {
         let params;
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
             params = (paramsOrFirst || {});
@@ -29407,7 +29754,7 @@ class Webhooks {
         if (typeof webhookId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "webhookId"');
         }
-        const apiPath = '/webhooks/{webhookId}/signature'.replace('{webhookId}', webhookId);
+        const apiPath = '/webhooks/{webhookId}/secret'.replace('{webhookId}', webhookId);
         const payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
         const apiHeaders = {
@@ -30441,6 +30788,10 @@ exports.Scopes = void 0;
     Scopes["WebhooksWrite"] = "webhooks.write";
     Scopes["ProjectRead"] = "project.read";
     Scopes["ProjectWrite"] = "project.write";
+    Scopes["KeysRead"] = "keys.read";
+    Scopes["KeysWrite"] = "keys.write";
+    Scopes["PlatformsRead"] = "platforms.read";
+    Scopes["PlatformsWrite"] = "platforms.write";
     Scopes["PoliciesWrite"] = "policies.write";
     Scopes["PoliciesRead"] = "policies.read";
     Scopes["ArchivesRead"] = "archives.read";
@@ -30450,12 +30801,8 @@ exports.Scopes = void 0;
     Scopes["DomainsRead"] = "domains.read";
     Scopes["DomainsWrite"] = "domains.write";
     Scopes["EventsRead"] = "events.read";
-    Scopes["PlatformsRead"] = "platforms.read";
-    Scopes["PlatformsWrite"] = "platforms.write";
     Scopes["ProjectsRead"] = "projects.read";
     Scopes["ProjectsWrite"] = "projects.write";
-    Scopes["KeysRead"] = "keys.read";
-    Scopes["KeysWrite"] = "keys.write";
     Scopes["DevKeysRead"] = "devKeys.read";
     Scopes["DevKeysWrite"] = "devKeys.write";
 })(exports.Scopes || (exports.Scopes = {}));
@@ -30509,6 +30856,7 @@ exports.OAuthProvider = void 0;
     OAuthProvider["TradeshiftBox"] = "tradeshiftBox";
     OAuthProvider["Twitch"] = "twitch";
     OAuthProvider["Wordpress"] = "wordpress";
+    OAuthProvider["X"] = "x";
     OAuthProvider["Yahoo"] = "yahoo";
     OAuthProvider["Yammer"] = "yammer";
     OAuthProvider["Yandex"] = "yandex";
@@ -31638,6 +31986,41 @@ exports.SupabaseMigrationResource = void 0;
     SupabaseMigrationResource["File"] = "file";
 })(exports.SupabaseMigrationResource || (exports.SupabaseMigrationResource = {}));
 
+exports.Addon = void 0;
+(function (Addon) {
+    Addon["Baa"] = "baa";
+})(exports.Addon || (exports.Addon = {}));
+
+exports.ProtocolId = void 0;
+(function (ProtocolId) {
+    ProtocolId["Rest"] = "rest";
+    ProtocolId["Graphql"] = "graphql";
+    ProtocolId["Websocket"] = "websocket";
+})(exports.ProtocolId || (exports.ProtocolId = {}));
+
+exports.ServiceId = void 0;
+(function (ServiceId) {
+    ServiceId["Account"] = "account";
+    ServiceId["Avatars"] = "avatars";
+    ServiceId["Databases"] = "databases";
+    ServiceId["Tablesdb"] = "tablesdb";
+    ServiceId["Documentsdb"] = "documentsdb";
+    ServiceId["Vectorsdb"] = "vectorsdb";
+    ServiceId["Locale"] = "locale";
+    ServiceId["Health"] = "health";
+    ServiceId["Project"] = "project";
+    ServiceId["Storage"] = "storage";
+    ServiceId["Teams"] = "teams";
+    ServiceId["Users"] = "users";
+    ServiceId["Vcs"] = "vcs";
+    ServiceId["Sites"] = "sites";
+    ServiceId["Functions"] = "functions";
+    ServiceId["Proxy"] = "proxy";
+    ServiceId["Graphql"] = "graphql";
+    ServiceId["Migrations"] = "migrations";
+    ServiceId["Messaging"] = "messaging";
+})(exports.ServiceId || (exports.ServiceId = {}));
+
 exports.ProjectUsageRange = void 0;
 (function (ProjectUsageRange) {
     ProjectUsageRange["OneHour"] = "1h";
@@ -31654,13 +32037,6 @@ exports.Region = void 0;
     Region["Tor"] = "tor";
 })(exports.Region || (exports.Region = {}));
 
-exports.Api = void 0;
-(function (Api) {
-    Api["Rest"] = "rest";
-    Api["Graphql"] = "graphql";
-    Api["Realtime"] = "realtime";
-})(exports.Api || (exports.Api = {}));
-
 exports.AuthMethod = void 0;
 (function (AuthMethod) {
     AuthMethod["Emailpassword"] = "email-password";
@@ -31672,25 +32048,6 @@ exports.AuthMethod = void 0;
     AuthMethod["Phone"] = "phone";
 })(exports.AuthMethod || (exports.AuthMethod = {}));
 
-exports.PlatformType = void 0;
-(function (PlatformType) {
-    PlatformType["Web"] = "web";
-    PlatformType["Flutterweb"] = "flutter-web";
-    PlatformType["Flutterios"] = "flutter-ios";
-    PlatformType["Flutterandroid"] = "flutter-android";
-    PlatformType["Flutterlinux"] = "flutter-linux";
-    PlatformType["Fluttermacos"] = "flutter-macos";
-    PlatformType["Flutterwindows"] = "flutter-windows";
-    PlatformType["Appleios"] = "apple-ios";
-    PlatformType["Applemacos"] = "apple-macos";
-    PlatformType["Applewatchos"] = "apple-watchos";
-    PlatformType["Appletvos"] = "apple-tvos";
-    PlatformType["Android"] = "android";
-    PlatformType["Unity"] = "unity";
-    PlatformType["Reactnativeios"] = "react-native-ios";
-    PlatformType["Reactnativeandroid"] = "react-native-android";
-})(exports.PlatformType || (exports.PlatformType = {}));
-
 exports.ResourceType = void 0;
 (function (ResourceType) {
     ResourceType["Function"] = "function";
@@ -31698,23 +32055,6 @@ exports.ResourceType = void 0;
     ResourceType["Message"] = "message";
     ResourceType["Backup"] = "backup";
 })(exports.ResourceType || (exports.ResourceType = {}));
-
-exports.ApiService = void 0;
-(function (ApiService) {
-    ApiService["Account"] = "account";
-    ApiService["Avatars"] = "avatars";
-    ApiService["Databases"] = "databases";
-    ApiService["Tablesdb"] = "tablesdb";
-    ApiService["Locale"] = "locale";
-    ApiService["Health"] = "health";
-    ApiService["Storage"] = "storage";
-    ApiService["Teams"] = "teams";
-    ApiService["Users"] = "users";
-    ApiService["Sites"] = "sites";
-    ApiService["Functions"] = "functions";
-    ApiService["Graphql"] = "graphql";
-    ApiService["Messaging"] = "messaging";
-})(exports.ApiService || (exports.ApiService = {}));
 
 exports.SMTPSecure = void 0;
 (function (SMTPSecure) {
@@ -32300,6 +32640,15 @@ exports.ExecutionStatus = void 0;
     ExecutionStatus["Failed"] = "failed";
     ExecutionStatus["Scheduled"] = "scheduled";
 })(exports.ExecutionStatus || (exports.ExecutionStatus = {}));
+
+exports.PlatformType = void 0;
+(function (PlatformType) {
+    PlatformType["Windows"] = "windows";
+    PlatformType["Apple"] = "apple";
+    PlatformType["Android"] = "android";
+    PlatformType["Linux"] = "linux";
+    PlatformType["Web"] = "web";
+})(exports.PlatformType || (exports.PlatformType = {}));
 
 exports.HealthAntivirusStatus = void 0;
 (function (HealthAntivirusStatus) {

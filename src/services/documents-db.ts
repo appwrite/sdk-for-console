@@ -900,10 +900,11 @@ export class DocumentsDB {
      * @param {string[]} params.permissions - An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.documentSecurity - Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.enabled - Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
+     * @param {boolean} params.purge - When true, purge all cached list responses for this collection as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Collection>}
      */
-    updateCollection(params: { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean }): Promise<Models.Collection>;
+    updateCollection(params: { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean, purge?: boolean }): Promise<Models.Collection>;
     /**
      * Update a collection by its unique ID.
      *
@@ -913,19 +914,20 @@ export class DocumentsDB {
      * @param {string[]} permissions - An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} documentSecurity - Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} enabled - Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
+     * @param {boolean} purge - When true, purge all cached list responses for this collection as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Collection>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateCollection(databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean): Promise<Models.Collection>;
+    updateCollection(databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean, purge?: boolean): Promise<Models.Collection>;
     updateCollection(
-        paramsOrFirst: { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string[])?, (boolean)?, (boolean)?]    
+        paramsOrFirst: { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean, purge?: boolean } | string,
+        ...rest: [(string)?, (string)?, (string[])?, (boolean)?, (boolean)?, (boolean)?]    
     ): Promise<Models.Collection> {
-        let params: { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean };
+        let params: { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean, purge?: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean };
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, name: string, permissions?: string[], documentSecurity?: boolean, enabled?: boolean, purge?: boolean };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -933,7 +935,8 @@ export class DocumentsDB {
                 name: rest[1] as string,
                 permissions: rest[2] as string[],
                 documentSecurity: rest[3] as boolean,
-                enabled: rest[4] as boolean            
+                enabled: rest[4] as boolean,
+                purge: rest[5] as boolean            
             };
         }
         
@@ -943,6 +946,7 @@ export class DocumentsDB {
         const permissions = params.permissions;
         const documentSecurity = params.documentSecurity;
         const enabled = params.enabled;
+        const purge = params.purge;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
@@ -967,6 +971,9 @@ export class DocumentsDB {
         }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
+        }
+        if (typeof purge !== 'undefined') {
+            payload['purge'] = purge;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

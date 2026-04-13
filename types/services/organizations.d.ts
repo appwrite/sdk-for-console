@@ -1,6 +1,7 @@
 import { Client } from '../client';
 import type { Models } from '../models';
 import { Platform } from '../enums/platform';
+import { Addon } from '../enums/addon';
 import { Scopes } from '../enums/scopes';
 export declare class Organizations {
     client: Client;
@@ -125,6 +126,144 @@ export declare class Organizations {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     delete(organizationId: string): Promise<{}>;
+    /**
+     * List all billing addons for an organization.
+     *
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AddonList>}
+     */
+    listAddons(params: {
+        organizationId: string;
+    }): Promise<Models.AddonList>;
+    /**
+     * List all billing addons for an organization.
+     *
+     *
+     * @param {string} organizationId - Organization ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AddonList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listAddons(organizationId: string): Promise<Models.AddonList>;
+    /**
+     * Create the BAA billing addon for an organization.
+     *
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     */
+    createBaaAddon(params: {
+        organizationId: string;
+    }): Promise<Models.Addon>;
+    /**
+     * Create the BAA billing addon for an organization.
+     *
+     *
+     * @param {string} organizationId - Organization ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createBaaAddon(organizationId: string): Promise<Models.Addon>;
+    /**
+     * Get the details of a billing addon for an organization.
+     *
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @param {string} params.addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     */
+    getAddon(params: {
+        organizationId: string;
+        addonId: string;
+    }): Promise<Models.Addon>;
+    /**
+     * Get the details of a billing addon for an organization.
+     *
+     *
+     * @param {string} organizationId - Organization ID
+     * @param {string} addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getAddon(organizationId: string, addonId: string): Promise<Models.Addon>;
+    /**
+     * Delete a billing addon for an organization.
+     *
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @param {string} params.addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteAddon(params: {
+        organizationId: string;
+        addonId: string;
+    }): Promise<{}>;
+    /**
+     * Delete a billing addon for an organization.
+     *
+     *
+     * @param {string} organizationId - Organization ID
+     * @param {string} addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteAddon(organizationId: string, addonId: string): Promise<{}>;
+    /**
+     * Confirm payment for a billing addon for an organization.
+     *
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @param {string} params.addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     */
+    confirmAddonPayment(params: {
+        organizationId: string;
+        addonId: string;
+    }): Promise<Models.Addon>;
+    /**
+     * Confirm payment for a billing addon for an organization.
+     *
+     *
+     * @param {string} organizationId - Organization ID
+     * @param {string} addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    confirmAddonPayment(organizationId: string, addonId: string): Promise<Models.Addon>;
+    /**
+     * Get the price details for a billing addon for an organization.
+     *
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @param {Addon} params.addon - Addon key identifier (e.g. baa).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AddonPrice>}
+     */
+    getAddonPrice(params: {
+        organizationId: string;
+        addon: Addon;
+    }): Promise<Models.AddonPrice>;
+    /**
+     * Get the price details for a billing addon for an organization.
+     *
+     *
+     * @param {string} organizationId - Organization ID
+     * @param {Addon} addon - Addon key identifier (e.g. baa).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AddonPrice>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getAddonPrice(organizationId: string, addon: Addon): Promise<Models.AddonPrice>;
     /**
      * Get a list of all aggregations for an organization.
      *
@@ -947,7 +1086,7 @@ export declare class Organizations {
      */
     setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: {
         organizationId: string;
-        taxId: string;
+        taxId?: string;
     }): Promise<Models.Organization<Preferences>>;
     /**
      * Set an organization's billing tax ID.
@@ -958,7 +1097,7 @@ export declare class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, taxId: string): Promise<Models.Organization<Preferences>>;
+    setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, taxId?: string): Promise<Models.Organization<Preferences>>;
     /**
      * Get the usage data for an organization.
      *

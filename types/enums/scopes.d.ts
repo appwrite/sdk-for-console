@@ -61,6 +61,10 @@ export declare enum Scopes {
     WebhooksWrite = "webhooks.write",
     ProjectRead = "project.read",
     ProjectWrite = "project.write",
+    KeysRead = "keys.read",
+    KeysWrite = "keys.write",
+    PlatformsRead = "platforms.read",
+    PlatformsWrite = "platforms.write",
     PoliciesWrite = "policies.write",
     PoliciesRead = "policies.read",
     ArchivesRead = "archives.read",
@@ -70,12 +74,8 @@ export declare enum Scopes {
     DomainsRead = "domains.read",
     DomainsWrite = "domains.write",
     EventsRead = "events.read",
-    PlatformsRead = "platforms.read",
-    PlatformsWrite = "platforms.write",
     ProjectsRead = "projects.read",
     ProjectsWrite = "projects.write",
-    KeysRead = "keys.read",
-    KeysWrite = "keys.write",
     DevKeysRead = "devKeys.read",
     DevKeysWrite = "devKeys.write"
 }

@@ -204,6 +204,8 @@ export declare class Migrations {
      */
     getFirebaseReport(resources: FirebaseMigrationResource[], serviceAccount: string): Promise<Models.MigrationReport>;
     /**
+     * Export documents to a JSON file from your Appwrite database. This endpoint allows you to export documents to a JSON file stored in a secure internal bucket. You'll receive an email with a download link when the export is complete.
+     *
      *
      * @param {string} params.resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database to export.
      * @param {string} params.filename - The name of the file to be created for the export, excluding the .json extension.
@@ -221,6 +223,8 @@ export declare class Migrations {
         notify?: boolean;
     }): Promise<Models.Migration>;
     /**
+     * Export documents to a JSON file from your Appwrite database. This endpoint allows you to export documents to a JSON file stored in a secure internal bucket. You'll receive an email with a download link when the export is complete.
+     *
      *
      * @param {string} resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database to export.
      * @param {string} filename - The name of the file to be created for the export, excluding the .json extension.
@@ -233,6 +237,8 @@ export declare class Migrations {
      */
     createJSONExport(resourceId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean): Promise<Models.Migration>;
     /**
+     * Import documents from a JSON file into your Appwrite database. This endpoint allows you to import documents from a JSON file uploaded to Appwrite Storage bucket.
+     *
      *
      * @param {string} params.bucketId - Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
      * @param {string} params.fileId - File ID.
@@ -248,6 +254,8 @@ export declare class Migrations {
         internalFile?: boolean;
     }): Promise<Models.Migration>;
     /**
+     * Import documents from a JSON file into your Appwrite database. This endpoint allows you to import documents from a JSON file uploaded to Appwrite Storage bucket.
+     *
      *
      * @param {string} bucketId - Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
      * @param {string} fileId - File ID.
