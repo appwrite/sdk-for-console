@@ -1,5 +1,11 @@
 # Change Log
 
+## 9.1.0
+
+* Added optional `secret` parameter to `webhooks.create()` and `webhooks.updateSecret()` methods
+* Updated `Webhook.secret` field description to clarify it is only returned on creation and secret rotation
+* Updated `taxId` parameter to optional in `setBillingTaxId` method
+
 ## 9.0.0
 
 * Breaking: Moved `keys`, `labels`, and `platforms` methods from `Projects` to `Project` service

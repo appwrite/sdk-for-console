@@ -4884,7 +4884,7 @@ export namespace Models {
          */
         authPassword: string;
         /**
-         * Signature key which can be used to validate incoming webhook payloads.
+         * Signature key which can be used to validate incoming webhook payloads. Only returned on creation and secret rotation.
          */
         secret: string;
         /**

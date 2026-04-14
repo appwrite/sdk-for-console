@@ -8,7 +8,8 @@ const client = new Client()
 const webhooks = new Webhooks(client);
 
 const result = await webhooks.updateSecret({
-    webhookId: '<WEBHOOK_ID>'
+    webhookId: '<WEBHOOK_ID>',
+    secret: '<SECRET>' // optional
 });
 
 console.log(result);
