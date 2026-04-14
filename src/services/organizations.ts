@@ -2913,7 +2913,7 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, taxId: string }): Promise<Models.Organization<Preferences>>;
+    setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, taxId?: string }): Promise<Models.Organization<Preferences>>;
     /**
      * Set an organization's billing tax ID.
      *
@@ -2923,15 +2923,15 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, taxId: string): Promise<Models.Organization<Preferences>>;
+    setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, taxId?: string): Promise<Models.Organization<Preferences>>;
     setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, taxId: string } | string,
+        paramsOrFirst: { organizationId: string, taxId?: string } | string,
         ...rest: [(string)?]    
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, taxId: string };
+        let params: { organizationId: string, taxId?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, taxId: string };
+            params = (paramsOrFirst || {}) as { organizationId: string, taxId?: string };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
