@@ -737,6 +737,34 @@ export namespace Models {
     }
 
     /**
+     * VectorsDB Collections List
+     */
+    export type VectorsdbCollectionList = {
+        /**
+         * Total number of collections that matched your query.
+         */
+        total: number;
+        /**
+         * List of collections.
+         */
+        collections: VectorsdbCollection[];
+    }
+
+    /**
+     * Embedding list
+     */
+    export type EmbeddingList = {
+        /**
+         * Total number of embeddings that matched your query.
+         */
+        total: number;
+        /**
+         * List of embeddings.
+         */
+        embeddings: Embedding[];
+    }
+
+    /**
      * Database
      */
     export type Database = {
@@ -772,6 +800,28 @@ export namespace Models {
          * Database backup archives.
          */
         archives: Collection[];
+    }
+
+    /**
+     * Embedding
+     */
+    export type Embedding = {
+        /**
+         * Embedding model used to generate embeddings.
+         */
+        model: string;
+        /**
+         * Number of dimensions for each embedding vector.
+         */
+        dimension: number;
+        /**
+         * Embedding vector values. If an error occurs, this will be an empty array.
+         */
+        embedding: number[];
+        /**
+         * Error message if embedding generation fails. Empty string if no error.
+         */
+        error: string;
     }
 
     /**
@@ -1642,6 +1692,302 @@ export namespace Models {
          * Defines whether this attribute is encrypted or not.
          */
         encrypt?: boolean;
+    }
+
+    /**
+     * UsageDocumentsDB
+     */
+    export type UsageDocumentsDB = {
+        /**
+         * Time range of the usage stats.
+         */
+        range: string;
+        /**
+         * Total aggregated number of collections.
+         */
+        collectionsTotal: number;
+        /**
+         * Total aggregated number of documents.
+         */
+        documentsTotal: number;
+        /**
+         * Total aggregated storage used in bytes.
+         */
+        storageTotal: number;
+        /**
+         * Total number of database reads.
+         */
+        databaseReadsTotal: number;
+        /**
+         * Total number of database writes.
+         */
+        databaseWritesTotal: number;
+        /**
+         * Aggregated number of collections per period.
+         */
+        collections: Metric[];
+        /**
+         * Aggregated number of documents per period.
+         */
+        documents: Metric[];
+        /**
+         * Aggregated storage used in bytes per period.
+         */
+        storage: Metric[];
+        /**
+         * An array of aggregated number of database reads.
+         */
+        databaseReads: Metric[];
+        /**
+         * An array of aggregated number of database writes.
+         */
+        databaseWrites: Metric[];
+    }
+
+    /**
+     * VectorsDB Collection
+     */
+    export type VectorsdbCollection = {
+        /**
+         * Collection ID.
+         */
+        $id: string;
+        /**
+         * Collection creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Collection update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Collection permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * Database ID.
+         */
+        databaseId: string;
+        /**
+         * Collection name.
+         */
+        name: string;
+        /**
+         * Collection enabled. Can be 'enabled' or 'disabled'. When disabled, the collection is inaccessible to users, but remains accessible to Server SDKs using API keys.
+         */
+        enabled: boolean;
+        /**
+         * Whether document-level permissions are enabled. [Learn more about permissions](https://appwrite.io/docs/permissions).
+         */
+        documentSecurity: boolean;
+        /**
+         * Collection attributes.
+         */
+        attributes: (Models.AttributeObject | Models.AttributeVector)[];
+        /**
+         * Collection indexes.
+         */
+        indexes: Index[];
+        /**
+         * Maximum document size in bytes. Returns 0 when no limit applies.
+         */
+        bytesMax: number;
+        /**
+         * Currently used document size in bytes based on defined attributes.
+         */
+        bytesUsed: number;
+        /**
+         * Embedding dimension.
+         */
+        dimension: number;
+    }
+
+    /**
+     * AttributeObject
+     */
+    export type AttributeObject = {
+        /**
+         * Attribute Key.
+         */
+        key: string;
+        /**
+         * Attribute type.
+         */
+        type: string;
+        /**
+         * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: AttributeStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an attribute.
+         */
+        error: string;
+        /**
+         * Is attribute required?
+         */
+        required: boolean;
+        /**
+         * Is attribute an array?
+         */
+        array?: boolean;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+    }
+
+    /**
+     * AttributeVector
+     */
+    export type AttributeVector = {
+        /**
+         * Attribute Key.
+         */
+        key: string;
+        /**
+         * Attribute type.
+         */
+        type: string;
+        /**
+         * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: AttributeStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an attribute.
+         */
+        error: string;
+        /**
+         * Is attribute required?
+         */
+        required: boolean;
+        /**
+         * Is attribute an array?
+         */
+        array?: boolean;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Vector dimensions.
+         */
+        size: number;
+    }
+
+    /**
+     * UsageVectorsDBs
+     */
+    export type UsageVectorsDBs = {
+        /**
+         * Time range of the usage stats.
+         */
+        range: string;
+        /**
+         * Total aggregated number of VectorsDB databases.
+         */
+        databasesTotal: number;
+        /**
+         * Total aggregated number of collections.
+         */
+        collectionsTotal: number;
+        /**
+         * Total aggregated number of documents.
+         */
+        documentsTotal: number;
+        /**
+         * Total aggregated storage in bytes.
+         */
+        storageTotal: number;
+        /**
+         * Total number of database reads.
+         */
+        databasesReadsTotal: number;
+        /**
+         * Total number of database writes.
+         */
+        databasesWritesTotal: number;
+        /**
+         * Aggregated number of databases per period.
+         */
+        databases: Metric[];
+        /**
+         * Aggregated number of collections per period.
+         */
+        collections: Metric[];
+        /**
+         * Aggregated number of documents per period.
+         */
+        documents: Metric[];
+        /**
+         * Aggregated storage in bytes per period.
+         */
+        storage: Metric[];
+        /**
+         * An array of aggregated number of database reads.
+         */
+        databasesReads: Metric[];
+        /**
+         * An array of aggregated number of database writes.
+         */
+        databasesWrites: Metric[];
+    }
+
+    /**
+     * UsageVectorsDB
+     */
+    export type UsageVectorsDB = {
+        /**
+         * Time range of the usage stats.
+         */
+        range: string;
+        /**
+         * Total aggregated number of collections.
+         */
+        collectionsTotal: number;
+        /**
+         * Total aggregated number of documents.
+         */
+        documentsTotal: number;
+        /**
+         * Total aggregated storage used in bytes.
+         */
+        storageTotal: number;
+        /**
+         * Total number of database reads.
+         */
+        databaseReadsTotal: number;
+        /**
+         * Total number of database writes.
+         */
+        databaseWritesTotal: number;
+        /**
+         * Aggregated number of collections per period.
+         */
+        collections: Metric[];
+        /**
+         * Aggregated number of documents per period.
+         */
+        documents: Metric[];
+        /**
+         * Aggregated storage used in bytes per period.
+         */
+        storage: Metric[];
+        /**
+         * An array of aggregated number of database reads.
+         */
+        databaseReads: Metric[];
+        /**
+         * An array of aggregated number of database writes.
+         */
+        databaseWrites: Metric[];
     }
 
     /**

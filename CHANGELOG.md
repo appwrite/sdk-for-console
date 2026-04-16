@@ -1,5 +1,13 @@
 # Change Log
 
+## 10.0.0
+
+* Added `DocumentsDB` service with full CRUD for document-based databases, collections, attributes, indexes, and documents
+* Added `VectorsDB` service with full CRUD for vector databases, collections, attributes, indexes, and documents
+* Added `DocumentsDBIndexType` and `VectorsDBIndexType` enums
+* Added `DocumentsDB` and `VectorsDB` to `ServiceId` enum
+* Added `Model` enum
+
 ## 9.1.0
 
 * Added optional `secret` parameter to `webhooks.create()` and `webhooks.updateSecret()` methods
