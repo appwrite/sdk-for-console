@@ -1467,16 +1467,16 @@ export class Project {
     }
 
     /**
-     * Update the status of a specific protocol. Use this endpoint to enable or disable a protocol in your project. 
+     * Update properties of a specific protocol. Use this endpoint to enable or disable a protocol in your project. 
      *
      * @param {ProtocolId} params.protocolId - Protocol name. Can be one of: rest, graphql, websocket
      * @param {boolean} params.enabled - Protocol status.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateProtocolStatus(params: { protocolId: ProtocolId, enabled: boolean }): Promise<Models.Project>;
+    updateProtocol(params: { protocolId: ProtocolId, enabled: boolean }): Promise<Models.Project>;
     /**
-     * Update the status of a specific protocol. Use this endpoint to enable or disable a protocol in your project. 
+     * Update properties of a specific protocol. Use this endpoint to enable or disable a protocol in your project. 
      *
      * @param {ProtocolId} protocolId - Protocol name. Can be one of: rest, graphql, websocket
      * @param {boolean} enabled - Protocol status.
@@ -1484,8 +1484,8 @@ export class Project {
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateProtocolStatus(protocolId: ProtocolId, enabled: boolean): Promise<Models.Project>;
-    updateProtocolStatus(
+    updateProtocol(protocolId: ProtocolId, enabled: boolean): Promise<Models.Project>;
+    updateProtocol(
         paramsOrFirst: { protocolId: ProtocolId, enabled: boolean } | ProtocolId,
         ...rest: [(boolean)?]    
     ): Promise<Models.Project> {
@@ -1510,7 +1510,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "enabled"');
         }
 
-        const apiPath = '/project/protocols/{protocolId}/status'.replace('{protocolId}', protocolId);
+        const apiPath = '/project/protocols/{protocolId}'.replace('{protocolId}', protocolId);
         const payload: Payload = {};
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
@@ -1530,16 +1530,16 @@ export class Project {
     }
 
     /**
-     * Update the status of a specific service. Use this endpoint to enable or disable a service in your project. 
+     * Update properties of a specific service. Use this endpoint to enable or disable a service in your project. 
      *
      * @param {ServiceId} params.serviceId - Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging
      * @param {boolean} params.enabled - Service status.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateServiceStatus(params: { serviceId: ServiceId, enabled: boolean }): Promise<Models.Project>;
+    updateService(params: { serviceId: ServiceId, enabled: boolean }): Promise<Models.Project>;
     /**
-     * Update the status of a specific service. Use this endpoint to enable or disable a service in your project. 
+     * Update properties of a specific service. Use this endpoint to enable or disable a service in your project. 
      *
      * @param {ServiceId} serviceId - Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging
      * @param {boolean} enabled - Service status.
@@ -1547,8 +1547,8 @@ export class Project {
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateServiceStatus(serviceId: ServiceId, enabled: boolean): Promise<Models.Project>;
-    updateServiceStatus(
+    updateService(serviceId: ServiceId, enabled: boolean): Promise<Models.Project>;
+    updateService(
         paramsOrFirst: { serviceId: ServiceId, enabled: boolean } | ServiceId,
         ...rest: [(boolean)?]    
     ): Promise<Models.Project> {
@@ -1573,7 +1573,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "enabled"');
         }
 
-        const apiPath = '/project/services/{serviceId}/status'.replace('{serviceId}', serviceId);
+        const apiPath = '/project/services/{serviceId}'.replace('{serviceId}', serviceId);
         const payload: Payload = {};
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;

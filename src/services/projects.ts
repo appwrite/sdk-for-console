@@ -11,8 +11,6 @@ import { SMTPSecure } from '../enums/smtp-secure';
 import { Status } from '../enums/status';
 import { EmailTemplateType } from '../enums/email-template-type';
 import { EmailTemplateLocale } from '../enums/email-template-locale';
-import { SmsTemplateType } from '../enums/sms-template-type';
-import { SmsTemplateLocale } from '../enums/sms-template-locale';
 
 export class Projects {
     client: Client;
@@ -2576,7 +2574,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
      */
-    getEmailTemplate(params: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale }): Promise<Models.EmailTemplate>;
+    getEmailTemplate(params: { projectId: string, type: EmailTemplateType, locale?: EmailTemplateLocale }): Promise<Models.EmailTemplate>;
     /**
      * Get a custom email template for the specified locale and type. This endpoint returns the template content, subject, and other configuration details. 
      *
@@ -2587,15 +2585,15 @@ export class Projects {
      * @returns {Promise<Models.EmailTemplate>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getEmailTemplate(projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale): Promise<Models.EmailTemplate>;
+    getEmailTemplate(projectId: string, type: EmailTemplateType, locale?: EmailTemplateLocale): Promise<Models.EmailTemplate>;
     getEmailTemplate(
-        paramsOrFirst: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale } | string,
+        paramsOrFirst: { projectId: string, type: EmailTemplateType, locale?: EmailTemplateLocale } | string,
         ...rest: [(EmailTemplateType)?, (EmailTemplateLocale)?]    
     ): Promise<Models.EmailTemplate> {
-        let params: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale };
+        let params: { projectId: string, type: EmailTemplateType, locale?: EmailTemplateLocale };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale };
+            params = (paramsOrFirst || {}) as { projectId: string, type: EmailTemplateType, locale?: EmailTemplateLocale };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
@@ -2614,12 +2612,15 @@ export class Projects {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
-        if (typeof locale === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "locale"');
-        }
 
-        const apiPath = '/projects/{projectId}/templates/email/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
+        const apiPath = '/projects/{projectId}/templates/email'.replace('{projectId}', projectId);
         const payload: Payload = {};
+        if (typeof type !== 'undefined') {
+            payload['type'] = type;
+        }
+        if (typeof locale !== 'undefined') {
+            payload['locale'] = locale;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2638,24 +2639,24 @@ export class Projects {
      *
      * @param {string} params.projectId - Project unique ID.
      * @param {EmailTemplateType} params.type - Template type
-     * @param {EmailTemplateLocale} params.locale - Template locale
      * @param {string} params.subject - Email Subject
      * @param {string} params.message - Template message
+     * @param {EmailTemplateLocale} params.locale - Template locale
      * @param {string} params.senderName - Name of the email sender
      * @param {string} params.senderEmail - Email of the sender
      * @param {string} params.replyTo - Reply to email
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
      */
-    updateEmailTemplate(params: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale, subject: string, message: string, senderName?: string, senderEmail?: string, replyTo?: string }): Promise<Models.EmailTemplate>;
+    updateEmailTemplate(params: { projectId: string, type: EmailTemplateType, subject: string, message: string, locale?: EmailTemplateLocale, senderName?: string, senderEmail?: string, replyTo?: string }): Promise<Models.EmailTemplate>;
     /**
      * Update a custom email template for the specified locale and type. Use this endpoint to modify the content of your email templates.
      *
      * @param {string} projectId - Project unique ID.
      * @param {EmailTemplateType} type - Template type
-     * @param {EmailTemplateLocale} locale - Template locale
      * @param {string} subject - Email Subject
      * @param {string} message - Template message
+     * @param {EmailTemplateLocale} locale - Template locale
      * @param {string} senderName - Name of the email sender
      * @param {string} senderEmail - Email of the sender
      * @param {string} replyTo - Reply to email
@@ -2663,22 +2664,22 @@ export class Projects {
      * @returns {Promise<Models.EmailTemplate>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateEmailTemplate(projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale, subject: string, message: string, senderName?: string, senderEmail?: string, replyTo?: string): Promise<Models.EmailTemplate>;
+    updateEmailTemplate(projectId: string, type: EmailTemplateType, subject: string, message: string, locale?: EmailTemplateLocale, senderName?: string, senderEmail?: string, replyTo?: string): Promise<Models.EmailTemplate>;
     updateEmailTemplate(
-        paramsOrFirst: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale, subject: string, message: string, senderName?: string, senderEmail?: string, replyTo?: string } | string,
-        ...rest: [(EmailTemplateType)?, (EmailTemplateLocale)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
+        paramsOrFirst: { projectId: string, type: EmailTemplateType, subject: string, message: string, locale?: EmailTemplateLocale, senderName?: string, senderEmail?: string, replyTo?: string } | string,
+        ...rest: [(EmailTemplateType)?, (string)?, (string)?, (EmailTemplateLocale)?, (string)?, (string)?, (string)?]    
     ): Promise<Models.EmailTemplate> {
-        let params: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale, subject: string, message: string, senderName?: string, senderEmail?: string, replyTo?: string };
+        let params: { projectId: string, type: EmailTemplateType, subject: string, message: string, locale?: EmailTemplateLocale, senderName?: string, senderEmail?: string, replyTo?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale, subject: string, message: string, senderName?: string, senderEmail?: string, replyTo?: string };
+            params = (paramsOrFirst || {}) as { projectId: string, type: EmailTemplateType, subject: string, message: string, locale?: EmailTemplateLocale, senderName?: string, senderEmail?: string, replyTo?: string };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
                 type: rest[0] as EmailTemplateType,
-                locale: rest[1] as EmailTemplateLocale,
-                subject: rest[2] as string,
-                message: rest[3] as string,
+                subject: rest[1] as string,
+                message: rest[2] as string,
+                locale: rest[3] as EmailTemplateLocale,
                 senderName: rest[4] as string,
                 senderEmail: rest[5] as string,
                 replyTo: rest[6] as string            
@@ -2687,9 +2688,9 @@ export class Projects {
         
         const projectId = params.projectId;
         const type = params.type;
-        const locale = params.locale;
         const subject = params.subject;
         const message = params.message;
+        const locale = params.locale;
         const senderName = params.senderName;
         const senderEmail = params.senderEmail;
         const replyTo = params.replyTo;
@@ -2700,9 +2701,6 @@ export class Projects {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
-        if (typeof locale === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "locale"');
-        }
         if (typeof subject === 'undefined') {
             throw new AppwriteException('Missing required parameter: "subject"');
         }
@@ -2710,8 +2708,14 @@ export class Projects {
             throw new AppwriteException('Missing required parameter: "message"');
         }
 
-        const apiPath = '/projects/{projectId}/templates/email/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
+        const apiPath = '/projects/{projectId}/templates/email'.replace('{projectId}', projectId);
         const payload: Payload = {};
+        if (typeof type !== 'undefined') {
+            payload['type'] = type;
+        }
+        if (typeof locale !== 'undefined') {
+            payload['locale'] = locale;
+        }
         if (typeof subject !== 'undefined') {
             payload['subject'] = subject;
         }
@@ -2750,7 +2754,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
      */
-    deleteEmailTemplate(params: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale }): Promise<Models.EmailTemplate>;
+    deleteEmailTemplate(params: { projectId: string, type: EmailTemplateType, locale?: EmailTemplateLocale }): Promise<Models.EmailTemplate>;
     /**
      * Reset a custom email template to its default value. This endpoint removes any custom content and restores the template to its original state. 
      *
@@ -2761,15 +2765,15 @@ export class Projects {
      * @returns {Promise<Models.EmailTemplate>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    deleteEmailTemplate(projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale): Promise<Models.EmailTemplate>;
+    deleteEmailTemplate(projectId: string, type: EmailTemplateType, locale?: EmailTemplateLocale): Promise<Models.EmailTemplate>;
     deleteEmailTemplate(
-        paramsOrFirst: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale } | string,
+        paramsOrFirst: { projectId: string, type: EmailTemplateType, locale?: EmailTemplateLocale } | string,
         ...rest: [(EmailTemplateType)?, (EmailTemplateLocale)?]    
     ): Promise<Models.EmailTemplate> {
-        let params: { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale };
+        let params: { projectId: string, type: EmailTemplateType, locale?: EmailTemplateLocale };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, type: EmailTemplateType, locale: EmailTemplateLocale };
+            params = (paramsOrFirst || {}) as { projectId: string, type: EmailTemplateType, locale?: EmailTemplateLocale };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
@@ -2788,435 +2792,15 @@ export class Projects {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
-        if (typeof locale === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "locale"');
-        }
 
-        const apiPath = '/projects/{projectId}/templates/email/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
+        const apiPath = '/projects/{projectId}/templates/email'.replace('{projectId}', projectId);
         const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
+        if (typeof type !== 'undefined') {
+            payload['type'] = type;
         }
-
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get a custom SMS template for the specified locale and type returning it's contents.
-     *
-     * @param {string} params.projectId - Project unique ID.
-     * @param {SmsTemplateType} params.type - Template type
-     * @param {SmsTemplateLocale} params.locale - Template locale
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.SmsTemplate>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Projects.getSMSTemplate` instead.
-     */
-    getSmsTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale }): Promise<Models.SmsTemplate>;
-    /**
-     * Get a custom SMS template for the specified locale and type returning it's contents.
-     *
-     * @param {string} projectId - Project unique ID.
-     * @param {SmsTemplateType} type - Template type
-     * @param {SmsTemplateLocale} locale - Template locale
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.SmsTemplate>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getSmsTemplate(projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale): Promise<Models.SmsTemplate>;
-    getSmsTemplate(
-        paramsOrFirst: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale } | string,
-        ...rest: [(SmsTemplateType)?, (SmsTemplateLocale)?]    
-    ): Promise<Models.SmsTemplate> {
-        let params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale };
-        } else {
-            params = {
-                projectId: paramsOrFirst as string,
-                type: rest[0] as SmsTemplateType,
-                locale: rest[1] as SmsTemplateLocale            
-            };
+        if (typeof locale !== 'undefined') {
+            payload['locale'] = locale;
         }
-        
-        const projectId = params.projectId;
-        const type = params.type;
-        const locale = params.locale;
-
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof type === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "type"');
-        }
-        if (typeof locale === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "locale"');
-        }
-
-        const apiPath = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get a custom SMS template for the specified locale and type returning it's contents.
-     *
-     * @param {string} params.projectId - Project unique ID.
-     * @param {SmsTemplateType} params.type - Template type
-     * @param {SmsTemplateLocale} params.locale - Template locale
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.SmsTemplate>}
-     */
-    getSMSTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale }): Promise<Models.SmsTemplate>;
-    /**
-     * Get a custom SMS template for the specified locale and type returning it's contents.
-     *
-     * @param {string} projectId - Project unique ID.
-     * @param {SmsTemplateType} type - Template type
-     * @param {SmsTemplateLocale} locale - Template locale
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.SmsTemplate>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getSMSTemplate(projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale): Promise<Models.SmsTemplate>;
-    getSMSTemplate(
-        paramsOrFirst: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale } | string,
-        ...rest: [(SmsTemplateType)?, (SmsTemplateLocale)?]    
-    ): Promise<Models.SmsTemplate> {
-        let params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale };
-        } else {
-            params = {
-                projectId: paramsOrFirst as string,
-                type: rest[0] as SmsTemplateType,
-                locale: rest[1] as SmsTemplateLocale            
-            };
-        }
-        
-        const projectId = params.projectId;
-        const type = params.type;
-        const locale = params.locale;
-
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof type === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "type"');
-        }
-        if (typeof locale === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "locale"');
-        }
-
-        const apiPath = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Update a custom SMS template for the specified locale and type. Use this endpoint to modify the content of your SMS templates. 
-     *
-     * @param {string} params.projectId - Project unique ID.
-     * @param {SmsTemplateType} params.type - Template type
-     * @param {SmsTemplateLocale} params.locale - Template locale
-     * @param {string} params.message - Template message
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.SmsTemplate>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Projects.updateSMSTemplate` instead.
-     */
-    updateSmsTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string }): Promise<Models.SmsTemplate>;
-    /**
-     * Update a custom SMS template for the specified locale and type. Use this endpoint to modify the content of your SMS templates. 
-     *
-     * @param {string} projectId - Project unique ID.
-     * @param {SmsTemplateType} type - Template type
-     * @param {SmsTemplateLocale} locale - Template locale
-     * @param {string} message - Template message
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.SmsTemplate>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    updateSmsTemplate(projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string): Promise<Models.SmsTemplate>;
-    updateSmsTemplate(
-        paramsOrFirst: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string } | string,
-        ...rest: [(SmsTemplateType)?, (SmsTemplateLocale)?, (string)?]    
-    ): Promise<Models.SmsTemplate> {
-        let params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string };
-        } else {
-            params = {
-                projectId: paramsOrFirst as string,
-                type: rest[0] as SmsTemplateType,
-                locale: rest[1] as SmsTemplateLocale,
-                message: rest[2] as string            
-            };
-        }
-        
-        const projectId = params.projectId;
-        const type = params.type;
-        const locale = params.locale;
-        const message = params.message;
-
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof type === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "type"');
-        }
-        if (typeof locale === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "locale"');
-        }
-        if (typeof message === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "message"');
-        }
-
-        const apiPath = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
-        const payload: Payload = {};
-        if (typeof message !== 'undefined') {
-            payload['message'] = message;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Update a custom SMS template for the specified locale and type. Use this endpoint to modify the content of your SMS templates. 
-     *
-     * @param {string} params.projectId - Project unique ID.
-     * @param {SmsTemplateType} params.type - Template type
-     * @param {SmsTemplateLocale} params.locale - Template locale
-     * @param {string} params.message - Template message
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.SmsTemplate>}
-     */
-    updateSMSTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string }): Promise<Models.SmsTemplate>;
-    /**
-     * Update a custom SMS template for the specified locale and type. Use this endpoint to modify the content of your SMS templates. 
-     *
-     * @param {string} projectId - Project unique ID.
-     * @param {SmsTemplateType} type - Template type
-     * @param {SmsTemplateLocale} locale - Template locale
-     * @param {string} message - Template message
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.SmsTemplate>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    updateSMSTemplate(projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string): Promise<Models.SmsTemplate>;
-    updateSMSTemplate(
-        paramsOrFirst: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string } | string,
-        ...rest: [(SmsTemplateType)?, (SmsTemplateLocale)?, (string)?]    
-    ): Promise<Models.SmsTemplate> {
-        let params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale, message: string };
-        } else {
-            params = {
-                projectId: paramsOrFirst as string,
-                type: rest[0] as SmsTemplateType,
-                locale: rest[1] as SmsTemplateLocale,
-                message: rest[2] as string            
-            };
-        }
-        
-        const projectId = params.projectId;
-        const type = params.type;
-        const locale = params.locale;
-        const message = params.message;
-
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof type === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "type"');
-        }
-        if (typeof locale === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "locale"');
-        }
-        if (typeof message === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "message"');
-        }
-
-        const apiPath = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
-        const payload: Payload = {};
-        if (typeof message !== 'undefined') {
-            payload['message'] = message;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Reset a custom SMS template to its default value. This endpoint removes any custom message and restores the template to its original state. 
-     *
-     * @param {string} params.projectId - Project unique ID.
-     * @param {SmsTemplateType} params.type - Template type
-     * @param {SmsTemplateLocale} params.locale - Template locale
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.SmsTemplate>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `Projects.deleteSMSTemplate` instead.
-     */
-    deleteSmsTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale }): Promise<Models.SmsTemplate>;
-    /**
-     * Reset a custom SMS template to its default value. This endpoint removes any custom message and restores the template to its original state. 
-     *
-     * @param {string} projectId - Project unique ID.
-     * @param {SmsTemplateType} type - Template type
-     * @param {SmsTemplateLocale} locale - Template locale
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.SmsTemplate>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    deleteSmsTemplate(projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale): Promise<Models.SmsTemplate>;
-    deleteSmsTemplate(
-        paramsOrFirst: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale } | string,
-        ...rest: [(SmsTemplateType)?, (SmsTemplateLocale)?]    
-    ): Promise<Models.SmsTemplate> {
-        let params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale };
-        } else {
-            params = {
-                projectId: paramsOrFirst as string,
-                type: rest[0] as SmsTemplateType,
-                locale: rest[1] as SmsTemplateLocale            
-            };
-        }
-        
-        const projectId = params.projectId;
-        const type = params.type;
-        const locale = params.locale;
-
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof type === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "type"');
-        }
-        if (typeof locale === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "locale"');
-        }
-
-        const apiPath = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Reset a custom SMS template to its default value. This endpoint removes any custom message and restores the template to its original state. 
-     *
-     * @param {string} params.projectId - Project unique ID.
-     * @param {SmsTemplateType} params.type - Template type
-     * @param {SmsTemplateLocale} params.locale - Template locale
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.SmsTemplate>}
-     */
-    deleteSMSTemplate(params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale }): Promise<Models.SmsTemplate>;
-    /**
-     * Reset a custom SMS template to its default value. This endpoint removes any custom message and restores the template to its original state. 
-     *
-     * @param {string} projectId - Project unique ID.
-     * @param {SmsTemplateType} type - Template type
-     * @param {SmsTemplateLocale} locale - Template locale
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.SmsTemplate>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    deleteSMSTemplate(projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale): Promise<Models.SmsTemplate>;
-    deleteSMSTemplate(
-        paramsOrFirst: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale } | string,
-        ...rest: [(SmsTemplateType)?, (SmsTemplateLocale)?]    
-    ): Promise<Models.SmsTemplate> {
-        let params: { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, type: SmsTemplateType, locale: SmsTemplateLocale };
-        } else {
-            params = {
-                projectId: paramsOrFirst as string,
-                type: rest[0] as SmsTemplateType,
-                locale: rest[1] as SmsTemplateLocale            
-            };
-        }
-        
-        const projectId = params.projectId;
-        const type = params.type;
-        const locale = params.locale;
-
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof type === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "type"');
-        }
-        if (typeof locale === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "locale"');
-        }
-
-        const apiPath = '/projects/{projectId}/templates/sms/{type}/{locale}'.replace('{projectId}', projectId).replace('{type}', type).replace('{locale}', locale);
-        const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {

@@ -2,6 +2,8 @@ import { DatabaseType } from "./enums/database-type"
 import { AttributeStatus } from "./enums/attribute-status"
 import { ColumnStatus } from "./enums/column-status"
 import { IndexStatus } from "./enums/index-status"
+import { DetectionFrameworkType } from "./enums/detection-framework-type"
+import { DetectionRuntimeType } from "./enums/detection-runtime-type"
 import { DeploymentStatus } from "./enums/deployment-status"
 import { ExecutionTrigger } from "./enums/execution-trigger"
 import { ExecutionStatus } from "./enums/execution-status"
@@ -328,6 +330,10 @@ export namespace Models {
          * List of frameworkProviderRepositories.
          */
         frameworkProviderRepositories: ProviderRepositoryFramework[];
+        /**
+         * Provider repository list type.
+         */
+        type: string;
     }
 
     /**
@@ -342,6 +348,10 @@ export namespace Models {
          * List of runtimeProviderRepositories.
          */
         runtimeProviderRepositories: ProviderRepositoryRuntime[];
+        /**
+         * Provider repository list type.
+         */
+        type: string;
     }
 
     /**
@@ -4504,6 +4514,10 @@ export namespace Models {
      */
     export type DetectionFramework = {
         /**
+         * Repository detection type.
+         */
+        type: DetectionFrameworkType;
+        /**
          * Environment variables found in .env files
          */
         variables?: DetectionVariable[];
@@ -4529,6 +4543,10 @@ export namespace Models {
      * DetectionRuntime
      */
     export type DetectionRuntime = {
+        /**
+         * Repository detection type.
+         */
+        type: DetectionRuntimeType;
         /**
          * Environment variables found in .env files
          */
@@ -6987,24 +7005,6 @@ export namespace Models {
          * The region where the schedule is deployed.
          */
         region: string;
-    }
-
-    /**
-     * SmsTemplate
-     */
-    export type SmsTemplate = {
-        /**
-         * Template type
-         */
-        type: string;
-        /**
-         * Template locale
-         */
-        locale: string;
-        /**
-         * Template message
-         */
-        message: string;
     }
 
     /**

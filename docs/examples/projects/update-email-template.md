@@ -10,9 +10,9 @@ const projects = new Projects(client);
 const result = await projects.updateEmailTemplate({
     projectId: '<PROJECT_ID>',
     type: EmailTemplateType.Verification,
-    locale: EmailTemplateLocale.Af,
     subject: '<SUBJECT>',
     message: '<MESSAGE>',
+    locale: EmailTemplateLocale.Af, // optional
     senderName: '<SENDER_NAME>', // optional
     senderEmail: 'email@example.com', // optional
     replyTo: 'email@example.com' // optional

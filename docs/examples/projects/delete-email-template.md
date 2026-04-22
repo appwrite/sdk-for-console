@@ -10,7 +10,7 @@ const projects = new Projects(client);
 const result = await projects.deleteEmailTemplate({
     projectId: '<PROJECT_ID>',
     type: EmailTemplateType.Verification,
-    locale: EmailTemplateLocale.Af
+    locale: EmailTemplateLocale.Af // optional
 });
 
 console.log(result);
