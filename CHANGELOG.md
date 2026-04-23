@@ -2,27 +2,10 @@
 
 ## 11.0.0
 
-* Breaking: Renamed `project.updateProtocolStatus` to `project.updateProtocol` (endpoint changed to `/project/protocols/{protocolId}`)
-* Breaking: Renamed `project.updateServiceStatus` to `project.updateService` (endpoint changed to `/project/services/{serviceId}`)
-* Breaking: Removed SMS template methods `getSmsTemplate`, `getSMSTemplate`, `updateSmsTemplate`, `updateSMSTemplate`, `deleteSmsTemplate`, and `deleteSMSTemplate` from `Projects` service
-* Breaking: Removed `SmsTemplate` model and `SmsTemplateType`/`SmsTemplateLocale` enums
-* Breaking: Moved email template `type` and `locale` from the URL path to the request body — endpoints are now `/projects/{projectId}/templates/email`
-* Breaking: Made `locale` optional on `projects.getEmailTemplate`, `projects.updateEmailTemplate`, and `projects.deleteEmailTemplate`
-* Breaking: Reordered positional parameters on `projects.updateEmailTemplate` — `locale` now optional and placed after `message` (object-style callers unaffected)
-* Breaking: Removed deprecated `Deno121`, `Deno124`, and `Deno135` values from `Runtime`, `Runtimes`, and `BuildRuntime` enums
-* Breaking: Removed shared `queries` set from the Realtime client — queries are now tracked per-subscription
-* Added `DetectionFrameworkType` and `DetectionRuntimeType` enums
-* Added `type` field to `ProviderRepositoryFrameworkList`, `ProviderRepositoryRuntimeList`, `DetectionFramework`, and `DetectionRuntime` models
-* Added Realtime `subscribe` message protocol — channels and queries are sent per-subscription over the WebSocket, with per-subscription IDs and reconnect handling
-* Updated `updateProtocol` and `updateService` descriptions to "Update properties of a specific…"
-
-## 10.0.0
-
-* Added `DocumentsDB` service with full CRUD for document-based databases, collections, attributes, indexes, and documents
-* Added `VectorsDB` service with full CRUD for vector databases, collections, attributes, indexes, and documents
-* Added `DocumentsDBIndexType` and `VectorsDBIndexType` enums
-* Added `DocumentsDB` and `VectorsDB` to `ServiceId` enum
-* Added `Model` enum
+* Breaking: Switched Realtime subscriptions to `subscribe` message lifecycle flow.
+* Breaking: Updated project policy endpoints and examples under singular `project` paths.
+* Added: Added detection runtime and framework enums for repository analysis.
+* Updated: Updated `X-Appwrite-Response-Format` header to `1.9.2`.
 
 ## 9.1.0
 

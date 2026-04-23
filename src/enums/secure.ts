@@ -1,4 +1,4 @@
-export enum SMTPSecure {
+export enum Secure {
     Tls = 'tls',
     Ssl = 'ssl',
 }

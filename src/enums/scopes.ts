@@ -66,6 +66,8 @@ export enum Scopes {
     PlatformsRead = 'platforms.read',
     PlatformsWrite = 'platforms.write',
     PoliciesWrite = 'policies.write',
+    TemplatesRead = 'templates.read',
+    TemplatesWrite = 'templates.write',
     PoliciesRead = 'policies.read',
     ArchivesRead = 'archives.read',
     ArchivesWrite = 'archives.write',

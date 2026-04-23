@@ -1,15 +1,14 @@
 ```javascript
-import { Client, Projects, EmailTemplateType, EmailTemplateLocale } from "@appwrite.io/console";
+import { Client, Project, EmailTemplateType, EmailTemplateLocale } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const projects = new Projects(client);
+const project = new Project(client);
 
-const result = await projects.getEmailTemplate({
-    projectId: '<PROJECT_ID>',
-    type: EmailTemplateType.Verification,
+const result = await project.getEmailTemplate({
+    templateId: EmailTemplateType.Verification,
     locale: EmailTemplateLocale.Af // optional
 });
 

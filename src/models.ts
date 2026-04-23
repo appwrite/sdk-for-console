@@ -3814,6 +3814,10 @@ export namespace Models {
          */
         userEmail: string;
         /**
+         * User phone number. Hide this attribute by toggling membership privacy in the Console.
+         */
+        userPhone: string;
+        /**
          * Team ID.
          */
         teamId: string;
@@ -5006,6 +5010,14 @@ export namespace Models {
          */
         authMembershipsMfa: boolean;
         /**
+         * Whether or not to show user IDs in the teams membership response.
+         */
+        authMembershipsUserId: boolean;
+        /**
+         * Whether or not to show user phone numbers in the teams membership response.
+         */
+        authMembershipsUserPhone: boolean;
+        /**
          * Whether or not all existing sessions should be invalidated on password change
          */
         authInvalidateSessions: boolean;
@@ -5042,9 +5054,13 @@ export namespace Models {
          */
         smtpSenderEmail: string;
         /**
+         * SMTP reply to name
+         */
+        smtpReplyToName: string;
+        /**
          * SMTP reply to email
          */
-        smtpReplyTo: string;
+        smtpReplyToEmail: string;
         /**
          * SMTP server host name
          */
@@ -5058,7 +5074,7 @@ export namespace Models {
          */
         smtpUsername: string;
         /**
-         * SMTP server password
+         * SMTP server password. This property is write-only and always returned empty.
          */
         smtpPassword: string;
         /**
@@ -7014,7 +7030,7 @@ export namespace Models {
         /**
          * Template type
          */
-        type: string;
+        templateId: string;
         /**
          * Template locale
          */
@@ -7034,7 +7050,11 @@ export namespace Models {
         /**
          * Reply to email address
          */
-        replyTo: string;
+        replyToEmail: string;
+        /**
+         * Reply to name
+         */
+        replyToName: string;
         /**
          * Email subject
          */
