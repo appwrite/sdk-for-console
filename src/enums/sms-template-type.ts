@@ -1,6 +1,0 @@
-export enum SmsTemplateType {
-    Verification = 'verification',
-    Login = 'login',
-    Invitation = 'invitation',
-    MfaChallenge = 'mfaChallenge',
-}

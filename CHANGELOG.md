@@ -1,12 +1,11 @@
 # Change Log
 
-## 10.0.0
+## 11.0.0
 
-* Added `DocumentsDB` service with full CRUD for document-based databases, collections, attributes, indexes, and documents
-* Added `VectorsDB` service with full CRUD for vector databases, collections, attributes, indexes, and documents
-* Added `DocumentsDBIndexType` and `VectorsDBIndexType` enums
-* Added `DocumentsDB` and `VectorsDB` to `ServiceId` enum
-* Added `Model` enum
+* Breaking: Switched Realtime subscriptions to `subscribe` message lifecycle flow.
+* Breaking: Updated project policy endpoints and examples under singular `project` paths.
+* Added: Added detection runtime and framework enums for repository analysis.
+* Updated: Updated `X-Appwrite-Response-Format` header to `1.9.2`.
 
 ## 9.1.0
 
