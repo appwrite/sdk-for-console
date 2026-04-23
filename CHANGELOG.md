@@ -2,10 +2,30 @@
 
 ## 11.0.0
 
-* Breaking: Switched Realtime subscriptions to `subscribe` message lifecycle flow.
-* Breaking: Updated project policy endpoints and examples under singular `project` paths.
-* Added: Added detection runtime and framework enums for repository analysis.
-* Updated: Updated `X-Appwrite-Response-Format` header to `1.9.2`.
+* Breaking: Moved SMTP, email template, and all policy methods from `Projects` to `Project` service
+* Breaking: Renamed policy methods with `*Policy` suffix (e.g. `updateAuthPasswordDictionary` → `updatePasswordDictionaryPolicy`, `updateSessionAlerts` → `updateSessionAlertPolicy`, `updateAuthSessionsLimit` → `updateSessionLimitPolicy`)
+* Breaking: Replaced `updateProtocolStatus`/`updateServiceStatus` with `updateProtocol`/`updateService`
+* Breaking: Removed all SMS template support — `SmsTemplate` model, related enums, and `get`/`update`/`delete` methods
+* Breaking: Removed `deleteEmailTemplate` method
+* Breaking: Renamed `SMTPSecure` enum to `Secure`
+* Breaking: Renamed SMTP/email-template fields — `smtpReplyTo` → `smtpReplyToEmail`, `EmailTemplate.type` → `templateId`, `EmailTemplate.replyTo` → `replyToEmail`; added `smtpReplyToName` and `replyToName`
+* Breaking: `Project.smtpPassword` is now write-only and always returned empty
+* Breaking: Removed deprecated Deno runtimes (`deno-1.21`, `deno-1.24`, `deno-1.35`)
+* Breaking: Rewrote Realtime protocol — slot-based mapping replaced with server-negotiated `subscribe`/`unsubscribe` lifecycle
+* Added: `RealtimeSubscription.unsubscribe()` and `RealtimeSubscription.update()` for per-subscription teardown and in-place channel/query changes
+* Added: New session and user policy methods (`updatePasswordPersonalDataPolicy`, `updateSessionDurationPolicy`, `updateSessionInvalidationPolicy`, `updateUserLimitPolicy`)
+* Added: `DetectionRuntimeType` and `DetectionFrameworkType` enums, plus `type` field on detection and provider-repository-list models
+* Added: `authMembershipsUserId`, `authMembershipsUserPhone` fields on `Project` model and `userPhone` on `Membership`
+* Added: `templates.read` and `templates.write` scopes
+* Updated: `X-Appwrite-Response-Format` header to `1.9.2`
+
+## 10.0.0
+
+* Added `DocumentsDB` service with full CRUD for document-based databases, collections, attributes, indexes, and documents
+* Added `VectorsDB` service with full CRUD for vector databases, collections, attributes, indexes, and documents
+* Added `DocumentsDBIndexType` and `VectorsDBIndexType` enums
+* Added `DocumentsDB` and `VectorsDB` to `ServiceId` enum
+* Added `Model` enum
 
 ## 9.1.0
 
