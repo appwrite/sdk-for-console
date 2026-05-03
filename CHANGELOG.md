@@ -1,5 +1,9 @@
 # Change Log
 
+## 11.0.1
+
+* Added `rust-1.83` to `Runtime`, `Runtimes`, and `BuildRuntime` enums
+
 ## 11.0.0
 
 * Breaking: Moved SMTP, email template, and all policy methods from `Projects` to `Project` service
