@@ -19,7 +19,7 @@ const result = await functions.update({
     logging: false, // optional
     entrypoint: '<ENTRYPOINT>', // optional
     commands: '<COMMANDS>', // optional
-    scopes: [Scopes.SessionsWrite], // optional
+    scopes: [Scopes.ProjectRead], // optional
     installationId: '<INSTALLATION_ID>', // optional
     providerRepositoryId: '<PROVIDER_REPOSITORY_ID>', // optional
     providerBranch: '<PROVIDER_BRANCH>', // optional

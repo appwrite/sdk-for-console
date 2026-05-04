@@ -115,6 +115,29 @@ export class Console {
     }
 
     /**
+     * List all OAuth2 providers supported by the Appwrite server, along with the parameters required to configure each provider. The response excludes mock providers but includes sandbox providers.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ConsoleOAuth2ProviderList>}
+     */
+    listOAuth2Providers(): Promise<Models.ConsoleOAuth2ProviderList> {
+
+        const apiPath = '/console/oauth2-providers';
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Return a list of all available plans.
      *
      * @param {Platform} params.platform - Platform type
@@ -394,6 +417,29 @@ export class Console {
         if (typeof type !== 'undefined') {
             payload['type'] = type;
         }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List all scopes available for project API keys, along with a description for each scope.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ConsoleKeyScopeList>}
+     */
+    listProjectScopes(): Promise<Models.ConsoleKeyScopeList> {
+
+        const apiPath = '/console/scopes/project';
+        const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
