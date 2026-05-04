@@ -82,7 +82,6 @@ export { FirebaseMigrationResource } from './enums/firebase-migration-resource';
 export { NHostMigrationResource } from './enums/n-host-migration-resource';
 export { SupabaseMigrationResource } from './enums/supabase-migration-resource';
 export { Addon } from './enums/addon';
-export { BillingPlan } from './enums/billing-plan';
 export { MethodId } from './enums/method-id';
 export { PolicyId } from './enums/policy-id';
 export { ProtocolId } from './enums/protocol-id';

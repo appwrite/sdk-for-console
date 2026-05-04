@@ -5,7 +5,6 @@ import type { Models } from '../models';
 import { Platform } from '../enums/platform';
 import { Addon } from '../enums/addon';
 import { Scopes } from '../enums/scopes';
-import { BillingPlan } from '../enums/billing-plan';
 
 export class Organizations {
     client: Client;
@@ -2801,38 +2800,38 @@ export class Organizations {
      * 
      *
      * @param {string} params.organizationId - Organization ID
-     * @param {BillingPlan} params.billingPlan - Target billing plan
+     * @param {string} params.billingPlan - Target billing plan
      * @param {string[]} params.invites - Additional member invites
      * @param {string} params.couponId - Coupon id
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationPlanChange>}
      */
-    createPlanEstimation(params: { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string }): Promise<Models.EstimationPlanChange>;
+    createPlanEstimation(params: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string }): Promise<Models.EstimationPlanChange>;
     /**
      * Create a billing plan estimation for upgrading or downgrading an organization plan.
      * 
      *
      * @param {string} organizationId - Organization ID
-     * @param {BillingPlan} billingPlan - Target billing plan
+     * @param {string} billingPlan - Target billing plan
      * @param {string[]} invites - Additional member invites
      * @param {string} couponId - Coupon id
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationPlanChange>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPlanEstimation(organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string): Promise<Models.EstimationPlanChange>;
+    createPlanEstimation(organizationId: string, billingPlan: string, invites?: string[], couponId?: string): Promise<Models.EstimationPlanChange>;
     createPlanEstimation(
-        paramsOrFirst: { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string } | string,
-        ...rest: [(BillingPlan)?, (string[])?, (string)?]    
+        paramsOrFirst: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string } | string,
+        ...rest: [(string)?, (string[])?, (string)?]    
     ): Promise<Models.EstimationPlanChange> {
-        let params: { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string };
+        let params: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string };
+            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: string, invites?: string[], couponId?: string };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                billingPlan: rest[0] as BillingPlan,
+                billingPlan: rest[0] as string,
                 invites: rest[1] as string[],
                 couponId: rest[2] as string            
             };
