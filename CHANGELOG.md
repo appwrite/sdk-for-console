@@ -1,8 +1,25 @@
 # Change Log
 
-## 11.0.1
+## 12.0.0
 
-* Added `rust-1.83` to `Runtime`, `Runtimes`, and `BuildRuntime` enums
+* Breaking: Renamed `AuthMethod` enum to `MethodId`
+* Breaking: Replaced `Projects.updateAuthStatus` with `Project.updateAuthMethod`
+* Breaking: Replaced `Projects.updateOAuth2` with per-provider methods on `Project` service (e.g. `updateOAuth2Google`, `updateOAuth2GitHub`)
+* Breaking: Replaced `Projects.updateMockNumbers` with `listMockPhones`, `createMockPhone`, `getMockPhone`, `updateMockPhone`, `deleteMockPhone` on `Project` service
+* Breaking: Moved `delete` from `Projects` to `Project` service and removed `createJWT` from `Projects` service
+* Breaking: Renamed `domainId` parameter to `invoiceId` in `domains.updatePurchase` and `domains.updateTransferIn`
+* Added: `Manager` service with `createBlock`, `deleteBlock`, `listBlocks` methods
+* Added: `createEphemeralKey`, `listEmailTemplates`, `listOAuth2Providers`, `getOAuth2Provider`, `listPolicies`, `getPolicy` methods on `Project` service
+* Added: `createPlanEstimation` method on `Organizations` service
+* Added: `listOAuth2Providers` and `listProjectScopes` methods on `Console` service
+* Added: `fusionauth`, `keycloak`, `kick` to `OAuthProvider` enum
+* Added: `BillingPlan`, `MethodId`, `PolicyId` enums
+* Added: `executions.read`, `executions.write`, `mocks.read`, `mocks.write`, `sessions.read` scopes
+* Added: `rust-1.83` runtime
+* Added: `backup-policy` to `AppwriteMigrationResource` enum
+* Added: Plural `ResourceType` values (`projects`, `functions`, `sites`, `databases`, `buckets`, `providers`, `topics`, `subscribers`, `messages`)
+* Added: Models for ephemeral keys, mock numbers, email templates, policies, and per-provider OAuth2 settings
+* Updated: `X-Appwrite-Response-Format` header to `1.9.3`
 
 ## 11.0.0
 

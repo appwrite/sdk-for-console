@@ -5,6 +5,7 @@ import type { Models } from '../models';
 import { Platform } from '../enums/platform';
 import { Addon } from '../enums/addon';
 import { Scopes } from '../enums/scopes';
+import { BillingPlan } from '../enums/billing-plan';
 
 export class Organizations {
     client: Client;
@@ -2789,6 +2790,85 @@ export class Organizations {
 
         return this.client.call(
             'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a billing plan estimation for upgrading or downgrading an organization plan.
+     * 
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @param {BillingPlan} params.billingPlan - Target billing plan
+     * @param {string[]} params.invites - Additional member invites
+     * @param {string} params.couponId - Coupon id
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.EstimationPlanChange>}
+     */
+    createPlanEstimation(params: { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string }): Promise<Models.EstimationPlanChange>;
+    /**
+     * Create a billing plan estimation for upgrading or downgrading an organization plan.
+     * 
+     *
+     * @param {string} organizationId - Organization ID
+     * @param {BillingPlan} billingPlan - Target billing plan
+     * @param {string[]} invites - Additional member invites
+     * @param {string} couponId - Coupon id
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.EstimationPlanChange>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createPlanEstimation(organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string): Promise<Models.EstimationPlanChange>;
+    createPlanEstimation(
+        paramsOrFirst: { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string } | string,
+        ...rest: [(BillingPlan)?, (string[])?, (string)?]    
+    ): Promise<Models.EstimationPlanChange> {
+        let params: { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: BillingPlan, invites?: string[], couponId?: string };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                billingPlan: rest[0] as BillingPlan,
+                invites: rest[1] as string[],
+                couponId: rest[2] as string            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+        const billingPlan = params.billingPlan;
+        const invites = params.invites;
+        const couponId = params.couponId;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+        if (typeof billingPlan === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "billingPlan"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/plan/estimations'.replace('{organizationId}', organizationId);
+        const payload: Payload = {};
+        if (typeof billingPlan !== 'undefined') {
+            payload['billingPlan'] = billingPlan;
+        }
+        if (typeof invites !== 'undefined') {
+            payload['invites'] = invites;
+        }
+        if (typeof couponId !== 'undefined') {
+            payload['couponId'] = couponId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
             uri,
             apiHeaders,
             payload

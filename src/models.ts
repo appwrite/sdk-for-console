@@ -565,6 +565,48 @@ export namespace Models {
     }
 
     /**
+     * Mock Numbers List
+     */
+    export type MockNumberList = {
+        /**
+         * Total number of mockNumbers that matched your query.
+         */
+        total: number;
+        /**
+         * List of mockNumbers.
+         */
+        mockNumbers: MockNumber[];
+    }
+
+    /**
+     * Policies List
+     */
+    export type PolicyList = {
+        /**
+         * Total number of policies in the given project.
+         */
+        total: number;
+        /**
+         * List of policies.
+         */
+        policies: (Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy)[];
+    }
+
+    /**
+     * Email Templates List
+     */
+    export type EmailTemplateList = {
+        /**
+         * Total number of templates that matched your query.
+         */
+        total: number;
+        /**
+         * List of templates.
+         */
+        templates: EmailTemplate[];
+    }
+
+    /**
      * Status List
      */
     export type HealthStatusList = {
@@ -5324,6 +5366,48 @@ export namespace Models {
     }
 
     /**
+     * Ephemeral Key
+     */
+    export type EphemeralKey = {
+        /**
+         * Key ID.
+         */
+        $id: string;
+        /**
+         * Key creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Key update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Key name.
+         */
+        name: string;
+        /**
+         * Key expiration date in ISO 8601 format.
+         */
+        expire: string;
+        /**
+         * Allowed permission scopes.
+         */
+        scopes: string[];
+        /**
+         * Secret key.
+         */
+        secret: string;
+        /**
+         * Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+         */
+        accessedAt: string;
+        /**
+         * List of SDK user agents that used this key.
+         */
+        sdks: string[];
+    }
+
+    /**
      * DevKey
      */
     export type DevKey = {
@@ -5368,11 +5452,1115 @@ export namespace Models {
         /**
          * Mock phone number for testing phone authentication. Useful for testing phone authentication without sending an SMS.
          */
-        phone: string;
+        number: string;
         /**
          * Mock OTP for the number. 
          */
         otp: string;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+    }
+
+    /**
+     * OAuth2GitHub
+     */
+    export type OAuth2Github = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * GitHub OAuth2 client ID. For GitHub Apps, use the "App ID" when both an App ID and client ID are available.
+         */
+        clientId: string;
+        /**
+         * GitHub OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Discord
+     */
+    export type OAuth2Discord = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Discord OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Discord OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Figma
+     */
+    export type OAuth2Figma = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Figma OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Figma OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Dropbox
+     */
+    export type OAuth2Dropbox = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Dropbox OAuth2 app key.
+         */
+        appKey: string;
+        /**
+         * Dropbox OAuth2 app secret.
+         */
+        appSecret: string;
+    }
+
+    /**
+     * OAuth2Dailymotion
+     */
+    export type OAuth2Dailymotion = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Dailymotion OAuth2 API key.
+         */
+        apiKey: string;
+        /**
+         * Dailymotion OAuth2 API secret.
+         */
+        apiSecret: string;
+    }
+
+    /**
+     * OAuth2Bitbucket
+     */
+    export type OAuth2Bitbucket = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Bitbucket OAuth2 key.
+         */
+        key: string;
+        /**
+         * Bitbucket OAuth2 secret.
+         */
+        secret: string;
+    }
+
+    /**
+     * OAuth2Bitly
+     */
+    export type OAuth2Bitly = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Bitly OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Bitly OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Box
+     */
+    export type OAuth2Box = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Box OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Box OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Autodesk
+     */
+    export type OAuth2Autodesk = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Autodesk OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Autodesk OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Google
+     */
+    export type OAuth2Google = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Google OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Google OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Zoom
+     */
+    export type OAuth2Zoom = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Zoom OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Zoom OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Zoho
+     */
+    export type OAuth2Zoho = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Zoho OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Zoho OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Yandex
+     */
+    export type OAuth2Yandex = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Yandex OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Yandex OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2X
+     */
+    export type OAuth2X = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * X OAuth2 customer key.
+         */
+        customerKey: string;
+        /**
+         * X OAuth2 secret key.
+         */
+        secretKey: string;
+    }
+
+    /**
+     * OAuth2WordPress
+     */
+    export type OAuth2WordPress = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * WordPress OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * WordPress OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Twitch
+     */
+    export type OAuth2Twitch = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Twitch OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Twitch OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Stripe
+     */
+    export type OAuth2Stripe = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Stripe OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Stripe OAuth2 API secret key.
+         */
+        apiSecretKey: string;
+    }
+
+    /**
+     * OAuth2Spotify
+     */
+    export type OAuth2Spotify = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Spotify OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Spotify OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Slack
+     */
+    export type OAuth2Slack = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Slack OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Slack OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Podio
+     */
+    export type OAuth2Podio = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Podio OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Podio OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Notion
+     */
+    export type OAuth2Notion = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Notion OAuth2 client ID.
+         */
+        oauthClientId: string;
+        /**
+         * Notion OAuth2 client secret.
+         */
+        oauthClientSecret: string;
+    }
+
+    /**
+     * OAuth2Salesforce
+     */
+    export type OAuth2Salesforce = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Salesforce OAuth2 consumer key.
+         */
+        customerKey: string;
+        /**
+         * Salesforce OAuth2 consumer secret.
+         */
+        customerSecret: string;
+    }
+
+    /**
+     * OAuth2Yahoo
+     */
+    export type OAuth2Yahoo = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Yahoo OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Yahoo OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Linkedin
+     */
+    export type OAuth2Linkedin = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * LinkedIn OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * LinkedIn OAuth2 primary client secret.
+         */
+        primaryClientSecret: string;
+    }
+
+    /**
+     * OAuth2Disqus
+     */
+    export type OAuth2Disqus = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Disqus OAuth2 public key.
+         */
+        publicKey: string;
+        /**
+         * Disqus OAuth2 secret key.
+         */
+        secretKey: string;
+    }
+
+    /**
+     * OAuth2Amazon
+     */
+    export type OAuth2Amazon = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Amazon OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Amazon OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Etsy
+     */
+    export type OAuth2Etsy = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Etsy OAuth2 keystring.
+         */
+        keyString: string;
+        /**
+         * Etsy OAuth2 shared secret.
+         */
+        sharedSecret: string;
+    }
+
+    /**
+     * OAuth2Facebook
+     */
+    export type OAuth2Facebook = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Facebook OAuth2 app ID.
+         */
+        appId: string;
+        /**
+         * Facebook OAuth2 app secret.
+         */
+        appSecret: string;
+    }
+
+    /**
+     * OAuth2Tradeshift
+     */
+    export type OAuth2Tradeshift = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Tradeshift OAuth2 client ID.
+         */
+        oauth2ClientId: string;
+        /**
+         * Tradeshift OAuth2 client secret.
+         */
+        oauth2ClientSecret: string;
+    }
+
+    /**
+     * OAuth2Paypal
+     */
+    export type OAuth2Paypal = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * PayPal OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * PayPal OAuth2 secret key.
+         */
+        secretKey: string;
+    }
+
+    /**
+     * OAuth2Gitlab
+     */
+    export type OAuth2Gitlab = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * GitLab OAuth2 application ID.
+         */
+        applicationId: string;
+        /**
+         * GitLab OAuth2 secret.
+         */
+        secret: string;
+        /**
+         * GitLab OAuth2 endpoint URL. Defaults to https://gitlab.com for self-hosted instances.
+         */
+        endpoint: string;
+    }
+
+    /**
+     * OAuth2Authentik
+     */
+    export type OAuth2Authentik = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Authentik OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Authentik OAuth2 client secret.
+         */
+        clientSecret: string;
+        /**
+         * Authentik OAuth2 endpoint domain.
+         */
+        endpoint: string;
+    }
+
+    /**
+     * OAuth2Auth0
+     */
+    export type OAuth2Auth0 = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Auth0 OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Auth0 OAuth2 client secret.
+         */
+        clientSecret: string;
+        /**
+         * Auth0 OAuth2 endpoint domain.
+         */
+        endpoint: string;
+    }
+
+    /**
+     * OAuth2FusionAuth
+     */
+    export type OAuth2FusionAuth = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * FusionAuth OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * FusionAuth OAuth2 client secret.
+         */
+        clientSecret: string;
+        /**
+         * FusionAuth OAuth2 endpoint domain.
+         */
+        endpoint: string;
+    }
+
+    /**
+     * OAuth2Keycloak
+     */
+    export type OAuth2Keycloak = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Keycloak OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Keycloak OAuth2 client secret.
+         */
+        clientSecret: string;
+        /**
+         * Keycloak OAuth2 endpoint domain.
+         */
+        endpoint: string;
+        /**
+         * Keycloak OAuth2 realm name.
+         */
+        realmName: string;
+    }
+
+    /**
+     * OAuth2Oidc
+     */
+    export type OAuth2Oidc = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * OpenID Connect OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * OpenID Connect OAuth2 client secret.
+         */
+        clientSecret: string;
+        /**
+         * OpenID Connect well-known configuration URL. When set, authorization, token, and user info endpoints can be discovered automatically.
+         */
+        wellKnownURL: string;
+        /**
+         * OpenID Connect authorization endpoint URL.
+         */
+        authorizationURL: string;
+        /**
+         * OpenID Connect token endpoint URL.
+         */
+        tokenUrl: string;
+        /**
+         * OpenID Connect user info endpoint URL.
+         */
+        userInfoUrl: string;
+    }
+
+    /**
+     * OAuth2Okta
+     */
+    export type OAuth2Okta = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Okta OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Okta OAuth2 client secret.
+         */
+        clientSecret: string;
+        /**
+         * Okta OAuth2 domain.
+         */
+        domain: string;
+        /**
+         * Okta OAuth2 authorization server ID.
+         */
+        authorizationServerId: string;
+    }
+
+    /**
+     * OAuth2Kick
+     */
+    export type OAuth2Kick = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Kick OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Kick OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
+     * OAuth2Apple
+     */
+    export type OAuth2Apple = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Apple OAuth2 service ID.
+         */
+        serviceId: string;
+        /**
+         * Apple OAuth2 key ID.
+         */
+        keyId: string;
+        /**
+         * Apple OAuth2 team ID.
+         */
+        teamId: string;
+        /**
+         * Apple OAuth2 .p8 private key file contents. The secret key wrapped by the PEM markers is 200 characters long.
+         */
+        p8File: string;
+    }
+
+    /**
+     * OAuth2Microsoft
+     */
+    export type OAuth2Microsoft = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Microsoft OAuth2 application ID.
+         */
+        applicationId: string;
+        /**
+         * Microsoft OAuth2 application secret.
+         */
+        applicationSecret: string;
+        /**
+         * Microsoft Entra ID tenant identifier. Use 'common', 'organizations', 'consumers' or a specific tenant ID.
+         */
+        tenant: string;
+    }
+
+    /**
+     * OAuth2 Providers List
+     */
+    export type OAuth2ProviderList = {
+        /**
+         * Total number of OAuth2 providers in the given project.
+         */
+        total: number;
+        /**
+         * List of OAuth2 providers.
+         */
+        providers: (Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft)[];
+    }
+
+    /**
+     * Policy Password Dictionary
+     */
+    export type PolicyPasswordDictionary = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether password dictionary policy is enabled.
+         */
+        enabled: boolean;
+    }
+
+    /**
+     * Policy Password History
+     */
+    export type PolicyPasswordHistory = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Password history length. A value of 0 means the policy is disabled.
+         */
+        total: number;
+    }
+
+    /**
+     * Policy Password Personal Data
+     */
+    export type PolicyPasswordPersonalData = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether password personal data policy is enabled.
+         */
+        enabled: boolean;
+    }
+
+    /**
+     * Policy Session Alert
+     */
+    export type PolicySessionAlert = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether session alert policy is enabled.
+         */
+        enabled: boolean;
+    }
+
+    /**
+     * Policy Session Duration
+     */
+    export type PolicySessionDuration = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Session duration in seconds.
+         */
+        duration: number;
+    }
+
+    /**
+     * Policy Session Invalidation
+     */
+    export type PolicySessionInvalidation = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether session invalidation policy is enabled.
+         */
+        enabled: boolean;
+    }
+
+    /**
+     * Policy Session Limit
+     */
+    export type PolicySessionLimit = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Maximum number of sessions allowed per user. A value of 0 means the policy is disabled.
+         */
+        total: number;
+    }
+
+    /**
+     * Policy User Limit
+     */
+    export type PolicyUserLimit = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Maximum number of users allowed in the project. A value of 0 means the policy is disabled.
+         */
+        total: number;
+    }
+
+    /**
+     * Policy Membership Privacy
+     */
+    export type PolicyMembershipPrivacy = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether user ID is visible in memberships.
+         */
+        userId: boolean;
+        /**
+         * Whether user email is visible in memberships.
+         */
+        userEmail: boolean;
+        /**
+         * Whether user phone is visible in memberships.
+         */
+        userPhone: boolean;
+        /**
+         * Whether user name is visible in memberships.
+         */
+        userName: boolean;
+        /**
+         * Whether user MFA status is visible in memberships.
+         */
+        userMFA: boolean;
     }
 
     /**
@@ -5392,7 +6580,7 @@ export namespace Models {
          */
         appId: string;
         /**
-         * OAuth 2.0 application secret. Might be JSON string if provider requires extra configuration.
+         * OAuth 2.0 application secret. Might be JSON string if provider requires extra configuration. This property is write-only and always returned empty.
          */
         secret: string;
         /**
@@ -7176,6 +8364,92 @@ export namespace Models {
     }
 
     /**
+     * Console OAuth2 Provider Parameter
+     */
+    export type ConsoleOAuth2ProviderParameter = {
+        /**
+         * Parameter ID. Maps to the request body field used by the project OAuth2 update endpoint (e.g. `clientId`, `appKey`, `tenant`).
+         */
+        $id: string;
+        /**
+         * Verbose, user-facing parameter name as shown in the provider's own dashboard. Includes alternate names when the provider exposes more than one.
+         */
+        name: string;
+        /**
+         * Example value for this parameter.
+         */
+        example: string;
+        /**
+         * Optional hint for this parameter, typically calling out a common wrong value. Empty string when no hint is set.
+         */
+        hint: string;
+    }
+
+    /**
+     * Console OAuth2 Provider
+     */
+    export type ConsoleOAuth2Provider = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * List of parameters required to configure this OAuth2 provider.
+         */
+        parameters: ConsoleOAuth2ProviderParameter[];
+    }
+
+    /**
+     * Console OAuth2 Providers List
+     */
+    export type ConsoleOAuth2ProviderList = {
+        /**
+         * Total number of OAuth2 providers exposed by the server.
+         */
+        total: number;
+        /**
+         * List of OAuth2 providers, each with the parameters required to configure it.
+         */
+        oAuth2Providers: ConsoleOAuth2Provider[];
+    }
+
+    /**
+     * Console Key Scope
+     */
+    export type ConsoleKeyScope = {
+        /**
+         * Scope ID.
+         */
+        $id: string;
+        /**
+         * Scope description.
+         */
+        description: string;
+        /**
+         * Scope category.
+         */
+        category: string;
+        /**
+         * Scope is deprecated.
+         */
+        deprecated: boolean;
+    }
+
+    /**
+     * Console Key Scopes List
+     */
+    export type ConsoleKeyScopeList = {
+        /**
+         * Total number of key scopes exposed by the server.
+         */
+        total: number;
+        /**
+         * List of key scopes, each with its ID and description.
+         */
+        scopes: ConsoleKeyScope[];
+    }
+
+    /**
      * MFA Challenge
      */
     export type MfaChallenge = {
@@ -8415,6 +9689,40 @@ export namespace Models {
          * Block expiration date in ISO 8601 format. Can be null if the block does not expire.
          */
         expiredAt?: string;
+        /**
+         * Name of the project this block applies to.
+         */
+        projectName: string;
+        /**
+         * Region of the project this block applies to.
+         */
+        region: string;
+        /**
+         * Name of the organization that owns the project.
+         */
+        organizationName: string;
+        /**
+         * ID of the organization that owns the project.
+         */
+        organizationId: string;
+        /**
+         * Billing plan of the organization that owns the project.
+         */
+        billingPlan: string;
+    }
+
+    /**
+     * BlockDelete
+     */
+    export type BlockDelete = {
+        /**
+         * Number of blocks deleted
+         */
+        deleted: number;
+        /**
+         * List of deleted blocks
+         */
+        blocks: Block[];
     }
 
     /**
@@ -8751,6 +10059,10 @@ export namespace Models {
          * Invoice status
          */
         status: string;
+        /**
+         * Invoice type. Can be one of `subscription`, `domain_purchase`, `domain_renewal`, `domain_transfer`, or `addon_*`.
+         */
+        type: string;
         /**
          * Last payment error associated with the invoice
          */
@@ -9736,6 +11048,156 @@ export namespace Models {
     }
 
     /**
+     * EstimationPlanChange
+     */
+    export type EstimationPlanChange = {
+        /**
+         * Current billing plan ID
+         */
+        currentBillingPlanId: string;
+        /**
+         * Target billing plan ID
+         */
+        targetBillingPlanId: string;
+        /**
+         * Direction of plan change: upgrade, downgrade, or same
+         */
+        direction: string;
+        /**
+         * Cost estimation details
+         */
+        estimation: PlanChangeEstimationDetails;
+        /**
+         * Plan limits and compliance information
+         */
+        limits: PlanChangeLimits;
+    }
+
+    /**
+     * PlanChangeEstimationDetails
+     */
+    export type PlanChangeEstimationDetails = {
+        /**
+         * Currency code
+         */
+        currency: string;
+        /**
+         * Gross amount after all discounts and credits
+         */
+        grossAmount: number;
+        /**
+         * Credits applied from coupon
+         */
+        credits: number;
+        /**
+         * Organization's existing credits applied
+         */
+        organizationCredits: number;
+        /**
+         * Discount amount from prorated invoices
+         */
+        discount: number;
+        /**
+         * Total amount before discounts and credits
+         */
+        amount: number;
+        /**
+         * Next invoice date
+         */
+        nextInvoiceDate: string;
+        /**
+         * Line items breakdown
+         */
+        items: object;
+        /**
+         * Applied discounts breakdown
+         */
+        discounts: object;
+    }
+
+    /**
+     * PlanChangeLimits
+     */
+    export type PlanChangeLimits = {
+        /**
+         * Total number of projects in the organization
+         */
+        totalProjects: number;
+        /**
+         * Number of projects exceeding target plan limits
+         */
+        nonCompliantProjects: number;
+        /**
+         * Whether the plan change is allowed
+         */
+        canChangePlan: boolean;
+        /**
+         * Project compliance details
+         */
+        projects: PlanChangeProjectCompliance[];
+        /**
+         * Active addon keys that the target plan does not support. When non-empty, `canChangePlan` is false.
+         */
+        unsupportedAddons: string[];
+    }
+
+    /**
+     * PlanChangeProjectCompliance
+     */
+    export type PlanChangeProjectCompliance = {
+        /**
+         * Project ID
+         */
+        $id: string;
+        /**
+         * Project name
+         */
+        name: string;
+        /**
+         * Whether the project complies with target plan limits
+         */
+        isCompliant: boolean;
+        /**
+         * Resource compliance details
+         */
+        resources: PlanChangeResourceCompliance[];
+        /**
+         * Failure reason when compliance could not be evaluated. Present only when the project DB or Regions API was unreachable; in that case `isCompliant` is false (fail closed) and `resources` is empty.
+         */
+        error?: string;
+    }
+
+    /**
+     * PlanChangeResourceCompliance
+     */
+    export type PlanChangeResourceCompliance = {
+        /**
+         * Resource type
+         */
+        type: string;
+        /**
+         * Current usage count
+         */
+        currentUsage: number;
+        /**
+         * Allowed limit in target plan
+         */
+        limit: number;
+        /**
+         * Compliance status
+         */
+        status: string;
+        /**
+         * Number of resources exceeding the limit
+         */
+        excess: number;
+        /**
+         * Suggestion for resolving the compliance issue
+         */
+        resolutionHint: string;
+    }
+
+    /**
      * EstimationDeleteOrganization
      */
     export type EstimationDeleteOrganization = {
@@ -10075,6 +11537,20 @@ export namespace Models {
          * List of paymentMethods.
          */
         paymentMethods: PaymentMethod[];
+    }
+
+    /**
+     * Blocks list
+     */
+    export type BlockList = {
+        /**
+         * Total number of blocks that matched your query.
+         */
+        total: number;
+        /**
+         * List of blocks.
+         */
+        blocks: Block[];
     }
 
     /**

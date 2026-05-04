@@ -363,48 +363,48 @@ export class Domains {
     /**
      *     Finalize a domain purchase initiated with Create Purchase. Verifies that any required 3D Secure authentication is complete, registers the domain, captures the payment, and provisions default DNS records. Returns a 402 error if authentication is still pending.
      *
-     * @param {string} params.domainId - Domain ID to confirm purchase for.
+     * @param {string} params.invoiceId - Invoice ID.
      * @param {string} params.organizationId - Team ID that owns the domain.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      */
-    updatePurchase(params: { domainId: string, organizationId: string }): Promise<Models.DomainPurchase>;
+    updatePurchase(params: { invoiceId: string, organizationId: string }): Promise<Models.DomainPurchase>;
     /**
      *     Finalize a domain purchase initiated with Create Purchase. Verifies that any required 3D Secure authentication is complete, registers the domain, captures the payment, and provisions default DNS records. Returns a 402 error if authentication is still pending.
      *
-     * @param {string} domainId - Domain ID to confirm purchase for.
+     * @param {string} invoiceId - Invoice ID.
      * @param {string} organizationId - Team ID that owns the domain.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePurchase(domainId: string, organizationId: string): Promise<Models.DomainPurchase>;
+    updatePurchase(invoiceId: string, organizationId: string): Promise<Models.DomainPurchase>;
     updatePurchase(
-        paramsOrFirst: { domainId: string, organizationId: string } | string,
+        paramsOrFirst: { invoiceId: string, organizationId: string } | string,
         ...rest: [(string)?]    
     ): Promise<Models.DomainPurchase> {
-        let params: { domainId: string, organizationId: string };
+        let params: { invoiceId: string, organizationId: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, organizationId: string };
+            params = (paramsOrFirst || {}) as { invoiceId: string, organizationId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string,
+                invoiceId: paramsOrFirst as string,
                 organizationId: rest[0] as string            
             };
         }
         
-        const domainId = params.domainId;
+        const invoiceId = params.invoiceId;
         const organizationId = params.organizationId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof invoiceId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "invoiceId"');
         }
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/domains/purchases/{domainId}'.replace('{domainId}', domainId);
+        const apiPath = '/domains/purchases/{invoiceId}'.replace('{invoiceId}', invoiceId);
         const payload: Payload = {};
         if (typeof organizationId !== 'undefined') {
             payload['organizationId'] = organizationId;
@@ -609,48 +609,48 @@ export class Domains {
     /**
      *     Finalize a domain transfer-in initiated with Create Transfer In. Verifies that any required 3D Secure authentication is complete, submits the transfer with the authorization code, captures the payment, and sends a confirmation email. Returns a 402 error if authentication is still pending.
      *
-     * @param {string} params.domainId - Domain ID to confirm transfer for.
+     * @param {string} params.invoiceId - Invoice ID.
      * @param {string} params.organizationId - Team ID that owns the domain.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      */
-    updateTransferIn(params: { domainId: string, organizationId: string }): Promise<Models.DomainPurchase>;
+    updateTransferIn(params: { invoiceId: string, organizationId: string }): Promise<Models.DomainPurchase>;
     /**
      *     Finalize a domain transfer-in initiated with Create Transfer In. Verifies that any required 3D Secure authentication is complete, submits the transfer with the authorization code, captures the payment, and sends a confirmation email. Returns a 402 error if authentication is still pending.
      *
-     * @param {string} domainId - Domain ID to confirm transfer for.
+     * @param {string} invoiceId - Invoice ID.
      * @param {string} organizationId - Team ID that owns the domain.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateTransferIn(domainId: string, organizationId: string): Promise<Models.DomainPurchase>;
+    updateTransferIn(invoiceId: string, organizationId: string): Promise<Models.DomainPurchase>;
     updateTransferIn(
-        paramsOrFirst: { domainId: string, organizationId: string } | string,
+        paramsOrFirst: { invoiceId: string, organizationId: string } | string,
         ...rest: [(string)?]    
     ): Promise<Models.DomainPurchase> {
-        let params: { domainId: string, organizationId: string };
+        let params: { invoiceId: string, organizationId: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, organizationId: string };
+            params = (paramsOrFirst || {}) as { invoiceId: string, organizationId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string,
+                invoiceId: paramsOrFirst as string,
                 organizationId: rest[0] as string            
             };
         }
         
-        const domainId = params.domainId;
+        const invoiceId = params.invoiceId;
         const organizationId = params.organizationId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof invoiceId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "invoiceId"');
         }
         if (typeof organizationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/domains/transfers/in/{domainId}'.replace('{domainId}', domainId);
+        const apiPath = '/domains/transfers/in/{invoiceId}'.replace('{invoiceId}', invoiceId);
         const payload: Payload = {};
         if (typeof organizationId !== 'undefined') {
             payload['organizationId'] = organizationId;

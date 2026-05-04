@@ -1,4 +1,13 @@
 export enum ResourceType {
+    Projects = 'projects',
+    Functions = 'functions',
+    Sites = 'sites',
+    Databases = 'databases',
+    Buckets = 'buckets',
+    Providers = 'providers',
+    Topics = 'topics',
+    Subscribers = 'subscribers',
+    Messages = 'messages',
     Function = 'function',
     Execution = 'execution',
     Message = 'message',

@@ -8,7 +8,7 @@ const client = new Client()
 const domains = new Domains(client);
 
 const result = await domains.updatePurchase({
-    domainId: '<DOMAIN_ID>',
+    invoiceId: '<INVOICE_ID>',
     organizationId: '<ORGANIZATION_ID>'
 });
 
