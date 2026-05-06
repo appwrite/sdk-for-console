@@ -4,6 +4,7 @@ import type { Models } from '../models';
 
 import { Platform } from '../enums/platform';
 import { ConsoleResourceType } from '../enums/console-resource-type';
+import { QuerySuggestionResource } from '../enums/query-suggestion-resource';
 
 export class Console {
     client: Client;
@@ -685,6 +686,87 @@ export class Console {
         }
         if (typeof max !== 'undefined') {
             payload['max'] = max;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Suggest valid Appwrite query JSON objects for a supported list resource from free-text user intent. The endpoint picks a validator based on `resource` — for system resources it uses the static validator and its allowed attributes, and for user-owned table rows it loads the table schema and validates against those attributes at request time. The returned queries are guaranteed to parse and pass the relevant queries validator.
+     * 
+     *
+     * @param {QuerySuggestionResource} params.resource - Resource to generate queries for.
+     * @param {string} params.input - Natural language query intent used to generate filters/sorting/pagination.
+     * @param {string} params.databaseId - Database ID. Required when resource is `tables` or `rows`.
+     * @param {string} params.tableId - Table ID. Required when resource is `rows`.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    suggestQueries(params: { resource: QuerySuggestionResource, input: string, databaseId?: string, tableId?: string }): Promise<{}>;
+    /**
+     * Suggest valid Appwrite query JSON objects for a supported list resource from free-text user intent. The endpoint picks a validator based on `resource` — for system resources it uses the static validator and its allowed attributes, and for user-owned table rows it loads the table schema and validates against those attributes at request time. The returned queries are guaranteed to parse and pass the relevant queries validator.
+     * 
+     *
+     * @param {QuerySuggestionResource} resource - Resource to generate queries for.
+     * @param {string} input - Natural language query intent used to generate filters/sorting/pagination.
+     * @param {string} databaseId - Database ID. Required when resource is `tables` or `rows`.
+     * @param {string} tableId - Table ID. Required when resource is `rows`.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    suggestQueries(resource: QuerySuggestionResource, input: string, databaseId?: string, tableId?: string): Promise<{}>;
+    suggestQueries(
+        paramsOrFirst: { resource: QuerySuggestionResource, input: string, databaseId?: string, tableId?: string } | QuerySuggestionResource,
+        ...rest: [(string)?, (string)?, (string)?]    
+    ): Promise<{}> {
+        let params: { resource: QuerySuggestionResource, input: string, databaseId?: string, tableId?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resource' in paramsOrFirst || 'input' in paramsOrFirst || 'databaseId' in paramsOrFirst || 'tableId' in paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { resource: QuerySuggestionResource, input: string, databaseId?: string, tableId?: string };
+        } else {
+            params = {
+                resource: paramsOrFirst as QuerySuggestionResource,
+                input: rest[0] as string,
+                databaseId: rest[1] as string,
+                tableId: rest[2] as string            
+            };
+        }
+        
+        const resource = params.resource;
+        const input = params.input;
+        const databaseId = params.databaseId;
+        const tableId = params.tableId;
+
+        if (typeof resource === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "resource"');
+        }
+        if (typeof input === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "input"');
+        }
+
+        const apiPath = '/console/suggestions/queries';
+        const payload: Payload = {};
+        if (typeof resource !== 'undefined') {
+            payload['resource'] = resource;
+        }
+        if (typeof input !== 'undefined') {
+            payload['input'] = input;
+        }
+        if (typeof databaseId !== 'undefined') {
+            payload['databaseId'] = databaseId;
+        }
+        if (typeof tableId !== 'undefined') {
+            payload['tableId'] = tableId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

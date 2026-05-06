@@ -359,12 +359,13 @@ class Client {
         locale: string;
         mode: string;
         cookie: string;
+        session: string;
+        devkey: string;
         impersonateuserid: string;
         impersonateuseremail: string;
         impersonateuserphone: string;
         platform: string;
         selfSigned: boolean;
-        session?: string;
     } = {
         endpoint: 'https://cloud.appwrite.io/v1',
         endpointRealtime: '',
@@ -374,12 +375,13 @@ class Client {
         locale: '',
         mode: '',
         cookie: '',
+        session: '',
+        devkey: '',
         impersonateuserid: '',
         impersonateuseremail: '',
         impersonateuserphone: '',
         platform: '',
         selfSigned: false,
-        session: undefined,
     };
     /**
      * Custom headers for API requests.
@@ -388,7 +390,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '12.0.0',
+        'x-sdk-version': '12.1.0',
         'X-Appwrite-Response-Format': '1.9.3',
     };
 
@@ -529,7 +531,7 @@ class Client {
     /**
      * Set Cookie
      *
-     * The user cookie to authenticate with
+     * The user cookie to authenticate with. Used by SDKs that forward an incoming Cookie header in server-side runtimes.
      *
      * @param value string
      *
@@ -538,6 +540,34 @@ class Client {
     setCookie(value: string): this {
         this.headers['Cookie'] = value;
         this.config.cookie = value;
+        return this;
+    }
+    /**
+     * Set Session
+     *
+     * The user session to authenticate with
+     *
+     * @param value string
+     *
+     * @return {this}
+     */
+    setSession(value: string): this {
+        this.headers['X-Appwrite-Session'] = value;
+        this.config.session = value;
+        return this;
+    }
+    /**
+     * Set DevKey
+     *
+     * Your secret dev API key
+     *
+     * @param value string
+     *
+     * @return {this}
+     */
+    setDevKey(value: string): this {
+        this.headers['X-Appwrite-Dev-Key'] = value;
+        this.config.devkey = value;
         return this;
     }
     /**

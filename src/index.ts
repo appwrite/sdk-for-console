@@ -58,6 +58,7 @@ export { ImageFormat } from './enums/image-format';
 export { BackupServices } from './enums/backup-services';
 export { Platform } from './enums/platform';
 export { ConsoleResourceType } from './enums/console-resource-type';
+export { QuerySuggestionResource } from './enums/query-suggestion-resource';
 export { UsageRange } from './enums/usage-range';
 export { RelationshipType } from './enums/relationship-type';
 export { RelationMutate } from './enums/relation-mutate';

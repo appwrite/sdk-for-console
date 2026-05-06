@@ -1,5 +1,14 @@
 # Change Log
 
+## 12.1.0
+
+* Added: `setSession` method on `Client` for `X-Appwrite-Session` authentication
+* Added: `setDevKey` method on `Client` for `X-Appwrite-Dev-Key` authentication
+* Added: `suggestQueries` method on `Console` service
+* Added: `QuerySuggestionResource` enum for supported list resource types
+* Added: `project.policies.read`, `project.policies.write`, `backups.policies.read`, `backups.policies.write` scopes
+* Updated: `setCookie` documentation clarified for server-side runtimes
+
 ## 12.0.0
 
 * Breaking: Renamed `AuthMethod` enum to `MethodId`
