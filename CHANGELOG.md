@@ -1,11 +1,5 @@
 # Change Log
 
-## 12.2.0
-
-* Added: Introduced `bigint` create/update APIs for legacy Databases attributes
-* Added: Introduced `bigint` create/update APIs for `TablesDB` columns
-* Updated: Extended key-list query filters with `key`, `resourceType`, `resourceId`, and `secret`
-
 ## 12.1.0
 
 * Added: `setSession` method on `Client` for `X-Appwrite-Session` authentication
