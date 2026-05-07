@@ -8,7 +8,9 @@ const client = new Client()
 const functions = new Functions(client);
 
 const result = await functions.listVariables({
-    functionId: '<FUNCTION_ID>'
+    functionId: '<FUNCTION_ID>',
+    queries: [], // optional
+    total: false // optional
 });
 
 console.log(result);

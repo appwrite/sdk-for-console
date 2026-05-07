@@ -7,7 +7,10 @@ const client = new Client()
 
 const project = new Project(client);
 
-const result = await project.listOAuth2Providers();
+const result = await project.listOAuth2Providers({
+    queries: [], // optional
+    total: false // optional
+});
 
 console.log(result);
 ```

@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Project } from "@appwrite.io/console";
+import { Client, Project, ProviderId } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const project = new Project(client);
 
 const result = await project.getOAuth2Provider({
-    provider: '<PROVIDER>'
+    providerId: ProviderId.Amazon
 });
 
 console.log(result);

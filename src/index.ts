@@ -84,6 +84,7 @@ export { NHostMigrationResource } from './enums/n-host-migration-resource';
 export { SupabaseMigrationResource } from './enums/supabase-migration-resource';
 export { Addon } from './enums/addon';
 export { MethodId } from './enums/method-id';
+export { ProviderId } from './enums/provider-id';
 export { PolicyId } from './enums/policy-id';
 export { ProtocolId } from './enums/protocol-id';
 export { ServiceId } from './enums/service-id';

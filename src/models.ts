@@ -915,7 +915,7 @@ export namespace Models {
         /**
          * Collection attributes.
          */
-        attributes: (Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributePoint | Models.AttributeLine | Models.AttributePolygon | Models.AttributeVarchar | Models.AttributeText | Models.AttributeMediumtext | Models.AttributeLongtext | Models.AttributeString)[];
+        attributes: (Models.AttributeBoolean | Models.AttributeBigint | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributePoint | Models.AttributeLine | Models.AttributePolygon | Models.AttributeVarchar | Models.AttributeText | Models.AttributeMediumtext | Models.AttributeLongtext | Models.AttributeString)[];
         /**
          * Collection indexes.
          */
@@ -941,7 +941,7 @@ export namespace Models {
         /**
          * List of attributes.
          */
-        attributes: (Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributePoint | Models.AttributeLine | Models.AttributePolygon | Models.AttributeVarchar | Models.AttributeText | Models.AttributeMediumtext | Models.AttributeLongtext | Models.AttributeString)[];
+        attributes: (Models.AttributeBoolean | Models.AttributeBigint | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributePoint | Models.AttributeLine | Models.AttributePolygon | Models.AttributeVarchar | Models.AttributeText | Models.AttributeMediumtext | Models.AttributeLongtext | Models.AttributeString)[];
     }
 
     /**
@@ -1042,6 +1042,56 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: number;
+    }
+
+    /**
+     * AttributeBigInt
+     */
+    export type AttributeBigint = {
+        /**
+         * Attribute Key.
+         */
+        key: string;
+        /**
+         * Attribute type.
+         */
+        type: string;
+        /**
+         * Attribute status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: AttributeStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an attribute.
+         */
+        error: string;
+        /**
+         * Is attribute required?
+         */
+        required: boolean;
+        /**
+         * Is attribute an array?
+         */
+        array?: boolean;
+        /**
+         * Attribute creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Attribute update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Minimum value to enforce for new documents.
+         */
+        min?: number | bigint;
+        /**
+         * Maximum value to enforce for new documents.
+         */
+        max?: number | bigint;
+        /**
+         * Default value for attribute when not provided. Cannot be set when attribute is required.
+         */
+        default?: number | bigint;
     }
 
     /**
@@ -2081,7 +2131,7 @@ export namespace Models {
         /**
          * Table columns.
          */
-        columns: (Models.ColumnBoolean | Models.ColumnInteger | Models.ColumnFloat | Models.ColumnEmail | Models.ColumnEnum | Models.ColumnUrl | Models.ColumnIp | Models.ColumnDatetime | Models.ColumnRelationship | Models.ColumnPoint | Models.ColumnLine | Models.ColumnPolygon | Models.ColumnVarchar | Models.ColumnText | Models.ColumnMediumtext | Models.ColumnLongtext | Models.ColumnString)[];
+        columns: (Models.ColumnBoolean | Models.ColumnBigint | Models.ColumnInteger | Models.ColumnFloat | Models.ColumnEmail | Models.ColumnEnum | Models.ColumnUrl | Models.ColumnIp | Models.ColumnDatetime | Models.ColumnRelationship | Models.ColumnPoint | Models.ColumnLine | Models.ColumnPolygon | Models.ColumnVarchar | Models.ColumnText | Models.ColumnMediumtext | Models.ColumnLongtext | Models.ColumnString)[];
         /**
          * Table indexes.
          */
@@ -2107,7 +2157,7 @@ export namespace Models {
         /**
          * List of columns.
          */
-        columns: (Models.ColumnBoolean | Models.ColumnInteger | Models.ColumnFloat | Models.ColumnEmail | Models.ColumnEnum | Models.ColumnUrl | Models.ColumnIp | Models.ColumnDatetime | Models.ColumnRelationship | Models.ColumnPoint | Models.ColumnLine | Models.ColumnPolygon | Models.ColumnVarchar | Models.ColumnText | Models.ColumnMediumtext | Models.ColumnLongtext | Models.ColumnString)[];
+        columns: (Models.ColumnBoolean | Models.ColumnBigint | Models.ColumnInteger | Models.ColumnFloat | Models.ColumnEmail | Models.ColumnEnum | Models.ColumnUrl | Models.ColumnIp | Models.ColumnDatetime | Models.ColumnRelationship | Models.ColumnPoint | Models.ColumnLine | Models.ColumnPolygon | Models.ColumnVarchar | Models.ColumnText | Models.ColumnMediumtext | Models.ColumnLongtext | Models.ColumnString)[];
     }
 
     /**
@@ -2208,6 +2258,56 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: number;
+    }
+
+    /**
+     * ColumnBigInt
+     */
+    export type ColumnBigint = {
+        /**
+         * Column Key.
+         */
+        key: string;
+        /**
+         * Column type.
+         */
+        type: string;
+        /**
+         * Column status. Possible values: `available`, `processing`, `deleting`, `stuck`, or `failed`
+         */
+        status: ColumnStatus;
+        /**
+         * Error message. Displays error generated on failure of creating or deleting an column.
+         */
+        error: string;
+        /**
+         * Is column required?
+         */
+        required: boolean;
+        /**
+         * Is column an array?
+         */
+        array?: boolean;
+        /**
+         * Column creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Column update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Minimum value to enforce for new documents.
+         */
+        min?: number | bigint;
+        /**
+         * Maximum value to enforce for new documents.
+         */
+        max?: number | bigint;
+        /**
+         * Default value for column when not provided. Cannot be set when column is required.
+         */
+        default?: number | bigint;
     }
 
     /**
@@ -6292,11 +6392,11 @@ export namespace Models {
         /**
          * OpenID Connect token endpoint URL.
          */
-        tokenUrl: string;
+        tokenURL: string;
         /**
          * OpenID Connect user info endpoint URL.
          */
-        userInfoUrl: string;
+        userInfoURL: string;
     }
 
     /**
@@ -8140,7 +8240,7 @@ export namespace Models {
          */
         deploymentResourceType?: ProxyRuleDeploymentResourceType;
         /**
-         * ID deployment's resource. Used if type is "deployment"
+         * ID of deployment's resource (site or function ID). Used if type is "deployment"
          */
         deploymentResourceId: string;
         /**
@@ -8148,7 +8248,7 @@ export namespace Models {
          */
         deploymentVcsProviderBranch: string;
         /**
-         * Domain verification status. Possible values are "created", "verifying", "verified" and "unverified"
+         * Domain verification status. Possible values are "unverified", "verifying", "verified"
          */
         status: ProxyRuleStatus;
         /**

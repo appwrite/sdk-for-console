@@ -9,7 +9,7 @@ const project = new Project(client);
 
 const result = await project.createEphemeralKey({
     scopes: [Scopes.ProjectRead],
-    duration: 1
+    duration: 600
 });
 
 console.log(result);
