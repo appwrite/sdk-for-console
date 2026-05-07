@@ -85,7 +85,7 @@ export { NHostMigrationResource } from './enums/n-host-migration-resource';
 export { SupabaseMigrationResource } from './enums/supabase-migration-resource';
 export { Addon } from './enums/addon';
 export { AuthMethod } from './enums/auth-method';
-export { ProjectPolicyId } from './enums/project-policy-id';
+export { ProjectPolicy } from './enums/project-policy';
 export { ProtocolId } from './enums/protocol-id';
 export { ServiceId } from './enums/service-id';
 export { Secure } from './enums/secure';
