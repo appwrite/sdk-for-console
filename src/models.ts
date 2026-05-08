@@ -53,6 +53,20 @@ export namespace Models {
     }
 
     /**
+     * Presences List
+     */
+    export type PresenceList<Presence extends Models.Presence = Models.DefaultPresence> = {
+        /**
+         * Total number of presences that matched your query.
+         */
+        total: number;
+        /**
+         * List of presences.
+         */
+        presences: Presence[];
+    }
+
+    /**
      * Tables List
      */
     export type TableList = {
@@ -3178,6 +3192,57 @@ export namespace Models {
     }
 
     export type DefaultDocument = Document & {
+        [key: string]: any;
+        [__default]: true;
+    };
+
+    /**
+     * Presence
+     */
+    export type Presence = {
+        /**
+         * Presence ID.
+         */
+        $id: string;
+        /**
+         * Presence sequence ID.
+         */
+        $sequence: string;
+        /**
+         * Presence creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Presence update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Presence permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * User internal ID.
+         */
+        userInternalId: string;
+        /**
+         * User ID.
+         */
+        userId: string;
+        /**
+         * Presence status.
+         */
+        status?: string;
+        /**
+         * Presence source.
+         */
+        source: string;
+        /**
+         * Presence expiry date in ISO 8601 format.
+         */
+        expiresAt?: string;
+    }
+
+    export type DefaultPresence = Presence & {
         [key: string]: any;
         [__default]: true;
     };
@@ -7318,6 +7383,24 @@ export namespace Models {
     }
 
     /**
+     * UsagePresence
+     */
+    export type UsagePresence = {
+        /**
+         * Time range of the usage stats.
+         */
+        range: string;
+        /**
+         * Current total number of online users.
+         */
+        usersOnlineTotal: number;
+        /**
+         * Aggregated number of online users per period.
+         */
+        presences: Metric[];
+    }
+
+    /**
      * StorageUsage
      */
     export type UsageStorage = {
@@ -9326,7 +9409,7 @@ export namespace Models {
          */
         size: number;
         /**
-         * The status of the archive creation. Possible values: pending, processing, uploading, completed, failed.
+         * The status of the archive creation. Possible values: pending, processing, uploading, completed, failed, skipped.
          */
         status: string;
         /**

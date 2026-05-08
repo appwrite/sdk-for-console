@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Migrations, AppwriteMigrationResource, OnDuplicate } from "@appwrite.io/console";
+import { Client, Migrations, AppwriteMigrationResource } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,8 +11,7 @@ const result = await migrations.createAppwriteMigration({
     resources: [AppwriteMigrationResource.User],
     endpoint: 'https://example.com',
     projectId: '<PROJECT_ID>',
-    apiKey: '<API_KEY>',
-    onDuplicate: OnDuplicate.Fail // optional
+    apiKey: '<API_KEY>'
 });
 
 console.log(result);

@@ -3,7 +3,6 @@ import { AppwriteException, Client, type Payload, UploadProgress } from '../clie
 import type { Models } from '../models';
 
 import { AppwriteMigrationResource } from '../enums/appwrite-migration-resource';
-import { OnDuplicate } from '../enums/on-duplicate';
 import { FirebaseMigrationResource } from '../enums/firebase-migration-resource';
 import { NHostMigrationResource } from '../enums/n-host-migration-resource';
 import { SupabaseMigrationResource } from '../enums/supabase-migration-resource';
@@ -88,11 +87,10 @@ export class Migrations {
      * @param {string} params.endpoint - Source Appwrite endpoint
      * @param {string} params.projectId - Source Project ID
      * @param {string} params.apiKey - Source API Key
-     * @param {OnDuplicate} params.onDuplicate - Behavior when a row with an existing $id is encountered. "fail" (default): abort on first conflict. "skip": silently ignore. "overwrite": replace existing row.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createAppwriteMigration(params: { resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string, onDuplicate?: OnDuplicate }): Promise<Models.Migration>;
+    createAppwriteMigration(params: { resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string }): Promise<Models.Migration>;
     /**
      * Migrate data from another Appwrite project to your current project. This endpoint allows you to migrate resources like databases, collections, documents, users, and files from an existing Appwrite project. 
      *
@@ -100,27 +98,25 @@ export class Migrations {
      * @param {string} endpoint - Source Appwrite endpoint
      * @param {string} projectId - Source Project ID
      * @param {string} apiKey - Source API Key
-     * @param {OnDuplicate} onDuplicate - Behavior when a row with an existing $id is encountered. "fail" (default): abort on first conflict. "skip": silently ignore. "overwrite": replace existing row.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createAppwriteMigration(resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string, onDuplicate?: OnDuplicate): Promise<Models.Migration>;
+    createAppwriteMigration(resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string): Promise<Models.Migration>;
     createAppwriteMigration(
-        paramsOrFirst: { resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string, onDuplicate?: OnDuplicate } | AppwriteMigrationResource[],
-        ...rest: [(string)?, (string)?, (string)?, (OnDuplicate)?]    
+        paramsOrFirst: { resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string } | AppwriteMigrationResource[],
+        ...rest: [(string)?, (string)?, (string)?]    
     ): Promise<Models.Migration> {
-        let params: { resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string, onDuplicate?: OnDuplicate };
+        let params: { resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string };
         
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'endpoint' in paramsOrFirst || 'projectId' in paramsOrFirst || 'apiKey' in paramsOrFirst || 'onDuplicate' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string, onDuplicate?: OnDuplicate };
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'endpoint' in paramsOrFirst || 'projectId' in paramsOrFirst || 'apiKey' in paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string };
         } else {
             params = {
                 resources: paramsOrFirst as AppwriteMigrationResource[],
                 endpoint: rest[0] as string,
                 projectId: rest[1] as string,
-                apiKey: rest[2] as string,
-                onDuplicate: rest[3] as OnDuplicate            
+                apiKey: rest[2] as string            
             };
         }
         
@@ -128,7 +124,6 @@ export class Migrations {
         const endpoint = params.endpoint;
         const projectId = params.projectId;
         const apiKey = params.apiKey;
-        const onDuplicate = params.onDuplicate;
 
         if (typeof resources === 'undefined') {
             throw new AppwriteException('Missing required parameter: "resources"');
@@ -156,9 +151,6 @@ export class Migrations {
         }
         if (typeof apiKey !== 'undefined') {
             payload['apiKey'] = apiKey;
-        }
-        if (typeof onDuplicate !== 'undefined') {
-            payload['onDuplicate'] = onDuplicate;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -381,11 +373,10 @@ export class Migrations {
      * @param {string} params.fileId - File ID.
      * @param {string} params.resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database.
      * @param {boolean} params.internalFile - Is the file stored in an internal bucket?
-     * @param {OnDuplicate} params.onDuplicate - Behavior when a row with an existing $id is encountered. "fail" (default): abort on first conflict. "skip": silently ignore. "overwrite": replace existing row.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createCSVImport(params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate }): Promise<Models.Migration>;
+    createCSVImport(params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean }): Promise<Models.Migration>;
     /**
      * Import documents from a CSV file into your Appwrite database. This endpoint allows you to import documents from a CSV file uploaded to Appwrite Storage bucket.
      *
@@ -393,27 +384,25 @@ export class Migrations {
      * @param {string} fileId - File ID.
      * @param {string} resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database.
      * @param {boolean} internalFile - Is the file stored in an internal bucket?
-     * @param {OnDuplicate} onDuplicate - Behavior when a row with an existing $id is encountered. "fail" (default): abort on first conflict. "skip": silently ignore. "overwrite": replace existing row.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createCSVImport(bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate): Promise<Models.Migration>;
+    createCSVImport(bucketId: string, fileId: string, resourceId: string, internalFile?: boolean): Promise<Models.Migration>;
     createCSVImport(
-        paramsOrFirst: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate } | string,
-        ...rest: [(string)?, (string)?, (boolean)?, (OnDuplicate)?]    
+        paramsOrFirst: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean } | string,
+        ...rest: [(string)?, (string)?, (boolean)?]    
     ): Promise<Models.Migration> {
-        let params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
+        let params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
+            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean };
         } else {
             params = {
                 bucketId: paramsOrFirst as string,
                 fileId: rest[0] as string,
                 resourceId: rest[1] as string,
-                internalFile: rest[2] as boolean,
-                onDuplicate: rest[3] as OnDuplicate            
+                internalFile: rest[2] as boolean            
             };
         }
         
@@ -421,7 +410,6 @@ export class Migrations {
         const fileId = params.fileId;
         const resourceId = params.resourceId;
         const internalFile = params.internalFile;
-        const onDuplicate = params.onDuplicate;
 
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
@@ -446,9 +434,6 @@ export class Migrations {
         }
         if (typeof internalFile !== 'undefined') {
             payload['internalFile'] = internalFile;
-        }
-        if (typeof onDuplicate !== 'undefined') {
-            payload['onDuplicate'] = onDuplicate;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -692,11 +677,10 @@ export class Migrations {
      * @param {string} params.fileId - File ID.
      * @param {string} params.resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database.
      * @param {boolean} params.internalFile - Is the file stored in an internal bucket?
-     * @param {OnDuplicate} params.onDuplicate - Behavior when a row with an existing $id is encountered. "fail" (default): abort on first conflict. "skip": silently ignore. "overwrite": replace existing row.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createJSONImport(params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate }): Promise<Models.Migration>;
+    createJSONImport(params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean }): Promise<Models.Migration>;
     /**
      * Import documents from a JSON file into your Appwrite database. This endpoint allows you to import documents from a JSON file uploaded to Appwrite Storage bucket.
      * 
@@ -705,27 +689,25 @@ export class Migrations {
      * @param {string} fileId - File ID.
      * @param {string} resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database.
      * @param {boolean} internalFile - Is the file stored in an internal bucket?
-     * @param {OnDuplicate} onDuplicate - Behavior when a row with an existing $id is encountered. "fail" (default): abort on first conflict. "skip": silently ignore. "overwrite": replace existing row.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createJSONImport(bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate): Promise<Models.Migration>;
+    createJSONImport(bucketId: string, fileId: string, resourceId: string, internalFile?: boolean): Promise<Models.Migration>;
     createJSONImport(
-        paramsOrFirst: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate } | string,
-        ...rest: [(string)?, (string)?, (boolean)?, (OnDuplicate)?]    
+        paramsOrFirst: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean } | string,
+        ...rest: [(string)?, (string)?, (boolean)?]    
     ): Promise<Models.Migration> {
-        let params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
+        let params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
+            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean };
         } else {
             params = {
                 bucketId: paramsOrFirst as string,
                 fileId: rest[0] as string,
                 resourceId: rest[1] as string,
-                internalFile: rest[2] as boolean,
-                onDuplicate: rest[3] as OnDuplicate            
+                internalFile: rest[2] as boolean            
             };
         }
         
@@ -733,7 +715,6 @@ export class Migrations {
         const fileId = params.fileId;
         const resourceId = params.resourceId;
         const internalFile = params.internalFile;
-        const onDuplicate = params.onDuplicate;
 
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
@@ -758,9 +739,6 @@ export class Migrations {
         }
         if (typeof internalFile !== 'undefined') {
             payload['internalFile'] = internalFile;
-        }
-        if (typeof onDuplicate !== 'undefined') {
-            payload['onDuplicate'] = onDuplicate;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

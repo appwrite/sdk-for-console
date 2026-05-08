@@ -2,10 +2,10 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { AuthMethod } from '../enums/auth-method';
+import { MethodId } from '../enums/method-id';
 import { Scopes } from '../enums/scopes';
-import { OAuthProvider } from '../enums/o-auth-provider';
-import { ProjectPolicy } from '../enums/project-policy';
+import { ProviderId } from '../enums/provider-id';
+import { PolicyId } from '../enums/policy-id';
 import { ProtocolId } from '../enums/protocol-id';
 import { ServiceId } from '../enums/service-id';
 import { Secure } from '../enums/secure';
@@ -47,33 +47,33 @@ export class Project {
     /**
      * Update properties of a specific auth method. Use this endpoint to enable or disable a method in your project. 
      *
-     * @param {AuthMethod} params.methodId - Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone
+     * @param {MethodId} params.methodId - Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone
      * @param {boolean} params.enabled - Auth method status.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAuthMethod(params: { methodId: AuthMethod, enabled: boolean }): Promise<Models.Project>;
+    updateAuthMethod(params: { methodId: MethodId, enabled: boolean }): Promise<Models.Project>;
     /**
      * Update properties of a specific auth method. Use this endpoint to enable or disable a method in your project. 
      *
-     * @param {AuthMethod} methodId - Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone
+     * @param {MethodId} methodId - Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone
      * @param {boolean} enabled - Auth method status.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateAuthMethod(methodId: AuthMethod, enabled: boolean): Promise<Models.Project>;
+    updateAuthMethod(methodId: MethodId, enabled: boolean): Promise<Models.Project>;
     updateAuthMethod(
-        paramsOrFirst: { methodId: AuthMethod, enabled: boolean } | AuthMethod,
+        paramsOrFirst: { methodId: MethodId, enabled: boolean } | MethodId,
         ...rest: [(boolean)?]    
     ): Promise<Models.Project> {
-        let params: { methodId: AuthMethod, enabled: boolean };
+        let params: { methodId: MethodId, enabled: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('methodId' in paramsOrFirst || 'enabled' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { methodId: AuthMethod, enabled: boolean };
+            params = (paramsOrFirst || {}) as { methodId: MethodId, enabled: boolean };
         } else {
             params = {
-                methodId: paramsOrFirst as AuthMethod,
+                methodId: paramsOrFirst as MethodId,
                 enabled: rest[0] as boolean            
             };
         }
@@ -1079,30 +1079,30 @@ export class Project {
     /**
      * Get a single OAuth2 provider configuration. Credential fields (client secret, p8 file, key/team IDs) are write-only and always returned empty.
      *
-     * @param {OAuthProvider} params.providerId - OAuth2 provider key. For example: github, google, apple.
+     * @param {ProviderId} params.providerId - OAuth2 provider key. For example: github, google, apple.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft>}
      */
-    getOAuth2Provider(params: { providerId: OAuthProvider }): Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft>;
+    getOAuth2Provider(params: { providerId: ProviderId }): Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft>;
     /**
      * Get a single OAuth2 provider configuration. Credential fields (client secret, p8 file, key/team IDs) are write-only and always returned empty.
      *
-     * @param {OAuthProvider} providerId - OAuth2 provider key. For example: github, google, apple.
+     * @param {ProviderId} providerId - OAuth2 provider key. For example: github, google, apple.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getOAuth2Provider(providerId: OAuthProvider): Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft>;
+    getOAuth2Provider(providerId: ProviderId): Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft>;
     getOAuth2Provider(
-        paramsOrFirst: { providerId: OAuthProvider } | OAuthProvider    
+        paramsOrFirst: { providerId: ProviderId } | ProviderId    
     ): Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft> {
-        let params: { providerId: OAuthProvider };
+        let params: { providerId: ProviderId };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('providerId' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: OAuthProvider };
+            params = (paramsOrFirst || {}) as { providerId: ProviderId };
         } else {
             params = {
-                providerId: paramsOrFirst as OAuthProvider            
+                providerId: paramsOrFirst as ProviderId            
             };
         }
         
@@ -2381,8 +2381,8 @@ export class Project {
     /**
      * Update the project OAuth2 Google configuration.
      *
-     * @param {string} params.clientId - 'Client ID' of Google OAuth2 app. For example: your-google-client-id.apps.googleusercontent.com
-     * @param {string} params.clientSecret - 'Client Secret' of Google OAuth2 app. For example: your-google-client-secret
+     * @param {string} params.clientId - 'Client ID' of Google OAuth2 app. For example: 120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com
+     * @param {string} params.clientSecret - 'Client Secret' of Google OAuth2 app. For example: GOCSPX-2k8gsR0000000000000000VNahJj
      * @param {boolean} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Google>}
@@ -2391,8 +2391,8 @@ export class Project {
     /**
      * Update the project OAuth2 Google configuration.
      *
-     * @param {string} clientId - 'Client ID' of Google OAuth2 app. For example: your-google-client-id.apps.googleusercontent.com
-     * @param {string} clientSecret - 'Client Secret' of Google OAuth2 app. For example: your-google-client-secret
+     * @param {string} clientId - 'Client ID' of Google OAuth2 app. For example: 120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com
+     * @param {string} clientSecret - 'Client Secret' of Google OAuth2 app. For example: GOCSPX-2k8gsR0000000000000000VNahJj
      * @param {boolean} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Google>}
@@ -2597,7 +2597,7 @@ export class Project {
      * Update the project OAuth2 Linkedin configuration.
      *
      * @param {string} params.clientId - 'Client ID' of Linkedin OAuth2 app. For example: 770000000000dv
-     * @param {string} params.primaryClientSecret - 'Primary Client Secret or Secondary Client Secret' of Linkedin OAuth2 app. For example: your-linkedin-client-secret
+     * @param {string} params.primaryClientSecret - 'Primary Client Secret or Secondary Client Secret' of Linkedin OAuth2 app. For example: WPL_AP1.2Bf0000000000000./HtlYw==
      * @param {boolean} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Linkedin>}
@@ -2607,7 +2607,7 @@ export class Project {
      * Update the project OAuth2 Linkedin configuration.
      *
      * @param {string} clientId - 'Client ID' of Linkedin OAuth2 app. For example: 770000000000dv
-     * @param {string} primaryClientSecret - 'Primary Client Secret or Secondary Client Secret' of Linkedin OAuth2 app. For example: your-linkedin-client-secret
+     * @param {string} primaryClientSecret - 'Primary Client Secret or Secondary Client Secret' of Linkedin OAuth2 app. For example: WPL_AP1.2Bf0000000000000./HtlYw==
      * @param {boolean} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Linkedin>}
@@ -5543,30 +5543,30 @@ export class Project {
     /**
      * Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
      *
-     * @param {ProjectPolicy} params.policyId - Policy ID. Can be one of: password-dictionary, password-history, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy.
+     * @param {PolicyId} params.policyId - Policy ID. Can be one of: password-dictionary, password-history, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy.
      * @throws {AppwriteException}
      * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy>}
      */
-    getPolicy(params: { policyId: ProjectPolicy }): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy>;
+    getPolicy(params: { policyId: PolicyId }): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy>;
     /**
      * Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
      *
-     * @param {ProjectPolicy} policyId - Policy ID. Can be one of: password-dictionary, password-history, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy.
+     * @param {PolicyId} policyId - Policy ID. Can be one of: password-dictionary, password-history, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy.
      * @throws {AppwriteException}
      * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getPolicy(policyId: ProjectPolicy): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy>;
+    getPolicy(policyId: PolicyId): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy>;
     getPolicy(
-        paramsOrFirst: { policyId: ProjectPolicy } | ProjectPolicy    
+        paramsOrFirst: { policyId: PolicyId } | PolicyId    
     ): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy> {
-        let params: { policyId: ProjectPolicy };
+        let params: { policyId: PolicyId };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('policyId' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { policyId: ProjectPolicy };
+            params = (paramsOrFirst || {}) as { policyId: PolicyId };
         } else {
             params = {
-                policyId: paramsOrFirst as ProjectPolicy            
+                policyId: paramsOrFirst as PolicyId            
             };
         }
         
