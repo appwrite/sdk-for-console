@@ -306,11 +306,11 @@ export class Vcs {
      * @param {string} params.installationId - Installation Id
      * @param {string} params.providerRepositoryId - Repository Id
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
-     * @param {string} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit, offset, cursorAfter, and cursorBefore
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit, offset, cursorAfter, and cursorBefore
      * @throws {AppwriteException}
      * @returns {Promise<Models.BranchList>}
      */
-    listRepositoryBranches(params: { installationId: string, providerRepositoryId: string, search?: string, queries?: string }): Promise<Models.BranchList>;
+    listRepositoryBranches(params: { installationId: string, providerRepositoryId: string, search?: string, queries?: string[] }): Promise<Models.BranchList>;
     /**
      * Get a list of branches from a GitHub repository in your installation. This endpoint supports filtering by a search term and pagination using query strings such as `Query.limit()`, `Query.offset()`, `Query.cursorAfter()`, and `Query.cursorBefore()`. It returns branch names along with the total number of matches. The GitHub installation must be properly configured and have access to the requested repository for this endpoint to work.
      * 
@@ -318,26 +318,26 @@ export class Vcs {
      * @param {string} installationId - Installation Id
      * @param {string} providerRepositoryId - Repository Id
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
-     * @param {string} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit, offset, cursorAfter, and cursorBefore
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit, offset, cursorAfter, and cursorBefore
      * @throws {AppwriteException}
      * @returns {Promise<Models.BranchList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listRepositoryBranches(installationId: string, providerRepositoryId: string, search?: string, queries?: string): Promise<Models.BranchList>;
+    listRepositoryBranches(installationId: string, providerRepositoryId: string, search?: string, queries?: string[]): Promise<Models.BranchList>;
     listRepositoryBranches(
-        paramsOrFirst: { installationId: string, providerRepositoryId: string, search?: string, queries?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?]    
+        paramsOrFirst: { installationId: string, providerRepositoryId: string, search?: string, queries?: string[] } | string,
+        ...rest: [(string)?, (string)?, (string[])?]    
     ): Promise<Models.BranchList> {
-        let params: { installationId: string, providerRepositoryId: string, search?: string, queries?: string };
+        let params: { installationId: string, providerRepositoryId: string, search?: string, queries?: string[] };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { installationId: string, providerRepositoryId: string, search?: string, queries?: string };
+            params = (paramsOrFirst || {}) as { installationId: string, providerRepositoryId: string, search?: string, queries?: string[] };
         } else {
             params = {
                 installationId: paramsOrFirst as string,
                 providerRepositoryId: rest[0] as string,
                 search: rest[1] as string,
-                queries: rest[2] as string            
+                queries: rest[2] as string[]            
             };
         }
         
