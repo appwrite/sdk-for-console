@@ -70,6 +70,5 @@ export enum QuerySuggestionResource {
     ResourceTokens = 'resourcetokens',
     Transactions = 'transactions',
     TransactionLogs = 'transactionlogs',
-    PresenceLogs = 'presencelogs',
     Stats = 'stats',
 }
