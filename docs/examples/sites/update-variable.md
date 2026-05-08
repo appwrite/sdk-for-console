@@ -10,7 +10,7 @@ const sites = new Sites(client);
 const result = await sites.updateVariable({
     siteId: '<SITE_ID>',
     variableId: '<VARIABLE_ID>',
-    key: '<KEY>',
+    key: '<KEY>', // optional
     value: '<VALUE>', // optional
     secret: false // optional
 });

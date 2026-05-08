@@ -1,14 +1,14 @@
 ```javascript
-import { Client, Console } from "@appwrite.io/console";
+import { Client, Presences, Range } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const console = new Console(client);
+const presences = new Presences(client);
 
-const result = await console.getProgram({
-    programId: '<PROGRAM_ID>'
+const result = await presences.getUsage({
+    range: Range.24h // optional
 });
 
 console.log(result);

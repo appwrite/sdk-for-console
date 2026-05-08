@@ -12,8 +12,8 @@ const result = await project.updateOAuth2Oidc({
     clientSecret: '<CLIENT_SECRET>', // optional
     wellKnownURL: 'https://example.com', // optional
     authorizationURL: 'https://example.com', // optional
-    tokenUrl: 'https://example.com', // optional
-    userInfoUrl: 'https://example.com', // optional
+    tokenURL: 'https://example.com', // optional
+    userInfoURL: 'https://example.com', // optional
     enabled: false // optional
 });
 

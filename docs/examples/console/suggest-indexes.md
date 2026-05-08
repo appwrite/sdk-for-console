@@ -5,9 +5,9 @@ const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const xconsole = new Console(client);
+const console = new Console(client);
 
-const result = await xconsole.suggestIndexes({
+const result = await console.suggestIndexes({
     databaseId: '<DATABASE_ID>',
     tableId: '<TABLE_ID>',
     min: 1, // optional

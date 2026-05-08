@@ -16,41 +16,37 @@ export class Proxy {
      * Get a list of all the proxy rules. You can use the query params to filter your results.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: domain, type, trigger, deploymentResourceType, deploymentResourceId, deploymentId, deploymentVcsProviderBranch
-     * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRuleList>}
      */
-    listRules(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.ProxyRuleList>;
+    listRules(params?: { queries?: string[], total?: boolean }): Promise<Models.ProxyRuleList>;
     /**
      * Get a list of all the proxy rules. You can use the query params to filter your results.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: domain, type, trigger, deploymentResourceType, deploymentResourceId, deploymentId, deploymentVcsProviderBranch
-     * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRuleList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listRules(queries?: string[], search?: string, total?: boolean): Promise<Models.ProxyRuleList>;
+    listRules(queries?: string[], total?: boolean): Promise<Models.ProxyRuleList>;
     listRules(
-        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
-        ...rest: [(string)?, (boolean)?]    
+        paramsOrFirst?: { queries?: string[], total?: boolean } | string[],
+        ...rest: [(boolean)?]    
     ): Promise<Models.ProxyRuleList> {
-        let params: { queries?: string[], search?: string, total?: boolean };
+        let params: { queries?: string[], total?: boolean };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
+            params = (paramsOrFirst || {}) as { queries?: string[], total?: boolean };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
-                search: rest[0] as string,
-                total: rest[1] as boolean            
+                total: rest[0] as boolean            
             };
         }
         
         const queries = params.queries;
-        const search = params.search;
         const total = params.total;
 
 
@@ -58,9 +54,6 @@ export class Proxy {
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
-        }
-        if (typeof search !== 'undefined') {
-            payload['search'] = search;
         }
         if (typeof total !== 'undefined') {
             payload['total'] = total;
@@ -80,6 +73,8 @@ export class Proxy {
 
     /**
      * Create a new proxy rule for serving Appwrite's API on custom domain.
+     * 
+     * Rule ID is automatically generated as MD5 hash of a rule domain for performance purposes.
      *
      * @param {string} params.domain - Domain name.
      * @throws {AppwriteException}
@@ -88,6 +83,8 @@ export class Proxy {
     createAPIRule(params: { domain: string }): Promise<Models.ProxyRule>;
     /**
      * Create a new proxy rule for serving Appwrite's API on custom domain.
+     * 
+     * Rule ID is automatically generated as MD5 hash of a rule domain for performance purposes.
      *
      * @param {string} domain - Domain name.
      * @throws {AppwriteException}
@@ -135,6 +132,8 @@ export class Proxy {
 
     /**
      * Create a new proxy rule for executing Appwrite Function on custom domain.
+     * 
+     * Rule ID is automatically generated as MD5 hash of a rule domain for performance purposes.
      *
      * @param {string} params.domain - Domain name.
      * @param {string} params.functionId - ID of function to be executed.
@@ -145,6 +144,8 @@ export class Proxy {
     createFunctionRule(params: { domain: string, functionId: string, branch?: string }): Promise<Models.ProxyRule>;
     /**
      * Create a new proxy rule for executing Appwrite Function on custom domain.
+     * 
+     * Rule ID is automatically generated as MD5 hash of a rule domain for performance purposes.
      *
      * @param {string} domain - Domain name.
      * @param {string} functionId - ID of function to be executed.
@@ -208,6 +209,8 @@ export class Proxy {
 
     /**
      * Create a new proxy rule for to redirect from custom domain to another domain.
+     * 
+     * Rule ID is automatically generated as MD5 hash of a rule domain for performance purposes.
      *
      * @param {string} params.domain - Domain name.
      * @param {string} params.url - Target URL of redirection
@@ -220,6 +223,8 @@ export class Proxy {
     createRedirectRule(params: { domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType }): Promise<Models.ProxyRule>;
     /**
      * Create a new proxy rule for to redirect from custom domain to another domain.
+     * 
+     * Rule ID is automatically generated as MD5 hash of a rule domain for performance purposes.
      *
      * @param {string} domain - Domain name.
      * @param {string} url - Target URL of redirection
@@ -304,6 +309,8 @@ export class Proxy {
 
     /**
      * Create a new proxy rule for serving Appwrite Site on custom domain.
+     * 
+     * Rule ID is automatically generated as MD5 hash of a rule domain for performance purposes.
      *
      * @param {string} params.domain - Domain name.
      * @param {string} params.siteId - ID of site to be executed.
@@ -314,6 +321,8 @@ export class Proxy {
     createSiteRule(params: { domain: string, siteId: string, branch?: string }): Promise<Models.ProxyRule>;
     /**
      * Create a new proxy rule for serving Appwrite Site on custom domain.
+     * 
+     * Rule ID is automatically generated as MD5 hash of a rule domain for performance purposes.
      *
      * @param {string} domain - Domain name.
      * @param {string} siteId - ID of site to be executed.
@@ -479,23 +488,23 @@ export class Proxy {
     }
 
     /**
-     * Retry getting verification process of a proxy rule. This endpoint triggers domain verification by checking DNS records (CNAME) against the configured target domain. If verification is successful, a TLS certificate will be automatically provisioned for the domain.
+     * If not succeeded yet, retry verification process of a proxy rule domain. This endpoint triggers domain verification by checking DNS records. If verification is successful, a TLS certificate will be automatically provisioned for the domain asynchronously in the background.
      *
      * @param {string} params.ruleId - Rule ID.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    updateRuleVerification(params: { ruleId: string }): Promise<Models.ProxyRule>;
+    updateRuleStatus(params: { ruleId: string }): Promise<Models.ProxyRule>;
     /**
-     * Retry getting verification process of a proxy rule. This endpoint triggers domain verification by checking DNS records (CNAME) against the configured target domain. If verification is successful, a TLS certificate will be automatically provisioned for the domain.
+     * If not succeeded yet, retry verification process of a proxy rule domain. This endpoint triggers domain verification by checking DNS records. If verification is successful, a TLS certificate will be automatically provisioned for the domain asynchronously in the background.
      *
      * @param {string} ruleId - Rule ID.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRuleVerification(ruleId: string): Promise<Models.ProxyRule>;
-    updateRuleVerification(
+    updateRuleStatus(ruleId: string): Promise<Models.ProxyRule>;
+    updateRuleStatus(
         paramsOrFirst: { ruleId: string } | string    
     ): Promise<Models.ProxyRule> {
         let params: { ruleId: string };
@@ -514,7 +523,7 @@ export class Proxy {
             throw new AppwriteException('Missing required parameter: "ruleId"');
         }
 
-        const apiPath = '/proxy/rules/{ruleId}/verification'.replace('{ruleId}', ruleId);
+        const apiPath = '/proxy/rules/{ruleId}/status'.replace('{ruleId}', ruleId);
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
