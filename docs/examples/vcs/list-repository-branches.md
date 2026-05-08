@@ -11,7 +11,7 @@ const result = await vcs.listRepositoryBranches({
     installationId: '<INSTALLATION_ID>',
     providerRepositoryId: '<PROVIDER_REPOSITORY_ID>',
     search: '<SEARCH>', // optional
-    queries: '' // optional
+    queries: [] // optional
 });
 
 console.log(result);
