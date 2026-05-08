@@ -12,7 +12,7 @@ const result = await databases.createPointAttribute({
     collectionId: '<COLLECTION_ID>',
     key: '',
     required: false,
-    default: [1, 2] // optional
+    xdefault: [1, 2] // optional
 });
 
 console.log(result);

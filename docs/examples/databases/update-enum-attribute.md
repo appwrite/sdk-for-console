@@ -13,7 +13,7 @@ const result = await databases.updateEnumAttribute({
     key: '',
     elements: [],
     required: false,
-    default: '<DEFAULT>',
+    xdefault: '<DEFAULT>',
     newKey: '' // optional
 });
 

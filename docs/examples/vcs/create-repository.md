@@ -10,7 +10,7 @@ const vcs = new Vcs(client);
 const result = await vcs.createRepository({
     installationId: '<INSTALLATION_ID>',
     name: '<NAME>',
-    private: false
+    xprivate: false
 });
 
 console.log(result);

@@ -12,7 +12,7 @@ const result = await tablesDB.createIpColumn({
     tableId: '<TABLE_ID>',
     key: '',
     required: false,
-    default: '', // optional
+    xdefault: '', // optional
     array: false // optional
 });
 

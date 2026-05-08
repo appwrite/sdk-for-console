@@ -13,7 +13,7 @@ const result = await tablesDB.updateEnumColumn({
     key: '',
     elements: [],
     required: false,
-    default: '<DEFAULT>',
+    xdefault: '<DEFAULT>',
     newKey: '' // optional
 });
 

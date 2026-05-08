@@ -366,6 +366,7 @@ class Client {
         impersonateuserphone: string;
         platform: string;
         selfSigned: boolean;
+        session?: string;
     } = {
         endpoint: 'https://cloud.appwrite.io/v1',
         endpointRealtime: '',
@@ -382,6 +383,7 @@ class Client {
         impersonateuserphone: '',
         platform: '',
         selfSigned: false,
+        session: undefined,
     };
     /**
      * Custom headers for API requests.
