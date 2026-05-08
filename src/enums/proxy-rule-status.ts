@@ -1,6 +1,5 @@
 export enum ProxyRuleStatus {
-    Created = 'created',
+    Unverified = 'unverified',
     Verifying = 'verifying',
     Verified = 'verified',
-    Unverified = 'unverified',
 }

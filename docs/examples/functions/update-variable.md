@@ -10,7 +10,7 @@ const functions = new Functions(client);
 const result = await functions.updateVariable({
     functionId: '<FUNCTION_ID>',
     variableId: '<VARIABLE_ID>',
-    key: '<KEY>',
+    key: '<KEY>', // optional
     value: '<VALUE>', // optional
     secret: false // optional
 });

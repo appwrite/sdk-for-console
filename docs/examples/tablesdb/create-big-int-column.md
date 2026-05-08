@@ -1,18 +1,20 @@
 ```javascript
-import { Client, Databases } from "@appwrite.io/console";
+import { Client, TablesDB } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const databases = new Databases(client);
+const tablesDB = new TablesDB(client);
 
-const result = await databases.createIpAttribute({
+const result = await tablesDB.createBigIntColumn({
     databaseId: '<DATABASE_ID>',
-    collectionId: '<COLLECTION_ID>',
+    tableId: '<TABLE_ID>',
     key: '',
     required: false,
-    xdefault: '', // optional
+    min: null, // optional
+    max: null, // optional
+    xdefault: null, // optional
     array: false // optional
 });
 

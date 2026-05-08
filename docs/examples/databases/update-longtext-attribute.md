@@ -12,7 +12,7 @@ const result = await databases.updateLongtextAttribute({
     collectionId: '<COLLECTION_ID>',
     key: '',
     required: false,
-    default: '<DEFAULT>',
+    xdefault: '<DEFAULT>',
     newKey: '' // optional
 });
 

@@ -12,7 +12,7 @@ const result = await databases.createBooleanAttribute({
     collectionId: '<COLLECTION_ID>',
     key: '',
     required: false,
-    default: false, // optional
+    xdefault: false, // optional
     array: false // optional
 });
 

@@ -12,7 +12,7 @@ const result = await tablesDB.createBooleanColumn({
     tableId: '<TABLE_ID>',
     key: '',
     required: false,
-    default: false, // optional
+    xdefault: false, // optional
     array: false // optional
 });
 

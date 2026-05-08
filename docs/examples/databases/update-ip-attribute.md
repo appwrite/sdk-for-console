@@ -12,7 +12,7 @@ const result = await databases.updateIpAttribute({
     collectionId: '<COLLECTION_ID>',
     key: '',
     required: false,
-    default: '',
+    xdefault: '',
     newKey: '' // optional
 });
 

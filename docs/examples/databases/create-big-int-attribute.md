@@ -7,12 +7,14 @@ const client = new Client()
 
 const databases = new Databases(client);
 
-const result = await databases.createIpAttribute({
+const result = await databases.createBigIntAttribute({
     databaseId: '<DATABASE_ID>',
     collectionId: '<COLLECTION_ID>',
     key: '',
     required: false,
-    xdefault: '', // optional
+    min: null, // optional
+    max: null, // optional
+    xdefault: null, // optional
     array: false // optional
 });
 

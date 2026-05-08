@@ -12,7 +12,7 @@ const result = await tablesDB.updateTextColumn({
     tableId: '<TABLE_ID>',
     key: '',
     required: false,
-    default: '<DEFAULT>',
+    xdefault: '<DEFAULT>',
     newKey: '' // optional
 });
 
