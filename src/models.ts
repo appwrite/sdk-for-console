@@ -7,6 +7,7 @@ import { DetectionRuntimeType } from "./enums/detection-runtime-type"
 import { DeploymentStatus } from "./enums/deployment-status"
 import { ExecutionTrigger } from "./enums/execution-trigger"
 import { ExecutionStatus } from "./enums/execution-status"
+import { OAuth2GooglePrompt } from "./enums/o-auth-2-google-prompt"
 import { PlatformType } from "./enums/platform-type"
 import { HealthAntivirusStatus } from "./enums/health-antivirus-status"
 import { HealthCheckStatus } from "./enums/health-check-status"
@@ -5785,6 +5786,10 @@ export namespace Models {
          * Google OAuth2 client secret.
          */
         clientSecret: string;
+        /**
+         * Google OAuth2 prompt values.
+         */
+        prompt: OAuth2GooglePrompt[];
     }
 
     /**

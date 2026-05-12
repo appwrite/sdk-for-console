@@ -7,7 +7,7 @@ const client = new Client()
 
 const project = new Project(client);
 
-const result = await project.updateFreeEmails({
+const result = await project.updateDenyFreeEmailPolicy({
     enabled: false
 });
 

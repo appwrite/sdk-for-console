@@ -1,5 +1,14 @@
 # Change Log
 
+## 13.0.0
+
+* Breaking: Renamed `updateCanonicalEmails` to `updateDenyCanonicalEmailPolicy` on `Project` service
+* Breaking: Renamed `updateDisposableEmails` to `updateDenyDisposableEmailPolicy` on `Project` service
+* Breaking: Renamed `updateFreeEmails` to `updateDenyFreeEmailPolicy` on `Project` service
+* Added: `prompt` parameter on `updateOAuth2Google` for Google OAuth2 prompt configuration
+* Added: `Prompt` and `OAuth2GooglePrompt` enums
+* Added: `prompt` field on `OAuth2Google` model
+
 ## 12.2.0
 
 * Added: Introduced `bigint` create/update APIs for legacy Databases attributes

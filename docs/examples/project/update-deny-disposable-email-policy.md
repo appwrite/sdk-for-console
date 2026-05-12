@@ -7,7 +7,7 @@ const client = new Client()
 
 const project = new Project(client);
 
-const result = await project.updateCanonicalEmails({
+const result = await project.updateDenyDisposableEmailPolicy({
     enabled: false
 });
 
