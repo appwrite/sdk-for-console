@@ -5,6 +5,8 @@ import type { Models } from '../models';
 import { Platform } from '../enums/platform';
 import { ConsoleResourceType } from '../enums/console-resource-type';
 import { QuerySuggestionResource } from '../enums/query-suggestion-resource';
+import { ProjectEmailTemplateId } from '../enums/project-email-template-id';
+import { ProjectEmailTemplateLocale } from '../enums/project-email-template-locale';
 
 export class Console {
     client: Client;
@@ -432,6 +434,29 @@ export class Console {
     }
 
     /**
+     * List all scopes available for organization API keys, along with a description for each scope.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ConsoleKeyScopeList>}
+     */
+    listOrganizationScopes(): Promise<Models.ConsoleKeyScopeList> {
+
+        const apiPath = '/console/scopes/organization';
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * List all scopes available for project API keys, along with a description for each scope.
      *
      * @throws {AppwriteException}
@@ -767,6 +792,65 @@ export class Console {
         }
         if (typeof tableId !== 'undefined') {
             payload['tableId'] = tableId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get the Appwrite built-in default email template for the specified type and locale. Always returns the unmodified default, ignoring any custom project overrides.
+     *
+     * @param {ProjectEmailTemplateId} params.templateId - Email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+     * @param {ProjectEmailTemplateLocale} params.locale - Template locale. If left empty, the fallback locale (en) will be used.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.EmailTemplate>}
+     */
+    getEmailTemplate(params: { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale }): Promise<Models.EmailTemplate>;
+    /**
+     * Get the Appwrite built-in default email template for the specified type and locale. Always returns the unmodified default, ignoring any custom project overrides.
+     *
+     * @param {ProjectEmailTemplateId} templateId - Email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+     * @param {ProjectEmailTemplateLocale} locale - Template locale. If left empty, the fallback locale (en) will be used.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.EmailTemplate>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getEmailTemplate(templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale): Promise<Models.EmailTemplate>;
+    getEmailTemplate(
+        paramsOrFirst: { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale } | ProjectEmailTemplateId,
+        ...rest: [(ProjectEmailTemplateLocale)?]    
+    ): Promise<Models.EmailTemplate> {
+        let params: { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('templateId' in paramsOrFirst || 'locale' in paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale };
+        } else {
+            params = {
+                templateId: paramsOrFirst as ProjectEmailTemplateId,
+                locale: rest[0] as ProjectEmailTemplateLocale            
+            };
+        }
+        
+        const templateId = params.templateId;
+        const locale = params.locale;
+
+        if (typeof templateId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "templateId"');
+        }
+
+        const apiPath = '/console/templates/email/{templateId}'.replace('{templateId}', templateId);
+        const payload: Payload = {};
+        if (typeof locale !== 'undefined') {
+            payload['locale'] = locale;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
