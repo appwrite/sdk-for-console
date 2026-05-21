@@ -1063,8 +1063,13 @@ class Client {
             let nextChunk = 0;
             let inFlight = 0;
             let completed = 0;
+            let rejected = false;
 
             const uploadNext = () => {
+                if (rejected) {
+                    return;
+                }
+
                 if (completed === chunks.length) {
                     resolve();
                     return;
@@ -1080,7 +1085,10 @@ class Client {
                             completed++;
                             uploadNext();
                         })
-                        .catch(reject);
+                        .catch((error) => {
+                            rejected = true;
+                            reject(error);
+                        });
                 }
             };
 
