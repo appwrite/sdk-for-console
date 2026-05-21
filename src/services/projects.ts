@@ -86,19 +86,10 @@ export class Projects {
      * @param {string} params.name - Project name. Max length: 128 chars.
      * @param {string} params.teamId - Team unique ID.
      * @param {Region} params.region - Project Region.
-     * @param {string} params.description - Project description. Max length: 256 chars.
-     * @param {string} params.logo - Project logo.
-     * @param {string} params.url - Project URL.
-     * @param {string} params.legalName - Project legal Name. Max length: 256 chars.
-     * @param {string} params.legalCountry - Project legal Country. Max length: 256 chars.
-     * @param {string} params.legalState - Project legal State. Max length: 256 chars.
-     * @param {string} params.legalCity - Project legal City. Max length: 256 chars.
-     * @param {string} params.legalAddress - Project legal Address. Max length: 256 chars.
-     * @param {string} params.legalTaxId - Project legal Tax ID. Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    create(params: { projectId: string, name: string, teamId: string, region?: Region, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string }): Promise<Models.Project>;
+    create(params: { projectId: string, name: string, teamId: string, region?: Region }): Promise<Models.Project>;
     /**
      * Create a new project. You can create a maximum of 100 projects per account. 
      *
@@ -106,43 +97,25 @@ export class Projects {
      * @param {string} name - Project name. Max length: 128 chars.
      * @param {string} teamId - Team unique ID.
      * @param {Region} region - Project Region.
-     * @param {string} description - Project description. Max length: 256 chars.
-     * @param {string} logo - Project logo.
-     * @param {string} url - Project URL.
-     * @param {string} legalName - Project legal Name. Max length: 256 chars.
-     * @param {string} legalCountry - Project legal Country. Max length: 256 chars.
-     * @param {string} legalState - Project legal State. Max length: 256 chars.
-     * @param {string} legalCity - Project legal City. Max length: 256 chars.
-     * @param {string} legalAddress - Project legal Address. Max length: 256 chars.
-     * @param {string} legalTaxId - Project legal Tax ID. Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(projectId: string, name: string, teamId: string, region?: Region, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string): Promise<Models.Project>;
+    create(projectId: string, name: string, teamId: string, region?: Region): Promise<Models.Project>;
     create(
-        paramsOrFirst: { projectId: string, name: string, teamId: string, region?: Region, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string } | string,
-        ...rest: [(string)?, (string)?, (Region)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
+        paramsOrFirst: { projectId: string, name: string, teamId: string, region?: Region } | string,
+        ...rest: [(string)?, (string)?, (Region)?]    
     ): Promise<Models.Project> {
-        let params: { projectId: string, name: string, teamId: string, region?: Region, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string };
+        let params: { projectId: string, name: string, teamId: string, region?: Region };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, name: string, teamId: string, region?: Region, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string };
+            params = (paramsOrFirst || {}) as { projectId: string, name: string, teamId: string, region?: Region };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
                 name: rest[0] as string,
                 teamId: rest[1] as string,
-                region: rest[2] as Region,
-                description: rest[3] as string,
-                logo: rest[4] as string,
-                url: rest[5] as string,
-                legalName: rest[6] as string,
-                legalCountry: rest[7] as string,
-                legalState: rest[8] as string,
-                legalCity: rest[9] as string,
-                legalAddress: rest[10] as string,
-                legalTaxId: rest[11] as string            
+                region: rest[2] as Region            
             };
         }
         
@@ -150,15 +123,6 @@ export class Projects {
         const name = params.name;
         const teamId = params.teamId;
         const region = params.region;
-        const description = params.description;
-        const logo = params.logo;
-        const url = params.url;
-        const legalName = params.legalName;
-        const legalCountry = params.legalCountry;
-        const legalState = params.legalState;
-        const legalCity = params.legalCity;
-        const legalAddress = params.legalAddress;
-        const legalTaxId = params.legalTaxId;
 
         if (typeof projectId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "projectId"');
@@ -184,33 +148,6 @@ export class Projects {
         if (typeof region !== 'undefined') {
             payload['region'] = region;
         }
-        if (typeof description !== 'undefined') {
-            payload['description'] = description;
-        }
-        if (typeof logo !== 'undefined') {
-            payload['logo'] = logo;
-        }
-        if (typeof url !== 'undefined') {
-            payload['url'] = url;
-        }
-        if (typeof legalName !== 'undefined') {
-            payload['legalName'] = legalName;
-        }
-        if (typeof legalCountry !== 'undefined') {
-            payload['legalCountry'] = legalCountry;
-        }
-        if (typeof legalState !== 'undefined') {
-            payload['legalState'] = legalState;
-        }
-        if (typeof legalCity !== 'undefined') {
-            payload['legalCity'] = legalCity;
-        }
-        if (typeof legalAddress !== 'undefined') {
-            payload['legalAddress'] = legalAddress;
-        }
-        if (typeof legalTaxId !== 'undefined') {
-            payload['legalTaxId'] = legalTaxId;
-        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -219,57 +156,6 @@ export class Projects {
 
         return this.client.call(
             'post',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get a project by its unique ID. This endpoint allows you to retrieve the project's details, including its name, description, team, region, and other metadata. 
-     *
-     * @param {string} params.projectId - Project unique ID.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
-     */
-    get(params: { projectId: string }): Promise<Models.Project>;
-    /**
-     * Get a project by its unique ID. This endpoint allows you to retrieve the project's details, including its name, description, team, region, and other metadata. 
-     *
-     * @param {string} projectId - Project unique ID.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    get(projectId: string): Promise<Models.Project>;
-    get(
-        paramsOrFirst: { projectId: string } | string    
-    ): Promise<Models.Project> {
-        let params: { projectId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string };
-        } else {
-            params = {
-                projectId: paramsOrFirst as string            
-            };
-        }
-        
-        const projectId = params.projectId;
-
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-
-        const apiPath = '/projects/{projectId}'.replace('{projectId}', projectId);
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-        }
-
-        return this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload

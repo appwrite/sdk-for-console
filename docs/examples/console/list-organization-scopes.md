@@ -1,15 +1,13 @@
 ```javascript
-import { Client, Project } from "@appwrite.io/console";
+import { Client, Console } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const project = new Project(client);
+const xconsole = new Console(client);
 
-const result = await project.updateDenyCanonicalEmailPolicy({
-    enabled: false
-});
+const result = await xconsole.listOrganizationScopes();
 
 console.log(result);
 ```

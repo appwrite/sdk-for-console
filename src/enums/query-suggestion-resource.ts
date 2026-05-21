@@ -27,6 +27,8 @@ export enum QuerySuggestionResource {
     Repositories = 'repositories',
     VcsComments = 'vcscomments',
     VcsCommentLocks = 'vcscommentlocks',
+    Reports = 'reports',
+    Insights = 'insights',
     Users = 'users',
     Cache = 'cache',
     Tokens = 'tokens',
@@ -70,5 +72,6 @@ export enum QuerySuggestionResource {
     ResourceTokens = 'resourcetokens',
     Transactions = 'transactions',
     TransactionLogs = 'transactionlogs',
+    PresenceLogs = 'presencelogs',
     Stats = 'stats',
 }

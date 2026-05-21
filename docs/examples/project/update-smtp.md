@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Project, Secure } from "@appwrite.io/console";
+import { Client, Project, ProjectSMTPSecure } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -16,7 +16,7 @@ const result = await project.updateSMTP({
     senderName: '<SENDER_NAME>', // optional
     replyToEmail: 'email@example.com', // optional
     replyToName: '<REPLY_TO_NAME>', // optional
-    secure: Secure.Tls, // optional
+    secure: ProjectSMTPSecure.Tls, // optional
     enabled: false // optional
 });
 
