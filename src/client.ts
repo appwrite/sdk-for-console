@@ -1018,6 +1018,7 @@ class Client {
         let uploadedBytes = firstChunkEnd;
         let lastResponse = response;
         let finalResponse = null;
+        let rejected = false;
 
         const isUploadComplete = (chunkResponse: any) => {
             const chunksUploaded = chunkResponse?.chunksUploaded;
@@ -1037,6 +1038,10 @@ class Client {
             chunkPayload[fileParam] = new File([chunkBlob], file.name);
 
             const chunkResponse = await this.call(method, url, chunkHeaders, chunkPayload);
+
+            if (rejected) {
+                return chunkResponse;
+            }
             
             completedCount++;
             uploadedBytes += (chunk.end - chunk.start);
@@ -1063,7 +1068,6 @@ class Client {
             let nextChunk = 0;
             let inFlight = 0;
             let completed = 0;
-            let rejected = false;
 
             const uploadNext = () => {
                 if (rejected) {
@@ -1098,7 +1102,7 @@ class Client {
         return finalResponse ?? lastResponse;
     }
 
-    async ping(): Promise<any> {
+    async ping(): Promise<unknown> {
         return this.call('GET', new URL(this.config.endpoint + '/ping'));
     }
 
