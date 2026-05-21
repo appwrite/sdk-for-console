@@ -1,7 +1,4 @@
-export enum Scopes {
-    Account = 'account',
-    TeamsRead = 'teams.read',
-    TeamsWrite = 'teams.write',
+export enum ProjectKeyScopes {
     ProjectRead = 'project.read',
     ProjectWrite = 'project.write',
     KeysRead = 'keys.read',
@@ -22,6 +19,8 @@ export enum Scopes {
     UsersWrite = 'users.write',
     SessionsRead = 'sessions.read',
     SessionsWrite = 'sessions.write',
+    TeamsRead = 'teams.read',
+    TeamsWrite = 'teams.write',
     DatabasesRead = 'databases.read',
     DatabasesWrite = 'databases.write',
     TablesRead = 'tables.read',
@@ -94,8 +93,4 @@ export enum Scopes {
     DomainsWrite = 'domains.write',
     EventsRead = 'events.read',
     UsageRead = 'usage.read',
-    ProjectsRead = 'projects.read',
-    ProjectsWrite = 'projects.write',
-    DevKeysRead = 'devKeys.read',
-    DevKeysWrite = 'devKeys.write',
 }

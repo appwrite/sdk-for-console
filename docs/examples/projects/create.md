@@ -11,16 +11,7 @@ const result = await projects.create({
     projectId: '',
     name: '<NAME>',
     teamId: '<TEAM_ID>',
-    region: Region.Fra, // optional
-    description: '<DESCRIPTION>', // optional
-    logo: '<LOGO>', // optional
-    url: 'https://example.com', // optional
-    legalName: '<LEGAL_NAME>', // optional
-    legalCountry: '<LEGAL_COUNTRY>', // optional
-    legalState: '<LEGAL_STATE>', // optional
-    legalCity: '<LEGAL_CITY>', // optional
-    legalAddress: '<LEGAL_ADDRESS>', // optional
-    legalTaxId: '<LEGAL_TAX_ID>' // optional
+    region: Region.Fra // optional
 });
 
 console.log(result);

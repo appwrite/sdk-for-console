@@ -2,16 +2,16 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { AuthMethod } from '../enums/auth-method';
-import { Scopes } from '../enums/scopes';
-import { Prompt } from '../enums/prompt';
-import { OAuthProvider } from '../enums/o-auth-provider';
-import { ProjectPolicy } from '../enums/project-policy';
-import { ProtocolId } from '../enums/protocol-id';
-import { ServiceId } from '../enums/service-id';
-import { Secure } from '../enums/secure';
-import { EmailTemplateType } from '../enums/email-template-type';
-import { EmailTemplateLocale } from '../enums/email-template-locale';
+import { ProjectAuthMethodId } from '../enums/project-auth-method-id';
+import { ProjectKeyScopes } from '../enums/project-key-scopes';
+import { ProjectOAuth2GooglePrompt } from '../enums/project-o-auth-2-google-prompt';
+import { ProjectOAuthProviderId } from '../enums/project-o-auth-provider-id';
+import { ProjectPolicyId } from '../enums/project-policy-id';
+import { ProjectProtocolId } from '../enums/project-protocol-id';
+import { ProjectServiceId } from '../enums/project-service-id';
+import { ProjectSMTPSecure } from '../enums/project-smtp-secure';
+import { ProjectEmailTemplateId } from '../enums/project-email-template-id';
+import { ProjectEmailTemplateLocale } from '../enums/project-email-template-locale';
 import { ProjectUsageRange } from '../enums/project-usage-range';
 
 export class Project {
@@ -19,6 +19,29 @@ export class Project {
 
     constructor(client: Client) {
         this.client = client;
+    }
+
+    /**
+     * Get a project.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     */
+    get(): Promise<Models.Project> {
+
+        const apiPath = '/project';
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
     }
 
     /**
@@ -48,33 +71,33 @@ export class Project {
     /**
      * Update properties of a specific auth method. Use this endpoint to enable or disable a method in your project. 
      *
-     * @param {AuthMethod} params.methodId - Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone
+     * @param {ProjectAuthMethodId} params.methodId - Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone
      * @param {boolean} params.enabled - Auth method status.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateAuthMethod(params: { methodId: AuthMethod, enabled: boolean }): Promise<Models.Project>;
+    updateAuthMethod(params: { methodId: ProjectAuthMethodId, enabled: boolean }): Promise<Models.Project>;
     /**
      * Update properties of a specific auth method. Use this endpoint to enable or disable a method in your project. 
      *
-     * @param {AuthMethod} methodId - Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone
+     * @param {ProjectAuthMethodId} methodId - Auth Method ID. Possible values: email-password,magic-url,email-otp,anonymous,invites,jwt,phone
      * @param {boolean} enabled - Auth method status.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateAuthMethod(methodId: AuthMethod, enabled: boolean): Promise<Models.Project>;
+    updateAuthMethod(methodId: ProjectAuthMethodId, enabled: boolean): Promise<Models.Project>;
     updateAuthMethod(
-        paramsOrFirst: { methodId: AuthMethod, enabled: boolean } | AuthMethod,
+        paramsOrFirst: { methodId: ProjectAuthMethodId, enabled: boolean } | ProjectAuthMethodId,
         ...rest: [(boolean)?]    
     ): Promise<Models.Project> {
-        let params: { methodId: AuthMethod, enabled: boolean };
+        let params: { methodId: ProjectAuthMethodId, enabled: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('methodId' in paramsOrFirst || 'enabled' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { methodId: AuthMethod, enabled: boolean };
+            params = (paramsOrFirst || {}) as { methodId: ProjectAuthMethodId, enabled: boolean };
         } else {
             params = {
-                methodId: paramsOrFirst as AuthMethod,
+                methodId: paramsOrFirst as ProjectAuthMethodId,
                 enabled: rest[0] as boolean            
             };
         }
@@ -174,12 +197,12 @@ export class Project {
      *
      * @param {string} params.keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {Scopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
      * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
-    createKey(params: { keyId: string, name: string, scopes: Scopes[], expire?: string }): Promise<Models.Key>;
+    createKey(params: { keyId: string, name: string, scopes: ProjectKeyScopes[], expire?: string }): Promise<Models.Key>;
     /**
      * Create a new API key. It's recommended to have multiple API keys with strict scopes for separate functions within your project.
      * 
@@ -187,26 +210,26 @@ export class Project {
      *
      * @param {string} keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Key name. Max length: 128 chars.
-     * @param {Scopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
      * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createKey(keyId: string, name: string, scopes: Scopes[], expire?: string): Promise<Models.Key>;
+    createKey(keyId: string, name: string, scopes: ProjectKeyScopes[], expire?: string): Promise<Models.Key>;
     createKey(
-        paramsOrFirst: { keyId: string, name: string, scopes: Scopes[], expire?: string } | string,
-        ...rest: [(string)?, (Scopes[])?, (string)?]    
+        paramsOrFirst: { keyId: string, name: string, scopes: ProjectKeyScopes[], expire?: string } | string,
+        ...rest: [(string)?, (ProjectKeyScopes[])?, (string)?]    
     ): Promise<Models.Key> {
-        let params: { keyId: string, name: string, scopes: Scopes[], expire?: string };
+        let params: { keyId: string, name: string, scopes: ProjectKeyScopes[], expire?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { keyId: string, name: string, scopes: Scopes[], expire?: string };
+            params = (paramsOrFirst || {}) as { keyId: string, name: string, scopes: ProjectKeyScopes[], expire?: string };
         } else {
             params = {
                 keyId: paramsOrFirst as string,
                 name: rest[0] as string,
-                scopes: rest[1] as Scopes[],
+                scopes: rest[1] as ProjectKeyScopes[],
                 expire: rest[2] as string            
             };
         }
@@ -259,35 +282,35 @@ export class Project {
      * 
      * You can also create a standard API key if you need a longer-lived key instead.
      *
-     * @param {Scopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
      * @param {number} params.duration - Time in seconds before ephemeral key expires. Maximum duration is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EphemeralKey>}
      */
-    createEphemeralKey(params: { scopes: Scopes[], duration: number }): Promise<Models.EphemeralKey>;
+    createEphemeralKey(params: { scopes: ProjectKeyScopes[], duration: number }): Promise<Models.EphemeralKey>;
     /**
      * Create a new ephemeral API key. It's recommended to have multiple API keys with strict scopes for separate functions within your project.
      * 
      * You can also create a standard API key if you need a longer-lived key instead.
      *
-     * @param {Scopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
      * @param {number} duration - Time in seconds before ephemeral key expires. Maximum duration is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EphemeralKey>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createEphemeralKey(scopes: Scopes[], duration: number): Promise<Models.EphemeralKey>;
+    createEphemeralKey(scopes: ProjectKeyScopes[], duration: number): Promise<Models.EphemeralKey>;
     createEphemeralKey(
-        paramsOrFirst: { scopes: Scopes[], duration: number } | Scopes[],
+        paramsOrFirst: { scopes: ProjectKeyScopes[], duration: number } | ProjectKeyScopes[],
         ...rest: [(number)?]    
     ): Promise<Models.EphemeralKey> {
-        let params: { scopes: Scopes[], duration: number };
+        let params: { scopes: ProjectKeyScopes[], duration: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('scopes' in paramsOrFirst || 'duration' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { scopes: Scopes[], duration: number };
+            params = (paramsOrFirst || {}) as { scopes: ProjectKeyScopes[], duration: number };
         } else {
             params = {
-                scopes: paramsOrFirst as Scopes[],
+                scopes: paramsOrFirst as ProjectKeyScopes[],
                 duration: rest[0] as number            
             };
         }
@@ -380,37 +403,37 @@ export class Project {
      *
      * @param {string} params.keyId - Key ID.
      * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {Scopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
      * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
-    updateKey(params: { keyId: string, name: string, scopes: Scopes[], expire?: string }): Promise<Models.Key>;
+    updateKey(params: { keyId: string, name: string, scopes: ProjectKeyScopes[], expire?: string }): Promise<Models.Key>;
     /**
      * Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
      *
      * @param {string} keyId - Key ID.
      * @param {string} name - Key name. Max length: 128 chars.
-     * @param {Scopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
      * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateKey(keyId: string, name: string, scopes: Scopes[], expire?: string): Promise<Models.Key>;
+    updateKey(keyId: string, name: string, scopes: ProjectKeyScopes[], expire?: string): Promise<Models.Key>;
     updateKey(
-        paramsOrFirst: { keyId: string, name: string, scopes: Scopes[], expire?: string } | string,
-        ...rest: [(string)?, (Scopes[])?, (string)?]    
+        paramsOrFirst: { keyId: string, name: string, scopes: ProjectKeyScopes[], expire?: string } | string,
+        ...rest: [(string)?, (ProjectKeyScopes[])?, (string)?]    
     ): Promise<Models.Key> {
-        let params: { keyId: string, name: string, scopes: Scopes[], expire?: string };
+        let params: { keyId: string, name: string, scopes: ProjectKeyScopes[], expire?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { keyId: string, name: string, scopes: Scopes[], expire?: string };
+            params = (paramsOrFirst || {}) as { keyId: string, name: string, scopes: ProjectKeyScopes[], expire?: string };
         } else {
             params = {
                 keyId: paramsOrFirst as string,
                 name: rest[0] as string,
-                scopes: rest[1] as Scopes[],
+                scopes: rest[1] as ProjectKeyScopes[],
                 expire: rest[2] as string            
             };
         }
@@ -2165,37 +2188,37 @@ export class Project {
      *
      * @param {string} params.clientId - 'Client ID' of Google OAuth2 app. For example: 120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com
      * @param {string} params.clientSecret - 'Client Secret' of Google OAuth2 app. For example: GOCSPX-2k8gsR0000000000000000VNahJj
-     * @param {Prompt[]} params.prompt - Array of Google OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. Must not be specified with other values. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
+     * @param {ProjectOAuth2GooglePrompt[]} params.prompt - Array of Google OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. Must not be specified with other values. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
      * @param {boolean} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Google>}
      */
-    updateOAuth2Google(params?: { clientId?: string, clientSecret?: string, prompt?: Prompt[], enabled?: boolean }): Promise<Models.OAuth2Google>;
+    updateOAuth2Google(params?: { clientId?: string, clientSecret?: string, prompt?: ProjectOAuth2GooglePrompt[], enabled?: boolean }): Promise<Models.OAuth2Google>;
     /**
      * Update the project OAuth2 Google configuration.
      *
      * @param {string} clientId - 'Client ID' of Google OAuth2 app. For example: 120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com
      * @param {string} clientSecret - 'Client Secret' of Google OAuth2 app. For example: GOCSPX-2k8gsR0000000000000000VNahJj
-     * @param {Prompt[]} prompt - Array of Google OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. Must not be specified with other values. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
+     * @param {ProjectOAuth2GooglePrompt[]} prompt - Array of Google OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. Must not be specified with other values. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
      * @param {boolean} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Google>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateOAuth2Google(clientId?: string, clientSecret?: string, prompt?: Prompt[], enabled?: boolean): Promise<Models.OAuth2Google>;
+    updateOAuth2Google(clientId?: string, clientSecret?: string, prompt?: ProjectOAuth2GooglePrompt[], enabled?: boolean): Promise<Models.OAuth2Google>;
     updateOAuth2Google(
-        paramsOrFirst?: { clientId?: string, clientSecret?: string, prompt?: Prompt[], enabled?: boolean } | string,
-        ...rest: [(string)?, (Prompt[])?, (boolean)?]    
+        paramsOrFirst?: { clientId?: string, clientSecret?: string, prompt?: ProjectOAuth2GooglePrompt[], enabled?: boolean } | string,
+        ...rest: [(string)?, (ProjectOAuth2GooglePrompt[])?, (boolean)?]    
     ): Promise<Models.OAuth2Google> {
-        let params: { clientId?: string, clientSecret?: string, prompt?: Prompt[], enabled?: boolean };
+        let params: { clientId?: string, clientSecret?: string, prompt?: ProjectOAuth2GooglePrompt[], enabled?: boolean };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { clientId?: string, clientSecret?: string, prompt?: Prompt[], enabled?: boolean };
+            params = (paramsOrFirst || {}) as { clientId?: string, clientSecret?: string, prompt?: ProjectOAuth2GooglePrompt[], enabled?: boolean };
         } else {
             params = {
                 clientId: paramsOrFirst as string,
                 clientSecret: rest[0] as string,
-                prompt: rest[1] as Prompt[],
+                prompt: rest[1] as ProjectOAuth2GooglePrompt[],
                 enabled: rest[2] as boolean            
             };
         }
@@ -3841,30 +3864,30 @@ export class Project {
     /**
      * Get a single OAuth2 provider configuration. Credential fields (client secret, p8 file, key/team IDs) are write-only and always returned empty.
      *
-     * @param {OAuthProvider} params.providerId - OAuth2 provider key. For example: github, google, apple.
+     * @param {ProjectOAuthProviderId} params.providerId - OAuth2 provider key. For example: github, google, apple.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft>}
      */
-    getOAuth2Provider(params: { providerId: OAuthProvider }): Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft>;
+    getOAuth2Provider(params: { providerId: ProjectOAuthProviderId }): Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft>;
     /**
      * Get a single OAuth2 provider configuration. Credential fields (client secret, p8 file, key/team IDs) are write-only and always returned empty.
      *
-     * @param {OAuthProvider} providerId - OAuth2 provider key. For example: github, google, apple.
+     * @param {ProjectOAuthProviderId} providerId - OAuth2 provider key. For example: github, google, apple.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getOAuth2Provider(providerId: OAuthProvider): Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft>;
+    getOAuth2Provider(providerId: ProjectOAuthProviderId): Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft>;
     getOAuth2Provider(
-        paramsOrFirst: { providerId: OAuthProvider } | OAuthProvider    
+        paramsOrFirst: { providerId: ProjectOAuthProviderId } | ProjectOAuthProviderId    
     ): Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft> {
-        let params: { providerId: OAuthProvider };
+        let params: { providerId: ProjectOAuthProviderId };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('providerId' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: OAuthProvider };
+            params = (paramsOrFirst || {}) as { providerId: ProjectOAuthProviderId };
         } else {
             params = {
-                providerId: paramsOrFirst as OAuthProvider            
+                providerId: paramsOrFirst as ProjectOAuthProviderId            
             };
         }
         
@@ -4856,23 +4879,23 @@ export class Project {
     }
 
     /**
-     * Configures if email aliases such as subaddresses and emails with suffixes are denied during new users sign-ups and email updates.
+     * Configures if aliased emails such as subaddresses and emails with suffixes are denied during new users sign-ups and email updates.
      *
-     * @param {boolean} params.enabled - Set whether or not to block email aliases during signup and email updates.
+     * @param {boolean} params.enabled - Set whether or not to block aliased emails during signup and email updates.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateDenyCanonicalEmailPolicy(params: { enabled: boolean }): Promise<Models.Project>;
+    updateDenyAliasedEmailPolicy(params: { enabled: boolean }): Promise<Models.Project>;
     /**
-     * Configures if email aliases such as subaddresses and emails with suffixes are denied during new users sign-ups and email updates.
+     * Configures if aliased emails such as subaddresses and emails with suffixes are denied during new users sign-ups and email updates.
      *
-     * @param {boolean} enabled - Set whether or not to block email aliases during signup and email updates.
+     * @param {boolean} enabled - Set whether or not to block aliased emails during signup and email updates.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateDenyCanonicalEmailPolicy(enabled: boolean): Promise<Models.Project>;
-    updateDenyCanonicalEmailPolicy(
+    updateDenyAliasedEmailPolicy(enabled: boolean): Promise<Models.Project>;
+    updateDenyAliasedEmailPolicy(
         paramsOrFirst: { enabled: boolean } | boolean    
     ): Promise<Models.Project> {
         let params: { enabled: boolean };
@@ -4891,7 +4914,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "enabled"');
         }
 
-        const apiPath = '/project/policies/deny-canonical-email';
+        const apiPath = '/project/policies/deny-aliased-email';
         const payload: Payload = {};
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
@@ -5548,30 +5571,30 @@ export class Project {
     /**
      * Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
      *
-     * @param {ProjectPolicy} params.policyId - Policy ID. Can be one of: password-dictionary, password-history, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy.
+     * @param {ProjectPolicyId} params.policyId - Policy ID. Can be one of: password-dictionary, password-history, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy.
      * @throws {AppwriteException}
      * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy>}
      */
-    getPolicy(params: { policyId: ProjectPolicy }): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy>;
+    getPolicy(params: { policyId: ProjectPolicyId }): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy>;
     /**
      * Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
      *
-     * @param {ProjectPolicy} policyId - Policy ID. Can be one of: password-dictionary, password-history, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy.
+     * @param {ProjectPolicyId} policyId - Policy ID. Can be one of: password-dictionary, password-history, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy.
      * @throws {AppwriteException}
      * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getPolicy(policyId: ProjectPolicy): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy>;
+    getPolicy(policyId: ProjectPolicyId): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy>;
     getPolicy(
-        paramsOrFirst: { policyId: ProjectPolicy } | ProjectPolicy    
+        paramsOrFirst: { policyId: ProjectPolicyId } | ProjectPolicyId    
     ): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy> {
-        let params: { policyId: ProjectPolicy };
+        let params: { policyId: ProjectPolicyId };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('policyId' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { policyId: ProjectPolicy };
+            params = (paramsOrFirst || {}) as { policyId: ProjectPolicyId };
         } else {
             params = {
-                policyId: paramsOrFirst as ProjectPolicy            
+                policyId: paramsOrFirst as ProjectPolicyId            
             };
         }
         
@@ -5599,33 +5622,33 @@ export class Project {
     /**
      * Update properties of a specific protocol. Use this endpoint to enable or disable a protocol in your project. 
      *
-     * @param {ProtocolId} params.protocolId - Protocol name. Can be one of: rest, graphql, websocket
+     * @param {ProjectProtocolId} params.protocolId - Protocol name. Can be one of: rest, graphql, websocket
      * @param {boolean} params.enabled - Protocol status.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateProtocol(params: { protocolId: ProtocolId, enabled: boolean }): Promise<Models.Project>;
+    updateProtocol(params: { protocolId: ProjectProtocolId, enabled: boolean }): Promise<Models.Project>;
     /**
      * Update properties of a specific protocol. Use this endpoint to enable or disable a protocol in your project. 
      *
-     * @param {ProtocolId} protocolId - Protocol name. Can be one of: rest, graphql, websocket
+     * @param {ProjectProtocolId} protocolId - Protocol name. Can be one of: rest, graphql, websocket
      * @param {boolean} enabled - Protocol status.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateProtocol(protocolId: ProtocolId, enabled: boolean): Promise<Models.Project>;
+    updateProtocol(protocolId: ProjectProtocolId, enabled: boolean): Promise<Models.Project>;
     updateProtocol(
-        paramsOrFirst: { protocolId: ProtocolId, enabled: boolean } | ProtocolId,
+        paramsOrFirst: { protocolId: ProjectProtocolId, enabled: boolean } | ProjectProtocolId,
         ...rest: [(boolean)?]    
     ): Promise<Models.Project> {
-        let params: { protocolId: ProtocolId, enabled: boolean };
+        let params: { protocolId: ProjectProtocolId, enabled: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('protocolId' in paramsOrFirst || 'enabled' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { protocolId: ProtocolId, enabled: boolean };
+            params = (paramsOrFirst || {}) as { protocolId: ProjectProtocolId, enabled: boolean };
         } else {
             params = {
-                protocolId: paramsOrFirst as ProtocolId,
+                protocolId: paramsOrFirst as ProjectProtocolId,
                 enabled: rest[0] as boolean            
             };
         }
@@ -5662,33 +5685,33 @@ export class Project {
     /**
      * Update properties of a specific service. Use this endpoint to enable or disable a service in your project. 
      *
-     * @param {ServiceId} params.serviceId - Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging
+     * @param {ProjectServiceId} params.serviceId - Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging, advisor
      * @param {boolean} params.enabled - Service status.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateService(params: { serviceId: ServiceId, enabled: boolean }): Promise<Models.Project>;
+    updateService(params: { serviceId: ProjectServiceId, enabled: boolean }): Promise<Models.Project>;
     /**
      * Update properties of a specific service. Use this endpoint to enable or disable a service in your project. 
      *
-     * @param {ServiceId} serviceId - Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging
+     * @param {ProjectServiceId} serviceId - Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging, advisor
      * @param {boolean} enabled - Service status.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateService(serviceId: ServiceId, enabled: boolean): Promise<Models.Project>;
+    updateService(serviceId: ProjectServiceId, enabled: boolean): Promise<Models.Project>;
     updateService(
-        paramsOrFirst: { serviceId: ServiceId, enabled: boolean } | ServiceId,
+        paramsOrFirst: { serviceId: ProjectServiceId, enabled: boolean } | ProjectServiceId,
         ...rest: [(boolean)?]    
     ): Promise<Models.Project> {
-        let params: { serviceId: ServiceId, enabled: boolean };
+        let params: { serviceId: ProjectServiceId, enabled: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('serviceId' in paramsOrFirst || 'enabled' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { serviceId: ServiceId, enabled: boolean };
+            params = (paramsOrFirst || {}) as { serviceId: ProjectServiceId, enabled: boolean };
         } else {
             params = {
-                serviceId: paramsOrFirst as ServiceId,
+                serviceId: paramsOrFirst as ProjectServiceId,
                 enabled: rest[0] as boolean            
             };
         }
@@ -5727,44 +5750,44 @@ export class Project {
      *
      * @param {string} params.host - SMTP server hostname (domain)
      * @param {number} params.port - SMTP server port
-     * @param {string} params.username - SMTP server username. Leave empty for no authorization.
-     * @param {string} params.password - SMTP server password. Leave empty for no authorization. This property is stored securely and cannot be read in future (write-only).
-     * @param {string} params.senderEmail - Email address shown in inbox as the sender of the email.
-     * @param {string} params.senderName - Name shown in inbox as the sender of the email.
-     * @param {string} params.replyToEmail - Email used when user replies to the email.
-     * @param {string} params.replyToName - Name used when user replies to the email.
-     * @param {Secure} params.secure - Configures if communication with SMTP server is encrypted. Allowed values are: tls, ssl. Leave empty for no encryption.
+     * @param {string} params.username - SMTP server username. Pass an empty string to clear a previously set value.
+     * @param {string} params.password - SMTP server password. Pass an empty string to clear a previously set value. This property is stored securely and cannot be read in future (write-only).
+     * @param {string} params.senderEmail - Email address shown in inbox as the sender of the email. Pass an empty string to clear a previously set value.
+     * @param {string} params.senderName - Name shown in inbox as the sender of the email. Pass an empty string to clear a previously set value.
+     * @param {string} params.replyToEmail - Email used when user replies to the email. Pass an empty string to clear a previously set value.
+     * @param {string} params.replyToName - Name used when user replies to the email. Pass an empty string to clear a previously set value.
+     * @param {ProjectSMTPSecure} params.secure - Configures if communication with SMTP server is encrypted. Allowed values are: tls, ssl. Leave empty for no encryption.
      * @param {boolean} params.enabled - Enable or disable custom SMTP. Custom SMTP is useful for branding purposes, but also allows use of custom email templates.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateSMTP(params?: { host?: string, port?: number, username?: string, password?: string, senderEmail?: string, senderName?: string, replyToEmail?: string, replyToName?: string, secure?: Secure, enabled?: boolean }): Promise<Models.Project>;
+    updateSMTP(params?: { host?: string, port?: number, username?: string, password?: string, senderEmail?: string, senderName?: string, replyToEmail?: string, replyToName?: string, secure?: ProjectSMTPSecure, enabled?: boolean }): Promise<Models.Project>;
     /**
      * Update the SMTP configuration for your project. Use this endpoint to configure your project's SMTP provider with your custom settings for sending transactional emails.
      *
      * @param {string} host - SMTP server hostname (domain)
      * @param {number} port - SMTP server port
-     * @param {string} username - SMTP server username. Leave empty for no authorization.
-     * @param {string} password - SMTP server password. Leave empty for no authorization. This property is stored securely and cannot be read in future (write-only).
-     * @param {string} senderEmail - Email address shown in inbox as the sender of the email.
-     * @param {string} senderName - Name shown in inbox as the sender of the email.
-     * @param {string} replyToEmail - Email used when user replies to the email.
-     * @param {string} replyToName - Name used when user replies to the email.
-     * @param {Secure} secure - Configures if communication with SMTP server is encrypted. Allowed values are: tls, ssl. Leave empty for no encryption.
+     * @param {string} username - SMTP server username. Pass an empty string to clear a previously set value.
+     * @param {string} password - SMTP server password. Pass an empty string to clear a previously set value. This property is stored securely and cannot be read in future (write-only).
+     * @param {string} senderEmail - Email address shown in inbox as the sender of the email. Pass an empty string to clear a previously set value.
+     * @param {string} senderName - Name shown in inbox as the sender of the email. Pass an empty string to clear a previously set value.
+     * @param {string} replyToEmail - Email used when user replies to the email. Pass an empty string to clear a previously set value.
+     * @param {string} replyToName - Name used when user replies to the email. Pass an empty string to clear a previously set value.
+     * @param {ProjectSMTPSecure} secure - Configures if communication with SMTP server is encrypted. Allowed values are: tls, ssl. Leave empty for no encryption.
      * @param {boolean} enabled - Enable or disable custom SMTP. Custom SMTP is useful for branding purposes, but also allows use of custom email templates.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateSMTP(host?: string, port?: number, username?: string, password?: string, senderEmail?: string, senderName?: string, replyToEmail?: string, replyToName?: string, secure?: Secure, enabled?: boolean): Promise<Models.Project>;
+    updateSMTP(host?: string, port?: number, username?: string, password?: string, senderEmail?: string, senderName?: string, replyToEmail?: string, replyToName?: string, secure?: ProjectSMTPSecure, enabled?: boolean): Promise<Models.Project>;
     updateSMTP(
-        paramsOrFirst?: { host?: string, port?: number, username?: string, password?: string, senderEmail?: string, senderName?: string, replyToEmail?: string, replyToName?: string, secure?: Secure, enabled?: boolean } | string,
-        ...rest: [(number)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (Secure)?, (boolean)?]    
+        paramsOrFirst?: { host?: string, port?: number, username?: string, password?: string, senderEmail?: string, senderName?: string, replyToEmail?: string, replyToName?: string, secure?: ProjectSMTPSecure, enabled?: boolean } | string,
+        ...rest: [(number)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (ProjectSMTPSecure)?, (boolean)?]    
     ): Promise<Models.Project> {
-        let params: { host?: string, port?: number, username?: string, password?: string, senderEmail?: string, senderName?: string, replyToEmail?: string, replyToName?: string, secure?: Secure, enabled?: boolean };
+        let params: { host?: string, port?: number, username?: string, password?: string, senderEmail?: string, senderName?: string, replyToEmail?: string, replyToName?: string, secure?: ProjectSMTPSecure, enabled?: boolean };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { host?: string, port?: number, username?: string, password?: string, senderEmail?: string, senderName?: string, replyToEmail?: string, replyToName?: string, secure?: Secure, enabled?: boolean };
+            params = (paramsOrFirst || {}) as { host?: string, port?: number, username?: string, password?: string, senderEmail?: string, senderName?: string, replyToEmail?: string, replyToName?: string, secure?: ProjectSMTPSecure, enabled?: boolean };
         } else {
             params = {
                 host: paramsOrFirst as string,
@@ -5775,7 +5798,7 @@ export class Project {
                 senderName: rest[4] as string,
                 replyToEmail: rest[5] as string,
                 replyToName: rest[6] as string,
-                secure: rest[7] as Secure,
+                secure: rest[7] as ProjectSMTPSecure,
                 enabled: rest[8] as boolean            
             };
         }
@@ -5955,46 +5978,46 @@ export class Project {
     /**
      * Update a custom email template for the specified locale and type. Use this endpoint to modify the content of your email templates.
      *
-     * @param {EmailTemplateType} params.templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
-     * @param {EmailTemplateLocale} params.locale - Custom email template locale. If left empty, the fallback locale (en) will be used.
+     * @param {ProjectEmailTemplateId} params.templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+     * @param {ProjectEmailTemplateLocale} params.locale - Custom email template locale. If left empty, the fallback locale (en) will be used.
      * @param {string} params.subject - Subject of the email template. Can be up to 255 characters.
      * @param {string} params.message - Plain or HTML body of the email template message. Can be up to 10MB of content.
      * @param {string} params.senderName - Name of the email sender.
-     * @param {string} params.senderEmail - Email of the sender.
-     * @param {string} params.replyToEmail - Reply to email.
+     * @param {string} params.senderEmail - Email of the sender. Pass an empty string to clear a previously set value.
+     * @param {string} params.replyToEmail - Reply to email. Pass an empty string to clear a previously set value.
      * @param {string} params.replyToName - Reply to name.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
      */
-    updateEmailTemplate(params: { templateId: EmailTemplateType, locale?: EmailTemplateLocale, subject?: string, message?: string, senderName?: string, senderEmail?: string, replyToEmail?: string, replyToName?: string }): Promise<Models.EmailTemplate>;
+    updateEmailTemplate(params: { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale, subject?: string, message?: string, senderName?: string, senderEmail?: string, replyToEmail?: string, replyToName?: string }): Promise<Models.EmailTemplate>;
     /**
      * Update a custom email template for the specified locale and type. Use this endpoint to modify the content of your email templates.
      *
-     * @param {EmailTemplateType} templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
-     * @param {EmailTemplateLocale} locale - Custom email template locale. If left empty, the fallback locale (en) will be used.
+     * @param {ProjectEmailTemplateId} templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+     * @param {ProjectEmailTemplateLocale} locale - Custom email template locale. If left empty, the fallback locale (en) will be used.
      * @param {string} subject - Subject of the email template. Can be up to 255 characters.
      * @param {string} message - Plain or HTML body of the email template message. Can be up to 10MB of content.
      * @param {string} senderName - Name of the email sender.
-     * @param {string} senderEmail - Email of the sender.
-     * @param {string} replyToEmail - Reply to email.
+     * @param {string} senderEmail - Email of the sender. Pass an empty string to clear a previously set value.
+     * @param {string} replyToEmail - Reply to email. Pass an empty string to clear a previously set value.
      * @param {string} replyToName - Reply to name.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateEmailTemplate(templateId: EmailTemplateType, locale?: EmailTemplateLocale, subject?: string, message?: string, senderName?: string, senderEmail?: string, replyToEmail?: string, replyToName?: string): Promise<Models.EmailTemplate>;
+    updateEmailTemplate(templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale, subject?: string, message?: string, senderName?: string, senderEmail?: string, replyToEmail?: string, replyToName?: string): Promise<Models.EmailTemplate>;
     updateEmailTemplate(
-        paramsOrFirst: { templateId: EmailTemplateType, locale?: EmailTemplateLocale, subject?: string, message?: string, senderName?: string, senderEmail?: string, replyToEmail?: string, replyToName?: string } | EmailTemplateType,
-        ...rest: [(EmailTemplateLocale)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
+        paramsOrFirst: { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale, subject?: string, message?: string, senderName?: string, senderEmail?: string, replyToEmail?: string, replyToName?: string } | ProjectEmailTemplateId,
+        ...rest: [(ProjectEmailTemplateLocale)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
     ): Promise<Models.EmailTemplate> {
-        let params: { templateId: EmailTemplateType, locale?: EmailTemplateLocale, subject?: string, message?: string, senderName?: string, senderEmail?: string, replyToEmail?: string, replyToName?: string };
+        let params: { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale, subject?: string, message?: string, senderName?: string, senderEmail?: string, replyToEmail?: string, replyToName?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('templateId' in paramsOrFirst || 'locale' in paramsOrFirst || 'subject' in paramsOrFirst || 'message' in paramsOrFirst || 'senderName' in paramsOrFirst || 'senderEmail' in paramsOrFirst || 'replyToEmail' in paramsOrFirst || 'replyToName' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { templateId: EmailTemplateType, locale?: EmailTemplateLocale, subject?: string, message?: string, senderName?: string, senderEmail?: string, replyToEmail?: string, replyToName?: string };
+            params = (paramsOrFirst || {}) as { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale, subject?: string, message?: string, senderName?: string, senderEmail?: string, replyToEmail?: string, replyToName?: string };
         } else {
             params = {
-                templateId: paramsOrFirst as EmailTemplateType,
-                locale: rest[0] as EmailTemplateLocale,
+                templateId: paramsOrFirst as ProjectEmailTemplateId,
+                locale: rest[0] as ProjectEmailTemplateLocale,
                 subject: rest[1] as string,
                 message: rest[2] as string,
                 senderName: rest[3] as string,
@@ -6060,34 +6083,34 @@ export class Project {
     /**
      * Get a custom email template for the specified locale and type. This endpoint returns the template content, subject, and other configuration details.
      *
-     * @param {EmailTemplateType} params.templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
-     * @param {EmailTemplateLocale} params.locale - Custom email template locale. If left empty, the fallback locale (en) will be used.
+     * @param {ProjectEmailTemplateId} params.templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+     * @param {ProjectEmailTemplateLocale} params.locale - Custom email template locale. If left empty, the fallback locale (en) will be used.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
      */
-    getEmailTemplate(params: { templateId: EmailTemplateType, locale?: EmailTemplateLocale }): Promise<Models.EmailTemplate>;
+    getEmailTemplate(params: { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale }): Promise<Models.EmailTemplate>;
     /**
      * Get a custom email template for the specified locale and type. This endpoint returns the template content, subject, and other configuration details.
      *
-     * @param {EmailTemplateType} templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
-     * @param {EmailTemplateLocale} locale - Custom email template locale. If left empty, the fallback locale (en) will be used.
+     * @param {ProjectEmailTemplateId} templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+     * @param {ProjectEmailTemplateLocale} locale - Custom email template locale. If left empty, the fallback locale (en) will be used.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getEmailTemplate(templateId: EmailTemplateType, locale?: EmailTemplateLocale): Promise<Models.EmailTemplate>;
+    getEmailTemplate(templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale): Promise<Models.EmailTemplate>;
     getEmailTemplate(
-        paramsOrFirst: { templateId: EmailTemplateType, locale?: EmailTemplateLocale } | EmailTemplateType,
-        ...rest: [(EmailTemplateLocale)?]    
+        paramsOrFirst: { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale } | ProjectEmailTemplateId,
+        ...rest: [(ProjectEmailTemplateLocale)?]    
     ): Promise<Models.EmailTemplate> {
-        let params: { templateId: EmailTemplateType, locale?: EmailTemplateLocale };
+        let params: { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('templateId' in paramsOrFirst || 'locale' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { templateId: EmailTemplateType, locale?: EmailTemplateLocale };
+            params = (paramsOrFirst || {}) as { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale };
         } else {
             params = {
-                templateId: paramsOrFirst as EmailTemplateType,
-                locale: rest[0] as EmailTemplateLocale            
+                templateId: paramsOrFirst as ProjectEmailTemplateId,
+                locale: rest[0] as ProjectEmailTemplateLocale            
             };
         }
         

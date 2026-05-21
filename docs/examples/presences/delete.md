@@ -1,14 +1,14 @@
 ```javascript
-import { Client, Project, ProjectPolicyId } from "@appwrite.io/console";
+import { Client, Presences } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const project = new Project(client);
+const presences = new Presences(client);
 
-const result = await project.getPolicy({
-    policyId: ProjectPolicyId.PasswordDictionary
+const result = await presences.delete({
+    presenceId: '<PRESENCE_ID>'
 });
 
 console.log(result);

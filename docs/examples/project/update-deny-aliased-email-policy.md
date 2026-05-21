@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Project, ProjectKeyScopes } from "@appwrite.io/console";
+import { Client, Project } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -7,9 +7,8 @@ const client = new Client()
 
 const project = new Project(client);
 
-const result = await project.createEphemeralKey({
-    scopes: [ProjectKeyScopes.ProjectRead],
-    duration: 600
+const result = await project.updateDenyAliasedEmailPolicy({
+    enabled: false
 });
 
 console.log(result);
