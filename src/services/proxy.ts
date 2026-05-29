@@ -2,7 +2,7 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { StatusCode } from '../enums/status-code';
+import { RedirectStatusCode } from '../enums/redirect-status-code';
 import { ProxyResourceType } from '../enums/proxy-resource-type';
 
 export class Proxy {
@@ -214,13 +214,13 @@ export class Proxy {
      *
      * @param {string} params.domain - Domain name.
      * @param {string} params.url - Target URL of redirection
-     * @param {StatusCode} params.statusCode - Status code of redirection
+     * @param {RedirectStatusCode} params.statusCode - Status code of redirection
      * @param {string} params.resourceId - ID of parent resource.
      * @param {ProxyResourceType} params.resourceType - Type of parent resource.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      */
-    createRedirectRule(params: { domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType }): Promise<Models.ProxyRule>;
+    createRedirectRule(params: { domain: string, url: string, statusCode: RedirectStatusCode, resourceId: string, resourceType: ProxyResourceType }): Promise<Models.ProxyRule>;
     /**
      * Create a new proxy rule for to redirect from custom domain to another domain.
      * 
@@ -228,27 +228,27 @@ export class Proxy {
      *
      * @param {string} domain - Domain name.
      * @param {string} url - Target URL of redirection
-     * @param {StatusCode} statusCode - Status code of redirection
+     * @param {RedirectStatusCode} statusCode - Status code of redirection
      * @param {string} resourceId - ID of parent resource.
      * @param {ProxyResourceType} resourceType - Type of parent resource.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProxyRule>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRedirectRule(domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType): Promise<Models.ProxyRule>;
+    createRedirectRule(domain: string, url: string, statusCode: RedirectStatusCode, resourceId: string, resourceType: ProxyResourceType): Promise<Models.ProxyRule>;
     createRedirectRule(
-        paramsOrFirst: { domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType } | string,
-        ...rest: [(string)?, (StatusCode)?, (string)?, (ProxyResourceType)?]    
+        paramsOrFirst: { domain: string, url: string, statusCode: RedirectStatusCode, resourceId: string, resourceType: ProxyResourceType } | string,
+        ...rest: [(string)?, (RedirectStatusCode)?, (string)?, (ProxyResourceType)?]    
     ): Promise<Models.ProxyRule> {
-        let params: { domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType };
+        let params: { domain: string, url: string, statusCode: RedirectStatusCode, resourceId: string, resourceType: ProxyResourceType };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domain: string, url: string, statusCode: StatusCode, resourceId: string, resourceType: ProxyResourceType };
+            params = (paramsOrFirst || {}) as { domain: string, url: string, statusCode: RedirectStatusCode, resourceId: string, resourceType: ProxyResourceType };
         } else {
             params = {
                 domain: paramsOrFirst as string,
                 url: rest[0] as string,
-                statusCode: rest[1] as StatusCode,
+                statusCode: rest[1] as RedirectStatusCode,
                 resourceId: rest[2] as string,
                 resourceType: rest[3] as ProxyResourceType            
             };

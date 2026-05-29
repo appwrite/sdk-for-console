@@ -2,290 +2,14 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { Region } from '../enums/region';
-import { ResourceType } from '../enums/resource-type';
-import { Status } from '../enums/status';
+import { ScheduleResourceType } from '../enums/schedule-resource-type';
+import { ProjectStatus } from '../enums/project-status';
 
 export class Projects {
     client: Client;
 
     constructor(client: Client) {
         this.client = client;
-    }
-
-    /**
-     * Get a list of all projects. You can use the query params to filter your results. 
-     *
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, teamId, labels, search
-     * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
-     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.ProjectList>}
-     */
-    list(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.ProjectList>;
-    /**
-     * Get a list of all projects. You can use the query params to filter your results. 
-     *
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, teamId, labels, search
-     * @param {string} search - Search term to filter your list results. Max length: 256 chars.
-     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.ProjectList>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    list(queries?: string[], search?: string, total?: boolean): Promise<Models.ProjectList>;
-    list(
-        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
-        ...rest: [(string)?, (boolean)?]    
-    ): Promise<Models.ProjectList> {
-        let params: { queries?: string[], search?: string, total?: boolean };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
-        } else {
-            params = {
-                queries: paramsOrFirst as string[],
-                search: rest[0] as string,
-                total: rest[1] as boolean            
-            };
-        }
-        
-        const queries = params.queries;
-        const search = params.search;
-        const total = params.total;
-
-
-        const apiPath = '/projects';
-        const payload: Payload = {};
-        if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
-        }
-        if (typeof search !== 'undefined') {
-            payload['search'] = search;
-        }
-        if (typeof total !== 'undefined') {
-            payload['total'] = total;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Create a new project. You can create a maximum of 100 projects per account. 
-     *
-     * @param {string} params.projectId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, and hyphen. Can't start with a special char. Max length is 36 chars.
-     * @param {string} params.name - Project name. Max length: 128 chars.
-     * @param {string} params.teamId - Team unique ID.
-     * @param {Region} params.region - Project Region.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
-     */
-    create(params: { projectId: string, name: string, teamId: string, region?: Region }): Promise<Models.Project>;
-    /**
-     * Create a new project. You can create a maximum of 100 projects per account. 
-     *
-     * @param {string} projectId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, and hyphen. Can't start with a special char. Max length is 36 chars.
-     * @param {string} name - Project name. Max length: 128 chars.
-     * @param {string} teamId - Team unique ID.
-     * @param {Region} region - Project Region.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    create(projectId: string, name: string, teamId: string, region?: Region): Promise<Models.Project>;
-    create(
-        paramsOrFirst: { projectId: string, name: string, teamId: string, region?: Region } | string,
-        ...rest: [(string)?, (string)?, (Region)?]    
-    ): Promise<Models.Project> {
-        let params: { projectId: string, name: string, teamId: string, region?: Region };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, name: string, teamId: string, region?: Region };
-        } else {
-            params = {
-                projectId: paramsOrFirst as string,
-                name: rest[0] as string,
-                teamId: rest[1] as string,
-                region: rest[2] as Region            
-            };
-        }
-        
-        const projectId = params.projectId;
-        const name = params.name;
-        const teamId = params.teamId;
-        const region = params.region;
-
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof name === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "name"');
-        }
-        if (typeof teamId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "teamId"');
-        }
-
-        const apiPath = '/projects';
-        const payload: Payload = {};
-        if (typeof projectId !== 'undefined') {
-            payload['projectId'] = projectId;
-        }
-        if (typeof name !== 'undefined') {
-            payload['name'] = name;
-        }
-        if (typeof teamId !== 'undefined') {
-            payload['teamId'] = teamId;
-        }
-        if (typeof region !== 'undefined') {
-            payload['region'] = region;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Update a project by its unique ID.
-     *
-     * @param {string} params.projectId - Project unique ID.
-     * @param {string} params.name - Project name. Max length: 128 chars.
-     * @param {string} params.description - Project description. Max length: 256 chars.
-     * @param {string} params.logo - Project logo.
-     * @param {string} params.url - Project URL.
-     * @param {string} params.legalName - Project legal name. Max length: 256 chars.
-     * @param {string} params.legalCountry - Project legal country. Max length: 256 chars.
-     * @param {string} params.legalState - Project legal state. Max length: 256 chars.
-     * @param {string} params.legalCity - Project legal city. Max length: 256 chars.
-     * @param {string} params.legalAddress - Project legal address. Max length: 256 chars.
-     * @param {string} params.legalTaxId - Project legal tax ID. Max length: 256 chars.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
-     */
-    update(params: { projectId: string, name: string, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string }): Promise<Models.Project>;
-    /**
-     * Update a project by its unique ID.
-     *
-     * @param {string} projectId - Project unique ID.
-     * @param {string} name - Project name. Max length: 128 chars.
-     * @param {string} description - Project description. Max length: 256 chars.
-     * @param {string} logo - Project logo.
-     * @param {string} url - Project URL.
-     * @param {string} legalName - Project legal name. Max length: 256 chars.
-     * @param {string} legalCountry - Project legal country. Max length: 256 chars.
-     * @param {string} legalState - Project legal state. Max length: 256 chars.
-     * @param {string} legalCity - Project legal city. Max length: 256 chars.
-     * @param {string} legalAddress - Project legal address. Max length: 256 chars.
-     * @param {string} legalTaxId - Project legal tax ID. Max length: 256 chars.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    update(projectId: string, name: string, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string): Promise<Models.Project>;
-    update(
-        paramsOrFirst: { projectId: string, name: string, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
-    ): Promise<Models.Project> {
-        let params: { projectId: string, name: string, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, name: string, description?: string, logo?: string, url?: string, legalName?: string, legalCountry?: string, legalState?: string, legalCity?: string, legalAddress?: string, legalTaxId?: string };
-        } else {
-            params = {
-                projectId: paramsOrFirst as string,
-                name: rest[0] as string,
-                description: rest[1] as string,
-                logo: rest[2] as string,
-                url: rest[3] as string,
-                legalName: rest[4] as string,
-                legalCountry: rest[5] as string,
-                legalState: rest[6] as string,
-                legalCity: rest[7] as string,
-                legalAddress: rest[8] as string,
-                legalTaxId: rest[9] as string            
-            };
-        }
-        
-        const projectId = params.projectId;
-        const name = params.name;
-        const description = params.description;
-        const logo = params.logo;
-        const url = params.url;
-        const legalName = params.legalName;
-        const legalCountry = params.legalCountry;
-        const legalState = params.legalState;
-        const legalCity = params.legalCity;
-        const legalAddress = params.legalAddress;
-        const legalTaxId = params.legalTaxId;
-
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
-        }
-        if (typeof name === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "name"');
-        }
-
-        const apiPath = '/projects/{projectId}'.replace('{projectId}', projectId);
-        const payload: Payload = {};
-        if (typeof name !== 'undefined') {
-            payload['name'] = name;
-        }
-        if (typeof description !== 'undefined') {
-            payload['description'] = description;
-        }
-        if (typeof logo !== 'undefined') {
-            payload['logo'] = logo;
-        }
-        if (typeof url !== 'undefined') {
-            payload['url'] = url;
-        }
-        if (typeof legalName !== 'undefined') {
-            payload['legalName'] = legalName;
-        }
-        if (typeof legalCountry !== 'undefined') {
-            payload['legalCountry'] = legalCountry;
-        }
-        if (typeof legalState !== 'undefined') {
-            payload['legalState'] = legalState;
-        }
-        if (typeof legalCity !== 'undefined') {
-            payload['legalCity'] = legalCity;
-        }
-        if (typeof legalAddress !== 'undefined') {
-            payload['legalAddress'] = legalAddress;
-        }
-        if (typeof legalTaxId !== 'undefined') {
-            payload['legalTaxId'] = legalTaxId;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
     }
 
     /**
@@ -743,7 +467,7 @@ export class Projects {
      * Create a new schedule for a resource.
      *
      * @param {string} params.projectId - Project unique ID.
-     * @param {ResourceType} params.resourceType - The resource type for the schedule. Possible values: function, execution, message, backup.
+     * @param {ScheduleResourceType} params.resourceType - The resource type for the schedule. Possible values: function, execution, message, backup.
      * @param {string} params.resourceId - The resource ID to associate with this schedule.
      * @param {string} params.schedule - Schedule CRON expression.
      * @param {boolean} params.active - Whether the schedule is active.
@@ -751,12 +475,12 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Schedule>}
      */
-    createSchedule(params: { projectId: string, resourceType: ResourceType, resourceId: string, schedule: string, active?: boolean, data?: object }): Promise<Models.Schedule>;
+    createSchedule(params: { projectId: string, resourceType: ScheduleResourceType, resourceId: string, schedule: string, active?: boolean, data?: object }): Promise<Models.Schedule>;
     /**
      * Create a new schedule for a resource.
      *
      * @param {string} projectId - Project unique ID.
-     * @param {ResourceType} resourceType - The resource type for the schedule. Possible values: function, execution, message, backup.
+     * @param {ScheduleResourceType} resourceType - The resource type for the schedule. Possible values: function, execution, message, backup.
      * @param {string} resourceId - The resource ID to associate with this schedule.
      * @param {string} schedule - Schedule CRON expression.
      * @param {boolean} active - Whether the schedule is active.
@@ -765,19 +489,19 @@ export class Projects {
      * @returns {Promise<Models.Schedule>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSchedule(projectId: string, resourceType: ResourceType, resourceId: string, schedule: string, active?: boolean, data?: object): Promise<Models.Schedule>;
+    createSchedule(projectId: string, resourceType: ScheduleResourceType, resourceId: string, schedule: string, active?: boolean, data?: object): Promise<Models.Schedule>;
     createSchedule(
-        paramsOrFirst: { projectId: string, resourceType: ResourceType, resourceId: string, schedule: string, active?: boolean, data?: object } | string,
-        ...rest: [(ResourceType)?, (string)?, (string)?, (boolean)?, (object)?]    
+        paramsOrFirst: { projectId: string, resourceType: ScheduleResourceType, resourceId: string, schedule: string, active?: boolean, data?: object } | string,
+        ...rest: [(ScheduleResourceType)?, (string)?, (string)?, (boolean)?, (object)?]    
     ): Promise<Models.Schedule> {
-        let params: { projectId: string, resourceType: ResourceType, resourceId: string, schedule: string, active?: boolean, data?: object };
+        let params: { projectId: string, resourceType: ScheduleResourceType, resourceId: string, schedule: string, active?: boolean, data?: object };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, resourceType: ResourceType, resourceId: string, schedule: string, active?: boolean, data?: object };
+            params = (paramsOrFirst || {}) as { projectId: string, resourceType: ScheduleResourceType, resourceId: string, schedule: string, active?: boolean, data?: object };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                resourceType: rest[0] as ResourceType,
+                resourceType: rest[0] as ScheduleResourceType,
                 resourceId: rest[1] as string,
                 schedule: rest[2] as string,
                 active: rest[3] as boolean,
@@ -900,34 +624,34 @@ export class Projects {
      * 
      *
      * @param {string} params.projectId - Project ID
-     * @param {Status} params.status - New status for the project
+     * @param {ProjectStatus} params.status - New status for the project
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    updateStatus(params: { projectId: string, status: Status }): Promise<{}>;
+    updateStatus(params: { projectId: string, status: ProjectStatus }): Promise<{}>;
     /**
      * Update the status of a project. Can be used to archive/restore projects, and to restore paused projects. When restoring a paused project, the console fingerprint header must be provided and the project must not be blocked for any reason other than inactivity.
      * 
      *
      * @param {string} projectId - Project ID
-     * @param {Status} status - New status for the project
+     * @param {ProjectStatus} status - New status for the project
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateStatus(projectId: string, status: Status): Promise<{}>;
+    updateStatus(projectId: string, status: ProjectStatus): Promise<{}>;
     updateStatus(
-        paramsOrFirst: { projectId: string, status: Status } | string,
-        ...rest: [(Status)?]    
+        paramsOrFirst: { projectId: string, status: ProjectStatus } | string,
+        ...rest: [(ProjectStatus)?]    
     ): Promise<{}> {
-        let params: { projectId: string, status: Status };
+        let params: { projectId: string, status: ProjectStatus };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, status: Status };
+            params = (paramsOrFirst || {}) as { projectId: string, status: ProjectStatus };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                status: rest[0] as Status            
+                status: rest[0] as ProjectStatus            
             };
         }
         

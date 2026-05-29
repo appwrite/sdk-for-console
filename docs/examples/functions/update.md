@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Functions, Runtime, Scopes } from "@appwrite.io/console";
+import { Client, Functions, FunctionRuntime, ProjectKeyScopes } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const functions = new Functions(client);
 const result = await functions.update({
     functionId: '<FUNCTION_ID>',
     name: '<NAME>',
-    runtime: Runtime.Node145, // optional
+    runtime: FunctionRuntime.Node145, // optional
     execute: ["any"], // optional
     events: [], // optional
     schedule: '', // optional
@@ -19,12 +19,14 @@ const result = await functions.update({
     logging: false, // optional
     entrypoint: '<ENTRYPOINT>', // optional
     commands: '<COMMANDS>', // optional
-    scopes: [Scopes.ProjectRead], // optional
+    scopes: [ProjectKeyScopes.ProjectRead], // optional
     installationId: '<INSTALLATION_ID>', // optional
     providerRepositoryId: '<PROVIDER_REPOSITORY_ID>', // optional
     providerBranch: '<PROVIDER_BRANCH>', // optional
     providerSilentMode: false, // optional
     providerRootDirectory: '<PROVIDER_ROOT_DIRECTORY>', // optional
+    providerBranches: [], // optional
+    providerPaths: [], // optional
     buildSpecification: '', // optional
     runtimeSpecification: '', // optional
     deploymentRetention: 0 // optional

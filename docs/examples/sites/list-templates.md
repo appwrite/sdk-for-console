@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Sites, Frameworks, UseCases } from "@appwrite.io/console";
+import { Client, Sites, SiteFramework, SiteTemplateUseCase } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,8 +8,8 @@ const client = new Client()
 const sites = new Sites(client);
 
 const result = await sites.listTemplates({
-    frameworks: [Frameworks.Analog], // optional
-    useCases: [UseCases.Portfolio], // optional
+    frameworks: [SiteFramework.Analog], // optional
+    useCases: [SiteTemplateUseCase.Portfolio], // optional
     limit: 1, // optional
     offset: 0 // optional
 });

@@ -2187,7 +2187,7 @@ export class Project {
      * Update the project OAuth2 Google configuration.
      *
      * @param {string} params.clientId - 'Client ID' of Google OAuth2 app. For example: 120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com
-     * @param {string} params.clientSecret - 'Client Secret' of Google OAuth2 app. For example: example-google-client-secret
+     * @param {string} params.clientSecret - 'Client Secret' of Google OAuth2 app. For example: GOCSPX-2k8gsR0000000000000000VNahJj
      * @param {ProjectOAuth2GooglePrompt[]} params.prompt - Array of Google OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. Must not be specified with other values. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
      * @param {boolean} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
      * @throws {AppwriteException}
@@ -2198,7 +2198,7 @@ export class Project {
      * Update the project OAuth2 Google configuration.
      *
      * @param {string} clientId - 'Client ID' of Google OAuth2 app. For example: 120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com
-     * @param {string} clientSecret - 'Client Secret' of Google OAuth2 app. For example: example-google-client-secret
+     * @param {string} clientSecret - 'Client Secret' of Google OAuth2 app. For example: GOCSPX-2k8gsR0000000000000000VNahJj
      * @param {ProjectOAuth2GooglePrompt[]} prompt - Array of Google OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. Must not be specified with other values. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
      * @param {boolean} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
      * @throws {AppwriteException}
@@ -2409,7 +2409,7 @@ export class Project {
      * Update the project OAuth2 Linkedin configuration.
      *
      * @param {string} params.clientId - 'Client ID' of Linkedin OAuth2 app. For example: 770000000000dv
-     * @param {string} params.primaryClientSecret - 'Primary Client Secret or Secondary Client Secret' of Linkedin OAuth2 app. For example: example-linkedin-client-secret
+     * @param {string} params.primaryClientSecret - 'Primary Client Secret or Secondary Client Secret' of Linkedin OAuth2 app. For example: WPL_AP1.2Bf0000000000000./HtlYw==
      * @param {boolean} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Linkedin>}
@@ -2419,7 +2419,7 @@ export class Project {
      * Update the project OAuth2 Linkedin configuration.
      *
      * @param {string} clientId - 'Client ID' of Linkedin OAuth2 app. For example: 770000000000dv
-     * @param {string} primaryClientSecret - 'Primary Client Secret or Secondary Client Secret' of Linkedin OAuth2 app. For example: example-linkedin-client-secret
+     * @param {string} primaryClientSecret - 'Primary Client Secret or Secondary Client Secret' of Linkedin OAuth2 app. For example: WPL_AP1.2Bf0000000000000./HtlYw==
      * @param {boolean} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Linkedin>}
@@ -5750,12 +5750,12 @@ export class Project {
      *
      * @param {string} params.host - SMTP server hostname (domain)
      * @param {number} params.port - SMTP server port
-     * @param {string} params.username - SMTP server username. Leave empty for no authorization.
-     * @param {string} params.password - SMTP server password. Leave empty for no authorization. This property is stored securely and cannot be read in future (write-only).
-     * @param {string} params.senderEmail - Email address shown in inbox as the sender of the email.
-     * @param {string} params.senderName - Name shown in inbox as the sender of the email.
-     * @param {string} params.replyToEmail - Email used when user replies to the email.
-     * @param {string} params.replyToName - Name used when user replies to the email.
+     * @param {string} params.username - SMTP server username. Pass an empty string to clear a previously set value.
+     * @param {string} params.password - SMTP server password. Pass an empty string to clear a previously set value. This property is stored securely and cannot be read in future (write-only).
+     * @param {string} params.senderEmail - Email address shown in inbox as the sender of the email. Pass an empty string to clear a previously set value.
+     * @param {string} params.senderName - Name shown in inbox as the sender of the email. Pass an empty string to clear a previously set value.
+     * @param {string} params.replyToEmail - Email used when user replies to the email. Pass an empty string to clear a previously set value.
+     * @param {string} params.replyToName - Name used when user replies to the email. Pass an empty string to clear a previously set value.
      * @param {ProjectSMTPSecure} params.secure - Configures if communication with SMTP server is encrypted. Allowed values are: tls, ssl. Leave empty for no encryption.
      * @param {boolean} params.enabled - Enable or disable custom SMTP. Custom SMTP is useful for branding purposes, but also allows use of custom email templates.
      * @throws {AppwriteException}
@@ -5767,12 +5767,12 @@ export class Project {
      *
      * @param {string} host - SMTP server hostname (domain)
      * @param {number} port - SMTP server port
-     * @param {string} username - SMTP server username. Leave empty for no authorization.
-     * @param {string} password - SMTP server password. Leave empty for no authorization. This property is stored securely and cannot be read in future (write-only).
-     * @param {string} senderEmail - Email address shown in inbox as the sender of the email.
-     * @param {string} senderName - Name shown in inbox as the sender of the email.
-     * @param {string} replyToEmail - Email used when user replies to the email.
-     * @param {string} replyToName - Name used when user replies to the email.
+     * @param {string} username - SMTP server username. Pass an empty string to clear a previously set value.
+     * @param {string} password - SMTP server password. Pass an empty string to clear a previously set value. This property is stored securely and cannot be read in future (write-only).
+     * @param {string} senderEmail - Email address shown in inbox as the sender of the email. Pass an empty string to clear a previously set value.
+     * @param {string} senderName - Name shown in inbox as the sender of the email. Pass an empty string to clear a previously set value.
+     * @param {string} replyToEmail - Email used when user replies to the email. Pass an empty string to clear a previously set value.
+     * @param {string} replyToName - Name used when user replies to the email. Pass an empty string to clear a previously set value.
      * @param {ProjectSMTPSecure} secure - Configures if communication with SMTP server is encrypted. Allowed values are: tls, ssl. Leave empty for no encryption.
      * @param {boolean} enabled - Enable or disable custom SMTP. Custom SMTP is useful for branding purposes, but also allows use of custom email templates.
      * @throws {AppwriteException}
@@ -5983,8 +5983,8 @@ export class Project {
      * @param {string} params.subject - Subject of the email template. Can be up to 255 characters.
      * @param {string} params.message - Plain or HTML body of the email template message. Can be up to 10MB of content.
      * @param {string} params.senderName - Name of the email sender.
-     * @param {string} params.senderEmail - Email of the sender.
-     * @param {string} params.replyToEmail - Reply to email.
+     * @param {string} params.senderEmail - Email of the sender. Pass an empty string to clear a previously set value.
+     * @param {string} params.replyToEmail - Reply to email. Pass an empty string to clear a previously set value.
      * @param {string} params.replyToName - Reply to name.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
@@ -5998,8 +5998,8 @@ export class Project {
      * @param {string} subject - Subject of the email template. Can be up to 255 characters.
      * @param {string} message - Plain or HTML body of the email template message. Can be up to 10MB of content.
      * @param {string} senderName - Name of the email sender.
-     * @param {string} senderEmail - Email of the sender.
-     * @param {string} replyToEmail - Reply to email.
+     * @param {string} senderEmail - Email of the sender. Pass an empty string to clear a previously set value.
+     * @param {string} replyToEmail - Reply to email. Pass an empty string to clear a previously set value.
      * @param {string} replyToName - Reply to name.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}

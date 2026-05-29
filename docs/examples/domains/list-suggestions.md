@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Domains, FilterType } from "@appwrite.io/console";
+import { Client, Domains, DomainSuggestionType } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +11,7 @@ const result = await domains.listSuggestions({
     query: '<QUERY>',
     tlds: [], // optional
     limit: null, // optional
-    filterType: FilterType.Premium, // optional
+    filterType: DomainSuggestionType.Premium, // optional
     priceMax: null, // optional
     priceMin: null // optional
 });

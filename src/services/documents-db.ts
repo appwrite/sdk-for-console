@@ -17,41 +17,37 @@ export class DocumentsDB {
      * Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name
-     * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DatabaseList>}
      */
-    list(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.DatabaseList>;
+    list(params?: { queries?: string[], total?: boolean }): Promise<Models.DatabaseList>;
     /**
      * Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name
-     * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DatabaseList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    list(queries?: string[], search?: string, total?: boolean): Promise<Models.DatabaseList>;
+    list(queries?: string[], total?: boolean): Promise<Models.DatabaseList>;
     list(
-        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
-        ...rest: [(string)?, (boolean)?]    
+        paramsOrFirst?: { queries?: string[], total?: boolean } | string[],
+        ...rest: [(boolean)?]    
     ): Promise<Models.DatabaseList> {
-        let params: { queries?: string[], search?: string, total?: boolean };
+        let params: { queries?: string[], total?: boolean };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
+            params = (paramsOrFirst || {}) as { queries?: string[], total?: boolean };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
-                search: rest[0] as string,
-                total: rest[1] as boolean            
+                total: rest[0] as boolean            
             };
         }
         
         const queries = params.queries;
-        const search = params.search;
         const total = params.total;
 
 
@@ -59,9 +55,6 @@ export class DocumentsDB {
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
-        }
-        if (typeof search !== 'undefined') {
-            payload['search'] = search;
         }
         if (typeof total !== 'undefined') {
             payload['total'] = total;

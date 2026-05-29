@@ -1,5 +1,5 @@
 ```javascript
-import { Client, VectorsDB, Model } from "@appwrite.io/console";
+import { Client, VectorsDB, EmbeddingModel } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const vectorsDB = new VectorsDB(client);
 
 const result = await vectorsDB.createTextEmbeddings({
     texts: [],
-    model: Model.Embeddinggemma // optional
+    model: EmbeddingModel.Embeddinggemma // optional
 });
 
 console.log(result);

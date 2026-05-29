@@ -19,9 +19,9 @@ export class Presences {
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @param {number} params.ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
      * @throws {AppwriteException}
-     * @returns {Promise<Models.PresenceList<Presence>>}
+     * @returns {Promise<Models.PresenceList>}
      */
-    list<Presence extends Models.Presence = Models.DefaultPresence>(params?: { queries?: string[], total?: boolean, ttl?: number }): Promise<Models.PresenceList<Presence>>;
+    list(params?: { queries?: string[], total?: boolean, ttl?: number }): Promise<Models.PresenceList>;
     /**
      * List presence logs. Expired entries are filtered out automatically.
      * 
@@ -30,14 +30,14 @@ export class Presences {
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @param {number} ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
      * @throws {AppwriteException}
-     * @returns {Promise<Models.PresenceList<Presence>>}
+     * @returns {Promise<Models.PresenceList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    list<Presence extends Models.Presence = Models.DefaultPresence>(queries?: string[], total?: boolean, ttl?: number): Promise<Models.PresenceList<Presence>>;
-    list<Presence extends Models.Presence = Models.DefaultPresence>(
+    list(queries?: string[], total?: boolean, ttl?: number): Promise<Models.PresenceList>;
+    list(
         paramsOrFirst?: { queries?: string[], total?: boolean, ttl?: number } | string[],
         ...rest: [(boolean)?, (number)?]    
-    ): Promise<Models.PresenceList<Presence>> {
+    ): Promise<Models.PresenceList> {
         let params: { queries?: string[], total?: boolean, ttl?: number };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
@@ -138,22 +138,22 @@ export class Presences {
      *
      * @param {string} params.presenceId - Presence unique ID.
      * @throws {AppwriteException}
-     * @returns {Promise<Presence>}
+     * @returns {Promise<Models.Presence>}
      */
-    get<Presence extends Models.Presence = Models.DefaultPresence>(params: { presenceId: string }): Promise<Presence>;
+    get(params: { presenceId: string }): Promise<Models.Presence>;
     /**
      * Get a presence log by its unique ID. Entries whose `expiresAt` is in the past are treated as not found.
      * 
      *
      * @param {string} presenceId - Presence unique ID.
      * @throws {AppwriteException}
-     * @returns {Promise<Presence>}
+     * @returns {Promise<Models.Presence>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    get<Presence extends Models.Presence = Models.DefaultPresence>(presenceId: string): Promise<Presence>;
-    get<Presence extends Models.Presence = Models.DefaultPresence>(
+    get(presenceId: string): Promise<Models.Presence>;
+    get(
         paramsOrFirst: { presenceId: string } | string    
-    ): Promise<Presence> {
+    ): Promise<Models.Presence> {
         let params: { presenceId: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
@@ -190,51 +190,47 @@ export class Presences {
      * 
      *
      * @param {string} params.presenceId - Presence unique ID.
-     * @param {string} params.userId - User ID.
      * @param {string} params.status - Presence status.
      * @param {string[]} params.permissions - An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {string} params.expiresAt - Presence expiry datetime.
      * @param {object} params.metadata - Presence metadata object.
      * @throws {AppwriteException}
-     * @returns {Promise<Presence>}
+     * @returns {Promise<Models.Presence>}
      */
-    upsert<Presence extends Models.Presence = Models.DefaultPresence>(params: { presenceId: string, userId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object }): Promise<Presence>;
+    upsert(params: { presenceId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object }): Promise<Models.Presence>;
     /**
      * Create or update a presence log by its user ID.
      * 
      *
      * @param {string} presenceId - Presence unique ID.
-     * @param {string} userId - User ID.
      * @param {string} status - Presence status.
      * @param {string[]} permissions - An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {string} expiresAt - Presence expiry datetime.
      * @param {object} metadata - Presence metadata object.
      * @throws {AppwriteException}
-     * @returns {Promise<Presence>}
+     * @returns {Promise<Models.Presence>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    upsert<Presence extends Models.Presence = Models.DefaultPresence>(presenceId: string, userId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object): Promise<Presence>;
-    upsert<Presence extends Models.Presence = Models.DefaultPresence>(
-        paramsOrFirst: { presenceId: string, userId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object } | string,
-        ...rest: [(string)?, (string)?, (string[])?, (string)?, (object)?]    
-    ): Promise<Presence> {
-        let params: { presenceId: string, userId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object };
+    upsert(presenceId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object): Promise<Models.Presence>;
+    upsert(
+        paramsOrFirst: { presenceId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object } | string,
+        ...rest: [(string)?, (string[])?, (string)?, (object)?]    
+    ): Promise<Models.Presence> {
+        let params: { presenceId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { presenceId: string, userId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object };
+            params = (paramsOrFirst || {}) as { presenceId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object };
         } else {
             params = {
                 presenceId: paramsOrFirst as string,
-                userId: rest[0] as string,
-                status: rest[1] as string,
-                permissions: rest[2] as string[],
-                expiresAt: rest[3] as string,
-                metadata: rest[4] as object            
+                status: rest[0] as string,
+                permissions: rest[1] as string[],
+                expiresAt: rest[2] as string,
+                metadata: rest[3] as object            
             };
         }
         
         const presenceId = params.presenceId;
-        const userId = params.userId;
         const status = params.status;
         const permissions = params.permissions;
         const expiresAt = params.expiresAt;
@@ -243,18 +239,12 @@ export class Presences {
         if (typeof presenceId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "presenceId"');
         }
-        if (typeof userId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "userId"');
-        }
         if (typeof status === 'undefined') {
             throw new AppwriteException('Missing required parameter: "status"');
         }
 
         const apiPath = '/presences/{presenceId}'.replace('{presenceId}', presenceId);
         const payload: Payload = {};
-        if (typeof userId !== 'undefined') {
-            payload['userId'] = userId;
-        }
         if (typeof status !== 'undefined') {
             payload['status'] = status;
         }
@@ -286,54 +276,50 @@ export class Presences {
      * 
      *
      * @param {string} params.presenceId - Presence unique ID.
-     * @param {string} params.userId - User ID.
      * @param {string} params.status - Presence status.
      * @param {string} params.expiresAt - Presence expiry datetime.
      * @param {object} params.metadata - Presence metadata object.
      * @param {string[]} params.permissions - An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.purge - When true, purge cached responses used by list presences endpoint.
      * @throws {AppwriteException}
-     * @returns {Promise<Presence>}
+     * @returns {Promise<Models.Presence>}
      */
-    updatePresence<Presence extends Models.Presence = Models.DefaultPresence>(params: { presenceId: string, userId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean }): Promise<Presence>;
+    update(params: { presenceId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean }): Promise<Models.Presence>;
     /**
      * Update a presence log by its unique ID. Using the patch method you can pass only specific fields that will get updated.
      * 
      *
      * @param {string} presenceId - Presence unique ID.
-     * @param {string} userId - User ID.
      * @param {string} status - Presence status.
      * @param {string} expiresAt - Presence expiry datetime.
      * @param {object} metadata - Presence metadata object.
      * @param {string[]} permissions - An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} purge - When true, purge cached responses used by list presences endpoint.
      * @throws {AppwriteException}
-     * @returns {Promise<Presence>}
+     * @returns {Promise<Models.Presence>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePresence<Presence extends Models.Presence = Models.DefaultPresence>(presenceId: string, userId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean): Promise<Presence>;
-    updatePresence<Presence extends Models.Presence = Models.DefaultPresence>(
-        paramsOrFirst: { presenceId: string, userId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (object)?, (string[])?, (boolean)?]    
-    ): Promise<Presence> {
-        let params: { presenceId: string, userId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean };
+    update(presenceId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean): Promise<Models.Presence>;
+    update(
+        paramsOrFirst: { presenceId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean } | string,
+        ...rest: [(string)?, (string)?, (object)?, (string[])?, (boolean)?]    
+    ): Promise<Models.Presence> {
+        let params: { presenceId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { presenceId: string, userId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean };
+            params = (paramsOrFirst || {}) as { presenceId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean };
         } else {
             params = {
                 presenceId: paramsOrFirst as string,
-                userId: rest[0] as string,
-                status: rest[1] as string,
-                expiresAt: rest[2] as string,
-                metadata: rest[3] as object,
-                permissions: rest[4] as string[],
-                purge: rest[5] as boolean            
+                status: rest[0] as string,
+                expiresAt: rest[1] as string,
+                metadata: rest[2] as object,
+                permissions: rest[3] as string[],
+                purge: rest[4] as boolean            
             };
         }
         
         const presenceId = params.presenceId;
-        const userId = params.userId;
         const status = params.status;
         const expiresAt = params.expiresAt;
         const metadata = params.metadata;
@@ -343,15 +329,9 @@ export class Presences {
         if (typeof presenceId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "presenceId"');
         }
-        if (typeof userId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "userId"');
-        }
 
         const apiPath = '/presences/{presenceId}'.replace('{presenceId}', presenceId);
         const payload: Payload = {};
-        if (typeof userId !== 'undefined') {
-            payload['userId'] = userId;
-        }
         if (typeof status !== 'undefined') {
             payload['status'] = status;
         }

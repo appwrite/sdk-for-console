@@ -2,8 +2,8 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { RegistrationType } from '../enums/registration-type';
-import { FilterType } from '../enums/filter-type';
+import { DomainRegistrationType } from '../enums/domain-registration-type';
+import { DomainSuggestionType } from '../enums/domain-suggestion-type';
 
 export class Domains {
     client: Client;
@@ -13,7 +13,7 @@ export class Domains {
     }
 
     /**
-     *     List all domains registered for this project. This endpoint supports pagination.
+     * List all domains registered for this project. This endpoint supports pagination.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on attributes such as domain name, teamInternalId, expiration, etc.
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
@@ -22,7 +22,7 @@ export class Domains {
      */
     list(params?: { queries?: string[], search?: string }): Promise<Models.DomainsList>;
     /**
-     *     List all domains registered for this project. This endpoint supports pagination.
+     * List all domains registered for this project. This endpoint supports pagination.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on attributes such as domain name, teamInternalId, expiration, etc.
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
@@ -72,7 +72,7 @@ export class Domains {
     }
 
     /**
-     *     Create a new domain. Before creating a domain, you need to ensure that your DNS provider is properly configured. After creating the domain, you can use the verification endpoint to check if the domain is ready to be used.
+     * Create a new domain. Before creating a domain, you need to ensure that your DNS provider is properly configured. After creating the domain, you can use the verification endpoint to check if the domain is ready to be used.
      *
      * @param {string} params.teamId - Team unique ID.
      * @param {string} params.domain - Domain name (e.g. "example.com").
@@ -81,7 +81,7 @@ export class Domains {
      */
     create(params: { teamId: string, domain: string }): Promise<Models.Domain>;
     /**
-     *     Create a new domain. Before creating a domain, you need to ensure that your DNS provider is properly configured. After creating the domain, you can use the verification endpoint to check if the domain is ready to be used.
+     * Create a new domain. Before creating a domain, you need to ensure that your DNS provider is properly configured. After creating the domain, you can use the verification endpoint to check if the domain is ready to be used.
      *
      * @param {string} teamId - Team unique ID.
      * @param {string} domain - Domain name (e.g. "example.com").
@@ -138,39 +138,39 @@ export class Domains {
     }
 
     /**
-     *     Get the registration price for a domain name.
+     * Get the registration price for a domain name.
      *
      * @param {string} params.domain - Domain name to get price for.
      * @param {number} params.periodYears - Number of years to calculate the domain price for. Must be at least 1.
-     * @param {RegistrationType} params.registrationType - Type of registration pricing to fetch. Allowed values: new, transfer, renewal, trade.
+     * @param {DomainRegistrationType} params.registrationType - Type of registration pricing to fetch. Allowed values: new, transfer, renewal, trade.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPrice>}
      */
-    getPrice(params: { domain: string, periodYears?: number, registrationType?: RegistrationType }): Promise<Models.DomainPrice>;
+    getPrice(params: { domain: string, periodYears?: number, registrationType?: DomainRegistrationType }): Promise<Models.DomainPrice>;
     /**
-     *     Get the registration price for a domain name.
+     * Get the registration price for a domain name.
      *
      * @param {string} domain - Domain name to get price for.
      * @param {number} periodYears - Number of years to calculate the domain price for. Must be at least 1.
-     * @param {RegistrationType} registrationType - Type of registration pricing to fetch. Allowed values: new, transfer, renewal, trade.
+     * @param {DomainRegistrationType} registrationType - Type of registration pricing to fetch. Allowed values: new, transfer, renewal, trade.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPrice>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getPrice(domain: string, periodYears?: number, registrationType?: RegistrationType): Promise<Models.DomainPrice>;
+    getPrice(domain: string, periodYears?: number, registrationType?: DomainRegistrationType): Promise<Models.DomainPrice>;
     getPrice(
-        paramsOrFirst: { domain: string, periodYears?: number, registrationType?: RegistrationType } | string,
-        ...rest: [(number)?, (RegistrationType)?]    
+        paramsOrFirst: { domain: string, periodYears?: number, registrationType?: DomainRegistrationType } | string,
+        ...rest: [(number)?, (DomainRegistrationType)?]    
     ): Promise<Models.DomainPrice> {
-        let params: { domain: string, periodYears?: number, registrationType?: RegistrationType };
+        let params: { domain: string, periodYears?: number, registrationType?: DomainRegistrationType };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domain: string, periodYears?: number, registrationType?: RegistrationType };
+            params = (paramsOrFirst || {}) as { domain: string, periodYears?: number, registrationType?: DomainRegistrationType };
         } else {
             params = {
                 domain: paramsOrFirst as string,
                 periodYears: rest[0] as number,
-                registrationType: rest[1] as RegistrationType            
+                registrationType: rest[1] as DomainRegistrationType            
             };
         }
         
@@ -207,7 +207,7 @@ export class Domains {
     }
 
     /**
-     *     Initiate a domain purchase by providing registrant details and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Purchase endpoint to capture the payment and finalize the purchase.
+     * Initiate a domain purchase by providing registrant details and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Purchase endpoint to capture the payment and finalize the purchase.
      *
      * @param {string} params.domain - Fully qualified domain name to purchase (for example, example.com).
      * @param {string} params.organizationId - Team ID that will own the domain.
@@ -226,7 +226,7 @@ export class Domains {
      */
     createPurchase(params: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number, autoRenewal?: boolean }): Promise<Models.DomainPurchase>;
     /**
-     *     Initiate a domain purchase by providing registrant details and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Purchase endpoint to capture the payment and finalize the purchase.
+     * Initiate a domain purchase by providing registrant details and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Purchase endpoint to capture the payment and finalize the purchase.
      *
      * @param {string} domain - Fully qualified domain name to purchase (for example, example.com).
      * @param {string} organizationId - Team ID that will own the domain.
@@ -361,7 +361,7 @@ export class Domains {
     }
 
     /**
-     *     Finalize a domain purchase initiated with Create Purchase. Verifies that any required 3D Secure authentication is complete, registers the domain, captures the payment, and provisions default DNS records. Returns a 402 error if authentication is still pending.
+     * Finalize a domain purchase initiated with Create Purchase. Verifies that any required 3D Secure authentication is complete, registers the domain, captures the payment, and provisions default DNS records. Returns a 402 error if authentication is still pending.
      *
      * @param {string} params.invoiceId - Invoice ID.
      * @param {string} params.organizationId - Team ID that owns the domain.
@@ -370,7 +370,7 @@ export class Domains {
      */
     updatePurchase(params: { invoiceId: string, organizationId: string }): Promise<Models.DomainPurchase>;
     /**
-     *     Finalize a domain purchase initiated with Create Purchase. Verifies that any required 3D Secure authentication is complete, registers the domain, captures the payment, and provisions default DNS records. Returns a 402 error if authentication is still pending.
+     * Finalize a domain purchase initiated with Create Purchase. Verifies that any required 3D Secure authentication is complete, registers the domain, captures the payment, and provisions default DNS records. Returns a 402 error if authentication is still pending.
      *
      * @param {string} invoiceId - Invoice ID.
      * @param {string} organizationId - Team ID that owns the domain.
@@ -424,46 +424,46 @@ export class Domains {
     }
 
     /**
-     *     List domain suggestions.
+     * List domain suggestions.
      *
      * @param {string} params.query - Query to find available domains and suggestions. Max length: 256 chars.
      * @param {string[]} params.tlds - TLDs to suggest.
      * @param {number} params.limit - Maximum number of suggestions to return.
-     * @param {FilterType} params.filterType - Filter type: premium, suggestion.
+     * @param {DomainSuggestionType} params.filterType - Filter type: premium, suggestion.
      * @param {number} params.priceMax - Filter premium domains by maximum price. Only premium domains at or below this price will be returned. Does not affect regular domain suggestions.
      * @param {number} params.priceMin - Filter premium domains by minimum price. Only premium domains at or above this price will be returned. Does not affect regular domain suggestions.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainSuggestionsList>}
      */
-    listSuggestions(params: { query: string, tlds?: string[], limit?: number, filterType?: FilterType, priceMax?: number, priceMin?: number }): Promise<Models.DomainSuggestionsList>;
+    listSuggestions(params: { query: string, tlds?: string[], limit?: number, filterType?: DomainSuggestionType, priceMax?: number, priceMin?: number }): Promise<Models.DomainSuggestionsList>;
     /**
-     *     List domain suggestions.
+     * List domain suggestions.
      *
      * @param {string} query - Query to find available domains and suggestions. Max length: 256 chars.
      * @param {string[]} tlds - TLDs to suggest.
      * @param {number} limit - Maximum number of suggestions to return.
-     * @param {FilterType} filterType - Filter type: premium, suggestion.
+     * @param {DomainSuggestionType} filterType - Filter type: premium, suggestion.
      * @param {number} priceMax - Filter premium domains by maximum price. Only premium domains at or below this price will be returned. Does not affect regular domain suggestions.
      * @param {number} priceMin - Filter premium domains by minimum price. Only premium domains at or above this price will be returned. Does not affect regular domain suggestions.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainSuggestionsList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listSuggestions(query: string, tlds?: string[], limit?: number, filterType?: FilterType, priceMax?: number, priceMin?: number): Promise<Models.DomainSuggestionsList>;
+    listSuggestions(query: string, tlds?: string[], limit?: number, filterType?: DomainSuggestionType, priceMax?: number, priceMin?: number): Promise<Models.DomainSuggestionsList>;
     listSuggestions(
-        paramsOrFirst: { query: string, tlds?: string[], limit?: number, filterType?: FilterType, priceMax?: number, priceMin?: number } | string,
-        ...rest: [(string[])?, (number)?, (FilterType)?, (number)?, (number)?]    
+        paramsOrFirst: { query: string, tlds?: string[], limit?: number, filterType?: DomainSuggestionType, priceMax?: number, priceMin?: number } | string,
+        ...rest: [(string[])?, (number)?, (DomainSuggestionType)?, (number)?, (number)?]    
     ): Promise<Models.DomainSuggestionsList> {
-        let params: { query: string, tlds?: string[], limit?: number, filterType?: FilterType, priceMax?: number, priceMin?: number };
+        let params: { query: string, tlds?: string[], limit?: number, filterType?: DomainSuggestionType, priceMax?: number, priceMin?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { query: string, tlds?: string[], limit?: number, filterType?: FilterType, priceMax?: number, priceMin?: number };
+            params = (paramsOrFirst || {}) as { query: string, tlds?: string[], limit?: number, filterType?: DomainSuggestionType, priceMax?: number, priceMin?: number };
         } else {
             params = {
                 query: paramsOrFirst as string,
                 tlds: rest[0] as string[],
                 limit: rest[1] as number,
-                filterType: rest[2] as FilterType,
+                filterType: rest[2] as DomainSuggestionType,
                 priceMax: rest[3] as number,
                 priceMin: rest[4] as number            
             };
@@ -514,7 +514,7 @@ export class Domains {
     }
 
     /**
-     *     Initiate a domain transfer-in by providing an authorization code, registrant details, and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Transfer In endpoint to capture the payment and submit the transfer.
+     * Initiate a domain transfer-in by providing an authorization code, registrant details, and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Transfer In endpoint to capture the payment and submit the transfer.
      *
      * @param {string} params.domain - Domain name to transfer in.
      * @param {string} params.organizationId - Organization ID that this domain will belong to.
@@ -526,7 +526,7 @@ export class Domains {
      */
     createTransferIn(params: { domain: string, organizationId: string, authCode: string, paymentMethodId: string, autoRenewal?: boolean }): Promise<Models.DomainPurchase>;
     /**
-     *     Initiate a domain transfer-in by providing an authorization code, registrant details, and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Transfer In endpoint to capture the payment and submit the transfer.
+     * Initiate a domain transfer-in by providing an authorization code, registrant details, and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Transfer In endpoint to capture the payment and submit the transfer.
      *
      * @param {string} domain - Domain name to transfer in.
      * @param {string} organizationId - Organization ID that this domain will belong to.
@@ -607,7 +607,7 @@ export class Domains {
     }
 
     /**
-     *     Finalize a domain transfer-in initiated with Create Transfer In. Verifies that any required 3D Secure authentication is complete, submits the transfer with the authorization code, captures the payment, and sends a confirmation email. Returns a 402 error if authentication is still pending.
+     * Finalize a domain transfer-in initiated with Create Transfer In. Verifies that any required 3D Secure authentication is complete, submits the transfer with the authorization code, captures the payment, and sends a confirmation email. Returns a 402 error if authentication is still pending.
      *
      * @param {string} params.invoiceId - Invoice ID.
      * @param {string} params.organizationId - Team ID that owns the domain.
@@ -616,7 +616,7 @@ export class Domains {
      */
     updateTransferIn(params: { invoiceId: string, organizationId: string }): Promise<Models.DomainPurchase>;
     /**
-     *     Finalize a domain transfer-in initiated with Create Transfer In. Verifies that any required 3D Secure authentication is complete, submits the transfer with the authorization code, captures the payment, and sends a confirmation email. Returns a 402 error if authentication is still pending.
+     * Finalize a domain transfer-in initiated with Create Transfer In. Verifies that any required 3D Secure authentication is complete, submits the transfer with the authorization code, captures the payment, and sends a confirmation email. Returns a 402 error if authentication is still pending.
      *
      * @param {string} invoiceId - Invoice ID.
      * @param {string} organizationId - Team ID that owns the domain.
@@ -670,7 +670,7 @@ export class Domains {
     }
 
     /**
-     *     Initiate a domain transfer-out by generating an authorization code for the specified domain. The returned `authCode` should be provided to the gaining provider to complete the transfer. If the domain has auto-renewal enabled, it will be automatically disabled as part of this operation.
+     * Initiate a domain transfer-out by generating an authorization code for the specified domain. The returned `authCode` should be provided to the gaining provider to complete the transfer. If the domain has auto-renewal enabled, it will be automatically disabled as part of this operation.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.organizationId - Organization ID that this domain belongs to.
@@ -679,7 +679,7 @@ export class Domains {
      */
     createTransferOut(params: { domainId: string, organizationId: string }): Promise<Models.DomainTransferOut>;
     /**
-     *     Initiate a domain transfer-out by generating an authorization code for the specified domain. The returned `authCode` should be provided to the gaining provider to complete the transfer. If the domain has auto-renewal enabled, it will be automatically disabled as part of this operation.
+     * Initiate a domain transfer-out by generating an authorization code for the specified domain. The returned `authCode` should be provided to the gaining provider to complete the transfer. If the domain has auto-renewal enabled, it will be automatically disabled as part of this operation.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} organizationId - Organization ID that this domain belongs to.
@@ -736,7 +736,7 @@ export class Domains {
     }
 
     /**
-     *     Get a domain by its unique ID.
+     * Get a domain by its unique ID.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -744,7 +744,7 @@ export class Domains {
      */
     get(params: { domainId: string }): Promise<Models.Domain>;
     /**
-     *     Get a domain by its unique ID.
+     * Get a domain by its unique ID.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -841,7 +841,7 @@ export class Domains {
     }
 
     /**
-     *     Enable or disable auto-renewal for a domain.
+     * Enable or disable auto-renewal for a domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {boolean} params.autoRenewal - Whether the domain should renew automatically.
@@ -850,7 +850,7 @@ export class Domains {
      */
     updateAutoRenewal(params: { domainId: string, autoRenewal: boolean }): Promise<Models.Domain>;
     /**
-     *     Enable or disable auto-renewal for a domain.
+     * Enable or disable auto-renewal for a domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {boolean} autoRenewal - Whether the domain should renew automatically.
@@ -904,9 +904,9 @@ export class Domains {
     }
 
     /**
-     *     Verify which NS records are used and update the domain accordingly. This will check the domain's
-     *     nameservers and update the domain's status based on whether the nameservers match the expected
-     *     Appwrite nameservers.
+     * Verify which NS records are used and update the domain accordingly. This will check the domain's
+     * nameservers and update the domain's status based on whether the nameservers match the expected
+     * Appwrite nameservers.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -914,9 +914,9 @@ export class Domains {
      */
     updateNameservers(params: { domainId: string }): Promise<Models.Domain>;
     /**
-     *     Verify which NS records are used and update the domain accordingly. This will check the domain's
-     *     nameservers and update the domain's status based on whether the nameservers match the expected
-     *     Appwrite nameservers.
+     * Verify which NS records are used and update the domain accordingly. This will check the domain's
+     * nameservers and update the domain's status based on whether the nameservers match the expected
+     * Appwrite nameservers.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -960,7 +960,7 @@ export class Domains {
     }
 
     /**
-     *     List Google Workspace DNS records.
+     * List Google Workspace DNS records.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -968,7 +968,7 @@ export class Domains {
      */
     getPresetGoogleWorkspace(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
-     *     List Google Workspace DNS records.
+     * List Google Workspace DNS records.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1011,8 +1011,8 @@ export class Domains {
     }
 
     /**
-     *     Add Google Workspace DNS records to the domain. This will create the required MX records 
-     *     for Google Workspace email hosting.
+     * Add Google Workspace DNS records to the domain. This will create the required MX records 
+     * for Google Workspace email hosting.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1020,8 +1020,8 @@ export class Domains {
      */
     createPresetGoogleWorkspace(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
-     *     Add Google Workspace DNS records to the domain. This will create the required MX records 
-     *     for Google Workspace email hosting.
+     * Add Google Workspace DNS records to the domain. This will create the required MX records 
+     * for Google Workspace email hosting.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1065,7 +1065,7 @@ export class Domains {
     }
 
     /**
-     *     List iCloud DNS records.
+     * List iCloud DNS records.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1073,7 +1073,7 @@ export class Domains {
      */
     getPresetICloud(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
-     *     List iCloud DNS records.
+     * List iCloud DNS records.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1116,8 +1116,8 @@ export class Domains {
     }
 
     /**
-     *     Add iCloud DNS records to the domain. This will create the required MX and SPF records
-     *     for using iCloud email services with your domain.
+     * Add iCloud DNS records to the domain. This will create the required MX and SPF records
+     * for using iCloud email services with your domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1125,8 +1125,8 @@ export class Domains {
      */
     createPresetICloud(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
-     *     Add iCloud DNS records to the domain. This will create the required MX and SPF records
-     *     for using iCloud email services with your domain.
+     * Add iCloud DNS records to the domain. This will create the required MX and SPF records
+     * for using iCloud email services with your domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1170,7 +1170,7 @@ export class Domains {
     }
 
     /**
-     *     List Mailgun DNS records.
+     * List Mailgun DNS records.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1178,7 +1178,7 @@ export class Domains {
      */
     getPresetMailgun(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
-     *     List Mailgun DNS records.
+     * List Mailgun DNS records.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1221,8 +1221,8 @@ export class Domains {
     }
 
     /**
-     *     Add Mailgun DNS records to the domain. This endpoint will create the required DNS records 
-     *     for Mailgun in the specified domain.
+     * Add Mailgun DNS records to the domain. This endpoint will create the required DNS records 
+     * for Mailgun in the specified domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1230,8 +1230,8 @@ export class Domains {
      */
     createPresetMailgun(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
-     *     Add Mailgun DNS records to the domain. This endpoint will create the required DNS records 
-     *     for Mailgun in the specified domain.
+     * Add Mailgun DNS records to the domain. This endpoint will create the required DNS records 
+     * for Mailgun in the specified domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1275,7 +1275,7 @@ export class Domains {
     }
 
     /**
-     *     List Outlook DNS records.
+     * List Outlook DNS records.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1283,7 +1283,7 @@ export class Domains {
      */
     getPresetOutlook(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
-     *     List Outlook DNS records.
+     * List Outlook DNS records.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1326,8 +1326,8 @@ export class Domains {
     }
 
     /**
-     *     Add Outlook DNS records to the domain. This will create the required MX records
-     *     for setting up Outlook email hosting for your domain.
+     * Add Outlook DNS records to the domain. This will create the required MX records
+     * for setting up Outlook email hosting for your domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1335,8 +1335,8 @@ export class Domains {
      */
     createPresetOutlook(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
-     *     Add Outlook DNS records to the domain. This will create the required MX records
-     *     for setting up Outlook email hosting for your domain.
+     * Add Outlook DNS records to the domain. This will create the required MX records
+     * for setting up Outlook email hosting for your domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1380,7 +1380,7 @@ export class Domains {
     }
 
     /**
-     *     List ProtonMail DNS records.
+     * List ProtonMail DNS records.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1388,7 +1388,7 @@ export class Domains {
      */
     getPresetProtonMail(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
-     *     List ProtonMail DNS records.
+     * List ProtonMail DNS records.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1431,8 +1431,8 @@ export class Domains {
     }
 
     /**
-     *     Add ProtonMail DNS records to the domain. This will create the required MX records
-     *     for using ProtonMail with your custom domain.
+     * Add ProtonMail DNS records to the domain. This will create the required MX records
+     * for using ProtonMail with your custom domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1440,8 +1440,8 @@ export class Domains {
      */
     createPresetProtonMail(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
-     *     Add ProtonMail DNS records to the domain. This will create the required MX records
-     *     for using ProtonMail with your custom domain.
+     * Add ProtonMail DNS records to the domain. This will create the required MX records
+     * for using ProtonMail with your custom domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1485,7 +1485,7 @@ export class Domains {
     }
 
     /**
-     *     List Zoho DNS records.
+     * List Zoho DNS records.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1493,7 +1493,7 @@ export class Domains {
      */
     getPresetZoho(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
-     *     List Zoho DNS records.
+     * List Zoho DNS records.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1536,8 +1536,8 @@ export class Domains {
     }
 
     /**
-     *     Add Zoho Mail DNS records to the domain. This will create the required MX records
-     *     for setting up Zoho Mail on your domain.
+     * Add Zoho Mail DNS records to the domain. This will create the required MX records
+     * for setting up Zoho Mail on your domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1545,8 +1545,8 @@ export class Domains {
      */
     createPresetZoho(params: { domainId: string }): Promise<Models.DnsRecordsList>;
     /**
-     *     Add Zoho Mail DNS records to the domain. This will create the required MX records
-     *     for setting up Zoho Mail on your domain.
+     * Add Zoho Mail DNS records to the domain. This will create the required MX records
+     * for setting up Zoho Mail on your domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -1590,8 +1590,8 @@ export class Domains {
     }
 
     /**
-     *     List DNS records for a given domain. You can use this endpoint to list all the DNS records
-     *     associated with your domain.
+     * List DNS records for a given domain. You can use this endpoint to list all the DNS records
+     * associated with your domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. You may filter on attributes such as type, name, value, etc. Maximum of 100 queries are allowed, each 4096 characters long.
@@ -1600,8 +1600,8 @@ export class Domains {
      */
     listRecords(params: { domainId: string, queries?: string[] }): Promise<Models.DnsRecordsList>;
     /**
-     *     List DNS records for a given domain. You can use this endpoint to list all the DNS records
-     *     associated with your domain.
+     * List DNS records for a given domain. You can use this endpoint to list all the DNS records
+     * associated with your domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. You may filter on attributes such as type, name, value, etc. Maximum of 100 queries are allowed, each 4096 characters long.
@@ -1743,9 +1743,9 @@ export class Domains {
     }
 
     /**
-     *     Update an existing A record for the given domain. This endpoint allows you to modify 
-     *     the properties of an A record including its name (subdomain), IPv4 address, TTL, 
-     *     and optional comment.
+     * Update an existing A record for the given domain. This endpoint allows you to modify 
+     * the properties of an A record including its name (subdomain), IPv4 address, TTL, 
+     * and optional comment.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
@@ -1758,9 +1758,9 @@ export class Domains {
      */
     updateRecordA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Update an existing A record for the given domain. This endpoint allows you to modify 
-     *     the properties of an A record including its name (subdomain), IPv4 address, TTL, 
-     *     and optional comment.
+     * Update an existing A record for the given domain. This endpoint allows you to modify 
+     * the properties of an A record including its name (subdomain), IPv4 address, TTL, 
+     * and optional comment.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
@@ -1844,8 +1844,8 @@ export class Domains {
     }
 
     /**
-     *     Create a new AAAA record for the given domain. This endpoint allows you to add a new IPv6 DNS record 
-     *     to your domain. The record will be used to point a hostname to an IPv6 address.
+     * Create a new AAAA record for the given domain. This endpoint allows you to add a new IPv6 DNS record 
+     * to your domain. The record will be used to point a hostname to an IPv6 address.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
@@ -1857,8 +1857,8 @@ export class Domains {
      */
     createRecordAAAA(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Create a new AAAA record for the given domain. This endpoint allows you to add a new IPv6 DNS record 
-     *     to your domain. The record will be used to point a hostname to an IPv6 address.
+     * Create a new AAAA record for the given domain. This endpoint allows you to add a new IPv6 DNS record 
+     * to your domain. The record will be used to point a hostname to an IPv6 address.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
@@ -1936,9 +1936,9 @@ export class Domains {
     }
 
     /**
-     *     Update an existing AAAA record for the given domain. This endpoint allows you to modify
-     *     the properties of an existing AAAA record, including its name (subdomain), IPv6 address,
-     *     TTL, and optional comment.
+     * Update an existing AAAA record for the given domain. This endpoint allows you to modify
+     * the properties of an existing AAAA record, including its name (subdomain), IPv6 address,
+     * TTL, and optional comment.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
@@ -1951,9 +1951,9 @@ export class Domains {
      */
     updateRecordAAAA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Update an existing AAAA record for the given domain. This endpoint allows you to modify
-     *     the properties of an existing AAAA record, including its name (subdomain), IPv6 address,
-     *     TTL, and optional comment.
+     * Update an existing AAAA record for the given domain. This endpoint allows you to modify
+     * the properties of an existing AAAA record, including its name (subdomain), IPv6 address,
+     * TTL, and optional comment.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
@@ -2037,9 +2037,9 @@ export class Domains {
     }
 
     /**
-     *     Create a new ALIAS record for the given domain. This record type can be used to point your domain 
-     *     to another domain name that will serve as an alias. This is particularly useful when you want to 
-     *     map your domain to a target domain that may change its IP address.
+     * Create a new ALIAS record for the given domain. This record type can be used to point your domain 
+     * to another domain name that will serve as an alias. This is particularly useful when you want to 
+     * map your domain to a target domain that may change its IP address.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name.
@@ -2051,9 +2051,9 @@ export class Domains {
      */
     createRecordAlias(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Create a new ALIAS record for the given domain. This record type can be used to point your domain 
-     *     to another domain name that will serve as an alias. This is particularly useful when you want to 
-     *     map your domain to a target domain that may change its IP address.
+     * Create a new ALIAS record for the given domain. This record type can be used to point your domain 
+     * to another domain name that will serve as an alias. This is particularly useful when you want to 
+     * map your domain to a target domain that may change its IP address.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name.
@@ -2131,11 +2131,11 @@ export class Domains {
     }
 
     /**
-     *     Update an existing ALIAS record for the specified domain. This endpoint allows you to modify
-     *     the properties of an existing ALIAS record including its name, target domain, TTL, and comment.
+     * Update an existing ALIAS record for the specified domain. This endpoint allows you to modify
+     * the properties of an existing ALIAS record including its name, target domain, TTL, and comment.
      *     
-     *     The ALIAS record type is similar to a CNAME record but can be used at the zone apex (root domain).
-     *     It provides a way to map one domain name to another.
+     * The ALIAS record type is similar to a CNAME record but can be used at the zone apex (root domain).
+     * It provides a way to map one domain name to another.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
@@ -2148,11 +2148,11 @@ export class Domains {
      */
     updateRecordAlias(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Update an existing ALIAS record for the specified domain. This endpoint allows you to modify
-     *     the properties of an existing ALIAS record including its name, target domain, TTL, and comment.
+     * Update an existing ALIAS record for the specified domain. This endpoint allows you to modify
+     * the properties of an existing ALIAS record including its name, target domain, TTL, and comment.
      *     
-     *     The ALIAS record type is similar to a CNAME record but can be used at the zone apex (root domain).
-     *     It provides a way to map one domain name to another.
+     * The ALIAS record type is similar to a CNAME record but can be used at the zone apex (root domain).
+     * It provides a way to map one domain name to another.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
@@ -2328,9 +2328,9 @@ export class Domains {
     }
 
     /**
-     *     Update an existing CAA record for the given domain. A CAA (Certification Authority Authorization) 
-     *     record is used to specify which certificate authorities (CAs) are authorized to issue certificates 
-     *     for a domain.
+     * Update an existing CAA record for the given domain. A CAA (Certification Authority Authorization) 
+     * record is used to specify which certificate authorities (CAs) are authorized to issue certificates 
+     * for a domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
@@ -2343,9 +2343,9 @@ export class Domains {
      */
     updateRecordCAA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Update an existing CAA record for the given domain. A CAA (Certification Authority Authorization) 
-     *     record is used to specify which certificate authorities (CAs) are authorized to issue certificates 
-     *     for a domain.
+     * Update an existing CAA record for the given domain. A CAA (Certification Authority Authorization) 
+     * record is used to specify which certificate authorities (CAs) are authorized to issue certificates 
+     * for a domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
@@ -2429,11 +2429,11 @@ export class Domains {
     }
 
     /**
-     *     Create a new CNAME record for the given domain.
+     * Create a new CNAME record for the given domain.
      *     
-     *     A CNAME record maps a subdomain to another domain name, allowing you to create aliases 
-     *     for your domain. For example, you can create a CNAME record to point 'blog.example.com' 
-     *     to 'example.wordpress.com'.
+     * A CNAME record maps a subdomain to another domain name, allowing you to create aliases 
+     * for your domain. For example, you can create a CNAME record to point 'blog.example.com' 
+     * to 'example.wordpress.com'.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
@@ -2445,11 +2445,11 @@ export class Domains {
      */
     createRecordCNAME(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Create a new CNAME record for the given domain.
+     * Create a new CNAME record for the given domain.
      *     
-     *     A CNAME record maps a subdomain to another domain name, allowing you to create aliases 
-     *     for your domain. For example, you can create a CNAME record to point 'blog.example.com' 
-     *     to 'example.wordpress.com'.
+     * A CNAME record maps a subdomain to another domain name, allowing you to create aliases 
+     * for your domain. For example, you can create a CNAME record to point 'blog.example.com' 
+     * to 'example.wordpress.com'.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
@@ -2527,7 +2527,7 @@ export class Domains {
     }
 
     /**
-     *     Update an existing CNAME record for the given domain.
+     * Update an existing CNAME record for the given domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
@@ -2540,7 +2540,7 @@ export class Domains {
      */
     updateRecordCNAME(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Update an existing CNAME record for the given domain.
+     * Update an existing CNAME record for the given domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
@@ -2624,8 +2624,8 @@ export class Domains {
     }
 
     /**
-     *     Create a new HTTPS record for the given domain. This record is used to configure HTTPS 
-     *     settings for your domain, enabling secure communication over SSL/TLS.
+     * Create a new HTTPS record for the given domain. This record is used to configure HTTPS 
+     * settings for your domain, enabling secure communication over SSL/TLS.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
@@ -2637,8 +2637,8 @@ export class Domains {
      */
     createRecordHTTPS(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Create a new HTTPS record for the given domain. This record is used to configure HTTPS 
-     *     settings for your domain, enabling secure communication over SSL/TLS.
+     * Create a new HTTPS record for the given domain. This record is used to configure HTTPS 
+     * settings for your domain, enabling secure communication over SSL/TLS.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
@@ -2817,10 +2817,10 @@ export class Domains {
     }
 
     /**
-     *     Create a new MX record for the given domain. MX records are used to define the mail servers responsible 
-     *     for accepting email messages for the domain. Multiple MX records can be created with different priorities.
-     *     The priority parameter determines the order in which mail servers are used, with lower values indicating 
-     *     higher priority.
+     * Create a new MX record for the given domain. MX records are used to define the mail servers responsible 
+     * for accepting email messages for the domain. Multiple MX records can be created with different priorities.
+     * The priority parameter determines the order in which mail servers are used, with lower values indicating 
+     * higher priority.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
@@ -2833,10 +2833,10 @@ export class Domains {
      */
     createRecordMX(params: { domainId: string, name: string, value: string, ttl: number, priority: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Create a new MX record for the given domain. MX records are used to define the mail servers responsible 
-     *     for accepting email messages for the domain. Multiple MX records can be created with different priorities.
-     *     The priority parameter determines the order in which mail servers are used, with lower values indicating 
-     *     higher priority.
+     * Create a new MX record for the given domain. MX records are used to define the mail servers responsible 
+     * for accepting email messages for the domain. Multiple MX records can be created with different priorities.
+     * The priority parameter determines the order in which mail servers are used, with lower values indicating 
+     * higher priority.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
@@ -2923,7 +2923,7 @@ export class Domains {
     }
 
     /**
-     *     Update an existing MX record for the given domain.
+     * Update an existing MX record for the given domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
@@ -2937,7 +2937,7 @@ export class Domains {
      */
     updateRecordMX(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Update an existing MX record for the given domain.
+     * Update an existing MX record for the given domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
@@ -3030,8 +3030,8 @@ export class Domains {
     }
 
     /**
-     *     Create a new NS record for the given domain. NS records specify the nameservers that are used 
-     *     to resolve the domain name to IP addresses. Each domain can have multiple NS records.
+     * Create a new NS record for the given domain. NS records specify the nameservers that are used 
+     * to resolve the domain name to IP addresses. Each domain can have multiple NS records.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
@@ -3043,8 +3043,8 @@ export class Domains {
      */
     createRecordNS(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Create a new NS record for the given domain. NS records specify the nameservers that are used 
-     *     to resolve the domain name to IP addresses. Each domain can have multiple NS records.
+     * Create a new NS record for the given domain. NS records specify the nameservers that are used 
+     * to resolve the domain name to IP addresses. Each domain can have multiple NS records.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
@@ -3122,10 +3122,10 @@ export class Domains {
     }
 
     /**
-     *     Update an existing NS record for the given domain. This endpoint allows you to modify 
-     *     the properties of an NS (nameserver) record associated with your domain. You can update 
-     *     the record name (subdomain), target nameserver value, TTL, and add or modify comments 
-     *     for better record management.
+     * Update an existing NS record for the given domain. This endpoint allows you to modify 
+     * the properties of an NS (nameserver) record associated with your domain. You can update 
+     * the record name (subdomain), target nameserver value, TTL, and add or modify comments 
+     * for better record management.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
@@ -3138,10 +3138,10 @@ export class Domains {
      */
     updateRecordNS(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Update an existing NS record for the given domain. This endpoint allows you to modify 
-     *     the properties of an NS (nameserver) record associated with your domain. You can update 
-     *     the record name (subdomain), target nameserver value, TTL, and add or modify comments 
-     *     for better record management.
+     * Update an existing NS record for the given domain. This endpoint allows you to modify 
+     * the properties of an NS (nameserver) record associated with your domain. You can update 
+     * the record name (subdomain), target nameserver value, TTL, and add or modify comments 
+     * for better record management.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
@@ -3225,9 +3225,9 @@ export class Domains {
     }
 
     /**
-     *     Create a new SRV record for the given domain. SRV records are used to define the location 
-     *     of servers for specific services. For example, they can be used to specify which server 
-     *     handles a specific service like SIP or XMPP for the domain.
+     * Create a new SRV record for the given domain. SRV records are used to define the location 
+     * of servers for specific services. For example, they can be used to specify which server 
+     * handles a specific service like SIP or XMPP for the domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (service name).
@@ -3242,9 +3242,9 @@ export class Domains {
      */
     createRecordSRV(params: { domainId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Create a new SRV record for the given domain. SRV records are used to define the location 
-     *     of servers for specific services. For example, they can be used to specify which server 
-     *     handles a specific service like SIP or XMPP for the domain.
+     * Create a new SRV record for the given domain. SRV records are used to define the location 
+     * of servers for specific services. For example, they can be used to specify which server 
+     * handles a specific service like SIP or XMPP for the domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (service name).
@@ -3349,20 +3349,20 @@ export class Domains {
     }
 
     /**
-     *     Update an existing SRV record for the given domain.
+     * Update an existing SRV record for the given domain.
      *     
-     *     Required parameters:
-     *     - domainId: Domain unique ID
-     *     - recordId: DNS record unique ID
-     *     - name: Record name (service name)
-     *     - value: Target hostname for this SRV record
-     *     - ttl: Time to live, in seconds
-     *     - priority: Record priority
-     *     - weight: Record weight
-     *     - port: Port number for the service
+     * Required parameters:
+     * - domainId: Domain unique ID
+     * - recordId: DNS record unique ID
+     * - name: Record name (service name)
+     * - value: Target hostname for this SRV record
+     * - ttl: Time to live, in seconds
+     * - priority: Record priority
+     * - weight: Record weight
+     * - port: Port number for the service
      *     
-     *     Optional parameters:
-     *     - comment: A comment for this record
+     * Optional parameters:
+     * - comment: A comment for this record
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
@@ -3378,20 +3378,20 @@ export class Domains {
      */
     updateRecordSRV(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Update an existing SRV record for the given domain.
+     * Update an existing SRV record for the given domain.
      *     
-     *     Required parameters:
-     *     - domainId: Domain unique ID
-     *     - recordId: DNS record unique ID
-     *     - name: Record name (service name)
-     *     - value: Target hostname for this SRV record
-     *     - ttl: Time to live, in seconds
-     *     - priority: Record priority
-     *     - weight: Record weight
-     *     - port: Port number for the service
+     * Required parameters:
+     * - domainId: Domain unique ID
+     * - recordId: DNS record unique ID
+     * - name: Record name (service name)
+     * - value: Target hostname for this SRV record
+     * - ttl: Time to live, in seconds
+     * - priority: Record priority
+     * - weight: Record weight
+     * - port: Port number for the service
      *     
-     *     Optional parameters:
-     *     - comment: A comment for this record
+     * Optional parameters:
+     * - comment: A comment for this record
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
@@ -3502,9 +3502,9 @@ export class Domains {
     }
 
     /**
-     *     Create a new TXT record for the given domain. TXT records can be used 
-     *     to provide additional information about your domain, such as domain 
-     *     verification records, SPF records, or DKIM records.
+     * Create a new TXT record for the given domain. TXT records can be used 
+     * to provide additional information about your domain, such as domain 
+     * verification records, SPF records, or DKIM records.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain) for the TXT record.
@@ -3516,9 +3516,9 @@ export class Domains {
      */
     createRecordTXT(params: { domainId: string, name: string, ttl: number, value?: string, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Create a new TXT record for the given domain. TXT records can be used 
-     *     to provide additional information about your domain, such as domain 
-     *     verification records, SPF records, or DKIM records.
+     * Create a new TXT record for the given domain. TXT records can be used 
+     * to provide additional information about your domain, such as domain 
+     * verification records, SPF records, or DKIM records.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain) for the TXT record.
@@ -3593,10 +3593,10 @@ export class Domains {
     }
 
     /**
-     *     Update an existing TXT record for the given domain.
+     * Update an existing TXT record for the given domain.
      *     
-     *     Update the TXT record details for a specific domain by providing the domain ID,
-     *     record ID, and the new record configuration including name, value, TTL, and an optional comment.
+     * Update the TXT record details for a specific domain by providing the domain ID,
+     * record ID, and the new record configuration including name, value, TTL, and an optional comment.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
@@ -3609,10 +3609,10 @@ export class Domains {
      */
     updateRecordTXT(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
     /**
-     *     Update an existing TXT record for the given domain.
+     * Update an existing TXT record for the given domain.
      *     
-     *     Update the TXT record details for a specific domain by providing the domain ID,
-     *     record ID, and the new record configuration including name, value, TTL, and an optional comment.
+     * Update the TXT record details for a specific domain by providing the domain ID,
+     * record ID, and the new record configuration including name, value, TTL, and an optional comment.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
@@ -3696,11 +3696,11 @@ export class Domains {
     }
 
     /**
-     *     Get a single DNS record for a given domain by record ID.
+     * Get a single DNS record for a given domain by record ID.
      *     
-     *     This endpoint allows you to retrieve a specific DNS record associated with a domain
-     *     using its unique identifier. The record contains information about the DNS configuration
-     *     such as type, value, and TTL settings.
+     * This endpoint allows you to retrieve a specific DNS record associated with a domain
+     * using its unique identifier. The record contains information about the DNS configuration
+     * such as type, value, and TTL settings.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
@@ -3709,11 +3709,11 @@ export class Domains {
      */
     getRecord(params: { domainId: string, recordId: string }): Promise<Models.DnsRecord>;
     /**
-     *     Get a single DNS record for a given domain by record ID.
+     * Get a single DNS record for a given domain by record ID.
      *     
-     *     This endpoint allows you to retrieve a specific DNS record associated with a domain
-     *     using its unique identifier. The record contains information about the DNS configuration
-     *     such as type, value, and TTL settings.
+     * This endpoint allows you to retrieve a specific DNS record associated with a domain
+     * using its unique identifier. The record contains information about the DNS configuration
+     * such as type, value, and TTL settings.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
@@ -3763,8 +3763,8 @@ export class Domains {
     }
 
     /**
-     *     Delete a DNS record for the given domain. This endpoint allows you to delete an existing DNS record 
-     *     from a specific domain.
+     * Delete a DNS record for the given domain. This endpoint allows you to delete an existing DNS record 
+     * from a specific domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
@@ -3773,8 +3773,8 @@ export class Domains {
      */
     deleteRecord(params: { domainId: string, recordId: string }): Promise<{}>;
     /**
-     *     Delete a DNS record for the given domain. This endpoint allows you to delete an existing DNS record 
-     *     from a specific domain.
+     * Delete a DNS record for the given domain. This endpoint allows you to delete an existing DNS record 
+     * from a specific domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
@@ -3825,10 +3825,10 @@ export class Domains {
     }
 
     /**
-     *     Update the team ID for a specific domain. This endpoint requires admin access.
+     * Update the team ID for a specific domain. This endpoint requires admin access.
      *     
-     *     Updating the team ID will transfer ownership and access control of the domain
-     *     and all its DNS records to the new team.
+     * Updating the team ID will transfer ownership and access control of the domain
+     * and all its DNS records to the new team.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.teamId - New team unique ID.
@@ -3837,10 +3837,10 @@ export class Domains {
      */
     updateTeam(params: { domainId: string, teamId: string }): Promise<Models.Domain>;
     /**
-     *     Update the team ID for a specific domain. This endpoint requires admin access.
+     * Update the team ID for a specific domain. This endpoint requires admin access.
      *     
-     *     Updating the team ID will transfer ownership and access control of the domain
-     *     and all its DNS records to the new team.
+     * Updating the team ID will transfer ownership and access control of the domain
+     * and all its DNS records to the new team.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} teamId - New team unique ID.
@@ -3894,7 +3894,7 @@ export class Domains {
     }
 
     /**
-     *     Retrieve the current transfer status for a domain. Returns the status, an optional reason, and a timestamp of the last status change.
+     * Retrieve the current transfer status for a domain. Returns the status, an optional reason, and a timestamp of the last status change.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -3902,7 +3902,7 @@ export class Domains {
      */
     getTransferStatus(params: { domainId: string }): Promise<Models.DomainTransferStatus>;
     /**
-     *     Retrieve the current transfer status for a domain. Returns the status, an optional reason, and a timestamp of the last status change.
+     * Retrieve the current transfer status for a domain. Returns the status, an optional reason, and a timestamp of the last status change.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -3945,8 +3945,8 @@ export class Domains {
     }
 
     /**
-     *     Retrieve the DNS zone file for the given domain. This endpoint will return the DNS
-     *     zone file in a standardized format that can be used to configure DNS servers.
+     * Retrieve the DNS zone file for the given domain. This endpoint will return the DNS
+     * zone file in a standardized format that can be used to configure DNS servers.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
@@ -3954,8 +3954,8 @@ export class Domains {
      */
     getZone(params: { domainId: string }): Promise<{}>;
     /**
-     *     Retrieve the DNS zone file for the given domain. This endpoint will return the DNS
-     *     zone file in a standardized format that can be used to configure DNS servers.
+     * Retrieve the DNS zone file for the given domain. This endpoint will return the DNS
+     * zone file in a standardized format that can be used to configure DNS servers.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}

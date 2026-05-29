@@ -2,10 +2,9 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { Runtime } from '../enums/runtime';
-import { Scopes } from '../enums/scopes';
-import { Runtimes } from '../enums/runtimes';
-import { UseCases } from '../enums/use-cases';
+import { FunctionRuntime } from '../enums/function-runtime';
+import { ProjectKeyScopes } from '../enums/project-key-scopes';
+import { FunctionTemplateUseCase } from '../enums/function-template-use-case';
 import { UsageRange } from '../enums/usage-range';
 import { TemplateReferenceType } from '../enums/template-reference-type';
 import { VCSReferenceType } from '../enums/vcs-reference-type';
@@ -90,7 +89,7 @@ export class Functions {
      *
      * @param {string} params.functionId - Function ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Function name. Max length: 128 chars.
-     * @param {Runtime} params.runtime - Execution runtime.
+     * @param {FunctionRuntime} params.runtime - Execution runtime.
      * @param {string[]} params.execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} params.events - Events list. Maximum of 100 events are allowed.
      * @param {string} params.schedule - Schedule CRON syntax.
@@ -99,25 +98,27 @@ export class Functions {
      * @param {boolean} params.logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
      * @param {string} params.entrypoint - Entrypoint File. This path is relative to the "providerRootDirectory".
      * @param {string} params.commands - Build Commands.
-     * @param {Scopes[]} params.scopes - List of scopes allowed for API key auto-generated for every execution. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} params.scopes - List of scopes allowed for API key auto-generated for every execution. Maximum of 100 scopes are allowed.
      * @param {string} params.installationId - Appwrite Installation ID for VCS (Version Control System) deployment.
      * @param {string} params.providerRepositoryId - Repository ID of the repo linked to the function.
      * @param {string} params.providerBranch - Production branch for the repo linked to the function.
      * @param {boolean} params.providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} params.providerRootDirectory - Path to function code in the linked repo.
+     * @param {string[]} params.providerBranches - List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+     * @param {string[]} params.providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
      * @param {string} params.buildSpecification - Build specification for the function deployments.
      * @param {string} params.runtimeSpecification - Runtime specification for the function executions.
      * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    create(params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Function>;
+    create(params: { functionId: string, name: string, runtime: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Function>;
     /**
      * Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
      *
      * @param {string} functionId - Function ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Function name. Max length: 128 chars.
-     * @param {Runtime} runtime - Execution runtime.
+     * @param {FunctionRuntime} runtime - Execution runtime.
      * @param {string[]} execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} events - Events list. Maximum of 100 events are allowed.
      * @param {string} schedule - Schedule CRON syntax.
@@ -126,12 +127,14 @@ export class Functions {
      * @param {boolean} logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
      * @param {string} entrypoint - Entrypoint File. This path is relative to the "providerRootDirectory".
      * @param {string} commands - Build Commands.
-     * @param {Scopes[]} scopes - List of scopes allowed for API key auto-generated for every execution. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} scopes - List of scopes allowed for API key auto-generated for every execution. Maximum of 100 scopes are allowed.
      * @param {string} installationId - Appwrite Installation ID for VCS (Version Control System) deployment.
      * @param {string} providerRepositoryId - Repository ID of the repo linked to the function.
      * @param {string} providerBranch - Production branch for the repo linked to the function.
      * @param {boolean} providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} providerRootDirectory - Path to function code in the linked repo.
+     * @param {string[]} providerBranches - List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+     * @param {string[]} providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
      * @param {string} buildSpecification - Build specification for the function deployments.
      * @param {string} runtimeSpecification - Runtime specification for the function executions.
      * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
@@ -139,20 +142,20 @@ export class Functions {
      * @returns {Promise<Models.Function>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Function>;
+    create(functionId: string, name: string, runtime: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Function>;
     create(
-        paramsOrFirst: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
-        ...rest: [(string)?, (Runtime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (Scopes[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?, (string)?, (number)?]    
+        paramsOrFirst: { functionId: string, name: string, runtime: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
+        ...rest: [(string)?, (FunctionRuntime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (ProjectKeyScopes[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Function> {
-        let params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+        let params: { functionId: string, name: string, runtime: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 name: rest[0] as string,
-                runtime: rest[1] as Runtime,
+                runtime: rest[1] as FunctionRuntime,
                 execute: rest[2] as string[],
                 events: rest[3] as string[],
                 schedule: rest[4] as string,
@@ -161,15 +164,17 @@ export class Functions {
                 logging: rest[7] as boolean,
                 entrypoint: rest[8] as string,
                 commands: rest[9] as string,
-                scopes: rest[10] as Scopes[],
+                scopes: rest[10] as ProjectKeyScopes[],
                 installationId: rest[11] as string,
                 providerRepositoryId: rest[12] as string,
                 providerBranch: rest[13] as string,
                 providerSilentMode: rest[14] as boolean,
                 providerRootDirectory: rest[15] as string,
-                buildSpecification: rest[16] as string,
-                runtimeSpecification: rest[17] as string,
-                deploymentRetention: rest[18] as number            
+                providerBranches: rest[16] as string[],
+                providerPaths: rest[17] as string[],
+                buildSpecification: rest[18] as string,
+                runtimeSpecification: rest[19] as string,
+                deploymentRetention: rest[20] as number            
             };
         }
         
@@ -190,6 +195,8 @@ export class Functions {
         const providerBranch = params.providerBranch;
         const providerSilentMode = params.providerSilentMode;
         const providerRootDirectory = params.providerRootDirectory;
+        const providerBranches = params.providerBranches;
+        const providerPaths = params.providerPaths;
         const buildSpecification = params.buildSpecification;
         const runtimeSpecification = params.runtimeSpecification;
         const deploymentRetention = params.deploymentRetention;
@@ -256,6 +263,12 @@ export class Functions {
         }
         if (typeof providerRootDirectory !== 'undefined') {
             payload['providerRootDirectory'] = providerRootDirectory;
+        }
+        if (typeof providerBranches !== 'undefined') {
+            payload['providerBranches'] = providerBranches;
+        }
+        if (typeof providerPaths !== 'undefined') {
+            payload['providerPaths'] = providerPaths;
         }
         if (typeof buildSpecification !== 'undefined') {
             payload['buildSpecification'] = buildSpecification;
@@ -329,20 +342,20 @@ export class Functions {
     /**
      * List available function templates. You can use template details in [createFunction](/docs/references/cloud/server-nodejs/functions#create) method.
      *
-     * @param {Runtimes[]} params.runtimes - List of runtimes allowed for filtering function templates. Maximum of 100 runtimes are allowed.
-     * @param {UseCases[]} params.useCases - List of use cases allowed for filtering function templates. Maximum of 100 use cases are allowed.
+     * @param {FunctionRuntime[]} params.runtimes - List of runtimes allowed for filtering function templates. Maximum of 100 runtimes are allowed.
+     * @param {FunctionTemplateUseCase[]} params.useCases - List of use cases allowed for filtering function templates. Maximum of 100 use cases are allowed.
      * @param {number} params.limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
      * @param {number} params.offset - Offset the list of returned templates. Maximum offset is 5000.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateFunctionList>}
      */
-    listTemplates(params?: { runtimes?: Runtimes[], useCases?: UseCases[], limit?: number, offset?: number, total?: boolean }): Promise<Models.TemplateFunctionList>;
+    listTemplates(params?: { runtimes?: FunctionRuntime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean }): Promise<Models.TemplateFunctionList>;
     /**
      * List available function templates. You can use template details in [createFunction](/docs/references/cloud/server-nodejs/functions#create) method.
      *
-     * @param {Runtimes[]} runtimes - List of runtimes allowed for filtering function templates. Maximum of 100 runtimes are allowed.
-     * @param {UseCases[]} useCases - List of use cases allowed for filtering function templates. Maximum of 100 use cases are allowed.
+     * @param {FunctionRuntime[]} runtimes - List of runtimes allowed for filtering function templates. Maximum of 100 runtimes are allowed.
+     * @param {FunctionTemplateUseCase[]} useCases - List of use cases allowed for filtering function templates. Maximum of 100 use cases are allowed.
      * @param {number} limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
      * @param {number} offset - Offset the list of returned templates. Maximum offset is 5000.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
@@ -350,19 +363,19 @@ export class Functions {
      * @returns {Promise<Models.TemplateFunctionList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listTemplates(runtimes?: Runtimes[], useCases?: UseCases[], limit?: number, offset?: number, total?: boolean): Promise<Models.TemplateFunctionList>;
+    listTemplates(runtimes?: FunctionRuntime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean): Promise<Models.TemplateFunctionList>;
     listTemplates(
-        paramsOrFirst?: { runtimes?: Runtimes[], useCases?: UseCases[], limit?: number, offset?: number, total?: boolean } | Runtimes[],
-        ...rest: [(UseCases[])?, (number)?, (number)?, (boolean)?]    
+        paramsOrFirst?: { runtimes?: FunctionRuntime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean } | FunctionRuntime[],
+        ...rest: [(FunctionTemplateUseCase[])?, (number)?, (number)?, (boolean)?]    
     ): Promise<Models.TemplateFunctionList> {
-        let params: { runtimes?: Runtimes[], useCases?: UseCases[], limit?: number, offset?: number, total?: boolean };
+        let params: { runtimes?: FunctionRuntime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('runtimes' in paramsOrFirst || 'useCases' in paramsOrFirst || 'limit' in paramsOrFirst || 'offset' in paramsOrFirst || 'total' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { runtimes?: Runtimes[], useCases?: UseCases[], limit?: number, offset?: number, total?: boolean };
+            params = (paramsOrFirst || {}) as { runtimes?: FunctionRuntime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean };
         } else {
             params = {
-                runtimes: paramsOrFirst as Runtimes[],
-                useCases: rest[0] as UseCases[],
+                runtimes: paramsOrFirst as FunctionRuntime[],
+                useCases: rest[0] as FunctionTemplateUseCase[],
                 limit: rest[1] as number,
                 offset: rest[2] as number,
                 total: rest[3] as boolean            
@@ -564,7 +577,7 @@ export class Functions {
      *
      * @param {string} params.functionId - Function ID.
      * @param {string} params.name - Function name. Max length: 128 chars.
-     * @param {Runtime} params.runtime - Execution runtime.
+     * @param {FunctionRuntime} params.runtime - Execution runtime.
      * @param {string[]} params.execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} params.events - Events list. Maximum of 100 events are allowed.
      * @param {string} params.schedule - Schedule CRON syntax.
@@ -573,25 +586,27 @@ export class Functions {
      * @param {boolean} params.logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
      * @param {string} params.entrypoint - Entrypoint File. This path is relative to the "providerRootDirectory".
      * @param {string} params.commands - Build Commands.
-     * @param {Scopes[]} params.scopes - List of scopes allowed for API Key auto-generated for every execution. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} params.scopes - List of scopes allowed for API Key auto-generated for every execution. Maximum of 100 scopes are allowed.
      * @param {string} params.installationId - Appwrite Installation ID for VCS (Version Controle System) deployment.
      * @param {string} params.providerRepositoryId - Repository ID of the repo linked to the function
      * @param {string} params.providerBranch - Production branch for the repo linked to the function
      * @param {boolean} params.providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} params.providerRootDirectory - Path to function code in the linked repo.
+     * @param {string[]} params.providerBranches - List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+     * @param {string[]} params.providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
      * @param {string} params.buildSpecification - Build specification for the function deployments.
      * @param {string} params.runtimeSpecification - Runtime specification for the function executions.
      * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    update(params: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Function>;
+    update(params: { functionId: string, name: string, runtime?: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Function>;
     /**
      * Update function by its unique ID.
      *
      * @param {string} functionId - Function ID.
      * @param {string} name - Function name. Max length: 128 chars.
-     * @param {Runtime} runtime - Execution runtime.
+     * @param {FunctionRuntime} runtime - Execution runtime.
      * @param {string[]} execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} events - Events list. Maximum of 100 events are allowed.
      * @param {string} schedule - Schedule CRON syntax.
@@ -600,12 +615,14 @@ export class Functions {
      * @param {boolean} logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
      * @param {string} entrypoint - Entrypoint File. This path is relative to the "providerRootDirectory".
      * @param {string} commands - Build Commands.
-     * @param {Scopes[]} scopes - List of scopes allowed for API Key auto-generated for every execution. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} scopes - List of scopes allowed for API Key auto-generated for every execution. Maximum of 100 scopes are allowed.
      * @param {string} installationId - Appwrite Installation ID for VCS (Version Controle System) deployment.
      * @param {string} providerRepositoryId - Repository ID of the repo linked to the function
      * @param {string} providerBranch - Production branch for the repo linked to the function
      * @param {boolean} providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the function? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} providerRootDirectory - Path to function code in the linked repo.
+     * @param {string[]} providerBranches - List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+     * @param {string[]} providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
      * @param {string} buildSpecification - Build specification for the function deployments.
      * @param {string} runtimeSpecification - Runtime specification for the function executions.
      * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
@@ -613,20 +630,20 @@ export class Functions {
      * @returns {Promise<Models.Function>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Function>;
+    update(functionId: string, name: string, runtime?: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Function>;
     update(
-        paramsOrFirst: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
-        ...rest: [(string)?, (Runtime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (Scopes[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?, (string)?, (number)?]    
+        paramsOrFirst: { functionId: string, name: string, runtime?: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
+        ...rest: [(string)?, (FunctionRuntime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (ProjectKeyScopes[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Function> {
-        let params: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+        let params: { functionId: string, name: string, runtime?: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: Scopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime?: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 name: rest[0] as string,
-                runtime: rest[1] as Runtime,
+                runtime: rest[1] as FunctionRuntime,
                 execute: rest[2] as string[],
                 events: rest[3] as string[],
                 schedule: rest[4] as string,
@@ -635,15 +652,17 @@ export class Functions {
                 logging: rest[7] as boolean,
                 entrypoint: rest[8] as string,
                 commands: rest[9] as string,
-                scopes: rest[10] as Scopes[],
+                scopes: rest[10] as ProjectKeyScopes[],
                 installationId: rest[11] as string,
                 providerRepositoryId: rest[12] as string,
                 providerBranch: rest[13] as string,
                 providerSilentMode: rest[14] as boolean,
                 providerRootDirectory: rest[15] as string,
-                buildSpecification: rest[16] as string,
-                runtimeSpecification: rest[17] as string,
-                deploymentRetention: rest[18] as number            
+                providerBranches: rest[16] as string[],
+                providerPaths: rest[17] as string[],
+                buildSpecification: rest[18] as string,
+                runtimeSpecification: rest[19] as string,
+                deploymentRetention: rest[20] as number            
             };
         }
         
@@ -664,6 +683,8 @@ export class Functions {
         const providerBranch = params.providerBranch;
         const providerSilentMode = params.providerSilentMode;
         const providerRootDirectory = params.providerRootDirectory;
+        const providerBranches = params.providerBranches;
+        const providerPaths = params.providerPaths;
         const buildSpecification = params.buildSpecification;
         const runtimeSpecification = params.runtimeSpecification;
         const deploymentRetention = params.deploymentRetention;
@@ -724,6 +745,12 @@ export class Functions {
         }
         if (typeof providerRootDirectory !== 'undefined') {
             payload['providerRootDirectory'] = providerRootDirectory;
+        }
+        if (typeof providerBranches !== 'undefined') {
+            payload['providerBranches'] = providerBranches;
+        }
+        if (typeof providerPaths !== 'undefined') {
+            payload['providerPaths'] = providerPaths;
         }
         if (typeof buildSpecification !== 'undefined') {
             payload['buildSpecification'] = buildSpecification;

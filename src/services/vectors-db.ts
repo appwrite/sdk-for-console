@@ -2,7 +2,7 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { Model } from '../enums/model';
+import { EmbeddingModel } from '../enums/embedding-model';
 import { UsageRange } from '../enums/usage-range';
 import { VectorsDBIndexType } from '../enums/vectors-db-index-type';
 import { OrderBy } from '../enums/order-by';
@@ -18,41 +18,37 @@ export class VectorsDB {
      * Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name
-     * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DatabaseList>}
      */
-    list(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.DatabaseList>;
+    list(params?: { queries?: string[], total?: boolean }): Promise<Models.DatabaseList>;
     /**
      * Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name
-     * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DatabaseList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    list(queries?: string[], search?: string, total?: boolean): Promise<Models.DatabaseList>;
+    list(queries?: string[], total?: boolean): Promise<Models.DatabaseList>;
     list(
-        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
-        ...rest: [(string)?, (boolean)?]    
+        paramsOrFirst?: { queries?: string[], total?: boolean } | string[],
+        ...rest: [(boolean)?]    
     ): Promise<Models.DatabaseList> {
-        let params: { queries?: string[], search?: string, total?: boolean };
+        let params: { queries?: string[], total?: boolean };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
+            params = (paramsOrFirst || {}) as { queries?: string[], total?: boolean };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
-                search: rest[0] as string,
-                total: rest[1] as boolean            
+                total: rest[0] as boolean            
             };
         }
         
         const queries = params.queries;
-        const search = params.search;
         const total = params.total;
 
 
@@ -60,9 +56,6 @@ export class VectorsDB {
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
-        }
-        if (typeof search !== 'undefined') {
-            payload['search'] = search;
         }
         if (typeof total !== 'undefined') {
             payload['total'] = total;
@@ -159,33 +152,33 @@ export class VectorsDB {
      * Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
      *
      * @param {string[]} params.texts - Array of text to generate embeddings.
-     * @param {Model} params.model - The embedding model to use for generating vector embeddings.
+     * @param {EmbeddingModel} params.model - The embedding model to use for generating vector embeddings.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmbeddingList>}
      */
-    createTextEmbeddings(params: { texts: string[], model?: Model }): Promise<Models.EmbeddingList>;
+    createTextEmbeddings(params: { texts: string[], model?: EmbeddingModel }): Promise<Models.EmbeddingList>;
     /**
      * Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
      *
      * @param {string[]} texts - Array of text to generate embeddings.
-     * @param {Model} model - The embedding model to use for generating vector embeddings.
+     * @param {EmbeddingModel} model - The embedding model to use for generating vector embeddings.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmbeddingList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createTextEmbeddings(texts: string[], model?: Model): Promise<Models.EmbeddingList>;
+    createTextEmbeddings(texts: string[], model?: EmbeddingModel): Promise<Models.EmbeddingList>;
     createTextEmbeddings(
-        paramsOrFirst: { texts: string[], model?: Model } | string[],
-        ...rest: [(Model)?]    
+        paramsOrFirst: { texts: string[], model?: EmbeddingModel } | string[],
+        ...rest: [(EmbeddingModel)?]    
     ): Promise<Models.EmbeddingList> {
-        let params: { texts: string[], model?: Model };
+        let params: { texts: string[], model?: EmbeddingModel };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { texts: string[], model?: Model };
+            params = (paramsOrFirst || {}) as { texts: string[], model?: EmbeddingModel };
         } else {
             params = {
                 texts: paramsOrFirst as string[],
-                model: rest[0] as Model            
+                model: rest[0] as EmbeddingModel            
             };
         }
         

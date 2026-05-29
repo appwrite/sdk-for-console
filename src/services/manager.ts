@@ -2,7 +2,10 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { ResourceType } from '../enums/resource-type';
+import { BlockResourceType } from '../enums/block-resource-type';
+import { Region } from '../enums/region';
+import { CacheTarget } from '../enums/cache-target';
+import { CacheDatabase } from '../enums/cache-database';
 
 export class Manager {
     client: Client;
@@ -15,19 +18,19 @@ export class Manager {
      * Creates a new resource block.
      *
      * @param {string} params.projectId - Project ID
-     * @param {ResourceType} params.resourceType - Resource type to block (e.g., projects, functions, databases, storage, etc.)
+     * @param {BlockResourceType} params.resourceType - Resource type to block (e.g., projects, functions, databases, storage, etc.)
      * @param {string} params.resourceId - Optional resource ID (if omitted, all resources of this type will be blocked)
      * @param {string} params.reason - Optional reason why the resource is blocked
      * @param {string} params.expiredAt - Optional expiration date for the block
      * @throws {AppwriteException}
      * @returns {Promise<Models.Block>}
      */
-    createBlock(params: { projectId: string, resourceType: ResourceType, resourceId?: string, reason?: string, expiredAt?: string }): Promise<Models.Block>;
+    createBlock(params: { projectId: string, resourceType: BlockResourceType, resourceId?: string, reason?: string, expiredAt?: string }): Promise<Models.Block>;
     /**
      * Creates a new resource block.
      *
      * @param {string} projectId - Project ID
-     * @param {ResourceType} resourceType - Resource type to block (e.g., projects, functions, databases, storage, etc.)
+     * @param {BlockResourceType} resourceType - Resource type to block (e.g., projects, functions, databases, storage, etc.)
      * @param {string} resourceId - Optional resource ID (if omitted, all resources of this type will be blocked)
      * @param {string} reason - Optional reason why the resource is blocked
      * @param {string} expiredAt - Optional expiration date for the block
@@ -35,19 +38,19 @@ export class Manager {
      * @returns {Promise<Models.Block>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createBlock(projectId: string, resourceType: ResourceType, resourceId?: string, reason?: string, expiredAt?: string): Promise<Models.Block>;
+    createBlock(projectId: string, resourceType: BlockResourceType, resourceId?: string, reason?: string, expiredAt?: string): Promise<Models.Block>;
     createBlock(
-        paramsOrFirst: { projectId: string, resourceType: ResourceType, resourceId?: string, reason?: string, expiredAt?: string } | string,
-        ...rest: [(ResourceType)?, (string)?, (string)?, (string)?]    
+        paramsOrFirst: { projectId: string, resourceType: BlockResourceType, resourceId?: string, reason?: string, expiredAt?: string } | string,
+        ...rest: [(BlockResourceType)?, (string)?, (string)?, (string)?]    
     ): Promise<Models.Block> {
-        let params: { projectId: string, resourceType: ResourceType, resourceId?: string, reason?: string, expiredAt?: string };
+        let params: { projectId: string, resourceType: BlockResourceType, resourceId?: string, reason?: string, expiredAt?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, resourceType: ResourceType, resourceId?: string, reason?: string, expiredAt?: string };
+            params = (paramsOrFirst || {}) as { projectId: string, resourceType: BlockResourceType, resourceId?: string, reason?: string, expiredAt?: string };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                resourceType: rest[0] as ResourceType,
+                resourceType: rest[0] as BlockResourceType,
                 resourceId: rest[1] as string,
                 reason: rest[2] as string,
                 expiredAt: rest[3] as string            
@@ -102,35 +105,35 @@ export class Manager {
      * Deletes resource blocks for a project.
      *
      * @param {string} params.projectId - Project ID
-     * @param {ResourceType} params.resourceType - Resource type to unblock
+     * @param {BlockResourceType} params.resourceType - Resource type to unblock
      * @param {string} params.resourceId - Optional resource ID (if omitted, all blocks of this type will be removed)
      * @throws {AppwriteException}
      * @returns {Promise<Models.BlockDelete>}
      */
-    deleteBlock(params: { projectId: string, resourceType: ResourceType, resourceId?: string }): Promise<Models.BlockDelete>;
+    deleteBlock(params: { projectId: string, resourceType: BlockResourceType, resourceId?: string }): Promise<Models.BlockDelete>;
     /**
      * Deletes resource blocks for a project.
      *
      * @param {string} projectId - Project ID
-     * @param {ResourceType} resourceType - Resource type to unblock
+     * @param {BlockResourceType} resourceType - Resource type to unblock
      * @param {string} resourceId - Optional resource ID (if omitted, all blocks of this type will be removed)
      * @throws {AppwriteException}
      * @returns {Promise<Models.BlockDelete>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    deleteBlock(projectId: string, resourceType: ResourceType, resourceId?: string): Promise<Models.BlockDelete>;
+    deleteBlock(projectId: string, resourceType: BlockResourceType, resourceId?: string): Promise<Models.BlockDelete>;
     deleteBlock(
-        paramsOrFirst: { projectId: string, resourceType: ResourceType, resourceId?: string } | string,
-        ...rest: [(ResourceType)?, (string)?]    
+        paramsOrFirst: { projectId: string, resourceType: BlockResourceType, resourceId?: string } | string,
+        ...rest: [(BlockResourceType)?, (string)?]    
     ): Promise<Models.BlockDelete> {
-        let params: { projectId: string, resourceType: ResourceType, resourceId?: string };
+        let params: { projectId: string, resourceType: BlockResourceType, resourceId?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, resourceType: ResourceType, resourceId?: string };
+            params = (paramsOrFirst || {}) as { projectId: string, resourceType: BlockResourceType, resourceId?: string };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                resourceType: rest[0] as ResourceType,
+                resourceType: rest[0] as BlockResourceType,
                 resourceId: rest[1] as string            
             };
         }
@@ -216,6 +219,101 @@ export class Manager {
 
         return this.client.call(
             'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Clears internal cache.
+     *
+     * @param {Region} params.region - Target region.
+     * @param {CacheTarget} params.cache - Cache target.
+     * @param {boolean} params.all - Clear the entire selected cache target.
+     * @param {CacheDatabase} params.database - Database cache scope.
+     * @param {string} params.projectId - Project ID for project or logs database cache.
+     * @param {string} params.collectionId - Collection ID.
+     * @param {string} params.documentId - Document ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteCache(params?: { region?: Region, cache?: CacheTarget, all?: boolean, database?: CacheDatabase, projectId?: string, collectionId?: string, documentId?: string }): Promise<{}>;
+    /**
+     * Clears internal cache.
+     *
+     * @param {Region} region - Target region.
+     * @param {CacheTarget} cache - Cache target.
+     * @param {boolean} all - Clear the entire selected cache target.
+     * @param {CacheDatabase} database - Database cache scope.
+     * @param {string} projectId - Project ID for project or logs database cache.
+     * @param {string} collectionId - Collection ID.
+     * @param {string} documentId - Document ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteCache(region?: Region, cache?: CacheTarget, all?: boolean, database?: CacheDatabase, projectId?: string, collectionId?: string, documentId?: string): Promise<{}>;
+    deleteCache(
+        paramsOrFirst?: { region?: Region, cache?: CacheTarget, all?: boolean, database?: CacheDatabase, projectId?: string, collectionId?: string, documentId?: string } | Region,
+        ...rest: [(CacheTarget)?, (boolean)?, (CacheDatabase)?, (string)?, (string)?, (string)?]    
+    ): Promise<{}> {
+        let params: { region?: Region, cache?: CacheTarget, all?: boolean, database?: CacheDatabase, projectId?: string, collectionId?: string, documentId?: string };
+        
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('region' in paramsOrFirst || 'cache' in paramsOrFirst || 'all' in paramsOrFirst || 'database' in paramsOrFirst || 'projectId' in paramsOrFirst || 'collectionId' in paramsOrFirst || 'documentId' in paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { region?: Region, cache?: CacheTarget, all?: boolean, database?: CacheDatabase, projectId?: string, collectionId?: string, documentId?: string };
+        } else {
+            params = {
+                region: paramsOrFirst as Region,
+                cache: rest[0] as CacheTarget,
+                all: rest[1] as boolean,
+                database: rest[2] as CacheDatabase,
+                projectId: rest[3] as string,
+                collectionId: rest[4] as string,
+                documentId: rest[5] as string            
+            };
+        }
+        
+        const region = params.region;
+        const cache = params.cache;
+        const all = params.all;
+        const database = params.database;
+        const projectId = params.projectId;
+        const collectionId = params.collectionId;
+        const documentId = params.documentId;
+
+
+        const apiPath = '/manager/cache';
+        const payload: Payload = {};
+        if (typeof region !== 'undefined') {
+            payload['region'] = region;
+        }
+        if (typeof cache !== 'undefined') {
+            payload['cache'] = cache;
+        }
+        if (typeof all !== 'undefined') {
+            payload['all'] = all;
+        }
+        if (typeof database !== 'undefined') {
+            payload['database'] = database;
+        }
+        if (typeof projectId !== 'undefined') {
+            payload['projectId'] = projectId;
+        }
+        if (typeof collectionId !== 'undefined') {
+            payload['collectionId'] = collectionId;
+        }
+        if (typeof documentId !== 'undefined') {
+            payload['documentId'] = documentId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
             uri,
             apiHeaders,
             payload

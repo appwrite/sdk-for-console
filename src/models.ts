@@ -59,7 +59,7 @@ export namespace Models {
     /**
      * Presences List
      */
-    export type PresenceList<Presence extends Models.Presence = Models.DefaultPresence> = {
+    export type PresenceList = {
         /**
          * Total number of presences that matched your query.
          */
@@ -832,34 +832,6 @@ export namespace Models {
          * List of embeddings.
          */
         embeddings: Embedding[];
-    }
-
-    /**
-     * Insights List
-     */
-    export type InsightList = {
-        /**
-         * Total number of insights that matched your query.
-         */
-        total: number;
-        /**
-         * List of insights.
-         */
-        insights: Insight[];
-    }
-
-    /**
-     * Reports List
-     */
-    export type ReportList = {
-        /**
-         * Total number of reports that matched your query.
-         */
-        total: number;
-        /**
-         * List of reports.
-         */
-        reports: Report[];
     }
 
     /**
@@ -3264,12 +3236,11 @@ export namespace Models {
          * Presence expiry date in ISO 8601 format.
          */
         expiresAt?: string;
+        /**
+         * Presence metadata.
+         */
+        metadata?: object;
     }
-
-    export type DefaultPresence = Presence & {
-        [key: string]: any;
-        [__default]: true;
-    };
 
     /**
      * Log
@@ -4195,6 +4166,14 @@ export namespace Models {
          */
         providerSilentMode: boolean;
         /**
+         * List of branch name patterns that trigger automatic deployments. Supports glob wildcards. Empty list deploys on all branches.
+         */
+        providerBranches: string[];
+        /**
+         * List of file path patterns that trigger automatic deployments. Supports glob wildcards. Empty list deploys on all file changes.
+         */
+        providerPaths: string[];
+        /**
          * Machine specification for deployment builds.
          */
         buildSpecification: string;
@@ -4432,6 +4411,14 @@ export namespace Models {
          * Is VCS (Version Control System) connection is in silent mode? When in silence mode, no comments will be posted on the repository pull or merge requests
          */
         providerSilentMode: boolean;
+        /**
+         * List of branch name patterns that trigger automatic deployments. Supports glob wildcards. Empty list deploys on all branches.
+         */
+        providerBranches: string[];
+        /**
+         * List of file path patterns that trigger automatic deployments. Supports glob wildcards. Empty list deploys on all file changes.
+         */
+        providerPaths: string[];
         /**
          * Machine specification for deployment builds.
          */
@@ -7765,7 +7752,7 @@ export namespace Models {
     }
 
     /**
-     * UsageProject
+     * Project
      */
     export type UsageProject = {
         /**
@@ -8913,156 +8900,6 @@ export namespace Models {
     }
 
     /**
-     * Insight
-     */
-    export type Insight = {
-        /**
-         * Insight ID.
-         */
-        $id: string;
-        /**
-         * Insight creation date in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * Insight update date in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * Parent report ID. Insights always belong to a report.
-         */
-        reportId: string;
-        /**
-         * Insight type. One of databaseIndex (legacy), tablesDBIndex, documentsDBIndex, vectorsDBIndex, databasePerformance, sitePerformance, siteAccessibility, siteSeo, functionPerformance. The index types are engine-specific so each CTA can pair the right service+method (databases.createIndex, tablesDB.createIndex, documentsDB.createIndex, or vectorsDB.createIndex).
-         */
-        type: string;
-        /**
-         * Insight severity. One of info, warning, critical.
-         */
-        severity: string;
-        /**
-         * Insight status. One of active, dismissed.
-         */
-        status: string;
-        /**
-         * Type of the resource the insight is about. Plural noun, e.g. databases, sites, functions.
-         */
-        resourceType: string;
-        /**
-         * ID of the resource the insight is about.
-         */
-        resourceId: string;
-        /**
-         * Plural noun for the parent resource that contains the insight's resource, e.g. an insight about a column index on a table → resourceType=indexes, parentResourceType=tables. Empty when the resource has no parent.
-         */
-        parentResourceType: string;
-        /**
-         * ID of the parent resource. Empty when the resource has no parent.
-         */
-        parentResourceId: string;
-        /**
-         * Insight title.
-         */
-        title: string;
-        /**
-         * Short markdown summary describing the insight.
-         */
-        summary: string;
-        /**
-         * List of call-to-action buttons attached to this insight.
-         */
-        ctas: InsightCTA[];
-        /**
-         * Time the insight was analyzed in ISO 8601 format.
-         */
-        analyzedAt?: string;
-        /**
-         * Time the insight was dismissed in ISO 8601 format. Empty when not dismissed.
-         */
-        dismissedAt?: string;
-        /**
-         * User ID that dismissed the insight. Empty when not dismissed.
-         */
-        dismissedBy?: string;
-    }
-
-    /**
-     * InsightCTA
-     */
-    export type InsightCTA = {
-        /**
-         * Human-readable label for the CTA, used in UI.
-         */
-        label: string;
-        /**
-         * Public API service (SDK namespace) the client should invoke. Must match the engine that owns the resource — for index suggestions: databases (legacy), tablesDB, documentsDB, or vectorsDB.
-         */
-        service: string;
-        /**
-         * Public API method on the chosen service the client should invoke when this CTA is triggered.
-         */
-        method: string;
-        /**
-         * Parameter map the client should pass to the service method when this CTA is triggered. Keys match the target API's parameter names (e.g. databaseId/tableId/columns for tablesDB, databaseId/collectionId/attributes for the legacy Databases API).
-         */
-        params: object;
-    }
-
-    /**
-     * Report
-     */
-    export type Report = {
-        /**
-         * Report ID.
-         */
-        $id: string;
-        /**
-         * Report creation date in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * Report update date in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * ID of the third-party app that submitted the report.
-         */
-        appId: string;
-        /**
-         * Analyzer that produced this report. e.g. lighthouse, audit, databaseAnalyzer.
-         */
-        type: string;
-        /**
-         * Short, human-readable title for the report.
-         */
-        title: string;
-        /**
-         * Markdown summary describing the report.
-         */
-        summary: string;
-        /**
-         * Plural noun describing what the report analyzes, e.g. databases, sites, urls.
-         */
-        targetType: string;
-        /**
-         * Free-form target identifier (URL for lighthouse, resource ID for db).
-         */
-        target: string;
-        /**
-         * Categories covered by the report, e.g. performance, accessibility.
-         */
-        categories: string[];
-        /**
-         * Insights nested under this report.
-         */
-        insights: Insight[];
-        /**
-         * Time the report was analyzed in ISO 8601 format.
-         */
-        analyzedAt?: string;
-    }
-
-    /**
      * ActivityEvent
      */
     export type ActivityEvent = {
@@ -9071,21 +8908,21 @@ export namespace Models {
          */
         $id: string;
         /**
-         * User type.
+         * Actor type.
          */
-        userType: string;
+        actorType: string;
         /**
-         * User ID.
+         * Actor ID.
          */
-        userId: string;
+        actorId: string;
         /**
-         * User Email.
+         * Actor Email.
          */
-        userEmail: string;
+        actorEmail: string;
         /**
-         * User Name.
+         * Actor Name.
          */
-        userName: string;
+        actorName: string;
         /**
          * Resource parent.
          */
@@ -9227,7 +9064,117 @@ export namespace Models {
     }
 
     /**
-     * AggregationTeam
+     * Addon
+     */
+    export type Addon = {
+        /**
+         * Addon ID.
+         */
+        $id: string;
+        /**
+         * Addon creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Addon update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Addon permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+         */
+        $permissions: string[];
+        /**
+         * Addon key
+         */
+        key: string;
+        /**
+         * Resource type (organization or project)
+         */
+        resourceType: string;
+        /**
+         * Resource ID
+         */
+        resourceId: string;
+        /**
+         * Payment status. Possible values: pending (awaiting payment confirmation e.g. 3DS), active (payment confirmed and addon is running).
+         */
+        status: string;
+        /**
+         * Current value for this billing cycle. For toggle addons: 1 (on) or 0 (off). For numeric addons: the active quantity.
+         */
+        currentValue: number;
+        /**
+         * Value to apply at the start of the next billing cycle. Null means no change is scheduled. For toggle addons, 0 means the addon will be removed at the next cycle.
+         */
+        nextValue?: number;
+    }
+
+    /**
+     * AddonPrice
+     */
+    export type AddonPrice = {
+        /**
+         * Addon key.
+         */
+        addonKey: string;
+        /**
+         * Addon display name.
+         */
+        name: string;
+        /**
+         * Full monthly price of the addon.
+         */
+        monthlyPrice: number;
+        /**
+         * Calculated prorated amount for the current billing cycle.
+         */
+        proratedAmount: number;
+        /**
+         * Days remaining in the current billing cycle.
+         */
+        remainingDays: number;
+        /**
+         * Total days in the billing cycle.
+         */
+        totalCycleDays: number;
+        /**
+         * Currency code.
+         */
+        currency: string;
+        /**
+         * When the current billing cycle ends.
+         */
+        billingCycleEnd: string;
+    }
+
+    /**
+     * Breakdown
+     */
+    export type AggregationBreakdown = {
+        /**
+         * Aggregation ID.
+         */
+        $id: string;
+        /**
+         * Project name
+         */
+        name: string;
+        /**
+         * Project region
+         */
+        region: string;
+        /**
+         * Aggregated amount
+         */
+        amount: number;
+        /**
+         * 
+         */
+        resources: UsageResources[];
+    }
+
+    /**
+     * Team
      */
     export type AggregationTeam = {
         /**
@@ -9349,32 +9296,6 @@ export namespace Models {
     }
 
     /**
-     * AggregationBreakdown
-     */
-    export type AggregationBreakdown = {
-        /**
-         * Aggregation ID.
-         */
-        $id: string;
-        /**
-         * Project name
-         */
-        name: string;
-        /**
-         * Project region
-         */
-        region: string;
-        /**
-         * Aggregated amount
-         */
-        amount: number;
-        /**
-         * 
-         */
-        resources: UsageResources[];
-    }
-
-    /**
      * Archive
      */
     export type BackupArchive = {
@@ -9429,7 +9350,7 @@ export namespace Models {
     }
 
     /**
-     * BillingAddress
+     * Address
      */
     export type BillingAddress = {
         /**
@@ -9464,6 +9385,44 @@ export namespace Models {
          * postal code
          */
         postalCode: string;
+    }
+
+    /**
+     * Limits
+     */
+    export type BillingLimits = {
+        /**
+         * Bandwidth limit
+         */
+        bandwidth?: number;
+        /**
+         * Storage limit
+         */
+        storage?: number;
+        /**
+         * Users limit
+         */
+        users?: number;
+        /**
+         * Executions limit
+         */
+        executions?: number;
+        /**
+         * GBHours limit
+         */
+        GBHours?: number;
+        /**
+         * Image transformations limit
+         */
+        imageTransformations?: number;
+        /**
+         * Auth phone limit
+         */
+        authPhone?: number;
+        /**
+         * Budget limit percentage
+         */
+        budgetLimit?: number;
     }
 
     /**
@@ -9725,7 +9684,7 @@ export namespace Models {
     }
 
     /**
-     * BillingPlanAddon
+     * Addon
      */
     export type BillingPlanAddon = {
         /**
@@ -9739,7 +9698,7 @@ export namespace Models {
     }
 
     /**
-     * BillingPlanAddonDetails
+     * Details
      */
     export type BillingPlanAddonDetails = {
         /**
@@ -9777,7 +9736,7 @@ export namespace Models {
     }
 
     /**
-     * BillingPlanLimits
+     * PlanLimits
      */
     export type BillingPlanLimits = {
         /**
@@ -9798,44 +9757,6 @@ export namespace Models {
          * Whether the plan supports BAA (Business Associate Agreement) addon
          */
         baa: boolean;
-    }
-
-    /**
-     * BillingLimits
-     */
-    export type BillingLimits = {
-        /**
-         * Bandwidth limit
-         */
-        bandwidth?: number;
-        /**
-         * Storage limit
-         */
-        storage?: number;
-        /**
-         * Users limit
-         */
-        users?: number;
-        /**
-         * Executions limit
-         */
-        executions?: number;
-        /**
-         * GBHours limit
-         */
-        GBHours?: number;
-        /**
-         * Image transformations limit
-         */
-        imageTransformations?: number;
-        /**
-         * Auth phone limit
-         */
-        authPhone?: number;
-        /**
-         * Budget limit percentage
-         */
-        budgetLimit?: number;
     }
 
     /**
@@ -9950,48 +9871,6 @@ export namespace Models {
          * Is footer
          */
         footer?: boolean;
-    }
-
-    /**
-     * Program
-     */
-    export type Program = {
-        /**
-         * Program ID
-         */
-        $id: string;
-        /**
-         * Program title
-         */
-        title: string;
-        /**
-         * Program description
-         */
-        description: string;
-        /**
-         * Program tag for highlighting on console
-         */
-        tag: string;
-        /**
-         * Program icon for highlighting on console
-         */
-        icon: string;
-        /**
-         * URL for more information on this program
-         */
-        url: string;
-        /**
-         * Whether this program is active
-         */
-        active: boolean;
-        /**
-         * Whether this program is external
-         */
-        external: boolean;
-        /**
-         * Billing plan ID that this is program is associated with.
-         */
-        billingPlanId: string;
     }
 
     /**
@@ -10111,6 +9990,244 @@ export namespace Models {
     }
 
     /**
+     * DNSRecord
+     */
+    export type DnsRecord = {
+        /**
+         * DNS Record ID.
+         */
+        $id: string;
+        /**
+         * DNS Record creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * DNS Record update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * DNS record type (e.g. A, CNAME, MX).
+         */
+        type: string;
+        /**
+         * Record name or subdomain.
+         */
+        name: string;
+        /**
+         * Value of the record (IP address, domain, etc.).
+         */
+        value: string;
+        /**
+         * Time to live (in seconds).
+         */
+        ttl: number;
+        /**
+         * Record priority (commonly used for MX).
+         */
+        priority: number;
+        /**
+         * Whether this record is locked (read-only).
+         */
+        lock: boolean;
+        /**
+         * Record weight (used for SRV records).
+         */
+        weight: number;
+        /**
+         * Target port (used for SRV records).
+         */
+        port: number;
+        /**
+         * Comment for the DNS record.
+         */
+        comment: string;
+    }
+
+    /**
+     * Domain
+     */
+    export type Domain = {
+        /**
+         * Domain ID.
+         */
+        $id: string;
+        /**
+         * Domain creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Domain update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Domain name.
+         */
+        domain: string;
+        /**
+         * Domain registrar (e.g. "appwrite" or "third_party").
+         */
+        registrar: string;
+        /**
+         * Nameservers setting. "Appwrite" or empty string.
+         */
+        nameservers: string;
+        /**
+         * Domain expiry date in ISO 8601 format.
+         */
+        expire: string;
+        /**
+         * Domain renewal date in ISO 8601 format.
+         */
+        renewal: string;
+        /**
+         * If set to true, the domain will automatically renew.
+         */
+        autoRenewal: boolean;
+        /**
+         * Renewal price (in cents).
+         */
+        renewalPrice: number;
+        /**
+         * Transfer status for domains being transferred in.
+         */
+        transferStatus: DomainTransferStatusEnum;
+        /**
+         * Team ID.
+         */
+        teamId: string;
+        /**
+         * Dns records
+         */
+        dnsRecords: DnsRecord[];
+    }
+
+    /**
+     * DomainPrice
+     */
+    export type DomainPrice = {
+        /**
+         * Domain name.
+         */
+        domain: string;
+        /**
+         * Top-level domain for the requested domain.
+         */
+        tld: string;
+        /**
+         * Whether the domain is currently available for registration.
+         */
+        available: boolean;
+        /**
+         * Domain registration price.
+         */
+        price: number;
+        /**
+         * Price period in years.
+         */
+        periodYears: number;
+        /**
+         * Whether the domain is a premium domain.
+         */
+        premium: boolean;
+    }
+
+    /**
+     * DomainPurchase
+     */
+    export type DomainPurchase = {
+        /**
+         * Purchase/invoice ID.
+         */
+        $id: string;
+        /**
+         * Purchase creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Purchase update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Domain document ID.
+         */
+        domainId: string;
+        /**
+         * Domain name.
+         */
+        domain: string;
+        /**
+         * Team ID that owns the domain.
+         */
+        organizationId: string;
+        /**
+         * Domain purchase status.
+         */
+        status: DomainPurchaseStatus;
+        /**
+         * Stripe client secret for 3DS; empty when not applicable.
+         */
+        clientSecret: string;
+        /**
+         * Purchase amount.
+         */
+        amount: number;
+        /**
+         * Currency code.
+         */
+        currency: string;
+    }
+
+    /**
+     * DomainSuggestion
+     */
+    export type DomainSuggestion = {
+        /**
+         * Domain suggestion.
+         */
+        domain: string;
+        /**
+         * Is the domain premium?
+         */
+        premium: boolean;
+        /**
+         * Domain price.
+         */
+        price?: number;
+        /**
+         * Is the domain available?
+         */
+        available: boolean;
+    }
+
+    /**
+     * domainTransferOut
+     */
+    export type DomainTransferOut = {
+        /**
+         * Domain transfer authorization code.
+         */
+        authCode: string;
+    }
+
+    /**
+     * domainTransferStatus
+     */
+    export type DomainTransferStatus = {
+        /**
+         * Transfer status.
+         */
+        status: DomainTransferStatusEnum;
+        /**
+         * Additional transfer status information.
+         */
+        reason: string;
+        /**
+         * Transfer status timestamp in ISO 8601 format.
+         */
+        timestamp: string;
+    }
+
+    /**
      * Downgrade Feedback
      */
     export type DowngradeFeedback = {
@@ -10154,6 +10271,136 @@ export namespace Models {
          * Console version
          */
         version: string;
+    }
+
+    /**
+     * Estimation
+     */
+    export type Estimation = {
+        /**
+         * Total amount
+         */
+        amount: number;
+        /**
+         * Gross payable amount
+         */
+        grossAmount: number;
+        /**
+         * Discount amount
+         */
+        discount: number;
+        /**
+         * Credits amount
+         */
+        credits: number;
+        /**
+         * Estimation items
+         */
+        items: EstimationItem[];
+        /**
+         * Estimation discount items
+         */
+        discounts: EstimationItem[];
+        /**
+         * Trial days
+         */
+        trialDays: number;
+        /**
+         * Trial end date
+         */
+        trialEndDate?: string;
+    }
+
+    /**
+     * DeleteOrganization
+     */
+    export type EstimationDeleteOrganization = {
+        /**
+         * List of unpaid invoices
+         */
+        unpaidInvoices: Invoice[];
+    }
+
+    /**
+     * Item
+     */
+    export type EstimationItem = {
+        /**
+         * Label
+         */
+        label: string;
+        /**
+         * Gross payable amount
+         */
+        value: number;
+    }
+
+    /**
+     * EstimationPlanChange
+     */
+    export type EstimationPlanChange = {
+        /**
+         * Current billing plan ID
+         */
+        currentBillingPlanId: string;
+        /**
+         * Target billing plan ID
+         */
+        targetBillingPlanId: string;
+        /**
+         * Direction of plan change: upgrade, downgrade, or same
+         */
+        direction: string;
+        /**
+         * Cost estimation details
+         */
+        estimation: PlanChangeEstimationDetails;
+        /**
+         * Plan limits and compliance information
+         */
+        limits: PlanChangeLimits;
+    }
+
+    /**
+     * UpdatePlan
+     */
+    export type EstimationUpdatePlan = {
+        /**
+         * Total amount
+         */
+        amount: number;
+        /**
+         * Gross payable amount
+         */
+        grossAmount: number;
+        /**
+         * Discount amount
+         */
+        discount: number;
+        /**
+         * Credits amount
+         */
+        credits: number;
+        /**
+         * Estimation items
+         */
+        items: EstimationItem[];
+        /**
+         * Estimation discount items
+         */
+        discounts: EstimationItem[];
+        /**
+         * Trial days
+         */
+        trialDays: number;
+        /**
+         * Trial end date
+         */
+        trialEndDate?: string;
+        /**
+         * Organization's existing credits
+         */
+        organizationCredits: number;
     }
 
     /**
@@ -10513,6 +10760,130 @@ export namespace Models {
     }
 
     /**
+     * PlanChangeEstimationDetails
+     */
+    export type PlanChangeEstimationDetails = {
+        /**
+         * Currency code
+         */
+        currency: string;
+        /**
+         * Gross amount after all discounts and credits
+         */
+        grossAmount: number;
+        /**
+         * Credits applied from coupon
+         */
+        credits: number;
+        /**
+         * Organization's existing credits applied
+         */
+        organizationCredits: number;
+        /**
+         * Discount amount from prorated invoices
+         */
+        discount: number;
+        /**
+         * Total amount before discounts and credits
+         */
+        amount: number;
+        /**
+         * Next invoice date
+         */
+        nextInvoiceDate: string;
+        /**
+         * Line items breakdown
+         */
+        items: object;
+        /**
+         * Applied discounts breakdown
+         */
+        discounts: object;
+    }
+
+    /**
+     * PlanChangeLimits
+     */
+    export type PlanChangeLimits = {
+        /**
+         * Total number of projects in the organization
+         */
+        totalProjects: number;
+        /**
+         * Number of projects exceeding target plan limits
+         */
+        nonCompliantProjects: number;
+        /**
+         * Whether the plan change is allowed
+         */
+        canChangePlan: boolean;
+        /**
+         * Project compliance details
+         */
+        projects: PlanChangeProjectCompliance[];
+        /**
+         * Active addon keys that the target plan does not support. When non-empty, `canChangePlan` is false.
+         */
+        unsupportedAddons: string[];
+    }
+
+    /**
+     * PlanChangeProjectCompliance
+     */
+    export type PlanChangeProjectCompliance = {
+        /**
+         * Project ID
+         */
+        $id: string;
+        /**
+         * Project name
+         */
+        name: string;
+        /**
+         * Whether the project complies with target plan limits
+         */
+        isCompliant: boolean;
+        /**
+         * Resource compliance details
+         */
+        resources: PlanChangeResourceCompliance[];
+        /**
+         * Failure reason when compliance could not be evaluated. Present only when the project DB or Regions API was unreachable; in that case `isCompliant` is false (fail closed) and `resources` is empty.
+         */
+        error?: string;
+    }
+
+    /**
+     * PlanChangeResourceCompliance
+     */
+    export type PlanChangeResourceCompliance = {
+        /**
+         * Resource type
+         */
+        type: string;
+        /**
+         * Current usage count
+         */
+        currentUsage: number;
+        /**
+         * Allowed limit in target plan
+         */
+        limit: number;
+        /**
+         * Compliance status
+         */
+        status: string;
+        /**
+         * Number of resources exceeding the limit
+         */
+        excess: number;
+        /**
+         * Suggestion for resolving the compliance issue
+         */
+        resolutionHint: string;
+    }
+
+    /**
      * backup
      */
     export type BackupPolicy = {
@@ -10560,6 +10931,48 @@ export namespace Models {
          * Is this policy enabled.
          */
         enabled: boolean;
+    }
+
+    /**
+     * Program
+     */
+    export type Program = {
+        /**
+         * Program ID
+         */
+        $id: string;
+        /**
+         * Program title
+         */
+        title: string;
+        /**
+         * Program description
+         */
+        description: string;
+        /**
+         * Program tag for highlighting on console
+         */
+        tag: string;
+        /**
+         * Program icon for highlighting on console
+         */
+        icon: string;
+        /**
+         * URL for more information on this program
+         */
+        url: string;
+        /**
+         * Whether this program is active
+         */
+        active: boolean;
+        /**
+         * Whether this program is external
+         */
+        external: boolean;
+        /**
+         * Billing plan ID that this is program is associated with.
+         */
+        billingPlanId: string;
     }
 
     /**
@@ -10679,6 +11092,56 @@ export namespace Models {
     }
 
     /**
+     * usageBillingPlan
+     */
+    export type UsageBillingPlan = {
+        /**
+         * Bandwidth additional resources
+         */
+        bandwidth: AdditionalResource;
+        /**
+         * Executions additional resources
+         */
+        executions: AdditionalResource;
+        /**
+         * Member additional resources
+         */
+        member: AdditionalResource;
+        /**
+         * Realtime additional resources
+         */
+        realtime: AdditionalResource;
+        /**
+         * Realtime messages additional resources
+         */
+        realtimeMessages: AdditionalResource;
+        /**
+         * Realtime bandwidth additional resources
+         */
+        realtimeBandwidth: AdditionalResource;
+        /**
+         * Storage additional resources
+         */
+        storage: AdditionalResource;
+        /**
+         * User additional resources
+         */
+        users: AdditionalResource;
+        /**
+         * GBHour additional resources
+         */
+        GBHours: AdditionalResource;
+        /**
+         * Image transformation additional resources
+         */
+        imageTransformations: AdditionalResource;
+        /**
+         * Credits additional resources
+         */
+        credits: AdditionalResource;
+    }
+
+    /**
      * usageEvent
      */
     export type UsageEvent = {
@@ -10725,20 +11188,6 @@ export namespace Models {
     }
 
     /**
-     * Usage events list
-     */
-    export type UsageEventList = {
-        /**
-         * Total number of events that matched your query.
-         */
-        total: number;
-        /**
-         * List of events.
-         */
-        events: UsageEvent[];
-    }
-
-    /**
      * usageGauge
      */
     export type UsageGauge = {
@@ -10754,24 +11203,18 @@ export namespace Models {
          * The snapshot timestamp.
          */
         time: string;
+        /**
+         * The resource type.
+         */
+        resourceType: string;
+        /**
+         * The resource ID.
+         */
+        resourceId: string;
     }
 
     /**
-     * Usage gauges list
-     */
-    export type UsageGaugeList = {
-        /**
-         * Total number of gauges that matched your query.
-         */
-        total: number;
-        /**
-         * List of gauges.
-         */
-        gauges: UsageGauge[];
-    }
-
-    /**
-     * UsageOrganization
+     * Organization
      */
     export type UsageOrganization = {
         /**
@@ -10905,7 +11348,7 @@ export namespace Models {
     }
 
     /**
-     * UsageOrganizationProject
+     * OrganizationProject
      */
     export type UsageOrganizationProject = {
         /**
@@ -10995,165 +11438,7 @@ export namespace Models {
     }
 
     /**
-     * Domain
-     */
-    export type Domain = {
-        /**
-         * Domain ID.
-         */
-        $id: string;
-        /**
-         * Domain creation time in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * Domain update date in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * Domain name.
-         */
-        domain: string;
-        /**
-         * Domain registrar (e.g. "appwrite" or "third_party").
-         */
-        registrar: string;
-        /**
-         * Nameservers setting. "Appwrite" or empty string.
-         */
-        nameservers: string;
-        /**
-         * Domain expiry date in ISO 8601 format.
-         */
-        expire: string;
-        /**
-         * Domain renewal date in ISO 8601 format.
-         */
-        renewal: string;
-        /**
-         * If set to true, the domain will automatically renew.
-         */
-        autoRenewal: boolean;
-        /**
-         * Renewal price (in cents).
-         */
-        renewalPrice: number;
-        /**
-         * Transfer status for domains being transferred in.
-         */
-        transferStatus: DomainTransferStatusEnum;
-        /**
-         * Team ID.
-         */
-        teamId: string;
-        /**
-         * Dns records
-         */
-        dnsRecords: DnsRecord[];
-    }
-
-    /**
-     * DomainPurchase
-     */
-    export type DomainPurchase = {
-        /**
-         * Purchase/invoice ID.
-         */
-        $id: string;
-        /**
-         * Purchase creation time in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * Purchase update date in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * Domain document ID.
-         */
-        domainId: string;
-        /**
-         * Domain name.
-         */
-        domain: string;
-        /**
-         * Team ID that owns the domain.
-         */
-        organizationId: string;
-        /**
-         * Domain purchase status.
-         */
-        status: DomainPurchaseStatus;
-        /**
-         * Stripe client secret for 3DS; empty when not applicable.
-         */
-        clientSecret: string;
-        /**
-         * Purchase amount.
-         */
-        amount: number;
-        /**
-         * Currency code.
-         */
-        currency: string;
-    }
-
-    /**
-     * DNSRecord
-     */
-    export type DnsRecord = {
-        /**
-         * DNS Record ID.
-         */
-        $id: string;
-        /**
-         * DNS Record creation time in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * DNS Record update date in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * DNS record type (e.g. A, CNAME, MX).
-         */
-        type: string;
-        /**
-         * Record name or subdomain.
-         */
-        name: string;
-        /**
-         * Value of the record (IP address, domain, etc.).
-         */
-        value: string;
-        /**
-         * Time to live (in seconds).
-         */
-        ttl: number;
-        /**
-         * Record priority (commonly used for MX).
-         */
-        priority: number;
-        /**
-         * Whether this record is locked (read-only).
-         */
-        lock: boolean;
-        /**
-         * Record weight (used for SRV records).
-         */
-        weight: number;
-        /**
-         * Target port (used for SRV records).
-         */
-        port: number;
-        /**
-         * Comment for the DNS record.
-         */
-        comment: string;
-    }
-
-    /**
-     * UsageResource
+     * Resource
      */
     export type UsageResources = {
         /**
@@ -11183,471 +11468,17 @@ export namespace Models {
     }
 
     /**
-     * usageBillingPlan
+     * Activity event list
      */
-    export type UsageBillingPlan = {
+    export type ActivityEventList = {
         /**
-         * Bandwidth additional resources
+         * Total number of events that matched your query.
          */
-        bandwidth: AdditionalResource;
+        total: number;
         /**
-         * Executions additional resources
+         * List of events.
          */
-        executions: AdditionalResource;
-        /**
-         * Member additional resources
-         */
-        member: AdditionalResource;
-        /**
-         * Realtime additional resources
-         */
-        realtime: AdditionalResource;
-        /**
-         * Realtime messages additional resources
-         */
-        realtimeMessages: AdditionalResource;
-        /**
-         * Realtime bandwidth additional resources
-         */
-        realtimeBandwidth: AdditionalResource;
-        /**
-         * Storage additional resources
-         */
-        storage: AdditionalResource;
-        /**
-         * User additional resources
-         */
-        users: AdditionalResource;
-        /**
-         * GBHour additional resources
-         */
-        GBHours: AdditionalResource;
-        /**
-         * Image transformation additional resources
-         */
-        imageTransformations: AdditionalResource;
-        /**
-         * Credits additional resources
-         */
-        credits: AdditionalResource;
-    }
-
-    /**
-     * Estimation
-     */
-    export type Estimation = {
-        /**
-         * Total amount
-         */
-        amount: number;
-        /**
-         * Gross payable amount
-         */
-        grossAmount: number;
-        /**
-         * Discount amount
-         */
-        discount: number;
-        /**
-         * Credits amount
-         */
-        credits: number;
-        /**
-         * Estimation items
-         */
-        items: EstimationItem[];
-        /**
-         * Estimation discount items
-         */
-        discounts: EstimationItem[];
-        /**
-         * Trial days
-         */
-        trialDays: number;
-        /**
-         * Trial end date
-         */
-        trialEndDate?: string;
-    }
-
-    /**
-     * EstimationUpdatePlan
-     */
-    export type EstimationUpdatePlan = {
-        /**
-         * Total amount
-         */
-        amount: number;
-        /**
-         * Gross payable amount
-         */
-        grossAmount: number;
-        /**
-         * Discount amount
-         */
-        discount: number;
-        /**
-         * Credits amount
-         */
-        credits: number;
-        /**
-         * Estimation items
-         */
-        items: EstimationItem[];
-        /**
-         * Estimation discount items
-         */
-        discounts: EstimationItem[];
-        /**
-         * Trial days
-         */
-        trialDays: number;
-        /**
-         * Trial end date
-         */
-        trialEndDate?: string;
-        /**
-         * Organization's existing credits
-         */
-        organizationCredits: number;
-    }
-
-    /**
-     * EstimationPlanChange
-     */
-    export type EstimationPlanChange = {
-        /**
-         * Current billing plan ID
-         */
-        currentBillingPlanId: string;
-        /**
-         * Target billing plan ID
-         */
-        targetBillingPlanId: string;
-        /**
-         * Direction of plan change: upgrade, downgrade, or same
-         */
-        direction: string;
-        /**
-         * Cost estimation details
-         */
-        estimation: PlanChangeEstimationDetails;
-        /**
-         * Plan limits and compliance information
-         */
-        limits: PlanChangeLimits;
-    }
-
-    /**
-     * PlanChangeEstimationDetails
-     */
-    export type PlanChangeEstimationDetails = {
-        /**
-         * Currency code
-         */
-        currency: string;
-        /**
-         * Gross amount after all discounts and credits
-         */
-        grossAmount: number;
-        /**
-         * Credits applied from coupon
-         */
-        credits: number;
-        /**
-         * Organization's existing credits applied
-         */
-        organizationCredits: number;
-        /**
-         * Discount amount from prorated invoices
-         */
-        discount: number;
-        /**
-         * Total amount before discounts and credits
-         */
-        amount: number;
-        /**
-         * Next invoice date
-         */
-        nextInvoiceDate: string;
-        /**
-         * Line items breakdown
-         */
-        items: object;
-        /**
-         * Applied discounts breakdown
-         */
-        discounts: object;
-    }
-
-    /**
-     * PlanChangeLimits
-     */
-    export type PlanChangeLimits = {
-        /**
-         * Total number of projects in the organization
-         */
-        totalProjects: number;
-        /**
-         * Number of projects exceeding target plan limits
-         */
-        nonCompliantProjects: number;
-        /**
-         * Whether the plan change is allowed
-         */
-        canChangePlan: boolean;
-        /**
-         * Project compliance details
-         */
-        projects: PlanChangeProjectCompliance[];
-        /**
-         * Active addon keys that the target plan does not support. When non-empty, `canChangePlan` is false.
-         */
-        unsupportedAddons: string[];
-    }
-
-    /**
-     * PlanChangeProjectCompliance
-     */
-    export type PlanChangeProjectCompliance = {
-        /**
-         * Project ID
-         */
-        $id: string;
-        /**
-         * Project name
-         */
-        name: string;
-        /**
-         * Whether the project complies with target plan limits
-         */
-        isCompliant: boolean;
-        /**
-         * Resource compliance details
-         */
-        resources: PlanChangeResourceCompliance[];
-        /**
-         * Failure reason when compliance could not be evaluated. Present only when the project DB or Regions API was unreachable; in that case `isCompliant` is false (fail closed) and `resources` is empty.
-         */
-        error?: string;
-    }
-
-    /**
-     * PlanChangeResourceCompliance
-     */
-    export type PlanChangeResourceCompliance = {
-        /**
-         * Resource type
-         */
-        type: string;
-        /**
-         * Current usage count
-         */
-        currentUsage: number;
-        /**
-         * Allowed limit in target plan
-         */
-        limit: number;
-        /**
-         * Compliance status
-         */
-        status: string;
-        /**
-         * Number of resources exceeding the limit
-         */
-        excess: number;
-        /**
-         * Suggestion for resolving the compliance issue
-         */
-        resolutionHint: string;
-    }
-
-    /**
-     * EstimationDeleteOrganization
-     */
-    export type EstimationDeleteOrganization = {
-        /**
-         * List of unpaid invoices
-         */
-        unpaidInvoices: Invoice[];
-    }
-
-    /**
-     * EstimationItem
-     */
-    export type EstimationItem = {
-        /**
-         * Label
-         */
-        label: string;
-        /**
-         * Gross payable amount
-         */
-        value: number;
-    }
-
-    /**
-     * DomainPrice
-     */
-    export type DomainPrice = {
-        /**
-         * Domain name.
-         */
-        domain: string;
-        /**
-         * Top-level domain for the requested domain.
-         */
-        tld: string;
-        /**
-         * Whether the domain is currently available for registration.
-         */
-        available: boolean;
-        /**
-         * Domain registration price.
-         */
-        price: number;
-        /**
-         * Price period in years.
-         */
-        periodYears: number;
-        /**
-         * Whether the domain is a premium domain.
-         */
-        premium: boolean;
-    }
-
-    /**
-     * DomainSuggestion
-     */
-    export type DomainSuggestion = {
-        /**
-         * Domain suggestion.
-         */
-        domain: string;
-        /**
-         * Is the domain premium?
-         */
-        premium: boolean;
-        /**
-         * Domain price.
-         */
-        price?: number;
-        /**
-         * Is the domain available?
-         */
-        available: boolean;
-    }
-
-    /**
-     * Addon
-     */
-    export type Addon = {
-        /**
-         * Addon ID.
-         */
-        $id: string;
-        /**
-         * Addon creation time in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * Addon update date in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * Addon permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
-         */
-        $permissions: string[];
-        /**
-         * Addon key
-         */
-        key: string;
-        /**
-         * Resource type (organization or project)
-         */
-        resourceType: string;
-        /**
-         * Resource ID
-         */
-        resourceId: string;
-        /**
-         * Payment status. Possible values: pending (awaiting payment confirmation e.g. 3DS), active (payment confirmed and addon is running).
-         */
-        status: string;
-        /**
-         * Current value for this billing cycle. For toggle addons: 1 (on) or 0 (off). For numeric addons: the active quantity.
-         */
-        currentValue: number;
-        /**
-         * Value to apply at the start of the next billing cycle. Null means no change is scheduled. For toggle addons, 0 means the addon will be removed at the next cycle.
-         */
-        nextValue?: number;
-    }
-
-    /**
-     * AddonPrice
-     */
-    export type AddonPrice = {
-        /**
-         * Addon key.
-         */
-        addonKey: string;
-        /**
-         * Addon display name.
-         */
-        name: string;
-        /**
-         * Full monthly price of the addon.
-         */
-        monthlyPrice: number;
-        /**
-         * Calculated prorated amount for the current billing cycle.
-         */
-        proratedAmount: number;
-        /**
-         * Days remaining in the current billing cycle.
-         */
-        remainingDays: number;
-        /**
-         * Total days in the billing cycle.
-         */
-        totalCycleDays: number;
-        /**
-         * Currency code.
-         */
-        currency: string;
-        /**
-         * When the current billing cycle ends.
-         */
-        billingCycleEnd: string;
-    }
-
-    /**
-     * domainTransferOut
-     */
-    export type DomainTransferOut = {
-        /**
-         * Domain transfer authorization code.
-         */
-        authCode: string;
-    }
-
-    /**
-     * domainTransferStatus
-     */
-    export type DomainTransferStatus = {
-        /**
-         * Transfer status.
-         */
-        status: DomainTransferStatusEnum;
-        /**
-         * Additional transfer status information.
-         */
-        reason: string;
-        /**
-         * Transfer status timestamp in ISO 8601 format.
-         */
-        timestamp: string;
+        events: ActivityEvent[];
     }
 
     /**
@@ -11662,20 +11493,6 @@ export namespace Models {
          * List of addons.
          */
         addons: Addon[];
-    }
-
-    /**
-     * Activity event list
-     */
-    export type ActivityEventList = {
-        /**
-         * Total number of events that matched your query.
-         */
-        total: number;
-        /**
-         * List of events.
-         */
-        events: ActivityEvent[];
     }
 
     /**
@@ -11735,20 +11552,6 @@ export namespace Models {
     }
 
     /**
-     * Billing invoices list
-     */
-    export type InvoiceList = {
-        /**
-         * Total number of invoices that matched your query.
-         */
-        total: number;
-        /**
-         * List of invoices.
-         */
-        invoices: Invoice[];
-    }
-
-    /**
      * Billing address list
      */
     export type BillingAddressList = {
@@ -11763,6 +11566,20 @@ export namespace Models {
     }
 
     /**
+     * Billing invoices list
+     */
+    export type InvoiceList = {
+        /**
+         * Total number of invoices that matched your query.
+         */
+        total: number;
+        /**
+         * List of invoices.
+         */
+        invoices: Invoice[];
+    }
+
+    /**
      * Billing plan list
      */
     export type BillingPlanList = {
@@ -11774,6 +11591,62 @@ export namespace Models {
          * List of plans.
          */
         plans: BillingPlan[];
+    }
+
+    /**
+     * Blocks list
+     */
+    export type BlockList = {
+        /**
+         * Total number of blocks that matched your query.
+         */
+        total: number;
+        /**
+         * List of blocks.
+         */
+        blocks: Block[];
+    }
+
+    /**
+     * DNS records list
+     */
+    export type DnsRecordsList = {
+        /**
+         * Total number of dnsRecords that matched your query.
+         */
+        total: number;
+        /**
+         * List of dnsRecords.
+         */
+        dnsRecords: DnsRecord[];
+    }
+
+    /**
+     * Domain suggestions list
+     */
+    export type DomainSuggestionsList = {
+        /**
+         * Total number of suggestions that matched your query.
+         */
+        total: number;
+        /**
+         * List of suggestions.
+         */
+        suggestions: DomainSuggestion[];
+    }
+
+    /**
+     * Domains list
+     */
+    export type DomainsList = {
+        /**
+         * Total number of domains that matched your query.
+         */
+        total: number;
+        /**
+         * List of domains.
+         */
+        domains: Domain[];
     }
 
     /**
@@ -11805,20 +11678,6 @@ export namespace Models {
     }
 
     /**
-     * Blocks list
-     */
-    export type BlockList = {
-        /**
-         * Total number of blocks that matched your query.
-         */
-        total: number;
-        /**
-         * List of blocks.
-         */
-        blocks: Block[];
-    }
-
-    /**
      * Regions list
      */
     export type ConsoleRegionList = {
@@ -11833,44 +11692,30 @@ export namespace Models {
     }
 
     /**
-     * Domains list
+     * Usage events list
      */
-    export type DomainsList = {
+    export type UsageEventList = {
         /**
-         * Total number of domains that matched your query.
+         * Total number of events that matched your query.
          */
         total: number;
         /**
-         * List of domains.
+         * List of events.
          */
-        domains: Domain[];
+        events: UsageEvent[];
     }
 
     /**
-     * DNS records list
+     * Usage gauges list
      */
-    export type DnsRecordsList = {
+    export type UsageGaugeList = {
         /**
-         * Total number of dnsRecords that matched your query.
+         * Total number of gauges that matched your query.
          */
         total: number;
         /**
-         * List of dnsRecords.
+         * List of gauges.
          */
-        dnsRecords: DnsRecord[];
-    }
-
-    /**
-     * Domain suggestions list
-     */
-    export type DomainSuggestionsList = {
-        /**
-         * Total number of suggestions that matched your query.
-         */
-        total: number;
-        /**
-         * List of suggestions.
-         */
-        suggestions: DomainSuggestion[];
+        gauges: UsageGauge[];
     }
 }

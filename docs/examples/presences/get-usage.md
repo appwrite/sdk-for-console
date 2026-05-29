@@ -8,7 +8,7 @@ const client = new Client()
 const presences = new Presences(client);
 
 const result = await presences.getUsage({
-    range: UsageRange.24h // optional
+    range: UsageRange.TwentyFourHours // optional
 });
 
 console.log(result);
