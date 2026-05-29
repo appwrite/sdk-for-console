@@ -8,7 +8,7 @@ const client = new Client()
 const users = new Users(client);
 
 const result = await users.getUsage({
-    range: UsageRange.TwentyFourHours // optional
+    range: UsageRange.24h // optional
 });
 
 console.log(result);

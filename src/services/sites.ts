@@ -2,11 +2,10 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { Framework } from '../enums/framework';
-import { BuildRuntime } from '../enums/build-runtime';
-import { Adapter } from '../enums/adapter';
-import { Frameworks } from '../enums/frameworks';
-import { UseCases } from '../enums/use-cases';
+import { SiteFramework } from '../enums/site-framework';
+import { SiteBuildRuntime } from '../enums/site-build-runtime';
+import { SiteAdapter } from '../enums/site-adapter';
+import { SiteTemplateUseCase } from '../enums/site-template-use-case';
 import { UsageRange } from '../enums/usage-range';
 import { TemplateReferenceType } from '../enums/template-reference-type';
 import { VCSReferenceType } from '../enums/vcs-reference-type';
@@ -90,8 +89,8 @@ export class Sites {
      *
      * @param {string} params.siteId - Site ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Site name. Max length: 128 chars.
-     * @param {Framework} params.framework - Sites framework.
-     * @param {BuildRuntime} params.buildRuntime - Runtime to use during build step.
+     * @param {SiteFramework} params.framework - Sites framework.
+     * @param {SiteBuildRuntime} params.buildRuntime - Runtime to use during build step.
      * @param {boolean} params.enabled - Is site enabled? When set to 'disabled', users cannot access the site but Server SDKs with and API key can still access the site. No data is lost when this is toggled.
      * @param {boolean} params.logging - When disabled, request logs will exclude logs and errors, and site responses will be slightly faster.
      * @param {number} params.timeout - Maximum request time in seconds.
@@ -99,27 +98,29 @@ export class Sites {
      * @param {string} params.buildCommand - Build Command.
      * @param {string} params.startCommand - Custom start command. Leave empty to use default.
      * @param {string} params.outputDirectory - Output Directory for site.
-     * @param {Adapter} params.adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
+     * @param {SiteAdapter} params.adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
      * @param {string} params.installationId - Appwrite Installation ID for VCS (Version Control System) deployment.
      * @param {string} params.fallbackFile - Fallback file for single page application sites.
      * @param {string} params.providerRepositoryId - Repository ID of the repo linked to the site.
      * @param {string} params.providerBranch - Production branch for the repo linked to the site.
      * @param {boolean} params.providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} params.providerRootDirectory - Path to site code in the linked repo.
+     * @param {string[]} params.providerBranches - List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+     * @param {string[]} params.providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
      * @param {string} params.buildSpecification - Build specification for the site deployments.
      * @param {string} params.runtimeSpecification - Runtime specification for the SSR executions.
      * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      */
-    create(params: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Site>;
+    create(params: { siteId: string, name: string, framework: SiteFramework, buildRuntime: SiteBuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: SiteAdapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Site>;
     /**
      * Create a new site.
      *
      * @param {string} siteId - Site ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Site name. Max length: 128 chars.
-     * @param {Framework} framework - Sites framework.
-     * @param {BuildRuntime} buildRuntime - Runtime to use during build step.
+     * @param {SiteFramework} framework - Sites framework.
+     * @param {SiteBuildRuntime} buildRuntime - Runtime to use during build step.
      * @param {boolean} enabled - Is site enabled? When set to 'disabled', users cannot access the site but Server SDKs with and API key can still access the site. No data is lost when this is toggled.
      * @param {boolean} logging - When disabled, request logs will exclude logs and errors, and site responses will be slightly faster.
      * @param {number} timeout - Maximum request time in seconds.
@@ -127,13 +128,15 @@ export class Sites {
      * @param {string} buildCommand - Build Command.
      * @param {string} startCommand - Custom start command. Leave empty to use default.
      * @param {string} outputDirectory - Output Directory for site.
-     * @param {Adapter} adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
+     * @param {SiteAdapter} adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
      * @param {string} installationId - Appwrite Installation ID for VCS (Version Control System) deployment.
      * @param {string} fallbackFile - Fallback file for single page application sites.
      * @param {string} providerRepositoryId - Repository ID of the repo linked to the site.
      * @param {string} providerBranch - Production branch for the repo linked to the site.
      * @param {boolean} providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} providerRootDirectory - Path to site code in the linked repo.
+     * @param {string[]} providerBranches - List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+     * @param {string[]} providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
      * @param {string} buildSpecification - Build specification for the site deployments.
      * @param {string} runtimeSpecification - Runtime specification for the SSR executions.
      * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
@@ -141,21 +144,21 @@ export class Sites {
      * @returns {Promise<Models.Site>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Site>;
+    create(siteId: string, name: string, framework: SiteFramework, buildRuntime: SiteBuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: SiteAdapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Site>;
     create(
-        paramsOrFirst: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
-        ...rest: [(string)?, (Framework)?, (BuildRuntime)?, (boolean)?, (boolean)?, (number)?, (string)?, (string)?, (string)?, (string)?, (Adapter)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?, (string)?, (number)?]    
+        paramsOrFirst: { siteId: string, name: string, framework: SiteFramework, buildRuntime: SiteBuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: SiteAdapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
+        ...rest: [(string)?, (SiteFramework)?, (SiteBuildRuntime)?, (boolean)?, (boolean)?, (number)?, (string)?, (string)?, (string)?, (string)?, (SiteAdapter)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Site> {
-        let params: { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+        let params: { siteId: string, name: string, framework: SiteFramework, buildRuntime: SiteBuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: SiteAdapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { siteId: string, name: string, framework: Framework, buildRuntime: BuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: Adapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+            params = (paramsOrFirst || {}) as { siteId: string, name: string, framework: SiteFramework, buildRuntime: SiteBuildRuntime, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, adapter?: SiteAdapter, installationId?: string, fallbackFile?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         } else {
             params = {
                 siteId: paramsOrFirst as string,
                 name: rest[0] as string,
-                framework: rest[1] as Framework,
-                buildRuntime: rest[2] as BuildRuntime,
+                framework: rest[1] as SiteFramework,
+                buildRuntime: rest[2] as SiteBuildRuntime,
                 enabled: rest[3] as boolean,
                 logging: rest[4] as boolean,
                 timeout: rest[5] as number,
@@ -163,16 +166,18 @@ export class Sites {
                 buildCommand: rest[7] as string,
                 startCommand: rest[8] as string,
                 outputDirectory: rest[9] as string,
-                adapter: rest[10] as Adapter,
+                adapter: rest[10] as SiteAdapter,
                 installationId: rest[11] as string,
                 fallbackFile: rest[12] as string,
                 providerRepositoryId: rest[13] as string,
                 providerBranch: rest[14] as string,
                 providerSilentMode: rest[15] as boolean,
                 providerRootDirectory: rest[16] as string,
-                buildSpecification: rest[17] as string,
-                runtimeSpecification: rest[18] as string,
-                deploymentRetention: rest[19] as number            
+                providerBranches: rest[17] as string[],
+                providerPaths: rest[18] as string[],
+                buildSpecification: rest[19] as string,
+                runtimeSpecification: rest[20] as string,
+                deploymentRetention: rest[21] as number            
             };
         }
         
@@ -194,6 +199,8 @@ export class Sites {
         const providerBranch = params.providerBranch;
         const providerSilentMode = params.providerSilentMode;
         const providerRootDirectory = params.providerRootDirectory;
+        const providerBranches = params.providerBranches;
+        const providerPaths = params.providerPaths;
         const buildSpecification = params.buildSpecification;
         const runtimeSpecification = params.runtimeSpecification;
         const deploymentRetention = params.deploymentRetention;
@@ -267,6 +274,12 @@ export class Sites {
         if (typeof providerRootDirectory !== 'undefined') {
             payload['providerRootDirectory'] = providerRootDirectory;
         }
+        if (typeof providerBranches !== 'undefined') {
+            payload['providerBranches'] = providerBranches;
+        }
+        if (typeof providerPaths !== 'undefined') {
+            payload['providerPaths'] = providerPaths;
+        }
         if (typeof buildSpecification !== 'undefined') {
             payload['buildSpecification'] = buildSpecification;
         }
@@ -339,38 +352,38 @@ export class Sites {
     /**
      * List available site templates. You can use template details in [createSite](/docs/references/cloud/server-nodejs/sites#create) method.
      *
-     * @param {Frameworks[]} params.frameworks - List of frameworks allowed for filtering site templates. Maximum of 100 frameworks are allowed.
-     * @param {UseCases[]} params.useCases - List of use cases allowed for filtering site templates. Maximum of 100 use cases are allowed.
+     * @param {SiteFramework[]} params.frameworks - List of frameworks allowed for filtering site templates. Maximum of 100 frameworks are allowed.
+     * @param {SiteTemplateUseCase[]} params.useCases - List of use cases allowed for filtering site templates. Maximum of 100 use cases are allowed.
      * @param {number} params.limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
      * @param {number} params.offset - Offset the list of returned templates. Maximum offset is 5000.
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateSiteList>}
      */
-    listTemplates(params?: { frameworks?: Frameworks[], useCases?: UseCases[], limit?: number, offset?: number }): Promise<Models.TemplateSiteList>;
+    listTemplates(params?: { frameworks?: SiteFramework[], useCases?: SiteTemplateUseCase[], limit?: number, offset?: number }): Promise<Models.TemplateSiteList>;
     /**
      * List available site templates. You can use template details in [createSite](/docs/references/cloud/server-nodejs/sites#create) method.
      *
-     * @param {Frameworks[]} frameworks - List of frameworks allowed for filtering site templates. Maximum of 100 frameworks are allowed.
-     * @param {UseCases[]} useCases - List of use cases allowed for filtering site templates. Maximum of 100 use cases are allowed.
+     * @param {SiteFramework[]} frameworks - List of frameworks allowed for filtering site templates. Maximum of 100 frameworks are allowed.
+     * @param {SiteTemplateUseCase[]} useCases - List of use cases allowed for filtering site templates. Maximum of 100 use cases are allowed.
      * @param {number} limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
      * @param {number} offset - Offset the list of returned templates. Maximum offset is 5000.
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateSiteList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listTemplates(frameworks?: Frameworks[], useCases?: UseCases[], limit?: number, offset?: number): Promise<Models.TemplateSiteList>;
+    listTemplates(frameworks?: SiteFramework[], useCases?: SiteTemplateUseCase[], limit?: number, offset?: number): Promise<Models.TemplateSiteList>;
     listTemplates(
-        paramsOrFirst?: { frameworks?: Frameworks[], useCases?: UseCases[], limit?: number, offset?: number } | Frameworks[],
-        ...rest: [(UseCases[])?, (number)?, (number)?]    
+        paramsOrFirst?: { frameworks?: SiteFramework[], useCases?: SiteTemplateUseCase[], limit?: number, offset?: number } | SiteFramework[],
+        ...rest: [(SiteTemplateUseCase[])?, (number)?, (number)?]    
     ): Promise<Models.TemplateSiteList> {
-        let params: { frameworks?: Frameworks[], useCases?: UseCases[], limit?: number, offset?: number };
+        let params: { frameworks?: SiteFramework[], useCases?: SiteTemplateUseCase[], limit?: number, offset?: number };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('frameworks' in paramsOrFirst || 'useCases' in paramsOrFirst || 'limit' in paramsOrFirst || 'offset' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { frameworks?: Frameworks[], useCases?: UseCases[], limit?: number, offset?: number };
+            params = (paramsOrFirst || {}) as { frameworks?: SiteFramework[], useCases?: SiteTemplateUseCase[], limit?: number, offset?: number };
         } else {
             params = {
-                frameworks: paramsOrFirst as Frameworks[],
-                useCases: rest[0] as UseCases[],
+                frameworks: paramsOrFirst as SiteFramework[],
+                useCases: rest[0] as SiteTemplateUseCase[],
                 limit: rest[1] as number,
                 offset: rest[2] as number            
             };
@@ -567,7 +580,7 @@ export class Sites {
      *
      * @param {string} params.siteId - Site ID.
      * @param {string} params.name - Site name. Max length: 128 chars.
-     * @param {Framework} params.framework - Sites framework.
+     * @param {SiteFramework} params.framework - Sites framework.
      * @param {boolean} params.enabled - Is site enabled? When set to 'disabled', users cannot access the site but Server SDKs with and API key can still access the site. No data is lost when this is toggled.
      * @param {boolean} params.logging - When disabled, request logs will exclude logs and errors, and site responses will be slightly faster.
      * @param {number} params.timeout - Maximum request time in seconds.
@@ -575,27 +588,29 @@ export class Sites {
      * @param {string} params.buildCommand - Build Command.
      * @param {string} params.startCommand - Custom start command. Leave empty to use default.
      * @param {string} params.outputDirectory - Output Directory for site.
-     * @param {BuildRuntime} params.buildRuntime - Runtime to use during build step.
-     * @param {Adapter} params.adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
+     * @param {SiteBuildRuntime} params.buildRuntime - Runtime to use during build step.
+     * @param {SiteAdapter} params.adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
      * @param {string} params.fallbackFile - Fallback file for single page application sites.
      * @param {string} params.installationId - Appwrite Installation ID for VCS (Version Control System) deployment.
      * @param {string} params.providerRepositoryId - Repository ID of the repo linked to the site.
      * @param {string} params.providerBranch - Production branch for the repo linked to the site.
      * @param {boolean} params.providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} params.providerRootDirectory - Path to site code in the linked repo.
+     * @param {string[]} params.providerBranches - List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+     * @param {string[]} params.providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
      * @param {string} params.buildSpecification - Build specification for the site deployments.
      * @param {string} params.runtimeSpecification - Runtime specification for the SSR executions.
      * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      */
-    update(params: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Site>;
+    update(params: { siteId: string, name: string, framework: SiteFramework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: SiteBuildRuntime, adapter?: SiteAdapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Site>;
     /**
      * Update site by its unique ID.
      *
      * @param {string} siteId - Site ID.
      * @param {string} name - Site name. Max length: 128 chars.
-     * @param {Framework} framework - Sites framework.
+     * @param {SiteFramework} framework - Sites framework.
      * @param {boolean} enabled - Is site enabled? When set to 'disabled', users cannot access the site but Server SDKs with and API key can still access the site. No data is lost when this is toggled.
      * @param {boolean} logging - When disabled, request logs will exclude logs and errors, and site responses will be slightly faster.
      * @param {number} timeout - Maximum request time in seconds.
@@ -603,14 +618,16 @@ export class Sites {
      * @param {string} buildCommand - Build Command.
      * @param {string} startCommand - Custom start command. Leave empty to use default.
      * @param {string} outputDirectory - Output Directory for site.
-     * @param {BuildRuntime} buildRuntime - Runtime to use during build step.
-     * @param {Adapter} adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
+     * @param {SiteBuildRuntime} buildRuntime - Runtime to use during build step.
+     * @param {SiteAdapter} adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
      * @param {string} fallbackFile - Fallback file for single page application sites.
      * @param {string} installationId - Appwrite Installation ID for VCS (Version Control System) deployment.
      * @param {string} providerRepositoryId - Repository ID of the repo linked to the site.
      * @param {string} providerBranch - Production branch for the repo linked to the site.
      * @param {boolean} providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} providerRootDirectory - Path to site code in the linked repo.
+     * @param {string[]} providerBranches - List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+     * @param {string[]} providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
      * @param {string} buildSpecification - Build specification for the site deployments.
      * @param {string} runtimeSpecification - Runtime specification for the SSR executions.
      * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
@@ -618,20 +635,20 @@ export class Sites {
      * @returns {Promise<Models.Site>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Site>;
+    update(siteId: string, name: string, framework: SiteFramework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: SiteBuildRuntime, adapter?: SiteAdapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Site>;
     update(
-        paramsOrFirst: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
-        ...rest: [(string)?, (Framework)?, (boolean)?, (boolean)?, (number)?, (string)?, (string)?, (string)?, (string)?, (BuildRuntime)?, (Adapter)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?, (string)?, (number)?]    
+        paramsOrFirst: { siteId: string, name: string, framework: SiteFramework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: SiteBuildRuntime, adapter?: SiteAdapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
+        ...rest: [(string)?, (SiteFramework)?, (boolean)?, (boolean)?, (number)?, (string)?, (string)?, (string)?, (string)?, (SiteBuildRuntime)?, (SiteAdapter)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Site> {
-        let params: { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+        let params: { siteId: string, name: string, framework: SiteFramework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: SiteBuildRuntime, adapter?: SiteAdapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { siteId: string, name: string, framework: Framework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: BuildRuntime, adapter?: Adapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+            params = (paramsOrFirst || {}) as { siteId: string, name: string, framework: SiteFramework, enabled?: boolean, logging?: boolean, timeout?: number, installCommand?: string, buildCommand?: string, startCommand?: string, outputDirectory?: string, buildRuntime?: SiteBuildRuntime, adapter?: SiteAdapter, fallbackFile?: string, installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         } else {
             params = {
                 siteId: paramsOrFirst as string,
                 name: rest[0] as string,
-                framework: rest[1] as Framework,
+                framework: rest[1] as SiteFramework,
                 enabled: rest[2] as boolean,
                 logging: rest[3] as boolean,
                 timeout: rest[4] as number,
@@ -639,17 +656,19 @@ export class Sites {
                 buildCommand: rest[6] as string,
                 startCommand: rest[7] as string,
                 outputDirectory: rest[8] as string,
-                buildRuntime: rest[9] as BuildRuntime,
-                adapter: rest[10] as Adapter,
+                buildRuntime: rest[9] as SiteBuildRuntime,
+                adapter: rest[10] as SiteAdapter,
                 fallbackFile: rest[11] as string,
                 installationId: rest[12] as string,
                 providerRepositoryId: rest[13] as string,
                 providerBranch: rest[14] as string,
                 providerSilentMode: rest[15] as boolean,
                 providerRootDirectory: rest[16] as string,
-                buildSpecification: rest[17] as string,
-                runtimeSpecification: rest[18] as string,
-                deploymentRetention: rest[19] as number            
+                providerBranches: rest[17] as string[],
+                providerPaths: rest[18] as string[],
+                buildSpecification: rest[19] as string,
+                runtimeSpecification: rest[20] as string,
+                deploymentRetention: rest[21] as number            
             };
         }
         
@@ -671,6 +690,8 @@ export class Sites {
         const providerBranch = params.providerBranch;
         const providerSilentMode = params.providerSilentMode;
         const providerRootDirectory = params.providerRootDirectory;
+        const providerBranches = params.providerBranches;
+        const providerPaths = params.providerPaths;
         const buildSpecification = params.buildSpecification;
         const runtimeSpecification = params.runtimeSpecification;
         const deploymentRetention = params.deploymentRetention;
@@ -737,6 +758,12 @@ export class Sites {
         }
         if (typeof providerRootDirectory !== 'undefined') {
             payload['providerRootDirectory'] = providerRootDirectory;
+        }
+        if (typeof providerBranches !== 'undefined') {
+            payload['providerBranches'] = providerBranches;
+        }
+        if (typeof providerPaths !== 'undefined') {
+            payload['providerPaths'] = providerPaths;
         }
         if (typeof buildSpecification !== 'undefined') {
             payload['buildSpecification'] = buildSpecification;

@@ -24,5 +24,6 @@ export enum AppwriteMigrationResource {
     Site = 'site',
     Sitedeployment = 'site-deployment',
     Sitevariable = 'site-variable',
+    Platform = 'platform',
     Backuppolicy = 'backup-policy',
 }

@@ -9,7 +9,6 @@ const documentsDB = new DocumentsDB(client);
 
 const result = await documentsDB.list({
     queries: [], // optional
-    search: '<SEARCH>', // optional
     total: false // optional
 });
 

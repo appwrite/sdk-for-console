@@ -3,8 +3,7 @@ import { AppwriteException, Client, type Payload, UploadProgress } from '../clie
 import type { Models } from '../models';
 
 import { Platform } from '../enums/platform';
-import { Addon } from '../enums/addon';
-import { Scopes } from '../enums/scopes';
+import { OrganizationAddon } from '../enums/organization-addon';
 
 export class Organizations {
     client: Client;
@@ -632,34 +631,34 @@ export class Organizations {
      * 
      *
      * @param {string} params.organizationId - Organization ID
-     * @param {Addon} params.addon - Addon key identifier (e.g. baa).
+     * @param {OrganizationAddon} params.addon - Addon key identifier (e.g. baa).
      * @throws {AppwriteException}
      * @returns {Promise<Models.AddonPrice>}
      */
-    getAddonPrice(params: { organizationId: string, addon: Addon }): Promise<Models.AddonPrice>;
+    getAddonPrice(params: { organizationId: string, addon: OrganizationAddon }): Promise<Models.AddonPrice>;
     /**
      * Get the price details for a billing addon for an organization.
      * 
      *
      * @param {string} organizationId - Organization ID
-     * @param {Addon} addon - Addon key identifier (e.g. baa).
+     * @param {OrganizationAddon} addon - Addon key identifier (e.g. baa).
      * @throws {AppwriteException}
      * @returns {Promise<Models.AddonPrice>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getAddonPrice(organizationId: string, addon: Addon): Promise<Models.AddonPrice>;
+    getAddonPrice(organizationId: string, addon: OrganizationAddon): Promise<Models.AddonPrice>;
     getAddonPrice(
-        paramsOrFirst: { organizationId: string, addon: Addon } | string,
-        ...rest: [(Addon)?]    
+        paramsOrFirst: { organizationId: string, addon: OrganizationAddon } | string,
+        ...rest: [(OrganizationAddon)?]    
     ): Promise<Models.AddonPrice> {
-        let params: { organizationId: string, addon: Addon };
+        let params: { organizationId: string, addon: OrganizationAddon };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, addon: Addon };
+            params = (paramsOrFirst || {}) as { organizationId: string, addon: OrganizationAddon };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                addon: rest[0] as Addon            
+                addon: rest[0] as OrganizationAddon            
             };
         }
         
@@ -1945,351 +1944,6 @@ export class Organizations {
 
         return this.client.call(
             'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get a list of all API keys from the current organization. 
-     *
-     * @param {string} params.organizationId - Organization Unique ID
-     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.KeyList>}
-     */
-    listKeys(params: { organizationId: string, total?: boolean }): Promise<Models.KeyList>;
-    /**
-     * Get a list of all API keys from the current organization. 
-     *
-     * @param {string} organizationId - Organization Unique ID
-     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.KeyList>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    listKeys(organizationId: string, total?: boolean): Promise<Models.KeyList>;
-    listKeys(
-        paramsOrFirst: { organizationId: string, total?: boolean } | string,
-        ...rest: [(boolean)?]    
-    ): Promise<Models.KeyList> {
-        let params: { organizationId: string, total?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, total?: boolean };
-        } else {
-            params = {
-                organizationId: paramsOrFirst as string,
-                total: rest[0] as boolean            
-            };
-        }
-        
-        const organizationId = params.organizationId;
-        const total = params.total;
-
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
-        }
-
-        const apiPath = '/organizations/{organizationId}/keys'.replace('{organizationId}', organizationId);
-        const payload: Payload = {};
-        if (typeof total !== 'undefined') {
-            payload['total'] = total;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Create a new organization API key.
-     *
-     * @param {string} params.organizationId - Organization Unique ID
-     * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {Scopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
-     * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Key>}
-     */
-    createKey(params: { organizationId: string, name: string, scopes: Scopes[], expire?: string }): Promise<Models.Key>;
-    /**
-     * Create a new organization API key.
-     *
-     * @param {string} organizationId - Organization Unique ID
-     * @param {string} name - Key name. Max length: 128 chars.
-     * @param {Scopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
-     * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Key>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    createKey(organizationId: string, name: string, scopes: Scopes[], expire?: string): Promise<Models.Key>;
-    createKey(
-        paramsOrFirst: { organizationId: string, name: string, scopes: Scopes[], expire?: string } | string,
-        ...rest: [(string)?, (Scopes[])?, (string)?]    
-    ): Promise<Models.Key> {
-        let params: { organizationId: string, name: string, scopes: Scopes[], expire?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, name: string, scopes: Scopes[], expire?: string };
-        } else {
-            params = {
-                organizationId: paramsOrFirst as string,
-                name: rest[0] as string,
-                scopes: rest[1] as Scopes[],
-                expire: rest[2] as string            
-            };
-        }
-        
-        const organizationId = params.organizationId;
-        const name = params.name;
-        const scopes = params.scopes;
-        const expire = params.expire;
-
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
-        }
-        if (typeof name === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "name"');
-        }
-        if (typeof scopes === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "scopes"');
-        }
-
-        const apiPath = '/organizations/{organizationId}/keys'.replace('{organizationId}', organizationId);
-        const payload: Payload = {};
-        if (typeof name !== 'undefined') {
-            payload['name'] = name;
-        }
-        if (typeof scopes !== 'undefined') {
-            payload['scopes'] = scopes;
-        }
-        if (typeof expire !== 'undefined') {
-            payload['expire'] = expire;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get a key by its unique ID. This endpoint returns details about a specific API key in your organization including it's scopes.
-     *
-     * @param {string} params.organizationId - Organization Unique ID
-     * @param {string} params.keyId - Key unique ID.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Key>}
-     */
-    getKey(params: { organizationId: string, keyId: string }): Promise<Models.Key>;
-    /**
-     * Get a key by its unique ID. This endpoint returns details about a specific API key in your organization including it's scopes.
-     *
-     * @param {string} organizationId - Organization Unique ID
-     * @param {string} keyId - Key unique ID.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Key>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getKey(organizationId: string, keyId: string): Promise<Models.Key>;
-    getKey(
-        paramsOrFirst: { organizationId: string, keyId: string } | string,
-        ...rest: [(string)?]    
-    ): Promise<Models.Key> {
-        let params: { organizationId: string, keyId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, keyId: string };
-        } else {
-            params = {
-                organizationId: paramsOrFirst as string,
-                keyId: rest[0] as string            
-            };
-        }
-        
-        const organizationId = params.organizationId;
-        const keyId = params.keyId;
-
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
-        }
-        if (typeof keyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "keyId"');
-        }
-
-        const apiPath = '/organizations/{organizationId}/keys/{keyId}'.replace('{organizationId}', organizationId).replace('{keyId}', keyId);
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
-     *
-     * @param {string} params.organizationId - Organization Unique ID
-     * @param {string} params.keyId - Key unique ID.
-     * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {Scopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
-     * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Key>}
-     */
-    updateKey(params: { organizationId: string, keyId: string, name: string, scopes: Scopes[], expire?: string }): Promise<Models.Key>;
-    /**
-     * Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
-     *
-     * @param {string} organizationId - Organization Unique ID
-     * @param {string} keyId - Key unique ID.
-     * @param {string} name - Key name. Max length: 128 chars.
-     * @param {Scopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
-     * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Key>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    updateKey(organizationId: string, keyId: string, name: string, scopes: Scopes[], expire?: string): Promise<Models.Key>;
-    updateKey(
-        paramsOrFirst: { organizationId: string, keyId: string, name: string, scopes: Scopes[], expire?: string } | string,
-        ...rest: [(string)?, (string)?, (Scopes[])?, (string)?]    
-    ): Promise<Models.Key> {
-        let params: { organizationId: string, keyId: string, name: string, scopes: Scopes[], expire?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, keyId: string, name: string, scopes: Scopes[], expire?: string };
-        } else {
-            params = {
-                organizationId: paramsOrFirst as string,
-                keyId: rest[0] as string,
-                name: rest[1] as string,
-                scopes: rest[2] as Scopes[],
-                expire: rest[3] as string            
-            };
-        }
-        
-        const organizationId = params.organizationId;
-        const keyId = params.keyId;
-        const name = params.name;
-        const scopes = params.scopes;
-        const expire = params.expire;
-
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
-        }
-        if (typeof keyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "keyId"');
-        }
-        if (typeof name === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "name"');
-        }
-        if (typeof scopes === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "scopes"');
-        }
-
-        const apiPath = '/organizations/{organizationId}/keys/{keyId}'.replace('{organizationId}', organizationId).replace('{keyId}', keyId);
-        const payload: Payload = {};
-        if (typeof name !== 'undefined') {
-            payload['name'] = name;
-        }
-        if (typeof scopes !== 'undefined') {
-            payload['scopes'] = scopes;
-        }
-        if (typeof expire !== 'undefined') {
-            payload['expire'] = expire;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Delete a key by its unique ID. Once deleted, the key can no longer be used to authenticate API calls.
-     *
-     * @param {string} params.organizationId - Organization Unique ID
-     * @param {string} params.keyId - Key unique ID.
-     * @throws {AppwriteException}
-     * @returns {Promise<{}>}
-     */
-    deleteKey(params: { organizationId: string, keyId: string }): Promise<{}>;
-    /**
-     * Delete a key by its unique ID. Once deleted, the key can no longer be used to authenticate API calls.
-     *
-     * @param {string} organizationId - Organization Unique ID
-     * @param {string} keyId - Key unique ID.
-     * @throws {AppwriteException}
-     * @returns {Promise<{}>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    deleteKey(organizationId: string, keyId: string): Promise<{}>;
-    deleteKey(
-        paramsOrFirst: { organizationId: string, keyId: string } | string,
-        ...rest: [(string)?]    
-    ): Promise<{}> {
-        let params: { organizationId: string, keyId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, keyId: string };
-        } else {
-            params = {
-                organizationId: paramsOrFirst as string,
-                keyId: rest[0] as string            
-            };
-        }
-        
-        const organizationId = params.organizationId;
-        const keyId = params.keyId;
-
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
-        }
-        if (typeof keyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "keyId"');
-        }
-
-        const apiPath = '/organizations/{organizationId}/keys/{keyId}'.replace('{organizationId}', organizationId).replace('{keyId}', keyId);
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'delete',
             uri,
             apiHeaders,
             payload

@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Account, Scopes } from "@appwrite.io/console";
+import { Client, Account, AccountKeyScopes } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const account = new Account(client);
 const result = await account.updateKey({
     keyId: '<KEY_ID>',
     name: '<NAME>',
-    scopes: [Scopes.Account],
+    scopes: [AccountKeyScopes.Account],
     expire: '2020-10-15T06:38:00.000+00:00' // optional
 });
 

@@ -9,7 +9,6 @@ const vectorsDB = new VectorsDB(client);
 
 const result = await vectorsDB.list({
     queries: [], // optional
-    search: '<SEARCH>', // optional
     total: false // optional
 });
 
