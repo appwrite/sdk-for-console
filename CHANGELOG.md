@@ -1,5 +1,13 @@
 # Change Log
 
+## 13.1.0
+
+* Added: `Organization` service with organization-scoped key methods (`listKeys`, `createKey`, `getKey`, `updateKey`, `deleteKey`)
+* Added: `Presences` service with `list`, `get`, and `getUsage` methods
+* Added: `Usage` service with `listEvents` and `listGauges` methods
+* Added: `listOrganizationScopes` and `getEmailTemplate` methods on `Console` service
+* Updated: Renamed enums for clearer namespacing (e.g. `Scopes` to `AccountKeyScopes`, `Theme` to `BrowserTheme`, `Runtime` to `FunctionRuntime`)
+
 ## 13.0.0
 
 * Breaking: Renamed `updateCanonicalEmails` to `updateDenyCanonicalEmailPolicy` on `Project` service
