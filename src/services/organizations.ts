@@ -3,7 +3,7 @@ import { AppwriteException, Client, type Payload, UploadProgress } from '../clie
 import type { Models } from '../models';
 
 import { Platform } from '../enums/platform';
-import { OrganizationAddon } from '../enums/organization-addon';
+import { Addon } from '../enums/addon';
 
 export class Organizations {
     client: Client;
@@ -61,6 +61,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -187,6 +188,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -271,6 +273,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -323,6 +326,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -377,6 +381,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -430,6 +435,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -492,6 +498,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -553,6 +560,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -615,6 +623,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -631,34 +640,34 @@ export class Organizations {
      * 
      *
      * @param {string} params.organizationId - Organization ID
-     * @param {OrganizationAddon} params.addon - Addon key identifier (e.g. baa).
+     * @param {Addon} params.addon - Addon key identifier (e.g. baa).
      * @throws {AppwriteException}
      * @returns {Promise<Models.AddonPrice>}
      */
-    getAddonPrice(params: { organizationId: string, addon: OrganizationAddon }): Promise<Models.AddonPrice>;
+    getAddonPrice(params: { organizationId: string, addon: Addon }): Promise<Models.AddonPrice>;
     /**
      * Get the price details for a billing addon for an organization.
      * 
      *
      * @param {string} organizationId - Organization ID
-     * @param {OrganizationAddon} addon - Addon key identifier (e.g. baa).
+     * @param {Addon} addon - Addon key identifier (e.g. baa).
      * @throws {AppwriteException}
      * @returns {Promise<Models.AddonPrice>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getAddonPrice(organizationId: string, addon: OrganizationAddon): Promise<Models.AddonPrice>;
+    getAddonPrice(organizationId: string, addon: Addon): Promise<Models.AddonPrice>;
     getAddonPrice(
-        paramsOrFirst: { organizationId: string, addon: OrganizationAddon } | string,
-        ...rest: [(OrganizationAddon)?]    
+        paramsOrFirst: { organizationId: string, addon: Addon } | string,
+        ...rest: [(Addon)?]    
     ): Promise<Models.AddonPrice> {
-        let params: { organizationId: string, addon: OrganizationAddon };
+        let params: { organizationId: string, addon: Addon };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, addon: OrganizationAddon };
+            params = (paramsOrFirst || {}) as { organizationId: string, addon: Addon };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                addon: rest[0] as OrganizationAddon            
+                addon: rest[0] as Addon            
             };
         }
         
@@ -677,6 +686,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -736,6 +746,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -809,6 +820,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -871,6 +883,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -923,6 +936,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -983,6 +997,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -1045,6 +1060,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1115,6 +1131,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1177,6 +1194,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -1239,6 +1257,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1291,6 +1310,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -1350,6 +1370,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -1401,6 +1422,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1478,6 +1500,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1573,6 +1596,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1633,6 +1657,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -1692,6 +1717,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -1751,6 +1777,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -1820,6 +1847,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1880,6 +1908,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1940,6 +1969,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -2002,6 +2032,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -2054,6 +2085,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -2119,6 +2151,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -2171,6 +2204,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -2231,6 +2265,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -2282,6 +2317,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -2386,6 +2422,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -2438,6 +2475,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -2517,6 +2555,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -2569,6 +2608,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -2628,6 +2668,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -2690,6 +2731,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -2757,6 +2799,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -2816,6 +2859,7 @@ export class Organizations {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 

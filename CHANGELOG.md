@@ -1,5 +1,27 @@
 # Change Log
 
+## 13.2.0
+
+* Added: `Apps` service for managing OAuth2 apps, secrets, and tokens
+* Added: `Compute` service for dedicated database management (backups, branches, connections, replicas, restorations)
+* Added: `Advisor` service with `listInsights`, `getInsight`, `listReports`, `getReport`, and `deleteReport`
+* Added: `getAuditsDB` method on `Health` service
+* Added: `createSesProvider` and `updateSesProvider` methods on `Messaging` service
+* Added: `updateOAuth2Server` method on `Project` service
+* Added: `updatePasswordStrengthPolicy` method on `Project` service
+* Added: Models for dedicated databases, apps, advisor insights/reports, and new password policies
+* Updated: `getPolicy` now also returns password-strength and email-deny policy types
+* Updated: Renamed enums to match server naming (`FunctionRuntime` to `Runtime`, `SiteFramework` to `Framework`, `SiteBuildRuntime` to `BuildRuntime`, `SiteAdapter` to `Adapter`, `MigrationOnDuplicate` to `OnDuplicate`, `RedirectStatusCode` to `StatusCode`, `OrganizationAddon` to `Addon`, `ProjectStatus` to `Status`)
+* Updated: `X-Appwrite-Project` is now sent per request instead of set globally on `setProject`
+
+## 13.1.0
+
+* Added: `Organization` service with organization-scoped key methods (`listKeys`, `createKey`, `getKey`, `updateKey`, `deleteKey`)
+* Added: `Presences` service with `list`, `get`, and `getUsage` methods
+* Added: `Usage` service with `listEvents` and `listGauges` methods
+* Added: `listOrganizationScopes` and `getEmailTemplate` methods on `Console` service
+* Updated: Renamed enums for clearer namespacing (e.g. `Scopes` to `AccountKeyScopes`, `Theme` to `BrowserTheme`, `Runtime` to `FunctionRuntime`)
+
 ## 13.0.0
 
 * Breaking: Renamed `updateCanonicalEmails` to `updateDenyCanonicalEmailPolicy` on `Project` service

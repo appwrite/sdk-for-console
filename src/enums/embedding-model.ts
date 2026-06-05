@@ -1,3 +1,6 @@
 export enum EmbeddingModel {
-    Embeddinggemma = 'embeddinggemma',
+    Nomicembedtext = 'nomic-embed-text',
+    Embeddinggemma = 'embedding-gemma',
+    Allminilm = 'all-minilm',
+    Bgesmall = 'bge-small',
 }

@@ -2,7 +2,7 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { FunctionRuntime } from '../enums/function-runtime';
+import { Runtime } from '../enums/runtime';
 import { ProjectKeyScopes } from '../enums/project-key-scopes';
 import { FunctionTemplateUseCase } from '../enums/function-template-use-case';
 import { UsageRange } from '../enums/usage-range';
@@ -74,6 +74,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -89,7 +90,7 @@ export class Functions {
      *
      * @param {string} params.functionId - Function ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Function name. Max length: 128 chars.
-     * @param {FunctionRuntime} params.runtime - Execution runtime.
+     * @param {Runtime} params.runtime - Execution runtime.
      * @param {string[]} params.execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} params.events - Events list. Maximum of 100 events are allowed.
      * @param {string} params.schedule - Schedule CRON syntax.
@@ -112,13 +113,13 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    create(params: { functionId: string, name: string, runtime: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Function>;
+    create(params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Function>;
     /**
      * Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
      *
      * @param {string} functionId - Function ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Function name. Max length: 128 chars.
-     * @param {FunctionRuntime} runtime - Execution runtime.
+     * @param {Runtime} runtime - Execution runtime.
      * @param {string[]} execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} events - Events list. Maximum of 100 events are allowed.
      * @param {string} schedule - Schedule CRON syntax.
@@ -142,20 +143,20 @@ export class Functions {
      * @returns {Promise<Models.Function>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(functionId: string, name: string, runtime: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Function>;
+    create(functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Function>;
     create(
-        paramsOrFirst: { functionId: string, name: string, runtime: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
-        ...rest: [(string)?, (FunctionRuntime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (ProjectKeyScopes[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (number)?]    
+        paramsOrFirst: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
+        ...rest: [(string)?, (Runtime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (ProjectKeyScopes[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Function> {
-        let params: { functionId: string, name: string, runtime: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+        let params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 name: rest[0] as string,
-                runtime: rest[1] as FunctionRuntime,
+                runtime: rest[1] as Runtime,
                 execute: rest[2] as string[],
                 events: rest[3] as string[],
                 schedule: rest[4] as string,
@@ -282,6 +283,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -306,6 +308,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -329,6 +332,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -342,7 +346,7 @@ export class Functions {
     /**
      * List available function templates. You can use template details in [createFunction](/docs/references/cloud/server-nodejs/functions#create) method.
      *
-     * @param {FunctionRuntime[]} params.runtimes - List of runtimes allowed for filtering function templates. Maximum of 100 runtimes are allowed.
+     * @param {Runtime[]} params.runtimes - List of runtimes allowed for filtering function templates. Maximum of 100 runtimes are allowed.
      * @param {FunctionTemplateUseCase[]} params.useCases - List of use cases allowed for filtering function templates. Maximum of 100 use cases are allowed.
      * @param {number} params.limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
      * @param {number} params.offset - Offset the list of returned templates. Maximum offset is 5000.
@@ -350,11 +354,11 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateFunctionList>}
      */
-    listTemplates(params?: { runtimes?: FunctionRuntime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean }): Promise<Models.TemplateFunctionList>;
+    listTemplates(params?: { runtimes?: Runtime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean }): Promise<Models.TemplateFunctionList>;
     /**
      * List available function templates. You can use template details in [createFunction](/docs/references/cloud/server-nodejs/functions#create) method.
      *
-     * @param {FunctionRuntime[]} runtimes - List of runtimes allowed for filtering function templates. Maximum of 100 runtimes are allowed.
+     * @param {Runtime[]} runtimes - List of runtimes allowed for filtering function templates. Maximum of 100 runtimes are allowed.
      * @param {FunctionTemplateUseCase[]} useCases - List of use cases allowed for filtering function templates. Maximum of 100 use cases are allowed.
      * @param {number} limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
      * @param {number} offset - Offset the list of returned templates. Maximum offset is 5000.
@@ -363,18 +367,18 @@ export class Functions {
      * @returns {Promise<Models.TemplateFunctionList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listTemplates(runtimes?: FunctionRuntime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean): Promise<Models.TemplateFunctionList>;
+    listTemplates(runtimes?: Runtime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean): Promise<Models.TemplateFunctionList>;
     listTemplates(
-        paramsOrFirst?: { runtimes?: FunctionRuntime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean } | FunctionRuntime[],
+        paramsOrFirst?: { runtimes?: Runtime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean } | Runtime[],
         ...rest: [(FunctionTemplateUseCase[])?, (number)?, (number)?, (boolean)?]    
     ): Promise<Models.TemplateFunctionList> {
-        let params: { runtimes?: FunctionRuntime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean };
+        let params: { runtimes?: Runtime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('runtimes' in paramsOrFirst || 'useCases' in paramsOrFirst || 'limit' in paramsOrFirst || 'offset' in paramsOrFirst || 'total' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { runtimes?: FunctionRuntime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean };
+            params = (paramsOrFirst || {}) as { runtimes?: Runtime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean };
         } else {
             params = {
-                runtimes: paramsOrFirst as FunctionRuntime[],
+                runtimes: paramsOrFirst as Runtime[],
                 useCases: rest[0] as FunctionTemplateUseCase[],
                 limit: rest[1] as number,
                 offset: rest[2] as number,
@@ -409,6 +413,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -460,6 +465,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -511,6 +517,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -562,6 +569,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -577,7 +585,7 @@ export class Functions {
      *
      * @param {string} params.functionId - Function ID.
      * @param {string} params.name - Function name. Max length: 128 chars.
-     * @param {FunctionRuntime} params.runtime - Execution runtime.
+     * @param {Runtime} params.runtime - Execution runtime.
      * @param {string[]} params.execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} params.events - Events list. Maximum of 100 events are allowed.
      * @param {string} params.schedule - Schedule CRON syntax.
@@ -600,13 +608,13 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    update(params: { functionId: string, name: string, runtime?: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Function>;
+    update(params: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Function>;
     /**
      * Update function by its unique ID.
      *
      * @param {string} functionId - Function ID.
      * @param {string} name - Function name. Max length: 128 chars.
-     * @param {FunctionRuntime} runtime - Execution runtime.
+     * @param {Runtime} runtime - Execution runtime.
      * @param {string[]} execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} events - Events list. Maximum of 100 events are allowed.
      * @param {string} schedule - Schedule CRON syntax.
@@ -630,20 +638,20 @@ export class Functions {
      * @returns {Promise<Models.Function>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(functionId: string, name: string, runtime?: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Function>;
+    update(functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Function>;
     update(
-        paramsOrFirst: { functionId: string, name: string, runtime?: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
-        ...rest: [(string)?, (FunctionRuntime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (ProjectKeyScopes[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (number)?]    
+        paramsOrFirst: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
+        ...rest: [(string)?, (Runtime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (ProjectKeyScopes[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (number)?]    
     ): Promise<Models.Function> {
-        let params: { functionId: string, name: string, runtime?: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+        let params: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime?: FunctionRuntime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 name: rest[0] as string,
-                runtime: rest[1] as FunctionRuntime,
+                runtime: rest[1] as Runtime,
                 execute: rest[2] as string[],
                 events: rest[3] as string[],
                 schedule: rest[4] as string,
@@ -764,6 +772,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -816,6 +825,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -879,6 +889,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -953,6 +964,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -1050,6 +1062,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'multipart/form-data',
         }
 
@@ -1121,6 +1134,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1235,6 +1249,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1319,6 +1334,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1379,6 +1395,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -1438,6 +1455,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1505,6 +1523,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         payload['project'] = this.client.config.project;
@@ -1565,6 +1584,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1632,6 +1652,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -1726,6 +1747,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1786,6 +1808,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -1845,6 +1868,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -1905,6 +1929,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -1971,6 +1996,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -2060,6 +2086,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -2120,6 +2147,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -2200,6 +2228,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -2260,6 +2289,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 

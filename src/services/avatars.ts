@@ -84,6 +84,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         payload['project'] = this.client.config.project;
@@ -164,6 +165,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         payload['project'] = this.client.config.project;
@@ -223,6 +225,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         payload['project'] = this.client.config.project;
@@ -303,6 +306,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         payload['project'] = this.client.config.project;
@@ -381,6 +385,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         payload['project'] = this.client.config.project;
@@ -465,6 +470,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         payload['project'] = this.client.config.project;
@@ -544,6 +550,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         payload['project'] = this.client.config.project;
@@ -741,6 +748,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         payload['project'] = this.client.config.project;

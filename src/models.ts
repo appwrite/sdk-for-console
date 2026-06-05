@@ -607,7 +607,7 @@ export namespace Models {
         /**
          * List of policies.
          */
-        policies: (Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy)[];
+        policies: (Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail)[];
     }
 
     /**
@@ -832,6 +832,34 @@ export namespace Models {
          * List of embeddings.
          */
         embeddings: Embedding[];
+    }
+
+    /**
+     * Insights List
+     */
+    export type InsightList = {
+        /**
+         * Total number of insights that matched your query.
+         */
+        total: number;
+        /**
+         * List of insights.
+         */
+        insights: Insight[];
+    }
+
+    /**
+     * Reports List
+     */
+    export type ReportList = {
+        /**
+         * Total number of reports that matched your query.
+         */
+        total: number;
+        /**
+         * List of reports.
+         */
+        reports: Report[];
     }
 
     /**
@@ -5140,6 +5168,10 @@ export namespace Models {
          */
         teamId: string;
         /**
+         * Project region
+         */
+        region: string;
+        /**
          * Deprecated since 1.9.5: List of dev keys.
          */
         devKeys: DevKey[];
@@ -5212,14 +5244,6 @@ export namespace Models {
          */
         protocols: ProjectProtocol[];
         /**
-         * Project region
-         */
-        region: string;
-        /**
-         * Billing limits reached
-         */
-        billingLimits?: BillingLimits;
-        /**
          * Project blocks information
          */
         blocks: Block[];
@@ -5227,6 +5251,46 @@ export namespace Models {
          * Last time the project was accessed via console. Used with plan's projectInactivityDays to determine if project is paused.
          */
         consoleAccessedAt: string;
+        /**
+         * Billing limits reached
+         */
+        billingLimits?: BillingLimits;
+        /**
+         * OAuth2 server status
+         */
+        oAuth2ServerEnabled: boolean;
+        /**
+         * OAuth2 server authorization URL
+         */
+        oAuth2ServerAuthorizationUrl: string;
+        /**
+         * OAuth2 server allowed scopes
+         */
+        oAuth2ServerScopes: string[];
+        /**
+         * OAuth2 server access token duration in seconds for confidential clients
+         */
+        oAuth2ServerAccessTokenDuration: number;
+        /**
+         * OAuth2 server refresh token duration in seconds for confidential clients
+         */
+        oAuth2ServerRefreshTokenDuration: number;
+        /**
+         * OAuth2 server access token duration in seconds for public clients (SPAs, mobile, native)
+         */
+        oAuth2ServerPublicAccessTokenDuration: number;
+        /**
+         * OAuth2 server refresh token duration in seconds for public clients (SPAs, mobile, native)
+         */
+        oAuth2ServerPublicRefreshTokenDuration: number;
+        /**
+         * When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
+         */
+        oAuth2ServerConfidentialPkce: boolean;
+        /**
+         * OAuth2 server discovery URL
+         */
+        oAuth2ServerDiscoveryUrl: string;
     }
 
     /**
@@ -6457,6 +6521,36 @@ export namespace Models {
          * Password history length. A value of 0 means the policy is disabled.
          */
         total: number;
+    }
+
+    /**
+     * Policy Password Strength
+     */
+    export type PolicyPasswordStrength = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Minimum password length required for user passwords.
+         */
+        min: number;
+        /**
+         * Whether passwords must include at least one uppercase letter.
+         */
+        uppercase: boolean;
+        /**
+         * Whether passwords must include at least one lowercase letter.
+         */
+        lowercase: boolean;
+        /**
+         * Whether passwords must include at least one number.
+         */
+        number: boolean;
+        /**
+         * Whether passwords must include at least one symbol.
+         */
+        symbols: boolean;
     }
 
     /**
@@ -8866,6 +8960,50 @@ export namespace Models {
          */
         platform: number;
         /**
+         * Number of API keys to be migrated.
+         */
+        apikey: number;
+        /**
+         * Number of project variables to be migrated.
+         */
+        projectvariable: number;
+        /**
+         * Number of webhooks to be migrated.
+         */
+        webhook: number;
+        /**
+         * Number of auth-method configs to be migrated (always 0 or 1 — the project-level flag bundle).
+         */
+        authmethods: number;
+        /**
+         * Number of protocol configs to be migrated (always 0 or 1 — the project-level REST/GraphQL/WebSocket flags).
+         */
+        projectprotocols: number;
+        /**
+         * Number of label sets to be migrated (always 0 or 1 — the project-level RBAC label array).
+         */
+        projectlabels: number;
+        /**
+         * Number of service configs to be migrated (always 0 or 1 — the project-level enable/disable flags for all 17 services).
+         */
+        projectservices: number;
+        /**
+         * Number of policy bundles to be migrated (always 0 or 1 — the project-level security policies covering password rules, session behavior, user limits, and membership privacy).
+         */
+        policies: number;
+        /**
+         * Number of SMTP configurations to be migrated (always 0 or 1 — the project-level custom SMTP settings; password is not exposed by the source API).
+         */
+        smtp: number;
+        /**
+         * Number of custom-domain proxy rules to be migrated. Auto-generated `.appwrite.network` rules are skipped — they are recreated by parent Function/Site migration.
+         */
+        rule: number;
+        /**
+         * Number of custom email templates to be migrated (one per templateId × locale pair).
+         */
+        projectemailtemplate: number;
+        /**
          * Number of sites to be migrated.
          */
         site: number;
@@ -8894,9 +9032,163 @@ export namespace Models {
          */
         version: string;
         /**
+         * Number of OAuth2 provider configurations to be migrated. Secrets (clientSecret, p8File) are never migrated — destination admin must re-enter them per provider.
+         */
+        oauth2provider: number;
+        /**
          * Number of backup policies to be migrated.
          */
         backuppolicy: number;
+    }
+
+    /**
+     * Insight
+     */
+    export type Insight = {
+        /**
+         * Insight ID.
+         */
+        $id: string;
+        /**
+         * Insight creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Insight update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Parent report ID. Insights always belong to a report.
+         */
+        reportId: string;
+        /**
+         * Insight type. One of databaseIndex (legacy), tablesDBIndex, documentsDBIndex, vectorsDBIndex, databasePerformance, sitePerformance, siteAccessibility, siteSeo, functionPerformance. The index types are engine-specific so each CTA can pair the right service+method (databases.createIndex, tablesDB.createIndex, documentsDB.createIndex, or vectorsDB.createIndex).
+         */
+        type: string;
+        /**
+         * Insight severity. One of info, warning, critical.
+         */
+        severity: string;
+        /**
+         * Insight status. One of active, dismissed.
+         */
+        status: string;
+        /**
+         * Type of the resource the insight is about. Plural noun, e.g. databases, sites, functions.
+         */
+        resourceType: string;
+        /**
+         * ID of the resource the insight is about.
+         */
+        resourceId: string;
+        /**
+         * Plural noun for the parent resource that contains the insight's resource, e.g. an insight about a column index on a table → resourceType=indexes, parentResourceType=tables. Empty when the resource has no parent.
+         */
+        parentResourceType: string;
+        /**
+         * ID of the parent resource. Empty when the resource has no parent.
+         */
+        parentResourceId: string;
+        /**
+         * Insight title.
+         */
+        title: string;
+        /**
+         * Short markdown summary describing the insight.
+         */
+        summary: string;
+        /**
+         * List of call-to-action buttons attached to this insight.
+         */
+        ctas: InsightCTA[];
+        /**
+         * Time the insight was analyzed in ISO 8601 format.
+         */
+        analyzedAt?: string;
+        /**
+         * Time the insight was dismissed in ISO 8601 format. Empty when not dismissed.
+         */
+        dismissedAt?: string;
+        /**
+         * User ID that dismissed the insight. Empty when not dismissed.
+         */
+        dismissedBy?: string;
+    }
+
+    /**
+     * InsightCTA
+     */
+    export type InsightCTA = {
+        /**
+         * Human-readable label for the CTA, used in UI.
+         */
+        label: string;
+        /**
+         * Public API service (SDK namespace) the client should invoke. Must match the engine that owns the resource — for index suggestions: databases (legacy), tablesDB, documentsDB, or vectorsDB.
+         */
+        service: string;
+        /**
+         * Public API method on the chosen service the client should invoke when this CTA is triggered.
+         */
+        method: string;
+        /**
+         * Parameter map the client should pass to the service method when this CTA is triggered. Keys match the target API's parameter names (e.g. databaseId/tableId/columns for tablesDB, databaseId/collectionId/attributes for the legacy Databases API).
+         */
+        params: object;
+    }
+
+    /**
+     * Report
+     */
+    export type Report = {
+        /**
+         * Report ID.
+         */
+        $id: string;
+        /**
+         * Report creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Report update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the third-party app that submitted the report.
+         */
+        appId: string;
+        /**
+         * Analyzer that produced this report. e.g. lighthouse, audit, databaseAnalyzer.
+         */
+        type: string;
+        /**
+         * Short, human-readable title for the report.
+         */
+        title: string;
+        /**
+         * Markdown summary describing the report.
+         */
+        summary: string;
+        /**
+         * Plural noun describing what the report analyzes, e.g. databases, sites, urls.
+         */
+        targetType: string;
+        /**
+         * Free-form target identifier (URL for lighthouse, resource ID for db).
+         */
+        target: string;
+        /**
+         * Categories covered by the report, e.g. performance, accessibility.
+         */
+        categories: string[];
+        /**
+         * Insights nested under this report.
+         */
+        insights: Insight[];
+        /**
+         * Time the report was analyzed in ISO 8601 format.
+         */
+        analyzedAt?: string;
     }
 
     /**
@@ -9350,6 +9642,108 @@ export namespace Models {
     }
 
     /**
+     * Backup
+     */
+    export type DedicatedDatabaseBackup = {
+        /**
+         * Backup ID.
+         */
+        $id: string;
+        /**
+         * Backup creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Database ID this backup belongs to.
+         */
+        databaseId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Backup policy ID when the backup was created by a schedule.
+         */
+        policyId: string;
+        /**
+         * Backup trigger. Possible values: manual, schedule.
+         */
+        trigger: string;
+        /**
+         * Backup type. Possible values: full (complete database snapshot), incremental (changes since last backup), wal (write-ahead log continuous archival).
+         */
+        type: string;
+        /**
+         * Backup status. Possible values: pending (queued for processing), running (currently in progress), completed (successfully finished), failed (encountered an error), verified (integrity check passed).
+         */
+        status: string;
+        /**
+         * Backup size in bytes.
+         */
+        sizeBytes: number;
+        /**
+         * Backup start time in ISO 8601 format.
+         */
+        startedAt: string;
+        /**
+         * Backup completion time in ISO 8601 format.
+         */
+        completedAt: string;
+        /**
+         * Backup verification time in ISO 8601 format.
+         */
+        verifiedAt: string;
+        /**
+         * Backup expiration time in ISO 8601 format.
+         */
+        expiresAt: string;
+        /**
+         * Error message if backup failed.
+         */
+        error: string;
+    }
+
+    /**
+     * BackupList
+     */
+    export type DedicatedDatabaseBackupList = {
+        /**
+         * Total number of backups.
+         */
+        total: number;
+        /**
+         * List of backups.
+         */
+        backups: DedicatedDatabaseBackup[];
+    }
+
+    /**
+     * BackupStorageConfig
+     */
+    export type DedicatedDatabaseBackupStorage = {
+        /**
+         * Storage provider. Possible values: s3 (Amazon S3 or S3-compatible), gcs (Google Cloud Storage), azure (Azure Blob Storage).
+         */
+        provider: string;
+        /**
+         * Storage bucket or container name.
+         */
+        bucket: string;
+        /**
+         * Storage region.
+         */
+        region: string;
+        /**
+         * Object key prefix for backups.
+         */
+        prefix: string;
+        /**
+         * Custom endpoint for S3-compatible storage.
+         */
+        endpoint: string;
+    }
+
+    /**
      * Address
      */
     export type BillingAddress = {
@@ -9642,6 +10036,10 @@ export namespace Models {
          */
         supportsFreeEmailValidation: boolean;
         /**
+         * Does plan support project-specific member roles.
+         */
+        supportsProjectSpecificRoles: boolean;
+        /**
          * Does plan support backup policies.
          */
         backupsEnabled: boolean;
@@ -9820,6 +10218,38 @@ export namespace Models {
     }
 
     /**
+     * Branch
+     */
+    export type DedicatedDatabaseBranch = {
+        /**
+         * Branch identifier.
+         */
+        branchId: string;
+        /**
+         * Branch name.
+         */
+        branchName: string;
+        /**
+         * Kubernetes namespace where the branch is deployed.
+         */
+        namespace: string;
+        /**
+         * Unix timestamp when the branch expires.
+         */
+        expiresAt: number;
+    }
+
+    /**
+     * BranchList
+     */
+    export type DedicatedDatabaseBranchList = {
+        /**
+         * List of branches.
+         */
+        branches: DedicatedDatabaseBranch[];
+    }
+
+    /**
      * Campaign
      */
     export type Campaign = {
@@ -9874,6 +10304,32 @@ export namespace Models {
     }
 
     /**
+     * Connection
+     */
+    export type DedicatedDatabaseConnection = {
+        /**
+         * Connection ID.
+         */
+        $id: string;
+        /**
+         * Connection username.
+         */
+        username: string;
+        /**
+         * Database name.
+         */
+        database: string;
+        /**
+         * Connection role. Common values: readonly, readwrite.
+         */
+        role: string;
+        /**
+         * Connection creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+    }
+
+    /**
      * Coupon
      */
     export type Coupon = {
@@ -9909,6 +10365,48 @@ export namespace Models {
          * If the coupon is only valid for new organizations or not.
          */
         onlyNewOrgs: boolean;
+    }
+
+    /**
+     * Credentials
+     */
+    export type DedicatedDatabaseCredentials = {
+        /**
+         * Database ID.
+         */
+        $id: string;
+        /**
+         * Database hostname.
+         */
+        host: string;
+        /**
+         * Database port.
+         */
+        port: number;
+        /**
+         * Database username.
+         */
+        username: string;
+        /**
+         * Database password.
+         */
+        password: string;
+        /**
+         * Database name.
+         */
+        database: string;
+        /**
+         * Database engine. Possible values: postgres, mysql, mariadb, mongodb.
+         */
+        engine: string;
+        /**
+         * Whether SSL is required.
+         */
+        ssl: boolean;
+        /**
+         * Full connection string.
+         */
+        connectionString: string;
     }
 
     /**
@@ -9987,6 +10485,398 @@ export namespace Models {
          * Total available credit balance in USD
          */
         available: number;
+    }
+
+    /**
+     * DatabaseMetrics
+     */
+    export type DedicatedDatabaseMetrics = {
+        /**
+         * Metrics aggregation period. Possible values: 1h (last hour), 24h (last 24 hours), 7d (last 7 days), 30d (last 30 days).
+         */
+        period: string;
+        /**
+         * Average CPU usage percentage.
+         */
+        cpuPercent: number;
+        /**
+         * Average memory usage percentage.
+         */
+        memoryPercent: number;
+        /**
+         * Memory used in bytes.
+         */
+        memoryUsedBytes: number;
+        /**
+         * Maximum memory available in bytes.
+         */
+        memoryMaxBytes: number;
+        /**
+         * Storage used in bytes.
+         */
+        storageUsedBytes: number;
+        /**
+         * Current active connections.
+         */
+        connectionsActive: number;
+        /**
+         * Maximum connections configured.
+         */
+        connectionsMax: number;
+        /**
+         * Average read IOPS.
+         */
+        iopsRead: number;
+        /**
+         * Average write IOPS.
+         */
+        iopsWrite: number;
+        /**
+         * Queries per second.
+         */
+        qps: number;
+    }
+
+    /**
+     * DedicatedDatabase
+     */
+    export type DedicatedDatabase = {
+        /**
+         * Dedicated database ID.
+         */
+        $id: string;
+        /**
+         * Database creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Database update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Project ID that owns this database.
+         */
+        projectId: string;
+        /**
+         * Database display name.
+         */
+        name: string;
+        /**
+         * Database type: shared (serverless) or dedicated (always-on).
+         */
+        type: string;
+        /**
+         * Product API that owns this database: compute, documentsdb, or vectorsdb.
+         */
+        api: string;
+        /**
+         * Region identifier (e.g., fra, nyc, syd).
+         */
+        region: string;
+        /**
+         * Database engine: postgres, mysql, mariadb, or mongodb.
+         */
+        engine: string;
+        /**
+         * Database engine version.
+         */
+        version: string;
+        /**
+         * Specification identifier.
+         */
+        specification: string;
+        /**
+         * Database backend provider. Possible values: prisma, edge.
+         */
+        backend: string;
+        /**
+         * Database hostname for connections.
+         */
+        hostname: string;
+        /**
+         * Database port for connections.
+         */
+        connectionPort: number;
+        /**
+         * Database username for connections.
+         */
+        connectionUser: string;
+        /**
+         * Database password for connections.
+         */
+        connectionPassword: string;
+        /**
+         * Full database connection string (URI format).
+         */
+        connectionString: string;
+        /**
+         * Database status. Possible values: provisioning, ready, inactive, paused, failed, deleted, restoring, scaling.
+         */
+        status: string;
+        /**
+         * Container status for shared databases: active or inactive.
+         */
+        containerStatus: string;
+        /**
+         * Last activity timestamp in ISO 8601 format.
+         */
+        lastAccessedAt: string;
+        /**
+         * Timestamp when container will be considered idle and scale to zero (ISO 8601 format).
+         */
+        idleUntil: string;
+        /**
+         * Minutes of inactivity before container scales to zero.
+         */
+        idleTimeoutMinutes: number;
+        /**
+         * CPU allocated in millicores.
+         */
+        cpu: number;
+        /**
+         * Memory allocated in MB.
+         */
+        memory: number;
+        /**
+         * Storage allocated in GB.
+         */
+        storage: number;
+        /**
+         * Storage class: ssd, nvme, or hdd.
+         */
+        storageClass: string;
+        /**
+         * Maximum storage allowed in GB. 0 means use system default.
+         */
+        storageMaxGb: number;
+        /**
+         * Kubernetes node pool where the database is scheduled.
+         */
+        nodePool: string;
+        /**
+         * Whether high availability is enabled.
+         */
+        highAvailability: boolean;
+        /**
+         * Number of high availability replicas.
+         */
+        highAvailabilityReplicaCount: number;
+        /**
+         * Replication sync mode: async, sync, or quorum.
+         */
+        highAvailabilitySyncMode: string;
+        /**
+         * Maximum concurrent connections.
+         */
+        networkMaxConnections: number;
+        /**
+         * Connection idle timeout in seconds.
+         */
+        networkIdleTimeoutSeconds: number;
+        /**
+         * IP addresses/CIDR ranges allowed to connect.
+         */
+        networkIPAllowlist: string[];
+        /**
+         * Whether automatic backups are enabled.
+         */
+        backupEnabled: boolean;
+        /**
+         * Whether point-in-time recovery is enabled.
+         */
+        backupPitr: boolean;
+        /**
+         * Backup schedule in cron format.
+         */
+        backupCron: string;
+        /**
+         * Number of days to retain backups.
+         */
+        backupRetentionDays: number;
+        /**
+         * Number of days to retain PITR data.
+         */
+        pitrRetentionDays: number;
+        /**
+         * Whether automatic storage expansion is enabled.
+         */
+        storageAutoscaling: boolean;
+        /**
+         * Storage usage percentage that triggers automatic expansion.
+         */
+        storageAutoscalingThresholdPercent: number;
+        /**
+         * Maximum storage size in GB for autoscaling. 0 means no limit.
+         */
+        storageAutoscalingMaxGb: number;
+        /**
+         * Day of the week for the maintenance window. Possible values: sun, mon, tue, wed, thu, fri, sat.
+         */
+        maintenanceWindowDay: string;
+        /**
+         * Hour in UTC (0-23) when the maintenance window starts.
+         */
+        maintenanceWindowHourUtc: number;
+        /**
+         * Whether metrics collection is enabled.
+         */
+        metricsEnabled: boolean;
+        /**
+         * Whether the SQL API sidecar is enabled for this database.
+         */
+        sqlApiEnabled: boolean;
+        /**
+         * Statement types accepted by the SQL API. Allowed values: SELECT, INSERT, UPDATE, DELETE.
+         */
+        sqlApiAllowedStatements: string[];
+        /**
+         * Maximum rows returned per SQL API execution. Results larger than this are truncated.
+         */
+        sqlApiMaxRows: number;
+        /**
+         * Maximum serialised SQL API result payload in bytes. Results larger than this are truncated.
+         */
+        sqlApiMaxBytes: number;
+        /**
+         * Maximum server-side SQL API execution time in seconds before the query is cancelled.
+         */
+        sqlApiTimeoutSeconds: number;
+        /**
+         * Error message if status is failed.
+         */
+        error: string;
+    }
+
+    /**
+     * Execution
+     */
+    export type DedicatedDatabaseExecution = {
+        /**
+         * Result rows as a list of column-name => value maps. Empty for non-returning statements.
+         */
+        rows: object;
+        /**
+         * Number of rows returned (for SELECT) or affected (for INSERT/UPDATE/DELETE).
+         */
+        rowCount: number;
+        /**
+         * Column metadata in result-set order.
+         */
+        columns: DedicatedDatabaseExecutionColumn[];
+        /**
+         * Server-side execution time in milliseconds.
+         */
+        durationMs: number;
+        /**
+         * True when the configured row or byte cap was hit and the result was truncated.
+         */
+        truncated: boolean;
+        /**
+         * Serialised payload size in bytes.
+         */
+        bytes: number;
+    }
+
+    /**
+     * ExecutionColumn
+     */
+    export type DedicatedDatabaseExecutionColumn = {
+        /**
+         * Column name as returned by the database.
+         */
+        name: string;
+        /**
+         * Engine-specific column type (e.g. int4, text, timestamptz).
+         */
+        type: string;
+    }
+
+    /**
+     * Restoration
+     */
+    export type DedicatedDatabaseRestoration = {
+        /**
+         * Restoration ID.
+         */
+        $id: string;
+        /**
+         * Restoration creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Database ID being restored.
+         */
+        databaseId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Backup ID used for restoration (null for PITR).
+         */
+        backupId: string;
+        /**
+         * Restoration type. Possible values: backup (restore from a specific backup snapshot), pitr (point-in-time recovery to a specific timestamp).
+         */
+        type: string;
+        /**
+         * Restoration status. Possible values: pending (queued for processing), running (currently in progress), completed (successfully finished), failed (encountered an error).
+         */
+        status: string;
+        /**
+         * Target time for PITR restoration in ISO 8601 format.
+         */
+        targetTime: string;
+        /**
+         * Restoration start time in ISO 8601 format.
+         */
+        startedAt: string;
+        /**
+         * Restoration completion time in ISO 8601 format.
+         */
+        completedAt: string;
+        /**
+         * Error message if restoration failed.
+         */
+        error: string;
+    }
+
+    /**
+     * Status
+     */
+    export type DatabaseStatus = {
+        /**
+         * Overall health status: healthy, degraded, or unhealthy.
+         */
+        health: string;
+        /**
+         * Whether the database is ready to accept connections.
+         */
+        ready: boolean;
+        /**
+         * Database engine: postgres, mysql, mariadb, or mongodb.
+         */
+        engine: string;
+        /**
+         * Database engine version.
+         */
+        version: string;
+        /**
+         * Database uptime in seconds.
+         */
+        uptime: number;
+        /**
+         * Connection statistics.
+         */
+        connections: DatabaseStatusConnections;
+        /**
+         * List of database replicas and their status.
+         */
+        replicas: DatabaseStatusReplica[];
+        /**
+         * Storage volume information.
+         */
+        volumes: DatabaseStatusVolume[];
     }
 
     /**
@@ -10404,6 +11294,64 @@ export namespace Models {
     }
 
     /**
+     * Extensions
+     */
+    export type DedicatedDatabaseExtensions = {
+        /**
+         * List of installed extensions.
+         */
+        installed: string[];
+        /**
+         * List of available extensions that can be installed.
+         */
+        available: string[];
+    }
+
+    /**
+     * HAReplica
+     */
+    export type DedicatedDatabaseHAReplica = {
+        /**
+         * Replica identifier.
+         */
+        $id: string;
+        /**
+         * Replica role. Possible values: primary (accepts reads and writes), replica (read-only follower).
+         */
+        role: string;
+        /**
+         * Replica health status. Possible values: healthy (fully synced), degraded (lagging behind primary), unhealthy (replication broken or unreachable).
+         */
+        status: string;
+        /**
+         * Replication lag in seconds.
+         */
+        lagSeconds: number;
+    }
+
+    /**
+     * HAStatus
+     */
+    export type DedicatedDatabaseHAStatus = {
+        /**
+         * Whether high availability is enabled.
+         */
+        enabled: boolean;
+        /**
+         * Number of configured replicas.
+         */
+        replicaCount: number;
+        /**
+         * Replication sync mode. Possible values: async (asynchronous, fastest), sync (synchronous, strong consistency), quorum (quorum-based, majority of replicas must confirm).
+         */
+        syncMode: string;
+        /**
+         * List of replica statuses.
+         */
+        replicas: DedicatedDatabaseHAReplica[];
+    }
+
+    /**
      * Invoice
      */
     export type Invoice = {
@@ -10760,6 +11708,94 @@ export namespace Models {
     }
 
     /**
+     * PerformanceInsights
+     */
+    export type DedicatedDatabasePerformanceInsights = {
+        /**
+         * Top queries by total execution time.
+         */
+        topQueries: DedicatedDatabasePerformanceInsightsQuery[];
+        /**
+         * Active wait events.
+         */
+        waitEvents: DedicatedDatabasePerformanceInsightsWaitEvent[];
+        /**
+         * Total number of query calls.
+         */
+        totalCalls: number;
+        /**
+         * Total query execution time in milliseconds.
+         */
+        totalTimeMs: number;
+        /**
+         * Average query execution time in milliseconds.
+         */
+        avgTimeMs: number;
+    }
+
+    /**
+     * PerformanceInsightsQuery
+     */
+    export type DedicatedDatabasePerformanceInsightsQuery = {
+        /**
+         * The SQL query text.
+         */
+        query: string;
+        /**
+         * Number of times this query has been executed.
+         */
+        calls: number;
+        /**
+         * Total execution time in milliseconds.
+         */
+        totalTimeMs: number;
+        /**
+         * Mean execution time in milliseconds.
+         */
+        meanTimeMs: number;
+        /**
+         * Total rows returned or affected.
+         */
+        rows: number;
+    }
+
+    /**
+     * PerformanceInsightsWaitEvent
+     */
+    export type DedicatedDatabasePerformanceInsightsWaitEvent = {
+        /**
+         * Wait event name.
+         */
+        event: string;
+        /**
+         * Wait event type or category.
+         */
+        type: string;
+        /**
+         * Number of occurrences.
+         */
+        count: number;
+        /**
+         * Total wait time in milliseconds.
+         */
+        totalWaitMs: number;
+    }
+
+    /**
+     * PITRWindows
+     */
+    export type DedicatedDatabasePITRWindows = {
+        /**
+         * Earliest available recovery point.
+         */
+        earliest: string;
+        /**
+         * Latest available recovery point.
+         */
+        latest: string;
+    }
+
+    /**
      * PlanChangeEstimationDetails
      */
     export type PlanChangeEstimationDetails = {
@@ -10934,6 +11970,94 @@ export namespace Models {
     }
 
     /**
+     * Policy Deny Aliased Email
+     */
+    export type PolicyDenyAliasedEmail = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether the deny aliased email policy is enabled.
+         */
+        enabled: boolean;
+    }
+
+    /**
+     * Policy Deny Disposable Email
+     */
+    export type PolicyDenyDisposableEmail = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether the deny disposable email policy is enabled.
+         */
+        enabled: boolean;
+    }
+
+    /**
+     * Policy Deny Free Email
+     */
+    export type PolicyDenyFreeEmail = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether the deny free email policy is enabled.
+         */
+        enabled: boolean;
+    }
+
+    /**
+     * PoolerConfig
+     */
+    export type DedicatedDatabasePooler = {
+        /**
+         * Whether connection pooling is enabled.
+         */
+        enabled: boolean;
+        /**
+         * Connection pool mode. Possible values: transaction (releases connections back to pool after each transaction), session (holds connections for the entire client session).
+         */
+        mode: string;
+        /**
+         * Maximum number of pooled connections.
+         */
+        maxConnections: number;
+        /**
+         * Default pool size per user.
+         */
+        defaultPoolSize: number;
+        /**
+         * Pooler listening port.
+         */
+        port: number;
+        /**
+         * Whether SELECTs are routed to HA replicas while writes and locked reads stay on the primary. Active only when HA is enabled.
+         */
+        readWriteSplitting: boolean;
+        /**
+         * Effective CPU request applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (5% of DB CPU, floor 100m) unless overridden.
+         */
+        poolerCpuRequest: string;
+        /**
+         * Effective CPU limit applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (10% of DB CPU, floor 200m) unless overridden.
+         */
+        poolerCpuLimit: string;
+        /**
+         * Effective memory request applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (7.5% of DB memory, floor 64Mi) unless overridden.
+         */
+        poolerMemoryRequest: string;
+        /**
+         * Effective memory limit applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (15% of DB memory, floor 128Mi) unless overridden.
+         */
+        poolerMemoryLimit: string;
+    }
+
+    /**
      * Program
      */
     export type Program = {
@@ -10973,6 +12097,20 @@ export namespace Models {
          * Billing plan ID that this is program is associated with.
          */
         billingPlanId: string;
+    }
+
+    /**
+     * QueryExplanation
+     */
+    export type DedicatedDatabaseQueryExplanation = {
+        /**
+         * Structured query execution plan. Contents are engine-specific.
+         */
+        plan: Record<string, any>[];
+        /**
+         * Raw EXPLAIN output from the database engine.
+         */
+        raw: string;
     }
 
     /**
@@ -11056,6 +12194,20 @@ export namespace Models {
     }
 
     /**
+     * Dedicated database restorations list
+     */
+    export type DedicatedDatabaseRestorationList = {
+        /**
+         * Total number of restorations that matched your query.
+         */
+        total: number;
+        /**
+         * List of restorations.
+         */
+        restorations: DedicatedDatabaseRestoration[];
+    }
+
+    /**
      * Review
      */
     export type Review = {
@@ -11089,6 +12241,212 @@ export namespace Models {
          * Array of roles assigned to current user.
          */
         roles: string[];
+    }
+
+    /**
+     * Schema
+     */
+    export type DedicatedDatabaseSchema = {
+        /**
+         * List of tables with columns, types, and constraints.
+         */
+        tables: Record<string, any>[];
+        /**
+         * List of indexes across all tables.
+         */
+        indexes: Record<string, any>[];
+    }
+
+    /**
+     * SchemaPreview
+     */
+    export type DedicatedDatabaseSchemaPreview = {
+        /**
+         * Whether the engine supports transactional DDL for safe preview.
+         */
+        supportsTransactionalDDL: boolean;
+        /**
+         * Schema change preview output.
+         */
+        preview: string;
+        /**
+         * List of tables in the database after the change.
+         */
+        tables: string[];
+    }
+
+    /**
+     * SlowQuery
+     */
+    export type DedicatedDatabaseSlowQuery = {
+        /**
+         * The SQL query text.
+         */
+        query: string;
+        /**
+         * Query duration in milliseconds.
+         */
+        durationMs: number;
+        /**
+         * Number of times this query has been executed.
+         */
+        calls: number;
+        /**
+         * Database user that executed the query.
+         */
+        user: string;
+        /**
+         * Database name.
+         */
+        database: string;
+    }
+
+    /**
+     * Specification
+     */
+    export type DedicatedDatabaseSpecification = {
+        /**
+         * Specification slug. Use this value when creating a dedicated database.
+         */
+        slug: string;
+        /**
+         * Human readable specification name.
+         */
+        name: string;
+        /**
+         * Monthly price of the specification in USD.
+         */
+        price: number;
+        /**
+         * Allocated CPU in millicores.
+         */
+        cpu: number;
+        /**
+         * Allocated memory in MB.
+         */
+        memory: number;
+        /**
+         * Maximum number of concurrent connections.
+         */
+        maxConnections: number;
+        /**
+         * Included storage in GB before overage charges apply.
+         */
+        includedStorage: number;
+        /**
+         * Included bandwidth in GB before overage charges apply.
+         */
+        includedBandwidth: number;
+        /**
+         * Whether the specification is available on the current plan.
+         */
+        enabled: boolean;
+    }
+
+    /**
+     * SpecificationList
+     */
+    export type DedicatedDatabaseSpecificationList = {
+        /**
+         * List of dedicated database specifications.
+         */
+        specifications: DedicatedDatabaseSpecification[];
+        /**
+         * Total number of specifications.
+         */
+        total: number;
+        /**
+         * Overage and add-on pricing shared across all specifications.
+         */
+        pricing: DedicatedDatabaseSpecificationPricing;
+    }
+
+    /**
+     * SpecificationPricing
+     */
+    export type DedicatedDatabaseSpecificationPricing = {
+        /**
+         * Price per GB of storage above the included amount, per month, in USD.
+         */
+        storageOverageRate: number;
+        /**
+         * Price per GB of bandwidth above the included amount, per month, in USD.
+         */
+        bandwidthOverageRate: number;
+        /**
+         * High availability replica price as a fraction of the specification cost.
+         */
+        haReplicaRate: number;
+        /**
+         * Cross-region replica price as a fraction of the specification cost.
+         */
+        crossRegionReplicaRate: number;
+        /**
+         * Cross-region transfer price as a fraction of the specification cost.
+         */
+        crossRegionRate: number;
+        /**
+         * Point-in-time recovery price as a fraction of the specification cost.
+         */
+        pitrRate: number;
+    }
+
+    /**
+     * Connections
+     */
+    export type DatabaseStatusConnections = {
+        /**
+         * Current number of active connections.
+         */
+        current: number;
+        /**
+         * Maximum allowed connections.
+         */
+        max: number;
+    }
+
+    /**
+     * Replica
+     */
+    export type DatabaseStatusReplica = {
+        /**
+         * StatefulSet pod index (0 = primary, 1+ = replicas).
+         */
+        index: number;
+        /**
+         * Replica role: primary or replica.
+         */
+        role: string;
+        /**
+         * Whether the replica is healthy.
+         */
+        healthy: boolean;
+        /**
+         * Replication lag in seconds (null for primary).
+         */
+        lagSeconds?: number;
+    }
+
+    /**
+     * Volume
+     */
+    export type DatabaseStatusVolume = {
+        /**
+         * Mount path of the volume.
+         */
+        path: string;
+        /**
+         * Percentage of storage used.
+         */
+        usedPercent: string;
+        /**
+         * Available storage space.
+         */
+        available: string;
+        /**
+         * Whether the volume is mounted.
+         */
+        mounted: boolean;
     }
 
     /**
@@ -11468,6 +12826,132 @@ export namespace Models {
     }
 
     /**
+     * App
+     */
+    export type App = {
+        /**
+         * App ID.
+         */
+        $id: string;
+        /**
+         * App creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * App update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Application name.
+         */
+        name: string;
+        /**
+         * List of authorized redirect URIs. These URIs can be used to redirect users after they authenticate.
+         */
+        redirectUris: string[];
+        /**
+         * When true, the application is restricted to the owner user (if `userId` is set) or members of `teamId` (if set). When false, any user in the project can authorize against the app.
+         */
+        internal: boolean;
+        /**
+         * Whether the app is enabled or not.
+         */
+        enabled: boolean;
+        /**
+         * OAuth2 client type. `public` for SPAs, mobile, and native apps that cannot keep a client secret (PKCE required); `confidential` for server-side clients that authenticate with a client secret.
+         */
+        type: string;
+        /**
+         * ID of team that owns the application, if owned by team. Otherwise, user ID will be used.
+         */
+        teamId: string;
+        /**
+         * ID of user who owns the application, if owned by user. Otherwise, team ID will be used.
+         */
+        userId: string;
+        /**
+         * List of application secrets.
+         */
+        secrets: AppSecret[];
+    }
+
+    /**
+     * AppSecret
+     */
+    export type AppSecret = {
+        /**
+         * Secret ID.
+         */
+        $id: string;
+        /**
+         * Secret creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Secret update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Application ID this secret belongs to.
+         */
+        appId: string;
+        /**
+         * Masked application client secret. Only the last 6 characters are returned.
+         */
+        secret: string;
+        /**
+         * ID of the user who created the secret.
+         */
+        createdById: string;
+        /**
+         * Name of the user who created the secret.
+         */
+        createdByName: string;
+        /**
+         * Time the secret was last used for authentication in ISO 8601 format. Null if never used.
+         */
+        lastAccessedAt?: string;
+    }
+
+    /**
+     * AppSecretPlaintext
+     */
+    export type AppSecretPlaintext = {
+        /**
+         * Secret ID.
+         */
+        $id: string;
+        /**
+         * Secret creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Secret update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Application ID this secret belongs to.
+         */
+        appId: string;
+        /**
+         * Application client secret. Returned in full only when the secret is created; subsequent reads return a masked value.
+         */
+        secret: string;
+        /**
+         * ID of the user who created the secret.
+         */
+        createdById: string;
+        /**
+         * Name of the user who created the secret.
+         */
+        createdByName: string;
+        /**
+         * Time the secret was last used for authentication in ISO 8601 format. Null if never used.
+         */
+        lastAccessedAt?: string;
+    }
+
+    /**
      * Activity event list
      */
     export type ActivityEventList = {
@@ -11608,6 +13092,48 @@ export namespace Models {
     }
 
     /**
+     * Dedicated database connections list
+     */
+    export type DedicatedDatabaseConnectionList = {
+        /**
+         * Total number of connections that matched your query.
+         */
+        total: number;
+        /**
+         * List of connections.
+         */
+        connections: DedicatedDatabaseConnection[];
+    }
+
+    /**
+     * Dedicated database slow queries list
+     */
+    export type DedicatedDatabaseSlowQueryList = {
+        /**
+         * Total number of slowQueries that matched your query.
+         */
+        total: number;
+        /**
+         * List of slowQueries.
+         */
+        slowQueries: DedicatedDatabaseSlowQuery[];
+    }
+
+    /**
+     * Dedicated databases list
+     */
+    export type DedicatedDatabaseList = {
+        /**
+         * Total number of databases that matched your query.
+         */
+        total: number;
+        /**
+         * List of databases.
+         */
+        databases: DedicatedDatabase[];
+    }
+
+    /**
      * DNS records list
      */
     export type DnsRecordsList = {
@@ -11717,5 +13243,33 @@ export namespace Models {
          * List of gauges.
          */
         gauges: UsageGauge[];
+    }
+
+    /**
+     * Apps list
+     */
+    export type AppsList = {
+        /**
+         * Total number of apps that matched your query.
+         */
+        total: number;
+        /**
+         * List of apps.
+         */
+        apps: App[];
+    }
+
+    /**
+     * App secrets list
+     */
+    export type AppSecretList = {
+        /**
+         * Total number of secrets that matched your query.
+         */
+        total: number;
+        /**
+         * List of secrets.
+         */
+        secrets: AppSecret[];
     }
 }

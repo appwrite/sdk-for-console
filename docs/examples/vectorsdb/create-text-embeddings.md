@@ -9,7 +9,7 @@ const vectorsDB = new VectorsDB(client);
 
 const result = await vectorsDB.createTextEmbeddings({
     texts: [],
-    model: EmbeddingModel.Embeddinggemma // optional
+    model: EmbeddingModel.NomicEmbedText // optional
 });
 
 console.log(result);

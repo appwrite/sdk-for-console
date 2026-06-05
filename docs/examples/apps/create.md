@@ -1,0 +1,21 @@
+```javascript
+import { Client, Apps } from "@appwrite.io/console";
+
+const client = new Client()
+    .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
+    .setProject('<YOUR_PROJECT_ID>'); // Your project ID
+
+const apps = new Apps(client);
+
+const result = await apps.create({
+    appId: '<APP_ID>',
+    name: '<NAME>',
+    redirectUris: [],
+    enabled: false, // optional
+    internal: false, // optional
+    type: 'public', // optional
+    teamId: '<TEAM_ID>' // optional
+});
+
+console.log(result);
+```

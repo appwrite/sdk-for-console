@@ -1,4 +1,4 @@
-export enum SiteAdapter {
+export enum Adapter {
     Static = 'static',
     Ssr = 'ssr',
 }

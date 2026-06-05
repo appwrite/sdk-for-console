@@ -3,7 +3,7 @@ import { AppwriteException, Client, type Payload, UploadProgress } from '../clie
 import type { Models } from '../models';
 
 import { ScheduleResourceType } from '../enums/schedule-resource-type';
-import { ProjectStatus } from '../enums/project-status';
+import { Status } from '../enums/status';
 
 export class Projects {
     client: Client;
@@ -55,6 +55,7 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -115,6 +116,7 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -187,6 +189,7 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -247,6 +250,7 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -326,6 +330,7 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -386,6 +391,7 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -453,6 +459,7 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -549,6 +556,7 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -609,6 +617,7 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
         }
 
         return this.client.call(
@@ -624,34 +633,34 @@ export class Projects {
      * 
      *
      * @param {string} params.projectId - Project ID
-     * @param {ProjectStatus} params.status - New status for the project
+     * @param {Status} params.status - New status for the project
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    updateStatus(params: { projectId: string, status: ProjectStatus }): Promise<{}>;
+    updateStatus(params: { projectId: string, status: Status }): Promise<{}>;
     /**
      * Update the status of a project. Can be used to archive/restore projects, and to restore paused projects. When restoring a paused project, the console fingerprint header must be provided and the project must not be blocked for any reason other than inactivity.
      * 
      *
      * @param {string} projectId - Project ID
-     * @param {ProjectStatus} status - New status for the project
+     * @param {Status} status - New status for the project
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateStatus(projectId: string, status: ProjectStatus): Promise<{}>;
+    updateStatus(projectId: string, status: Status): Promise<{}>;
     updateStatus(
-        paramsOrFirst: { projectId: string, status: ProjectStatus } | string,
-        ...rest: [(ProjectStatus)?]    
+        paramsOrFirst: { projectId: string, status: Status } | string,
+        ...rest: [(Status)?]    
     ): Promise<{}> {
-        let params: { projectId: string, status: ProjectStatus };
+        let params: { projectId: string, status: Status };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, status: ProjectStatus };
+            params = (paramsOrFirst || {}) as { projectId: string, status: Status };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                status: rest[0] as ProjectStatus            
+                status: rest[0] as Status            
             };
         }
         
@@ -673,6 +682,7 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 
@@ -736,6 +746,7 @@ export class Projects {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
         }
 

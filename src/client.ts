@@ -390,7 +390,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '13.1.0',
+        'x-sdk-version': '13.2.0',
         'X-Appwrite-Response-Format': '1.9.5',
     };
 
@@ -472,7 +472,6 @@ class Client {
      * @return {this}
      */
     setProject(value: string): this {
-        this.headers['X-Appwrite-Project'] = value;
         this.config.project = value;
         return this;
     }
@@ -1103,7 +1102,9 @@ class Client {
     }
 
     async ping(): Promise<unknown> {
-        return this.call('GET', new URL(this.config.endpoint + '/ping'));
+        return this.call('GET', new URL(this.config.endpoint + '/ping'), {
+            'X-Appwrite-Project': this.config.project,
+        });
     }
 
     async call(method: string, url: URL, headers: Headers = {}, params: Payload = {}, responseType = 'json'): Promise<any> {
