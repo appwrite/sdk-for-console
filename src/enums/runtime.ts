@@ -1,4 +1,4 @@
-export enum SiteBuildRuntime {
+export enum Runtime {
     Node145 = 'node-14.5',
     Node160 = 'node-16.0',
     Node180 = 'node-18.0',

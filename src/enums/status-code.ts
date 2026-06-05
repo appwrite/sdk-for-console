@@ -1,4 +1,4 @@
-export enum RedirectStatusCode {
+export enum StatusCode {
     MovedPermanently = '301',
     Found = '302',
     TemporaryRedirect = '307',

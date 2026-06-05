@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Sites, SiteFramework, SiteBuildRuntime, SiteAdapter } from "@appwrite.io/console";
+import { Client, Sites, Framework, BuildRuntime, Adapter } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,8 +10,8 @@ const sites = new Sites(client);
 const result = await sites.create({
     siteId: '<SITE_ID>',
     name: '<NAME>',
-    framework: SiteFramework.Analog,
-    buildRuntime: SiteBuildRuntime.Node145,
+    framework: Framework.Analog,
+    buildRuntime: BuildRuntime.Node145,
     enabled: false, // optional
     logging: false, // optional
     timeout: 1, // optional
@@ -19,7 +19,7 @@ const result = await sites.create({
     buildCommand: '<BUILD_COMMAND>', // optional
     startCommand: '<START_COMMAND>', // optional
     outputDirectory: '<OUTPUT_DIRECTORY>', // optional
-    adapter: SiteAdapter.Static, // optional
+    adapter: Adapter.Static, // optional
     installationId: '<INSTALLATION_ID>', // optional
     fallbackFile: '<FALLBACK_FILE>', // optional
     providerRepositoryId: '<PROVIDER_REPOSITORY_ID>', // optional

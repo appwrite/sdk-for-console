@@ -1,4 +1,4 @@
-export enum SiteFramework {
+export enum Framework {
     Analog = 'analog',
     Angular = 'angular',
     Nextjs = 'nextjs',
