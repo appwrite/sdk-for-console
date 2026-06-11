@@ -56,6 +56,7 @@ export class Assistant {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'text/plain',
         }
 
         return this.client.call(

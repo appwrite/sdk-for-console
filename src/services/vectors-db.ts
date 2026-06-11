@@ -64,6 +64,7 @@ export class VectorsDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -81,10 +82,11 @@ export class VectorsDB {
      * @param {string} params.databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {string} params.dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
-    create(params: { databaseId: string, name: string, enabled?: boolean }): Promise<Models.Database>;
+    create(params: { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string }): Promise<Models.Database>;
     /**
      * Create a new Database.
      * 
@@ -92,30 +94,33 @@ export class VectorsDB {
      * @param {string} databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {string} dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(databaseId: string, name: string, enabled?: boolean): Promise<Models.Database>;
+    create(databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string): Promise<Models.Database>;
     create(
-        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (boolean)?]    
+        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string } | string,
+        ...rest: [(string)?, (boolean)?, (string)?]    
     ): Promise<Models.Database> {
-        let params: { databaseId: string, name: string, enabled?: boolean };
+        let params: { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean };
+            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
-                enabled: rest[1] as boolean            
+                enabled: rest[1] as boolean,
+                dedicatedDatabaseId: rest[2] as string            
             };
         }
         
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
+        const dedicatedDatabaseId = params.dedicatedDatabaseId;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
@@ -135,11 +140,15 @@ export class VectorsDB {
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
         }
+        if (typeof dedicatedDatabaseId !== 'undefined') {
+            payload['dedicatedDatabaseId'] = dedicatedDatabaseId;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -204,6 +213,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -256,6 +266,7 @@ export class VectorsDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -309,6 +320,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -361,6 +373,7 @@ export class VectorsDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -429,6 +442,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -543,6 +557,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -595,6 +610,7 @@ export class VectorsDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -647,6 +663,7 @@ export class VectorsDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -718,6 +735,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -845,6 +863,7 @@ export class VectorsDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -950,6 +969,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1010,6 +1030,7 @@ export class VectorsDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1109,6 +1130,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1258,6 +1280,7 @@ export class VectorsDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1346,6 +1369,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1417,6 +1441,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1497,6 +1522,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1579,6 +1605,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1654,6 +1681,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1735,6 +1763,7 @@ export class VectorsDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1824,6 +1853,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1913,6 +1943,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2062,6 +2093,7 @@ export class VectorsDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2169,6 +2201,7 @@ export class VectorsDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2236,6 +2269,7 @@ export class VectorsDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2371,6 +2405,7 @@ export class VectorsDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2431,6 +2466,7 @@ export class VectorsDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(

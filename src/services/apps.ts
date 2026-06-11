@@ -60,6 +60,7 @@ export class Apps {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -76,55 +77,79 @@ export class Apps {
      * @param {string} params.appId - Application ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Application name.
      * @param {string[]} params.redirectUris - Redirect URIs (array of valid URLs).
+     * @param {string} params.description - Application description shown to users during OAuth2 consent.
+     * @param {string} params.clientUri - Application homepage URL shown to users during OAuth2 consent.
+     * @param {string} params.logoUri - Application logo URL shown to users during OAuth2 consent.
+     * @param {string} params.privacyPolicyUrl - Application privacy policy URL shown to users during OAuth2 consent.
+     * @param {string} params.termsUrl - Application terms of service URL shown to users during OAuth2 consent.
+     * @param {string[]} params.contacts - Application support or security contact emails. Maximum of 100 contacts are allowed.
      * @param {boolean} params.enabled - Is application enabled?
-     * @param {boolean} params.internal - When true, the application is restricted to the owner user or members of the configured team. Defaults to false (any user in the project can authorize).
      * @param {string} params.type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
+     * @param {boolean} params.deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
      * @param {string} params.teamId - Team unique ID.
      * @throws {AppwriteException}
      * @returns {Promise<Models.App>}
      */
-    create(params: { appId: string, name: string, redirectUris: string[], enabled?: boolean, internal?: boolean, type?: string, teamId?: string }): Promise<Models.App>;
+    create(params: { appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string }): Promise<Models.App>;
     /**
      * Create a new application.
      *
      * @param {string} appId - Application ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Application name.
      * @param {string[]} redirectUris - Redirect URIs (array of valid URLs).
+     * @param {string} description - Application description shown to users during OAuth2 consent.
+     * @param {string} clientUri - Application homepage URL shown to users during OAuth2 consent.
+     * @param {string} logoUri - Application logo URL shown to users during OAuth2 consent.
+     * @param {string} privacyPolicyUrl - Application privacy policy URL shown to users during OAuth2 consent.
+     * @param {string} termsUrl - Application terms of service URL shown to users during OAuth2 consent.
+     * @param {string[]} contacts - Application support or security contact emails. Maximum of 100 contacts are allowed.
      * @param {boolean} enabled - Is application enabled?
-     * @param {boolean} internal - When true, the application is restricted to the owner user or members of the configured team. Defaults to false (any user in the project can authorize).
      * @param {string} type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
+     * @param {boolean} deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
      * @param {string} teamId - Team unique ID.
      * @throws {AppwriteException}
      * @returns {Promise<Models.App>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(appId: string, name: string, redirectUris: string[], enabled?: boolean, internal?: boolean, type?: string, teamId?: string): Promise<Models.App>;
+    create(appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string): Promise<Models.App>;
     create(
-        paramsOrFirst: { appId: string, name: string, redirectUris: string[], enabled?: boolean, internal?: boolean, type?: string, teamId?: string } | string,
-        ...rest: [(string)?, (string[])?, (boolean)?, (boolean)?, (string)?, (string)?]    
+        paramsOrFirst: { appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string } | string,
+        ...rest: [(string)?, (string[])?, (string)?, (string)?, (string)?, (string)?, (string)?, (string[])?, (boolean)?, (string)?, (boolean)?, (string)?]    
     ): Promise<Models.App> {
-        let params: { appId: string, name: string, redirectUris: string[], enabled?: boolean, internal?: boolean, type?: string, teamId?: string };
+        let params: { appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { appId: string, name: string, redirectUris: string[], enabled?: boolean, internal?: boolean, type?: string, teamId?: string };
+            params = (paramsOrFirst || {}) as { appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string };
         } else {
             params = {
                 appId: paramsOrFirst as string,
                 name: rest[0] as string,
                 redirectUris: rest[1] as string[],
-                enabled: rest[2] as boolean,
-                internal: rest[3] as boolean,
-                type: rest[4] as string,
-                teamId: rest[5] as string            
+                description: rest[2] as string,
+                clientUri: rest[3] as string,
+                logoUri: rest[4] as string,
+                privacyPolicyUrl: rest[5] as string,
+                termsUrl: rest[6] as string,
+                contacts: rest[7] as string[],
+                enabled: rest[8] as boolean,
+                type: rest[9] as string,
+                deviceFlow: rest[10] as boolean,
+                teamId: rest[11] as string            
             };
         }
         
         const appId = params.appId;
         const name = params.name;
         const redirectUris = params.redirectUris;
+        const description = params.description;
+        const clientUri = params.clientUri;
+        const logoUri = params.logoUri;
+        const privacyPolicyUrl = params.privacyPolicyUrl;
+        const termsUrl = params.termsUrl;
+        const contacts = params.contacts;
         const enabled = params.enabled;
-        const internal = params.internal;
         const type = params.type;
+        const deviceFlow = params.deviceFlow;
         const teamId = params.teamId;
 
         if (typeof appId === 'undefined') {
@@ -145,17 +170,35 @@ export class Apps {
         if (typeof name !== 'undefined') {
             payload['name'] = name;
         }
+        if (typeof description !== 'undefined') {
+            payload['description'] = description;
+        }
+        if (typeof clientUri !== 'undefined') {
+            payload['clientUri'] = clientUri;
+        }
+        if (typeof logoUri !== 'undefined') {
+            payload['logoUri'] = logoUri;
+        }
+        if (typeof privacyPolicyUrl !== 'undefined') {
+            payload['privacyPolicyUrl'] = privacyPolicyUrl;
+        }
+        if (typeof termsUrl !== 'undefined') {
+            payload['termsUrl'] = termsUrl;
+        }
+        if (typeof contacts !== 'undefined') {
+            payload['contacts'] = contacts;
+        }
         if (typeof redirectUris !== 'undefined') {
             payload['redirectUris'] = redirectUris;
         }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
         }
-        if (typeof internal !== 'undefined') {
-            payload['internal'] = internal;
-        }
         if (typeof type !== 'undefined') {
             payload['type'] = type;
+        }
+        if (typeof deviceFlow !== 'undefined') {
+            payload['deviceFlow'] = deviceFlow;
         }
         if (typeof teamId !== 'undefined') {
             payload['teamId'] = teamId;
@@ -165,6 +208,7 @@ export class Apps {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -217,6 +261,7 @@ export class Apps {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -232,53 +277,77 @@ export class Apps {
      *
      * @param {string} params.appId - Application unique ID.
      * @param {string} params.name - Application name.
+     * @param {string} params.description - Application description shown to users during OAuth2 consent.
+     * @param {string} params.clientUri - Application homepage URL shown to users during OAuth2 consent.
+     * @param {string} params.logoUri - Application logo URL shown to users during OAuth2 consent.
+     * @param {string} params.privacyPolicyUrl - Application privacy policy URL shown to users during OAuth2 consent.
+     * @param {string} params.termsUrl - Application terms of service URL shown to users during OAuth2 consent.
+     * @param {string[]} params.contacts - Application support or security contact emails. Maximum of 100 contacts are allowed.
      * @param {boolean} params.enabled - Is application enabled?
-     * @param {boolean} params.internal - When true, the application is restricted to the owner user or members of the configured team. Defaults to false (any user in the project can authorize).
      * @param {string[]} params.redirectUris - Redirect URIs (array of valid URLs).
      * @param {string} params.type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
+     * @param {boolean} params.deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
      * @throws {AppwriteException}
      * @returns {Promise<Models.App>}
      */
-    update(params: { appId: string, name: string, enabled?: boolean, internal?: boolean, redirectUris?: string[], type?: string }): Promise<Models.App>;
+    update(params: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, redirectUris?: string[], type?: string, deviceFlow?: boolean }): Promise<Models.App>;
     /**
      * Update an application by its unique ID.
      *
      * @param {string} appId - Application unique ID.
      * @param {string} name - Application name.
+     * @param {string} description - Application description shown to users during OAuth2 consent.
+     * @param {string} clientUri - Application homepage URL shown to users during OAuth2 consent.
+     * @param {string} logoUri - Application logo URL shown to users during OAuth2 consent.
+     * @param {string} privacyPolicyUrl - Application privacy policy URL shown to users during OAuth2 consent.
+     * @param {string} termsUrl - Application terms of service URL shown to users during OAuth2 consent.
+     * @param {string[]} contacts - Application support or security contact emails. Maximum of 100 contacts are allowed.
      * @param {boolean} enabled - Is application enabled?
-     * @param {boolean} internal - When true, the application is restricted to the owner user or members of the configured team. Defaults to false (any user in the project can authorize).
      * @param {string[]} redirectUris - Redirect URIs (array of valid URLs).
      * @param {string} type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
+     * @param {boolean} deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
      * @throws {AppwriteException}
      * @returns {Promise<Models.App>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(appId: string, name: string, enabled?: boolean, internal?: boolean, redirectUris?: string[], type?: string): Promise<Models.App>;
+    update(appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, redirectUris?: string[], type?: string, deviceFlow?: boolean): Promise<Models.App>;
     update(
-        paramsOrFirst: { appId: string, name: string, enabled?: boolean, internal?: boolean, redirectUris?: string[], type?: string } | string,
-        ...rest: [(string)?, (boolean)?, (boolean)?, (string[])?, (string)?]    
+        paramsOrFirst: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, redirectUris?: string[], type?: string, deviceFlow?: boolean } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string[])?, (boolean)?, (string[])?, (string)?, (boolean)?]    
     ): Promise<Models.App> {
-        let params: { appId: string, name: string, enabled?: boolean, internal?: boolean, redirectUris?: string[], type?: string };
+        let params: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, redirectUris?: string[], type?: string, deviceFlow?: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { appId: string, name: string, enabled?: boolean, internal?: boolean, redirectUris?: string[], type?: string };
+            params = (paramsOrFirst || {}) as { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, redirectUris?: string[], type?: string, deviceFlow?: boolean };
         } else {
             params = {
                 appId: paramsOrFirst as string,
                 name: rest[0] as string,
-                enabled: rest[1] as boolean,
-                internal: rest[2] as boolean,
-                redirectUris: rest[3] as string[],
-                type: rest[4] as string            
+                description: rest[1] as string,
+                clientUri: rest[2] as string,
+                logoUri: rest[3] as string,
+                privacyPolicyUrl: rest[4] as string,
+                termsUrl: rest[5] as string,
+                contacts: rest[6] as string[],
+                enabled: rest[7] as boolean,
+                redirectUris: rest[8] as string[],
+                type: rest[9] as string,
+                deviceFlow: rest[10] as boolean            
             };
         }
         
         const appId = params.appId;
         const name = params.name;
+        const description = params.description;
+        const clientUri = params.clientUri;
+        const logoUri = params.logoUri;
+        const privacyPolicyUrl = params.privacyPolicyUrl;
+        const termsUrl = params.termsUrl;
+        const contacts = params.contacts;
         const enabled = params.enabled;
-        const internal = params.internal;
         const redirectUris = params.redirectUris;
         const type = params.type;
+        const deviceFlow = params.deviceFlow;
 
         if (typeof appId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "appId"');
@@ -292,11 +361,26 @@ export class Apps {
         if (typeof name !== 'undefined') {
             payload['name'] = name;
         }
+        if (typeof description !== 'undefined') {
+            payload['description'] = description;
+        }
+        if (typeof clientUri !== 'undefined') {
+            payload['clientUri'] = clientUri;
+        }
+        if (typeof logoUri !== 'undefined') {
+            payload['logoUri'] = logoUri;
+        }
+        if (typeof privacyPolicyUrl !== 'undefined') {
+            payload['privacyPolicyUrl'] = privacyPolicyUrl;
+        }
+        if (typeof termsUrl !== 'undefined') {
+            payload['termsUrl'] = termsUrl;
+        }
+        if (typeof contacts !== 'undefined') {
+            payload['contacts'] = contacts;
+        }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
-        }
-        if (typeof internal !== 'undefined') {
-            payload['internal'] = internal;
         }
         if (typeof redirectUris !== 'undefined') {
             payload['redirectUris'] = redirectUris;
@@ -304,11 +388,15 @@ export class Apps {
         if (typeof type !== 'undefined') {
             payload['type'] = type;
         }
+        if (typeof deviceFlow !== 'undefined') {
+            payload['deviceFlow'] = deviceFlow;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -362,6 +450,7 @@ export class Apps {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -429,6 +518,7 @@ export class Apps {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -482,6 +572,7 @@ export class Apps {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -542,6 +633,7 @@ export class Apps {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -603,6 +695,7 @@ export class Apps {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -667,6 +760,7 @@ export class Apps {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -720,6 +814,7 @@ export class Apps {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(

@@ -52,6 +52,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -70,8 +71,6 @@ export class Compute {
      * @param {string} params.database - Physical database/catalog name. Defaults to databaseId.
      * @param {string} params.engine - Database engine: postgres, mysql, mariadb, or mongodb.
      * @param {string} params.version - Database engine version. Defaults to latest for selected engine.
-     * @param {string} params.region - Region identifier. Use one of the enabled region codes (e.g., fra, nyc, syd).
-     * @param {string} params.type - Database type: shared (serverless) or dedicated (always-on).
      * @param {string} params.specification - Specification identifier.
      * @param {string} params.backend - Database backend provider: prisma, or edge.
      * @param {number} params.cpu - CPU in millicores (125-16000).
@@ -79,8 +78,7 @@ export class Compute {
      * @param {number} params.storage - Storage in GB to allocate (1-16384).
      * @param {string} params.storageClass - Storage class: ssd, nvme, or hdd.
      * @param {number} params.storageMaxGb - Maximum storage limit in GB. 0 uses system default.
-     * @param {boolean} params.highAvailability - Enable high availability.
-     * @param {number} params.highAvailabilityReplicaCount - Number of high availability replicas (0-5).
+     * @param {number} params.replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} params.highAvailabilitySyncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
      * @param {number} params.networkMaxConnections - Maximum concurrent connections.
      * @param {number} params.networkIdleTimeoutSeconds - Connection idle timeout in seconds.
@@ -96,10 +94,11 @@ export class Compute {
      * @param {number} params.storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
      * @param {boolean} params.metricsEnabled - Enable metrics collection.
      * @param {boolean} params.poolerEnabled - Enable connection pooler on provision.
+     * @param {string} params.api - Product API that owns this database: compute (raw, direct-access), tablesdb, documentsdb, or vectorsdb. tablesdb/documentsdb/vectorsdb computes are reached only through their product APIs.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
-    createDatabase(params: { databaseId: string, name: string, database?: string, engine?: string, version?: string, region?: string, type?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, highAvailability?: boolean, highAvailabilityReplicaCount?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean }): Promise<Models.DedicatedDatabase>;
+    createDatabase(params: { databaseId: string, name: string, database?: string, engine?: string, version?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, replicas?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean, api?: string }): Promise<Models.DedicatedDatabase>;
     /**
      * Create a new dedicated database with the chosen engine and configuration. Status will be 'provisioning' until the database is ready.
      *
@@ -108,8 +107,6 @@ export class Compute {
      * @param {string} database - Physical database/catalog name. Defaults to databaseId.
      * @param {string} engine - Database engine: postgres, mysql, mariadb, or mongodb.
      * @param {string} version - Database engine version. Defaults to latest for selected engine.
-     * @param {string} region - Region identifier. Use one of the enabled region codes (e.g., fra, nyc, syd).
-     * @param {string} type - Database type: shared (serverless) or dedicated (always-on).
      * @param {string} specification - Specification identifier.
      * @param {string} backend - Database backend provider: prisma, or edge.
      * @param {number} cpu - CPU in millicores (125-16000).
@@ -117,8 +114,7 @@ export class Compute {
      * @param {number} storage - Storage in GB to allocate (1-16384).
      * @param {string} storageClass - Storage class: ssd, nvme, or hdd.
      * @param {number} storageMaxGb - Maximum storage limit in GB. 0 uses system default.
-     * @param {boolean} highAvailability - Enable high availability.
-     * @param {number} highAvailabilityReplicaCount - Number of high availability replicas (0-5).
+     * @param {number} replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} highAvailabilitySyncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
      * @param {number} networkMaxConnections - Maximum concurrent connections.
      * @param {number} networkIdleTimeoutSeconds - Connection idle timeout in seconds.
@@ -134,19 +130,20 @@ export class Compute {
      * @param {number} storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
      * @param {boolean} metricsEnabled - Enable metrics collection.
      * @param {boolean} poolerEnabled - Enable connection pooler on provision.
+     * @param {string} api - Product API that owns this database: compute (raw, direct-access), tablesdb, documentsdb, or vectorsdb. tablesdb/documentsdb/vectorsdb computes are reached only through their product APIs.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createDatabase(databaseId: string, name: string, database?: string, engine?: string, version?: string, region?: string, type?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, highAvailability?: boolean, highAvailabilityReplicaCount?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean): Promise<Models.DedicatedDatabase>;
+    createDatabase(databaseId: string, name: string, database?: string, engine?: string, version?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, replicas?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean, api?: string): Promise<Models.DedicatedDatabase>;
     createDatabase(
-        paramsOrFirst: { databaseId: string, name: string, database?: string, engine?: string, version?: string, region?: string, type?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, highAvailability?: boolean, highAvailabilityReplicaCount?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (number)?, (number)?, (string)?, (number)?, (boolean)?, (number)?, (string)?, (number)?, (number)?, (string[])?, (number)?, (boolean)?, (boolean)?, (string)?, (number)?, (number)?, (boolean)?, (number)?, (number)?, (boolean)?, (boolean)?]    
+        paramsOrFirst: { databaseId: string, name: string, database?: string, engine?: string, version?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, replicas?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean, api?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (number)?, (number)?, (string)?, (number)?, (number)?, (string)?, (number)?, (number)?, (string[])?, (number)?, (boolean)?, (boolean)?, (string)?, (number)?, (number)?, (boolean)?, (number)?, (number)?, (boolean)?, (boolean)?, (string)?]    
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string, name: string, database?: string, engine?: string, version?: string, region?: string, type?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, highAvailability?: boolean, highAvailabilityReplicaCount?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean };
+        let params: { databaseId: string, name: string, database?: string, engine?: string, version?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, replicas?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean, api?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name: string, database?: string, engine?: string, version?: string, region?: string, type?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, highAvailability?: boolean, highAvailabilityReplicaCount?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean };
+            params = (paramsOrFirst || {}) as { databaseId: string, name: string, database?: string, engine?: string, version?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, replicas?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean, api?: string };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -154,32 +151,30 @@ export class Compute {
                 database: rest[1] as string,
                 engine: rest[2] as string,
                 version: rest[3] as string,
-                region: rest[4] as string,
-                type: rest[5] as string,
-                specification: rest[6] as string,
-                backend: rest[7] as string,
-                cpu: rest[8] as number,
-                memory: rest[9] as number,
-                storage: rest[10] as number,
-                storageClass: rest[11] as string,
-                storageMaxGb: rest[12] as number,
-                highAvailability: rest[13] as boolean,
-                highAvailabilityReplicaCount: rest[14] as number,
-                highAvailabilitySyncMode: rest[15] as string,
-                networkMaxConnections: rest[16] as number,
-                networkIdleTimeoutSeconds: rest[17] as number,
-                networkIPAllowlist: rest[18] as string[],
-                idleTimeoutMinutes: rest[19] as number,
-                backupEnabled: rest[20] as boolean,
-                backupPitr: rest[21] as boolean,
-                backupCron: rest[22] as string,
-                backupRetentionDays: rest[23] as number,
-                pitrRetentionDays: rest[24] as number,
-                storageAutoscaling: rest[25] as boolean,
-                storageAutoscalingThresholdPercent: rest[26] as number,
-                storageAutoscalingMaxGb: rest[27] as number,
-                metricsEnabled: rest[28] as boolean,
-                poolerEnabled: rest[29] as boolean            
+                specification: rest[4] as string,
+                backend: rest[5] as string,
+                cpu: rest[6] as number,
+                memory: rest[7] as number,
+                storage: rest[8] as number,
+                storageClass: rest[9] as string,
+                storageMaxGb: rest[10] as number,
+                replicas: rest[11] as number,
+                highAvailabilitySyncMode: rest[12] as string,
+                networkMaxConnections: rest[13] as number,
+                networkIdleTimeoutSeconds: rest[14] as number,
+                networkIPAllowlist: rest[15] as string[],
+                idleTimeoutMinutes: rest[16] as number,
+                backupEnabled: rest[17] as boolean,
+                backupPitr: rest[18] as boolean,
+                backupCron: rest[19] as string,
+                backupRetentionDays: rest[20] as number,
+                pitrRetentionDays: rest[21] as number,
+                storageAutoscaling: rest[22] as boolean,
+                storageAutoscalingThresholdPercent: rest[23] as number,
+                storageAutoscalingMaxGb: rest[24] as number,
+                metricsEnabled: rest[25] as boolean,
+                poolerEnabled: rest[26] as boolean,
+                api: rest[27] as string            
             };
         }
         
@@ -188,8 +183,6 @@ export class Compute {
         const database = params.database;
         const engine = params.engine;
         const version = params.version;
-        const region = params.region;
-        const type = params.type;
         const specification = params.specification;
         const backend = params.backend;
         const cpu = params.cpu;
@@ -197,8 +190,7 @@ export class Compute {
         const storage = params.storage;
         const storageClass = params.storageClass;
         const storageMaxGb = params.storageMaxGb;
-        const highAvailability = params.highAvailability;
-        const highAvailabilityReplicaCount = params.highAvailabilityReplicaCount;
+        const replicas = params.replicas;
         const highAvailabilitySyncMode = params.highAvailabilitySyncMode;
         const networkMaxConnections = params.networkMaxConnections;
         const networkIdleTimeoutSeconds = params.networkIdleTimeoutSeconds;
@@ -214,6 +206,7 @@ export class Compute {
         const storageAutoscalingMaxGb = params.storageAutoscalingMaxGb;
         const metricsEnabled = params.metricsEnabled;
         const poolerEnabled = params.poolerEnabled;
+        const api = params.api;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
@@ -239,12 +232,6 @@ export class Compute {
         if (typeof version !== 'undefined') {
             payload['version'] = version;
         }
-        if (typeof region !== 'undefined') {
-            payload['region'] = region;
-        }
-        if (typeof type !== 'undefined') {
-            payload['type'] = type;
-        }
         if (typeof specification !== 'undefined') {
             payload['specification'] = specification;
         }
@@ -266,11 +253,8 @@ export class Compute {
         if (typeof storageMaxGb !== 'undefined') {
             payload['storageMaxGb'] = storageMaxGb;
         }
-        if (typeof highAvailability !== 'undefined') {
-            payload['highAvailability'] = highAvailability;
-        }
-        if (typeof highAvailabilityReplicaCount !== 'undefined') {
-            payload['highAvailabilityReplicaCount'] = highAvailabilityReplicaCount;
+        if (typeof replicas !== 'undefined') {
+            payload['replicas'] = replicas;
         }
         if (typeof highAvailabilitySyncMode !== 'undefined') {
             payload['highAvailabilitySyncMode'] = highAvailabilitySyncMode;
@@ -317,11 +301,15 @@ export class Compute {
         if (typeof poolerEnabled !== 'undefined') {
             payload['poolerEnabled'] = poolerEnabled;
         }
+        if (typeof api !== 'undefined') {
+            payload['api'] = api;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -346,6 +334,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -398,6 +387,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -413,14 +403,13 @@ export class Compute {
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.name - Database display name.
-     * @param {string} params.status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume, or "inactive" to spin down a shared database.
-     * @param {string} params.specification - Specification. Changes cpu, memory, and type based on specification config.
+     * @param {string} params.status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume, or "inactive" to spin down a shared-pool database.
+     * @param {string} params.specification - Specification. Changes cpu, memory, and node pool based on specification config.
      * @param {number} params.cpu - CPU cores to allocate (125-16000).
      * @param {number} params.memory - Memory in MB to allocate (128-65536).
      * @param {number} params.storage - Storage in GB to allocate (1-16384).
      * @param {string} params.storageClass - Storage class. Allowed values: ssd, nvme, hdd.
-     * @param {boolean} params.highAvailability - Enable high availability.
-     * @param {number} params.highAvailabilityReplicaCount - Number of high availability replicas (0-5).
+     * @param {number} params.replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} params.highAvailabilitySyncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
      * @param {number} params.networkMaxConnections - Maximum concurrent connections.
      * @param {number} params.networkIdleTimeoutSeconds - Connection idle timeout in seconds (60-86400).
@@ -439,27 +428,26 @@ export class Compute {
      * @param {number} params.metricsTraceSampleRate - Fraction of queries to trace (0.0–1.0). Forwarded to the sidecar.
      * @param {number} params.metricsSlowQueryLogThresholdMs - Threshold in ms above which queries are logged as slow. Forwarded to the sidecar.
      * @param {boolean} params.sqlApiEnabled - Enable the SQL API sidecar for this database.
-     * @param {string[]} params.sqlApiAllowedStatements - Statement types the SQL API accepts. Allowed values: SELECT, INSERT, UPDATE, DELETE.
+     * @param {string[]} params.sqlApiAllowedStatements - Statement types the SQL API accepts. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.
      * @param {number} params.sqlApiMaxRows - Maximum rows returned per SQL API execution (1-1000000).
      * @param {number} params.sqlApiMaxBytes - Maximum serialised SQL API result payload in bytes (1024-104857600).
      * @param {number} params.sqlApiTimeoutSeconds - Per-call SQL API execution timeout in seconds (1-300).
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
-    updateDatabase(params: { databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, highAvailability?: boolean, highAvailabilityReplicaCount?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number }): Promise<Models.DedicatedDatabase>;
+    updateDatabase(params: { databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, replicas?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number }): Promise<Models.DedicatedDatabase>;
     /**
      * Update a dedicated database configuration. All changes are applied with zero downtime. Resource changes (cpu, memory) are handled via rolling cutover. Storage expansion is done online. All other settings are applied in-place.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} name - Database display name.
-     * @param {string} status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume, or "inactive" to spin down a shared database.
-     * @param {string} specification - Specification. Changes cpu, memory, and type based on specification config.
+     * @param {string} status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume, or "inactive" to spin down a shared-pool database.
+     * @param {string} specification - Specification. Changes cpu, memory, and node pool based on specification config.
      * @param {number} cpu - CPU cores to allocate (125-16000).
      * @param {number} memory - Memory in MB to allocate (128-65536).
      * @param {number} storage - Storage in GB to allocate (1-16384).
      * @param {string} storageClass - Storage class. Allowed values: ssd, nvme, hdd.
-     * @param {boolean} highAvailability - Enable high availability.
-     * @param {number} highAvailabilityReplicaCount - Number of high availability replicas (0-5).
+     * @param {number} replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} highAvailabilitySyncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
      * @param {number} networkMaxConnections - Maximum concurrent connections.
      * @param {number} networkIdleTimeoutSeconds - Connection idle timeout in seconds (60-86400).
@@ -478,7 +466,7 @@ export class Compute {
      * @param {number} metricsTraceSampleRate - Fraction of queries to trace (0.0–1.0). Forwarded to the sidecar.
      * @param {number} metricsSlowQueryLogThresholdMs - Threshold in ms above which queries are logged as slow. Forwarded to the sidecar.
      * @param {boolean} sqlApiEnabled - Enable the SQL API sidecar for this database.
-     * @param {string[]} sqlApiAllowedStatements - Statement types the SQL API accepts. Allowed values: SELECT, INSERT, UPDATE, DELETE.
+     * @param {string[]} sqlApiAllowedStatements - Statement types the SQL API accepts. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.
      * @param {number} sqlApiMaxRows - Maximum rows returned per SQL API execution (1-1000000).
      * @param {number} sqlApiMaxBytes - Maximum serialised SQL API result payload in bytes (1024-104857600).
      * @param {number} sqlApiTimeoutSeconds - Per-call SQL API execution timeout in seconds (1-300).
@@ -486,15 +474,15 @@ export class Compute {
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateDatabase(databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, highAvailability?: boolean, highAvailabilityReplicaCount?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number): Promise<Models.DedicatedDatabase>;
+    updateDatabase(databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, replicas?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number): Promise<Models.DedicatedDatabase>;
     updateDatabase(
-        paramsOrFirst: { databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, highAvailability?: boolean, highAvailabilityReplicaCount?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (number)?, (number)?, (string)?, (boolean)?, (number)?, (string)?, (number)?, (number)?, (string[])?, (number)?, (boolean)?, (boolean)?, (string)?, (number)?, (number)?, (boolean)?, (number)?, (number)?, (boolean)?, (boolean)?, (number)?, (number)?, (boolean)?, (string[])?, (number)?, (number)?, (number)?]    
+        paramsOrFirst: { databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, replicas?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number)?, (number)?, (number)?, (string)?, (number)?, (string)?, (number)?, (number)?, (string[])?, (number)?, (boolean)?, (boolean)?, (string)?, (number)?, (number)?, (boolean)?, (number)?, (number)?, (boolean)?, (boolean)?, (number)?, (number)?, (boolean)?, (string[])?, (number)?, (number)?, (number)?]    
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, highAvailability?: boolean, highAvailabilityReplicaCount?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number };
+        let params: { databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, replicas?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, highAvailability?: boolean, highAvailabilityReplicaCount?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number };
+            params = (paramsOrFirst || {}) as { databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, replicas?: number, highAvailabilitySyncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -505,30 +493,29 @@ export class Compute {
                 memory: rest[4] as number,
                 storage: rest[5] as number,
                 storageClass: rest[6] as string,
-                highAvailability: rest[7] as boolean,
-                highAvailabilityReplicaCount: rest[8] as number,
-                highAvailabilitySyncMode: rest[9] as string,
-                networkMaxConnections: rest[10] as number,
-                networkIdleTimeoutSeconds: rest[11] as number,
-                networkIPAllowlist: rest[12] as string[],
-                idleTimeoutMinutes: rest[13] as number,
-                backupEnabled: rest[14] as boolean,
-                backupPitr: rest[15] as boolean,
-                backupCron: rest[16] as string,
-                backupRetentionDays: rest[17] as number,
-                pitrRetentionDays: rest[18] as number,
-                storageAutoscaling: rest[19] as boolean,
-                storageAutoscalingThresholdPercent: rest[20] as number,
-                storageAutoscalingMaxGb: rest[21] as number,
-                poolerEnabled: rest[22] as boolean,
-                metricsEnabled: rest[23] as boolean,
-                metricsTraceSampleRate: rest[24] as number,
-                metricsSlowQueryLogThresholdMs: rest[25] as number,
-                sqlApiEnabled: rest[26] as boolean,
-                sqlApiAllowedStatements: rest[27] as string[],
-                sqlApiMaxRows: rest[28] as number,
-                sqlApiMaxBytes: rest[29] as number,
-                sqlApiTimeoutSeconds: rest[30] as number            
+                replicas: rest[7] as number,
+                highAvailabilitySyncMode: rest[8] as string,
+                networkMaxConnections: rest[9] as number,
+                networkIdleTimeoutSeconds: rest[10] as number,
+                networkIPAllowlist: rest[11] as string[],
+                idleTimeoutMinutes: rest[12] as number,
+                backupEnabled: rest[13] as boolean,
+                backupPitr: rest[14] as boolean,
+                backupCron: rest[15] as string,
+                backupRetentionDays: rest[16] as number,
+                pitrRetentionDays: rest[17] as number,
+                storageAutoscaling: rest[18] as boolean,
+                storageAutoscalingThresholdPercent: rest[19] as number,
+                storageAutoscalingMaxGb: rest[20] as number,
+                poolerEnabled: rest[21] as boolean,
+                metricsEnabled: rest[22] as boolean,
+                metricsTraceSampleRate: rest[23] as number,
+                metricsSlowQueryLogThresholdMs: rest[24] as number,
+                sqlApiEnabled: rest[25] as boolean,
+                sqlApiAllowedStatements: rest[26] as string[],
+                sqlApiMaxRows: rest[27] as number,
+                sqlApiMaxBytes: rest[28] as number,
+                sqlApiTimeoutSeconds: rest[29] as number            
             };
         }
         
@@ -540,8 +527,7 @@ export class Compute {
         const memory = params.memory;
         const storage = params.storage;
         const storageClass = params.storageClass;
-        const highAvailability = params.highAvailability;
-        const highAvailabilityReplicaCount = params.highAvailabilityReplicaCount;
+        const replicas = params.replicas;
         const highAvailabilitySyncMode = params.highAvailabilitySyncMode;
         const networkMaxConnections = params.networkMaxConnections;
         const networkIdleTimeoutSeconds = params.networkIdleTimeoutSeconds;
@@ -592,11 +578,8 @@ export class Compute {
         if (typeof storageClass !== 'undefined') {
             payload['storageClass'] = storageClass;
         }
-        if (typeof highAvailability !== 'undefined') {
-            payload['highAvailability'] = highAvailability;
-        }
-        if (typeof highAvailabilityReplicaCount !== 'undefined') {
-            payload['highAvailabilityReplicaCount'] = highAvailabilityReplicaCount;
+        if (typeof replicas !== 'undefined') {
+            payload['replicas'] = replicas;
         }
         if (typeof highAvailabilitySyncMode !== 'undefined') {
             payload['highAvailabilitySyncMode'] = highAvailabilitySyncMode;
@@ -669,6 +652,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -680,7 +664,7 @@ export class Compute {
     }
 
     /**
-     * Delete a dedicated database. This action is irreversible. The database status will be set to 'deleting' and all resources will be cleaned up.
+     * Delete a dedicated database. This action is irreversible. The database status will be set to 'deleting' and all resources will be cleaned up. Deletion is allowed from any state, and repeating the call re-dispatches the cleanup.
      *
      * @param {string} params.databaseId - Database ID.
      * @throws {AppwriteException}
@@ -688,7 +672,7 @@ export class Compute {
      */
     deleteDatabase(params: { databaseId: string }): Promise<{}>;
     /**
-     * Delete a dedicated database. This action is irreversible. The database status will be set to 'deleting' and all resources will be cleaned up.
+     * Delete a dedicated database. This action is irreversible. The database status will be set to 'deleting' and all resources will be cleaned up. Deletion is allowed from any state, and repeating the call re-dispatches the cleanup.
      *
      * @param {string} databaseId - Database ID.
      * @throws {AppwriteException}
@@ -722,6 +706,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -782,6 +767,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -843,6 +829,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -854,7 +841,7 @@ export class Compute {
     }
 
     /**
-     *     List scheduled backup policies for a dedicated database.
+     * List scheduled backup policies for a dedicated database.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK.
@@ -863,7 +850,7 @@ export class Compute {
      */
     listDatabaseBackupPolicies(params: { databaseId: string, queries?: string[] }): Promise<Models.BackupPolicyList>;
     /**
-     *     List scheduled backup policies for a dedicated database.
+     * List scheduled backup policies for a dedicated database.
      *
      * @param {string} databaseId - Database ID.
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK.
@@ -903,6 +890,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -914,7 +902,7 @@ export class Compute {
     }
 
     /**
-     *     Create a scheduled backup policy for a dedicated database.
+     * Create a scheduled backup policy for a dedicated database.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.policyId - Policy ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
@@ -928,7 +916,7 @@ export class Compute {
      */
     createDatabaseBackupPolicy(params: { databaseId: string, policyId: string, name: string, schedule: string, retention: number, type?: string, enabled?: boolean }): Promise<Models.BackupPolicy>;
     /**
-     *     Create a scheduled backup policy for a dedicated database.
+     * Create a scheduled backup policy for a dedicated database.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} policyId - Policy ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
@@ -1011,6 +999,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1126,6 +1115,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1186,6 +1176,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1247,6 +1238,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1299,6 +1291,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1367,6 +1360,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1428,6 +1422,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1480,6 +1475,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1551,6 +1547,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1612,6 +1609,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1664,6 +1662,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1717,6 +1716,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1795,6 +1795,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1866,6 +1867,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1918,6 +1920,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1982,6 +1985,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2043,6 +2047,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2095,6 +2100,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2156,77 +2162,11 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
             'post',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get query-level performance insights for a dedicated database. Returns top queries by execution time, wait events, and aggregate query statistics.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.period - Analysis period for performance insights. Allowed values: 1h (last hour), 24h (last 24 hours), 7d (last 7 days).
-     * @param {number} params.limit - Maximum number of queries to return.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DedicatedDatabasePerformanceInsights>}
-     */
-    getDatabaseInsights(params: { databaseId: string, period?: string, limit?: number }): Promise<Models.DedicatedDatabasePerformanceInsights>;
-    /**
-     * Get query-level performance insights for a dedicated database. Returns top queries by execution time, wait events, and aggregate query statistics.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} period - Analysis period for performance insights. Allowed values: 1h (last hour), 24h (last 24 hours), 7d (last 7 days).
-     * @param {number} limit - Maximum number of queries to return.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DedicatedDatabasePerformanceInsights>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getDatabaseInsights(databaseId: string, period?: string, limit?: number): Promise<Models.DedicatedDatabasePerformanceInsights>;
-    getDatabaseInsights(
-        paramsOrFirst: { databaseId: string, period?: string, limit?: number } | string,
-        ...rest: [(string)?, (number)?]    
-    ): Promise<Models.DedicatedDatabasePerformanceInsights> {
-        let params: { databaseId: string, period?: string, limit?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, period?: string, limit?: number };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                period: rest[0] as string,
-                limit: rest[1] as number            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const period = params.period;
-        const limit = params.limit;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-
-        const apiPath = '/compute/databases/{databaseId}/insights'.replace('{databaseId}', databaseId);
-        const payload: Payload = {};
-        if (typeof period !== 'undefined') {
-            payload['period'] = period;
-        }
-        if (typeof limit !== 'undefined') {
-            payload['limit'] = limit;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-        }
-
-        return this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload
@@ -2297,70 +2237,11 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
             'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get detailed performance metrics for a dedicated database. Returns CPU, memory, storage, IOPS, QPS, and connection metrics.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.period - Metrics aggregation period. Allowed values: 1h (last hour), 24h (last 24 hours), 7d (last 7 days), 30d (last 30 days).
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DedicatedDatabaseMetrics>}
-     */
-    getDatabaseMetrics(params: { databaseId: string, period?: string }): Promise<Models.DedicatedDatabaseMetrics>;
-    /**
-     * Get detailed performance metrics for a dedicated database. Returns CPU, memory, storage, IOPS, QPS, and connection metrics.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} period - Metrics aggregation period. Allowed values: 1h (last hour), 24h (last 24 hours), 7d (last 7 days), 30d (last 30 days).
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DedicatedDatabaseMetrics>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getDatabaseMetrics(databaseId: string, period?: string): Promise<Models.DedicatedDatabaseMetrics>;
-    getDatabaseMetrics(
-        paramsOrFirst: { databaseId: string, period?: string } | string,
-        ...rest: [(string)?]    
-    ): Promise<Models.DedicatedDatabaseMetrics> {
-        let params: { databaseId: string, period?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, period?: string };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                period: rest[0] as string            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const period = params.period;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-
-        const apiPath = '/compute/databases/{databaseId}/metrics'.replace('{databaseId}', databaseId);
-        const payload: Payload = {};
-        if (typeof period !== 'undefined') {
-            payload['period'] = period;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-        }
-
-        return this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload
@@ -2428,6 +2309,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2480,6 +2362,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2532,6 +2415,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2642,6 +2526,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2723,6 +2608,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2798,6 +2684,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2858,126 +2745,11 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
             'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get the current schema for a dedicated database. Returns collections, fields, data types, constraints, and indexes.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DedicatedDatabaseSchema>}
-     */
-    getDatabaseSchema(params: { databaseId: string }): Promise<Models.DedicatedDatabaseSchema>;
-    /**
-     * Get the current schema for a dedicated database. Returns collections, fields, data types, constraints, and indexes.
-     *
-     * @param {string} databaseId - Database ID.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DedicatedDatabaseSchema>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getDatabaseSchema(databaseId: string): Promise<Models.DedicatedDatabaseSchema>;
-    getDatabaseSchema(
-        paramsOrFirst: { databaseId: string } | string    
-    ): Promise<Models.DedicatedDatabaseSchema> {
-        let params: { databaseId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-
-        const apiPath = '/compute/databases/{databaseId}/schema'.replace('{databaseId}', databaseId);
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Preview a schema change against a dedicated database. Returns the expected impact including affected collections, records, and a dry-run diff of the schema before and after the change.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.sql - Schema statement to preview.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DedicatedDatabaseSchemaPreview>}
-     */
-    createDatabaseSchemaPreview(params: { databaseId: string, sql: string }): Promise<Models.DedicatedDatabaseSchemaPreview>;
-    /**
-     * Preview a schema change against a dedicated database. Returns the expected impact including affected collections, records, and a dry-run diff of the schema before and after the change.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} sql - Schema statement to preview.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DedicatedDatabaseSchemaPreview>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    createDatabaseSchemaPreview(databaseId: string, sql: string): Promise<Models.DedicatedDatabaseSchemaPreview>;
-    createDatabaseSchemaPreview(
-        paramsOrFirst: { databaseId: string, sql: string } | string,
-        ...rest: [(string)?]    
-    ): Promise<Models.DedicatedDatabaseSchemaPreview> {
-        let params: { databaseId: string, sql: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, sql: string };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                sql: rest[0] as string            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const sql = params.sql;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-        if (typeof sql === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "sql"');
-        }
-
-        const apiPath = '/compute/databases/{databaseId}/schema/preview'.replace('{databaseId}', databaseId);
-        const payload: Payload = {};
-        if (typeof sql !== 'undefined') {
-            payload['sql'] = sql;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'content-type': 'application/json',
-        }
-
-        return this.client.call(
-            'post',
             uri,
             apiHeaders,
             payload
@@ -3041,6 +2813,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3093,6 +2866,7 @@ export class Compute {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3157,6 +2931,7 @@ export class Compute {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(

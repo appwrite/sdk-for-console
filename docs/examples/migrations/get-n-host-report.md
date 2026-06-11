@@ -14,7 +14,7 @@ const result = await migrations.getNHostReport({
     adminSecret: '<ADMIN_SECRET>',
     database: '<DATABASE>',
     username: '<USERNAME>',
-    password: '<PASSWORD>',
+    password: 'password',
     port: null // optional
 });
 

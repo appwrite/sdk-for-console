@@ -28,6 +28,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -112,6 +113,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -189,6 +191,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -287,6 +290,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -339,6 +343,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -444,6 +449,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -497,6 +503,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -549,6 +556,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -620,6 +628,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -680,6 +689,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -785,6 +795,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -838,6 +849,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -890,6 +902,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -964,6 +977,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1016,6 +1030,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1097,6 +1112,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1150,6 +1166,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1210,6 +1227,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1266,6 +1284,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1320,6 +1339,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1373,6 +1393,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1438,6 +1459,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1502,6 +1524,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1666,6 +1689,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1722,6 +1746,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1790,6 +1815,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1857,6 +1883,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1882,6 +1909,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1906,6 +1934,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1931,6 +1960,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1955,6 +1985,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1981,6 +2012,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2006,6 +2038,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2032,6 +2065,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2057,6 +2091,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2113,6 +2148,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2177,6 +2213,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2229,6 +2266,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2254,6 +2292,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2306,6 +2345,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2387,6 +2427,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2440,6 +2481,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2521,6 +2563,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2574,6 +2617,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2641,6 +2685,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2665,6 +2710,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2721,6 +2767,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2788,6 +2835,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2869,6 +2917,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2893,6 +2942,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2943,6 +2993,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3014,6 +3065,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3082,6 +3134,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3166,6 +3219,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'text/html',
         }
 
         payload['project'] = this.client.config.project;
@@ -3240,6 +3294,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3307,6 +3362,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3359,6 +3415,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3412,6 +3469,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3490,6 +3548,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3564,6 +3623,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3628,6 +3688,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3761,6 +3822,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3848,6 +3910,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3930,6 +3993,7 @@ export class Account {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'text/html',
         }
 
         payload['project'] = this.client.config.project;
@@ -4007,6 +4071,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4069,6 +4134,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4132,6 +4198,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4199,6 +4266,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4267,6 +4335,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4292,6 +4361,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4359,6 +4429,7 @@ export class Account {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(

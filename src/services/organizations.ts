@@ -62,6 +62,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -190,6 +191,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -275,6 +277,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -328,6 +331,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -382,6 +386,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -437,6 +442,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -499,6 +505,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -562,6 +569,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -625,6 +633,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -687,6 +696,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -747,6 +757,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -821,6 +832,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -885,6 +897,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -938,6 +951,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -998,6 +1012,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1062,6 +1077,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1133,6 +1149,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1195,6 +1212,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1259,6 +1277,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1311,6 +1330,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1371,6 +1391,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1424,6 +1445,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1502,6 +1524,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1598,6 +1621,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1658,6 +1682,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1718,6 +1743,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1734,23 +1760,23 @@ export class Organizations {
      * @param {string} params.organizationId - Organization ID
      * @param {string} params.invoiceId - Invoice unique ID
      * @throws {AppwriteException}
-     * @returns {Promise<Models.PaymentMethod>}
+     * @returns {string}
      */
-    getInvoiceDownload(params: { organizationId: string, invoiceId: string }): Promise<Models.PaymentMethod>;
+    getInvoiceDownload(params: { organizationId: string, invoiceId: string }): string;
     /**
      * Download invoice in PDF
      *
      * @param {string} organizationId - Organization ID
      * @param {string} invoiceId - Invoice unique ID
      * @throws {AppwriteException}
-     * @returns {Promise<Models.PaymentMethod>}
+     * @returns {string}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getInvoiceDownload(organizationId: string, invoiceId: string): Promise<Models.PaymentMethod>;
+    getInvoiceDownload(organizationId: string, invoiceId: string): string;
     getInvoiceDownload(
         paramsOrFirst: { organizationId: string, invoiceId: string } | string,
         ...rest: [(string)?]    
-    ): Promise<Models.PaymentMethod> {
+    ): string {
         let params: { organizationId: string, invoiceId: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
@@ -1778,14 +1804,17 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        payload['project'] = this.client.config.project;
+        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+
+        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+            uri.searchParams.append(key, value);
+        }
+        
+        return uri.toString();
     }
 
     /**
@@ -1849,6 +1878,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1910,6 +1940,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1926,23 +1957,23 @@ export class Organizations {
      * @param {string} params.organizationId - Organization ID
      * @param {string} params.invoiceId - Invoice unique ID
      * @throws {AppwriteException}
-     * @returns {Promise<Models.PaymentMethod>}
+     * @returns {string}
      */
-    getInvoiceView(params: { organizationId: string, invoiceId: string }): Promise<Models.PaymentMethod>;
+    getInvoiceView(params: { organizationId: string, invoiceId: string }): string;
     /**
      * View invoice in PDF
      *
      * @param {string} organizationId - Organization ID
      * @param {string} invoiceId - Invoice unique ID
      * @throws {AppwriteException}
-     * @returns {Promise<Models.PaymentMethod>}
+     * @returns {string}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getInvoiceView(organizationId: string, invoiceId: string): Promise<Models.PaymentMethod>;
+    getInvoiceView(organizationId: string, invoiceId: string): string;
     getInvoiceView(
         paramsOrFirst: { organizationId: string, invoiceId: string } | string,
         ...rest: [(string)?]    
-    ): Promise<Models.PaymentMethod> {
+    ): string {
         let params: { organizationId: string, invoiceId: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
@@ -1970,14 +2001,17 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        payload['project'] = this.client.config.project;
+        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+
+        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+            uri.searchParams.append(key, value);
+        }
+        
+        return uri.toString();
     }
 
     /**
@@ -2034,6 +2068,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2087,6 +2122,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2153,6 +2189,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2206,6 +2243,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2266,6 +2304,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2318,6 +2357,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2424,6 +2464,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2477,6 +2518,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2557,6 +2599,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2609,6 +2652,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2669,6 +2713,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2733,6 +2778,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2800,6 +2846,7 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2861,6 +2908,7 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
