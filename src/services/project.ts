@@ -124,6 +124,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -184,6 +185,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -272,6 +274,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -343,6 +346,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -395,6 +399,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -476,6 +481,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -585,6 +591,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -645,6 +652,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -712,6 +720,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -764,6 +773,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -828,6 +838,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -941,6 +952,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -957,60 +969,80 @@ export class Project {
      * @param {boolean} params.enabled - Enable or disable the OAuth2 server.
      * @param {string} params.authorizationUrl - URL to your application with consent screen.
      * @param {string[]} params.scopes - List of allowed OAuth2 scopes. Maximum of 100 scopes are allowed, each up to 128 characters long.
+     * @param {string[]} params.authorizationDetailsTypes - List of accepted `authorization_details` types. Maximum of 100 types are allowed, each up to 128 characters long.
      * @param {number} params.accessTokenDuration - Access token duration in seconds for confidential clients (server-side apps that authenticate with a client secret). Leave empty to use default 8 hours.
      * @param {number} params.refreshTokenDuration - Refresh token duration in seconds for confidential clients (server-side apps that authenticate with a client secret). Leave empty to use default 1 year.
      * @param {number} params.publicAccessTokenDuration - Access token duration in seconds for public clients (SPAs, mobile, and native apps that cannot keep a client secret). Leave empty to use default 1 hour.
      * @param {number} params.publicRefreshTokenDuration - Refresh token duration in seconds for public clients (SPAs, mobile, and native apps that cannot keep a client secret). Leave empty to use default 30 days.
      * @param {boolean} params.confidentialPkce - When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
+     * @param {string} params.verificationUrl - URL to your application page where users enter the device flow user code. Required to enable the Device Authorization Grant.
+     * @param {number} params.userCodeLength - Number of characters in the device flow user code, excluding the formatting separator. Shorter codes are easier to type but weaker; pair short codes with short expiry. Leave empty to use default 8.
+     * @param {string} params.userCodeFormat - Character set for device flow user codes: `numeric` (digits only — best for numeric keypads and TV remotes), `alphabetic` (letters only), or `alphanumeric` (letters and digits — highest entropy per character). Defaults to `alphanumeric`.
+     * @param {number} params.deviceCodeDuration - Lifetime in seconds of device flow device codes and user codes. Device codes are intentionally short-lived. Leave empty to use default 600.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateOAuth2Server(params: { enabled: boolean, authorizationUrl: string, scopes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean }): Promise<Models.Project>;
+    updateOAuth2Server(params: { enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number }): Promise<Models.Project>;
     /**
      * Update the OAuth2 server (OIDC provider) configuration.
      *
      * @param {boolean} enabled - Enable or disable the OAuth2 server.
      * @param {string} authorizationUrl - URL to your application with consent screen.
      * @param {string[]} scopes - List of allowed OAuth2 scopes. Maximum of 100 scopes are allowed, each up to 128 characters long.
+     * @param {string[]} authorizationDetailsTypes - List of accepted `authorization_details` types. Maximum of 100 types are allowed, each up to 128 characters long.
      * @param {number} accessTokenDuration - Access token duration in seconds for confidential clients (server-side apps that authenticate with a client secret). Leave empty to use default 8 hours.
      * @param {number} refreshTokenDuration - Refresh token duration in seconds for confidential clients (server-side apps that authenticate with a client secret). Leave empty to use default 1 year.
      * @param {number} publicAccessTokenDuration - Access token duration in seconds for public clients (SPAs, mobile, and native apps that cannot keep a client secret). Leave empty to use default 1 hour.
      * @param {number} publicRefreshTokenDuration - Refresh token duration in seconds for public clients (SPAs, mobile, and native apps that cannot keep a client secret). Leave empty to use default 30 days.
      * @param {boolean} confidentialPkce - When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
+     * @param {string} verificationUrl - URL to your application page where users enter the device flow user code. Required to enable the Device Authorization Grant.
+     * @param {number} userCodeLength - Number of characters in the device flow user code, excluding the formatting separator. Shorter codes are easier to type but weaker; pair short codes with short expiry. Leave empty to use default 8.
+     * @param {string} userCodeFormat - Character set for device flow user codes: `numeric` (digits only — best for numeric keypads and TV remotes), `alphabetic` (letters only), or `alphanumeric` (letters and digits — highest entropy per character). Defaults to `alphanumeric`.
+     * @param {number} deviceCodeDuration - Lifetime in seconds of device flow device codes and user codes. Device codes are intentionally short-lived. Leave empty to use default 600.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateOAuth2Server(enabled: boolean, authorizationUrl: string, scopes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean): Promise<Models.Project>;
+    updateOAuth2Server(enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number): Promise<Models.Project>;
     updateOAuth2Server(
-        paramsOrFirst: { enabled: boolean, authorizationUrl: string, scopes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean } | boolean,
-        ...rest: [(string)?, (string[])?, (number)?, (number)?, (number)?, (number)?, (boolean)?]    
+        paramsOrFirst: { enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number } | boolean,
+        ...rest: [(string)?, (string[])?, (string[])?, (number)?, (number)?, (number)?, (number)?, (boolean)?, (string)?, (number)?, (string)?, (number)?]    
     ): Promise<Models.Project> {
-        let params: { enabled: boolean, authorizationUrl: string, scopes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean };
+        let params: { enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { enabled: boolean, authorizationUrl: string, scopes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean };
+            params = (paramsOrFirst || {}) as { enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number };
         } else {
             params = {
                 enabled: paramsOrFirst as boolean,
                 authorizationUrl: rest[0] as string,
                 scopes: rest[1] as string[],
-                accessTokenDuration: rest[2] as number,
-                refreshTokenDuration: rest[3] as number,
-                publicAccessTokenDuration: rest[4] as number,
-                publicRefreshTokenDuration: rest[5] as number,
-                confidentialPkce: rest[6] as boolean            
+                authorizationDetailsTypes: rest[2] as string[],
+                accessTokenDuration: rest[3] as number,
+                refreshTokenDuration: rest[4] as number,
+                publicAccessTokenDuration: rest[5] as number,
+                publicRefreshTokenDuration: rest[6] as number,
+                confidentialPkce: rest[7] as boolean,
+                verificationUrl: rest[8] as string,
+                userCodeLength: rest[9] as number,
+                userCodeFormat: rest[10] as string,
+                deviceCodeDuration: rest[11] as number            
             };
         }
         
         const enabled = params.enabled;
         const authorizationUrl = params.authorizationUrl;
         const scopes = params.scopes;
+        const authorizationDetailsTypes = params.authorizationDetailsTypes;
         const accessTokenDuration = params.accessTokenDuration;
         const refreshTokenDuration = params.refreshTokenDuration;
         const publicAccessTokenDuration = params.publicAccessTokenDuration;
         const publicRefreshTokenDuration = params.publicRefreshTokenDuration;
         const confidentialPkce = params.confidentialPkce;
+        const verificationUrl = params.verificationUrl;
+        const userCodeLength = params.userCodeLength;
+        const userCodeFormat = params.userCodeFormat;
+        const deviceCodeDuration = params.deviceCodeDuration;
 
         if (typeof enabled === 'undefined') {
             throw new AppwriteException('Missing required parameter: "enabled"');
@@ -1030,6 +1062,9 @@ export class Project {
         if (typeof scopes !== 'undefined') {
             payload['scopes'] = scopes;
         }
+        if (typeof authorizationDetailsTypes !== 'undefined') {
+            payload['authorizationDetailsTypes'] = authorizationDetailsTypes;
+        }
         if (typeof accessTokenDuration !== 'undefined') {
             payload['accessTokenDuration'] = accessTokenDuration;
         }
@@ -1045,11 +1080,24 @@ export class Project {
         if (typeof confidentialPkce !== 'undefined') {
             payload['confidentialPkce'] = confidentialPkce;
         }
+        if (typeof verificationUrl !== 'undefined') {
+            payload['verificationUrl'] = verificationUrl;
+        }
+        if (typeof userCodeLength !== 'undefined') {
+            payload['userCodeLength'] = userCodeLength;
+        }
+        if (typeof userCodeFormat !== 'undefined') {
+            payload['userCodeFormat'] = userCodeFormat;
+        }
+        if (typeof deviceCodeDuration !== 'undefined') {
+            payload['deviceCodeDuration'] = deviceCodeDuration;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1118,6 +1166,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1200,6 +1249,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1275,6 +1325,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1350,6 +1401,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1418,6 +1470,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1486,6 +1539,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1554,6 +1608,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1622,6 +1677,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1690,6 +1746,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1758,6 +1815,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1826,6 +1884,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1894,6 +1953,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1962,6 +2022,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2030,6 +2091,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2098,6 +2160,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2173,6 +2236,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2241,6 +2305,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2316,6 +2381,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2391,6 +2457,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2473,6 +2540,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2541,6 +2609,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2609,6 +2678,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2684,6 +2754,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2752,6 +2823,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2848,6 +2920,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2930,6 +3003,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2998,6 +3072,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3066,6 +3141,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3134,6 +3210,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3202,6 +3279,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3270,6 +3348,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3338,6 +3417,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3406,6 +3486,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3474,6 +3555,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3542,6 +3624,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3610,6 +3693,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3678,6 +3762,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3746,6 +3831,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3814,6 +3900,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3882,6 +3969,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3950,6 +4038,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4018,6 +4107,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4070,6 +4160,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4130,6 +4221,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4207,6 +4299,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4281,6 +4374,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4358,6 +4452,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4432,6 +4527,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4509,6 +4605,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4583,6 +4680,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4660,6 +4758,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4734,6 +4833,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4811,6 +4911,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4885,6 +4986,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4937,6 +5039,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5050,6 +5153,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5106,6 +5210,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5162,6 +5267,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5218,6 +5324,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5236,10 +5343,11 @@ export class Project {
      * @param {boolean} params.userPhone - Set to true if you want make user phone number visible to all team members, or false to hide it.
      * @param {boolean} params.userName - Set to true if you want make user name visible to all team members, or false to hide it.
      * @param {boolean} params.userMFA - Set to true if you want make user MFA status visible to all team members, or false to hide it.
+     * @param {boolean} params.userAccessedAt - Set to true if you want make user last access time visible to all team members, or false to hide it.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateMembershipPrivacyPolicy(params?: { userId?: boolean, userEmail?: boolean, userPhone?: boolean, userName?: boolean, userMFA?: boolean }): Promise<Models.Project>;
+    updateMembershipPrivacyPolicy(params?: { userId?: boolean, userEmail?: boolean, userPhone?: boolean, userName?: boolean, userMFA?: boolean, userAccessedAt?: boolean }): Promise<Models.Project>;
     /**
      * Updating this policy allows you to control if team members can see other members information. When enabled, all team members can see ID, name, email, phone number, and MFA status of other members..
      *
@@ -5248,26 +5356,28 @@ export class Project {
      * @param {boolean} userPhone - Set to true if you want make user phone number visible to all team members, or false to hide it.
      * @param {boolean} userName - Set to true if you want make user name visible to all team members, or false to hide it.
      * @param {boolean} userMFA - Set to true if you want make user MFA status visible to all team members, or false to hide it.
+     * @param {boolean} userAccessedAt - Set to true if you want make user last access time visible to all team members, or false to hide it.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateMembershipPrivacyPolicy(userId?: boolean, userEmail?: boolean, userPhone?: boolean, userName?: boolean, userMFA?: boolean): Promise<Models.Project>;
+    updateMembershipPrivacyPolicy(userId?: boolean, userEmail?: boolean, userPhone?: boolean, userName?: boolean, userMFA?: boolean, userAccessedAt?: boolean): Promise<Models.Project>;
     updateMembershipPrivacyPolicy(
-        paramsOrFirst?: { userId?: boolean, userEmail?: boolean, userPhone?: boolean, userName?: boolean, userMFA?: boolean } | boolean,
-        ...rest: [(boolean)?, (boolean)?, (boolean)?, (boolean)?]    
+        paramsOrFirst?: { userId?: boolean, userEmail?: boolean, userPhone?: boolean, userName?: boolean, userMFA?: boolean, userAccessedAt?: boolean } | boolean,
+        ...rest: [(boolean)?, (boolean)?, (boolean)?, (boolean)?, (boolean)?]    
     ): Promise<Models.Project> {
-        let params: { userId?: boolean, userEmail?: boolean, userPhone?: boolean, userName?: boolean, userMFA?: boolean };
+        let params: { userId?: boolean, userEmail?: boolean, userPhone?: boolean, userName?: boolean, userMFA?: boolean, userAccessedAt?: boolean };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId?: boolean, userEmail?: boolean, userPhone?: boolean, userName?: boolean, userMFA?: boolean };
+            params = (paramsOrFirst || {}) as { userId?: boolean, userEmail?: boolean, userPhone?: boolean, userName?: boolean, userMFA?: boolean, userAccessedAt?: boolean };
         } else {
             params = {
                 userId: paramsOrFirst as boolean,
                 userEmail: rest[0] as boolean,
                 userPhone: rest[1] as boolean,
                 userName: rest[2] as boolean,
-                userMFA: rest[3] as boolean            
+                userMFA: rest[3] as boolean,
+                userAccessedAt: rest[4] as boolean            
             };
         }
         
@@ -5276,6 +5386,7 @@ export class Project {
         const userPhone = params.userPhone;
         const userName = params.userName;
         const userMFA = params.userMFA;
+        const userAccessedAt = params.userAccessedAt;
 
 
         const apiPath = '/project/policies/membership-privacy';
@@ -5295,11 +5406,15 @@ export class Project {
         if (typeof userMFA !== 'undefined') {
             payload['userMFA'] = userMFA;
         }
+        if (typeof userAccessedAt !== 'undefined') {
+            payload['userAccessedAt'] = userAccessedAt;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5356,6 +5471,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5416,6 +5532,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5472,6 +5589,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5554,6 +5672,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5610,6 +5729,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5666,6 +5786,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5722,6 +5843,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5778,6 +5900,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5834,6 +5957,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5886,6 +6010,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5950,6 +6075,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6014,6 +6140,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6131,6 +6258,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6247,6 +6375,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6353,6 +6482,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6413,6 +6543,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6486,6 +6617,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6546,6 +6678,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6630,6 +6763,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6682,6 +6816,7 @@ export class Project {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6757,6 +6892,7 @@ export class Project {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(

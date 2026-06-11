@@ -13,7 +13,7 @@ const result = await messaging.createSMTPProvider({
     host: '<HOST>',
     port: 1, // optional
     username: '<USERNAME>', // optional
-    password: '<PASSWORD>', // optional
+    password: 'password', // optional
     encryption: SmtpEncryption.None, // optional
     autoTLS: false, // optional
     mailer: '<MAILER>', // optional

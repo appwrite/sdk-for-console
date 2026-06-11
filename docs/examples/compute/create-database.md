@@ -13,8 +13,6 @@ const result = await compute.createDatabase({
     database: '<DATABASE>', // optional
     engine: 'postgres', // optional
     version: '17', // optional
-    region: 'fra', // optional
-    type: 'shared', // optional
     specification: '<SPECIFICATION>', // optional
     backend: 'prisma', // optional
     cpu: 125, // optional
@@ -22,8 +20,7 @@ const result = await compute.createDatabase({
     storage: 1, // optional
     storageClass: 'ssd', // optional
     storageMaxGb: 0, // optional
-    highAvailability: false, // optional
-    highAvailabilityReplicaCount: 0, // optional
+    replicas: 0, // optional
     highAvailabilitySyncMode: 'async', // optional
     networkMaxConnections: 10, // optional
     networkIdleTimeoutSeconds: 60, // optional
@@ -38,7 +35,8 @@ const result = await compute.createDatabase({
     storageAutoscalingThresholdPercent: 50, // optional
     storageAutoscalingMaxGb: 0, // optional
     metricsEnabled: false, // optional
-    poolerEnabled: false // optional
+    poolerEnabled: false, // optional
+    api: 'compute' // optional
 });
 
 console.log(result);

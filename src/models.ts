@@ -1567,7 +1567,7 @@ export namespace Models {
         /**
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
-        default?: any[];
+        default?: number[];
     }
 
     /**
@@ -1609,7 +1609,7 @@ export namespace Models {
         /**
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
-        default?: any[];
+        default?: number[][];
     }
 
     /**
@@ -1651,7 +1651,7 @@ export namespace Models {
         /**
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
-        default?: any[];
+        default?: number[][][];
     }
 
     /**
@@ -2783,7 +2783,7 @@ export namespace Models {
         /**
          * Default value for column when not provided. Cannot be set when column is required.
          */
-        default?: any[];
+        default?: number[];
     }
 
     /**
@@ -2825,7 +2825,7 @@ export namespace Models {
         /**
          * Default value for column when not provided. Cannot be set when column is required.
          */
-        default?: any[];
+        default?: number[][];
     }
 
     /**
@@ -2867,7 +2867,7 @@ export namespace Models {
         /**
          * Default value for column when not provided. Cannot be set when column is required.
          */
-        default?: any[];
+        default?: number[][][];
     }
 
     /**
@@ -3424,6 +3424,26 @@ export namespace Models {
          * Email verification status.
          */
         emailVerification: boolean;
+        /**
+         * Canonical form of the user email address.
+         */
+        emailCanonical?: string;
+        /**
+         * Whether the user email is from a free email provider.
+         */
+        emailIsFree?: boolean;
+        /**
+         * Whether the user email is from a disposable email provider.
+         */
+        emailIsDisposable?: boolean;
+        /**
+         * Whether the user email is from a corporate domain.
+         */
+        emailIsCorporate?: boolean;
+        /**
+         * Whether the user email is in its canonical form.
+         */
+        emailIsCanonical?: boolean;
         /**
          * Phone verification status.
          */
@@ -4075,6 +4095,10 @@ export namespace Models {
          * Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
          */
         mfa: boolean;
+        /**
+         * Most recent access date in ISO 8601 format. Show this attribute by toggling membership privacy in the Console.
+         */
+        userAccessedAt: string;
         /**
          * User list of roles
          */
@@ -5268,6 +5292,10 @@ export namespace Models {
          */
         oAuth2ServerScopes: string[];
         /**
+         * OAuth2 server accepted RFC 9396 authorization_details types
+         */
+        oAuth2ServerAuthorizationDetailsTypes: string[];
+        /**
          * OAuth2 server access token duration in seconds for confidential clients
          */
         oAuth2ServerAccessTokenDuration: number;
@@ -5287,6 +5315,22 @@ export namespace Models {
          * When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
          */
         oAuth2ServerConfidentialPkce: boolean;
+        /**
+         * URL to your application page where users enter the device flow user code. Empty when the Device Authorization Grant is not configured.
+         */
+        oAuth2ServerVerificationUrl: string;
+        /**
+         * Number of characters in the device flow user code, excluding the formatting separator.
+         */
+        oAuth2ServerUserCodeLength: number;
+        /**
+         * Character set for device flow user codes: `numeric`, `alphabetic`, or `alphanumeric`.
+         */
+        oAuth2ServerUserCodeFormat: string;
+        /**
+         * Lifetime in seconds of device flow device codes and user codes.
+         */
+        oAuth2ServerDeviceCodeDuration: number;
         /**
          * OAuth2 server discovery URL
          */
@@ -6665,6 +6709,10 @@ export namespace Models {
          * Whether user MFA status is visible in memberships.
          */
         userMFA: boolean;
+        /**
+         * Whether user last access time is visible in memberships.
+         */
+        userAccessedAt: boolean;
     }
 
     /**
@@ -9268,54 +9316,6 @@ export namespace Models {
          */
         hostname: string;
         /**
-         * Operating system code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/os.json).
-         */
-        osCode: string;
-        /**
-         * Operating system name.
-         */
-        osName: string;
-        /**
-         * Operating system version.
-         */
-        osVersion: string;
-        /**
-         * Client type.
-         */
-        clientType: string;
-        /**
-         * Client code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/clients.json).
-         */
-        clientCode: string;
-        /**
-         * Client name.
-         */
-        clientName: string;
-        /**
-         * Client version.
-         */
-        clientVersion: string;
-        /**
-         * Client engine name.
-         */
-        clientEngine: string;
-        /**
-         * Client engine name.
-         */
-        clientEngineVersion: string;
-        /**
-         * Device name.
-         */
-        deviceName: string;
-        /**
-         * Device brand name.
-         */
-        deviceBrand: string;
-        /**
-         * Device model name.
-         */
-        deviceModel: string;
-        /**
          * Country two-character ISO 3166-1 alpha code.
          */
         countryCode: string;
@@ -10237,6 +10237,38 @@ export namespace Models {
          * Unix timestamp when the branch expires.
          */
         expiresAt: number;
+        /**
+         * Branch hostname for direct connections.
+         */
+        host: string;
+        /**
+         * Branch port.
+         */
+        port: number;
+        /**
+         * Database name the client sends for routing to the branch.
+         */
+        database: string;
+        /**
+         * Database username. Shared with the parent database.
+         */
+        username: string;
+        /**
+         * Database password. Shared with the parent database.
+         */
+        password: string;
+        /**
+         * Whether SSL is required.
+         */
+        ssl: boolean;
+        /**
+         * Database engine. Possible values: postgres, mysql, mariadb, mongodb.
+         */
+        engine: string;
+        /**
+         * Full connection string for the branch.
+         */
+        connectionString: string;
     }
 
     /**
@@ -10396,6 +10428,18 @@ export namespace Models {
          */
         database: string;
         /**
+         * Database TCP hostname or address.
+         */
+        tcpHost: string;
+        /**
+         * Database TCP port.
+         */
+        tcpPort: number;
+        /**
+         * Database name for direct TCP connections.
+         */
+        tcpDatabase: string;
+        /**
          * Database engine. Possible values: postgres, mysql, mariadb, mongodb.
          */
         engine: string;
@@ -10488,56 +10532,6 @@ export namespace Models {
     }
 
     /**
-     * DatabaseMetrics
-     */
-    export type DedicatedDatabaseMetrics = {
-        /**
-         * Metrics aggregation period. Possible values: 1h (last hour), 24h (last 24 hours), 7d (last 7 days), 30d (last 30 days).
-         */
-        period: string;
-        /**
-         * Average CPU usage percentage.
-         */
-        cpuPercent: number;
-        /**
-         * Average memory usage percentage.
-         */
-        memoryPercent: number;
-        /**
-         * Memory used in bytes.
-         */
-        memoryUsedBytes: number;
-        /**
-         * Maximum memory available in bytes.
-         */
-        memoryMaxBytes: number;
-        /**
-         * Storage used in bytes.
-         */
-        storageUsedBytes: number;
-        /**
-         * Current active connections.
-         */
-        connectionsActive: number;
-        /**
-         * Maximum connections configured.
-         */
-        connectionsMax: number;
-        /**
-         * Average read IOPS.
-         */
-        iopsRead: number;
-        /**
-         * Average write IOPS.
-         */
-        iopsWrite: number;
-        /**
-         * Queries per second.
-         */
-        qps: number;
-    }
-
-    /**
      * DedicatedDatabase
      */
     export type DedicatedDatabase = {
@@ -10562,17 +10556,9 @@ export namespace Models {
          */
         name: string;
         /**
-         * Database type: shared (serverless) or dedicated (always-on).
-         */
-        type: string;
-        /**
          * Product API that owns this database: compute, documentsdb, or vectorsdb.
          */
         api: string;
-        /**
-         * Region identifier (e.g., fra, nyc, syd).
-         */
-        region: string;
         /**
          * Database engine: postgres, mysql, mariadb, or mongodb.
          */
@@ -10614,7 +10600,7 @@ export namespace Models {
          */
         status: string;
         /**
-         * Container status for shared databases: active or inactive.
+         * Container status for lifecycle-managed database runtimes: active or inactive.
          */
         containerStatus: string;
         /**
@@ -10654,13 +10640,9 @@ export namespace Models {
          */
         nodePool: string;
         /**
-         * Whether high availability is enabled.
+         * Number of high availability replicas. High availability is enabled when greater than 0.
          */
-        highAvailability: boolean;
-        /**
-         * Number of high availability replicas.
-         */
-        highAvailabilityReplicaCount: number;
+        replicas: number;
         /**
          * Replication sync mode: async, sync, or quorum.
          */
@@ -10726,7 +10708,7 @@ export namespace Models {
          */
         sqlApiEnabled: boolean;
         /**
-         * Statement types accepted by the SQL API. Allowed values: SELECT, INSERT, UPDATE, DELETE.
+         * Statement types accepted by the SQL API. Defaults to DML only; DDL/DCL types (CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE) are opt-in per database. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.
          */
         sqlApiAllowedStatements: string[];
         /**
@@ -11708,80 +11690,6 @@ export namespace Models {
     }
 
     /**
-     * PerformanceInsights
-     */
-    export type DedicatedDatabasePerformanceInsights = {
-        /**
-         * Top queries by total execution time.
-         */
-        topQueries: DedicatedDatabasePerformanceInsightsQuery[];
-        /**
-         * Active wait events.
-         */
-        waitEvents: DedicatedDatabasePerformanceInsightsWaitEvent[];
-        /**
-         * Total number of query calls.
-         */
-        totalCalls: number;
-        /**
-         * Total query execution time in milliseconds.
-         */
-        totalTimeMs: number;
-        /**
-         * Average query execution time in milliseconds.
-         */
-        avgTimeMs: number;
-    }
-
-    /**
-     * PerformanceInsightsQuery
-     */
-    export type DedicatedDatabasePerformanceInsightsQuery = {
-        /**
-         * The SQL query text.
-         */
-        query: string;
-        /**
-         * Number of times this query has been executed.
-         */
-        calls: number;
-        /**
-         * Total execution time in milliseconds.
-         */
-        totalTimeMs: number;
-        /**
-         * Mean execution time in milliseconds.
-         */
-        meanTimeMs: number;
-        /**
-         * Total rows returned or affected.
-         */
-        rows: number;
-    }
-
-    /**
-     * PerformanceInsightsWaitEvent
-     */
-    export type DedicatedDatabasePerformanceInsightsWaitEvent = {
-        /**
-         * Wait event name.
-         */
-        event: string;
-        /**
-         * Wait event type or category.
-         */
-        type: string;
-        /**
-         * Number of occurrences.
-         */
-        count: number;
-        /**
-         * Total wait time in milliseconds.
-         */
-        totalWaitMs: number;
-    }
-
-    /**
      * PITRWindows
      */
     export type DedicatedDatabasePITRWindows = {
@@ -11963,6 +11871,10 @@ export namespace Models {
          * Policy backup schedule in CRON format.
          */
         schedule: string;
+        /**
+         * Backup type. Possible values: full (complete database snapshot), incremental (changes since last backup).
+         */
+        type: string;
         /**
          * Is this policy enabled.
          */
@@ -12241,38 +12153,6 @@ export namespace Models {
          * Array of roles assigned to current user.
          */
         roles: string[];
-    }
-
-    /**
-     * Schema
-     */
-    export type DedicatedDatabaseSchema = {
-        /**
-         * List of tables with columns, types, and constraints.
-         */
-        tables: Record<string, any>[];
-        /**
-         * List of indexes across all tables.
-         */
-        indexes: Record<string, any>[];
-    }
-
-    /**
-     * SchemaPreview
-     */
-    export type DedicatedDatabaseSchemaPreview = {
-        /**
-         * Whether the engine supports transactional DDL for safe preview.
-         */
-        supportsTransactionalDDL: boolean;
-        /**
-         * Schema change preview output.
-         */
-        preview: string;
-        /**
-         * List of tables in the database after the change.
-         */
-        tables: string[];
     }
 
     /**
@@ -12846,13 +12726,33 @@ export namespace Models {
          */
         name: string;
         /**
+         * Application description shown to users during OAuth2 consent.
+         */
+        description: string;
+        /**
+         * Application homepage URL shown to users during OAuth2 consent.
+         */
+        clientUri: string;
+        /**
+         * Application logo URL shown to users during OAuth2 consent.
+         */
+        logoUri: string;
+        /**
+         * Application privacy policy URL shown to users during OAuth2 consent.
+         */
+        privacyPolicyUrl: string;
+        /**
+         * Application terms of service URL shown to users during OAuth2 consent.
+         */
+        termsUrl: string;
+        /**
+         * Application support or security contact emails.
+         */
+        contacts: string[];
+        /**
          * List of authorized redirect URIs. These URIs can be used to redirect users after they authenticate.
          */
         redirectUris: string[];
-        /**
-         * When true, the application is restricted to the owner user (if `userId` is set) or members of `teamId` (if set). When false, any user in the project can authorize against the app.
-         */
-        internal: boolean;
         /**
          * Whether the app is enabled or not.
          */
@@ -12861,6 +12761,10 @@ export namespace Models {
          * OAuth2 client type. `public` for SPAs, mobile, and native apps that cannot keep a client secret (PKCE required); `confidential` for server-side clients that authenticate with a client secret.
          */
         type: string;
+        /**
+         * Whether this client may use the OAuth2 Device Authorization Grant (RFC 8628).
+         */
+        deviceFlow: boolean;
         /**
          * ID of team that owns the application, if owned by team. Otherwise, user ID will be used.
          */
@@ -12896,9 +12800,13 @@ export namespace Models {
          */
         appId: string;
         /**
-         * Masked application client secret. Only the last 6 characters are returned.
+         * Hashed application client secret.
          */
         secret: string;
+        /**
+         * Last few characters of the client secret, used to help identify it.
+         */
+        hint: string;
         /**
          * ID of the user who created the secret.
          */
@@ -12937,6 +12845,10 @@ export namespace Models {
          * Application client secret. Returned in full only when the secret is created; subsequent reads return a masked value.
          */
         secret: string;
+        /**
+         * Last few characters of the client secret, used to help identify it.
+         */
+        hint: string;
         /**
          * ID of the user who created the secret.
          */

@@ -13,7 +13,7 @@ const result = await migrations.createSupabaseMigration({
     apiKey: '<API_KEY>',
     databaseHost: '<DATABASE_HOST>',
     username: '<USERNAME>',
-    password: '<PASSWORD>',
+    password: 'password',
     port: null // optional
 });
 

@@ -9,7 +9,7 @@ const users = new Users(client);
 
 const result = await users.updatePassword({
     userId: '<USER_ID>',
-    password: ''
+    password: 'password'
 });
 
 console.log(result);

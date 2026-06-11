@@ -1,5 +1,29 @@
 # Change Log
 
+## 14.0.0
+
+* Breaking: Removed `getDatabaseMetrics`, `getDatabaseInsights`, `getDatabaseSchema`, and `createDatabaseSchemaPreview` from `Compute` service
+* Breaking: Removed `region` and `type` parameters from `createDatabase` on `Compute` service
+* Breaking: Replaced `highAvailability` and `highAvailabilityReplicaCount` with `replicas` on `createDatabase` and `updateDatabase`
+* Breaking: Removed `type`, `region`, and `highAvailability` fields from `DedicatedDatabase` model
+* Breaking: Removed `DedicatedDatabaseMetrics`, `DedicatedDatabaseSchema`, `DedicatedDatabaseSchemaPreview`, and performance insights models
+* Breaking: Removed OS, client, and device fields from `ActivityEvent` model
+* Breaking: Removed `internal` parameter and field from `Apps` service and `App` model
+* Breaking: `getInvoiceDownload` and `getInvoiceView` on `Organizations` now return a URL string
+* Breaking: Geometric attribute and column models now type `default` as number arrays instead of `any[]`
+* Added: OAuth2 Device Authorization Grant support with `deviceFlow` on apps and device code settings on `updateOAuth2Server`
+* Added: Consent metadata on `Apps` service (`description`, `clientUri`, `logoUri`, `privacyPolicyUrl`, `termsUrl`, `contacts`)
+* Added: `authorizationDetailsTypes` parameter on `updateOAuth2Server` for RFC 9396 support
+* Added: `dedicatedDatabaseId` parameter on `create` for `TablesDB`, `DocumentsDB`, and `VectorsDB`
+* Added: `api` parameter on `createDatabase` and `DedicatedDatabasesExecute` key scope
+* Added: `userAccessedAt` membership privacy setting and field on `Membership` model
+* Added: Email classification fields on `User` model (`emailCanonical`, `emailIsFree`, `emailIsDisposable`, `emailIsCorporate`, `emailIsCanonical`)
+* Added: Connection details on `Branch` model and TCP connection fields on dedicated database connection model
+* Added: `type` field on backup policies for full or incremental backups
+* Added: `hint` field on app secret models for identifying secrets
+* Updated: SQL API allowed statements now support DDL and DCL types as opt-in
+* Updated: All requests now send an explicit `accept` header
+
 ## 13.2.0
 
 * Added: `Apps` service for managing OAuth2 apps, secrets, and tokens

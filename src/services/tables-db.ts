@@ -72,6 +72,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -89,10 +90,11 @@ export class TablesDB {
      * @param {string} params.databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {string} params.dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
-    create(params: { databaseId: string, name: string, enabled?: boolean }): Promise<Models.Database>;
+    create(params: { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string }): Promise<Models.Database>;
     /**
      * Create a new Database.
      * 
@@ -100,30 +102,33 @@ export class TablesDB {
      * @param {string} databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {string} dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(databaseId: string, name: string, enabled?: boolean): Promise<Models.Database>;
+    create(databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string): Promise<Models.Database>;
     create(
-        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (boolean)?]    
+        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string } | string,
+        ...rest: [(string)?, (boolean)?, (string)?]    
     ): Promise<Models.Database> {
-        let params: { databaseId: string, name: string, enabled?: boolean };
+        let params: { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean };
+            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
-                enabled: rest[1] as boolean            
+                enabled: rest[1] as boolean,
+                dedicatedDatabaseId: rest[2] as string            
             };
         }
         
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
+        const dedicatedDatabaseId = params.dedicatedDatabaseId;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
@@ -143,11 +148,15 @@ export class TablesDB {
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
         }
+        if (typeof dedicatedDatabaseId !== 'undefined') {
+            payload['dedicatedDatabaseId'] = dedicatedDatabaseId;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -200,6 +209,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -253,6 +263,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -305,6 +316,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -373,6 +385,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -487,6 +500,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -539,6 +553,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -591,6 +606,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -659,6 +675,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -786,6 +803,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -895,6 +913,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -955,6 +974,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1051,6 +1071,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1186,6 +1207,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1297,6 +1319,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1408,6 +1431,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1505,6 +1529,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1600,6 +1625,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1695,6 +1721,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1790,6 +1817,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1887,6 +1915,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -1984,6 +2013,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2089,6 +2119,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2196,6 +2227,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2307,6 +2339,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2418,6 +2451,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2529,6 +2563,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2640,6 +2675,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2737,6 +2773,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2834,6 +2871,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2851,11 +2889,11 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {any[]} params.xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
+     * @param {any[][]} params.xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnLine>}
      */
-    createLineColumn(params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[] }): Promise<Models.ColumnLine>;
+    createLineColumn(params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][] }): Promise<Models.ColumnLine>;
     /**
      * Create a geometric line column.
      *
@@ -2863,27 +2901,27 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {any[]} xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
+     * @param {any[][]} xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnLine>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createLineColumn(databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[]): Promise<Models.ColumnLine>;
+    createLineColumn(databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][]): Promise<Models.ColumnLine>;
     createLineColumn(
-        paramsOrFirst: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[] } | string,
-        ...rest: [(string)?, (string)?, (boolean)?, (any[])?]    
+        paramsOrFirst: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][] } | string,
+        ...rest: [(string)?, (string)?, (boolean)?, (any[][])?]    
     ): Promise<Models.ColumnLine> {
-        let params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[] };
+        let params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][] };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[] };
+            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][] };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as any[]            
+                xdefault: rest[3] as any[][]            
             };
         }
         
@@ -2922,6 +2960,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -2939,12 +2978,12 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {any[]} params.xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
+     * @param {any[][]} params.xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
      * @param {string} params.newKey - New Column Key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnLine>}
      */
-    updateLineColumn(params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string }): Promise<Models.ColumnLine>;
+    updateLineColumn(params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][], newKey?: string }): Promise<Models.ColumnLine>;
     /**
      * Update a line column. Changing the `default` value will not update already existing rows.
      *
@@ -2952,28 +2991,28 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {any[]} xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
+     * @param {any[][]} xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
      * @param {string} newKey - New Column Key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnLine>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateLineColumn(databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string): Promise<Models.ColumnLine>;
+    updateLineColumn(databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][], newKey?: string): Promise<Models.ColumnLine>;
     updateLineColumn(
-        paramsOrFirst: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string } | string,
-        ...rest: [(string)?, (string)?, (boolean)?, (any[])?, (string)?]    
+        paramsOrFirst: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][], newKey?: string } | string,
+        ...rest: [(string)?, (string)?, (boolean)?, (any[][])?, (string)?]    
     ): Promise<Models.ColumnLine> {
-        let params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string };
+        let params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][], newKey?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string };
+            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][], newKey?: string };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as any[],
+                xdefault: rest[3] as any[][],
                 newKey: rest[4] as string            
             };
         }
@@ -3014,6 +3053,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3118,6 +3158,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3215,6 +3256,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3319,6 +3361,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3416,6 +3459,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3433,11 +3477,11 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {any[]} params.xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
+     * @param {number[]} params.xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPoint>}
      */
-    createPointColumn(params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[] }): Promise<Models.ColumnPoint>;
+    createPointColumn(params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: number[] }): Promise<Models.ColumnPoint>;
     /**
      * Create a geometric point column.
      *
@@ -3445,27 +3489,27 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {any[]} xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
+     * @param {number[]} xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPoint>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPointColumn(databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[]): Promise<Models.ColumnPoint>;
+    createPointColumn(databaseId: string, tableId: string, key: string, required: boolean, xdefault?: number[]): Promise<Models.ColumnPoint>;
     createPointColumn(
-        paramsOrFirst: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[] } | string,
-        ...rest: [(string)?, (string)?, (boolean)?, (any[])?]    
+        paramsOrFirst: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: number[] } | string,
+        ...rest: [(string)?, (string)?, (boolean)?, (number[])?]    
     ): Promise<Models.ColumnPoint> {
-        let params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[] };
+        let params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: number[] };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[] };
+            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: number[] };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as any[]            
+                xdefault: rest[3] as number[]            
             };
         }
         
@@ -3504,6 +3548,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3521,12 +3566,12 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {any[]} params.xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
+     * @param {number[]} params.xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
      * @param {string} params.newKey - New Column Key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPoint>}
      */
-    updatePointColumn(params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string }): Promise<Models.ColumnPoint>;
+    updatePointColumn(params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: number[], newKey?: string }): Promise<Models.ColumnPoint>;
     /**
      * Update a point column. Changing the `default` value will not update already existing rows.
      *
@@ -3534,28 +3579,28 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {any[]} xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
+     * @param {number[]} xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
      * @param {string} newKey - New Column Key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPoint>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePointColumn(databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string): Promise<Models.ColumnPoint>;
+    updatePointColumn(databaseId: string, tableId: string, key: string, required: boolean, xdefault?: number[], newKey?: string): Promise<Models.ColumnPoint>;
     updatePointColumn(
-        paramsOrFirst: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string } | string,
-        ...rest: [(string)?, (string)?, (boolean)?, (any[])?, (string)?]    
+        paramsOrFirst: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: number[], newKey?: string } | string,
+        ...rest: [(string)?, (string)?, (boolean)?, (number[])?, (string)?]    
     ): Promise<Models.ColumnPoint> {
-        let params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string };
+        let params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: number[], newKey?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string };
+            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: number[], newKey?: string };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as any[],
+                xdefault: rest[3] as number[],
                 newKey: rest[4] as string            
             };
         }
@@ -3596,6 +3641,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3613,11 +3659,11 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {any[]} params.xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
+     * @param {any[][]} params.xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPolygon>}
      */
-    createPolygonColumn(params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[] }): Promise<Models.ColumnPolygon>;
+    createPolygonColumn(params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][] }): Promise<Models.ColumnPolygon>;
     /**
      * Create a geometric polygon column.
      *
@@ -3625,27 +3671,27 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {any[]} xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
+     * @param {any[][]} xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPolygon>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPolygonColumn(databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[]): Promise<Models.ColumnPolygon>;
+    createPolygonColumn(databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][]): Promise<Models.ColumnPolygon>;
     createPolygonColumn(
-        paramsOrFirst: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[] } | string,
-        ...rest: [(string)?, (string)?, (boolean)?, (any[])?]    
+        paramsOrFirst: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][] } | string,
+        ...rest: [(string)?, (string)?, (boolean)?, (any[][])?]    
     ): Promise<Models.ColumnPolygon> {
-        let params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[] };
+        let params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][] };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[] };
+            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][] };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as any[]            
+                xdefault: rest[3] as any[][]            
             };
         }
         
@@ -3684,6 +3730,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3701,12 +3748,12 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {any[]} params.xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
+     * @param {any[][]} params.xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
      * @param {string} params.newKey - New Column Key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPolygon>}
      */
-    updatePolygonColumn(params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string }): Promise<Models.ColumnPolygon>;
+    updatePolygonColumn(params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][], newKey?: string }): Promise<Models.ColumnPolygon>;
     /**
      * Update a polygon column. Changing the `default` value will not update already existing rows.
      *
@@ -3714,28 +3761,28 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {any[]} xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
+     * @param {any[][]} xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
      * @param {string} newKey - New Column Key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPolygon>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePolygonColumn(databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string): Promise<Models.ColumnPolygon>;
+    updatePolygonColumn(databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][], newKey?: string): Promise<Models.ColumnPolygon>;
     updatePolygonColumn(
-        paramsOrFirst: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string } | string,
-        ...rest: [(string)?, (string)?, (boolean)?, (any[])?, (string)?]    
+        paramsOrFirst: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][], newKey?: string } | string,
+        ...rest: [(string)?, (string)?, (boolean)?, (any[][])?, (string)?]    
     ): Promise<Models.ColumnPolygon> {
-        let params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string };
+        let params: { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][], newKey?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[], newKey?: string };
+            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, key: string, required: boolean, xdefault?: any[][], newKey?: string };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as any[],
+                xdefault: rest[3] as any[][],
                 newKey: rest[4] as string            
             };
         }
@@ -3776,6 +3823,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -3887,6 +3935,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4002,6 +4051,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4107,6 +4157,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4211,6 +4262,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4308,6 +4360,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4405,6 +4458,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4502,6 +4556,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4616,6 +4671,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4720,6 +4776,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4787,6 +4844,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -4939,6 +4997,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5013,6 +5072,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5120,6 +5180,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5187,6 +5248,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5322,6 +5384,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5410,6 +5473,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5505,6 +5569,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5583,6 +5648,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5663,6 +5729,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5745,6 +5812,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5820,6 +5888,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5901,6 +5970,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5990,6 +6060,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6079,6 +6150,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6228,6 +6300,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6324,6 +6397,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6420,6 +6494,7 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6487,6 +6562,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -6547,6 +6623,7 @@ export class TablesDB {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
         }
 
         return this.client.call(

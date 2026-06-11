@@ -10,7 +10,8 @@ const documentsDB = new DocumentsDB(client);
 const result = await documentsDB.create({
     databaseId: '<DATABASE_ID>',
     name: '<NAME>',
-    enabled: false // optional
+    enabled: false, // optional
+    dedicatedDatabaseId: '<DEDICATED_DATABASE_ID>' // optional
 });
 
 console.log(result);

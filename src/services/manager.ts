@@ -91,6 +91,7 @@ export class Manager {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -164,6 +165,7 @@ export class Manager {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -215,6 +217,7 @@ export class Manager {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -310,6 +313,7 @@ export class Manager {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -387,6 +391,7 @@ export class Manager {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
