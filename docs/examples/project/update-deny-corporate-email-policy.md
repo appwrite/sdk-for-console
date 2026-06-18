@@ -1,14 +1,14 @@
 ```javascript
-import { Client, Avatars } from "@appwrite.io/console";
+import { Client, Project } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const avatars = new Avatars(client);
+const project = new Project(client);
 
-const result = avatars.getFavicon({
-    url: 'https://example.com'
+const result = await project.updateDenyCorporateEmailPolicy({
+    enabled: false
 });
 
 console.log(result);

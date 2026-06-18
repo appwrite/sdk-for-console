@@ -1,5 +1,19 @@
 # Change Log
 
+## 15.0.0
+
+* Breaking: `listEvents` and `listGauges` on `Usage` now require `metric` and use dimension/interval aggregation instead of `queries`/`total`
+* Breaking: Removed `UsageEvent` and `UsageGauge` models; `UsageEventList` and `UsageGaugeList` now expose `metric`, `interval`, and `groups`
+* Added: New `Oauth2` service with `authorize`, `approve`, `reject`, `createGrant`, `getGrant`, `revoke`, `logout`, `createDeviceAuthorization`, and `createToken`
+* Added: OAuth2 models `Oauth2Authorize`, `Oauth2Approve`, `Oauth2Reject`, `Oauth2Grant`, `Oauth2DeviceAuthorization`, and `Oauth2Token`
+* Added: `setCredentials` on `Client` to control whether fetch sends cookies
+* Added: `tagline`, `tags`, `images`, `supportUrl`, and `dataDeletionUrl` consent params on `Apps` `create` and `update`
+* Added: `postLogoutRedirectUris` on `Apps` `create` and `update` for OpenID Connect RP-Initiated Logout
+* Added: `updateDenyCorporateEmailPolicy` on `Project` and `PolicyDenyCorporateEmail` model
+* Added: `supportsCorporateEmailValidation` field on plan model
+* Added: `oauth2` service ID and `disputes` query suggestion resource enum values
+* Updated: `storageClass` now documents `ssd` as the only allowed value on `Compute`
+
 ## 14.0.0
 
 * Breaking: Removed `getDatabaseMetrics`, `getDatabaseInsights`, `getDatabaseSchema`, and `createDatabaseSchemaPreview` from `Compute` service

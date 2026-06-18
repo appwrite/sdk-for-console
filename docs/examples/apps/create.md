@@ -17,6 +17,12 @@ const result = await apps.create({
     privacyPolicyUrl: 'https://example.com', // optional
     termsUrl: 'https://example.com', // optional
     contacts: [], // optional
+    tagline: '<TAGLINE>', // optional
+    tags: [], // optional
+    images: [], // optional
+    supportUrl: 'https://example.com', // optional
+    dataDeletionUrl: 'https://example.com', // optional
+    postLogoutRedirectUris: [], // optional
     enabled: false, // optional
     type: 'public', // optional
     deviceFlow: false, // optional

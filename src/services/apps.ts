@@ -83,6 +83,12 @@ export class Apps {
      * @param {string} params.privacyPolicyUrl - Application privacy policy URL shown to users during OAuth2 consent.
      * @param {string} params.termsUrl - Application terms of service URL shown to users during OAuth2 consent.
      * @param {string[]} params.contacts - Application support or security contact emails. Maximum of 100 contacts are allowed.
+     * @param {string} params.tagline - Application tagline shown to users during OAuth2 consent.
+     * @param {string[]} params.tags - Application tags shown to users during OAuth2 consent. Maximum of 100 tags are allowed, each up to 64 characters long.
+     * @param {string[]} params.images - Application image URLs shown to users during OAuth2 consent. Maximum of 100 images are allowed.
+     * @param {string} params.supportUrl - Application support URL shown to users during OAuth2 consent.
+     * @param {string} params.dataDeletionUrl - Application data deletion URL shown to users during OAuth2 consent.
+     * @param {string[]} params.postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout (array of valid URLs). After ending the user session, the logout endpoint only redirects to URIs in this list.
      * @param {boolean} params.enabled - Is application enabled?
      * @param {string} params.type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
      * @param {boolean} params.deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
@@ -90,7 +96,7 @@ export class Apps {
      * @throws {AppwriteException}
      * @returns {Promise<Models.App>}
      */
-    create(params: { appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string }): Promise<Models.App>;
+    create(params: { appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, postLogoutRedirectUris?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string }): Promise<Models.App>;
     /**
      * Create a new application.
      *
@@ -103,6 +109,12 @@ export class Apps {
      * @param {string} privacyPolicyUrl - Application privacy policy URL shown to users during OAuth2 consent.
      * @param {string} termsUrl - Application terms of service URL shown to users during OAuth2 consent.
      * @param {string[]} contacts - Application support or security contact emails. Maximum of 100 contacts are allowed.
+     * @param {string} tagline - Application tagline shown to users during OAuth2 consent.
+     * @param {string[]} tags - Application tags shown to users during OAuth2 consent. Maximum of 100 tags are allowed, each up to 64 characters long.
+     * @param {string[]} images - Application image URLs shown to users during OAuth2 consent. Maximum of 100 images are allowed.
+     * @param {string} supportUrl - Application support URL shown to users during OAuth2 consent.
+     * @param {string} dataDeletionUrl - Application data deletion URL shown to users during OAuth2 consent.
+     * @param {string[]} postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout (array of valid URLs). After ending the user session, the logout endpoint only redirects to URIs in this list.
      * @param {boolean} enabled - Is application enabled?
      * @param {string} type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
      * @param {boolean} deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
@@ -111,15 +123,15 @@ export class Apps {
      * @returns {Promise<Models.App>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string): Promise<Models.App>;
+    create(appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, postLogoutRedirectUris?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string): Promise<Models.App>;
     create(
-        paramsOrFirst: { appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string } | string,
-        ...rest: [(string)?, (string[])?, (string)?, (string)?, (string)?, (string)?, (string)?, (string[])?, (boolean)?, (string)?, (boolean)?, (string)?]    
+        paramsOrFirst: { appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, postLogoutRedirectUris?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string } | string,
+        ...rest: [(string)?, (string[])?, (string)?, (string)?, (string)?, (string)?, (string)?, (string[])?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (string[])?, (boolean)?, (string)?, (boolean)?, (string)?]    
     ): Promise<Models.App> {
-        let params: { appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string };
+        let params: { appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, postLogoutRedirectUris?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string };
+            params = (paramsOrFirst || {}) as { appId: string, name: string, redirectUris: string[], description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, postLogoutRedirectUris?: string[], enabled?: boolean, type?: string, deviceFlow?: boolean, teamId?: string };
         } else {
             params = {
                 appId: paramsOrFirst as string,
@@ -131,10 +143,16 @@ export class Apps {
                 privacyPolicyUrl: rest[5] as string,
                 termsUrl: rest[6] as string,
                 contacts: rest[7] as string[],
-                enabled: rest[8] as boolean,
-                type: rest[9] as string,
-                deviceFlow: rest[10] as boolean,
-                teamId: rest[11] as string            
+                tagline: rest[8] as string,
+                tags: rest[9] as string[],
+                images: rest[10] as string[],
+                supportUrl: rest[11] as string,
+                dataDeletionUrl: rest[12] as string,
+                postLogoutRedirectUris: rest[13] as string[],
+                enabled: rest[14] as boolean,
+                type: rest[15] as string,
+                deviceFlow: rest[16] as boolean,
+                teamId: rest[17] as string            
             };
         }
         
@@ -147,6 +165,12 @@ export class Apps {
         const privacyPolicyUrl = params.privacyPolicyUrl;
         const termsUrl = params.termsUrl;
         const contacts = params.contacts;
+        const tagline = params.tagline;
+        const tags = params.tags;
+        const images = params.images;
+        const supportUrl = params.supportUrl;
+        const dataDeletionUrl = params.dataDeletionUrl;
+        const postLogoutRedirectUris = params.postLogoutRedirectUris;
         const enabled = params.enabled;
         const type = params.type;
         const deviceFlow = params.deviceFlow;
@@ -188,8 +212,26 @@ export class Apps {
         if (typeof contacts !== 'undefined') {
             payload['contacts'] = contacts;
         }
+        if (typeof tagline !== 'undefined') {
+            payload['tagline'] = tagline;
+        }
+        if (typeof tags !== 'undefined') {
+            payload['tags'] = tags;
+        }
+        if (typeof images !== 'undefined') {
+            payload['images'] = images;
+        }
+        if (typeof supportUrl !== 'undefined') {
+            payload['supportUrl'] = supportUrl;
+        }
+        if (typeof dataDeletionUrl !== 'undefined') {
+            payload['dataDeletionUrl'] = dataDeletionUrl;
+        }
         if (typeof redirectUris !== 'undefined') {
             payload['redirectUris'] = redirectUris;
+        }
+        if (typeof postLogoutRedirectUris !== 'undefined') {
+            payload['postLogoutRedirectUris'] = postLogoutRedirectUris;
         }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
@@ -283,14 +325,20 @@ export class Apps {
      * @param {string} params.privacyPolicyUrl - Application privacy policy URL shown to users during OAuth2 consent.
      * @param {string} params.termsUrl - Application terms of service URL shown to users during OAuth2 consent.
      * @param {string[]} params.contacts - Application support or security contact emails. Maximum of 100 contacts are allowed.
+     * @param {string} params.tagline - Application tagline shown to users during OAuth2 consent.
+     * @param {string[]} params.tags - Application tags shown to users during OAuth2 consent. Maximum of 100 tags are allowed, each up to 64 characters long.
+     * @param {string[]} params.images - Application image URLs shown to users during OAuth2 consent. Maximum of 100 images are allowed.
+     * @param {string} params.supportUrl - Application support URL shown to users during OAuth2 consent.
+     * @param {string} params.dataDeletionUrl - Application data deletion URL shown to users during OAuth2 consent.
      * @param {boolean} params.enabled - Is application enabled?
      * @param {string[]} params.redirectUris - Redirect URIs (array of valid URLs).
+     * @param {string[]} params.postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout (array of valid URLs). After ending the user session, the logout endpoint only redirects to URIs in this list.
      * @param {string} params.type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
      * @param {boolean} params.deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
      * @throws {AppwriteException}
      * @returns {Promise<Models.App>}
      */
-    update(params: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, redirectUris?: string[], type?: string, deviceFlow?: boolean }): Promise<Models.App>;
+    update(params: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean }): Promise<Models.App>;
     /**
      * Update an application by its unique ID.
      *
@@ -302,23 +350,29 @@ export class Apps {
      * @param {string} privacyPolicyUrl - Application privacy policy URL shown to users during OAuth2 consent.
      * @param {string} termsUrl - Application terms of service URL shown to users during OAuth2 consent.
      * @param {string[]} contacts - Application support or security contact emails. Maximum of 100 contacts are allowed.
+     * @param {string} tagline - Application tagline shown to users during OAuth2 consent.
+     * @param {string[]} tags - Application tags shown to users during OAuth2 consent. Maximum of 100 tags are allowed, each up to 64 characters long.
+     * @param {string[]} images - Application image URLs shown to users during OAuth2 consent. Maximum of 100 images are allowed.
+     * @param {string} supportUrl - Application support URL shown to users during OAuth2 consent.
+     * @param {string} dataDeletionUrl - Application data deletion URL shown to users during OAuth2 consent.
      * @param {boolean} enabled - Is application enabled?
      * @param {string[]} redirectUris - Redirect URIs (array of valid URLs).
+     * @param {string[]} postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout (array of valid URLs). After ending the user session, the logout endpoint only redirects to URIs in this list.
      * @param {string} type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
      * @param {boolean} deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
      * @throws {AppwriteException}
      * @returns {Promise<Models.App>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, redirectUris?: string[], type?: string, deviceFlow?: boolean): Promise<Models.App>;
+    update(appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean): Promise<Models.App>;
     update(
-        paramsOrFirst: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, redirectUris?: string[], type?: string, deviceFlow?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string[])?, (boolean)?, (string[])?, (string)?, (boolean)?]    
+        paramsOrFirst: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string[])?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (boolean)?, (string[])?, (string[])?, (string)?, (boolean)?]    
     ): Promise<Models.App> {
-        let params: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, redirectUris?: string[], type?: string, deviceFlow?: boolean };
+        let params: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], enabled?: boolean, redirectUris?: string[], type?: string, deviceFlow?: boolean };
+            params = (paramsOrFirst || {}) as { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean };
         } else {
             params = {
                 appId: paramsOrFirst as string,
@@ -329,10 +383,16 @@ export class Apps {
                 privacyPolicyUrl: rest[4] as string,
                 termsUrl: rest[5] as string,
                 contacts: rest[6] as string[],
-                enabled: rest[7] as boolean,
-                redirectUris: rest[8] as string[],
-                type: rest[9] as string,
-                deviceFlow: rest[10] as boolean            
+                tagline: rest[7] as string,
+                tags: rest[8] as string[],
+                images: rest[9] as string[],
+                supportUrl: rest[10] as string,
+                dataDeletionUrl: rest[11] as string,
+                enabled: rest[12] as boolean,
+                redirectUris: rest[13] as string[],
+                postLogoutRedirectUris: rest[14] as string[],
+                type: rest[15] as string,
+                deviceFlow: rest[16] as boolean            
             };
         }
         
@@ -344,8 +404,14 @@ export class Apps {
         const privacyPolicyUrl = params.privacyPolicyUrl;
         const termsUrl = params.termsUrl;
         const contacts = params.contacts;
+        const tagline = params.tagline;
+        const tags = params.tags;
+        const images = params.images;
+        const supportUrl = params.supportUrl;
+        const dataDeletionUrl = params.dataDeletionUrl;
         const enabled = params.enabled;
         const redirectUris = params.redirectUris;
+        const postLogoutRedirectUris = params.postLogoutRedirectUris;
         const type = params.type;
         const deviceFlow = params.deviceFlow;
 
@@ -379,11 +445,29 @@ export class Apps {
         if (typeof contacts !== 'undefined') {
             payload['contacts'] = contacts;
         }
+        if (typeof tagline !== 'undefined') {
+            payload['tagline'] = tagline;
+        }
+        if (typeof tags !== 'undefined') {
+            payload['tags'] = tags;
+        }
+        if (typeof images !== 'undefined') {
+            payload['images'] = images;
+        }
+        if (typeof supportUrl !== 'undefined') {
+            payload['supportUrl'] = supportUrl;
+        }
+        if (typeof dataDeletionUrl !== 'undefined') {
+            payload['dataDeletionUrl'] = dataDeletionUrl;
+        }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
         }
         if (typeof redirectUris !== 'undefined') {
             payload['redirectUris'] = redirectUris;
+        }
+        if (typeof postLogoutRedirectUris !== 'undefined') {
+            payload['postLogoutRedirectUris'] = postLogoutRedirectUris;
         }
         if (typeof type !== 'undefined') {
             payload['type'] = type;

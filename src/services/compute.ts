@@ -76,7 +76,7 @@ export class Compute {
      * @param {number} params.cpu - CPU in millicores (125-16000).
      * @param {number} params.memory - Memory in MB to allocate (128-65536).
      * @param {number} params.storage - Storage in GB to allocate (1-16384).
-     * @param {string} params.storageClass - Storage class: ssd, nvme, or hdd.
+     * @param {string} params.storageClass - Storage class. Allowed values: ssd. DigitalOcean exposes a single block-storage class, so only 'ssd' is offered today.
      * @param {number} params.storageMaxGb - Maximum storage limit in GB. 0 uses system default.
      * @param {number} params.replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} params.highAvailabilitySyncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
@@ -92,7 +92,7 @@ export class Compute {
      * @param {boolean} params.storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
      * @param {number} params.storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
      * @param {number} params.storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
-     * @param {boolean} params.metricsEnabled - Enable metrics collection.
+     * @param {boolean} params.metricsEnabled - Enable metrics collection. Enabled by default; pass false to opt out.
      * @param {boolean} params.poolerEnabled - Enable connection pooler on provision.
      * @param {string} params.api - Product API that owns this database: compute (raw, direct-access), tablesdb, documentsdb, or vectorsdb. tablesdb/documentsdb/vectorsdb computes are reached only through their product APIs.
      * @throws {AppwriteException}
@@ -112,7 +112,7 @@ export class Compute {
      * @param {number} cpu - CPU in millicores (125-16000).
      * @param {number} memory - Memory in MB to allocate (128-65536).
      * @param {number} storage - Storage in GB to allocate (1-16384).
-     * @param {string} storageClass - Storage class: ssd, nvme, or hdd.
+     * @param {string} storageClass - Storage class. Allowed values: ssd. DigitalOcean exposes a single block-storage class, so only 'ssd' is offered today.
      * @param {number} storageMaxGb - Maximum storage limit in GB. 0 uses system default.
      * @param {number} replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} highAvailabilitySyncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
@@ -128,7 +128,7 @@ export class Compute {
      * @param {boolean} storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
      * @param {number} storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
      * @param {number} storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
-     * @param {boolean} metricsEnabled - Enable metrics collection.
+     * @param {boolean} metricsEnabled - Enable metrics collection. Enabled by default; pass false to opt out.
      * @param {boolean} poolerEnabled - Enable connection pooler on provision.
      * @param {string} api - Product API that owns this database: compute (raw, direct-access), tablesdb, documentsdb, or vectorsdb. tablesdb/documentsdb/vectorsdb computes are reached only through their product APIs.
      * @throws {AppwriteException}
@@ -403,12 +403,12 @@ export class Compute {
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.name - Database display name.
-     * @param {string} params.status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume, or "inactive" to spin down a shared-pool database.
+     * @param {string} params.status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume (also recovers a failed database whose infrastructure is healthy), or "inactive" to spin down a shared-pool database.
      * @param {string} params.specification - Specification. Changes cpu, memory, and node pool based on specification config.
      * @param {number} params.cpu - CPU cores to allocate (125-16000).
      * @param {number} params.memory - Memory in MB to allocate (128-65536).
      * @param {number} params.storage - Storage in GB to allocate (1-16384).
-     * @param {string} params.storageClass - Storage class. Allowed values: ssd, nvme, hdd.
+     * @param {string} params.storageClass - Storage class. Allowed values: ssd.
      * @param {number} params.replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} params.highAvailabilitySyncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
      * @param {number} params.networkMaxConnections - Maximum concurrent connections.
@@ -441,12 +441,12 @@ export class Compute {
      *
      * @param {string} databaseId - Database ID.
      * @param {string} name - Database display name.
-     * @param {string} status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume, or "inactive" to spin down a shared-pool database.
+     * @param {string} status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume (also recovers a failed database whose infrastructure is healthy), or "inactive" to spin down a shared-pool database.
      * @param {string} specification - Specification. Changes cpu, memory, and node pool based on specification config.
      * @param {number} cpu - CPU cores to allocate (125-16000).
      * @param {number} memory - Memory in MB to allocate (128-65536).
      * @param {number} storage - Storage in GB to allocate (1-16384).
-     * @param {string} storageClass - Storage class. Allowed values: ssd, nvme, hdd.
+     * @param {string} storageClass - Storage class. Allowed values: ssd.
      * @param {number} replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} highAvailabilitySyncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
      * @param {number} networkMaxConnections - Maximum concurrent connections.

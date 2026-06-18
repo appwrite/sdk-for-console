@@ -24,6 +24,7 @@ export { Locale } from './services/locale';
 export { Manager } from './services/manager';
 export { Messaging } from './services/messaging';
 export { Migrations } from './services/migrations';
+export { Oauth2 } from './services/oauth-2';
 export { Organization } from './services/organization';
 export { Organizations } from './services/organizations';
 export { Presences } from './services/presences';

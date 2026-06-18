@@ -9,7 +9,7 @@ const domains = new Domains(client);
 
 const result = await domains.createRecordCNAME({
     domainId: '<DOMAIN_ID>',
-    name: '<NAME>',
+    name: '',
     value: '<VALUE>',
     ttl: 1,
     comment: '<COMMENT>' // optional
