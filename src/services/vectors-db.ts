@@ -367,7 +367,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "transactionId"');
         }
 
-        const apiPath = '/vectorsdb/transactions/{transactionId}'.replace('{transactionId}', transactionId);
+        const apiPath = '/vectorsdb/transactions/{transactionId}'.replace('{transactionId}', encodeURIComponent(String(transactionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -429,7 +429,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "transactionId"');
         }
 
-        const apiPath = '/vectorsdb/transactions/{transactionId}'.replace('{transactionId}', transactionId);
+        const apiPath = '/vectorsdb/transactions/{transactionId}'.replace('{transactionId}', encodeURIComponent(String(transactionId)));
         const payload: Payload = {};
         if (typeof commit !== 'undefined') {
             payload['commit'] = commit;
@@ -489,7 +489,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "transactionId"');
         }
 
-        const apiPath = '/vectorsdb/transactions/{transactionId}'.replace('{transactionId}', transactionId);
+        const apiPath = '/vectorsdb/transactions/{transactionId}'.replace('{transactionId}', encodeURIComponent(String(transactionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -547,7 +547,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "transactionId"');
         }
 
-        const apiPath = '/vectorsdb/transactions/{transactionId}/operations'.replace('{transactionId}', transactionId);
+        const apiPath = '/vectorsdb/transactions/{transactionId}/operations'.replace('{transactionId}', encodeURIComponent(String(transactionId)));
         const payload: Payload = {};
         if (typeof operations !== 'undefined') {
             payload['operations'] = operations;
@@ -657,7 +657,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}'.replace('{databaseId}', databaseId);
+        const apiPath = '/vectorsdb/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -722,7 +722,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}'.replace('{databaseId}', databaseId);
+        const apiPath = '/vectorsdb/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -782,7 +782,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}'.replace('{databaseId}', databaseId);
+        const apiPath = '/vectorsdb/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -848,7 +848,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections'.replace('{databaseId}', databaseId);
+        const apiPath = '/vectorsdb/{databaseId}/collections'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -944,7 +944,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "dimension"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections'.replace('{databaseId}', databaseId);
+        const apiPath = '/vectorsdb/{databaseId}/collections'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof collectionId !== 'undefined') {
             payload['collectionId'] = collectionId;
@@ -1024,7 +1024,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1108,7 +1108,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1185,7 +1185,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1262,7 +1262,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1353,7 +1353,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "data"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof documentId !== 'undefined') {
             payload['documentId'] = documentId;
@@ -1431,7 +1431,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "documents"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof documents !== 'undefined') {
             payload['documents'] = documents;
@@ -1509,7 +1509,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "documents"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof documents !== 'undefined') {
             payload['documents'] = documents;
@@ -1589,7 +1589,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof data !== 'undefined') {
             payload['data'] = data;
@@ -1668,7 +1668,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1751,7 +1751,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "documentId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{documentId}', encodeURIComponent(String(documentId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1837,7 +1837,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "documentId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{documentId}', encodeURIComponent(String(documentId)));
         const payload: Payload = {};
         if (typeof data !== 'undefined') {
             payload['data'] = data;
@@ -1927,7 +1927,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "documentId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{documentId}', encodeURIComponent(String(documentId)));
         const payload: Payload = {};
         if (typeof data !== 'undefined') {
             payload['data'] = data;
@@ -2009,7 +2009,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "documentId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{documentId}', encodeURIComponent(String(documentId)));
         const payload: Payload = {};
         if (typeof transactionId !== 'undefined') {
             payload['transactionId'] = transactionId;
@@ -2081,7 +2081,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/indexes'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/indexes'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -2179,7 +2179,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "attributes"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/indexes'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/indexes'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -2263,7 +2263,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/indexes/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/indexes/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2331,7 +2331,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/indexes/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/indexes/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2396,7 +2396,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/usage'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/vectorsdb/{databaseId}/collections/{collectionId}/usage'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof range !== 'undefined') {
             payload['range'] = range;
@@ -2457,7 +2457,7 @@ export class VectorsDB {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/vectorsdb/{databaseId}/usage'.replace('{databaseId}', databaseId);
+        const apiPath = '/vectorsdb/{databaseId}/usage'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof range !== 'undefined') {
             payload['range'] = range;

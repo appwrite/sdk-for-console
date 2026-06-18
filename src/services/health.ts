@@ -755,7 +755,7 @@ export class Health {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        const apiPath = '/health/queue/failed/{name}'.replace('{name}', name);
+        const apiPath = '/health/queue/failed/{name}'.replace('{name}', encodeURIComponent(String(name)));
         const payload: Payload = {};
         if (typeof threshold !== 'undefined') {
             payload['threshold'] = threshold;

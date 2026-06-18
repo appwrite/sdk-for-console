@@ -297,7 +297,7 @@ export class Apps {
             throw new AppwriteException('Missing required parameter: "appId"');
         }
 
-        const apiPath = '/apps/{appId}'.replace('{appId}', appId);
+        const apiPath = '/apps/{appId}'.replace('{appId}', encodeURIComponent(String(appId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -422,7 +422,7 @@ export class Apps {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        const apiPath = '/apps/{appId}'.replace('{appId}', appId);
+        const apiPath = '/apps/{appId}'.replace('{appId}', encodeURIComponent(String(appId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -527,7 +527,7 @@ export class Apps {
             throw new AppwriteException('Missing required parameter: "appId"');
         }
 
-        const apiPath = '/apps/{appId}'.replace('{appId}', appId);
+        const apiPath = '/apps/{appId}'.replace('{appId}', encodeURIComponent(String(appId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -590,7 +590,7 @@ export class Apps {
             throw new AppwriteException('Missing required parameter: "appId"');
         }
 
-        const apiPath = '/apps/{appId}/secrets'.replace('{appId}', appId);
+        const apiPath = '/apps/{appId}/secrets'.replace('{appId}', encodeURIComponent(String(appId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -649,7 +649,7 @@ export class Apps {
             throw new AppwriteException('Missing required parameter: "appId"');
         }
 
-        const apiPath = '/apps/{appId}/secrets'.replace('{appId}', appId);
+        const apiPath = '/apps/{appId}/secrets'.replace('{appId}', encodeURIComponent(String(appId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -711,7 +711,7 @@ export class Apps {
             throw new AppwriteException('Missing required parameter: "secretId"');
         }
 
-        const apiPath = '/apps/{appId}/secrets/{secretId}'.replace('{appId}', appId).replace('{secretId}', secretId);
+        const apiPath = '/apps/{appId}/secrets/{secretId}'.replace('{appId}', encodeURIComponent(String(appId))).replace('{secretId}', encodeURIComponent(String(secretId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -772,7 +772,7 @@ export class Apps {
             throw new AppwriteException('Missing required parameter: "secretId"');
         }
 
-        const apiPath = '/apps/{appId}/secrets/{secretId}'.replace('{appId}', appId).replace('{secretId}', secretId);
+        const apiPath = '/apps/{appId}/secrets/{secretId}'.replace('{appId}', encodeURIComponent(String(appId))).replace('{secretId}', encodeURIComponent(String(secretId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -834,7 +834,7 @@ export class Apps {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
-        const apiPath = '/apps/{appId}/team'.replace('{appId}', appId);
+        const apiPath = '/apps/{appId}/team'.replace('{appId}', encodeURIComponent(String(appId)));
         const payload: Payload = {};
         if (typeof teamId !== 'undefined') {
             payload['teamId'] = teamId;
@@ -891,7 +891,7 @@ export class Apps {
             throw new AppwriteException('Missing required parameter: "appId"');
         }
 
-        const apiPath = '/apps/{appId}/tokens'.replace('{appId}', appId);
+        const apiPath = '/apps/{appId}/tokens'.replace('{appId}', encodeURIComponent(String(appId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 

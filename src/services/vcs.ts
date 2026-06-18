@@ -66,7 +66,7 @@ export class Vcs {
             throw new AppwriteException('Missing required parameter: "type"');
         }
 
-        const apiPath = '/vcs/github/installations/{installationId}/detections'.replace('{installationId}', installationId);
+        const apiPath = '/vcs/github/installations/{installationId}/detections'.replace('{installationId}', encodeURIComponent(String(installationId)));
         const payload: Payload = {};
         if (typeof providerRepositoryId !== 'undefined') {
             payload['providerRepositoryId'] = providerRepositoryId;
@@ -145,7 +145,7 @@ export class Vcs {
             throw new AppwriteException('Missing required parameter: "type"');
         }
 
-        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories'.replace('{installationId}', installationId);
+        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories'.replace('{installationId}', encodeURIComponent(String(installationId)));
         const payload: Payload = {};
         if (typeof type !== 'undefined') {
             payload['type'] = type;
@@ -222,7 +222,7 @@ export class Vcs {
             throw new AppwriteException('Missing required parameter: "xprivate"');
         }
 
-        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories'.replace('{installationId}', installationId);
+        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories'.replace('{installationId}', encodeURIComponent(String(installationId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -290,7 +290,7 @@ export class Vcs {
             throw new AppwriteException('Missing required parameter: "providerRepositoryId"');
         }
 
-        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}'.replace('{installationId}', installationId).replace('{providerRepositoryId}', providerRepositoryId);
+        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}'.replace('{installationId}', encodeURIComponent(String(installationId))).replace('{providerRepositoryId}', encodeURIComponent(String(providerRepositoryId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -361,7 +361,7 @@ export class Vcs {
             throw new AppwriteException('Missing required parameter: "providerRepositoryId"');
         }
 
-        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}/branches'.replace('{installationId}', installationId).replace('{providerRepositoryId}', providerRepositoryId);
+        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}/branches'.replace('{installationId}', encodeURIComponent(String(installationId))).replace('{providerRepositoryId}', encodeURIComponent(String(providerRepositoryId)));
         const payload: Payload = {};
         if (typeof search !== 'undefined') {
             payload['search'] = search;
@@ -436,7 +436,7 @@ export class Vcs {
             throw new AppwriteException('Missing required parameter: "providerRepositoryId"');
         }
 
-        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}/contents'.replace('{installationId}', installationId).replace('{providerRepositoryId}', providerRepositoryId);
+        const apiPath = '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}/contents'.replace('{installationId}', encodeURIComponent(String(installationId))).replace('{providerRepositoryId}', encodeURIComponent(String(providerRepositoryId)));
         const payload: Payload = {};
         if (typeof providerRootDirectory !== 'undefined') {
             payload['providerRootDirectory'] = providerRootDirectory;
@@ -510,7 +510,7 @@ export class Vcs {
             throw new AppwriteException('Missing required parameter: "providerPullRequestId"');
         }
 
-        const apiPath = '/vcs/github/installations/{installationId}/repositories/{repositoryId}'.replace('{installationId}', installationId).replace('{repositoryId}', repositoryId);
+        const apiPath = '/vcs/github/installations/{installationId}/repositories/{repositoryId}'.replace('{installationId}', encodeURIComponent(String(installationId))).replace('{repositoryId}', encodeURIComponent(String(repositoryId)));
         const payload: Payload = {};
         if (typeof providerPullRequestId !== 'undefined') {
             payload['providerPullRequestId'] = providerPullRequestId;
@@ -637,7 +637,7 @@ export class Vcs {
             throw new AppwriteException('Missing required parameter: "installationId"');
         }
 
-        const apiPath = '/vcs/installations/{installationId}'.replace('{installationId}', installationId);
+        const apiPath = '/vcs/installations/{installationId}'.replace('{installationId}', encodeURIComponent(String(installationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -690,7 +690,7 @@ export class Vcs {
             throw new AppwriteException('Missing required parameter: "installationId"');
         }
 
-        const apiPath = '/vcs/installations/{installationId}'.replace('{installationId}', installationId);
+        const apiPath = '/vcs/installations/{installationId}'.replace('{installationId}', encodeURIComponent(String(installationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 

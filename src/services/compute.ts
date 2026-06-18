@@ -381,7 +381,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -555,7 +555,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -699,7 +699,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -758,7 +758,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/backups'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/backups'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -819,7 +819,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/backups'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/backups'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof type !== 'undefined') {
             payload['type'] = type;
@@ -881,7 +881,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/backups/policies'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/backups/policies'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -974,7 +974,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "retention"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/backups/policies'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/backups/policies'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof policyId !== 'undefined') {
             payload['policyId'] = policyId;
@@ -1087,7 +1087,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "secretKey"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/backups/storage'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/backups/storage'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof provider !== 'undefined') {
             payload['provider'] = provider;
@@ -1170,7 +1170,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "backupId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/backups/{backupId}'.replace('{databaseId}', databaseId).replace('{backupId}', backupId);
+        const apiPath = '/compute/databases/{databaseId}/backups/{backupId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{backupId}', encodeURIComponent(String(backupId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1231,7 +1231,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "backupId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/backups/{backupId}'.replace('{databaseId}', databaseId).replace('{backupId}', backupId);
+        const apiPath = '/compute/databases/{databaseId}/backups/{backupId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{backupId}', encodeURIComponent(String(backupId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1285,7 +1285,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/branches'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/branches'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1347,7 +1347,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/branches'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/branches'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof branchId !== 'undefined') {
             payload['branchId'] = branchId;
@@ -1415,7 +1415,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "branchId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/branches/{branchId}'.replace('{databaseId}', databaseId).replace('{branchId}', branchId);
+        const apiPath = '/compute/databases/{databaseId}/branches/{branchId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{branchId}', encodeURIComponent(String(branchId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1469,7 +1469,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/connections'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/connections'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1534,7 +1534,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "username"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/connections'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/connections'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof username !== 'undefined') {
             payload['username'] = username;
@@ -1602,7 +1602,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "connectionId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/connections/{connectionId}'.replace('{databaseId}', databaseId).replace('{connectionId}', connectionId);
+        const apiPath = '/compute/databases/{databaseId}/connections/{connectionId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{connectionId}', encodeURIComponent(String(connectionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1656,7 +1656,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/credentials'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/credentials'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1709,7 +1709,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/credentials'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/credentials'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1779,7 +1779,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "sql"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/execution'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/execution'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof sql !== 'undefined') {
             payload['sql'] = sql;
@@ -1854,7 +1854,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "query"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/explanation'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/explanation'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof query !== 'undefined') {
             payload['query'] = query;
@@ -1914,7 +1914,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/extensions'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/extensions'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1975,7 +1975,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/extensions'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/extensions'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2040,7 +2040,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "extensionName"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/extensions/{extensionName}'.replace('{databaseId}', databaseId).replace('{extensionName}', extensionName);
+        const apiPath = '/compute/databases/{databaseId}/extensions/{extensionName}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{extensionName}', encodeURIComponent(String(extensionName)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2094,7 +2094,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/ha'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/ha'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2152,7 +2152,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/ha/failovers'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/ha/failovers'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof targetReplicaId !== 'undefined') {
             payload['targetReplicaId'] = targetReplicaId;
@@ -2224,7 +2224,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "hourUtc"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/maintenance'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/maintenance'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof day !== 'undefined') {
             payload['day'] = day;
@@ -2296,7 +2296,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "targetType"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/migrations'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/migrations'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof targetType !== 'undefined') {
             payload['targetType'] = targetType;
@@ -2356,7 +2356,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/pitr'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/pitr'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2409,7 +2409,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/pooler'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/pooler'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2495,7 +2495,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/pooler'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/pooler'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof mode !== 'undefined') {
             payload['mode'] = mode;
@@ -2590,7 +2590,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/restorations'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/restorations'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof status !== 'undefined') {
             payload['status'] = status;
@@ -2668,7 +2668,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/restorations'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/restorations'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof type !== 'undefined') {
             payload['type'] = type;
@@ -2739,7 +2739,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "restorationId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/restorations/{restorationId}'.replace('{databaseId}', databaseId).replace('{restorationId}', restorationId);
+        const apiPath = '/compute/databases/{databaseId}/restorations/{restorationId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{restorationId}', encodeURIComponent(String(restorationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2801,7 +2801,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/slow-queries'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/slow-queries'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof limit !== 'undefined') {
             payload['limit'] = limit;
@@ -2860,7 +2860,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/status'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/status'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2921,7 +2921,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "targetVersion"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/upgrades'.replace('{databaseId}', databaseId);
+        const apiPath = '/compute/databases/{databaseId}/upgrades'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof targetVersion !== 'undefined') {
             payload['targetVersion'] = targetVersion;

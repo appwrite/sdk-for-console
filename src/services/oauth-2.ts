@@ -51,7 +51,7 @@ export class Oauth2 {
             throw new AppwriteException('Missing required parameter: "grantId"');
         }
 
-        const apiPath = '/oauth2/{project_id}/approve'.replace('{project_id}', this.client.config.project);
+        const apiPath = '/oauth2/{project_id}/approve'.replace('{project_id}', encodeURIComponent(String(this.client.config.project)));
         const payload: Payload = {};
         if (typeof grantId !== 'undefined') {
             payload['grant_id'] = grantId;
@@ -160,7 +160,7 @@ export class Oauth2 {
             throw new AppwriteException('Missing required parameter: "scope"');
         }
 
-        const apiPath = '/oauth2/{project_id}/authorize'.replace('{project_id}', this.client.config.project);
+        const apiPath = '/oauth2/{project_id}/authorize'.replace('{project_id}', encodeURIComponent(String(this.client.config.project)));
         const payload: Payload = {};
         if (typeof clientId !== 'undefined') {
             payload['client_id'] = clientId;
@@ -251,7 +251,7 @@ export class Oauth2 {
         const authorizationDetails = params.authorizationDetails;
 
 
-        const apiPath = '/oauth2/{project_id}/device_authorization'.replace('{project_id}', this.client.config.project);
+        const apiPath = '/oauth2/{project_id}/device_authorization'.replace('{project_id}', encodeURIComponent(String(this.client.config.project)));
         const payload: Payload = {};
         if (typeof clientId !== 'undefined') {
             payload['client_id'] = clientId;
@@ -313,7 +313,7 @@ export class Oauth2 {
             throw new AppwriteException('Missing required parameter: "userCode"');
         }
 
-        const apiPath = '/oauth2/{project_id}/grants'.replace('{project_id}', this.client.config.project);
+        const apiPath = '/oauth2/{project_id}/grants'.replace('{project_id}', encodeURIComponent(String(this.client.config.project)));
         const payload: Payload = {};
         if (typeof userCode !== 'undefined') {
             payload['user_code'] = userCode;
@@ -369,7 +369,7 @@ export class Oauth2 {
             throw new AppwriteException('Missing required parameter: "grantId"');
         }
 
-        const apiPath = '/oauth2/{project_id}/grants/{grant_id}'.replace('{project_id}', this.client.config.project).replace('{grant_id}', grantId);
+        const apiPath = '/oauth2/{project_id}/grants/{grant_id}'.replace('{project_id}', encodeURIComponent(String(this.client.config.project))).replace('{grant_id}', encodeURIComponent(String(grantId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -439,7 +439,7 @@ export class Oauth2 {
         const uiLocales = params.uiLocales;
 
 
-        const apiPath = '/oauth2/{project_id}/logout'.replace('{project_id}', this.client.config.project);
+        const apiPath = '/oauth2/{project_id}/logout'.replace('{project_id}', encodeURIComponent(String(this.client.config.project)));
         const payload: Payload = {};
         if (typeof idTokenHint !== 'undefined') {
             payload['id_token_hint'] = idTokenHint;
@@ -509,7 +509,7 @@ export class Oauth2 {
             throw new AppwriteException('Missing required parameter: "grantId"');
         }
 
-        const apiPath = '/oauth2/{project_id}/reject'.replace('{project_id}', this.client.config.project);
+        const apiPath = '/oauth2/{project_id}/reject'.replace('{project_id}', encodeURIComponent(String(this.client.config.project)));
         const payload: Payload = {};
         if (typeof grantId !== 'undefined') {
             payload['grant_id'] = grantId;
@@ -578,7 +578,7 @@ export class Oauth2 {
             throw new AppwriteException('Missing required parameter: "token"');
         }
 
-        const apiPath = '/oauth2/{project_id}/revoke'.replace('{project_id}', this.client.config.project);
+        const apiPath = '/oauth2/{project_id}/revoke'.replace('{project_id}', encodeURIComponent(String(this.client.config.project)));
         const payload: Payload = {};
         if (typeof token !== 'undefined') {
             payload['token'] = token;
@@ -672,7 +672,7 @@ export class Oauth2 {
             throw new AppwriteException('Missing required parameter: "grantType"');
         }
 
-        const apiPath = '/oauth2/{project_id}/token'.replace('{project_id}', this.client.config.project);
+        const apiPath = '/oauth2/{project_id}/token'.replace('{project_id}', encodeURIComponent(String(this.client.config.project)));
         const payload: Payload = {};
         if (typeof grantType !== 'undefined') {
             payload['grant_type'] = grantType;

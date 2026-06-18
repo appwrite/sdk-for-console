@@ -301,7 +301,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "transactionId"');
         }
 
-        const apiPath = '/documentsdb/transactions/{transactionId}'.replace('{transactionId}', transactionId);
+        const apiPath = '/documentsdb/transactions/{transactionId}'.replace('{transactionId}', encodeURIComponent(String(transactionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -363,7 +363,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "transactionId"');
         }
 
-        const apiPath = '/documentsdb/transactions/{transactionId}'.replace('{transactionId}', transactionId);
+        const apiPath = '/documentsdb/transactions/{transactionId}'.replace('{transactionId}', encodeURIComponent(String(transactionId)));
         const payload: Payload = {};
         if (typeof commit !== 'undefined') {
             payload['commit'] = commit;
@@ -423,7 +423,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "transactionId"');
         }
 
-        const apiPath = '/documentsdb/transactions/{transactionId}'.replace('{transactionId}', transactionId);
+        const apiPath = '/documentsdb/transactions/{transactionId}'.replace('{transactionId}', encodeURIComponent(String(transactionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -529,7 +529,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}'.replace('{databaseId}', databaseId);
+        const apiPath = '/documentsdb/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -594,7 +594,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}'.replace('{databaseId}', databaseId);
+        const apiPath = '/documentsdb/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -654,7 +654,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}'.replace('{databaseId}', databaseId);
+        const apiPath = '/documentsdb/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -720,7 +720,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections'.replace('{databaseId}', databaseId);
+        const apiPath = '/documentsdb/{databaseId}/collections'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -817,7 +817,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections'.replace('{databaseId}', databaseId);
+        const apiPath = '/documentsdb/{databaseId}/collections'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof collectionId !== 'undefined') {
             payload['collectionId'] = collectionId;
@@ -900,7 +900,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -984,7 +984,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1061,7 +1061,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1138,7 +1138,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1229,7 +1229,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "data"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof documentId !== 'undefined') {
             payload['documentId'] = documentId;
@@ -1307,7 +1307,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "documents"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof documents !== 'undefined') {
             payload['documents'] = documents;
@@ -1385,7 +1385,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "documents"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof documents !== 'undefined') {
             payload['documents'] = documents;
@@ -1465,7 +1465,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof data !== 'undefined') {
             payload['data'] = data;
@@ -1544,7 +1544,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1627,7 +1627,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "documentId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{documentId}', encodeURIComponent(String(documentId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1713,7 +1713,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "documentId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{documentId}', encodeURIComponent(String(documentId)));
         const payload: Payload = {};
         if (typeof data !== 'undefined') {
             payload['data'] = data;
@@ -1803,7 +1803,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "documentId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{documentId}', encodeURIComponent(String(documentId)));
         const payload: Payload = {};
         if (typeof data !== 'undefined') {
             payload['data'] = data;
@@ -1885,7 +1885,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "documentId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{documentId}', encodeURIComponent(String(documentId)));
         const payload: Payload = {};
         if (typeof transactionId !== 'undefined') {
             payload['transactionId'] = transactionId;
@@ -1975,7 +1975,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "attribute"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/decrement'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId).replace('{attribute}', attribute);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/decrement'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{documentId}', encodeURIComponent(String(documentId))).replace('{attribute}', encodeURIComponent(String(attribute)));
         const payload: Payload = {};
         if (typeof value !== 'undefined') {
             payload['value'] = value;
@@ -2072,7 +2072,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "attribute"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/increment'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{documentId}', documentId).replace('{attribute}', attribute);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/increment'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{documentId}', encodeURIComponent(String(documentId))).replace('{attribute}', encodeURIComponent(String(attribute)));
         const payload: Payload = {};
         if (typeof value !== 'undefined') {
             payload['value'] = value;
@@ -2151,7 +2151,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/indexes'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/indexes'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -2249,7 +2249,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "attributes"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/indexes'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/indexes'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -2333,7 +2333,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/indexes/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/indexes/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2401,7 +2401,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/indexes/{key}'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId).replace('{key}', key);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/indexes/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2466,7 +2466,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/usage'.replace('{databaseId}', databaseId).replace('{collectionId}', collectionId);
+        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/usage'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
         const payload: Payload = {};
         if (typeof range !== 'undefined') {
             payload['range'] = range;
@@ -2527,7 +2527,7 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/documentsdb/{databaseId}/usage'.replace('{databaseId}', databaseId);
+        const apiPath = '/documentsdb/{databaseId}/usage'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof range !== 'undefined') {
             payload['range'] = range;

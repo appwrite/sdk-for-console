@@ -324,7 +324,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -380,7 +380,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/addons'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/addons'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -435,7 +435,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/addons/baa'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/addons/baa'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -499,7 +499,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "addonId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/addons/{addonId}'.replace('{organizationId}', organizationId).replace('{addonId}', addonId);
+        const apiPath = '/organizations/{organizationId}/addons/{addonId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{addonId}', encodeURIComponent(String(addonId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -562,7 +562,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "addonId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/addons/{addonId}'.replace('{organizationId}', organizationId).replace('{addonId}', addonId);
+        const apiPath = '/organizations/{organizationId}/addons/{addonId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{addonId}', encodeURIComponent(String(addonId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -626,7 +626,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "addonId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/addons/{addonId}/confirmations'.replace('{organizationId}', organizationId).replace('{addonId}', addonId);
+        const apiPath = '/organizations/{organizationId}/addons/{addonId}/confirmations'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{addonId}', encodeURIComponent(String(addonId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -690,7 +690,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "addon"');
         }
 
-        const apiPath = '/organizations/{organizationId}/addons/{addon}/price'.replace('{organizationId}', organizationId).replace('{addon}', addon);
+        const apiPath = '/organizations/{organizationId}/addons/{addon}/price'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{addon}', encodeURIComponent(String(addon)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -748,7 +748,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/aggregations'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/aggregations'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -820,7 +820,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "aggregationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/aggregations/{aggregationId}'.replace('{organizationId}', organizationId).replace('{aggregationId}', aggregationId);
+        const apiPath = '/organizations/{organizationId}/aggregations/{aggregationId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{aggregationId}', encodeURIComponent(String(aggregationId)));
         const payload: Payload = {};
         if (typeof limit !== 'undefined') {
             payload['limit'] = limit;
@@ -887,7 +887,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "billingAddressId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/billing-address'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/billing-address'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof billingAddressId !== 'undefined') {
             payload['billingAddressId'] = billingAddressId;
@@ -944,7 +944,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/billing-address'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/billing-address'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1006,7 +1006,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "billingAddressId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/billing-addresses/{billingAddressId}'.replace('{organizationId}', organizationId).replace('{billingAddressId}', billingAddressId);
+        const apiPath = '/organizations/{organizationId}/billing-addresses/{billingAddressId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{billingAddressId}', encodeURIComponent(String(billingAddressId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1067,7 +1067,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "billingEmail"');
         }
 
-        const apiPath = '/organizations/{organizationId}/billing-email'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/billing-email'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof billingEmail !== 'undefined') {
             payload['billingEmail'] = billingEmail;
@@ -1136,7 +1136,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "budget"');
         }
 
-        const apiPath = '/organizations/{organizationId}/budget'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/budget'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof budget !== 'undefined') {
             payload['budget'] = budget;
@@ -1203,7 +1203,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/credits'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/credits'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1267,7 +1267,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "couponId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/credits'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/credits'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof couponId !== 'undefined') {
             payload['couponId'] = couponId;
@@ -1324,7 +1324,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/credits/available'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/credits/available'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1385,7 +1385,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "creditId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/credits/{creditId}'.replace('{organizationId}', organizationId).replace('{creditId}', creditId);
+        const apiPath = '/organizations/{organizationId}/credits/{creditId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{creditId}', encodeURIComponent(String(creditId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1438,7 +1438,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/estimations/delete-organization'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/estimations/delete-organization'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1508,7 +1508,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "billingPlan"');
         }
 
-        const apiPath = '/organizations/{organizationId}/estimations/update-plan'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/estimations/update-plan'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
             payload['billingPlan'] = billingPlan;
@@ -1602,7 +1602,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "toPlanId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/feedbacks/downgrade'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/feedbacks/downgrade'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof reason !== 'undefined') {
             payload['reason'] = reason;
@@ -1673,7 +1673,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/invoices'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/invoices'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1737,7 +1737,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "invoiceId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}'.replace('{organizationId}', organizationId).replace('{invoiceId}', invoiceId);
+        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1798,7 +1798,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "invoiceId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}/download'.replace('{organizationId}', organizationId).replace('{invoiceId}', invoiceId);
+        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}/download'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1868,7 +1868,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "paymentMethodId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}/payments'.replace('{organizationId}', organizationId).replace('{invoiceId}', invoiceId);
+        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}/payments'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
         const payload: Payload = {};
         if (typeof paymentMethodId !== 'undefined') {
             payload['paymentMethodId'] = paymentMethodId;
@@ -1933,7 +1933,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "invoiceId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}/status'.replace('{organizationId}', organizationId).replace('{invoiceId}', invoiceId);
+        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}/status'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1995,7 +1995,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "invoiceId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}/view'.replace('{organizationId}', organizationId).replace('{invoiceId}', invoiceId);
+        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}/view'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2058,7 +2058,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "paymentMethodId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/payment-method'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/payment-method'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof paymentMethodId !== 'undefined') {
             payload['paymentMethodId'] = paymentMethodId;
@@ -2115,7 +2115,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/payment-method'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/payment-method'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2179,7 +2179,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "paymentMethodId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/payment-method/backup'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/payment-method/backup'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof paymentMethodId !== 'undefined') {
             payload['paymentMethodId'] = paymentMethodId;
@@ -2236,7 +2236,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/payment-method/backup'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/payment-method/backup'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2298,7 +2298,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "paymentMethodId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/payment-methods/{paymentMethodId}'.replace('{organizationId}', organizationId).replace('{paymentMethodId}', paymentMethodId);
+        const apiPath = '/organizations/{organizationId}/payment-methods/{paymentMethodId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{paymentMethodId}', encodeURIComponent(String(paymentMethodId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2351,7 +2351,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/plan'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/plan'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2436,7 +2436,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "billingPlan"');
         }
 
-        const apiPath = '/organizations/{organizationId}/plan'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/plan'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
             payload['billingPlan'] = billingPlan;
@@ -2511,7 +2511,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/plan/cancel'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/plan/cancel'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2583,7 +2583,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "billingPlan"');
         }
 
-        const apiPath = '/organizations/{organizationId}/plan/estimations'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/plan/estimations'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
             payload['billingPlan'] = billingPlan;
@@ -2646,7 +2646,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/regions'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/regions'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2704,7 +2704,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/roles'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/roles'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof projectId !== 'undefined') {
             payload['projectId'] = projectId;
@@ -2768,7 +2768,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "taxId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/taxId'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/taxId'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof taxId !== 'undefined') {
             payload['taxId'] = taxId;
@@ -2834,7 +2834,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/usage'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/usage'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof startDate !== 'undefined') {
             payload['startDate'] = startDate;
@@ -2898,7 +2898,7 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "organizationId"');
         }
 
-        const apiPath = '/organizations/{organizationId}/validate'.replace('{organizationId}', organizationId);
+        const apiPath = '/organizations/{organizationId}/validate'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
         const payload: Payload = {};
         if (typeof invites !== 'undefined') {
             payload['invites'] = invites;
