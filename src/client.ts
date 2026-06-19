@@ -478,6 +478,32 @@ class Client {
         return this;
     }
 
+    private shouldUseFallbackCredentials(url?: URL | string): boolean {
+        switch (this.config.credentials) {
+            case 'include':
+                return true;
+            case 'same-origin': {
+                if (typeof window === 'undefined' || typeof url === 'undefined') {
+                    return false;
+                }
+
+                try {
+                    const parsedUrl = typeof url === 'string' ? new URL(url) : url;
+                    const normalizedOrigin = parsedUrl.protocol === 'wss:' || parsedUrl.protocol === 'ws:'
+                        ? `${parsedUrl.protocol === 'wss:' ? 'https:' : 'http:'}//${parsedUrl.host}`
+                        : parsedUrl.origin;
+
+                    return normalizedOrigin === window.location.origin;
+                } catch {
+                    return false;
+                }
+            }
+            case 'omit':
+            default:
+                return false;
+        }
+    }
+
     /**
      * Set Project
      *
@@ -764,7 +790,7 @@ class Client {
                     case 'connected': {
                         const messageData = <RealtimeResponseConnected>message.data;
 
-                        if (this.config.credentials !== 'omit') {
+                        if (this.shouldUseFallbackCredentials(this.realtime.url)) {
                             let session = this.config.session;
                             if (!session) {
                                 const cookie = JSONbig.parse(window.localStorage.getItem('cookieFallback') ?? '{}');
@@ -934,7 +960,7 @@ class Client {
 
         headers = Object.assign({}, this.headers, headers);
 
-        if (typeof window !== 'undefined' && window.localStorage && this.config.credentials !== 'omit') {
+        if (typeof window !== 'undefined' && window.localStorage && this.shouldUseFallbackCredentials(url)) {
             const cookieFallback = window.localStorage.getItem('cookieFallback');
             if (cookieFallback) {
                 headers['X-Fallback-Cookies'] = cookieFallback;
@@ -1170,7 +1196,7 @@ class Client {
 
         const cookieFallback = response.headers.get('X-Fallback-Cookies');
 
-        if (typeof window !== 'undefined' && window.localStorage && cookieFallback && this.config.credentials !== 'omit') {
+        if (typeof window !== 'undefined' && window.localStorage && cookieFallback && this.shouldUseFallbackCredentials(url)) {
             window.console.warn('Appwrite is using localStorage for session management. Increase your security by adding a custom domain as your API endpoint.');
             window.localStorage.setItem('cookieFallback', cookieFallback);
         }
