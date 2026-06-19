@@ -61,6 +61,7 @@ export enum QuerySuggestionResource {
     Blocks = 'blocks',
     Threats = 'threats',
     Feedbacks = 'feedbacks',
+    Disputes = 'disputes',
     ShInstallations = 'sh_installations',
     Apps = 'apps',
     AppSecrets = 'appsecrets',

@@ -189,7 +189,7 @@ export class Teams {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
-        const apiPath = '/teams/{teamId}'.replace('{teamId}', teamId);
+        const apiPath = '/teams/{teamId}'.replace('{teamId}', encodeURIComponent(String(teamId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -250,7 +250,7 @@ export class Teams {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        const apiPath = '/teams/{teamId}'.replace('{teamId}', teamId);
+        const apiPath = '/teams/{teamId}'.replace('{teamId}', encodeURIComponent(String(teamId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -307,7 +307,7 @@ export class Teams {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
-        const apiPath = '/teams/{teamId}'.replace('{teamId}', teamId);
+        const apiPath = '/teams/{teamId}'.replace('{teamId}', encodeURIComponent(String(teamId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -369,7 +369,7 @@ export class Teams {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
-        const apiPath = '/teams/{teamId}/logs'.replace('{teamId}', teamId);
+        const apiPath = '/teams/{teamId}/logs'.replace('{teamId}', encodeURIComponent(String(teamId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -441,7 +441,7 @@ export class Teams {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
-        const apiPath = '/teams/{teamId}/memberships'.replace('{teamId}', teamId);
+        const apiPath = '/teams/{teamId}/memberships'.replace('{teamId}', encodeURIComponent(String(teamId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -545,7 +545,7 @@ export class Teams {
             throw new AppwriteException('Missing required parameter: "roles"');
         }
 
-        const apiPath = '/teams/{teamId}/memberships'.replace('{teamId}', teamId);
+        const apiPath = '/teams/{teamId}/memberships'.replace('{teamId}', encodeURIComponent(String(teamId)));
         const payload: Payload = {};
         if (typeof email !== 'undefined') {
             payload['email'] = email;
@@ -625,7 +625,7 @@ export class Teams {
             throw new AppwriteException('Missing required parameter: "membershipId"');
         }
 
-        const apiPath = '/teams/{teamId}/memberships/{membershipId}'.replace('{teamId}', teamId).replace('{membershipId}', membershipId);
+        const apiPath = '/teams/{teamId}/memberships/{membershipId}'.replace('{teamId}', encodeURIComponent(String(teamId))).replace('{membershipId}', encodeURIComponent(String(membershipId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -695,7 +695,7 @@ export class Teams {
             throw new AppwriteException('Missing required parameter: "roles"');
         }
 
-        const apiPath = '/teams/{teamId}/memberships/{membershipId}'.replace('{teamId}', teamId).replace('{membershipId}', membershipId);
+        const apiPath = '/teams/{teamId}/memberships/{membershipId}'.replace('{teamId}', encodeURIComponent(String(teamId))).replace('{membershipId}', encodeURIComponent(String(membershipId)));
         const payload: Payload = {};
         if (typeof roles !== 'undefined') {
             payload['roles'] = roles;
@@ -760,7 +760,7 @@ export class Teams {
             throw new AppwriteException('Missing required parameter: "membershipId"');
         }
 
-        const apiPath = '/teams/{teamId}/memberships/{membershipId}'.replace('{teamId}', teamId).replace('{membershipId}', membershipId);
+        const apiPath = '/teams/{teamId}/memberships/{membershipId}'.replace('{teamId}', encodeURIComponent(String(teamId))).replace('{membershipId}', encodeURIComponent(String(membershipId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -841,7 +841,7 @@ export class Teams {
             throw new AppwriteException('Missing required parameter: "secret"');
         }
 
-        const apiPath = '/teams/{teamId}/memberships/{membershipId}/status'.replace('{teamId}', teamId).replace('{membershipId}', membershipId);
+        const apiPath = '/teams/{teamId}/memberships/{membershipId}/status'.replace('{teamId}', encodeURIComponent(String(teamId))).replace('{membershipId}', encodeURIComponent(String(membershipId)));
         const payload: Payload = {};
         if (typeof userId !== 'undefined') {
             payload['userId'] = userId;
@@ -901,7 +901,7 @@ export class Teams {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
-        const apiPath = '/teams/{teamId}/prefs'.replace('{teamId}', teamId);
+        const apiPath = '/teams/{teamId}/prefs'.replace('{teamId}', encodeURIComponent(String(teamId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -962,7 +962,7 @@ export class Teams {
             throw new AppwriteException('Missing required parameter: "prefs"');
         }
 
-        const apiPath = '/teams/{teamId}/prefs'.replace('{teamId}', teamId);
+        const apiPath = '/teams/{teamId}/prefs'.replace('{teamId}', encodeURIComponent(String(teamId)));
         const payload: Payload = {};
         if (typeof prefs !== 'undefined') {
             payload['prefs'] = prefs;

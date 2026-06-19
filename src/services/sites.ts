@@ -468,7 +468,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "templateId"');
         }
 
-        const apiPath = '/sites/templates/{templateId}'.replace('{templateId}', templateId);
+        const apiPath = '/sites/templates/{templateId}'.replace('{templateId}', encodeURIComponent(String(templateId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -574,7 +574,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "siteId"');
         }
 
-        const apiPath = '/sites/{siteId}'.replace('{siteId}', siteId);
+        const apiPath = '/sites/{siteId}'.replace('{siteId}', encodeURIComponent(String(siteId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -722,7 +722,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "framework"');
         }
 
-        const apiPath = '/sites/{siteId}'.replace('{siteId}', siteId);
+        const apiPath = '/sites/{siteId}'.replace('{siteId}', encodeURIComponent(String(siteId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -842,7 +842,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "siteId"');
         }
 
-        const apiPath = '/sites/{siteId}'.replace('{siteId}', siteId);
+        const apiPath = '/sites/{siteId}'.replace('{siteId}', encodeURIComponent(String(siteId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -903,7 +903,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        const apiPath = '/sites/{siteId}/deployment'.replace('{siteId}', siteId);
+        const apiPath = '/sites/{siteId}/deployment'.replace('{siteId}', encodeURIComponent(String(siteId)));
         const payload: Payload = {};
         if (typeof deploymentId !== 'undefined') {
             payload['deploymentId'] = deploymentId;
@@ -973,7 +973,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "siteId"');
         }
 
-        const apiPath = '/sites/{siteId}/deployments'.replace('{siteId}', siteId);
+        const apiPath = '/sites/{siteId}/deployments'.replace('{siteId}', encodeURIComponent(String(siteId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1062,7 +1062,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "code"');
         }
 
-        const apiPath = '/sites/{siteId}/deployments'.replace('{siteId}', siteId);
+        const apiPath = '/sites/{siteId}/deployments'.replace('{siteId}', encodeURIComponent(String(siteId)));
         const payload: Payload = {};
         if (typeof installCommand !== 'undefined') {
             payload['installCommand'] = installCommand;
@@ -1140,7 +1140,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        const apiPath = '/sites/{siteId}/deployments/duplicate'.replace('{siteId}', siteId);
+        const apiPath = '/sites/{siteId}/deployments/duplicate'.replace('{siteId}', encodeURIComponent(String(siteId)));
         const payload: Payload = {};
         if (typeof deploymentId !== 'undefined') {
             payload['deploymentId'] = deploymentId;
@@ -1241,7 +1241,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "reference"');
         }
 
-        const apiPath = '/sites/{siteId}/deployments/template'.replace('{siteId}', siteId);
+        const apiPath = '/sites/{siteId}/deployments/template'.replace('{siteId}', encodeURIComponent(String(siteId)));
         const payload: Payload = {};
         if (typeof repository !== 'undefined') {
             payload['repository'] = repository;
@@ -1336,7 +1336,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "reference"');
         }
 
-        const apiPath = '/sites/{siteId}/deployments/vcs'.replace('{siteId}', siteId);
+        const apiPath = '/sites/{siteId}/deployments/vcs'.replace('{siteId}', encodeURIComponent(String(siteId)));
         const payload: Payload = {};
         if (typeof type !== 'undefined') {
             payload['type'] = type;
@@ -1407,7 +1407,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        const apiPath = '/sites/{siteId}/deployments/{deploymentId}'.replace('{siteId}', siteId).replace('{deploymentId}', deploymentId);
+        const apiPath = '/sites/{siteId}/deployments/{deploymentId}'.replace('{siteId}', encodeURIComponent(String(siteId))).replace('{deploymentId}', encodeURIComponent(String(deploymentId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1468,7 +1468,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        const apiPath = '/sites/{siteId}/deployments/{deploymentId}'.replace('{siteId}', siteId).replace('{deploymentId}', deploymentId);
+        const apiPath = '/sites/{siteId}/deployments/{deploymentId}'.replace('{siteId}', encodeURIComponent(String(siteId))).replace('{deploymentId}', encodeURIComponent(String(deploymentId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1533,7 +1533,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        const apiPath = '/sites/{siteId}/deployments/{deploymentId}/download'.replace('{siteId}', siteId).replace('{deploymentId}', deploymentId);
+        const apiPath = '/sites/{siteId}/deployments/{deploymentId}/download'.replace('{siteId}', encodeURIComponent(String(siteId))).replace('{deploymentId}', encodeURIComponent(String(deploymentId)));
         const payload: Payload = {};
         if (typeof type !== 'undefined') {
             payload['type'] = type;
@@ -1599,7 +1599,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        const apiPath = '/sites/{siteId}/deployments/{deploymentId}/status'.replace('{siteId}', siteId).replace('{deploymentId}', deploymentId);
+        const apiPath = '/sites/{siteId}/deployments/{deploymentId}/status'.replace('{siteId}', encodeURIComponent(String(siteId))).replace('{deploymentId}', encodeURIComponent(String(deploymentId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1662,7 +1662,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "siteId"');
         }
 
-        const apiPath = '/sites/{siteId}/logs'.replace('{siteId}', siteId);
+        const apiPath = '/sites/{siteId}/logs'.replace('{siteId}', encodeURIComponent(String(siteId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1729,7 +1729,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "logId"');
         }
 
-        const apiPath = '/sites/{siteId}/logs/{logId}'.replace('{siteId}', siteId).replace('{logId}', logId);
+        const apiPath = '/sites/{siteId}/logs/{logId}'.replace('{siteId}', encodeURIComponent(String(siteId))).replace('{logId}', encodeURIComponent(String(logId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1790,7 +1790,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "logId"');
         }
 
-        const apiPath = '/sites/{siteId}/logs/{logId}'.replace('{siteId}', siteId).replace('{logId}', logId);
+        const apiPath = '/sites/{siteId}/logs/{logId}'.replace('{siteId}', encodeURIComponent(String(siteId))).replace('{logId}', encodeURIComponent(String(logId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1849,7 +1849,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "siteId"');
         }
 
-        const apiPath = '/sites/{siteId}/usage'.replace('{siteId}', siteId);
+        const apiPath = '/sites/{siteId}/usage'.replace('{siteId}', encodeURIComponent(String(siteId)));
         const payload: Payload = {};
         if (typeof range !== 'undefined') {
             payload['range'] = range;
@@ -1914,7 +1914,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "siteId"');
         }
 
-        const apiPath = '/sites/{siteId}/variables'.replace('{siteId}', siteId);
+        const apiPath = '/sites/{siteId}/variables'.replace('{siteId}', encodeURIComponent(String(siteId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1999,7 +1999,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "value"');
         }
 
-        const apiPath = '/sites/{siteId}/variables'.replace('{siteId}', siteId);
+        const apiPath = '/sites/{siteId}/variables'.replace('{siteId}', encodeURIComponent(String(siteId)));
         const payload: Payload = {};
         if (typeof variableId !== 'undefined') {
             payload['variableId'] = variableId;
@@ -2073,7 +2073,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
 
-        const apiPath = '/sites/{siteId}/variables/{variableId}'.replace('{siteId}', siteId).replace('{variableId}', variableId);
+        const apiPath = '/sites/{siteId}/variables/{variableId}'.replace('{siteId}', encodeURIComponent(String(siteId))).replace('{variableId}', encodeURIComponent(String(variableId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2146,7 +2146,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
 
-        const apiPath = '/sites/{siteId}/variables/{variableId}'.replace('{siteId}', siteId).replace('{variableId}', variableId);
+        const apiPath = '/sites/{siteId}/variables/{variableId}'.replace('{siteId}', encodeURIComponent(String(siteId))).replace('{variableId}', encodeURIComponent(String(variableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -2217,7 +2217,7 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
 
-        const apiPath = '/sites/{siteId}/variables/{variableId}'.replace('{siteId}', siteId).replace('{variableId}', variableId);
+        const apiPath = '/sites/{siteId}/variables/{variableId}'.replace('{siteId}', encodeURIComponent(String(siteId))).replace('{variableId}', encodeURIComponent(String(variableId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 

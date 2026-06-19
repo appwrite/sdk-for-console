@@ -50,7 +50,7 @@ export class Projects {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
 
-        const apiPath = '/projects/{projectId}/console-access'.replace('{projectId}', projectId);
+        const apiPath = '/projects/{projectId}/console-access'.replace('{projectId}', encodeURIComponent(String(projectId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -109,7 +109,7 @@ export class Projects {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
 
-        const apiPath = '/projects/{projectId}/dev-keys'.replace('{projectId}', projectId);
+        const apiPath = '/projects/{projectId}/dev-keys'.replace('{projectId}', encodeURIComponent(String(projectId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -180,7 +180,7 @@ export class Projects {
             throw new AppwriteException('Missing required parameter: "expire"');
         }
 
-        const apiPath = '/projects/{projectId}/dev-keys'.replace('{projectId}', projectId);
+        const apiPath = '/projects/{projectId}/dev-keys'.replace('{projectId}', encodeURIComponent(String(projectId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -248,7 +248,7 @@ export class Projects {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
 
-        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
+        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{keyId}', encodeURIComponent(String(keyId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -323,7 +323,7 @@ export class Projects {
             throw new AppwriteException('Missing required parameter: "expire"');
         }
 
-        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
+        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{keyId}', encodeURIComponent(String(keyId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -391,7 +391,7 @@ export class Projects {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
 
-        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'.replace('{projectId}', projectId).replace('{keyId}', keyId);
+        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{keyId}', encodeURIComponent(String(keyId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -453,7 +453,7 @@ export class Projects {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
 
-        const apiPath = '/projects/{projectId}/schedules'.replace('{projectId}', projectId);
+        const apiPath = '/projects/{projectId}/schedules'.replace('{projectId}', encodeURIComponent(String(projectId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -542,7 +542,7 @@ export class Projects {
             throw new AppwriteException('Missing required parameter: "schedule"');
         }
 
-        const apiPath = '/projects/{projectId}/schedules'.replace('{projectId}', projectId);
+        const apiPath = '/projects/{projectId}/schedules'.replace('{projectId}', encodeURIComponent(String(projectId)));
         const payload: Payload = {};
         if (typeof resourceType !== 'undefined') {
             payload['resourceType'] = resourceType;
@@ -619,7 +619,7 @@ export class Projects {
             throw new AppwriteException('Missing required parameter: "scheduleId"');
         }
 
-        const apiPath = '/projects/{projectId}/schedules/{scheduleId}'.replace('{projectId}', projectId).replace('{scheduleId}', scheduleId);
+        const apiPath = '/projects/{projectId}/schedules/{scheduleId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{scheduleId}', encodeURIComponent(String(scheduleId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -682,7 +682,7 @@ export class Projects {
             throw new AppwriteException('Missing required parameter: "status"');
         }
 
-        const apiPath = '/projects/{projectId}/status'.replace('{projectId}', projectId);
+        const apiPath = '/projects/{projectId}/status'.replace('{projectId}', encodeURIComponent(String(projectId)));
         const payload: Payload = {};
         if (typeof status !== 'undefined') {
             payload['status'] = status;
@@ -747,7 +747,7 @@ export class Projects {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
 
-        const apiPath = '/projects/{projectId}/team'.replace('{projectId}', projectId);
+        const apiPath = '/projects/{projectId}/team'.replace('{projectId}', encodeURIComponent(String(projectId)));
         const payload: Payload = {};
         if (typeof teamId !== 'undefined') {
             payload['teamId'] = teamId;

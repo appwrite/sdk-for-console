@@ -9,7 +9,7 @@ const domains = new Domains(client);
 
 const result = await domains.createRecordMX({
     domainId: '<DOMAIN_ID>',
-    name: '<NAME>',
+    name: '',
     value: '<VALUE>',
     ttl: 1,
     priority: null,

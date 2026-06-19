@@ -10,7 +10,7 @@ const domains = new Domains(client);
 const result = await domains.updateRecordMX({
     domainId: '<DOMAIN_ID>',
     recordId: '<RECORD_ID>',
-    name: '<NAME>',
+    name: '',
     value: '<VALUE>',
     ttl: 1,
     priority: null,

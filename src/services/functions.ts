@@ -465,7 +465,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "templateId"');
         }
 
-        const apiPath = '/functions/templates/{templateId}'.replace('{templateId}', templateId);
+        const apiPath = '/functions/templates/{templateId}'.replace('{templateId}', encodeURIComponent(String(templateId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -571,7 +571,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        const apiPath = '/functions/{functionId}'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -712,7 +712,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        const apiPath = '/functions/{functionId}'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -829,7 +829,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        const apiPath = '/functions/{functionId}'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -890,7 +890,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        const apiPath = '/functions/{functionId}/deployment'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/deployment'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         if (typeof deploymentId !== 'undefined') {
             payload['deploymentId'] = deploymentId;
@@ -960,7 +960,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        const apiPath = '/functions/{functionId}/deployments'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/deployments'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1056,7 +1056,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "activate"');
         }
 
-        const apiPath = '/functions/{functionId}/deployments'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/deployments'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         if (typeof entrypoint !== 'undefined') {
             payload['entrypoint'] = entrypoint;
@@ -1135,7 +1135,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        const apiPath = '/functions/{functionId}/deployments/duplicate'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/deployments/duplicate'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         if (typeof deploymentId !== 'undefined') {
             payload['deploymentId'] = deploymentId;
@@ -1239,7 +1239,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "reference"');
         }
 
-        const apiPath = '/functions/{functionId}/deployments/template'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/deployments/template'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         if (typeof repository !== 'undefined') {
             payload['repository'] = repository;
@@ -1334,7 +1334,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "reference"');
         }
 
-        const apiPath = '/functions/{functionId}/deployments/vcs'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/deployments/vcs'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         if (typeof type !== 'undefined') {
             payload['type'] = type;
@@ -1405,7 +1405,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{deploymentId}', encodeURIComponent(String(deploymentId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1466,7 +1466,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{deploymentId}', encodeURIComponent(String(deploymentId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1531,7 +1531,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        const apiPath = '/functions/{functionId}/deployments/{deploymentId}/download'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}/download'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{deploymentId}', encodeURIComponent(String(deploymentId)));
         const payload: Payload = {};
         if (typeof type !== 'undefined') {
             payload['type'] = type;
@@ -1597,7 +1597,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "deploymentId"');
         }
 
-        const apiPath = '/functions/{functionId}/deployments/{deploymentId}/status'.replace('{functionId}', functionId).replace('{deploymentId}', deploymentId);
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}/status'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{deploymentId}', encodeURIComponent(String(deploymentId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1660,7 +1660,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        const apiPath = '/functions/{functionId}/executions'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/executions'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1744,7 +1744,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        const apiPath = '/functions/{functionId}/executions'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/executions'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         if (typeof body !== 'undefined') {
             payload['body'] = body;
@@ -1824,7 +1824,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "executionId"');
         }
 
-        const apiPath = '/functions/{functionId}/executions/{executionId}'.replace('{functionId}', functionId).replace('{executionId}', executionId);
+        const apiPath = '/functions/{functionId}/executions/{executionId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{executionId}', encodeURIComponent(String(executionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1885,7 +1885,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "executionId"');
         }
 
-        const apiPath = '/functions/{functionId}/executions/{executionId}'.replace('{functionId}', functionId).replace('{executionId}', executionId);
+        const apiPath = '/functions/{functionId}/executions/{executionId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{executionId}', encodeURIComponent(String(executionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1943,7 +1943,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        const apiPath = '/functions/{functionId}/usage'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/usage'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         if (typeof range !== 'undefined') {
             payload['range'] = range;
@@ -2008,7 +2008,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "functionId"');
         }
 
-        const apiPath = '/functions/{functionId}/variables'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/variables'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -2093,7 +2093,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "value"');
         }
 
-        const apiPath = '/functions/{functionId}/variables'.replace('{functionId}', functionId);
+        const apiPath = '/functions/{functionId}/variables'.replace('{functionId}', encodeURIComponent(String(functionId)));
         const payload: Payload = {};
         if (typeof variableId !== 'undefined') {
             payload['variableId'] = variableId;
@@ -2167,7 +2167,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
 
-        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', functionId).replace('{variableId}', variableId);
+        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{variableId}', encodeURIComponent(String(variableId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2240,7 +2240,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
 
-        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', functionId).replace('{variableId}', variableId);
+        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{variableId}', encodeURIComponent(String(variableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -2311,7 +2311,7 @@ export class Functions {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
 
-        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', functionId).replace('{variableId}', variableId);
+        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{variableId}', encodeURIComponent(String(variableId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 

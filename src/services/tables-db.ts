@@ -310,7 +310,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "transactionId"');
         }
 
-        const apiPath = '/tablesdb/transactions/{transactionId}'.replace('{transactionId}', transactionId);
+        const apiPath = '/tablesdb/transactions/{transactionId}'.replace('{transactionId}', encodeURIComponent(String(transactionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -372,7 +372,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "transactionId"');
         }
 
-        const apiPath = '/tablesdb/transactions/{transactionId}'.replace('{transactionId}', transactionId);
+        const apiPath = '/tablesdb/transactions/{transactionId}'.replace('{transactionId}', encodeURIComponent(String(transactionId)));
         const payload: Payload = {};
         if (typeof commit !== 'undefined') {
             payload['commit'] = commit;
@@ -432,7 +432,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "transactionId"');
         }
 
-        const apiPath = '/tablesdb/transactions/{transactionId}'.replace('{transactionId}', transactionId);
+        const apiPath = '/tablesdb/transactions/{transactionId}'.replace('{transactionId}', encodeURIComponent(String(transactionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -490,7 +490,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "transactionId"');
         }
 
-        const apiPath = '/tablesdb/transactions/{transactionId}/operations'.replace('{transactionId}', transactionId);
+        const apiPath = '/tablesdb/transactions/{transactionId}/operations'.replace('{transactionId}', encodeURIComponent(String(transactionId)));
         const payload: Payload = {};
         if (typeof operations !== 'undefined') {
             payload['operations'] = operations;
@@ -600,7 +600,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}'.replace('{databaseId}', databaseId);
+        const apiPath = '/tablesdb/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -662,7 +662,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}'.replace('{databaseId}', databaseId);
+        const apiPath = '/tablesdb/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -722,7 +722,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}'.replace('{databaseId}', databaseId);
+        const apiPath = '/tablesdb/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -788,7 +788,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables'.replace('{databaseId}', databaseId);
+        const apiPath = '/tablesdb/{databaseId}/tables'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -885,7 +885,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables'.replace('{databaseId}', databaseId);
+        const apiPath = '/tablesdb/{databaseId}/tables'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof tableId !== 'undefined') {
             payload['tableId'] = tableId;
@@ -968,7 +968,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "tableId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1049,7 +1049,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "tableId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1126,7 +1126,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "tableId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1195,7 +1195,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "tableId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1294,7 +1294,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/bigint'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/bigint'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -1409,7 +1409,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/bigint/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/bigint/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -1510,7 +1510,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/boolean'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/boolean'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -1609,7 +1609,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/boolean/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/boolean/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -1702,7 +1702,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/datetime'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/datetime'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -1801,7 +1801,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/datetime/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/datetime/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -1896,7 +1896,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/email'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/email'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -1997,7 +1997,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/email/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/email/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -2097,7 +2097,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/enum'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/enum'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -2208,7 +2208,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/enum/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/enum/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof elements !== 'undefined') {
             payload['elements'] = elements;
@@ -2314,7 +2314,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/float'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/float'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -2429,7 +2429,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/float/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/float/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -2538,7 +2538,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/integer'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/integer'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -2653,7 +2653,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/integer/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/integer/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -2754,7 +2754,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/ip'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/ip'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -2855,7 +2855,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/ip/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/ip/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -2944,7 +2944,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/line'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/line'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -3037,7 +3037,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/line/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/line/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -3136,7 +3136,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/longtext'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/longtext'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -3240,7 +3240,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/longtext/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/longtext/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -3339,7 +3339,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/mediumtext'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/mediumtext'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -3443,7 +3443,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/mediumtext/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/mediumtext/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -3532,7 +3532,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/point'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/point'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -3625,7 +3625,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/point/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/point/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -3714,7 +3714,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/polygon'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/polygon'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -3807,7 +3807,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/polygon/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/polygon/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -3910,7 +3910,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "type"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/relationship'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/relationship'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof relatedTableId !== 'undefined') {
             payload['relatedTableId'] = relatedTableId;
@@ -4026,7 +4026,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/string'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/string'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -4138,7 +4138,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/string/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/string/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -4240,7 +4240,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/text'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/text'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -4344,7 +4344,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/text/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/text/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -4439,7 +4439,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/url'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/url'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -4540,7 +4540,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/url/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/url/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -4646,7 +4646,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "required"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/varchar'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/varchar'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -4757,7 +4757,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "xdefault"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/varchar/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/varchar/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof required !== 'undefined') {
             payload['required'] = required;
@@ -4838,7 +4838,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4906,7 +4906,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4984,7 +4984,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/{key}/relationship'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/{key}/relationship'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         if (typeof onDelete !== 'undefined') {
             payload['onDelete'] = onDelete;
@@ -5060,7 +5060,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "tableId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/indexes'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/indexes'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -5158,7 +5158,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "columns"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/indexes'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/indexes'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -5242,7 +5242,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/indexes/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/indexes/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5310,7 +5310,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "key"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/indexes/{key}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{key}', key);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/indexes/{key}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{key}', encodeURIComponent(String(key)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5375,7 +5375,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "tableId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/logs'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/logs'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -5455,7 +5455,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "tableId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -5550,7 +5550,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "data"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof rowId !== 'undefined') {
             payload['rowId'] = rowId;
@@ -5635,7 +5635,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "rows"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof rows !== 'undefined') {
             payload['rows'] = rows;
@@ -5716,7 +5716,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "rows"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof rows !== 'undefined') {
             payload['rows'] = rows;
@@ -5796,7 +5796,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "tableId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof data !== 'undefined') {
             payload['data'] = data;
@@ -5875,7 +5875,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "tableId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -5958,7 +5958,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "rowId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{rowId}', rowId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{rowId}', encodeURIComponent(String(rowId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -6044,7 +6044,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "rowId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{rowId}', rowId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{rowId}', encodeURIComponent(String(rowId)));
         const payload: Payload = {};
         if (typeof data !== 'undefined') {
             payload['data'] = data;
@@ -6134,7 +6134,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "rowId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{rowId}', rowId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{rowId}', encodeURIComponent(String(rowId)));
         const payload: Payload = {};
         if (typeof data !== 'undefined') {
             payload['data'] = data;
@@ -6216,7 +6216,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "rowId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{rowId}', rowId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{rowId}', encodeURIComponent(String(rowId)));
         const payload: Payload = {};
         if (typeof transactionId !== 'undefined') {
             payload['transactionId'] = transactionId;
@@ -6291,7 +6291,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "rowId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}/logs'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{rowId}', rowId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}/logs'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{rowId}', encodeURIComponent(String(rowId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -6381,7 +6381,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "column"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}/{column}/decrement'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{rowId}', rowId).replace('{column}', column);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}/{column}/decrement'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{rowId}', encodeURIComponent(String(rowId))).replace('{column}', encodeURIComponent(String(column)));
         const payload: Payload = {};
         if (typeof value !== 'undefined') {
             payload['value'] = value;
@@ -6478,7 +6478,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "column"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}/{column}/increment'.replace('{databaseId}', databaseId).replace('{tableId}', tableId).replace('{rowId}', rowId).replace('{column}', column);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}/{column}/increment'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{rowId}', encodeURIComponent(String(rowId))).replace('{column}', encodeURIComponent(String(column)));
         const payload: Payload = {};
         if (typeof value !== 'undefined') {
             payload['value'] = value;
@@ -6553,7 +6553,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "tableId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/usage'.replace('{databaseId}', databaseId).replace('{tableId}', tableId);
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/usage'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
         const payload: Payload = {};
         if (typeof range !== 'undefined') {
             payload['range'] = range;
@@ -6614,7 +6614,7 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "databaseId"');
         }
 
-        const apiPath = '/tablesdb/{databaseId}/usage'.replace('{databaseId}', databaseId);
+        const apiPath = '/tablesdb/{databaseId}/usage'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof range !== 'undefined') {
             payload['range'] = range;

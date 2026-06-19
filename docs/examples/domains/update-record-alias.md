@@ -10,7 +10,7 @@ const domains = new Domains(client);
 const result = await domains.updateRecordAlias({
     domainId: '<DOMAIN_ID>',
     recordId: '<RECORD_ID>',
-    name: '<NAME>',
+    name: '',
     value: '<VALUE>',
     ttl: 1,
     comment: '<COMMENT>' // optional

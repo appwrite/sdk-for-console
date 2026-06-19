@@ -1,14 +1,14 @@
 ```javascript
-import { Client, Avatars } from "@appwrite.io/console";
+import { Client, Oauth2 } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const avatars = new Avatars(client);
+const oauth2 = new Oauth2(client);
 
-const result = avatars.getFavicon({
-    url: 'https://example.com'
+const result = await oauth2.createGrant({
+    userCode: '<USER_CODE>'
 });
 
 console.log(result);

@@ -212,7 +212,7 @@ export class Manager {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
 
-        const apiPath = '/manager/blocks/{projectId}'.replace('{projectId}', projectId);
+        const apiPath = '/manager/blocks/{projectId}'.replace('{projectId}', encodeURIComponent(String(projectId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 

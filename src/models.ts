@@ -607,7 +607,7 @@ export namespace Models {
         /**
          * List of policies.
          */
-        policies: (Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail)[];
+        policies: (Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail)[];
     }
 
     /**
@@ -10036,6 +10036,10 @@ export namespace Models {
          */
         supportsFreeEmailValidation: boolean;
         /**
+         * Does plan support restricting sign-ups to corporate email addresses only.
+         */
+        supportsCorporateEmailValidation: boolean;
+        /**
          * Does plan support project-specific member roles.
          */
         supportsProjectSpecificRoles: boolean;
@@ -10628,7 +10632,7 @@ export namespace Models {
          */
         storage: number;
         /**
-         * Storage class: ssd, nvme, or hdd.
+         * Storage class. Currently always 'ssd'; DigitalOcean exposes a single block-storage class.
          */
         storageClass: string;
         /**
@@ -10708,7 +10712,7 @@ export namespace Models {
          */
         sqlApiEnabled: boolean;
         /**
-         * Statement types accepted by the SQL API. Defaults to DML only; DDL/DCL types (CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE) are opt-in per database. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.
+         * Statement types accepted by the SQL API. Defaults to read/write DML only; DDL/DCL types (CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE) are opt-in per database. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.
          */
         sqlApiAllowedStatements: string[];
         /**
@@ -11924,6 +11928,20 @@ export namespace Models {
     }
 
     /**
+     * Policy Deny Corporate Email
+     */
+    export type PolicyDenyCorporateEmail = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether the deny non-corporate email policy is enabled.
+         */
+        enabled: boolean;
+    }
+
+    /**
      * PoolerConfig
      */
     export type DedicatedDatabasePooler = {
@@ -12380,75 +12398,105 @@ export namespace Models {
     }
 
     /**
-     * usageEvent
+     * usageGroup
      */
-    export type UsageEvent = {
+    export type UsageGroup = {
         /**
-         * The metric key.
-         */
-        metric: string;
-        /**
-         * The metric value.
-         */
-        value: number;
-        /**
-         * The event timestamp.
+         * Group start timestamp (ISO 8601).
          */
         time: string;
         /**
-         * The API endpoint path.
+         * Aggregated value for the group.
          */
-        path: string;
+        value: number;
         /**
-         * The HTTP method.
+         * API endpoint path when broken down by `path`.
          */
-        method: string;
+        path?: string;
         /**
-         * HTTP status code. Stored as string to preserve unset state (empty string = not available).
+         * HTTP method when broken down by `method`.
          */
-        status: string;
+        method?: string;
         /**
-         * The resource type.
+         * HTTP status code when broken down by `status`.
          */
-        resourceType: string;
+        status?: string;
         /**
-         * The resource ID.
+         * API service segment when broken down by `service`.
          */
-        resourceId: string;
+        service?: string;
         /**
-         * Country code in [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1) two-character format.
+         * Country code when broken down by `country`.
          */
-        countryCode: string;
+        country?: string;
         /**
-         * The user agent string.
+         * Appwrite region when broken down by `region`.
          */
-        userAgent: string;
+        region?: string;
+        /**
+         * Caller origin hostname when broken down by `hostname`.
+         */
+        hostname?: string;
+        /**
+         * Operating system name when broken down by `osName`.
+         */
+        osName?: string;
+        /**
+         * Client type when broken down by `clientType`.
+         */
+        clientType?: string;
+        /**
+         * Client name when broken down by `clientName`.
+         */
+        clientName?: string;
+        /**
+         * Device classification when broken down by `deviceName`.
+         */
+        deviceName?: string;
+        /**
+         * Owning team ID when broken down by `teamId`.
+         */
+        teamId?: string;
+        /**
+         * External resource ID when broken down by `resourceId`.
+         */
+        resourceId?: string;
     }
 
     /**
-     * usageGauge
+     * usageEventList
      */
-    export type UsageGauge = {
+    export type UsageEventList = {
         /**
-         * The metric key.
+         * Metric key the groups describe.
          */
         metric: string;
         /**
-         * The current snapshot value.
+         * Time interval size (1h or 1d).
          */
-        value: number;
+        interval: string;
         /**
-         * The snapshot timestamp.
+         * Aggregated groups ordered by time ascending.
          */
-        time: string;
+        groups: UsageGroup[];
+    }
+
+    /**
+     * usageGaugeList
+     */
+    export type UsageGaugeList = {
         /**
-         * The resource type.
+         * Metric key the groups describe.
          */
-        resourceType: string;
+        metric: string;
         /**
-         * The resource ID.
+         * Time interval size (1h or 1d).
          */
-        resourceId: string;
+        interval: string;
+        /**
+         * Aggregated groups ordered by time ascending. Each group carries the latest snapshot in its interval (argMax over time).
+         */
+        groups: UsageGroup[];
     }
 
     /**
@@ -12750,9 +12798,33 @@ export namespace Models {
          */
         contacts: string[];
         /**
+         * Application tagline shown to users during OAuth2 consent.
+         */
+        tagline: string;
+        /**
+         * Application tags shown to users during OAuth2 consent.
+         */
+        tags: string[];
+        /**
+         * Application image URLs shown to users during OAuth2 consent.
+         */
+        images: string[];
+        /**
+         * Application support URL shown to users during OAuth2 consent.
+         */
+        supportUrl: string;
+        /**
+         * Application data deletion URL shown to users during OAuth2 consent.
+         */
+        dataDeletionUrl: string;
+        /**
          * List of authorized redirect URIs. These URIs can be used to redirect users after they authenticate.
          */
         redirectUris: string[];
+        /**
+         * List of authorized post-logout redirect URIs for OpenID Connect RP-Initiated Logout. The logout endpoint only redirects users to URIs in this list after ending their session.
+         */
+        postLogoutRedirectUris: string[];
         /**
          * Whether the app is enabled or not.
          */
@@ -12861,6 +12933,154 @@ export namespace Models {
          * Time the secret was last used for authentication in ISO 8601 format. Null if never used.
          */
         lastAccessedAt?: string;
+    }
+
+    /**
+     * OAuth2 Authorize
+     */
+    export type Oauth2Authorize = {
+        /**
+         * OAuth2 grant ID. Set when the user must give explicit consent; pass it to the approve or reject endpoint. Empty when a redirect URL is returned instead.
+         */
+        grantId: string;
+        /**
+         * URL the end user should be redirected to when the flow can complete without consent. Empty when consent is still required.
+         */
+        redirectUrl: string;
+    }
+
+    /**
+     * OAuth2 Approve
+     */
+    export type Oauth2Approve = {
+        /**
+         * URL the end user should be redirected to after the grant is approved, carrying the authorization `code` and/or `id_token` along with the original `state`.
+         */
+        redirectUrl: string;
+    }
+
+    /**
+     * OAuth2 Reject
+     */
+    export type Oauth2Reject = {
+        /**
+         * URL the end user should be redirected to after the grant is rejected, carrying an `access_denied` error.
+         */
+        redirectUrl: string;
+    }
+
+    /**
+     * OAuth2 Grant
+     */
+    export type Oauth2Grant = {
+        /**
+         * Grant ID.
+         */
+        $id: string;
+        /**
+         * Grant creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Grant update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the user the grant belongs to.
+         */
+        userId: string;
+        /**
+         * ID of the OAuth2 client (app) the grant was requested for.
+         */
+        appId: string;
+        /**
+         * Requested OAuth2 scopes the user is being asked to consent to.
+         */
+        scopes: string[];
+        /**
+         * Requested authorization_details the user is being asked to consent to, as a JSON string. Each entry has a `type` plus project-defined fields.
+         */
+        authorizationDetails: string;
+        /**
+         * OIDC prompt directive the consent screen should honor. Space-separated list of: login, consent, select_account.
+         */
+        prompt: string;
+        /**
+         * Redirect URI the user will be sent to after the flow completes.
+         */
+        redirectUri: string;
+        /**
+         * Unix timestamp of when the user last authenticated.
+         */
+        authTime: number;
+        /**
+         * Grant expiration time in ISO 8601 format.
+         */
+        expire: string;
+    }
+
+    /**
+     * OAuth2 Device Authorization
+     */
+    export type Oauth2DeviceAuthorization = {
+        /**
+         * Device verification code used by the client to poll the token endpoint.
+         */
+        device_code: string;
+        /**
+         * Short code the end user enters on the verification page.
+         */
+        user_code: string;
+        /**
+         * URL where the end user enters the user code.
+         */
+        verification_uri: string;
+        /**
+         * Verification URL with the user code prefilled as a query parameter.
+         */
+        verification_uri_complete: string;
+        /**
+         * Lifetime of the device code and user code in seconds.
+         */
+        expires_in: number;
+        /**
+         * Minimum polling interval for the token endpoint in seconds.
+         */
+        interval: number;
+    }
+
+    /**
+     * OAuth2 Token
+     */
+    export type Oauth2Token = {
+        /**
+         * OAuth2 access token.
+         */
+        access_token: string;
+        /**
+         * OAuth2 token type.
+         */
+        token_type: string;
+        /**
+         * Access token lifetime in seconds.
+         */
+        expires_in: number;
+        /**
+         * OAuth2 refresh token.
+         */
+        refresh_token: string;
+        /**
+         * Space-separated scopes granted to the access token.
+         */
+        scope: string;
+        /**
+         * Granted RFC 9396 authorization details as a JSON string.
+         */
+        authorization_details?: string;
+        /**
+         * OpenID Connect ID token. Returned when the `openid` scope is granted.
+         */
+        id_token?: string;
     }
 
     /**
@@ -13127,34 +13347,6 @@ export namespace Models {
          * List of regions.
          */
         regions: ConsoleRegion[];
-    }
-
-    /**
-     * Usage events list
-     */
-    export type UsageEventList = {
-        /**
-         * Total number of events that matched your query.
-         */
-        total: number;
-        /**
-         * List of events.
-         */
-        events: UsageEvent[];
-    }
-
-    /**
-     * Usage gauges list
-     */
-    export type UsageGaugeList = {
-        /**
-         * Total number of gauges that matched your query.
-         */
-        total: number;
-        /**
-         * List of gauges.
-         */
-        gauges: UsageGauge[];
     }
 
     /**

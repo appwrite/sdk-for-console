@@ -51,7 +51,7 @@ export class Console {
             throw new AppwriteException('Missing required parameter: "campaignId"');
         }
 
-        const apiPath = '/console/campaigns/{campaignId}'.replace('{campaignId}', campaignId);
+        const apiPath = '/console/campaigns/{campaignId}'.replace('{campaignId}', encodeURIComponent(String(campaignId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -104,7 +104,7 @@ export class Console {
             throw new AppwriteException('Missing required parameter: "couponId"');
         }
 
-        const apiPath = '/console/coupons/{couponId}'.replace('{couponId}', couponId);
+        const apiPath = '/console/coupons/{couponId}'.replace('{couponId}', encodeURIComponent(String(couponId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -235,7 +235,7 @@ export class Console {
             throw new AppwriteException('Missing required parameter: "planId"');
         }
 
-        const apiPath = '/console/plans/{planId}'.replace('{planId}', planId);
+        const apiPath = '/console/plans/{planId}'.replace('{planId}', encodeURIComponent(String(planId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -288,7 +288,7 @@ export class Console {
             throw new AppwriteException('Missing required parameter: "programId"');
         }
 
-        const apiPath = '/console/programs/{programId}'.replace('{programId}', programId);
+        const apiPath = '/console/programs/{programId}'.replace('{programId}', encodeURIComponent(String(programId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -341,7 +341,7 @@ export class Console {
             throw new AppwriteException('Missing required parameter: "programId"');
         }
 
-        const apiPath = '/console/programs/{programId}/memberships'.replace('{programId}', programId);
+        const apiPath = '/console/programs/{programId}/memberships'.replace('{programId}', encodeURIComponent(String(programId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -876,7 +876,7 @@ export class Console {
             throw new AppwriteException('Missing required parameter: "templateId"');
         }
 
-        const apiPath = '/console/templates/email/{templateId}'.replace('{templateId}', templateId);
+        const apiPath = '/console/templates/email/{templateId}'.replace('{templateId}', encodeURIComponent(String(templateId)));
         const payload: Payload = {};
         if (typeof locale !== 'undefined') {
             payload['locale'] = locale;

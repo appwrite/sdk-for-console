@@ -442,7 +442,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "identityId"');
         }
 
-        const apiPath = '/users/identities/{identityId}'.replace('{identityId}', identityId);
+        const apiPath = '/users/identities/{identityId}'.replace('{identityId}', encodeURIComponent(String(identityId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1062,7 +1062,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1115,7 +1115,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1176,7 +1176,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
 
-        const apiPath = '/users/{userId}/email'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/email'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof email !== 'undefined') {
             payload['email'] = email;
@@ -1243,7 +1243,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "impersonator"');
         }
 
-        const apiPath = '/users/{userId}/impersonator'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/impersonator'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof impersonator !== 'undefined') {
             payload['impersonator'] = impersonator;
@@ -1309,7 +1309,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/jwts'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/jwts'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof sessionId !== 'undefined') {
             payload['sessionId'] = sessionId;
@@ -1381,7 +1381,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "labels"');
         }
 
-        const apiPath = '/users/{userId}/labels'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/labels'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof labels !== 'undefined') {
             payload['labels'] = labels;
@@ -1447,7 +1447,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/logs'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/logs'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1519,7 +1519,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/memberships'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/memberships'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1590,7 +1590,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "mfa"');
         }
 
-        const apiPath = '/users/{userId}/mfa'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof mfa !== 'undefined') {
             payload['mfa'] = mfa;
@@ -1655,7 +1655,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "mfa"');
         }
 
-        const apiPath = '/users/{userId}/mfa'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof mfa !== 'undefined') {
             payload['mfa'] = mfa;
@@ -1721,7 +1721,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "type"');
         }
 
-        const apiPath = '/users/{userId}/mfa/authenticators/{type}'.replace('{userId}', userId).replace('{type}', type);
+        const apiPath = '/users/{userId}/mfa/authenticators/{type}'.replace('{userId}', encodeURIComponent(String(userId))).replace('{type}', encodeURIComponent(String(type)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1782,7 +1782,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "type"');
         }
 
-        const apiPath = '/users/{userId}/mfa/authenticators/{type}'.replace('{userId}', userId).replace('{type}', type);
+        const apiPath = '/users/{userId}/mfa/authenticators/{type}'.replace('{userId}', encodeURIComponent(String(userId))).replace('{type}', encodeURIComponent(String(type)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1836,7 +1836,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/mfa/factors'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa/factors'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1889,7 +1889,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/mfa/factors'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa/factors'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1943,7 +1943,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1996,7 +1996,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2050,7 +2050,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2104,7 +2104,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2159,7 +2159,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2213,7 +2213,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2275,7 +2275,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        const apiPath = '/users/{userId}/name'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/name'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2340,7 +2340,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "password"');
         }
 
-        const apiPath = '/users/{userId}/password'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/password'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof password !== 'undefined') {
             payload['password'] = password;
@@ -2405,7 +2405,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "number"');
         }
 
-        const apiPath = '/users/{userId}/phone'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/phone'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof number !== 'undefined') {
             payload['number'] = number;
@@ -2462,7 +2462,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/prefs'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/prefs'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2523,7 +2523,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "prefs"');
         }
 
-        const apiPath = '/users/{userId}/prefs'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/prefs'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof prefs !== 'undefined') {
             payload['prefs'] = prefs;
@@ -2585,7 +2585,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/sessions'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/sessions'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof total !== 'undefined') {
             payload['total'] = total;
@@ -2645,7 +2645,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/sessions'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/sessions'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2699,7 +2699,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/sessions'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/sessions'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2760,7 +2760,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "sessionId"');
         }
 
-        const apiPath = '/users/{userId}/sessions/{sessionId}'.replace('{userId}', userId).replace('{sessionId}', sessionId);
+        const apiPath = '/users/{userId}/sessions/{sessionId}'.replace('{userId}', encodeURIComponent(String(userId))).replace('{sessionId}', encodeURIComponent(String(sessionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2821,7 +2821,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "status"');
         }
 
-        const apiPath = '/users/{userId}/status'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/status'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof status !== 'undefined') {
             payload['status'] = status;
@@ -2887,7 +2887,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/targets'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/targets'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -2976,7 +2976,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "identifier"');
         }
 
-        const apiPath = '/users/{userId}/targets'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/targets'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof targetId !== 'undefined') {
             payload['targetId'] = targetId;
@@ -3053,7 +3053,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "targetId"');
         }
 
-        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', userId).replace('{targetId}', targetId);
+        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', encodeURIComponent(String(userId))).replace('{targetId}', encodeURIComponent(String(targetId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3126,7 +3126,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "targetId"');
         }
 
-        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', userId).replace('{targetId}', targetId);
+        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', encodeURIComponent(String(userId))).replace('{targetId}', encodeURIComponent(String(targetId)));
         const payload: Payload = {};
         if (typeof identifier !== 'undefined') {
             payload['identifier'] = identifier;
@@ -3197,7 +3197,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "targetId"');
         }
 
-        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', userId).replace('{targetId}', targetId);
+        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', encodeURIComponent(String(userId))).replace('{targetId}', encodeURIComponent(String(targetId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3261,7 +3261,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
 
-        const apiPath = '/users/{userId}/tokens'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/tokens'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof length !== 'undefined') {
             payload['length'] = length;
@@ -3329,7 +3329,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "emailVerification"');
         }
 
-        const apiPath = '/users/{userId}/verification'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/verification'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof emailVerification !== 'undefined') {
             payload['emailVerification'] = emailVerification;
@@ -3394,7 +3394,7 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "phoneVerification"');
         }
 
-        const apiPath = '/users/{userId}/verification/phone'.replace('{userId}', userId);
+        const apiPath = '/users/{userId}/verification/phone'.replace('{userId}', encodeURIComponent(String(userId)));
         const payload: Payload = {};
         if (typeof phoneVerification !== 'undefined') {
             payload['phoneVerification'] = phoneVerification;

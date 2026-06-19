@@ -366,6 +366,7 @@ class Client {
         impersonateuserphone: string;
         platform: string;
         selfSigned: boolean;
+        credentials: RequestCredentials;
     } = {
         endpoint: 'https://cloud.appwrite.io/v1',
         endpointRealtime: '',
@@ -382,6 +383,7 @@ class Client {
         impersonateuserphone: '',
         platform: '',
         selfSigned: false,
+        credentials: 'include',
     };
     /**
      * Custom headers for API requests.
@@ -390,7 +392,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '14.0.0',
+        'x-sdk-version': '15.0.0',
         'X-Appwrite-Response-Format': '1.9.5',
     };
 
@@ -460,6 +462,46 @@ class Client {
     setSelfSigned(selfSigned: boolean): this {
         this.config.selfSigned = selfSigned;
         return this;
+    }
+
+    /**
+     * Set credentials
+     *
+     * Controls whether fetch sends credentials like cookies with requests.
+     *
+     * @param {RequestCredentials} credentials
+     *
+     * @returns {this}
+     */
+    setCredentials(credentials: RequestCredentials): this {
+        this.config.credentials = credentials;
+        return this;
+    }
+
+    private shouldUseFallbackCredentials(url?: URL | string): boolean {
+        switch (this.config.credentials) {
+            case 'include':
+                return true;
+            case 'same-origin': {
+                if (typeof window === 'undefined' || typeof url === 'undefined') {
+                    return false;
+                }
+
+                try {
+                    const parsedUrl = typeof url === 'string' ? new URL(url) : url;
+                    const normalizedOrigin = parsedUrl.protocol === 'wss:' || parsedUrl.protocol === 'ws:'
+                        ? `${parsedUrl.protocol === 'wss:' ? 'https:' : 'http:'}//${parsedUrl.host}`
+                        : parsedUrl.origin;
+
+                    return normalizedOrigin === window.location.origin;
+                } catch {
+                    return false;
+                }
+            }
+            case 'omit':
+            default:
+                return false;
+        }
     }
 
     /**
@@ -572,7 +614,7 @@ class Client {
     /**
      * Set ImpersonateUserId
      *
-     * Impersonate a user by ID on an already user-authenticated request. Requires the current request to be authenticated as a user with impersonator capability; X-Appwrite-Key alone is not sufficient. Impersonator users are intentionally granted users.read so they can discover a target before impersonation begins. Internal audit logs still attribute actions to the original impersonator and record the impersonated target only in internal audit payload data.
+     * Impersonate a user by ID
      *
      * @param value string
      *
@@ -586,7 +628,7 @@ class Client {
     /**
      * Set ImpersonateUserEmail
      *
-     * Impersonate a user by email on an already user-authenticated request. Requires the current request to be authenticated as a user with impersonator capability; X-Appwrite-Key alone is not sufficient. Impersonator users are intentionally granted users.read so they can discover a target before impersonation begins. Internal audit logs still attribute actions to the original impersonator and record the impersonated target only in internal audit payload data.
+     * Impersonate a user by email
      *
      * @param value string
      *
@@ -600,7 +642,7 @@ class Client {
     /**
      * Set ImpersonateUserPhone
      *
-     * Impersonate a user by phone on an already user-authenticated request. Requires the current request to be authenticated as a user with impersonator capability; X-Appwrite-Key alone is not sufficient. Impersonator users are intentionally granted users.read so they can discover a target before impersonation begins. Internal audit logs still attribute actions to the original impersonator and record the impersonated target only in internal audit payload data.
+     * Impersonate a user by phone
      *
      * @param value string
      *
@@ -748,18 +790,20 @@ class Client {
                     case 'connected': {
                         const messageData = <RealtimeResponseConnected>message.data;
 
-                        let session = this.config.session;
-                        if (!session) {
-                            const cookie = JSONbig.parse(window.localStorage.getItem('cookieFallback') ?? '{}');
-                            session = cookie?.[`a_session_${this.config.project}`];
-                        }
-                        if (session && !messageData?.user) {
-                            this.realtime.socket?.send(JSONbig.stringify(<RealtimeRequest>{
-                                type: 'authentication',
-                                data: {
-                                    session
-                                }
-                            }));
+                        if (this.shouldUseFallbackCredentials(this.realtime.url)) {
+                            let session = this.config.session;
+                            if (!session) {
+                                const cookie = JSONbig.parse(window.localStorage.getItem('cookieFallback') ?? '{}');
+                                session = cookie?.[`a_session_${this.config.project}`];
+                            }
+                            if (session && !messageData?.user) {
+                                this.realtime.socket?.send(JSONbig.stringify(<RealtimeRequest>{
+                                    type: 'authentication',
+                                    data: {
+                                        session
+                                    }
+                                }));
+                            }
                         }
 
                         this.realtime.subscriptions.forEach((sub, subscriptionId) => {
@@ -916,7 +960,7 @@ class Client {
 
         headers = Object.assign({}, this.headers, headers);
 
-        if (typeof window !== 'undefined' && window.localStorage) {
+        if (typeof window !== 'undefined' && window.localStorage && this.shouldUseFallbackCredentials(url)) {
             const cookieFallback = window.localStorage.getItem('cookieFallback');
             if (cookieFallback) {
                 headers['X-Fallback-Cookies'] = cookieFallback;
@@ -929,7 +973,7 @@ class Client {
         };
 
         if (headers['X-Appwrite-Dev-Key'] === undefined) {
-            options.credentials = 'include';
+            options.credentials = this.config.credentials;
         }
 
         if (method === 'GET') {
@@ -1104,6 +1148,7 @@ class Client {
     async ping(): Promise<unknown> {
         return this.call('GET', new URL(this.config.endpoint + '/ping'), {
             'X-Appwrite-Project': this.config.project,
+            'accept': 'application/json',
         });
     }
 
@@ -1151,7 +1196,7 @@ class Client {
 
         const cookieFallback = response.headers.get('X-Fallback-Cookies');
 
-        if (typeof window !== 'undefined' && window.localStorage && cookieFallback) {
+        if (typeof window !== 'undefined' && window.localStorage && cookieFallback && this.shouldUseFallbackCredentials(url)) {
             window.console.warn('Appwrite is using localStorage for session management. Increase your security by adding a custom domain as your API endpoint.');
             window.localStorage.setItem('cookieFallback', cookieFallback);
         }

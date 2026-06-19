@@ -194,7 +194,7 @@ export class Organization {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
 
-        const apiPath = '/organization/keys/{keyId}'.replace('{keyId}', keyId);
+        const apiPath = '/organization/keys/{keyId}'.replace('{keyId}', encodeURIComponent(String(keyId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -266,7 +266,7 @@ export class Organization {
             throw new AppwriteException('Missing required parameter: "scopes"');
         }
 
-        const apiPath = '/organization/keys/{keyId}'.replace('{keyId}', keyId);
+        const apiPath = '/organization/keys/{keyId}'.replace('{keyId}', encodeURIComponent(String(keyId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -329,7 +329,7 @@ export class Organization {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
 
-        const apiPath = '/organization/keys/{keyId}'.replace('{keyId}', keyId);
+        const apiPath = '/organization/keys/{keyId}'.replace('{keyId}', encodeURIComponent(String(keyId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -525,7 +525,7 @@ export class Organization {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
 
-        const apiPath = '/organization/projects/{projectId}'.replace('{projectId}', projectId);
+        const apiPath = '/organization/projects/{projectId}'.replace('{projectId}', encodeURIComponent(String(projectId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -585,7 +585,7 @@ export class Organization {
             throw new AppwriteException('Missing required parameter: "name"');
         }
 
-        const apiPath = '/organization/projects/{projectId}'.replace('{projectId}', projectId);
+        const apiPath = '/organization/projects/{projectId}'.replace('{projectId}', encodeURIComponent(String(projectId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -642,7 +642,7 @@ export class Organization {
             throw new AppwriteException('Missing required parameter: "projectId"');
         }
 
-        const apiPath = '/organization/projects/{projectId}'.replace('{projectId}', projectId);
+        const apiPath = '/organization/projects/{projectId}'.replace('{projectId}', encodeURIComponent(String(projectId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 

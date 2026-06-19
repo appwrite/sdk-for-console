@@ -1308,7 +1308,7 @@ export class Migrations {
             throw new AppwriteException('Missing required parameter: "migrationId"');
         }
 
-        const apiPath = '/migrations/{migrationId}'.replace('{migrationId}', migrationId);
+        const apiPath = '/migrations/{migrationId}'.replace('{migrationId}', encodeURIComponent(String(migrationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1361,7 +1361,7 @@ export class Migrations {
             throw new AppwriteException('Missing required parameter: "migrationId"');
         }
 
-        const apiPath = '/migrations/{migrationId}'.replace('{migrationId}', migrationId);
+        const apiPath = '/migrations/{migrationId}'.replace('{migrationId}', encodeURIComponent(String(migrationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1415,7 +1415,7 @@ export class Migrations {
             throw new AppwriteException('Missing required parameter: "migrationId"');
         }
 
-        const apiPath = '/migrations/{migrationId}'.replace('{migrationId}', migrationId);
+        const apiPath = '/migrations/{migrationId}'.replace('{migrationId}', encodeURIComponent(String(migrationId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 

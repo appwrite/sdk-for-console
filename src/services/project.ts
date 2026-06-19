@@ -114,7 +114,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "enabled"');
         }
 
-        const apiPath = '/project/auth-methods/{methodId}'.replace('{methodId}', methodId);
+        const apiPath = '/project/auth-methods/{methodId}'.replace('{methodId}', encodeURIComponent(String(methodId)));
         const payload: Payload = {};
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
@@ -393,7 +393,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
 
-        const apiPath = '/project/keys/{keyId}'.replace('{keyId}', keyId);
+        const apiPath = '/project/keys/{keyId}'.replace('{keyId}', encodeURIComponent(String(keyId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -465,7 +465,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "scopes"');
         }
 
-        const apiPath = '/project/keys/{keyId}'.replace('{keyId}', keyId);
+        const apiPath = '/project/keys/{keyId}'.replace('{keyId}', encodeURIComponent(String(keyId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -528,7 +528,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
 
-        const apiPath = '/project/keys/{keyId}'.replace('{keyId}', keyId);
+        const apiPath = '/project/keys/{keyId}'.replace('{keyId}', encodeURIComponent(String(keyId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -767,7 +767,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "number"');
         }
 
-        const apiPath = '/project/mock-phones/{number}'.replace('{number}', number);
+        const apiPath = '/project/mock-phones/{number}'.replace('{number}', encodeURIComponent(String(number)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -828,7 +828,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "otp"');
         }
 
-        const apiPath = '/project/mock-phones/{number}'.replace('{number}', number);
+        const apiPath = '/project/mock-phones/{number}'.replace('{number}', encodeURIComponent(String(number)));
         const payload: Payload = {};
         if (typeof otp !== 'undefined') {
             payload['otp'] = otp;
@@ -885,7 +885,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "number"');
         }
 
-        const apiPath = '/project/mock-phones/{number}'.replace('{number}', number);
+        const apiPath = '/project/mock-phones/{number}'.replace('{number}', encodeURIComponent(String(number)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4154,7 +4154,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "providerId"');
         }
 
-        const apiPath = '/project/oauth2/{providerId}'.replace('{providerId}', providerId);
+        const apiPath = '/project/oauth2/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4361,7 +4361,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "applicationId"');
         }
 
-        const apiPath = '/project/platforms/android/{platformId}'.replace('{platformId}', platformId);
+        const apiPath = '/project/platforms/android/{platformId}'.replace('{platformId}', encodeURIComponent(String(platformId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -4514,7 +4514,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "bundleIdentifier"');
         }
 
-        const apiPath = '/project/platforms/apple/{platformId}'.replace('{platformId}', platformId);
+        const apiPath = '/project/platforms/apple/{platformId}'.replace('{platformId}', encodeURIComponent(String(platformId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -4667,7 +4667,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "packageName"');
         }
 
-        const apiPath = '/project/platforms/linux/{platformId}'.replace('{platformId}', platformId);
+        const apiPath = '/project/platforms/linux/{platformId}'.replace('{platformId}', encodeURIComponent(String(platformId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -4820,7 +4820,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "hostname"');
         }
 
-        const apiPath = '/project/platforms/web/{platformId}'.replace('{platformId}', platformId);
+        const apiPath = '/project/platforms/web/{platformId}'.replace('{platformId}', encodeURIComponent(String(platformId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -4973,7 +4973,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "packageIdentifierName"');
         }
 
-        const apiPath = '/project/platforms/windows/{platformId}'.replace('{platformId}', platformId);
+        const apiPath = '/project/platforms/windows/{platformId}'.replace('{platformId}', encodeURIComponent(String(platformId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -5033,7 +5033,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "platformId"');
         }
 
-        const apiPath = '/project/platforms/{platformId}'.replace('{platformId}', platformId);
+        const apiPath = '/project/platforms/{platformId}'.replace('{platformId}', encodeURIComponent(String(platformId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5086,7 +5086,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "platformId"');
         }
 
-        const apiPath = '/project/platforms/{platformId}'.replace('{platformId}', platformId);
+        const apiPath = '/project/platforms/{platformId}'.replace('{platformId}', encodeURIComponent(String(platformId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5201,6 +5201,63 @@ export class Project {
         }
 
         const apiPath = '/project/policies/deny-aliased-email';
+        const payload: Payload = {};
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Configures if only corporate email addresses (non-free and non-disposable domains) are allowed during new user sign-ups and email updates.
+     *
+     * @param {boolean} params.enabled - Set whether or not to restrict sign-ups and email updates to corporate email addresses only.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     */
+    updateDenyCorporateEmailPolicy(params: { enabled: boolean }): Promise<Models.Project>;
+    /**
+     * Configures if only corporate email addresses (non-free and non-disposable domains) are allowed during new user sign-ups and email updates.
+     *
+     * @param {boolean} enabled - Set whether or not to restrict sign-ups and email updates to corporate email addresses only.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateDenyCorporateEmailPolicy(enabled: boolean): Promise<Models.Project>;
+    updateDenyCorporateEmailPolicy(
+        paramsOrFirst: { enabled: boolean } | boolean    
+    ): Promise<Models.Project> {
+        let params: { enabled: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { enabled: boolean };
+        } else {
+            params = {
+                enabled: paramsOrFirst as boolean            
+            };
+        }
+        
+        const enabled = params.enabled;
+
+        if (typeof enabled === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "enabled"');
+        }
+
+        const apiPath = '/project/policies/deny-corporate-email';
         const payload: Payload = {};
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
@@ -5971,23 +6028,23 @@ export class Project {
     /**
      * Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
      *
-     * @param {ProjectPolicyId} params.policyId - Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, deny-aliased-email, deny-disposable-email, deny-free-email.
+     * @param {ProjectPolicyId} params.policyId - Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail>}
+     * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail>}
      */
-    getPolicy(params: { policyId: ProjectPolicyId }): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail>;
+    getPolicy(params: { policyId: ProjectPolicyId }): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail>;
     /**
      * Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
      *
-     * @param {ProjectPolicyId} policyId - Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, deny-aliased-email, deny-disposable-email, deny-free-email.
+     * @param {ProjectPolicyId} policyId - Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail>}
+     * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getPolicy(policyId: ProjectPolicyId): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail>;
+    getPolicy(policyId: ProjectPolicyId): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail>;
     getPolicy(
         paramsOrFirst: { policyId: ProjectPolicyId } | ProjectPolicyId    
-    ): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail> {
+    ): Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail> {
         let params: { policyId: ProjectPolicyId };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('policyId' in paramsOrFirst))) {
@@ -6004,7 +6061,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "policyId"');
         }
 
-        const apiPath = '/project/policies/{policyId}'.replace('{policyId}', policyId);
+        const apiPath = '/project/policies/{policyId}'.replace('{policyId}', encodeURIComponent(String(policyId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6065,7 +6122,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "enabled"');
         }
 
-        const apiPath = '/project/protocols/{protocolId}'.replace('{protocolId}', protocolId);
+        const apiPath = '/project/protocols/{protocolId}'.replace('{protocolId}', encodeURIComponent(String(protocolId)));
         const payload: Payload = {};
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
@@ -6089,7 +6146,7 @@ export class Project {
     /**
      * Update properties of a specific service. Use this endpoint to enable or disable a service in your project. 
      *
-     * @param {ProjectServiceId} params.serviceId - Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging, advisor
+     * @param {ProjectServiceId} params.serviceId - Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging, advisor, oauth2
      * @param {boolean} params.enabled - Service status.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
@@ -6098,7 +6155,7 @@ export class Project {
     /**
      * Update properties of a specific service. Use this endpoint to enable or disable a service in your project. 
      *
-     * @param {ProjectServiceId} serviceId - Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging, advisor
+     * @param {ProjectServiceId} serviceId - Service name. Can be one of: account, avatars, databases, tablesdb, locale, health, project, storage, teams, users, vcs, sites, functions, proxy, graphql, migrations, messaging, advisor, oauth2
      * @param {boolean} enabled - Service status.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
@@ -6130,7 +6187,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "enabled"');
         }
 
-        const apiPath = '/project/services/{serviceId}'.replace('{serviceId}', serviceId);
+        const apiPath = '/project/services/{serviceId}'.replace('{serviceId}', encodeURIComponent(String(serviceId)));
         const payload: Payload = {};
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
@@ -6534,7 +6591,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "templateId"');
         }
 
-        const apiPath = '/project/templates/email/{templateId}'.replace('{templateId}', templateId);
+        const apiPath = '/project/templates/email/{templateId}'.replace('{templateId}', encodeURIComponent(String(templateId)));
         const payload: Payload = {};
         if (typeof locale !== 'undefined') {
             payload['locale'] = locale;
@@ -6810,7 +6867,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
 
-        const apiPath = '/project/variables/{variableId}'.replace('{variableId}', variableId);
+        const apiPath = '/project/variables/{variableId}'.replace('{variableId}', encodeURIComponent(String(variableId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6876,7 +6933,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
 
-        const apiPath = '/project/variables/{variableId}'.replace('{variableId}', variableId);
+        const apiPath = '/project/variables/{variableId}'.replace('{variableId}', encodeURIComponent(String(variableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -6939,7 +6996,7 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "variableId"');
         }
 
-        const apiPath = '/project/variables/{variableId}'.replace('{variableId}', variableId);
+        const apiPath = '/project/variables/{variableId}'.replace('{variableId}', encodeURIComponent(String(variableId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 

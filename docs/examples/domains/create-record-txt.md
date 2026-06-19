@@ -9,7 +9,7 @@ const domains = new Domains(client);
 
 const result = await domains.createRecordTXT({
     domainId: '<DOMAIN_ID>',
-    name: '<NAME>',
+    name: '',
     ttl: 1,
     value: '<VALUE>', // optional
     comment: '<COMMENT>' // optional
