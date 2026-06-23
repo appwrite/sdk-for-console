@@ -15,7 +15,8 @@ const result = await oauth2.createToken({
     clientId: '<CLIENT_ID>', // optional
     clientSecret: '<CLIENT_SECRET>', // optional
     codeVerifier: '<CODE_VERIFIER>', // optional
-    redirectUri: 'https://example.com' // optional
+    redirectUri: 'https://example.com', // optional
+    resource: '' // optional
 });
 
 console.log(result);

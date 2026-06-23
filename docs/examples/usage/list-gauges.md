@@ -8,7 +8,7 @@ const client = new Client()
 const usage = new Usage(client);
 
 const result = await usage.listGauges({
-    metric: '<METRIC>',
+    metrics: [],
     resourceId: '<RESOURCE_ID>', // optional
     teamId: '<TEAM_ID>', // optional
     interval: '1m', // optional

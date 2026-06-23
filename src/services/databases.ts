@@ -168,6 +168,7 @@ export class Databases {
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries).
      * @throws {AppwriteException}
      * @returns {Promise<Models.TransactionList>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.listTransactions` instead.
      */
     listTransactions(params?: { queries?: string[] }): Promise<Models.TransactionList>;
     /**
@@ -221,6 +222,7 @@ export class Databases {
      * @param {number} params.ttl - Seconds before the transaction expires.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Transaction>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createTransaction` instead.
      */
     createTransaction(params?: { ttl?: number }): Promise<Models.Transaction>;
     /**
@@ -275,6 +277,7 @@ export class Databases {
      * @param {string} params.transactionId - Transaction ID.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Transaction>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.getTransaction` instead.
      */
     getTransaction(params: { transactionId: string }): Promise<Models.Transaction>;
     /**
@@ -330,6 +333,7 @@ export class Databases {
      * @param {boolean} params.rollback - Rollback transaction?
      * @throws {AppwriteException}
      * @returns {Promise<Models.Transaction>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateTransaction` instead.
      */
     updateTransaction(params: { transactionId: string, commit?: boolean, rollback?: boolean }): Promise<Models.Transaction>;
     /**
@@ -397,6 +401,7 @@ export class Databases {
      * @param {string} params.transactionId - Transaction ID.
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.deleteTransaction` instead.
      */
     deleteTransaction(params: { transactionId: string }): Promise<{}>;
     /**
@@ -451,6 +456,7 @@ export class Databases {
      * @param {object[]} params.operations - Array of staged operations.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Transaction>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createOperations` instead.
      */
     createOperations(params: { transactionId: string, operations?: object[] }): Promise<Models.Transaction>;
     /**
@@ -3102,6 +3108,7 @@ export class Databases {
      * @param {boolean} params.encrypt - Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeLongtext>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createLongtextColumn` instead.
      */
     createLongtextAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean, encrypt?: boolean }): Promise<Models.AttributeLongtext>;
     /**
@@ -3206,6 +3213,7 @@ export class Databases {
      * @param {string} params.newKey - New Attribute Key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeLongtext>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateLongtextColumn` instead.
      */
     updateLongtextAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string }): Promise<Models.AttributeLongtext>;
     /**
@@ -3305,6 +3313,7 @@ export class Databases {
      * @param {boolean} params.encrypt - Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeMediumtext>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createMediumtextColumn` instead.
      */
     createMediumtextAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean, encrypt?: boolean }): Promise<Models.AttributeMediumtext>;
     /**
@@ -3409,6 +3418,7 @@ export class Databases {
      * @param {string} params.newKey - New Attribute Key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeMediumtext>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateMediumtextColumn` instead.
      */
     updateMediumtextAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string }): Promise<Models.AttributeMediumtext>;
     /**
@@ -4297,6 +4307,7 @@ export class Databases {
      * @param {boolean} params.encrypt - Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeText>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createTextColumn` instead.
      */
     createTextAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, array?: boolean, encrypt?: boolean }): Promise<Models.AttributeText>;
     /**
@@ -4401,6 +4412,7 @@ export class Databases {
      * @param {string} params.newKey - New Attribute Key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeText>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateTextColumn` instead.
      */
     updateTextAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, newKey?: string }): Promise<Models.AttributeText>;
     /**
@@ -4699,6 +4711,7 @@ export class Databases {
      * @param {boolean} params.encrypt - Toggle encryption for the attribute. Encryption enhances security by not storing any plain text values in the database. However, encrypted attributes cannot be queried.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeVarchar>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createVarcharColumn` instead.
      */
     createVarcharAttribute(params: { databaseId: string, collectionId: string, key: string, size: number, required: boolean, xdefault?: string, array?: boolean, encrypt?: boolean }): Promise<Models.AttributeVarchar>;
     /**
@@ -4813,6 +4826,7 @@ export class Databases {
      * @param {string} params.newKey - New Attribute Key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AttributeVarchar>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateVarcharColumn` instead.
      */
     updateVarcharAttribute(params: { databaseId: string, collectionId: string, key: string, required: boolean, xdefault?: string, size?: number, newKey?: string }): Promise<Models.AttributeVarchar>;
     /**

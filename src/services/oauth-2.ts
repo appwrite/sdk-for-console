@@ -88,10 +88,11 @@ export class Oauth2 {
      * @param {string} params.prompt - OIDC prompt parameter for customization of consent screen. Space-separated list of: none, login, consent, select_account.
      * @param {number} params.maxAge - OIDC max_age paraleter for customization of consent screen. Maximum allowable elapsed time in seconds since the user last authenticated. If exceeded, re-authentication is required.
      * @param {string} params.authorizationDetails - Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
+     * @param {string} params.resource - RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Oauth2Authorize>}
      */
-    authorize(params: { clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string }): Promise<Models.Oauth2Authorize>;
+    authorize(params: { clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string }): Promise<Models.Oauth2Authorize>;
     /**
      * Begin the OAuth2 authorization flow. When called without a session, the user is redirected to the consent screen without grant ID. When called with a session, the redirect URL includes param for grant ID. You can pass Accept header of `application/json` to receive a JSON response instead of a redirect.
      *
@@ -106,19 +107,20 @@ export class Oauth2 {
      * @param {string} prompt - OIDC prompt parameter for customization of consent screen. Space-separated list of: none, login, consent, select_account.
      * @param {number} maxAge - OIDC max_age paraleter for customization of consent screen. Maximum allowable elapsed time in seconds since the user last authenticated. If exceeded, re-authentication is required.
      * @param {string} authorizationDetails - Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
+     * @param {string} resource - RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Oauth2Authorize>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    authorize(clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string): Promise<Models.Oauth2Authorize>;
+    authorize(clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string): Promise<Models.Oauth2Authorize>;
     authorize(
-        paramsOrFirst: { clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (string)?]    
+        paramsOrFirst: { clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (string)?, (string)?]    
     ): Promise<Models.Oauth2Authorize> {
-        let params: { clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string };
+        let params: { clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string };
+            params = (paramsOrFirst || {}) as { clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string };
         } else {
             params = {
                 clientId: paramsOrFirst as string,
@@ -131,7 +133,8 @@ export class Oauth2 {
                 codeChallengeMethod: rest[6] as string,
                 prompt: rest[7] as string,
                 maxAge: rest[8] as number,
-                authorizationDetails: rest[9] as string            
+                authorizationDetails: rest[9] as string,
+                resource: rest[10] as string            
             };
         }
         
@@ -146,6 +149,7 @@ export class Oauth2 {
         const prompt = params.prompt;
         const maxAge = params.maxAge;
         const authorizationDetails = params.authorizationDetails;
+        const resource = params.resource;
 
         if (typeof clientId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "clientId"');
@@ -195,6 +199,9 @@ export class Oauth2 {
         if (typeof authorizationDetails !== 'undefined') {
             payload['authorization_details'] = authorizationDetails;
         }
+        if (typeof resource !== 'undefined') {
+            payload['resource'] = resource;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -215,40 +222,44 @@ export class Oauth2 {
      * @param {string} params.clientId - OAuth2 client ID.
      * @param {string} params.scope - Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`.
      * @param {string} params.authorizationDetails - Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
+     * @param {string} params.resource - RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Oauth2DeviceAuthorization>}
      */
-    createDeviceAuthorization(params?: { clientId?: string, scope?: string, authorizationDetails?: string }): Promise<Models.Oauth2DeviceAuthorization>;
+    createDeviceAuthorization(params?: { clientId?: string, scope?: string, authorizationDetails?: string, resource?: string }): Promise<Models.Oauth2DeviceAuthorization>;
     /**
      * Start the OAuth2 Device Authorization Grant. Returns the device code, user code, verification URL, expiration, and polling interval.
      *
      * @param {string} clientId - OAuth2 client ID.
      * @param {string} scope - Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`.
      * @param {string} authorizationDetails - Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
+     * @param {string} resource - RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Oauth2DeviceAuthorization>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createDeviceAuthorization(clientId?: string, scope?: string, authorizationDetails?: string): Promise<Models.Oauth2DeviceAuthorization>;
+    createDeviceAuthorization(clientId?: string, scope?: string, authorizationDetails?: string, resource?: string): Promise<Models.Oauth2DeviceAuthorization>;
     createDeviceAuthorization(
-        paramsOrFirst?: { clientId?: string, scope?: string, authorizationDetails?: string } | string,
-        ...rest: [(string)?, (string)?]    
+        paramsOrFirst?: { clientId?: string, scope?: string, authorizationDetails?: string, resource?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?]    
     ): Promise<Models.Oauth2DeviceAuthorization> {
-        let params: { clientId?: string, scope?: string, authorizationDetails?: string };
+        let params: { clientId?: string, scope?: string, authorizationDetails?: string, resource?: string };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { clientId?: string, scope?: string, authorizationDetails?: string };
+            params = (paramsOrFirst || {}) as { clientId?: string, scope?: string, authorizationDetails?: string, resource?: string };
         } else {
             params = {
                 clientId: paramsOrFirst as string,
                 scope: rest[0] as string,
-                authorizationDetails: rest[1] as string            
+                authorizationDetails: rest[1] as string,
+                resource: rest[2] as string            
             };
         }
         
         const clientId = params.clientId;
         const scope = params.scope;
         const authorizationDetails = params.authorizationDetails;
+        const resource = params.resource;
 
 
         const apiPath = '/oauth2/{project_id}/device_authorization'.replace('{project_id}', encodeURIComponent(String(this.client.config.project)));
@@ -261,6 +272,9 @@ export class Oauth2 {
         }
         if (typeof authorizationDetails !== 'undefined') {
             payload['authorization_details'] = authorizationDetails;
+        }
+        if (typeof resource !== 'undefined') {
+            payload['resource'] = resource;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -618,10 +632,11 @@ export class Oauth2 {
      * @param {string} params.clientSecret - OAuth2 client secret. Required for confidential apps.
      * @param {string} params.codeVerifier - PKCE code verifier. Required for public apps.
      * @param {string} params.redirectUri - Redirect URI. Required for `authorization_code` grant type.
+     * @param {string} params.resource - RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Oauth2Token>}
      */
-    createToken(params: { grantType: string, code?: string, refreshToken?: string, deviceCode?: string, clientId?: string, clientSecret?: string, codeVerifier?: string, redirectUri?: string }): Promise<Models.Oauth2Token>;
+    createToken(params: { grantType: string, code?: string, refreshToken?: string, deviceCode?: string, clientId?: string, clientSecret?: string, codeVerifier?: string, redirectUri?: string, resource?: string }): Promise<Models.Oauth2Token>;
     /**
      * Exchange an OAuth2 authorization code, refresh token, or device code for access and refresh tokens.
      *
@@ -633,19 +648,20 @@ export class Oauth2 {
      * @param {string} clientSecret - OAuth2 client secret. Required for confidential apps.
      * @param {string} codeVerifier - PKCE code verifier. Required for public apps.
      * @param {string} redirectUri - Redirect URI. Required for `authorization_code` grant type.
+     * @param {string} resource - RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Oauth2Token>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createToken(grantType: string, code?: string, refreshToken?: string, deviceCode?: string, clientId?: string, clientSecret?: string, codeVerifier?: string, redirectUri?: string): Promise<Models.Oauth2Token>;
+    createToken(grantType: string, code?: string, refreshToken?: string, deviceCode?: string, clientId?: string, clientSecret?: string, codeVerifier?: string, redirectUri?: string, resource?: string): Promise<Models.Oauth2Token>;
     createToken(
-        paramsOrFirst: { grantType: string, code?: string, refreshToken?: string, deviceCode?: string, clientId?: string, clientSecret?: string, codeVerifier?: string, redirectUri?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
+        paramsOrFirst: { grantType: string, code?: string, refreshToken?: string, deviceCode?: string, clientId?: string, clientSecret?: string, codeVerifier?: string, redirectUri?: string, resource?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
     ): Promise<Models.Oauth2Token> {
-        let params: { grantType: string, code?: string, refreshToken?: string, deviceCode?: string, clientId?: string, clientSecret?: string, codeVerifier?: string, redirectUri?: string };
+        let params: { grantType: string, code?: string, refreshToken?: string, deviceCode?: string, clientId?: string, clientSecret?: string, codeVerifier?: string, redirectUri?: string, resource?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { grantType: string, code?: string, refreshToken?: string, deviceCode?: string, clientId?: string, clientSecret?: string, codeVerifier?: string, redirectUri?: string };
+            params = (paramsOrFirst || {}) as { grantType: string, code?: string, refreshToken?: string, deviceCode?: string, clientId?: string, clientSecret?: string, codeVerifier?: string, redirectUri?: string, resource?: string };
         } else {
             params = {
                 grantType: paramsOrFirst as string,
@@ -655,7 +671,8 @@ export class Oauth2 {
                 clientId: rest[3] as string,
                 clientSecret: rest[4] as string,
                 codeVerifier: rest[5] as string,
-                redirectUri: rest[6] as string            
+                redirectUri: rest[6] as string,
+                resource: rest[7] as string            
             };
         }
         
@@ -667,6 +684,7 @@ export class Oauth2 {
         const clientSecret = params.clientSecret;
         const codeVerifier = params.codeVerifier;
         const redirectUri = params.redirectUri;
+        const resource = params.resource;
 
         if (typeof grantType === 'undefined') {
             throw new AppwriteException('Missing required parameter: "grantType"');
@@ -697,6 +715,9 @@ export class Oauth2 {
         }
         if (typeof redirectUri !== 'undefined') {
             payload['redirect_uri'] = redirectUri;
+        }
+        if (typeof resource !== 'undefined') {
+            payload['resource'] = resource;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

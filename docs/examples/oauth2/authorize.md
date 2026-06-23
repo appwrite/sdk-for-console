@@ -18,7 +18,8 @@ const result = await oauth2.authorize({
     codeChallengeMethod: 's256', // optional
     prompt: '<PROMPT>', // optional
     maxAge: 0, // optional
-    authorizationDetails: '<AUTHORIZATION_DETAILS>' // optional
+    authorizationDetails: '<AUTHORIZATION_DETAILS>', // optional
+    resource: '' // optional
 });
 
 console.log(result);

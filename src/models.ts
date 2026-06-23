@@ -5282,59 +5282,59 @@ export namespace Models {
         /**
          * OAuth2 server status
          */
-        oAuth2ServerEnabled: boolean;
+        oAuth2ServerEnabled?: boolean;
         /**
          * OAuth2 server authorization URL
          */
-        oAuth2ServerAuthorizationUrl: string;
+        oAuth2ServerAuthorizationUrl?: string;
         /**
          * OAuth2 server allowed scopes
          */
-        oAuth2ServerScopes: string[];
+        oAuth2ServerScopes?: string[];
         /**
          * OAuth2 server accepted RFC 9396 authorization_details types
          */
-        oAuth2ServerAuthorizationDetailsTypes: string[];
+        oAuth2ServerAuthorizationDetailsTypes?: string[];
         /**
          * OAuth2 server access token duration in seconds for confidential clients
          */
-        oAuth2ServerAccessTokenDuration: number;
+        oAuth2ServerAccessTokenDuration?: number;
         /**
          * OAuth2 server refresh token duration in seconds for confidential clients
          */
-        oAuth2ServerRefreshTokenDuration: number;
+        oAuth2ServerRefreshTokenDuration?: number;
         /**
          * OAuth2 server access token duration in seconds for public clients (SPAs, mobile, native)
          */
-        oAuth2ServerPublicAccessTokenDuration: number;
+        oAuth2ServerPublicAccessTokenDuration?: number;
         /**
          * OAuth2 server refresh token duration in seconds for public clients (SPAs, mobile, native)
          */
-        oAuth2ServerPublicRefreshTokenDuration: number;
+        oAuth2ServerPublicRefreshTokenDuration?: number;
         /**
          * When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
          */
-        oAuth2ServerConfidentialPkce: boolean;
+        oAuth2ServerConfidentialPkce?: boolean;
         /**
          * URL to your application page where users enter the device flow user code. Empty when the Device Authorization Grant is not configured.
          */
-        oAuth2ServerVerificationUrl: string;
+        oAuth2ServerVerificationUrl?: string;
         /**
          * Number of characters in the device flow user code, excluding the formatting separator.
          */
-        oAuth2ServerUserCodeLength: number;
+        oAuth2ServerUserCodeLength?: number;
         /**
          * Character set for device flow user codes: `numeric`, `alphabetic`, or `alphanumeric`.
          */
-        oAuth2ServerUserCodeFormat: string;
+        oAuth2ServerUserCodeFormat?: string;
         /**
          * Lifetime in seconds of device flow device codes and user codes.
          */
-        oAuth2ServerDeviceCodeDuration: number;
+        oAuth2ServerDeviceCodeDuration?: number;
         /**
          * OAuth2 server discovery URL
          */
-        oAuth2ServerDiscoveryUrl: string;
+        oAuth2ServerDiscoveryUrl?: string;
     }
 
     /**
@@ -12398,15 +12398,15 @@ export namespace Models {
     }
 
     /**
-     * usageGroup
+     * usageDataPoint
      */
-    export type UsageGroup = {
+    export type UsageDataPoint = {
         /**
-         * Group start timestamp (ISO 8601).
+         * Bucket start timestamp (ISO 8601). When `interval` is omitted this is the request end time, marking the aggregate as-of moment.
          */
         time: string;
         /**
-         * Aggregated value for the group.
+         * Aggregated value for the bucket.
          */
         value: number;
         /**
@@ -12461,6 +12461,10 @@ export namespace Models {
          * External resource ID when broken down by `resourceId`.
          */
         resourceId?: string;
+        /**
+         * Resource type when broken down by `resource` (gauges only).
+         */
+        resource?: string;
     }
 
     /**
@@ -12468,17 +12472,13 @@ export namespace Models {
      */
     export type UsageEventList = {
         /**
-         * Metric key the groups describe.
-         */
-        metric: string;
-        /**
-         * Time interval size (1h or 1d).
+         * Time interval size (1h or 1d). Empty when the request omits `interval` — points then carry the request end time as their as-of marker.
          */
         interval: string;
         /**
-         * Aggregated groups ordered by time ascending.
+         * One entry per requested metric, each carrying its own points[] time series (sums per bucket / dimension over time).
          */
-        groups: UsageGroup[];
+        metrics: UsageMetric[];
     }
 
     /**
@@ -12486,17 +12486,27 @@ export namespace Models {
      */
     export type UsageGaugeList = {
         /**
-         * Metric key the groups describe.
-         */
-        metric: string;
-        /**
-         * Time interval size (1h or 1d).
+         * Time interval size (1h or 1d). Empty when the request omits `interval` — points then carry the request end time as their as-of marker.
          */
         interval: string;
         /**
-         * Aggregated groups ordered by time ascending. Each group carries the latest snapshot in its interval (argMax over time).
+         * One entry per requested metric, each carrying its own points[] time series (latest-snapshot per bucket / dimension via argMax over time).
          */
-        groups: UsageGroup[];
+        metrics: UsageMetric[];
+    }
+
+    /**
+     * usageMetric
+     */
+    export type UsageMetric = {
+        /**
+         * Metric key this series describes.
+         */
+        metric: string;
+        /**
+         * Data points for this metric, ordered by time ascending. With `interval`, each entry is one bucket; without, each entry is one row of the dimensional or aggregate breakdown.
+         */
+        points: UsageDataPoint[];
     }
 
     /**
@@ -12997,6 +13007,10 @@ export namespace Models {
          * Requested OAuth2 scopes the user is being asked to consent to.
          */
         scopes: string[];
+        /**
+         * Requested RFC 8707 resource indicators the user is being asked to consent to.
+         */
+        resources: string[];
         /**
          * Requested authorization_details the user is being asked to consent to, as a JSON string. Each entry has a `type` plus project-defined fields.
          */
