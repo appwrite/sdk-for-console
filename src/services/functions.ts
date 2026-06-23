@@ -325,13 +325,41 @@ export class Functions {
     /**
      * List allowed function specifications for this instance.
      *
+     * @param {string} params.type - Specification type to list. Can be one of: runtimes, builds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.SpecificationList>}
      */
-    listSpecifications(): Promise<Models.SpecificationList> {
+    listSpecifications(params?: { type?: string }): Promise<Models.SpecificationList>;
+    /**
+     * List allowed function specifications for this instance.
+     *
+     * @param {string} type - Specification type to list. Can be one of: runtimes, builds.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.SpecificationList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listSpecifications(type?: string): Promise<Models.SpecificationList>;
+    listSpecifications(
+        paramsOrFirst?: { type?: string } | string    
+    ): Promise<Models.SpecificationList> {
+        let params: { type?: string };
+        
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { type?: string };
+        } else {
+            params = {
+                type: paramsOrFirst as string            
+            };
+        }
+        
+        const type = params.type;
+
 
         const apiPath = '/functions/specifications';
         const payload: Payload = {};
+        if (typeof type !== 'undefined') {
+            payload['type'] = type;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {

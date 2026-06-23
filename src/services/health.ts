@@ -493,59 +493,6 @@ export class Health {
     }
 
     /**
-     * Get the priority builds queue size.
-     *
-     * @param {number} params.threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 500.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.HealthQueue>}
-     */
-    getQueuePriorityBuilds(params?: { threshold?: number }): Promise<Models.HealthQueue>;
-    /**
-     * Get the priority builds queue size.
-     *
-     * @param {number} threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 500.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.HealthQueue>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getQueuePriorityBuilds(threshold?: number): Promise<Models.HealthQueue>;
-    getQueuePriorityBuilds(
-        paramsOrFirst?: { threshold?: number } | number    
-    ): Promise<Models.HealthQueue> {
-        let params: { threshold?: number };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { threshold?: number };
-        } else {
-            params = {
-                threshold: paramsOrFirst as number            
-            };
-        }
-        
-        const threshold = params.threshold;
-
-
-        const apiPath = '/health/queue/builds-priority';
-        const payload: Payload = {};
-        if (typeof threshold !== 'undefined') {
-            payload['threshold'] = threshold;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
      * Get the number of certificates that are waiting to be issued against [Letsencrypt](https://letsencrypt.org/) in the Appwrite internal queue server.
      *
      * @param {number} params.threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
