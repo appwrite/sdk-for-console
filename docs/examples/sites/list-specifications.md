@@ -7,7 +7,9 @@ const client = new Client()
 
 const sites = new Sites(client);
 
-const result = await sites.listSpecifications();
+const result = await sites.listSpecifications({
+    type: 'runtimes' // optional
+});
 
 console.log(result);
 ```

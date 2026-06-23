@@ -7,7 +7,9 @@ const client = new Client()
 
 const functions = new Functions(client);
 
-const result = await functions.listSpecifications();
+const result = await functions.listSpecifications({
+    type: 'runtimes' // optional
+});
 
 console.log(result);
 ```

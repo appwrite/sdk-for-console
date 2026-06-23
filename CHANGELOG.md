@@ -1,5 +1,10 @@
 # Change Log
 
+## 15.1.1
+
+* Breaking: Removed `getQueuePriorityBuilds` from `Health` along with the `/health/queue/builds-priority` endpoint
+* Added: `type` parameter on `Functions` and `Sites` `listSpecifications` to filter by `runtimes` or `builds`
+
 ## 15.1.0
 
 * Breaking: `listEvents` and `listGauges` on `Usage` now take `metrics` (string array, 1-10) instead of a single `metric`
