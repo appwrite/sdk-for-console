@@ -1,5 +1,16 @@
 # Change Log
 
+## 15.1.0
+
+* Breaking: `listEvents` and `listGauges` on `Usage` now take `metrics` (string array, 1-10) instead of a single `metric`
+* Breaking: `UsageEventList` and `UsageGaugeList` now expose `interval` and a `metrics` array; `UsageGroup` is replaced by `UsageMetric` and `UsageDataPoint`
+* Breaking: `createDatabaseExecution` on `Compute` now posts to the `/executions` endpoint
+* Added: `resource` parameter on `Oauth2` `authorize`, `createDeviceAuthorization`, and `createToken` for RFC 8707 resource indicators
+* Added: `resources` field on the `Oauth2Authorize` model
+* Added: `service` and `resource` break-down dimensions on `Usage` `listGauges`
+* Updated: `Databases` transaction and text attribute methods are now marked deprecated in favor of `TablesDB`
+* Updated: OAuth2 server fields on the project model are now optional
+
 ## 15.0.0
 
 * Breaking: `listEvents` and `listGauges` on `Usage` now require `metric` and use dimension/interval aggregation instead of `queries`/`total`

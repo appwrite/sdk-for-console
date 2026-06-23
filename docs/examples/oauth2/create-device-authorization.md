@@ -10,7 +10,8 @@ const oauth2 = new Oauth2(client);
 const result = await oauth2.createDeviceAuthorization({
     clientId: '<CLIENT_ID>', // optional
     scope: '<SCOPE>', // optional
-    authorizationDetails: '<AUTHORIZATION_DETAILS>' // optional
+    authorizationDetails: '<AUTHORIZATION_DETAILS>', // optional
+    resource: '' // optional
 });
 
 console.log(result);

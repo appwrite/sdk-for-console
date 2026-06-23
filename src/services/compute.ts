@@ -1728,7 +1728,7 @@ export class Compute {
     }
 
     /**
-     * Execute SQL through the console-facing Cloud endpoint. Cloud proxies through the edge platform to the per-database SQL API sidecar. Application traffic should bypass cloud entirely and POST directly to the per-database hostname: `https://db-{project}-{db}.{region}.appwrite.center/v1/sql/execute` with an `X-Appwrite-Key` header — that path scales to the whole DB fleet without a per-query cloud round-trip. The statement type must be on the database's configured allow-list. Use bound parameters for any user-supplied values — the API does not interpolate raw strings.
+     * Execute SQL through the console-facing Cloud endpoint. Cloud proxies through the edge platform to the per-database SQL API sidecar. Application traffic should bypass cloud entirely and POST directly to the per-database hostname: `https://db-{project}-{db}.{region}.appwrite.center/v1/sql/executions` with an `X-Appwrite-Key` header — that path scales to the whole DB fleet without a per-query cloud round-trip. The statement type must be on the database's configured allow-list. Use bound parameters for any user-supplied values — the API does not interpolate raw strings.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.sql - SQL statement to execute. Exactly one statement per request.
@@ -1739,7 +1739,7 @@ export class Compute {
      */
     createDatabaseExecution(params: { databaseId: string, sql: string, bindings?: object, timeoutSeconds?: number }): Promise<Models.DedicatedDatabaseExecution>;
     /**
-     * Execute SQL through the console-facing Cloud endpoint. Cloud proxies through the edge platform to the per-database SQL API sidecar. Application traffic should bypass cloud entirely and POST directly to the per-database hostname: `https://db-{project}-{db}.{region}.appwrite.center/v1/sql/execute` with an `X-Appwrite-Key` header — that path scales to the whole DB fleet without a per-query cloud round-trip. The statement type must be on the database's configured allow-list. Use bound parameters for any user-supplied values — the API does not interpolate raw strings.
+     * Execute SQL through the console-facing Cloud endpoint. Cloud proxies through the edge platform to the per-database SQL API sidecar. Application traffic should bypass cloud entirely and POST directly to the per-database hostname: `https://db-{project}-{db}.{region}.appwrite.center/v1/sql/executions` with an `X-Appwrite-Key` header — that path scales to the whole DB fleet without a per-query cloud round-trip. The statement type must be on the database's configured allow-list. Use bound parameters for any user-supplied values — the API does not interpolate raw strings.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} sql - SQL statement to execute. Exactly one statement per request.
@@ -1779,7 +1779,7 @@ export class Compute {
             throw new AppwriteException('Missing required parameter: "sql"');
         }
 
-        const apiPath = '/compute/databases/{databaseId}/execution'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/compute/databases/{databaseId}/executions'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
         const payload: Payload = {};
         if (typeof sql !== 'undefined') {
             payload['sql'] = sql;

@@ -11,15 +11,15 @@ export class Usage {
     }
 
     /**
-     * Aggregate usage event metrics. `metric` is required.
+     * Aggregate usage event metrics. `metrics[]` (1-10) is required; the response always contains one entry per requested metric, each with its own `points[]` time series.
      * 
      * **Two response shapes**:
-     * - Omit `interval` for a flat top-N table — one row per dimension combination, no time axis. Useful for "top 10 paths by bandwidth in the last 7 days".
-     * - Pass `interval` (`1m`, `15m`, `30m`, `1h`, `1d`) for a time series — one row per (time bucket × dimension combination).
+     * - Omit `interval` for a flat top-N table — one point per dimension combination, no time axis. Useful for "top 10 paths by bandwidth in the last 7 days".
+     * - Pass `interval` (`1m`, `15m`, `30m`, `1h`, `1d`) for a time series — one point per (time bucket × dimension combination).
      * 
-     * `dimensions[]` breaks each row down by one or more attributes (service, path, status, country, …). `resource` and `resourceId` filter the underlying events. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N by aggregated value. When `startAt` is omitted, the default window adapts to `interval` (or 7d when interval is omitted).
+     * `dimensions[]` breaks each point down by one or more attributes (service, path, status, country, …). Pass multiple metrics to render stacked charts in one round-trip. `resource` and `resourceId` filter the underlying events. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N by aggregated value. When `startAt` is omitted, the default window adapts to `interval` (or 7d when interval is omitted).
      *
-     * @param {string} params.metric - Metric name (required). Example: executions, network.requests.
+     * @param {string[]} params.metrics - One to ten metric names. Single-metric callers pass a one-element array. Example: `metrics[]=executions` or `metrics[]=executions&metrics[]=executions.compute` for stacked charts.
      * @param {string} params.resource - Resource type filter (singular form). Common values: function, site, database, bucket, file, webhook, team, user, project.
      * @param {string} params.resourceId - Resource id filter.
      * @param {string} params.interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
@@ -33,17 +33,17 @@ export class Usage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageEventList>}
      */
-    listEvents(params: { metric: string, resource?: string, resourceId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number }): Promise<Models.UsageEventList>;
+    listEvents(params: { metrics: string[], resource?: string, resourceId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number }): Promise<Models.UsageEventList>;
     /**
-     * Aggregate usage event metrics. `metric` is required.
+     * Aggregate usage event metrics. `metrics[]` (1-10) is required; the response always contains one entry per requested metric, each with its own `points[]` time series.
      * 
      * **Two response shapes**:
-     * - Omit `interval` for a flat top-N table — one row per dimension combination, no time axis. Useful for "top 10 paths by bandwidth in the last 7 days".
-     * - Pass `interval` (`1m`, `15m`, `30m`, `1h`, `1d`) for a time series — one row per (time bucket × dimension combination).
+     * - Omit `interval` for a flat top-N table — one point per dimension combination, no time axis. Useful for "top 10 paths by bandwidth in the last 7 days".
+     * - Pass `interval` (`1m`, `15m`, `30m`, `1h`, `1d`) for a time series — one point per (time bucket × dimension combination).
      * 
-     * `dimensions[]` breaks each row down by one or more attributes (service, path, status, country, …). `resource` and `resourceId` filter the underlying events. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N by aggregated value. When `startAt` is omitted, the default window adapts to `interval` (or 7d when interval is omitted).
+     * `dimensions[]` breaks each point down by one or more attributes (service, path, status, country, …). Pass multiple metrics to render stacked charts in one round-trip. `resource` and `resourceId` filter the underlying events. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N by aggregated value. When `startAt` is omitted, the default window adapts to `interval` (or 7d when interval is omitted).
      *
-     * @param {string} metric - Metric name (required). Example: executions, network.requests.
+     * @param {string[]} metrics - One to ten metric names. Single-metric callers pass a one-element array. Example: `metrics[]=executions` or `metrics[]=executions&metrics[]=executions.compute` for stacked charts.
      * @param {string} resource - Resource type filter (singular form). Common values: function, site, database, bucket, file, webhook, team, user, project.
      * @param {string} resourceId - Resource id filter.
      * @param {string} interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
@@ -58,18 +58,18 @@ export class Usage {
      * @returns {Promise<Models.UsageEventList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listEvents(metric: string, resource?: string, resourceId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number): Promise<Models.UsageEventList>;
+    listEvents(metrics: string[], resource?: string, resourceId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number): Promise<Models.UsageEventList>;
     listEvents(
-        paramsOrFirst: { metric: string, resource?: string, resourceId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number } | string,
+        paramsOrFirst: { metrics: string[], resource?: string, resourceId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number } | string[],
         ...rest: [(string)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (string)?, (string)?, (number)?, (number)?]    
     ): Promise<Models.UsageEventList> {
-        let params: { metric: string, resource?: string, resourceId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number };
+        let params: { metrics: string[], resource?: string, resourceId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { metric: string, resource?: string, resourceId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number };
+            params = (paramsOrFirst || {}) as { metrics: string[], resource?: string, resourceId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number };
         } else {
             params = {
-                metric: paramsOrFirst as string,
+                metrics: paramsOrFirst as string[],
                 resource: rest[0] as string,
                 resourceId: rest[1] as string,
                 interval: rest[2] as string,
@@ -83,7 +83,7 @@ export class Usage {
             };
         }
         
-        const metric = params.metric;
+        const metrics = params.metrics;
         const resource = params.resource;
         const resourceId = params.resourceId;
         const interval = params.interval;
@@ -95,14 +95,14 @@ export class Usage {
         const limit = params.limit;
         const offset = params.offset;
 
-        if (typeof metric === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "metric"');
+        if (typeof metrics === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "metrics"');
         }
 
         const apiPath = '/usage/events';
         const payload: Payload = {};
-        if (typeof metric !== 'undefined') {
-            payload['metric'] = metric;
+        if (typeof metrics !== 'undefined') {
+            payload['metrics'] = metrics;
         }
         if (typeof resource !== 'undefined') {
             payload['resource'] = resource;
@@ -150,19 +150,19 @@ export class Usage {
     }
 
     /**
-     * Aggregate usage gauge snapshots. Gauges are point-in-time values (storage totals, resource counts, …); each group carries the latest snapshot in its interval via `argMax(value, time)`. `metric` is required.
+     * Aggregate usage gauge snapshots. Gauges are point-in-time values (storage totals, resource counts, …); each point carries the latest snapshot in its interval via `argMax(value, time)`. `metrics[]` (1-10) is required; the response always contains one entry per requested metric, each with its own `points[]` time series.
      * 
      * **Two response shapes**:
      * - Omit `interval` for a flat top-N table — `argMax(value, time)` per dimension combination over the whole window, no time axis. Useful for "top 10 resources by current storage".
      * - Pass `interval` (`1m`, `15m`, `30m`, `1h`, `1d`) for a time series — one snapshot per (time bucket × dimension combination).
      * 
-     * `dimensions[]` breaks each row down further — only `resourceId` and `teamId` are supported on gauges. `resourceId` and `teamId` parameters filter the underlying rows. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N. When `startAt` is omitted, the default window adapts to interval (or 7d when interval is omitted).
+     * `dimensions[]` breaks each point down further. Supported on gauges: `resourceId`, `teamId`, `service`, `resource`. `service` and `resource` enable per-service / per-resource-type panels (e.g. storage-by-service: group `files.storage`, `deployments.storage`, `builds.storage`, `databases.storage` by `service`). Pass multiple metrics to render stacked charts in one round-trip. `resourceId` and `teamId` parameters filter the underlying rows. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N. When `startAt` is omitted, the default window adapts to interval (or 7d when interval is omitted).
      *
-     * @param {string} params.metric - Metric name (required). Example: files.storage, deployments.storage.
+     * @param {string[]} params.metrics - One to ten metric names. Single-metric callers pass a one-element array. Example: `metrics[]=files.storage` or `metrics[]=files.storage&metrics[]=deployments.storage` for stacked charts.
      * @param {string} params.resourceId - Resource id filter.
      * @param {string} params.teamId - Team id filter.
      * @param {string} params.interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
-     * @param {string[]} params.dimensions - Break-down dimensions. Allowed: resourceId, teamId.
+     * @param {string[]} params.dimensions - Break-down dimensions. Allowed: resourceId, teamId, service, resource.
      * @param {string} params.startAt - Range start in ISO 8601. Defaults to endAt - 7d.
      * @param {string} params.endAt - Range end in ISO 8601. Defaults to the current time.
      * @param {string} params.orderBy - Column to order by. Allowed: time, value. Default time.
@@ -172,21 +172,21 @@ export class Usage {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageGaugeList>}
      */
-    listGauges(params: { metric: string, resourceId?: string, teamId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number }): Promise<Models.UsageGaugeList>;
+    listGauges(params: { metrics: string[], resourceId?: string, teamId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number }): Promise<Models.UsageGaugeList>;
     /**
-     * Aggregate usage gauge snapshots. Gauges are point-in-time values (storage totals, resource counts, …); each group carries the latest snapshot in its interval via `argMax(value, time)`. `metric` is required.
+     * Aggregate usage gauge snapshots. Gauges are point-in-time values (storage totals, resource counts, …); each point carries the latest snapshot in its interval via `argMax(value, time)`. `metrics[]` (1-10) is required; the response always contains one entry per requested metric, each with its own `points[]` time series.
      * 
      * **Two response shapes**:
      * - Omit `interval` for a flat top-N table — `argMax(value, time)` per dimension combination over the whole window, no time axis. Useful for "top 10 resources by current storage".
      * - Pass `interval` (`1m`, `15m`, `30m`, `1h`, `1d`) for a time series — one snapshot per (time bucket × dimension combination).
      * 
-     * `dimensions[]` breaks each row down further — only `resourceId` and `teamId` are supported on gauges. `resourceId` and `teamId` parameters filter the underlying rows. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N. When `startAt` is omitted, the default window adapts to interval (or 7d when interval is omitted).
+     * `dimensions[]` breaks each point down further. Supported on gauges: `resourceId`, `teamId`, `service`, `resource`. `service` and `resource` enable per-service / per-resource-type panels (e.g. storage-by-service: group `files.storage`, `deployments.storage`, `builds.storage`, `databases.storage` by `service`). Pass multiple metrics to render stacked charts in one round-trip. `resourceId` and `teamId` parameters filter the underlying rows. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N. When `startAt` is omitted, the default window adapts to interval (or 7d when interval is omitted).
      *
-     * @param {string} metric - Metric name (required). Example: files.storage, deployments.storage.
+     * @param {string[]} metrics - One to ten metric names. Single-metric callers pass a one-element array. Example: `metrics[]=files.storage` or `metrics[]=files.storage&metrics[]=deployments.storage` for stacked charts.
      * @param {string} resourceId - Resource id filter.
      * @param {string} teamId - Team id filter.
      * @param {string} interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
-     * @param {string[]} dimensions - Break-down dimensions. Allowed: resourceId, teamId.
+     * @param {string[]} dimensions - Break-down dimensions. Allowed: resourceId, teamId, service, resource.
      * @param {string} startAt - Range start in ISO 8601. Defaults to endAt - 7d.
      * @param {string} endAt - Range end in ISO 8601. Defaults to the current time.
      * @param {string} orderBy - Column to order by. Allowed: time, value. Default time.
@@ -197,18 +197,18 @@ export class Usage {
      * @returns {Promise<Models.UsageGaugeList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listGauges(metric: string, resourceId?: string, teamId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number): Promise<Models.UsageGaugeList>;
+    listGauges(metrics: string[], resourceId?: string, teamId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number): Promise<Models.UsageGaugeList>;
     listGauges(
-        paramsOrFirst: { metric: string, resourceId?: string, teamId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number } | string,
+        paramsOrFirst: { metrics: string[], resourceId?: string, teamId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number } | string[],
         ...rest: [(string)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (string)?, (string)?, (number)?, (number)?]    
     ): Promise<Models.UsageGaugeList> {
-        let params: { metric: string, resourceId?: string, teamId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number };
+        let params: { metrics: string[], resourceId?: string, teamId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { metric: string, resourceId?: string, teamId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number };
+            params = (paramsOrFirst || {}) as { metrics: string[], resourceId?: string, teamId?: string, interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number };
         } else {
             params = {
-                metric: paramsOrFirst as string,
+                metrics: paramsOrFirst as string[],
                 resourceId: rest[0] as string,
                 teamId: rest[1] as string,
                 interval: rest[2] as string,
@@ -222,7 +222,7 @@ export class Usage {
             };
         }
         
-        const metric = params.metric;
+        const metrics = params.metrics;
         const resourceId = params.resourceId;
         const teamId = params.teamId;
         const interval = params.interval;
@@ -234,14 +234,14 @@ export class Usage {
         const limit = params.limit;
         const offset = params.offset;
 
-        if (typeof metric === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "metric"');
+        if (typeof metrics === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "metrics"');
         }
 
         const apiPath = '/usage/gauges';
         const payload: Payload = {};
-        if (typeof metric !== 'undefined') {
-            payload['metric'] = metric;
+        if (typeof metrics !== 'undefined') {
+            payload['metrics'] = metrics;
         }
         if (typeof resourceId !== 'undefined') {
             payload['resourceId'] = resourceId;

@@ -8,7 +8,7 @@ const client = new Client()
 const usage = new Usage(client);
 
 const result = await usage.listEvents({
-    metric: '<METRIC>',
+    metrics: [],
     resource: '<RESOURCE>', // optional
     resourceId: '<RESOURCE_ID>', // optional
     interval: '1m', // optional
