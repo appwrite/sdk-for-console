@@ -3,7 +3,6 @@
 ## 15.2.0
 
 * Added: Realtime connections now send the configured JWT for authentication.
-* Fixed: URL-encode path parameters.
 
 ## 15.1.1
 
