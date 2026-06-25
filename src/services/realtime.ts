@@ -205,7 +205,12 @@ export class Realtime {
         }
 
         // URL carries only the project; channels/queries are sent via the subscribe message.
-        const queryParams = `project=${projectId}`;
+        let queryParams = `project=${projectId}`;
+
+        const jwt = this.client.config.jwt;
+        if (jwt) {
+            queryParams += `&jwt=${encodeURIComponent(jwt)}`;
+        }
 
         const endpoint =
             this.client.config.endpointRealtime !== ''

@@ -1,5 +1,9 @@
 # Change Log
 
+## 15.2.0
+
+* Added: Realtime connections now send the configured JWT for authentication.
+
 ## 15.1.1
 
 * Breaking: Removed `getQueuePriorityBuilds` from `Health` along with the `/health/queue/builds-priority` endpoint

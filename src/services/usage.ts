@@ -23,7 +23,7 @@ export class Usage {
      * @param {string} params.resource - Resource type filter (singular form). Common values: function, site, database, bucket, file, webhook, team, user, project.
      * @param {string} params.resourceId - Resource id filter.
      * @param {string} params.interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
-     * @param {string[]} params.dimensions - Break-down dimensions (max 10). Allowed: path, method, status, service, country, region, hostname, osName, clientType, clientName, deviceName, teamId, resourceId.
+     * @param {string[]} params.dimensions - Break-down dimensions (max 10). Allowed: path, method, status, service, resource, country, region, hostname, osName, clientType, clientName, deviceName, teamId, resourceId.
      * @param {string} params.startAt - Range start in ISO 8601. Defaults adapt to interval (7d for the no-interval aggregate).
      * @param {string} params.endAt - Range end in ISO 8601. Defaults to the current time.
      * @param {string} params.orderBy - Column to order by. Allowed: time, value. Default time when an interval is set; otherwise value.
@@ -47,7 +47,7 @@ export class Usage {
      * @param {string} resource - Resource type filter (singular form). Common values: function, site, database, bucket, file, webhook, team, user, project.
      * @param {string} resourceId - Resource id filter.
      * @param {string} interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
-     * @param {string[]} dimensions - Break-down dimensions (max 10). Allowed: path, method, status, service, country, region, hostname, osName, clientType, clientName, deviceName, teamId, resourceId.
+     * @param {string[]} dimensions - Break-down dimensions (max 10). Allowed: path, method, status, service, resource, country, region, hostname, osName, clientType, clientName, deviceName, teamId, resourceId.
      * @param {string} startAt - Range start in ISO 8601. Defaults adapt to interval (7d for the no-interval aggregate).
      * @param {string} endAt - Range end in ISO 8601. Defaults to the current time.
      * @param {string} orderBy - Column to order by. Allowed: time, value. Default time when an interval is set; otherwise value.

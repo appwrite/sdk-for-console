@@ -392,7 +392,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '15.1.1',
+        'x-sdk-version': '15.2.0',
         'X-Appwrite-Response-Format': '1.9.5',
     };
 
@@ -717,7 +717,11 @@ class Client {
 
             const encodedProject = encodeURIComponent((this.config.project as string) ?? '');
             // URL carries only the project; channels/queries are sent via subscribe message.
-            const queryParams = 'project=' + encodedProject;
+            let queryParams = 'project=' + encodedProject;
+
+            if (this.config.jwt) {
+                queryParams += '&jwt=' + encodeURIComponent(this.config.jwt as string);
+            }
 
             const url = this.config.endpointRealtime + '/realtime?' + queryParams;
 
