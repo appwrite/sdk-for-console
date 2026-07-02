@@ -78,7 +78,7 @@ export class Organization {
      *
      * @param {string} params.keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {OrganizationKeyScopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {OrganizationKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -89,7 +89,7 @@ export class Organization {
      *
      * @param {string} keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Key name. Max length: 128 chars.
-     * @param {OrganizationKeyScopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {OrganizationKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -216,7 +216,7 @@ export class Organization {
      *
      * @param {string} params.keyId - Key unique ID.
      * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {OrganizationKeyScopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {OrganizationKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -227,7 +227,7 @@ export class Organization {
      *
      * @param {string} keyId - Key unique ID.
      * @param {string} name - Key name. Max length: 128 chars.
-     * @param {OrganizationKeyScopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {OrganizationKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -349,7 +349,7 @@ export class Organization {
     /**
      * Get a list of all projects. You can use the query params to filter your results.
      *
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, teamId, labels, search
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, teamId, labels, search, accessedAt
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -359,7 +359,7 @@ export class Organization {
     /**
      * Get a list of all projects. You can use the query params to filter your results.
      *
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, teamId, labels, search
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, teamId, labels, search, accessedAt
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}

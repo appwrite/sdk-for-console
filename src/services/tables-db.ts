@@ -90,7 +90,7 @@ export class TablesDB {
      * @param {string} params.databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} params.dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
+     * @param {string} params.dedicatedDatabaseId - Optional dedicated database ID to attach this database to. Leave empty to create a database on the shared pool.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
@@ -102,7 +102,7 @@ export class TablesDB {
      * @param {string} databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
+     * @param {string} dedicatedDatabaseId - Optional dedicated database ID to attach this database to. Leave empty to create a database on the shared pool.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -5328,74 +5328,6 @@ export class TablesDB {
     }
 
     /**
-     * Get the table activity logs list by its unique ID.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.tableId - Table ID.
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.LogList>}
-     */
-    listTableLogs(params: { databaseId: string, tableId: string, queries?: string[] }): Promise<Models.LogList>;
-    /**
-     * Get the table activity logs list by its unique ID.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} tableId - Table ID.
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.LogList>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    listTableLogs(databaseId: string, tableId: string, queries?: string[]): Promise<Models.LogList>;
-    listTableLogs(
-        paramsOrFirst: { databaseId: string, tableId: string, queries?: string[] } | string,
-        ...rest: [(string)?, (string[])?]    
-    ): Promise<Models.LogList> {
-        let params: { databaseId: string, tableId: string, queries?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, queries?: string[] };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                tableId: rest[0] as string,
-                queries: rest[1] as string[]            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const tableId = params.tableId;
-        const queries = params.queries;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-        if (typeof tableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "tableId"');
-        }
-
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/logs'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
-        if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
      * Get a list of all the user's rows in a given table. You can use the query params to filter your results.
      *
      * @param {string} params.databaseId - Database ID.
@@ -6230,81 +6162,6 @@ export class TablesDB {
 
         return this.client.call(
             'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get the row activity logs list by its unique ID.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.tableId - Table ID.
-     * @param {string} params.rowId - Row ID.
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.LogList>}
-     */
-    listRowLogs(params: { databaseId: string, tableId: string, rowId: string, queries?: string[] }): Promise<Models.LogList>;
-    /**
-     * Get the row activity logs list by its unique ID.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} tableId - Table ID.
-     * @param {string} rowId - Row ID.
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.LogList>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    listRowLogs(databaseId: string, tableId: string, rowId: string, queries?: string[]): Promise<Models.LogList>;
-    listRowLogs(
-        paramsOrFirst: { databaseId: string, tableId: string, rowId: string, queries?: string[] } | string,
-        ...rest: [(string)?, (string)?, (string[])?]    
-    ): Promise<Models.LogList> {
-        let params: { databaseId: string, tableId: string, rowId: string, queries?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, rowId: string, queries?: string[] };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                tableId: rest[0] as string,
-                rowId: rest[1] as string,
-                queries: rest[2] as string[]            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const tableId = params.tableId;
-        const rowId = params.rowId;
-        const queries = params.queries;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-        if (typeof tableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "tableId"');
-        }
-        if (typeof rowId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "rowId"');
-        }
-
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}/logs'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{rowId}', encodeURIComponent(String(rowId)));
-        const payload: Payload = {};
-        if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload

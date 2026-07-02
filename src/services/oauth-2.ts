@@ -15,37 +15,41 @@ export class Oauth2 {
      *
      * @param {string} params.grantId - Grant ID made during authorization, provided to consent screen in URL search params.
      * @param {string} params.authorizationDetails - Enriched `authorization_details` the user consented to, replacing what the client requested. Each entry must use a `type` the project accepts. Optional; omit to keep the originally requested details.
+     * @param {string} params.scope - Space-separated scopes the user consented to. Must be a subset of the scopes originally requested; identity scopes such as `openid` are always retained. Optional; omit to keep the originally requested scopes.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Oauth2Approve>}
      */
-    approve(params: { grantId: string, authorizationDetails?: string }): Promise<Models.Oauth2Approve>;
+    approve(params: { grantId: string, authorizationDetails?: string, scope?: string }): Promise<Models.Oauth2Approve>;
     /**
      * Approve an OAuth2 grant after the user gives consent. Returns the `redirectUrl` the end user should be sent to. The consent screen may optionally pass enriched `authorization_details` to record the concrete resources the user selected. You can pass Accept header of `application/json` to receive a JSON response instead of a redirect.
      *
      * @param {string} grantId - Grant ID made during authorization, provided to consent screen in URL search params.
      * @param {string} authorizationDetails - Enriched `authorization_details` the user consented to, replacing what the client requested. Each entry must use a `type` the project accepts. Optional; omit to keep the originally requested details.
+     * @param {string} scope - Space-separated scopes the user consented to. Must be a subset of the scopes originally requested; identity scopes such as `openid` are always retained. Optional; omit to keep the originally requested scopes.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Oauth2Approve>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    approve(grantId: string, authorizationDetails?: string): Promise<Models.Oauth2Approve>;
+    approve(grantId: string, authorizationDetails?: string, scope?: string): Promise<Models.Oauth2Approve>;
     approve(
-        paramsOrFirst: { grantId: string, authorizationDetails?: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { grantId: string, authorizationDetails?: string, scope?: string } | string,
+        ...rest: [(string)?, (string)?]    
     ): Promise<Models.Oauth2Approve> {
-        let params: { grantId: string, authorizationDetails?: string };
+        let params: { grantId: string, authorizationDetails?: string, scope?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { grantId: string, authorizationDetails?: string };
+            params = (paramsOrFirst || {}) as { grantId: string, authorizationDetails?: string, scope?: string };
         } else {
             params = {
                 grantId: paramsOrFirst as string,
-                authorizationDetails: rest[0] as string            
+                authorizationDetails: rest[0] as string,
+                scope: rest[1] as string            
             };
         }
         
         const grantId = params.grantId;
         const authorizationDetails = params.authorizationDetails;
+        const scope = params.scope;
 
         if (typeof grantId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "grantId"');
@@ -58,6 +62,9 @@ export class Oauth2 {
         }
         if (typeof authorizationDetails !== 'undefined') {
             payload['authorization_details'] = authorizationDetails;
+        }
+        if (typeof scope !== 'undefined') {
+            payload['scope'] = scope;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -80,7 +87,7 @@ export class Oauth2 {
      * @param {string} params.clientId - OAuth2 client ID.
      * @param {string} params.redirectUri - Redirect URI where visitor will be redirected after authorization, whether successful or not.
      * @param {string} params.responseType - OAuth2 / OIDC response type. One of `code` (Authorization Code Flow), `id_token` (Implicit Flow, OIDC login only), or `code id_token` (Hybrid Flow).
-     * @param {string} params.scope - Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`.
+     * @param {string} params.scope - Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`, `phone`.
      * @param {string} params.state - OAuth2 state. You receive this back in the redirect URI.
      * @param {string} params.nonce - OIDC nonce parameter to prevent replay attacks. Required when response_type includes `id_token`.
      * @param {string} params.codeChallenge - PKCE code challenge. Required when OAuth2 app is public.
@@ -92,14 +99,14 @@ export class Oauth2 {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Oauth2Authorize>}
      */
-    authorize(params: { clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string }): Promise<Models.Oauth2Authorize>;
+    authorize(params: { clientId: string, redirectUri: string, responseType: string, scope?: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string }): Promise<Models.Oauth2Authorize>;
     /**
      * Begin the OAuth2 authorization flow. When called without a session, the user is redirected to the consent screen without grant ID. When called with a session, the redirect URL includes param for grant ID. You can pass Accept header of `application/json` to receive a JSON response instead of a redirect.
      *
      * @param {string} clientId - OAuth2 client ID.
      * @param {string} redirectUri - Redirect URI where visitor will be redirected after authorization, whether successful or not.
      * @param {string} responseType - OAuth2 / OIDC response type. One of `code` (Authorization Code Flow), `id_token` (Implicit Flow, OIDC login only), or `code id_token` (Hybrid Flow).
-     * @param {string} scope - Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`.
+     * @param {string} scope - Space-separated OAuth2 scopes. Can include project scopes, and built-in scopes: `openid`, `email`, `profile`, `phone`.
      * @param {string} state - OAuth2 state. You receive this back in the redirect URI.
      * @param {string} nonce - OIDC nonce parameter to prevent replay attacks. Required when response_type includes `id_token`.
      * @param {string} codeChallenge - PKCE code challenge. Required when OAuth2 app is public.
@@ -112,15 +119,15 @@ export class Oauth2 {
      * @returns {Promise<Models.Oauth2Authorize>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    authorize(clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string): Promise<Models.Oauth2Authorize>;
+    authorize(clientId: string, redirectUri: string, responseType: string, scope?: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string): Promise<Models.Oauth2Authorize>;
     authorize(
-        paramsOrFirst: { clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string } | string,
+        paramsOrFirst: { clientId: string, redirectUri: string, responseType: string, scope?: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string } | string,
         ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (string)?, (string)?]    
     ): Promise<Models.Oauth2Authorize> {
-        let params: { clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string };
+        let params: { clientId: string, redirectUri: string, responseType: string, scope?: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { clientId: string, redirectUri: string, responseType: string, scope: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string };
+            params = (paramsOrFirst || {}) as { clientId: string, redirectUri: string, responseType: string, scope?: string, state?: string, nonce?: string, codeChallenge?: string, codeChallengeMethod?: string, prompt?: string, maxAge?: number, authorizationDetails?: string, resource?: string };
         } else {
             params = {
                 clientId: paramsOrFirst as string,
@@ -159,9 +166,6 @@ export class Oauth2 {
         }
         if (typeof responseType === 'undefined') {
             throw new AppwriteException('Missing required parameter: "responseType"');
-        }
-        if (typeof scope === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "scope"');
         }
 
         const apiPath = '/oauth2/{project_id}/authorize'.replace('{project_id}', encodeURIComponent(String(this.client.config.project)));
@@ -472,6 +476,126 @@ export class Oauth2 {
         }
         if (typeof uiLocales !== 'undefined') {
             payload['ui_locales'] = uiLocales;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List the organizations the OAuth2 access token can access. Resolves the token's `organization` authorization details, expanding the `*` wildcard into the concrete set of organizations the user can see.
+     *
+     * @param {number} params.limit - Maximum number of organizations to return. Between 1 and 1000.
+     * @param {number} params.offset - Number of organizations to skip before returning results. Used for pagination.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2OrganizationList>}
+     */
+    listOrganizations(params?: { limit?: number, offset?: number }): Promise<Models.Oauth2OrganizationList>;
+    /**
+     * List the organizations the OAuth2 access token can access. Resolves the token's `organization` authorization details, expanding the `*` wildcard into the concrete set of organizations the user can see.
+     *
+     * @param {number} limit - Maximum number of organizations to return. Between 1 and 1000.
+     * @param {number} offset - Number of organizations to skip before returning results. Used for pagination.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2OrganizationList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listOrganizations(limit?: number, offset?: number): Promise<Models.Oauth2OrganizationList>;
+    listOrganizations(
+        paramsOrFirst?: { limit?: number, offset?: number } | number,
+        ...rest: [(number)?]    
+    ): Promise<Models.Oauth2OrganizationList> {
+        let params: { limit?: number, offset?: number };
+        
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { limit?: number, offset?: number };
+        } else {
+            params = {
+                limit: paramsOrFirst as number,
+                offset: rest[0] as number            
+            };
+        }
+        
+        const limit = params.limit;
+        const offset = params.offset;
+
+
+        const apiPath = '/oauth2/{project_id}/organizations'.replace('{project_id}', encodeURIComponent(String(this.client.config.project)));
+        const payload: Payload = {};
+        if (typeof limit !== 'undefined') {
+            payload['limit'] = limit;
+        }
+        if (typeof offset !== 'undefined') {
+            payload['offset'] = offset;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List the projects the OAuth2 access token can access. Resolves the token's `project` authorization details, expanding the `*` wildcard into the concrete set of projects the user can see.
+     *
+     * @param {number} params.limit - Maximum number of projects to return. Between 1 and 1000.
+     * @param {number} params.offset - Number of projects to skip before returning results. Used for pagination.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2ProjectList>}
+     */
+    listProjects(params?: { limit?: number, offset?: number }): Promise<Models.Oauth2ProjectList>;
+    /**
+     * List the projects the OAuth2 access token can access. Resolves the token's `project` authorization details, expanding the `*` wildcard into the concrete set of projects the user can see.
+     *
+     * @param {number} limit - Maximum number of projects to return. Between 1 and 1000.
+     * @param {number} offset - Number of projects to skip before returning results. Used for pagination.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2ProjectList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listProjects(limit?: number, offset?: number): Promise<Models.Oauth2ProjectList>;
+    listProjects(
+        paramsOrFirst?: { limit?: number, offset?: number } | number,
+        ...rest: [(number)?]    
+    ): Promise<Models.Oauth2ProjectList> {
+        let params: { limit?: number, offset?: number };
+        
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { limit?: number, offset?: number };
+        } else {
+            params = {
+                limit: paramsOrFirst as number,
+                offset: rest[0] as number            
+            };
+        }
+        
+        const limit = params.limit;
+        const offset = params.offset;
+
+
+        const apiPath = '/oauth2/{project_id}/projects'.replace('{project_id}', encodeURIComponent(String(this.client.config.project)));
+        const payload: Payload = {};
+        if (typeof limit !== 'undefined') {
+            payload['limit'] = limit;
+        }
+        if (typeof offset !== 'undefined') {
+            payload['offset'] = offset;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

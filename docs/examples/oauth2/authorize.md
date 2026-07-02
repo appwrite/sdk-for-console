@@ -11,7 +11,7 @@ const result = await oauth2.authorize({
     clientId: '<CLIENT_ID>',
     redirectUri: 'https://example.com',
     responseType: 'code',
-    scope: '<SCOPE>',
+    scope: '<SCOPE>', // optional
     state: '<STATE>', // optional
     nonce: '<NONCE>', // optional
     codeChallenge: '<CODE_CHALLENGE>', // optional

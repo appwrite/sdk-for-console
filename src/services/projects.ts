@@ -637,6 +637,132 @@ export class Projects {
     }
 
     /**
+     * Get the onboarding stages for the current project, including each stage’s SDK method key and status (for example pending, completed, or skipped).
+     * 
+     *
+     * @param {string} params.projectId - Project unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.StageList>}
+     */
+    listStages(params: { projectId: string }): Promise<Models.StageList>;
+    /**
+     * Get the onboarding stages for the current project, including each stage’s SDK method key and status (for example pending, completed, or skipped).
+     * 
+     *
+     * @param {string} projectId - Project unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.StageList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listStages(projectId: string): Promise<Models.StageList>;
+    listStages(
+        paramsOrFirst: { projectId: string } | string    
+    ): Promise<Models.StageList> {
+        let params: { projectId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string            
+            };
+        }
+        
+        const projectId = params.projectId;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        const apiPath = '/projects/{projectId}/stages'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update an onboarding stage for the current project. Use this endpoint to skip a stage or leave it unchanged without performing the related API action.
+     * 
+     *
+     * @param {string} params.projectId - Project unique ID.
+     * @param {string} params.stageId - SDK method key (namespace.method).
+     * @param {boolean} params.skip - Mark the stage as skipped.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Stage>}
+     */
+    updateStage(params: { projectId: string, stageId: string, skip?: boolean }): Promise<Models.Stage>;
+    /**
+     * Update an onboarding stage for the current project. Use this endpoint to skip a stage or leave it unchanged without performing the related API action.
+     * 
+     *
+     * @param {string} projectId - Project unique ID.
+     * @param {string} stageId - SDK method key (namespace.method).
+     * @param {boolean} skip - Mark the stage as skipped.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Stage>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateStage(projectId: string, stageId: string, skip?: boolean): Promise<Models.Stage>;
+    updateStage(
+        paramsOrFirst: { projectId: string, stageId: string, skip?: boolean } | string,
+        ...rest: [(string)?, (boolean)?]    
+    ): Promise<Models.Stage> {
+        let params: { projectId: string, stageId: string, skip?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string, stageId: string, skip?: boolean };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string,
+                stageId: rest[0] as string,
+                skip: rest[1] as boolean            
+            };
+        }
+        
+        const projectId = params.projectId;
+        const stageId = params.stageId;
+        const skip = params.skip;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof stageId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "stageId"');
+        }
+
+        const apiPath = '/projects/{projectId}/stages/{stageId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{stageId}', encodeURIComponent(String(stageId)));
+        const payload: Payload = {};
+        if (typeof skip !== 'undefined') {
+            payload['skip'] = skip;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Update the status of a project. Can be used to archive/restore projects, and to restore paused projects. When restoring a paused project, the console fingerprint header must be provided and the project must not be blocked for any reason other than inactivity.
      * 
      *

@@ -928,6 +928,70 @@ export class Domains {
     }
 
     /**
+     * Update the registrar nameservers for the given domain. When nameservers are not provided,
+     * the domain will be updated to use Appwrite nameservers.
+     *
+     * @param {string} params.domainId - Domain unique ID.
+     * @param {string[]} params.nameservers - Nameservers to set for the domain. Defaults to Appwrite nameservers when omitted.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     */
+    updateNameservers(params: { domainId: string, nameservers?: string[] }): Promise<Models.Domain>;
+    /**
+     * Update the registrar nameservers for the given domain. When nameservers are not provided,
+     * the domain will be updated to use Appwrite nameservers.
+     *
+     * @param {string} domainId - Domain unique ID.
+     * @param {string[]} nameservers - Nameservers to set for the domain. Defaults to Appwrite nameservers when omitted.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Domain>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateNameservers(domainId: string, nameservers?: string[]): Promise<Models.Domain>;
+    updateNameservers(
+        paramsOrFirst: { domainId: string, nameservers?: string[] } | string,
+        ...rest: [(string[])?]    
+    ): Promise<Models.Domain> {
+        let params: { domainId: string, nameservers?: string[] };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { domainId: string, nameservers?: string[] };
+        } else {
+            params = {
+                domainId: paramsOrFirst as string,
+                nameservers: rest[0] as string[]            
+            };
+        }
+        
+        const domainId = params.domainId;
+        const nameservers = params.nameservers;
+
+        if (typeof domainId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "domainId"');
+        }
+
+        const apiPath = '/domains/{domainId}/nameservers'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const payload: Payload = {};
+        if (typeof nameservers !== 'undefined') {
+            payload['nameservers'] = nameservers;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Verify which NS records are used and update the domain accordingly. This will check the domain's
      * nameservers and update the domain's status based on whether the nameservers match the expected
      * Appwrite nameservers.
@@ -936,7 +1000,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Domain>}
      */
-    updateNameservers(params: { domainId: string }): Promise<Models.Domain>;
+    verifyNameservers(params: { domainId: string }): Promise<Models.Domain>;
     /**
      * Verify which NS records are used and update the domain accordingly. This will check the domain's
      * nameservers and update the domain's status based on whether the nameservers match the expected
@@ -947,8 +1011,8 @@ export class Domains {
      * @returns {Promise<Models.Domain>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateNameservers(domainId: string): Promise<Models.Domain>;
-    updateNameservers(
+    verifyNameservers(domainId: string): Promise<Models.Domain>;
+    verifyNameservers(
         paramsOrFirst: { domainId: string } | string    
     ): Promise<Models.Domain> {
         let params: { domainId: string };
@@ -967,7 +1031,7 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "domainId"');
         }
 
-        const apiPath = '/domains/{domainId}/nameservers'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/nameservers/verification'.replace('{domainId}', encodeURIComponent(String(domainId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 

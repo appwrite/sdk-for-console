@@ -81,7 +81,7 @@ export class DocumentsDB {
      * @param {string} params.databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} params.dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
+     * @param {string} params.dedicatedDatabaseId - Optional dedicated database ID to attach this database to. Leave empty to create a database on the shared pool.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
@@ -93,7 +93,7 @@ export class DocumentsDB {
      * @param {string} databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
+     * @param {string} dedicatedDatabaseId - Optional dedicated database ID to attach this database to. Leave empty to create a database on the shared pool.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -445,21 +445,21 @@ export class DocumentsDB {
      *
      * @param {UsageRange} params.range - Date range.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDatabases>}
+     * @returns {Promise<Models.UsageDocumentsDBs>}
      */
-    listUsage(params?: { range?: UsageRange }): Promise<Models.UsageDatabases>;
+    listUsage(params?: { range?: UsageRange }): Promise<Models.UsageDocumentsDBs>;
     /**
      * List usage metrics and statistics for all databases in the project. You can view the total number of databases, collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
      *
      * @param {UsageRange} range - Date range.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDatabases>}
+     * @returns {Promise<Models.UsageDocumentsDBs>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listUsage(range?: UsageRange): Promise<Models.UsageDatabases>;
+    listUsage(range?: UsageRange): Promise<Models.UsageDocumentsDBs>;
     listUsage(
         paramsOrFirst?: { range?: UsageRange } | UsageRange    
-    ): Promise<Models.UsageDatabases> {
+    ): Promise<Models.UsageDocumentsDBs> {
         let params: { range?: UsageRange };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('range' in paramsOrFirst))) {

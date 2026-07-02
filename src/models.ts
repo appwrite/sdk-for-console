@@ -20,6 +20,7 @@ import { MessageStatus } from "./enums/message-status"
 import { BillingPlanGroup } from "./enums/billing-plan-group"
 import { DomainTransferStatusEnum } from "./enums/domain-transfer-status-enum"
 import { DomainPurchaseStatus } from "./enums/domain-purchase-status"
+import { WafRuleAction } from "./enums/waf-rule-action"
 
 /**
  * Appwrite Models
@@ -180,20 +181,6 @@ export namespace Models {
          * List of identities.
          */
         identities: Identity[];
-    }
-
-    /**
-     * Logs List
-     */
-    export type LogList = {
-        /**
-         * Total number of logs that matched your query.
-         */
-        total: number;
-        /**
-         * List of logs.
-         */
-        logs: Log[];
     }
 
     /**
@@ -664,6 +651,16 @@ export namespace Models {
          * List of schedules.
          */
         schedules: Schedule[];
+    }
+
+    /**
+     * Stages List
+     */
+    export type StageList = {
+        /**
+         * List of stages.
+         */
+        stages: Stage[];
     }
 
     /**
@@ -1840,6 +1837,64 @@ export namespace Models {
          * Defines whether this attribute is encrypted or not.
          */
         encrypt?: boolean;
+    }
+
+    /**
+     * UsageDocumentsDBs
+     */
+    export type UsageDocumentsDBs = {
+        /**
+         * Time range of the usage stats.
+         */
+        range: string;
+        /**
+         * Total aggregated number of DocumentsDB databases.
+         */
+        databasesTotal: number;
+        /**
+         * Total aggregated number of collections.
+         */
+        collectionsTotal: number;
+        /**
+         * Total aggregated number of documents.
+         */
+        documentsTotal: number;
+        /**
+         * Total aggregated number of total databases storage in bytes.
+         */
+        storageTotal: number;
+        /**
+         * Total number of databases reads.
+         */
+        databasesReadsTotal: number;
+        /**
+         * Total number of databases writes.
+         */
+        databasesWritesTotal: number;
+        /**
+         * Aggregated number of databases per period.
+         */
+        databases: Metric[];
+        /**
+         * Aggregated number of collections per period.
+         */
+        collections: Metric[];
+        /**
+         * Aggregated number of documents per period.
+         */
+        documents: Metric[];
+        /**
+         * An array of the aggregated number of databases storage in bytes per period.
+         */
+        storage: Metric[];
+        /**
+         * An array of aggregated number of database reads.
+         */
+        databasesReads: Metric[];
+        /**
+         * An array of aggregated number of database writes.
+         */
+        databasesWrites: Metric[];
     }
 
     /**
@@ -3268,100 +3323,6 @@ export namespace Models {
          * Presence metadata.
          */
         metadata?: object;
-    }
-
-    /**
-     * Log
-     */
-    export type Log = {
-        /**
-         * Event name.
-         */
-        event: string;
-        /**
-         * User ID of the actor recorded for this log. During impersonation, this is the original impersonator, not the impersonated target user.
-         */
-        userId: string;
-        /**
-         * User email of the actor recorded for this log. During impersonation, this is the original impersonator.
-         */
-        userEmail: string;
-        /**
-         * User name of the actor recorded for this log. During impersonation, this is the original impersonator.
-         */
-        userName: string;
-        /**
-         * API mode when event triggered.
-         */
-        mode: string;
-        /**
-         * User type who triggered the audit log. Possible values: user, admin, guest, keyProject, keyAccount, keyOrganization.
-         */
-        userType: string;
-        /**
-         * IP session in use when the session was created.
-         */
-        ip: string;
-        /**
-         * Log creation date in ISO 8601 format.
-         */
-        time: string;
-        /**
-         * Operating system code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/os.json).
-         */
-        osCode: string;
-        /**
-         * Operating system name.
-         */
-        osName: string;
-        /**
-         * Operating system version.
-         */
-        osVersion: string;
-        /**
-         * Client type.
-         */
-        clientType: string;
-        /**
-         * Client code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/clients.json).
-         */
-        clientCode: string;
-        /**
-         * Client name.
-         */
-        clientName: string;
-        /**
-         * Client version.
-         */
-        clientVersion: string;
-        /**
-         * Client engine name.
-         */
-        clientEngine: string;
-        /**
-         * Client engine name.
-         */
-        clientEngineVersion: string;
-        /**
-         * Device name.
-         */
-        deviceName: string;
-        /**
-         * Device brand name.
-         */
-        deviceBrand: string;
-        /**
-         * Device model name.
-         */
-        deviceModel: string;
-        /**
-         * Country two-character ISO 3166-1 alpha code.
-         */
-        countryCode: string;
-        /**
-         * Country name.
-         */
-        countryName: string;
     }
 
     /**
@@ -5256,6 +5217,10 @@ export namespace Models {
          */
         status: string;
         /**
+         * Stage progress (completed or skipped) with timestamps and actor types, keyed by stage id.
+         */
+        onboarding: object;
+        /**
          * List of auth methods.
          */
         authMethods: ProjectAuthMethod[];
@@ -5275,6 +5240,10 @@ export namespace Models {
          * Last time the project was accessed via console. Used with plan's projectInactivityDays to determine if project is paused.
          */
         consoleAccessedAt: string;
+        /**
+         * Whether WAF enforcement is enabled for the project.
+         */
+        wafEnabled: boolean;
         /**
          * Billing limits reached
          */
@@ -8170,14 +8139,6 @@ export namespace Models {
          */
         screenshotsGeneratedTotal: number;
         /**
-         * An array of aggregated number of Imagine credits in the given period.
-         */
-        imagineCredits: Metric[];
-        /**
-         * Total aggregated number of Imagine credits.
-         */
-        imagineCreditsTotal: number;
-        /**
          * Current aggregated number of open Realtime connections.
          */
         realtimeConnectionsTotal: number;
@@ -8353,6 +8314,32 @@ export namespace Models {
          * The region where the schedule is deployed.
          */
         region: string;
+    }
+
+    /**
+     * Stage
+     */
+    export type Stage = {
+        /**
+         * Stage ID.
+         */
+        id: string;
+        /**
+         * SDK method key (namespace.name) for this stage.
+         */
+        sdk: string;
+        /**
+         * Stage status.
+         */
+        status: string;
+        /**
+         * When the stage was completed or skipped, in ISO 8601 format.
+         */
+        at: string;
+        /**
+         * Actor type when the stage was recorded.
+         */
+        actorType: string;
     }
 
     /**
@@ -9315,14 +9302,6 @@ export namespace Models {
          * Hostname.
          */
         hostname: string;
-        /**
-         * Country two-character ISO 3166-1 alpha code.
-         */
-        countryCode: string;
-        /**
-         * Country name.
-         */
-        countryName: string;
     }
 
     /**
@@ -10178,6 +10157,10 @@ export namespace Models {
          */
         resourceId: string;
         /**
+         * Block mode. full blocks reads and writes; readOnly blocks writes only.
+         */
+        mode: string;
+        /**
          * Reason for the block. Can be null if no reason was provided.
          */
         reason?: string;
@@ -10266,7 +10249,7 @@ export namespace Models {
          */
         ssl: boolean;
         /**
-         * Database engine. Possible values: postgres, mysql, mariadb, mongodb.
+         * Database engine. Possible values: postgresql, mysql, mariadb, mongodb.
          */
         engine: string;
         /**
@@ -10340,32 +10323,6 @@ export namespace Models {
     }
 
     /**
-     * Connection
-     */
-    export type DedicatedDatabaseConnection = {
-        /**
-         * Connection ID.
-         */
-        $id: string;
-        /**
-         * Connection username.
-         */
-        username: string;
-        /**
-         * Database name.
-         */
-        database: string;
-        /**
-         * Connection role. Common values: readonly, readwrite.
-         */
-        role: string;
-        /**
-         * Connection creation date in ISO 8601 format.
-         */
-        $createdAt: string;
-    }
-
-    /**
      * Coupon
      */
     export type Coupon = {
@@ -10401,60 +10358,6 @@ export namespace Models {
          * If the coupon is only valid for new organizations or not.
          */
         onlyNewOrgs: boolean;
-    }
-
-    /**
-     * Credentials
-     */
-    export type DedicatedDatabaseCredentials = {
-        /**
-         * Database ID.
-         */
-        $id: string;
-        /**
-         * Database hostname.
-         */
-        host: string;
-        /**
-         * Database port.
-         */
-        port: number;
-        /**
-         * Database username.
-         */
-        username: string;
-        /**
-         * Database password.
-         */
-        password: string;
-        /**
-         * Database name.
-         */
-        database: string;
-        /**
-         * Database TCP hostname or address.
-         */
-        tcpHost: string;
-        /**
-         * Database TCP port.
-         */
-        tcpPort: number;
-        /**
-         * Database name for direct TCP connections.
-         */
-        tcpDatabase: string;
-        /**
-         * Database engine. Possible values: postgres, mysql, mariadb, mongodb.
-         */
-        engine: string;
-        /**
-         * Whether SSL is required.
-         */
-        ssl: boolean;
-        /**
-         * Full connection string.
-         */
-        connectionString: string;
     }
 
     /**
@@ -10560,11 +10463,11 @@ export namespace Models {
          */
         name: string;
         /**
-         * Product API that owns this database: compute, documentsdb, or vectorsdb.
+         * Product API that owns this database: nativedb, documentsdb, or vectorsdb.
          */
         api: string;
         /**
-         * Database engine: postgres, mysql, mariadb, or mongodb.
+         * Database engine: postgresql, mysql, mariadb, or mongodb.
          */
         engine: string;
         /**
@@ -10612,9 +10515,13 @@ export namespace Models {
          */
         lastAccessedAt: string;
         /**
-         * Timestamp when container will be considered idle and scale to zero (ISO 8601 format).
+         * Display-only timestamp when the database is expected to be considered idle (ISO 8601 format). Derived from last activity; lifecycle transitions are driven by lifecycleState.
          */
         idleUntil: string;
+        /**
+         * Idle-lifecycle state of the database. Possible values: active, warm, cold, hibernated.
+         */
+        lifecycleState: string;
         /**
          * Minutes of inactivity before container scales to zero.
          */
@@ -10650,7 +10557,7 @@ export namespace Models {
         /**
          * Replication sync mode: async, sync, or quorum.
          */
-        highAvailabilitySyncMode: string;
+        syncMode: string;
         /**
          * Maximum concurrent connections.
          */
@@ -10840,7 +10747,7 @@ export namespace Models {
          */
         ready: boolean;
         /**
-         * Database engine: postgres, mysql, mariadb, or mongodb.
+         * Database engine: postgresql, mysql, mariadb, or mongodb.
          */
         engine: string;
         /**
@@ -11294,19 +11201,19 @@ export namespace Models {
     }
 
     /**
-     * HAReplica
+     * Member
      */
-    export type DedicatedDatabaseHAReplica = {
+    export type DedicatedDatabaseMember = {
         /**
-         * Replica identifier.
+         * Member identifier.
          */
         $id: string;
         /**
-         * Replica role. Possible values: primary (accepts reads and writes), replica (read-only follower).
+         * Member role. Possible values: primary (accepts reads and writes), replica (read-only follower).
          */
         role: string;
         /**
-         * Replica health status. Possible values: healthy (fully synced), degraded (lagging behind primary), unhealthy (replication broken or unreachable).
+         * Member pod status. Possible values: active (running), pending, notFound (pod missing), or the lowercased pod phase reported by the cluster.
          */
         status: string;
         /**
@@ -11316,25 +11223,21 @@ export namespace Models {
     }
 
     /**
-     * HAStatus
+     * Replicas
      */
-    export type DedicatedDatabaseHAStatus = {
+    export type DedicatedDatabaseReplicas = {
         /**
-         * Whether high availability is enabled.
+         * Number of configured replicas. Zero means high availability is disabled.
          */
-        enabled: boolean;
-        /**
-         * Number of configured replicas.
-         */
-        replicaCount: number;
+        replicas: number;
         /**
          * Replication sync mode. Possible values: async (asynchronous, fastest), sync (synchronous, strong consistency), quorum (quorum-based, majority of replicas must confirm).
          */
         syncMode: string;
         /**
-         * List of replica statuses.
+         * Per-pod statuses for the primary and every replica.
          */
-        replicas: DedicatedDatabaseHAReplica[];
+        members: DedicatedDatabaseMember[];
     }
 
     /**
@@ -11988,6 +11891,28 @@ export namespace Models {
     }
 
     /**
+     * Postgres extension
+     */
+    export type PostgresExtension = {
+        /**
+         * Extension key used with CREATE EXTENSION.
+         */
+        key: string;
+        /**
+         * Human-readable extension name.
+         */
+        name: string;
+        /**
+         * Short description of what the extension provides.
+         */
+        description: string;
+        /**
+         * Category the extension belongs to.
+         */
+        category: string;
+    }
+
+    /**
      * Program
      */
     export type Program = {
@@ -12027,20 +11952,6 @@ export namespace Models {
          * Billing plan ID that this is program is associated with.
          */
         billingPlanId: string;
-    }
-
-    /**
-     * QueryExplanation
-     */
-    export type DedicatedDatabaseQueryExplanation = {
-        /**
-         * Structured query execution plan. Contents are engine-specific.
-         */
-        plan: Record<string, any>[];
-        /**
-         * Raw EXPLAIN output from the database engine.
-         */
-        raw: string;
     }
 
     /**
@@ -12174,32 +12085,6 @@ export namespace Models {
     }
 
     /**
-     * SlowQuery
-     */
-    export type DedicatedDatabaseSlowQuery = {
-        /**
-         * The SQL query text.
-         */
-        query: string;
-        /**
-         * Query duration in milliseconds.
-         */
-        durationMs: number;
-        /**
-         * Number of times this query has been executed.
-         */
-        calls: number;
-        /**
-         * Database user that executed the query.
-         */
-        user: string;
-        /**
-         * Database name.
-         */
-        database: string;
-    }
-
-    /**
      * Specification
      */
     export type DedicatedDatabaseSpecification = {
@@ -12274,7 +12159,7 @@ export namespace Models {
         /**
          * High availability replica price as a fraction of the specification cost.
          */
-        haReplicaRate: number;
+        replicaRate: number;
         /**
          * Cross-region replica price as a fraction of the specification cost.
          */
@@ -12550,14 +12435,6 @@ export namespace Models {
          */
         screenshotsGeneratedTotal: number;
         /**
-         * Aggregated stats for imagine credits.
-         */
-        imagineCredits: Metric[];
-        /**
-         * Aggregated stats for total imagine credits.
-         */
-        imagineCreditsTotal: number;
-        /**
          * Aggregated stats for total users.
          */
         usersTotal: number;
@@ -12716,10 +12593,6 @@ export namespace Models {
          */
         screenshotsGeneratedTotal: number;
         /**
-         * Aggregated stats for imagine credits.
-         */
-        imagineCredits: number;
-        /**
          * Aggregated stats for realtime connections.
          */
         realtimeConnections: number;
@@ -12761,6 +12634,14 @@ export namespace Models {
          * Resource ID
          */
         resourceId: string;
+        /**
+         * Dedicated database engine type for per-database line items (e.g. postgresql). Empty for other resources.
+         */
+        type: string;
+        /**
+         * Dedicated database specification slug for per-database line items (e.g. s-2vcpu-2gb). Empty for other resources.
+         */
+        specification: string;
     }
 
     /**
@@ -13098,6 +12979,460 @@ export namespace Models {
     }
 
     /**
+     * WafRule
+     */
+    export type WafRule = {
+        /**
+         * Rule ID.
+         */
+        $id: string;
+        /**
+         * WAF rule creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * WAF rule last update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human friendly rule name.
+         */
+        name: string;
+        /**
+         * Optional description for the rule.
+         */
+        description: string;
+        /**
+         * Team ID.
+         */
+        teamId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Resource type the rule is scoped to.
+         */
+        resourceType: string;
+        /**
+         * Resource identifier. Empty for API-wide rules.
+         */
+        resourceId: string;
+        /**
+         * Action performed when the rule matches.
+         */
+        action: WafRuleAction;
+        /**
+         * Evaluation priority. Lower values execute earlier.
+         */
+        priority: number;
+        /**
+         * Whether the rule is active.
+         */
+        enabled: boolean;
+        /**
+         * List of conditions evaluated for this rule.
+         */
+        conditions: object;
+        /**
+         * Action specific configuration.
+         */
+        config: object;
+    }
+
+    /**
+     * WafRuleBypass
+     */
+    export type WafRuleBypass = {
+        /**
+         * Rule ID.
+         */
+        $id: string;
+        /**
+         * WAF rule creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * WAF rule last update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human friendly rule name.
+         */
+        name: string;
+        /**
+         * Optional description for the rule.
+         */
+        description: string;
+        /**
+         * Team ID.
+         */
+        teamId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Resource type the rule is scoped to.
+         */
+        resourceType: string;
+        /**
+         * Resource identifier. Empty for API-wide rules.
+         */
+        resourceId: string;
+        /**
+         * Action performed when the rule matches.
+         */
+        action: WafRuleAction;
+        /**
+         * Evaluation priority. Lower values execute earlier.
+         */
+        priority: number;
+        /**
+         * Whether the rule is active.
+         */
+        enabled: boolean;
+        /**
+         * List of conditions evaluated for this rule.
+         */
+        conditions: object;
+        /**
+         * Action specific configuration.
+         */
+        config: object;
+    }
+
+    /**
+     * WafRuleDeny
+     */
+    export type WafRuleDeny = {
+        /**
+         * Rule ID.
+         */
+        $id: string;
+        /**
+         * WAF rule creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * WAF rule last update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human friendly rule name.
+         */
+        name: string;
+        /**
+         * Optional description for the rule.
+         */
+        description: string;
+        /**
+         * Team ID.
+         */
+        teamId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Resource type the rule is scoped to.
+         */
+        resourceType: string;
+        /**
+         * Resource identifier. Empty for API-wide rules.
+         */
+        resourceId: string;
+        /**
+         * Action performed when the rule matches.
+         */
+        action: WafRuleAction;
+        /**
+         * Evaluation priority. Lower values execute earlier.
+         */
+        priority: number;
+        /**
+         * Whether the rule is active.
+         */
+        enabled: boolean;
+        /**
+         * List of conditions evaluated for this rule.
+         */
+        conditions: object;
+        /**
+         * Action specific configuration.
+         */
+        config: object;
+    }
+
+    /**
+     * WafRuleChallenge
+     */
+    export type WafRuleChallenge = {
+        /**
+         * Rule ID.
+         */
+        $id: string;
+        /**
+         * WAF rule creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * WAF rule last update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human friendly rule name.
+         */
+        name: string;
+        /**
+         * Optional description for the rule.
+         */
+        description: string;
+        /**
+         * Team ID.
+         */
+        teamId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Resource type the rule is scoped to.
+         */
+        resourceType: string;
+        /**
+         * Resource identifier. Empty for API-wide rules.
+         */
+        resourceId: string;
+        /**
+         * Action performed when the rule matches.
+         */
+        action: WafRuleAction;
+        /**
+         * Evaluation priority. Lower values execute earlier.
+         */
+        priority: number;
+        /**
+         * Whether the rule is active.
+         */
+        enabled: boolean;
+        /**
+         * List of conditions evaluated for this rule.
+         */
+        conditions: object;
+        /**
+         * Action specific configuration.
+         */
+        config: object;
+        /**
+         * Challenge type enforced when the rule matches.
+         */
+        challengeType: string;
+    }
+
+    /**
+     * WafRuleRateLimit
+     */
+    export type WafRuleRateLimit = {
+        /**
+         * Rule ID.
+         */
+        $id: string;
+        /**
+         * WAF rule creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * WAF rule last update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human friendly rule name.
+         */
+        name: string;
+        /**
+         * Optional description for the rule.
+         */
+        description: string;
+        /**
+         * Team ID.
+         */
+        teamId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Resource type the rule is scoped to.
+         */
+        resourceType: string;
+        /**
+         * Resource identifier. Empty for API-wide rules.
+         */
+        resourceId: string;
+        /**
+         * Action performed when the rule matches.
+         */
+        action: WafRuleAction;
+        /**
+         * Evaluation priority. Lower values execute earlier.
+         */
+        priority: number;
+        /**
+         * Whether the rule is active.
+         */
+        enabled: boolean;
+        /**
+         * List of conditions evaluated for this rule.
+         */
+        conditions: object;
+        /**
+         * Action specific configuration.
+         */
+        config: object;
+        /**
+         * Maximum number of matching requests allowed for the given interval.
+         */
+        limit: number;
+        /**
+         * Interval in seconds for the rate limit window.
+         */
+        interval: number;
+    }
+
+    /**
+     * WafRuleRedirect
+     */
+    export type WafRuleRedirect = {
+        /**
+         * Rule ID.
+         */
+        $id: string;
+        /**
+         * WAF rule creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * WAF rule last update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human friendly rule name.
+         */
+        name: string;
+        /**
+         * Optional description for the rule.
+         */
+        description: string;
+        /**
+         * Team ID.
+         */
+        teamId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Resource type the rule is scoped to.
+         */
+        resourceType: string;
+        /**
+         * Resource identifier. Empty for API-wide rules.
+         */
+        resourceId: string;
+        /**
+         * Action performed when the rule matches.
+         */
+        action: WafRuleAction;
+        /**
+         * Evaluation priority. Lower values execute earlier.
+         */
+        priority: number;
+        /**
+         * Whether the rule is active.
+         */
+        enabled: boolean;
+        /**
+         * List of conditions evaluated for this rule.
+         */
+        conditions: object;
+        /**
+         * Action specific configuration.
+         */
+        config: object;
+        /**
+         * Target location for the redirect.
+         */
+        location: string;
+        /**
+         * HTTP status code used for the redirect.
+         */
+        statusCode: number;
+    }
+
+    /**
+     * WAF rule list
+     */
+    export type WafRuleList = {
+        /**
+         * Total number of rules that matched your query.
+         */
+        total: number;
+        /**
+         * List of rules.
+         */
+        rules: WafRule[];
+    }
+
+    /**
+     * OAuth2 Project
+     */
+    export type Oauth2Project = {
+        /**
+         * Project ID.
+         */
+        $id: string;
+    }
+
+    /**
+     * OAuth2 Organization
+     */
+    export type Oauth2Organization = {
+        /**
+         * Organization ID.
+         */
+        $id: string;
+    }
+
+    /**
+     * OAuth2 accessible projects list
+     */
+    export type Oauth2ProjectList = {
+        /**
+         * Total number of projects that matched your query.
+         */
+        total: number;
+        /**
+         * List of projects.
+         */
+        projects: Oauth2Project[];
+    }
+
+    /**
+     * OAuth2 accessible organizations list
+     */
+    export type Oauth2OrganizationList = {
+        /**
+         * Total number of organizations that matched your query.
+         */
+        total: number;
+        /**
+         * List of organizations.
+         */
+        organizations: Oauth2Organization[];
+    }
+
+    /**
      * Activity event list
      */
     export type ActivityEventList = {
@@ -13238,34 +13573,6 @@ export namespace Models {
     }
 
     /**
-     * Dedicated database connections list
-     */
-    export type DedicatedDatabaseConnectionList = {
-        /**
-         * Total number of connections that matched your query.
-         */
-        total: number;
-        /**
-         * List of connections.
-         */
-        connections: DedicatedDatabaseConnection[];
-    }
-
-    /**
-     * Dedicated database slow queries list
-     */
-    export type DedicatedDatabaseSlowQueryList = {
-        /**
-         * Total number of slowQueries that matched your query.
-         */
-        total: number;
-        /**
-         * List of slowQueries.
-         */
-        slowQueries: DedicatedDatabaseSlowQuery[];
-    }
-
-    /**
      * Dedicated databases list
      */
     export type DedicatedDatabaseList = {
@@ -13347,6 +13654,20 @@ export namespace Models {
          * List of paymentMethods.
          */
         paymentMethods: PaymentMethod[];
+    }
+
+    /**
+     * Postgres extensions list
+     */
+    export type PostgresExtensionList = {
+        /**
+         * Total number of extensions that matched your query.
+         */
+        total: number;
+        /**
+         * List of extensions.
+         */
+        extensions: PostgresExtension[];
     }
 
     /**

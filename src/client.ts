@@ -356,6 +356,7 @@ class Client {
         project: string;
         key: string;
         jwt: string;
+        bearer: string;
         locale: string;
         mode: string;
         cookie: string;
@@ -373,6 +374,7 @@ class Client {
         project: '',
         key: '',
         jwt: '',
+        bearer: '',
         locale: '',
         mode: '',
         cookie: '',
@@ -543,6 +545,20 @@ class Client {
     setJWT(value: string): this {
         this.headers['X-Appwrite-JWT'] = value;
         this.config.jwt = value;
+        return this;
+    }
+    /**
+     * Set Bearer
+     *
+     * The OAuth access token to authenticate with
+     *
+     * @param value string
+     *
+     * @return {this}
+     */
+    setBearer(value: string): this {
+        this.headers['Authorization'] = value;
+        this.config.bearer = value;
         return this;
     }
     /**
@@ -1195,7 +1211,7 @@ class Client {
             } else {
                 responseText = data?.message;
             }
-            throw new AppwriteException(data?.message, response.status, data?.type, responseText);
+            throw new AppwriteException(data?.message ?? responseText, response.status, data?.type, responseText);
         }
 
         const cookieFallback = response.headers.get('X-Fallback-Cookies');

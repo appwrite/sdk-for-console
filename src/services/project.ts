@@ -203,7 +203,7 @@ export class Project {
      *
      * @param {string} params.keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -216,7 +216,7 @@ export class Project {
      *
      * @param {string} keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Key name. Max length: 128 chars.
-     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -290,7 +290,7 @@ export class Project {
      * 
      * You can also create a standard API key if you need a longer-lived key instead.
      *
-     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {number} params.duration - Time in seconds before ephemeral key expires. Maximum duration is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EphemeralKey>}
@@ -301,7 +301,7 @@ export class Project {
      * 
      * You can also create a standard API key if you need a longer-lived key instead.
      *
-     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {number} duration - Time in seconds before ephemeral key expires. Maximum duration is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EphemeralKey>}
@@ -415,7 +415,7 @@ export class Project {
      *
      * @param {string} params.keyId - Key ID.
      * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -426,7 +426,7 @@ export class Project {
      *
      * @param {string} keyId - Key ID.
      * @param {string} name - Key name. Max length: 128 chars.
-     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -7007,6 +7007,63 @@ export class Project {
 
         return this.client.call(
             'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Enable or disable WAF for the current project.
+     *
+     * @param {boolean} params.enabled - Enable or disable WAF for the current project.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     */
+    updateWaf(params: { enabled: boolean }): Promise<Models.Project>;
+    /**
+     * Enable or disable WAF for the current project.
+     *
+     * @param {boolean} enabled - Enable or disable WAF for the current project.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateWaf(enabled: boolean): Promise<Models.Project>;
+    updateWaf(
+        paramsOrFirst: { enabled: boolean } | boolean    
+    ): Promise<Models.Project> {
+        let params: { enabled: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { enabled: boolean };
+        } else {
+            params = {
+                enabled: paramsOrFirst as boolean            
+            };
+        }
+        
+        const enabled = params.enabled;
+
+        if (typeof enabled === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "enabled"');
+        }
+
+        const apiPath = '/project/waf';
+        const payload: Payload = {};
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
             uri,
             apiHeaders,
             payload

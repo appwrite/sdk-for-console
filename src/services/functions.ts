@@ -100,7 +100,7 @@ export class Functions {
      * @param {boolean} params.logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
      * @param {string} params.entrypoint - Entrypoint File. This path is relative to the "providerRootDirectory".
      * @param {string} params.commands - Build Commands.
-     * @param {ProjectKeyScopes[]} params.scopes - List of scopes allowed for API key auto-generated for every execution. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} params.scopes - List of scopes allowed for API key auto-generated for every execution. Maximum of 200 scopes are allowed.
      * @param {string} params.installationId - Appwrite Installation ID for VCS (Version Control System) deployment.
      * @param {string} params.providerRepositoryId - Repository ID of the repo linked to the function.
      * @param {string} params.providerBranch - Production branch for the repo linked to the function.
@@ -129,7 +129,7 @@ export class Functions {
      * @param {boolean} logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
      * @param {string} entrypoint - Entrypoint File. This path is relative to the "providerRootDirectory".
      * @param {string} commands - Build Commands.
-     * @param {ProjectKeyScopes[]} scopes - List of scopes allowed for API key auto-generated for every execution. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} scopes - List of scopes allowed for API key auto-generated for every execution. Maximum of 200 scopes are allowed.
      * @param {string} installationId - Appwrite Installation ID for VCS (Version Control System) deployment.
      * @param {string} providerRepositoryId - Repository ID of the repo linked to the function.
      * @param {string} providerBranch - Production branch for the repo linked to the function.
@@ -630,7 +630,7 @@ export class Functions {
      * @param {boolean} params.logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
      * @param {string} params.entrypoint - Entrypoint File. This path is relative to the "providerRootDirectory".
      * @param {string} params.commands - Build Commands.
-     * @param {ProjectKeyScopes[]} params.scopes - List of scopes allowed for API Key auto-generated for every execution. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} params.scopes - List of scopes allowed for API Key auto-generated for every execution. Maximum of 200 scopes are allowed.
      * @param {string} params.installationId - Appwrite Installation ID for VCS (Version Controle System) deployment.
      * @param {string} params.providerRepositoryId - Repository ID of the repo linked to the function
      * @param {string} params.providerBranch - Production branch for the repo linked to the function
@@ -659,7 +659,7 @@ export class Functions {
      * @param {boolean} logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
      * @param {string} entrypoint - Entrypoint File. This path is relative to the "providerRootDirectory".
      * @param {string} commands - Build Commands.
-     * @param {ProjectKeyScopes[]} scopes - List of scopes allowed for API Key auto-generated for every execution. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} scopes - List of scopes allowed for API Key auto-generated for every execution. Maximum of 200 scopes are allowed.
      * @param {string} installationId - Appwrite Installation ID for VCS (Version Controle System) deployment.
      * @param {string} providerRepositoryId - Repository ID of the repo linked to the function
      * @param {string} providerBranch - Production branch for the repo linked to the function

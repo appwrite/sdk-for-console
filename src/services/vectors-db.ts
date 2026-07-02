@@ -82,7 +82,7 @@ export class VectorsDB {
      * @param {string} params.databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} params.dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
+     * @param {string} params.dedicatedDatabaseId - Optional dedicated database ID to attach this database to. Leave empty to create a database on the shared pool.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
@@ -94,7 +94,7 @@ export class VectorsDB {
      * @param {string} databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
+     * @param {string} dedicatedDatabaseId - Optional dedicated database ID to attach this database to. Leave empty to create a database on the shared pool.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -160,7 +160,8 @@ export class VectorsDB {
     }
 
     /**
-     * Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
+     * Generate vector embeddings for an array of text using the selected embedding model. Use the returned vectors to power semantic search and similarity queries against your vector collections.
+     * 
      *
      * @param {string[]} params.texts - Array of text to generate embeddings.
      * @param {EmbeddingModel} params.model - The embedding model to use for generating vector embeddings.
@@ -169,7 +170,8 @@ export class VectorsDB {
      */
     createTextEmbeddings(params: { texts: string[], model?: EmbeddingModel }): Promise<Models.EmbeddingList>;
     /**
-     * Create a new Document. Before using this route, you should create a new collection resource using either a [server integration](https://appwrite.io/docs/server/databases#documentsDBCreateCollection) API or directly from your database console.
+     * Generate vector embeddings for an array of text using the selected embedding model. Use the returned vectors to power semantic search and similarity queries against your vector collections.
+     * 
      *
      * @param {string[]} texts - Array of text to generate embeddings.
      * @param {EmbeddingModel} model - The embedding model to use for generating vector embeddings.

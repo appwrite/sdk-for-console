@@ -1,0 +1,2087 @@
+import { Service } from '../service';
+import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import type { Models } from '../models';
+
+
+export class Mongo {
+    client: Client;
+
+    constructor(client: Client) {
+        this.client = client;
+    }
+
+    /**
+     * List all dedicated databases. Results support pagination.
+     *
+     * @param {string[]} params.queries - Array of query strings.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseList>}
+     */
+    list(params?: { queries?: string[] }): Promise<Models.DedicatedDatabaseList>;
+    /**
+     * List all dedicated databases. Results support pagination.
+     *
+     * @param {string[]} queries - Array of query strings.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    list(queries?: string[]): Promise<Models.DedicatedDatabaseList>;
+    list(
+        paramsOrFirst?: { queries?: string[] } | string[]    
+    ): Promise<Models.DedicatedDatabaseList> {
+        let params: { queries?: string[] };
+        
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { queries?: string[] };
+        } else {
+            params = {
+                queries: paramsOrFirst as string[]            
+            };
+        }
+        
+        const queries = params.queries;
+
+
+        const apiPath = '/mongo';
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a new dedicated database with the chosen engine and configuration. Status will be 'provisioning' until the database is ready.
+     *
+     * @param {string} params.databaseId - Database ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param {string} params.name - Database display name. Max length: 128 chars.
+     * @param {string} params.database - Physical database/catalog name. Defaults to databaseId.
+     * @param {string} params.engine - Database engine. Allowed values: mongodb.
+     * @param {string} params.version - Database engine version. Defaults to latest for selected engine.
+     * @param {string} params.specification - Specification identifier.
+     * @param {string} params.backend - Database backend provider: prisma, or edge.
+     * @param {number} params.cpu - CPU in millicores (125-16000).
+     * @param {number} params.memory - Memory in MB to allocate (128-65536).
+     * @param {number} params.storage - Storage in GB to allocate (1-16384).
+     * @param {string} params.storageClass - Storage class. Allowed values: ssd. DigitalOcean exposes a single block-storage class, so only 'ssd' is offered today.
+     * @param {number} params.storageMaxGb - Maximum storage limit in GB. 0 uses system default.
+     * @param {number} params.replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
+     * @param {string} params.syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
+     * @param {number} params.networkMaxConnections - Maximum concurrent connections.
+     * @param {number} params.networkIdleTimeoutSeconds - Connection idle timeout in seconds.
+     * @param {string[]} params.networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
+     * @param {number} params.idleTimeoutMinutes - Minutes of inactivity before container scales to zero.
+     * @param {boolean} params.backupEnabled - Enable automatic backups.
+     * @param {boolean} params.backupPitr - Enable point-in-time recovery.
+     * @param {string} params.backupCron - Backup schedule in cron format.
+     * @param {number} params.backupRetentionDays - Number of days to retain backups.
+     * @param {number} params.pitrRetentionDays - Number of days to retain PITR data.
+     * @param {boolean} params.storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
+     * @param {number} params.storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
+     * @param {number} params.storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
+     * @param {boolean} params.metricsEnabled - Enable metrics collection. Enabled by default; pass false to opt out.
+     * @param {boolean} params.poolerEnabled - Enable connection pooler on provision.
+     * @param {string} params.api - Product API that owns this database: nativedb (raw, direct-access), tablesdb, documentsdb, or vectorsdb. tablesdb/documentsdb/vectorsdb databases are reached only through their product APIs.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     */
+    create(params: { databaseId: string, name: string, database?: string, engine?: string, version?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, replicas?: number, syncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean, api?: string }): Promise<Models.DedicatedDatabase>;
+    /**
+     * Create a new dedicated database with the chosen engine and configuration. Status will be 'provisioning' until the database is ready.
+     *
+     * @param {string} databaseId - Database ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param {string} name - Database display name. Max length: 128 chars.
+     * @param {string} database - Physical database/catalog name. Defaults to databaseId.
+     * @param {string} engine - Database engine. Allowed values: mongodb.
+     * @param {string} version - Database engine version. Defaults to latest for selected engine.
+     * @param {string} specification - Specification identifier.
+     * @param {string} backend - Database backend provider: prisma, or edge.
+     * @param {number} cpu - CPU in millicores (125-16000).
+     * @param {number} memory - Memory in MB to allocate (128-65536).
+     * @param {number} storage - Storage in GB to allocate (1-16384).
+     * @param {string} storageClass - Storage class. Allowed values: ssd. DigitalOcean exposes a single block-storage class, so only 'ssd' is offered today.
+     * @param {number} storageMaxGb - Maximum storage limit in GB. 0 uses system default.
+     * @param {number} replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
+     * @param {string} syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
+     * @param {number} networkMaxConnections - Maximum concurrent connections.
+     * @param {number} networkIdleTimeoutSeconds - Connection idle timeout in seconds.
+     * @param {string[]} networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
+     * @param {number} idleTimeoutMinutes - Minutes of inactivity before container scales to zero.
+     * @param {boolean} backupEnabled - Enable automatic backups.
+     * @param {boolean} backupPitr - Enable point-in-time recovery.
+     * @param {string} backupCron - Backup schedule in cron format.
+     * @param {number} backupRetentionDays - Number of days to retain backups.
+     * @param {number} pitrRetentionDays - Number of days to retain PITR data.
+     * @param {boolean} storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
+     * @param {number} storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
+     * @param {number} storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
+     * @param {boolean} metricsEnabled - Enable metrics collection. Enabled by default; pass false to opt out.
+     * @param {boolean} poolerEnabled - Enable connection pooler on provision.
+     * @param {string} api - Product API that owns this database: nativedb (raw, direct-access), tablesdb, documentsdb, or vectorsdb. tablesdb/documentsdb/vectorsdb databases are reached only through their product APIs.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    create(databaseId: string, name: string, database?: string, engine?: string, version?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, replicas?: number, syncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean, api?: string): Promise<Models.DedicatedDatabase>;
+    create(
+        paramsOrFirst: { databaseId: string, name: string, database?: string, engine?: string, version?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, replicas?: number, syncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean, api?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (number)?, (number)?, (string)?, (number)?, (number)?, (string)?, (number)?, (number)?, (string[])?, (number)?, (boolean)?, (boolean)?, (string)?, (number)?, (number)?, (boolean)?, (number)?, (number)?, (boolean)?, (boolean)?, (string)?]    
+    ): Promise<Models.DedicatedDatabase> {
+        let params: { databaseId: string, name: string, database?: string, engine?: string, version?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, replicas?: number, syncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean, api?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, name: string, database?: string, engine?: string, version?: string, specification?: string, backend?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, storageMaxGb?: number, replicas?: number, syncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsEnabled?: boolean, poolerEnabled?: boolean, api?: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                name: rest[0] as string,
+                database: rest[1] as string,
+                engine: rest[2] as string,
+                version: rest[3] as string,
+                specification: rest[4] as string,
+                backend: rest[5] as string,
+                cpu: rest[6] as number,
+                memory: rest[7] as number,
+                storage: rest[8] as number,
+                storageClass: rest[9] as string,
+                storageMaxGb: rest[10] as number,
+                replicas: rest[11] as number,
+                syncMode: rest[12] as string,
+                networkMaxConnections: rest[13] as number,
+                networkIdleTimeoutSeconds: rest[14] as number,
+                networkIPAllowlist: rest[15] as string[],
+                idleTimeoutMinutes: rest[16] as number,
+                backupEnabled: rest[17] as boolean,
+                backupPitr: rest[18] as boolean,
+                backupCron: rest[19] as string,
+                backupRetentionDays: rest[20] as number,
+                pitrRetentionDays: rest[21] as number,
+                storageAutoscaling: rest[22] as boolean,
+                storageAutoscalingThresholdPercent: rest[23] as number,
+                storageAutoscalingMaxGb: rest[24] as number,
+                metricsEnabled: rest[25] as boolean,
+                poolerEnabled: rest[26] as boolean,
+                api: rest[27] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const name = params.name;
+        const database = params.database;
+        const engine = params.engine;
+        const version = params.version;
+        const specification = params.specification;
+        const backend = params.backend;
+        const cpu = params.cpu;
+        const memory = params.memory;
+        const storage = params.storage;
+        const storageClass = params.storageClass;
+        const storageMaxGb = params.storageMaxGb;
+        const replicas = params.replicas;
+        const syncMode = params.syncMode;
+        const networkMaxConnections = params.networkMaxConnections;
+        const networkIdleTimeoutSeconds = params.networkIdleTimeoutSeconds;
+        const networkIPAllowlist = params.networkIPAllowlist;
+        const idleTimeoutMinutes = params.idleTimeoutMinutes;
+        const backupEnabled = params.backupEnabled;
+        const backupPitr = params.backupPitr;
+        const backupCron = params.backupCron;
+        const backupRetentionDays = params.backupRetentionDays;
+        const pitrRetentionDays = params.pitrRetentionDays;
+        const storageAutoscaling = params.storageAutoscaling;
+        const storageAutoscalingThresholdPercent = params.storageAutoscalingThresholdPercent;
+        const storageAutoscalingMaxGb = params.storageAutoscalingMaxGb;
+        const metricsEnabled = params.metricsEnabled;
+        const poolerEnabled = params.poolerEnabled;
+        const api = params.api;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+
+        const apiPath = '/mongo';
+        const payload: Payload = {};
+        if (typeof databaseId !== 'undefined') {
+            payload['databaseId'] = databaseId;
+        }
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof database !== 'undefined') {
+            payload['database'] = database;
+        }
+        if (typeof engine !== 'undefined') {
+            payload['engine'] = engine;
+        }
+        if (typeof version !== 'undefined') {
+            payload['version'] = version;
+        }
+        if (typeof specification !== 'undefined') {
+            payload['specification'] = specification;
+        }
+        if (typeof backend !== 'undefined') {
+            payload['backend'] = backend;
+        }
+        if (typeof cpu !== 'undefined') {
+            payload['cpu'] = cpu;
+        }
+        if (typeof memory !== 'undefined') {
+            payload['memory'] = memory;
+        }
+        if (typeof storage !== 'undefined') {
+            payload['storage'] = storage;
+        }
+        if (typeof storageClass !== 'undefined') {
+            payload['storageClass'] = storageClass;
+        }
+        if (typeof storageMaxGb !== 'undefined') {
+            payload['storageMaxGb'] = storageMaxGb;
+        }
+        if (typeof replicas !== 'undefined') {
+            payload['replicas'] = replicas;
+        }
+        if (typeof syncMode !== 'undefined') {
+            payload['syncMode'] = syncMode;
+        }
+        if (typeof networkMaxConnections !== 'undefined') {
+            payload['networkMaxConnections'] = networkMaxConnections;
+        }
+        if (typeof networkIdleTimeoutSeconds !== 'undefined') {
+            payload['networkIdleTimeoutSeconds'] = networkIdleTimeoutSeconds;
+        }
+        if (typeof networkIPAllowlist !== 'undefined') {
+            payload['networkIPAllowlist'] = networkIPAllowlist;
+        }
+        if (typeof idleTimeoutMinutes !== 'undefined') {
+            payload['idleTimeoutMinutes'] = idleTimeoutMinutes;
+        }
+        if (typeof backupEnabled !== 'undefined') {
+            payload['backupEnabled'] = backupEnabled;
+        }
+        if (typeof backupPitr !== 'undefined') {
+            payload['backupPitr'] = backupPitr;
+        }
+        if (typeof backupCron !== 'undefined') {
+            payload['backupCron'] = backupCron;
+        }
+        if (typeof backupRetentionDays !== 'undefined') {
+            payload['backupRetentionDays'] = backupRetentionDays;
+        }
+        if (typeof pitrRetentionDays !== 'undefined') {
+            payload['pitrRetentionDays'] = pitrRetentionDays;
+        }
+        if (typeof storageAutoscaling !== 'undefined') {
+            payload['storageAutoscaling'] = storageAutoscaling;
+        }
+        if (typeof storageAutoscalingThresholdPercent !== 'undefined') {
+            payload['storageAutoscalingThresholdPercent'] = storageAutoscalingThresholdPercent;
+        }
+        if (typeof storageAutoscalingMaxGb !== 'undefined') {
+            payload['storageAutoscalingMaxGb'] = storageAutoscalingMaxGb;
+        }
+        if (typeof metricsEnabled !== 'undefined') {
+            payload['metricsEnabled'] = metricsEnabled;
+        }
+        if (typeof poolerEnabled !== 'undefined') {
+            payload['poolerEnabled'] = poolerEnabled;
+        }
+        if (typeof api !== 'undefined') {
+            payload['api'] = api;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List the dedicated database specifications available on the current plan. Each specification reports its resource limits, pricing, and whether it is enabled for the organization.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseSpecificationList>}
+     */
+    listSpecifications(): Promise<Models.DedicatedDatabaseSpecificationList> {
+
+        const apiPath = '/mongo/specifications';
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get a dedicated database by its unique ID. Returns the database configuration and current status.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     */
+    get(params: { databaseId: string }): Promise<Models.DedicatedDatabase>;
+    /**
+     * Get a dedicated database by its unique ID. Returns the database configuration and current status.
+     *
+     * @param {string} databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    get(databaseId: string): Promise<Models.DedicatedDatabase>;
+    get(
+        paramsOrFirst: { databaseId: string } | string    
+    ): Promise<Models.DedicatedDatabase> {
+        let params: { databaseId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update a dedicated database configuration. All changes are applied with zero downtime. Resource changes (cpu, memory) are handled via rolling cutover. Storage expansion is done online. All other settings are applied in-place.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.name - Database display name.
+     * @param {string} params.status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume (also recovers a failed database whose infrastructure is healthy), or "inactive" to spin down a shared-pool database.
+     * @param {string} params.specification - Specification. Changes cpu, memory, and node pool based on specification config.
+     * @param {number} params.cpu - CPU cores to allocate (125-16000).
+     * @param {number} params.memory - Memory in MB to allocate (128-65536).
+     * @param {number} params.storage - Storage in GB to allocate (1-16384).
+     * @param {string} params.storageClass - Storage class. Allowed values: ssd.
+     * @param {number} params.replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
+     * @param {string} params.syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
+     * @param {number} params.networkMaxConnections - Maximum concurrent connections.
+     * @param {number} params.networkIdleTimeoutSeconds - Connection idle timeout in seconds (60-86400).
+     * @param {string[]} params.networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
+     * @param {number} params.idleTimeoutMinutes - Minutes before container scales to zero.
+     * @param {boolean} params.backupEnabled - Enable automatic backups.
+     * @param {boolean} params.backupPitr - Enable point-in-time recovery.
+     * @param {string} params.backupCron - Backup schedule in cron format.
+     * @param {number} params.backupRetentionDays - Days to retain backups.
+     * @param {number} params.pitrRetentionDays - Days to retain PITR data.
+     * @param {boolean} params.storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
+     * @param {number} params.storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
+     * @param {number} params.storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
+     * @param {boolean} params.poolerEnabled - Attach or detach the connection pooler sidecar. Set to true to add the sidecar (no-op if already attached) or false to remove it.
+     * @param {boolean} params.metricsEnabled - Enable or disable the metrics-agent sidecar.
+     * @param {number} params.metricsTraceSampleRate - Fraction of queries to trace (0.0–1.0). Forwarded to the sidecar.
+     * @param {number} params.metricsSlowQueryLogThresholdMs - Threshold in ms above which queries are logged as slow. Forwarded to the sidecar.
+     * @param {boolean} params.sqlApiEnabled - Enable the SQL API sidecar for this database.
+     * @param {string[]} params.sqlApiAllowedStatements - Statement types the SQL API accepts. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.
+     * @param {number} params.sqlApiMaxRows - Maximum rows returned per SQL API execution (1-1000000).
+     * @param {number} params.sqlApiMaxBytes - Maximum serialised SQL API result payload in bytes (1024-104857600).
+     * @param {number} params.sqlApiTimeoutSeconds - Per-call SQL API execution timeout in seconds (1-300).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     */
+    update(params: { databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, replicas?: number, syncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number }): Promise<Models.DedicatedDatabase>;
+    /**
+     * Update a dedicated database configuration. All changes are applied with zero downtime. Resource changes (cpu, memory) are handled via rolling cutover. Storage expansion is done online. All other settings are applied in-place.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} name - Database display name.
+     * @param {string} status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume (also recovers a failed database whose infrastructure is healthy), or "inactive" to spin down a shared-pool database.
+     * @param {string} specification - Specification. Changes cpu, memory, and node pool based on specification config.
+     * @param {number} cpu - CPU cores to allocate (125-16000).
+     * @param {number} memory - Memory in MB to allocate (128-65536).
+     * @param {number} storage - Storage in GB to allocate (1-16384).
+     * @param {string} storageClass - Storage class. Allowed values: ssd.
+     * @param {number} replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
+     * @param {string} syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
+     * @param {number} networkMaxConnections - Maximum concurrent connections.
+     * @param {number} networkIdleTimeoutSeconds - Connection idle timeout in seconds (60-86400).
+     * @param {string[]} networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
+     * @param {number} idleTimeoutMinutes - Minutes before container scales to zero.
+     * @param {boolean} backupEnabled - Enable automatic backups.
+     * @param {boolean} backupPitr - Enable point-in-time recovery.
+     * @param {string} backupCron - Backup schedule in cron format.
+     * @param {number} backupRetentionDays - Days to retain backups.
+     * @param {number} pitrRetentionDays - Days to retain PITR data.
+     * @param {boolean} storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
+     * @param {number} storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
+     * @param {number} storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
+     * @param {boolean} poolerEnabled - Attach or detach the connection pooler sidecar. Set to true to add the sidecar (no-op if already attached) or false to remove it.
+     * @param {boolean} metricsEnabled - Enable or disable the metrics-agent sidecar.
+     * @param {number} metricsTraceSampleRate - Fraction of queries to trace (0.0–1.0). Forwarded to the sidecar.
+     * @param {number} metricsSlowQueryLogThresholdMs - Threshold in ms above which queries are logged as slow. Forwarded to the sidecar.
+     * @param {boolean} sqlApiEnabled - Enable the SQL API sidecar for this database.
+     * @param {string[]} sqlApiAllowedStatements - Statement types the SQL API accepts. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.
+     * @param {number} sqlApiMaxRows - Maximum rows returned per SQL API execution (1-1000000).
+     * @param {number} sqlApiMaxBytes - Maximum serialised SQL API result payload in bytes (1024-104857600).
+     * @param {number} sqlApiTimeoutSeconds - Per-call SQL API execution timeout in seconds (1-300).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    update(databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, replicas?: number, syncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number): Promise<Models.DedicatedDatabase>;
+    update(
+        paramsOrFirst: { databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, replicas?: number, syncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number)?, (number)?, (number)?, (string)?, (number)?, (string)?, (number)?, (number)?, (string[])?, (number)?, (boolean)?, (boolean)?, (string)?, (number)?, (number)?, (boolean)?, (number)?, (number)?, (boolean)?, (boolean)?, (number)?, (number)?, (boolean)?, (string[])?, (number)?, (number)?, (number)?]    
+    ): Promise<Models.DedicatedDatabase> {
+        let params: { databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, replicas?: number, syncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, name?: string, status?: string, specification?: string, cpu?: number, memory?: number, storage?: number, storageClass?: string, replicas?: number, syncMode?: string, networkMaxConnections?: number, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, backupEnabled?: boolean, backupPitr?: boolean, backupCron?: string, backupRetentionDays?: number, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, poolerEnabled?: boolean, metricsEnabled?: boolean, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                name: rest[0] as string,
+                status: rest[1] as string,
+                specification: rest[2] as string,
+                cpu: rest[3] as number,
+                memory: rest[4] as number,
+                storage: rest[5] as number,
+                storageClass: rest[6] as string,
+                replicas: rest[7] as number,
+                syncMode: rest[8] as string,
+                networkMaxConnections: rest[9] as number,
+                networkIdleTimeoutSeconds: rest[10] as number,
+                networkIPAllowlist: rest[11] as string[],
+                idleTimeoutMinutes: rest[12] as number,
+                backupEnabled: rest[13] as boolean,
+                backupPitr: rest[14] as boolean,
+                backupCron: rest[15] as string,
+                backupRetentionDays: rest[16] as number,
+                pitrRetentionDays: rest[17] as number,
+                storageAutoscaling: rest[18] as boolean,
+                storageAutoscalingThresholdPercent: rest[19] as number,
+                storageAutoscalingMaxGb: rest[20] as number,
+                poolerEnabled: rest[21] as boolean,
+                metricsEnabled: rest[22] as boolean,
+                metricsTraceSampleRate: rest[23] as number,
+                metricsSlowQueryLogThresholdMs: rest[24] as number,
+                sqlApiEnabled: rest[25] as boolean,
+                sqlApiAllowedStatements: rest[26] as string[],
+                sqlApiMaxRows: rest[27] as number,
+                sqlApiMaxBytes: rest[28] as number,
+                sqlApiTimeoutSeconds: rest[29] as number            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const name = params.name;
+        const status = params.status;
+        const specification = params.specification;
+        const cpu = params.cpu;
+        const memory = params.memory;
+        const storage = params.storage;
+        const storageClass = params.storageClass;
+        const replicas = params.replicas;
+        const syncMode = params.syncMode;
+        const networkMaxConnections = params.networkMaxConnections;
+        const networkIdleTimeoutSeconds = params.networkIdleTimeoutSeconds;
+        const networkIPAllowlist = params.networkIPAllowlist;
+        const idleTimeoutMinutes = params.idleTimeoutMinutes;
+        const backupEnabled = params.backupEnabled;
+        const backupPitr = params.backupPitr;
+        const backupCron = params.backupCron;
+        const backupRetentionDays = params.backupRetentionDays;
+        const pitrRetentionDays = params.pitrRetentionDays;
+        const storageAutoscaling = params.storageAutoscaling;
+        const storageAutoscalingThresholdPercent = params.storageAutoscalingThresholdPercent;
+        const storageAutoscalingMaxGb = params.storageAutoscalingMaxGb;
+        const poolerEnabled = params.poolerEnabled;
+        const metricsEnabled = params.metricsEnabled;
+        const metricsTraceSampleRate = params.metricsTraceSampleRate;
+        const metricsSlowQueryLogThresholdMs = params.metricsSlowQueryLogThresholdMs;
+        const sqlApiEnabled = params.sqlApiEnabled;
+        const sqlApiAllowedStatements = params.sqlApiAllowedStatements;
+        const sqlApiMaxRows = params.sqlApiMaxRows;
+        const sqlApiMaxBytes = params.sqlApiMaxBytes;
+        const sqlApiTimeoutSeconds = params.sqlApiTimeoutSeconds;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof status !== 'undefined') {
+            payload['status'] = status;
+        }
+        if (typeof specification !== 'undefined') {
+            payload['specification'] = specification;
+        }
+        if (typeof cpu !== 'undefined') {
+            payload['cpu'] = cpu;
+        }
+        if (typeof memory !== 'undefined') {
+            payload['memory'] = memory;
+        }
+        if (typeof storage !== 'undefined') {
+            payload['storage'] = storage;
+        }
+        if (typeof storageClass !== 'undefined') {
+            payload['storageClass'] = storageClass;
+        }
+        if (typeof replicas !== 'undefined') {
+            payload['replicas'] = replicas;
+        }
+        if (typeof syncMode !== 'undefined') {
+            payload['syncMode'] = syncMode;
+        }
+        if (typeof networkMaxConnections !== 'undefined') {
+            payload['networkMaxConnections'] = networkMaxConnections;
+        }
+        if (typeof networkIdleTimeoutSeconds !== 'undefined') {
+            payload['networkIdleTimeoutSeconds'] = networkIdleTimeoutSeconds;
+        }
+        if (typeof networkIPAllowlist !== 'undefined') {
+            payload['networkIPAllowlist'] = networkIPAllowlist;
+        }
+        if (typeof idleTimeoutMinutes !== 'undefined') {
+            payload['idleTimeoutMinutes'] = idleTimeoutMinutes;
+        }
+        if (typeof backupEnabled !== 'undefined') {
+            payload['backupEnabled'] = backupEnabled;
+        }
+        if (typeof backupPitr !== 'undefined') {
+            payload['backupPitr'] = backupPitr;
+        }
+        if (typeof backupCron !== 'undefined') {
+            payload['backupCron'] = backupCron;
+        }
+        if (typeof backupRetentionDays !== 'undefined') {
+            payload['backupRetentionDays'] = backupRetentionDays;
+        }
+        if (typeof pitrRetentionDays !== 'undefined') {
+            payload['pitrRetentionDays'] = pitrRetentionDays;
+        }
+        if (typeof storageAutoscaling !== 'undefined') {
+            payload['storageAutoscaling'] = storageAutoscaling;
+        }
+        if (typeof storageAutoscalingThresholdPercent !== 'undefined') {
+            payload['storageAutoscalingThresholdPercent'] = storageAutoscalingThresholdPercent;
+        }
+        if (typeof storageAutoscalingMaxGb !== 'undefined') {
+            payload['storageAutoscalingMaxGb'] = storageAutoscalingMaxGb;
+        }
+        if (typeof poolerEnabled !== 'undefined') {
+            payload['poolerEnabled'] = poolerEnabled;
+        }
+        if (typeof metricsEnabled !== 'undefined') {
+            payload['metricsEnabled'] = metricsEnabled;
+        }
+        if (typeof metricsTraceSampleRate !== 'undefined') {
+            payload['metricsTraceSampleRate'] = metricsTraceSampleRate;
+        }
+        if (typeof metricsSlowQueryLogThresholdMs !== 'undefined') {
+            payload['metricsSlowQueryLogThresholdMs'] = metricsSlowQueryLogThresholdMs;
+        }
+        if (typeof sqlApiEnabled !== 'undefined') {
+            payload['sqlApiEnabled'] = sqlApiEnabled;
+        }
+        if (typeof sqlApiAllowedStatements !== 'undefined') {
+            payload['sqlApiAllowedStatements'] = sqlApiAllowedStatements;
+        }
+        if (typeof sqlApiMaxRows !== 'undefined') {
+            payload['sqlApiMaxRows'] = sqlApiMaxRows;
+        }
+        if (typeof sqlApiMaxBytes !== 'undefined') {
+            payload['sqlApiMaxBytes'] = sqlApiMaxBytes;
+        }
+        if (typeof sqlApiTimeoutSeconds !== 'undefined') {
+            payload['sqlApiTimeoutSeconds'] = sqlApiTimeoutSeconds;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Delete a dedicated database. This action is irreversible. The database status will be set to 'deleting' and all resources will be cleaned up. Deletion is allowed from any state, and repeating the call re-dispatches the cleanup.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    delete(params: { databaseId: string }): Promise<{}>;
+    /**
+     * Delete a dedicated database. This action is irreversible. The database status will be set to 'deleting' and all resources will be cleaned up. Deletion is allowed from any state, and repeating the call re-dispatches the cleanup.
+     *
+     * @param {string} databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    delete(databaseId: string): Promise<{}>;
+    delete(
+        paramsOrFirst: { databaseId: string } | string    
+    ): Promise<{}> {
+        let params: { databaseId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List all backups for a dedicated database. Results can be filtered by status and type.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: status, type, databaseId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseBackupList>}
+     */
+    listBackups(params: { databaseId: string, queries?: string[] }): Promise<Models.DedicatedDatabaseBackupList>;
+    /**
+     * List all backups for a dedicated database. Results can be filtered by status and type.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: status, type, databaseId
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseBackupList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listBackups(databaseId: string, queries?: string[]): Promise<Models.DedicatedDatabaseBackupList>;
+    listBackups(
+        paramsOrFirst: { databaseId: string, queries?: string[] } | string,
+        ...rest: [(string[])?]    
+    ): Promise<Models.DedicatedDatabaseBackupList> {
+        let params: { databaseId: string, queries?: string[] };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, queries?: string[] };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                queries: rest[0] as string[]            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const queries = params.queries;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/backups'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a manual backup of a dedicated database. The backup will be created asynchronously and its status can be checked via the get backup endpoint.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.type - Backup type: full or incremental.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseBackup>}
+     */
+    createBackup(params: { databaseId: string, type?: string }): Promise<Models.DedicatedDatabaseBackup>;
+    /**
+     * Create a manual backup of a dedicated database. The backup will be created asynchronously and its status can be checked via the get backup endpoint.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} type - Backup type: full or incremental.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseBackup>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createBackup(databaseId: string, type?: string): Promise<Models.DedicatedDatabaseBackup>;
+    createBackup(
+        paramsOrFirst: { databaseId: string, type?: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.DedicatedDatabaseBackup> {
+        let params: { databaseId: string, type?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, type?: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                type: rest[0] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const type = params.type;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/backups'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof type !== 'undefined') {
+            payload['type'] = type;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List scheduled backup policies for a dedicated database.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.BackupPolicyList>}
+     */
+    listBackupPolicies(params: { databaseId: string, queries?: string[] }): Promise<Models.BackupPolicyList>;
+    /**
+     * List scheduled backup policies for a dedicated database.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.BackupPolicyList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listBackupPolicies(databaseId: string, queries?: string[]): Promise<Models.BackupPolicyList>;
+    listBackupPolicies(
+        paramsOrFirst: { databaseId: string, queries?: string[] } | string,
+        ...rest: [(string[])?]    
+    ): Promise<Models.BackupPolicyList> {
+        let params: { databaseId: string, queries?: string[] };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, queries?: string[] };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                queries: rest[0] as string[]            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const queries = params.queries;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/backups/policies'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a scheduled backup policy for a dedicated database.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.policyId - Policy ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param {string} params.name - Policy name. Max length: 128 chars.
+     * @param {string} params.schedule - Schedule CRON syntax.
+     * @param {number} params.retention - Days to keep backups before deletion.
+     * @param {string} params.type - Backup type: full or incremental.
+     * @param {boolean} params.enabled - Is policy enabled? When disabled, no backups will be taken.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.BackupPolicy>}
+     */
+    createBackupPolicy(params: { databaseId: string, policyId: string, name: string, schedule: string, retention: number, type?: string, enabled?: boolean }): Promise<Models.BackupPolicy>;
+    /**
+     * Create a scheduled backup policy for a dedicated database.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} policyId - Policy ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param {string} name - Policy name. Max length: 128 chars.
+     * @param {string} schedule - Schedule CRON syntax.
+     * @param {number} retention - Days to keep backups before deletion.
+     * @param {string} type - Backup type: full or incremental.
+     * @param {boolean} enabled - Is policy enabled? When disabled, no backups will be taken.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.BackupPolicy>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createBackupPolicy(databaseId: string, policyId: string, name: string, schedule: string, retention: number, type?: string, enabled?: boolean): Promise<Models.BackupPolicy>;
+    createBackupPolicy(
+        paramsOrFirst: { databaseId: string, policyId: string, name: string, schedule: string, retention: number, type?: string, enabled?: boolean } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?, (boolean)?]    
+    ): Promise<Models.BackupPolicy> {
+        let params: { databaseId: string, policyId: string, name: string, schedule: string, retention: number, type?: string, enabled?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, policyId: string, name: string, schedule: string, retention: number, type?: string, enabled?: boolean };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                policyId: rest[0] as string,
+                name: rest[1] as string,
+                schedule: rest[2] as string,
+                retention: rest[3] as number,
+                type: rest[4] as string,
+                enabled: rest[5] as boolean            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const policyId = params.policyId;
+        const name = params.name;
+        const schedule = params.schedule;
+        const retention = params.retention;
+        const type = params.type;
+        const enabled = params.enabled;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof policyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "policyId"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+        if (typeof schedule === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "schedule"');
+        }
+        if (typeof retention === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "retention"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/backups/policies'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof policyId !== 'undefined') {
+            payload['policyId'] = policyId;
+        }
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof schedule !== 'undefined') {
+            payload['schedule'] = schedule;
+        }
+        if (typeof retention !== 'undefined') {
+            payload['retention'] = retention;
+        }
+        if (typeof type !== 'undefined') {
+            payload['type'] = type;
+        }
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Configure off-cluster backup storage for a dedicated database. Supports S3, GCS, and Azure Blob Storage destinations. Backups will be stored to the configured destination in addition to on-cluster storage.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.provider - Storage provider for off-cluster backups. Allowed values: s3 (Amazon S3 or S3-compatible), gcs (Google Cloud Storage), azure (Azure Blob Storage).
+     * @param {string} params.bucket - Storage bucket or container name.
+     * @param {string} params.accessKey - Access key or client ID for authentication.
+     * @param {string} params.secretKey - Secret key or service account JSON for authentication.
+     * @param {string} params.region - Storage region.
+     * @param {string} params.prefix - Object key prefix for backups.
+     * @param {string} params.endpoint - Custom endpoint for S3-compatible storage (e.g. MinIO).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseBackupStorage>}
+     */
+    updateBackupStorage(params: { databaseId: string, provider: string, bucket: string, accessKey: string, secretKey: string, region?: string, prefix?: string, endpoint?: string }): Promise<Models.DedicatedDatabaseBackupStorage>;
+    /**
+     * Configure off-cluster backup storage for a dedicated database. Supports S3, GCS, and Azure Blob Storage destinations. Backups will be stored to the configured destination in addition to on-cluster storage.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} provider - Storage provider for off-cluster backups. Allowed values: s3 (Amazon S3 or S3-compatible), gcs (Google Cloud Storage), azure (Azure Blob Storage).
+     * @param {string} bucket - Storage bucket or container name.
+     * @param {string} accessKey - Access key or client ID for authentication.
+     * @param {string} secretKey - Secret key or service account JSON for authentication.
+     * @param {string} region - Storage region.
+     * @param {string} prefix - Object key prefix for backups.
+     * @param {string} endpoint - Custom endpoint for S3-compatible storage (e.g. MinIO).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseBackupStorage>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateBackupStorage(databaseId: string, provider: string, bucket: string, accessKey: string, secretKey: string, region?: string, prefix?: string, endpoint?: string): Promise<Models.DedicatedDatabaseBackupStorage>;
+    updateBackupStorage(
+        paramsOrFirst: { databaseId: string, provider: string, bucket: string, accessKey: string, secretKey: string, region?: string, prefix?: string, endpoint?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
+    ): Promise<Models.DedicatedDatabaseBackupStorage> {
+        let params: { databaseId: string, provider: string, bucket: string, accessKey: string, secretKey: string, region?: string, prefix?: string, endpoint?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, provider: string, bucket: string, accessKey: string, secretKey: string, region?: string, prefix?: string, endpoint?: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                provider: rest[0] as string,
+                bucket: rest[1] as string,
+                accessKey: rest[2] as string,
+                secretKey: rest[3] as string,
+                region: rest[4] as string,
+                prefix: rest[5] as string,
+                endpoint: rest[6] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const provider = params.provider;
+        const bucket = params.bucket;
+        const accessKey = params.accessKey;
+        const secretKey = params.secretKey;
+        const region = params.region;
+        const prefix = params.prefix;
+        const endpoint = params.endpoint;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof provider === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "provider"');
+        }
+        if (typeof bucket === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "bucket"');
+        }
+        if (typeof accessKey === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "accessKey"');
+        }
+        if (typeof secretKey === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "secretKey"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/backups/storage'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof provider !== 'undefined') {
+            payload['provider'] = provider;
+        }
+        if (typeof bucket !== 'undefined') {
+            payload['bucket'] = bucket;
+        }
+        if (typeof region !== 'undefined') {
+            payload['region'] = region;
+        }
+        if (typeof prefix !== 'undefined') {
+            payload['prefix'] = prefix;
+        }
+        if (typeof endpoint !== 'undefined') {
+            payload['endpoint'] = endpoint;
+        }
+        if (typeof accessKey !== 'undefined') {
+            payload['accessKey'] = accessKey;
+        }
+        if (typeof secretKey !== 'undefined') {
+            payload['secretKey'] = secretKey;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'put',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get details of a specific database backup including its status, size, and timestamps.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.backupId - Backup ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseBackup>}
+     */
+    getBackup(params: { databaseId: string, backupId: string }): Promise<Models.DedicatedDatabaseBackup>;
+    /**
+     * Get details of a specific database backup including its status, size, and timestamps.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} backupId - Backup ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseBackup>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getBackup(databaseId: string, backupId: string): Promise<Models.DedicatedDatabaseBackup>;
+    getBackup(
+        paramsOrFirst: { databaseId: string, backupId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.DedicatedDatabaseBackup> {
+        let params: { databaseId: string, backupId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, backupId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                backupId: rest[0] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const backupId = params.backupId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof backupId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "backupId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/backups/{backupId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{backupId}', encodeURIComponent(String(backupId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Delete a database backup. This will permanently remove the backup from storage and cannot be undone.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.backupId - Backup ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteBackup(params: { databaseId: string, backupId: string }): Promise<{}>;
+    /**
+     * Delete a database backup. This will permanently remove the backup from storage and cannot be undone.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} backupId - Backup ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteBackup(databaseId: string, backupId: string): Promise<{}>;
+    deleteBackup(
+        paramsOrFirst: { databaseId: string, backupId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<{}> {
+        let params: { databaseId: string, backupId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, backupId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                backupId: rest[0] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const backupId = params.backupId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof backupId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "backupId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/backups/{backupId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{backupId}', encodeURIComponent(String(backupId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List all ephemeral branches for a dedicated database. Returns branch metadata including ID, name, namespace, and expiration time.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseBranchList>}
+     */
+    listBranches(params: { databaseId: string }): Promise<Models.DedicatedDatabaseBranchList>;
+    /**
+     * List all ephemeral branches for a dedicated database. Returns branch metadata including ID, name, namespace, and expiration time.
+     *
+     * @param {string} databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseBranchList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listBranches(databaseId: string): Promise<Models.DedicatedDatabaseBranchList>;
+    listBranches(
+        paramsOrFirst: { databaseId: string } | string    
+    ): Promise<Models.DedicatedDatabaseBranchList> {
+        let params: { databaseId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/branches'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create an ephemeral database branch from the primary via PVC snapshot. The branch is a full copy of the database at the current point in time, useful for testing schema migrations or running experiments without affecting production data. Branches expire after the configured TTL (default 24 hours). The branch is created asynchronously.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.branchId - Branch ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param {number} params.ttl - Time-to-live in seconds before the branch expires. Min 300 (5 min), max 604800 (7 days). Default: 86400 (24h).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     */
+    createBranch(params: { databaseId: string, branchId?: string, ttl?: number }): Promise<Models.DedicatedDatabase>;
+    /**
+     * Create an ephemeral database branch from the primary via PVC snapshot. The branch is a full copy of the database at the current point in time, useful for testing schema migrations or running experiments without affecting production data. Branches expire after the configured TTL (default 24 hours). The branch is created asynchronously.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} branchId - Branch ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param {number} ttl - Time-to-live in seconds before the branch expires. Min 300 (5 min), max 604800 (7 days). Default: 86400 (24h).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createBranch(databaseId: string, branchId?: string, ttl?: number): Promise<Models.DedicatedDatabase>;
+    createBranch(
+        paramsOrFirst: { databaseId: string, branchId?: string, ttl?: number } | string,
+        ...rest: [(string)?, (number)?]    
+    ): Promise<Models.DedicatedDatabase> {
+        let params: { databaseId: string, branchId?: string, ttl?: number };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, branchId?: string, ttl?: number };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                branchId: rest[0] as string,
+                ttl: rest[1] as number            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const branchId = params.branchId;
+        const ttl = params.ttl;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/branches'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof branchId !== 'undefined') {
+            payload['branchId'] = branchId;
+        }
+        if (typeof ttl !== 'undefined') {
+            payload['ttl'] = ttl;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Delete an ephemeral database branch. This removes the branch namespace, its PVC, and the associated VolumeSnapshot. The deletion runs asynchronously and is irreversible.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.branchId - Branch ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     */
+    deleteBranch(params: { databaseId: string, branchId: string }): Promise<Models.DedicatedDatabase>;
+    /**
+     * Delete an ephemeral database branch. This removes the branch namespace, its PVC, and the associated VolumeSnapshot. The deletion runs asynchronously and is irreversible.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} branchId - Branch ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteBranch(databaseId: string, branchId: string): Promise<Models.DedicatedDatabase>;
+    deleteBranch(
+        paramsOrFirst: { databaseId: string, branchId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.DedicatedDatabase> {
+        let params: { databaseId: string, branchId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, branchId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                branchId: rest[0] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const branchId = params.branchId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof branchId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "branchId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/branches/{branchId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{branchId}', encodeURIComponent(String(branchId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     */
+    createFailover(params: { databaseId: string, targetReplicaId?: string }): Promise<Models.DedicatedDatabase>;
+    /**
+     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createFailover(databaseId: string, targetReplicaId?: string): Promise<Models.DedicatedDatabase>;
+    createFailover(
+        paramsOrFirst: { databaseId: string, targetReplicaId?: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.DedicatedDatabase> {
+        let params: { databaseId: string, targetReplicaId?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, targetReplicaId?: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                targetReplicaId: rest[0] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const targetReplicaId = params.targetReplicaId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/failovers'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof targetReplicaId !== 'undefined') {
+            payload['targetReplicaId'] = targetReplicaId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update the maintenance window for a dedicated database. Maintenance operations like minor version upgrades will be performed during this window.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.day - Day of the week for the maintenance window. Allowed values: sun, mon, tue, wed, thu, fri, sat.
+     * @param {number} params.hourUtc - Hour in UTC (0-23) for maintenance window start.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     */
+    updateMaintenanceWindow(params: { databaseId: string, day: string, hourUtc: number }): Promise<Models.DedicatedDatabase>;
+    /**
+     * Update the maintenance window for a dedicated database. Maintenance operations like minor version upgrades will be performed during this window.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} day - Day of the week for the maintenance window. Allowed values: sun, mon, tue, wed, thu, fri, sat.
+     * @param {number} hourUtc - Hour in UTC (0-23) for maintenance window start.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateMaintenanceWindow(databaseId: string, day: string, hourUtc: number): Promise<Models.DedicatedDatabase>;
+    updateMaintenanceWindow(
+        paramsOrFirst: { databaseId: string, day: string, hourUtc: number } | string,
+        ...rest: [(string)?, (number)?]    
+    ): Promise<Models.DedicatedDatabase> {
+        let params: { databaseId: string, day: string, hourUtc: number };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, day: string, hourUtc: number };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                day: rest[0] as string,
+                hourUtc: rest[1] as number            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const day = params.day;
+        const hourUtc = params.hourUtc;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof day === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "day"');
+        }
+        if (typeof hourUtc === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "hourUtc"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/maintenance'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof day !== 'undefined') {
+            payload['day'] = day;
+        }
+        if (typeof hourUtc !== 'undefined') {
+            payload['hourUtc'] = hourUtc;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Migrate a database between shared and dedicated types. Shared to dedicated provisions an always-on dedicated instance; dedicated to shared converts to a serverless instance that scales to zero when idle. Data is copied to the target with a brief read-only window during cutover.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.targetType - Target database type to migrate to. Allowed values: shared (serverless, scales to zero when idle), dedicated (always-on with persistent resources).
+     * @param {string} params.specification - Target specification to provision when migrating to dedicated. Ignored for shared. Defaults to the database's current specification.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     */
+    createMigration(params: { databaseId: string, targetType: string, specification?: string }): Promise<Models.DedicatedDatabase>;
+    /**
+     * Migrate a database between shared and dedicated types. Shared to dedicated provisions an always-on dedicated instance; dedicated to shared converts to a serverless instance that scales to zero when idle. Data is copied to the target with a brief read-only window during cutover.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} targetType - Target database type to migrate to. Allowed values: shared (serverless, scales to zero when idle), dedicated (always-on with persistent resources).
+     * @param {string} specification - Target specification to provision when migrating to dedicated. Ignored for shared. Defaults to the database's current specification.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createMigration(databaseId: string, targetType: string, specification?: string): Promise<Models.DedicatedDatabase>;
+    createMigration(
+        paramsOrFirst: { databaseId: string, targetType: string, specification?: string } | string,
+        ...rest: [(string)?, (string)?]    
+    ): Promise<Models.DedicatedDatabase> {
+        let params: { databaseId: string, targetType: string, specification?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, targetType: string, specification?: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                targetType: rest[0] as string,
+                specification: rest[1] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const targetType = params.targetType;
+        const specification = params.specification;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof targetType === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "targetType"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/migrations'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof targetType !== 'undefined') {
+            payload['targetType'] = targetType;
+        }
+        if (typeof specification !== 'undefined') {
+            payload['specification'] = specification;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get available point-in-time recovery windows for a dedicated database. Returns the earliest and latest recovery points.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabasePITRWindows>}
+     */
+    getPitrWindows(params: { databaseId: string }): Promise<Models.DedicatedDatabasePITRWindows>;
+    /**
+     * Get available point-in-time recovery windows for a dedicated database. Returns the earliest and latest recovery points.
+     *
+     * @param {string} databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabasePITRWindows>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getPitrWindows(databaseId: string): Promise<Models.DedicatedDatabasePITRWindows>;
+    getPitrWindows(
+        paramsOrFirst: { databaseId: string } | string    
+    ): Promise<Models.DedicatedDatabasePITRWindows> {
+        let params: { databaseId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/pitr'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get high availability status for a dedicated database. Returns replica statuses, replication lag, and sync mode.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseReplicas>}
+     */
+    getReplicas(params: { databaseId: string }): Promise<Models.DedicatedDatabaseReplicas>;
+    /**
+     * Get high availability status for a dedicated database. Returns replica statuses, replication lag, and sync mode.
+     *
+     * @param {string} databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseReplicas>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getReplicas(databaseId: string): Promise<Models.DedicatedDatabaseReplicas>;
+    getReplicas(
+        paramsOrFirst: { databaseId: string } | string    
+    ): Promise<Models.DedicatedDatabaseReplicas> {
+        let params: { databaseId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/replicas'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List all restorations for a dedicated database. Results can be filtered by status and type.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.status - Filter by restoration status.
+     * @param {string} params.type - Filter by restoration type.
+     * @param {number} params.limit - Maximum number of restorations to return.
+     * @param {number} params.offset - Number of restorations to skip.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseRestorationList>}
+     */
+    listRestorations(params: { databaseId: string, status?: string, type?: string, limit?: number, offset?: number }): Promise<Models.DedicatedDatabaseRestorationList>;
+    /**
+     * List all restorations for a dedicated database. Results can be filtered by status and type.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} status - Filter by restoration status.
+     * @param {string} type - Filter by restoration type.
+     * @param {number} limit - Maximum number of restorations to return.
+     * @param {number} offset - Number of restorations to skip.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseRestorationList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listRestorations(databaseId: string, status?: string, type?: string, limit?: number, offset?: number): Promise<Models.DedicatedDatabaseRestorationList>;
+    listRestorations(
+        paramsOrFirst: { databaseId: string, status?: string, type?: string, limit?: number, offset?: number } | string,
+        ...rest: [(string)?, (string)?, (number)?, (number)?]    
+    ): Promise<Models.DedicatedDatabaseRestorationList> {
+        let params: { databaseId: string, status?: string, type?: string, limit?: number, offset?: number };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, status?: string, type?: string, limit?: number, offset?: number };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                status: rest[0] as string,
+                type: rest[1] as string,
+                limit: rest[2] as number,
+                offset: rest[3] as number            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const status = params.status;
+        const type = params.type;
+        const limit = params.limit;
+        const offset = params.offset;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/restorations'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof status !== 'undefined') {
+            payload['status'] = status;
+        }
+        if (typeof type !== 'undefined') {
+            payload['type'] = type;
+        }
+        if (typeof limit !== 'undefined') {
+            payload['limit'] = limit;
+        }
+        if (typeof offset !== 'undefined') {
+            payload['offset'] = offset;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Restore a database from a backup or to a specific point in time (PITR). For backup restoration, provide a backupId. For PITR, provide a targetTime. PITR requires the database to have PITR enabled and is only available for enterprise databases.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.type - Restoration type. Allowed values: backup, pitr. Use "backup" to restore from a specific backup, or "pitr" for point-in-time recovery.
+     * @param {string} params.backupId - Backup ID to restore from (required for backup type).
+     * @param {number} params.targetTime - Target time for PITR as Unix timestamp (required for pitr type).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseRestoration>}
+     */
+    createRestoration(params: { databaseId: string, type?: string, backupId?: string, targetTime?: number }): Promise<Models.DedicatedDatabaseRestoration>;
+    /**
+     * Restore a database from a backup or to a specific point in time (PITR). For backup restoration, provide a backupId. For PITR, provide a targetTime. PITR requires the database to have PITR enabled and is only available for enterprise databases.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} type - Restoration type. Allowed values: backup, pitr. Use "backup" to restore from a specific backup, or "pitr" for point-in-time recovery.
+     * @param {string} backupId - Backup ID to restore from (required for backup type).
+     * @param {number} targetTime - Target time for PITR as Unix timestamp (required for pitr type).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseRestoration>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createRestoration(databaseId: string, type?: string, backupId?: string, targetTime?: number): Promise<Models.DedicatedDatabaseRestoration>;
+    createRestoration(
+        paramsOrFirst: { databaseId: string, type?: string, backupId?: string, targetTime?: number } | string,
+        ...rest: [(string)?, (string)?, (number)?]    
+    ): Promise<Models.DedicatedDatabaseRestoration> {
+        let params: { databaseId: string, type?: string, backupId?: string, targetTime?: number };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, type?: string, backupId?: string, targetTime?: number };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                type: rest[0] as string,
+                backupId: rest[1] as string,
+                targetTime: rest[2] as number            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const type = params.type;
+        const backupId = params.backupId;
+        const targetTime = params.targetTime;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/restorations'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof type !== 'undefined') {
+            payload['type'] = type;
+        }
+        if (typeof backupId !== 'undefined') {
+            payload['backupId'] = backupId;
+        }
+        if (typeof targetTime !== 'undefined') {
+            payload['targetTime'] = targetTime;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get details of a specific database restoration including its status, type, and timestamps.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.restorationId - Restoration ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseRestoration>}
+     */
+    getRestoration(params: { databaseId: string, restorationId: string }): Promise<Models.DedicatedDatabaseRestoration>;
+    /**
+     * Get details of a specific database restoration including its status, type, and timestamps.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} restorationId - Restoration ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseRestoration>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getRestoration(databaseId: string, restorationId: string): Promise<Models.DedicatedDatabaseRestoration>;
+    getRestoration(
+        paramsOrFirst: { databaseId: string, restorationId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.DedicatedDatabaseRestoration> {
+        let params: { databaseId: string, restorationId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, restorationId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                restorationId: rest[0] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const restorationId = params.restorationId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof restorationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "restorationId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/restorations/{restorationId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{restorationId}', encodeURIComponent(String(restorationId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get real-time health and status information for a dedicated database. Returns health status, readiness, uptime, connection info, replica status, and volume information.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DatabaseStatus>}
+     */
+    getStatus(params: { databaseId: string }): Promise<Models.DatabaseStatus>;
+    /**
+     * Get real-time health and status information for a dedicated database. Returns health status, readiness, uptime, connection info, replica status, and volume information.
+     *
+     * @param {string} databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DatabaseStatus>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getStatus(databaseId: string): Promise<Models.DatabaseStatus>;
+    getStatus(
+        paramsOrFirst: { databaseId: string } | string    
+    ): Promise<Models.DatabaseStatus> {
+        let params: { databaseId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/status'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Upgrade a dedicated database to a new engine version. Uses blue-green deployment for zero-downtime cutover.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.targetVersion - Target engine version to upgrade to.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     */
+    createUpgrade(params: { databaseId: string, targetVersion: string }): Promise<Models.DedicatedDatabase>;
+    /**
+     * Upgrade a dedicated database to a new engine version. Uses blue-green deployment for zero-downtime cutover.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} targetVersion - Target engine version to upgrade to.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createUpgrade(databaseId: string, targetVersion: string): Promise<Models.DedicatedDatabase>;
+    createUpgrade(
+        paramsOrFirst: { databaseId: string, targetVersion: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.DedicatedDatabase> {
+        let params: { databaseId: string, targetVersion: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, targetVersion: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                targetVersion: rest[0] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const targetVersion = params.targetVersion;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof targetVersion === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "targetVersion"');
+        }
+
+        const apiPath = '/mongo/{databaseId}/upgrades'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof targetVersion !== 'undefined') {
+            payload['targetVersion'] = targetVersion;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+}
