@@ -310,8 +310,8 @@ export class Waf {
      * @param {string} params.name - Rule name.
      * @param {string} params.resourceId - Resource identifier. Required for functions and sites.
      * @param {string} params.description - Optional description for the rule.
-     * @param {string} params.challengeType - Challenge type enforced by the rule. Only `custom` (proof-of-work) is available today.
-     * @param {number} params.difficulty - Proof-of-work difficulty (leading zero bits) for custom challenges.
+     * @param {string} params.challengeType - Challenge type enforced by the rule.
+     * @param {number} params.difficulty - Challenge difficulty (leading zero bits) the client must solve.
      * @param {number} params.ttl - Clearance lifetime in seconds granted after solving the challenge.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to create the rule in a disabled state.
@@ -329,8 +329,8 @@ export class Waf {
      * @param {string} name - Rule name.
      * @param {string} resourceId - Resource identifier. Required for functions and sites.
      * @param {string} description - Optional description for the rule.
-     * @param {string} challengeType - Challenge type enforced by the rule. Only `custom` (proof-of-work) is available today.
-     * @param {number} difficulty - Proof-of-work difficulty (leading zero bits) for custom challenges.
+     * @param {string} challengeType - Challenge type enforced by the rule.
+     * @param {number} difficulty - Challenge difficulty (leading zero bits) the client must solve.
      * @param {number} ttl - Clearance lifetime in seconds granted after solving the challenge.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to create the rule in a disabled state.
@@ -447,7 +447,7 @@ export class Waf {
      * @param {string} params.name - Rule name.
      * @param {string} params.description - Optional description for the rule.
      * @param {string} params.challengeType - Challenge type enforced by the rule.
-     * @param {number} params.difficulty - Proof-of-work difficulty (leading zero bits) for custom challenges.
+     * @param {number} params.difficulty - Challenge difficulty (leading zero bits) the client must solve.
      * @param {number} params.ttl - Clearance lifetime in seconds granted after solving the challenge.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to disable the rule.
@@ -466,7 +466,7 @@ export class Waf {
      * @param {string} name - Rule name.
      * @param {string} description - Optional description for the rule.
      * @param {string} challengeType - Challenge type enforced by the rule.
-     * @param {number} difficulty - Proof-of-work difficulty (leading zero bits) for custom challenges.
+     * @param {number} difficulty - Challenge difficulty (leading zero bits) the client must solve.
      * @param {number} ttl - Clearance lifetime in seconds granted after solving the challenge.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to disable the rule.

@@ -13,7 +13,7 @@ const result = await waf.updateChallengeRule({
     resourceId: '<RESOURCE_ID>', // optional
     name: '<NAME>', // optional
     description: '<DESCRIPTION>', // optional
-    challengeType: 'captcha', // optional
+    challengeType: 'custom', // optional
     difficulty: 16, // optional
     ttl: 60, // optional
     priority: -100000, // optional
