@@ -8,10 +8,10 @@ const client = new Client()
 const oauth2 = new Oauth2(client);
 
 const result = await oauth2.authorize({
-    clientId: '<CLIENT_ID>',
-    redirectUri: 'https://example.com',
-    responseType: 'code',
-    scope: '<SCOPE>',
+    clientId: '<CLIENT_ID>', // optional
+    redirectUri: 'https://example.com', // optional
+    responseType: '', // optional
+    scope: '<SCOPE>', // optional
     state: '<STATE>', // optional
     nonce: '<NONCE>', // optional
     codeChallenge: '<CODE_CHALLENGE>', // optional
@@ -19,7 +19,8 @@ const result = await oauth2.authorize({
     prompt: '<PROMPT>', // optional
     maxAge: 0, // optional
     authorizationDetails: '<AUTHORIZATION_DETAILS>', // optional
-    resource: '' // optional
+    resource: '', // optional
+    requestUri: '<REQUEST_URI>' // optional
 });
 
 console.log(result);

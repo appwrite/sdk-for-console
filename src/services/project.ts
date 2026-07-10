@@ -5,6 +5,7 @@ import type { Models } from '../models';
 import { ProjectAuthMethodId } from '../enums/project-auth-method-id';
 import { ProjectKeyScopes } from '../enums/project-key-scopes';
 import { ProjectOAuth2GooglePrompt } from '../enums/project-o-auth-2-google-prompt';
+import { ProjectOAuth2OidcPrompt } from '../enums/project-o-auth-2-oidc-prompt';
 import { ProjectOAuthProviderId } from '../enums/project-o-auth-provider-id';
 import { ProjectPolicyId } from '../enums/project-policy-id';
 import { ProjectProtocolId } from '../enums/project-protocol-id';
@@ -203,7 +204,7 @@ export class Project {
      *
      * @param {string} params.keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -216,7 +217,7 @@ export class Project {
      *
      * @param {string} keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Key name. Max length: 128 chars.
-     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -290,7 +291,7 @@ export class Project {
      * 
      * You can also create a standard API key if you need a longer-lived key instead.
      *
-     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {number} params.duration - Time in seconds before ephemeral key expires. Maximum duration is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EphemeralKey>}
@@ -301,7 +302,7 @@ export class Project {
      * 
      * You can also create a standard API key if you need a longer-lived key instead.
      *
-     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {number} duration - Time in seconds before ephemeral key expires. Maximum duration is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EphemeralKey>}
@@ -415,7 +416,7 @@ export class Project {
      *
      * @param {string} params.keyId - Key ID.
      * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -426,7 +427,7 @@ export class Project {
      *
      * @param {string} keyId - Key ID.
      * @param {string} name - Key name. Max length: 128 chars.
-     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -2843,11 +2844,13 @@ export class Project {
      * @param {string} params.authorizationURL - OpenID Connect authorization endpoint URL. Required when wellKnownURL is not provided. For example: https://myoauth.com/oauth2/authorize
      * @param {string} params.tokenURL - OpenID Connect token endpoint URL. Required when wellKnownURL is not provided. For example: https://myoauth.com/oauth2/token
      * @param {string} params.userInfoURL - OpenID Connect user info endpoint URL. Required when wellKnownURL is not provided. For example: https://myoauth.com/oauth2/userinfo
+     * @param {ProjectOAuth2OidcPrompt[]} params.prompt - Array of OpenID Connect prompt values controlling the authentication and consent screens. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
+     * @param {number} params.maxAge - Maximum authentication age in seconds. When set, the user must have authenticated within this many seconds, otherwise they are prompted to re-authenticate.
      * @param {boolean} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Oidc>}
      */
-    updateOAuth2Oidc(params?: { clientId?: string, clientSecret?: string, wellKnownURL?: string, authorizationURL?: string, tokenURL?: string, userInfoURL?: string, enabled?: boolean }): Promise<Models.OAuth2Oidc>;
+    updateOAuth2Oidc(params?: { clientId?: string, clientSecret?: string, wellKnownURL?: string, authorizationURL?: string, tokenURL?: string, userInfoURL?: string, prompt?: ProjectOAuth2OidcPrompt[], maxAge?: number, enabled?: boolean }): Promise<Models.OAuth2Oidc>;
     /**
      * Update the project OAuth2 Oidc configuration.
      *
@@ -2857,20 +2860,22 @@ export class Project {
      * @param {string} authorizationURL - OpenID Connect authorization endpoint URL. Required when wellKnownURL is not provided. For example: https://myoauth.com/oauth2/authorize
      * @param {string} tokenURL - OpenID Connect token endpoint URL. Required when wellKnownURL is not provided. For example: https://myoauth.com/oauth2/token
      * @param {string} userInfoURL - OpenID Connect user info endpoint URL. Required when wellKnownURL is not provided. For example: https://myoauth.com/oauth2/userinfo
+     * @param {ProjectOAuth2OidcPrompt[]} prompt - Array of OpenID Connect prompt values controlling the authentication and consent screens. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
+     * @param {number} maxAge - Maximum authentication age in seconds. When set, the user must have authenticated within this many seconds, otherwise they are prompted to re-authenticate.
      * @param {boolean} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Oidc>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateOAuth2Oidc(clientId?: string, clientSecret?: string, wellKnownURL?: string, authorizationURL?: string, tokenURL?: string, userInfoURL?: string, enabled?: boolean): Promise<Models.OAuth2Oidc>;
+    updateOAuth2Oidc(clientId?: string, clientSecret?: string, wellKnownURL?: string, authorizationURL?: string, tokenURL?: string, userInfoURL?: string, prompt?: ProjectOAuth2OidcPrompt[], maxAge?: number, enabled?: boolean): Promise<Models.OAuth2Oidc>;
     updateOAuth2Oidc(
-        paramsOrFirst?: { clientId?: string, clientSecret?: string, wellKnownURL?: string, authorizationURL?: string, tokenURL?: string, userInfoURL?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        paramsOrFirst?: { clientId?: string, clientSecret?: string, wellKnownURL?: string, authorizationURL?: string, tokenURL?: string, userInfoURL?: string, prompt?: ProjectOAuth2OidcPrompt[], maxAge?: number, enabled?: boolean } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (ProjectOAuth2OidcPrompt[])?, (number)?, (boolean)?]    
     ): Promise<Models.OAuth2Oidc> {
-        let params: { clientId?: string, clientSecret?: string, wellKnownURL?: string, authorizationURL?: string, tokenURL?: string, userInfoURL?: string, enabled?: boolean };
+        let params: { clientId?: string, clientSecret?: string, wellKnownURL?: string, authorizationURL?: string, tokenURL?: string, userInfoURL?: string, prompt?: ProjectOAuth2OidcPrompt[], maxAge?: number, enabled?: boolean };
         
         if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { clientId?: string, clientSecret?: string, wellKnownURL?: string, authorizationURL?: string, tokenURL?: string, userInfoURL?: string, enabled?: boolean };
+            params = (paramsOrFirst || {}) as { clientId?: string, clientSecret?: string, wellKnownURL?: string, authorizationURL?: string, tokenURL?: string, userInfoURL?: string, prompt?: ProjectOAuth2OidcPrompt[], maxAge?: number, enabled?: boolean };
         } else {
             params = {
                 clientId: paramsOrFirst as string,
@@ -2879,7 +2884,9 @@ export class Project {
                 authorizationURL: rest[2] as string,
                 tokenURL: rest[3] as string,
                 userInfoURL: rest[4] as string,
-                enabled: rest[5] as boolean            
+                prompt: rest[5] as ProjectOAuth2OidcPrompt[],
+                maxAge: rest[6] as number,
+                enabled: rest[7] as boolean            
             };
         }
         
@@ -2889,6 +2896,8 @@ export class Project {
         const authorizationURL = params.authorizationURL;
         const tokenURL = params.tokenURL;
         const userInfoURL = params.userInfoURL;
+        const prompt = params.prompt;
+        const maxAge = params.maxAge;
         const enabled = params.enabled;
 
 
@@ -2911,6 +2920,12 @@ export class Project {
         }
         if (typeof userInfoURL !== 'undefined') {
             payload['userInfoURL'] = userInfoURL;
+        }
+        if (typeof prompt !== 'undefined') {
+            payload['prompt'] = prompt;
+        }
+        if (typeof maxAge !== 'undefined') {
+            payload['maxAge'] = maxAge;
         }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;

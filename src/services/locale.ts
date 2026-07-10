@@ -16,9 +16,9 @@ export class Locale {
      * ([IP Geolocation by DB-IP](https://db-ip.com))
      *
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Locale>}
+     * @returns {Promise<Models.CloudLocale>}
      */
-    get(): Promise<Models.Locale> {
+    get(): Promise<Models.CloudLocale> {
 
         const apiPath = '/locale';
         const payload: Payload = {};

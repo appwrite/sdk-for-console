@@ -9,7 +9,8 @@ const oauth2 = new Oauth2(client);
 
 const result = await oauth2.approve({
     grantId: '<GRANT_ID>',
-    authorizationDetails: '<AUTHORIZATION_DETAILS>' // optional
+    authorizationDetails: '<AUTHORIZATION_DETAILS>', // optional
+    scope: '<SCOPE>' // optional
 });
 
 console.log(result);

@@ -8,7 +8,8 @@ const client = new Client()
 const domains = new Domains(client);
 
 const result = await domains.updateNameservers({
-    domainId: '<DOMAIN_ID>'
+    domainId: '<DOMAIN_ID>',
+    nameservers: [] // optional
 });
 
 console.log(result);

@@ -122,6 +122,76 @@ export class Console {
     }
 
     /**
+     * Get a list of all the project's databases. You can use the query params to filter your results. This returns every database across all types and product APIs in a single call.
+     * 
+     *
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name
+     * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DatabaseList>}
+     */
+    listDatabases(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.DatabaseList>;
+    /**
+     * Get a list of all the project's databases. You can use the query params to filter your results. This returns every database across all types and product APIs in a single call.
+     * 
+     *
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name
+     * @param {string} search - Search term to filter your list results. Max length: 256 chars.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DatabaseList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listDatabases(queries?: string[], search?: string, total?: boolean): Promise<Models.DatabaseList>;
+    listDatabases(
+        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
+        ...rest: [(string)?, (boolean)?]    
+    ): Promise<Models.DatabaseList> {
+        let params: { queries?: string[], search?: string, total?: boolean };
+        
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
+        } else {
+            params = {
+                queries: paramsOrFirst as string[],
+                search: rest[0] as string,
+                total: rest[1] as boolean            
+            };
+        }
+        
+        const queries = params.queries;
+        const search = params.search;
+        const total = params.total;
+
+
+        const apiPath = '/console/databases';
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        if (typeof search !== 'undefined') {
+            payload['search'] = search;
+        }
+        if (typeof total !== 'undefined') {
+            payload['total'] = total;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * List all OAuth2 providers supported by the Appwrite server, along with the parameters required to configure each provider. The response excludes mock providers but includes sandbox providers.
      *
      * @throws {AppwriteException}
@@ -236,6 +306,32 @@ export class Console {
         }
 
         const apiPath = '/console/plans/{planId}'.replace('{planId}', encodeURIComponent(String(planId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get the catalog of Postgres extensions that can be installed on a dedicated Postgres database.
+     * 
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.PostgresExtensionList>}
+     */
+    listPostgresExtensions(): Promise<Models.PostgresExtensionList> {
+
+        const apiPath = '/console/postgres-extensions';
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 

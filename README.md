@@ -33,7 +33,7 @@ import { Client, Account } from "@appwrite.io/console";
 To install with a CDN (content delivery network) add the following scripts to the bottom of your <body> tag, but before you use any Appwrite services:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@appwrite.io/console@15.2.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/@appwrite.io/console@15.3.0"></script>
 ```
 
 
@@ -54,7 +54,7 @@ Initialize your SDK with your Appwrite server API endpoint and project ID which 
 const client = new Client();
 
 client
-    .setEndpoint('http://localhost/v1') // Your Appwrite Endpoint
+    .setEndpoint('http://localhost:9520/v1') // Your Appwrite Endpoint
     .setProject('455x34dfkj') // Your project ID
 ;
 ```
@@ -83,7 +83,7 @@ account.create(ID.unique(), "email@example.com", "password", "Walter O'Brien")
 const client = new Client();
 
 client
-    .setEndpoint('http://localhost/v1') // Your Appwrite Endpoint
+    .setEndpoint('http://localhost:9520/v1') // Your Appwrite Endpoint
     .setProject('455x34dfkj')
 ;
 

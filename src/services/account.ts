@@ -917,7 +917,7 @@ export class Account {
      * Create a new account API key.
      *
      * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {AccountKeyScopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {AccountKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -927,7 +927,7 @@ export class Account {
      * Create a new account API key.
      *
      * @param {string} name - Key name. Max length: 128 chars.
-     * @param {AccountKeyScopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {AccountKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -1046,7 +1046,7 @@ export class Account {
      *
      * @param {string} params.keyId - Key unique ID.
      * @param {string} params.name - Key name. Max length: 128 chars.
-     * @param {AccountKeyScopes[]} params.scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {AccountKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
@@ -1057,7 +1057,7 @@ export class Account {
      *
      * @param {string} keyId - Key unique ID.
      * @param {string} name - Key name. Max length: 128 chars.
-     * @param {AccountKeyScopes[]} scopes - Key scopes list. Maximum of 100 scopes are allowed.
+     * @param {AccountKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
      * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}

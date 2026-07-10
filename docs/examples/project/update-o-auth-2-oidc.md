@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Project } from "@appwrite.io/console";
+import { Client, Project, ProjectOAuth2OidcPrompt } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -14,6 +14,8 @@ const result = await project.updateOAuth2Oidc({
     authorizationURL: 'https://example.com', // optional
     tokenURL: 'https://example.com', // optional
     userInfoURL: 'https://example.com', // optional
+    prompt: [ProjectOAuth2OidcPrompt.None], // optional
+    maxAge: 0, // optional
     enabled: false // optional
 });
 

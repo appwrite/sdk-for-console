@@ -13,6 +13,371 @@ export class Projects {
     }
 
     /**
+     * List all billing addons for a project.
+     * 
+     *
+     * @param {string} params.projectId - Project ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AddonList>}
+     */
+    listAddons(params: { projectId: string }): Promise<Models.AddonList>;
+    /**
+     * List all billing addons for a project.
+     * 
+     *
+     * @param {string} projectId - Project ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AddonList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listAddons(projectId: string): Promise<Models.AddonList>;
+    listAddons(
+        paramsOrFirst: { projectId: string } | string    
+    ): Promise<Models.AddonList> {
+        let params: { projectId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string            
+            };
+        }
+        
+        const projectId = params.projectId;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        const apiPath = '/projects/{projectId}/addons'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a Premium Geo DB addon for a project.
+     * 
+     *
+     * @param {string} params.projectId - Project ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     */
+    createPremiumGeoDBAddon(params: { projectId: string }): Promise<Models.Addon>;
+    /**
+     * Create a Premium Geo DB addon for a project.
+     * 
+     *
+     * @param {string} projectId - Project ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createPremiumGeoDBAddon(projectId: string): Promise<Models.Addon>;
+    createPremiumGeoDBAddon(
+        paramsOrFirst: { projectId: string } | string    
+    ): Promise<Models.Addon> {
+        let params: { projectId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string            
+            };
+        }
+        
+        const projectId = params.projectId;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        const apiPath = '/projects/{projectId}/addons/premium-geo-db'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get the details of a billing addon for a project.
+     * 
+     *
+     * @param {string} params.projectId - Project ID
+     * @param {string} params.addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     */
+    getAddon(params: { projectId: string, addonId: string }): Promise<Models.Addon>;
+    /**
+     * Get the details of a billing addon for a project.
+     * 
+     *
+     * @param {string} projectId - Project ID
+     * @param {string} addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getAddon(projectId: string, addonId: string): Promise<Models.Addon>;
+    getAddon(
+        paramsOrFirst: { projectId: string, addonId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.Addon> {
+        let params: { projectId: string, addonId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string, addonId: string };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string,
+                addonId: rest[0] as string            
+            };
+        }
+        
+        const projectId = params.projectId;
+        const addonId = params.addonId;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof addonId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "addonId"');
+        }
+
+        const apiPath = '/projects/{projectId}/addons/{addonId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{addonId}', encodeURIComponent(String(addonId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Delete a billing addon for a project.
+     * 
+     *
+     * @param {string} params.projectId - Project ID
+     * @param {string} params.addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteAddon(params: { projectId: string, addonId: string }): Promise<{}>;
+    /**
+     * Delete a billing addon for a project.
+     * 
+     *
+     * @param {string} projectId - Project ID
+     * @param {string} addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteAddon(projectId: string, addonId: string): Promise<{}>;
+    deleteAddon(
+        paramsOrFirst: { projectId: string, addonId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<{}> {
+        let params: { projectId: string, addonId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string, addonId: string };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string,
+                addonId: rest[0] as string            
+            };
+        }
+        
+        const projectId = params.projectId;
+        const addonId = params.addonId;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof addonId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "addonId"');
+        }
+
+        const apiPath = '/projects/{projectId}/addons/{addonId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{addonId}', encodeURIComponent(String(addonId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Confirm payment for a billing addon for a project.
+     * 
+     *
+     * @param {string} params.projectId - Project ID
+     * @param {string} params.addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     */
+    confirmAddonPayment(params: { projectId: string, addonId: string }): Promise<Models.Addon>;
+    /**
+     * Confirm payment for a billing addon for a project.
+     * 
+     *
+     * @param {string} projectId - Project ID
+     * @param {string} addonId - Addon ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    confirmAddonPayment(projectId: string, addonId: string): Promise<Models.Addon>;
+    confirmAddonPayment(
+        paramsOrFirst: { projectId: string, addonId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.Addon> {
+        let params: { projectId: string, addonId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string, addonId: string };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string,
+                addonId: rest[0] as string            
+            };
+        }
+        
+        const projectId = params.projectId;
+        const addonId = params.addonId;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof addonId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "addonId"');
+        }
+
+        const apiPath = '/projects/{projectId}/addons/{addonId}/confirmations'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{addonId}', encodeURIComponent(String(addonId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get the price details for a billing addon for a project, including the prorated amount for the remaining days in the current billing cycle.
+     * 
+     *
+     * @param {string} params.projectId - Project ID
+     * @param {string} params.addon - Addon key identifier (e.g. premiumGeoDB).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AddonPrice>}
+     */
+    getAddonPrice(params: { projectId: string, addon: string }): Promise<Models.AddonPrice>;
+    /**
+     * Get the price details for a billing addon for a project, including the prorated amount for the remaining days in the current billing cycle.
+     * 
+     *
+     * @param {string} projectId - Project ID
+     * @param {string} addon - Addon key identifier (e.g. premiumGeoDB).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AddonPrice>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getAddonPrice(projectId: string, addon: string): Promise<Models.AddonPrice>;
+    getAddonPrice(
+        paramsOrFirst: { projectId: string, addon: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.AddonPrice> {
+        let params: { projectId: string, addon: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string, addon: string };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string,
+                addon: rest[0] as string            
+            };
+        }
+        
+        const projectId = params.projectId;
+        const addon = params.addon;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof addon === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "addon"');
+        }
+
+        const apiPath = '/projects/{projectId}/addons/{addon}/price'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{addon}', encodeURIComponent(String(addon)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Record console access to a project. This endpoint updates the last accessed timestamp for the project to track console activity.
      * 
      *
@@ -630,6 +995,132 @@ export class Projects {
 
         return this.client.call(
             'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get the onboarding stages for the current project, including each stage’s SDK method key and status (for example pending, completed, or skipped).
+     * 
+     *
+     * @param {string} params.projectId - Project unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.StageList>}
+     */
+    listStages(params: { projectId: string }): Promise<Models.StageList>;
+    /**
+     * Get the onboarding stages for the current project, including each stage’s SDK method key and status (for example pending, completed, or skipped).
+     * 
+     *
+     * @param {string} projectId - Project unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.StageList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listStages(projectId: string): Promise<Models.StageList>;
+    listStages(
+        paramsOrFirst: { projectId: string } | string    
+    ): Promise<Models.StageList> {
+        let params: { projectId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string            
+            };
+        }
+        
+        const projectId = params.projectId;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+
+        const apiPath = '/projects/{projectId}/stages'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update an onboarding stage for the current project. Use this endpoint to skip a stage or leave it unchanged without performing the related API action.
+     * 
+     *
+     * @param {string} params.projectId - Project unique ID.
+     * @param {string} params.stageId - SDK method key (namespace.method).
+     * @param {boolean} params.skip - Mark the stage as skipped.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Stage>}
+     */
+    updateStage(params: { projectId: string, stageId: string, skip?: boolean }): Promise<Models.Stage>;
+    /**
+     * Update an onboarding stage for the current project. Use this endpoint to skip a stage or leave it unchanged without performing the related API action.
+     * 
+     *
+     * @param {string} projectId - Project unique ID.
+     * @param {string} stageId - SDK method key (namespace.method).
+     * @param {boolean} skip - Mark the stage as skipped.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Stage>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateStage(projectId: string, stageId: string, skip?: boolean): Promise<Models.Stage>;
+    updateStage(
+        paramsOrFirst: { projectId: string, stageId: string, skip?: boolean } | string,
+        ...rest: [(string)?, (boolean)?]    
+    ): Promise<Models.Stage> {
+        let params: { projectId: string, stageId: string, skip?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { projectId: string, stageId: string, skip?: boolean };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string,
+                stageId: rest[0] as string,
+                skip: rest[1] as boolean            
+            };
+        }
+        
+        const projectId = params.projectId;
+        const stageId = params.stageId;
+        const skip = params.skip;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "projectId"');
+        }
+        if (typeof stageId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "stageId"');
+        }
+
+        const apiPath = '/projects/{projectId}/stages/{stageId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{stageId}', encodeURIComponent(String(stageId)));
+        const payload: Payload = {};
+        if (typeof skip !== 'undefined') {
+            payload['skip'] = skip;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
             uri,
             apiHeaders,
             payload
