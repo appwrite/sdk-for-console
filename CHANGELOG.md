@@ -1,5 +1,24 @@
 # Change Log
 
+## 15.3.0
+
+* Updated: Split the `Compute` service into engine-specific `Mysql`, `Postgresql`, and `Mongo` services
+* Updated: `tablesDB.create()` now takes `specification` instead of `dedicatedDatabaseId`
+* Updated: Removed `health.getQueueLogs()`
+* Added: `Notifications` service for console notifications
+* Added: `organization.get()`, `update()`, and `delete()` methods
+* Added: Organization membership methods `listMemberships`, `createMembership`, `getMembership`, `updateMembership`, and `deleteMembership`
+* Added: TablesDB dedicated migration methods `listMigrations`, `createMigration`, `getMigration`, and `deleteMigration`
+* Added: `oauth2.createPAR()`, `listOrganizations()`, and `listProjects()` methods
+* Added: `requestUri` parameter on `oauth2.authorize()`; client ID, redirect URI, and response type are now optional
+* Added: Project addon methods `listAddons`, `getAddon`, `deleteAddon`, `confirmAddonPayment`, and `getAddonPrice`
+* Added: `createPremiumGeoDBAddon()` on `Projects` and `Organizations`
+* Added: `account.listLogs()`, `teams.listLogs()`, and `users.listLogs()` methods
+* Added: `health.getGeo()` and `health.getGeoPremium()` methods
+* Added: `newSpecification` parameter on `backups.createRestoration()`
+* Added: `prompt` and `maxAge` parameters on `project.updateOAuth2Oidc()`
+* Added: `BlockMode`, `DatabaseStatus`, `OAuth2OidcPrompt`, and `ProjectOAuth2OidcPrompt` enums
+
 ## 15.2.0
 
 * Added: Realtime connections now send the configured JWT for authentication.

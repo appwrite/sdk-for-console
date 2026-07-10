@@ -90,11 +90,11 @@ export class TablesDB {
      * @param {string} params.databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} params.dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
+     * @param {string} params.specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
-    create(params: { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string }): Promise<Models.Database>;
+    create(params: { databaseId: string, name: string, enabled?: boolean, specification?: string }): Promise<Models.Database>;
     /**
      * Create a new Database.
      * 
@@ -102,33 +102,33 @@ export class TablesDB {
      * @param {string} databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
+     * @param {string} specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string): Promise<Models.Database>;
+    create(databaseId: string, name: string, enabled?: boolean, specification?: string): Promise<Models.Database>;
     create(
-        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string } | string,
+        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean, specification?: string } | string,
         ...rest: [(string)?, (boolean)?, (string)?]    
     ): Promise<Models.Database> {
-        let params: { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string };
+        let params: { databaseId: string, name: string, enabled?: boolean, specification?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string };
+            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean, specification?: string };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                dedicatedDatabaseId: rest[2] as string            
+                specification: rest[2] as string            
             };
         }
         
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
-        const dedicatedDatabaseId = params.dedicatedDatabaseId;
+        const specification = params.specification;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
@@ -148,8 +148,8 @@ export class TablesDB {
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
         }
-        if (typeof dedicatedDatabaseId !== 'undefined') {
-            payload['dedicatedDatabaseId'] = dedicatedDatabaseId;
+        if (typeof specification !== 'undefined') {
+            payload['specification'] = specification;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -729,6 +729,247 @@ export class TablesDB {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List the dedicated migrations for a TablesDB database. A database has at most one in-flight migration.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DatabaseMigrationList>}
+     */
+    listMigrations(params: { databaseId: string }): Promise<Models.DatabaseMigrationList>;
+    /**
+     * List the dedicated migrations for a TablesDB database. A database has at most one in-flight migration.
+     *
+     * @param {string} databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DatabaseMigrationList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listMigrations(databaseId: string): Promise<Models.DatabaseMigrationList>;
+    listMigrations(
+        paramsOrFirst: { databaseId: string } | string    
+    ): Promise<Models.DatabaseMigrationList> {
+        let params: { databaseId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/tablesdb/{databaseId}/migrations'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Start migrating a serverless TablesDB database onto a dedicated MySQL compute. Data is copied to the target while the source stays live, with a brief read-only window during cutover.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.specification - Dedicated compute specification to provision as the migration target (e.g. s-2vcpu-4gb). The migration always targets a dedicated compute, so `serverless` is not accepted.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DatabaseMigration>}
+     */
+    createMigration(params: { databaseId: string, specification: string }): Promise<Models.DatabaseMigration>;
+    /**
+     * Start migrating a serverless TablesDB database onto a dedicated MySQL compute. Data is copied to the target while the source stays live, with a brief read-only window during cutover.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} specification - Dedicated compute specification to provision as the migration target (e.g. s-2vcpu-4gb). The migration always targets a dedicated compute, so `serverless` is not accepted.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DatabaseMigration>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createMigration(databaseId: string, specification: string): Promise<Models.DatabaseMigration>;
+    createMigration(
+        paramsOrFirst: { databaseId: string, specification: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.DatabaseMigration> {
+        let params: { databaseId: string, specification: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, specification: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                specification: rest[0] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const specification = params.specification;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof specification === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "specification"');
+        }
+
+        const apiPath = '/tablesdb/{databaseId}/migrations'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof specification !== 'undefined') {
+            payload['specification'] = specification;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get a single dedicated migration for a TablesDB database by its ID.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.migrationId - Migration ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DatabaseMigration>}
+     */
+    getMigration(params: { databaseId: string, migrationId: string }): Promise<Models.DatabaseMigration>;
+    /**
+     * Get a single dedicated migration for a TablesDB database by its ID.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} migrationId - Migration ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DatabaseMigration>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getMigration(databaseId: string, migrationId: string): Promise<Models.DatabaseMigration>;
+    getMigration(
+        paramsOrFirst: { databaseId: string, migrationId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.DatabaseMigration> {
+        let params: { databaseId: string, migrationId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, migrationId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                migrationId: rest[0] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const migrationId = params.migrationId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof migrationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "migrationId"');
+        }
+
+        const apiPath = '/tablesdb/{databaseId}/migrations/{migrationId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{migrationId}', encodeURIComponent(String(migrationId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Abort an in-flight TablesDB dedicated migration. Only allowed before cutover; once the migration has cut over it cannot be aborted.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.migrationId - Migration ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteMigration(params: { databaseId: string, migrationId: string }): Promise<{}>;
+    /**
+     * Abort an in-flight TablesDB dedicated migration. Only allowed before cutover; once the migration has cut over it cannot be aborted.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} migrationId - Migration ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteMigration(databaseId: string, migrationId: string): Promise<{}>;
+    deleteMigration(
+        paramsOrFirst: { databaseId: string, migrationId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<{}> {
+        let params: { databaseId: string, migrationId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, migrationId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                migrationId: rest[0] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const migrationId = params.migrationId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof migrationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "migrationId"');
+        }
+
+        const apiPath = '/tablesdb/{databaseId}/migrations/{migrationId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{migrationId}', encodeURIComponent(String(migrationId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
         }
 
         return this.client.call(
@@ -5328,74 +5569,6 @@ export class TablesDB {
     }
 
     /**
-     * Get the table activity logs list by its unique ID.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.tableId - Table ID.
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.LogList>}
-     */
-    listTableLogs(params: { databaseId: string, tableId: string, queries?: string[] }): Promise<Models.LogList>;
-    /**
-     * Get the table activity logs list by its unique ID.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} tableId - Table ID.
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.LogList>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    listTableLogs(databaseId: string, tableId: string, queries?: string[]): Promise<Models.LogList>;
-    listTableLogs(
-        paramsOrFirst: { databaseId: string, tableId: string, queries?: string[] } | string,
-        ...rest: [(string)?, (string[])?]    
-    ): Promise<Models.LogList> {
-        let params: { databaseId: string, tableId: string, queries?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, queries?: string[] };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                tableId: rest[0] as string,
-                queries: rest[1] as string[]            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const tableId = params.tableId;
-        const queries = params.queries;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-        if (typeof tableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "tableId"');
-        }
-
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/logs'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
-        if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
      * Get a list of all the user's rows in a given table. You can use the query params to filter your results.
      *
      * @param {string} params.databaseId - Database ID.
@@ -6230,81 +6403,6 @@ export class TablesDB {
 
         return this.client.call(
             'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get the row activity logs list by its unique ID.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.tableId - Table ID.
-     * @param {string} params.rowId - Row ID.
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.LogList>}
-     */
-    listRowLogs(params: { databaseId: string, tableId: string, rowId: string, queries?: string[] }): Promise<Models.LogList>;
-    /**
-     * Get the row activity logs list by its unique ID.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} tableId - Table ID.
-     * @param {string} rowId - Row ID.
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.LogList>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    listRowLogs(databaseId: string, tableId: string, rowId: string, queries?: string[]): Promise<Models.LogList>;
-    listRowLogs(
-        paramsOrFirst: { databaseId: string, tableId: string, rowId: string, queries?: string[] } | string,
-        ...rest: [(string)?, (string)?, (string[])?]    
-    ): Promise<Models.LogList> {
-        let params: { databaseId: string, tableId: string, rowId: string, queries?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, rowId: string, queries?: string[] };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                tableId: rest[0] as string,
-                rowId: rest[1] as string,
-                queries: rest[2] as string[]            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const tableId = params.tableId;
-        const rowId = params.rowId;
-        const queries = params.queries;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-        if (typeof tableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "tableId"');
-        }
-        if (typeof rowId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "rowId"');
-        }
-
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/{rowId}/logs'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId))).replace('{rowId}', encodeURIComponent(String(rowId)));
-        const payload: Payload = {};
-        if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload

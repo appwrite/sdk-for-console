@@ -3,6 +3,7 @@ import { AppwriteException, Client, type Payload, UploadProgress } from '../clie
 import type { Models } from '../models';
 
 import { BlockResourceType } from '../enums/block-resource-type';
+import { BlockMode } from '../enums/block-mode';
 import { Region } from '../enums/region';
 import { CacheTarget } from '../enums/cache-target';
 import { CacheDatabase } from '../enums/cache-database';
@@ -20,46 +21,50 @@ export class Manager {
      * @param {string} params.projectId - Project ID
      * @param {BlockResourceType} params.resourceType - Resource type to block (e.g., projects, functions, databases, storage, etc.)
      * @param {string} params.resourceId - Optional resource ID (if omitted, all resources of this type will be blocked)
+     * @param {BlockMode} params.mode - Block mode. Use full to block reads and writes, or readOnly to block database writes only.
      * @param {string} params.reason - Optional reason why the resource is blocked
      * @param {string} params.expiredAt - Optional expiration date for the block
      * @throws {AppwriteException}
      * @returns {Promise<Models.Block>}
      */
-    createBlock(params: { projectId: string, resourceType: BlockResourceType, resourceId?: string, reason?: string, expiredAt?: string }): Promise<Models.Block>;
+    createBlock(params: { projectId: string, resourceType: BlockResourceType, resourceId?: string, mode?: BlockMode, reason?: string, expiredAt?: string }): Promise<Models.Block>;
     /**
      * Creates a new resource block.
      *
      * @param {string} projectId - Project ID
      * @param {BlockResourceType} resourceType - Resource type to block (e.g., projects, functions, databases, storage, etc.)
      * @param {string} resourceId - Optional resource ID (if omitted, all resources of this type will be blocked)
+     * @param {BlockMode} mode - Block mode. Use full to block reads and writes, or readOnly to block database writes only.
      * @param {string} reason - Optional reason why the resource is blocked
      * @param {string} expiredAt - Optional expiration date for the block
      * @throws {AppwriteException}
      * @returns {Promise<Models.Block>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createBlock(projectId: string, resourceType: BlockResourceType, resourceId?: string, reason?: string, expiredAt?: string): Promise<Models.Block>;
+    createBlock(projectId: string, resourceType: BlockResourceType, resourceId?: string, mode?: BlockMode, reason?: string, expiredAt?: string): Promise<Models.Block>;
     createBlock(
-        paramsOrFirst: { projectId: string, resourceType: BlockResourceType, resourceId?: string, reason?: string, expiredAt?: string } | string,
-        ...rest: [(BlockResourceType)?, (string)?, (string)?, (string)?]    
+        paramsOrFirst: { projectId: string, resourceType: BlockResourceType, resourceId?: string, mode?: BlockMode, reason?: string, expiredAt?: string } | string,
+        ...rest: [(BlockResourceType)?, (string)?, (BlockMode)?, (string)?, (string)?]    
     ): Promise<Models.Block> {
-        let params: { projectId: string, resourceType: BlockResourceType, resourceId?: string, reason?: string, expiredAt?: string };
+        let params: { projectId: string, resourceType: BlockResourceType, resourceId?: string, mode?: BlockMode, reason?: string, expiredAt?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, resourceType: BlockResourceType, resourceId?: string, reason?: string, expiredAt?: string };
+            params = (paramsOrFirst || {}) as { projectId: string, resourceType: BlockResourceType, resourceId?: string, mode?: BlockMode, reason?: string, expiredAt?: string };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
                 resourceType: rest[0] as BlockResourceType,
                 resourceId: rest[1] as string,
-                reason: rest[2] as string,
-                expiredAt: rest[3] as string            
+                mode: rest[2] as BlockMode,
+                reason: rest[3] as string,
+                expiredAt: rest[4] as string            
             };
         }
         
         const projectId = params.projectId;
         const resourceType = params.resourceType;
         const resourceId = params.resourceId;
+        const mode = params.mode;
         const reason = params.reason;
         const expiredAt = params.expiredAt;
 
@@ -80,6 +85,9 @@ export class Manager {
         }
         if (typeof resourceId !== 'undefined') {
             payload['resourceId'] = resourceId;
+        }
+        if (typeof mode !== 'undefined') {
+            payload['mode'] = mode;
         }
         if (typeof reason !== 'undefined') {
             payload['reason'] = reason;

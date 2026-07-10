@@ -254,6 +254,57 @@ export class Health {
     }
 
     /**
+     * Check the Appwrite geo service is up and connection is successful.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthStatus>}
+     */
+    getGeo(): Promise<Models.HealthStatus> {
+
+        const apiPath = '/health/geo';
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get the health status of the premium geo service. This endpoint probes the internal `appwrite-geo-premium` service used for premium IP-to-location lookups (organizations or projects on the premium geo DB addon) and returns a `pass` status when reachable.
+     * 
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthStatus>}
+     */
+    getGeoPremium(): Promise<Models.HealthStatus> {
+
+        const apiPath = '/health/geo-premium';
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Check the Appwrite pub-sub servers are up and connection is successful.
      *
      * @throws {AppwriteException}
@@ -776,59 +827,6 @@ export class Health {
     }
 
     /**
-     * Get the number of logs that are waiting to be processed in the Appwrite internal queue server.
-     *
-     * @param {number} params.threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.HealthQueue>}
-     */
-    getQueueLogs(params?: { threshold?: number }): Promise<Models.HealthQueue>;
-    /**
-     * Get the number of logs that are waiting to be processed in the Appwrite internal queue server.
-     *
-     * @param {number} threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.HealthQueue>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getQueueLogs(threshold?: number): Promise<Models.HealthQueue>;
-    getQueueLogs(
-        paramsOrFirst?: { threshold?: number } | number    
-    ): Promise<Models.HealthQueue> {
-        let params: { threshold?: number };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { threshold?: number };
-        } else {
-            params = {
-                threshold: paramsOrFirst as number            
-            };
-        }
-        
-        const threshold = params.threshold;
-
-
-        const apiPath = '/health/queue/logs';
-        const payload: Payload = {};
-        if (typeof threshold !== 'undefined') {
-            payload['threshold'] = threshold;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
      * Get the number of mails that are waiting to be processed in the Appwrite internal queue server.
      *
      * @param {number} params.threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
@@ -968,6 +966,61 @@ export class Health {
 
 
         const apiPath = '/health/queue/migrations';
+        const payload: Payload = {};
+        if (typeof threshold !== 'undefined') {
+            payload['threshold'] = threshold;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get the number of jobs in the notifications queue.
+     * 
+     *
+     * @param {number} params.threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthQueue>}
+     */
+    getQueueNotifications(params?: { threshold?: number }): Promise<Models.HealthQueue>;
+    /**
+     * Get the number of jobs in the notifications queue.
+     * 
+     *
+     * @param {number} threshold - Queue size threshold. When hit (equal or higher), endpoint returns server error. Default value is 5000.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.HealthQueue>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getQueueNotifications(threshold?: number): Promise<Models.HealthQueue>;
+    getQueueNotifications(
+        paramsOrFirst?: { threshold?: number } | number    
+    ): Promise<Models.HealthQueue> {
+        let params: { threshold?: number };
+        
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { threshold?: number };
+        } else {
+            params = {
+                threshold: paramsOrFirst as number            
+            };
+        }
+        
+        const threshold = params.threshold;
+
+
+        const apiPath = '/health/queue/notifications';
         const payload: Payload = {};
         if (typeof threshold !== 'undefined') {
             payload['threshold'] = threshold;

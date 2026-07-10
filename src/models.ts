@@ -1,4 +1,5 @@
 import { DatabaseType } from "./enums/database-type"
+import { DatabaseStatus } from "./enums/database-status"
 import { AttributeStatus } from "./enums/attribute-status"
 import { ColumnStatus } from "./enums/column-status"
 import { IndexStatus } from "./enums/index-status"
@@ -11,6 +12,7 @@ import { ProjectAuthMethodId } from "./enums/project-auth-method-id"
 import { ProjectServiceId } from "./enums/project-service-id"
 import { ProjectProtocolId } from "./enums/project-protocol-id"
 import { OAuth2GooglePrompt } from "./enums/o-auth-2-google-prompt"
+import { OAuth2OidcPrompt } from "./enums/o-auth-2-oidc-prompt"
 import { PlatformType } from "./enums/platform-type"
 import { HealthAntivirusStatus } from "./enums/health-antivirus-status"
 import { HealthCheckStatus } from "./enums/health-check-status"
@@ -180,6 +182,20 @@ export namespace Models {
          * List of identities.
          */
         identities: Identity[];
+    }
+
+    /**
+     * Notifications List
+     */
+    export type NotificationList = {
+        /**
+         * Total number of notifications that matched your query.
+         */
+        total: number;
+        /**
+         * List of notifications.
+         */
+        notifications: Notification[];
     }
 
     /**
@@ -667,6 +683,16 @@ export namespace Models {
     }
 
     /**
+     * Stages List
+     */
+    export type StageList = {
+        /**
+         * List of stages.
+         */
+        stages: Stage[];
+    }
+
+    /**
      * Locale codes list
      */
     export type LocaleCodeList = {
@@ -890,6 +916,10 @@ export namespace Models {
          * Database type.
          */
         type: DatabaseType;
+        /**
+         * Database status. Possible values: `provisioning`, `ready` or `failed`
+         */
+        status: DatabaseStatus;
         /**
          * Database backup policies.
          */
@@ -1843,56 +1873,6 @@ export namespace Models {
     }
 
     /**
-     * UsageDocumentsDB
-     */
-    export type UsageDocumentsDB = {
-        /**
-         * Time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of collections.
-         */
-        collectionsTotal: number;
-        /**
-         * Total aggregated number of documents.
-         */
-        documentsTotal: number;
-        /**
-         * Total aggregated storage used in bytes.
-         */
-        storageTotal: number;
-        /**
-         * Total number of database reads.
-         */
-        databaseReadsTotal: number;
-        /**
-         * Total number of database writes.
-         */
-        databaseWritesTotal: number;
-        /**
-         * Aggregated number of collections per period.
-         */
-        collections: Metric[];
-        /**
-         * Aggregated number of documents per period.
-         */
-        documents: Metric[];
-        /**
-         * Aggregated storage used in bytes per period.
-         */
-        storage: Metric[];
-        /**
-         * An array of aggregated number of database reads.
-         */
-        databaseReads: Metric[];
-        /**
-         * An array of aggregated number of database writes.
-         */
-        databaseWrites: Metric[];
-    }
-
-    /**
      * VectorsDB Collection
      */
     export type VectorsdbCollection = {
@@ -2028,114 +2008,6 @@ export namespace Models {
          * Vector dimensions.
          */
         size: number;
-    }
-
-    /**
-     * UsageVectorsDBs
-     */
-    export type UsageVectorsDBs = {
-        /**
-         * Time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of VectorsDB databases.
-         */
-        databasesTotal: number;
-        /**
-         * Total aggregated number of collections.
-         */
-        collectionsTotal: number;
-        /**
-         * Total aggregated number of documents.
-         */
-        documentsTotal: number;
-        /**
-         * Total aggregated storage in bytes.
-         */
-        storageTotal: number;
-        /**
-         * Total number of database reads.
-         */
-        databasesReadsTotal: number;
-        /**
-         * Total number of database writes.
-         */
-        databasesWritesTotal: number;
-        /**
-         * Aggregated number of databases per period.
-         */
-        databases: Metric[];
-        /**
-         * Aggregated number of collections per period.
-         */
-        collections: Metric[];
-        /**
-         * Aggregated number of documents per period.
-         */
-        documents: Metric[];
-        /**
-         * Aggregated storage in bytes per period.
-         */
-        storage: Metric[];
-        /**
-         * An array of aggregated number of database reads.
-         */
-        databasesReads: Metric[];
-        /**
-         * An array of aggregated number of database writes.
-         */
-        databasesWrites: Metric[];
-    }
-
-    /**
-     * UsageVectorsDB
-     */
-    export type UsageVectorsDB = {
-        /**
-         * Time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of collections.
-         */
-        collectionsTotal: number;
-        /**
-         * Total aggregated number of documents.
-         */
-        documentsTotal: number;
-        /**
-         * Total aggregated storage used in bytes.
-         */
-        storageTotal: number;
-        /**
-         * Total number of database reads.
-         */
-        databaseReadsTotal: number;
-        /**
-         * Total number of database writes.
-         */
-        databaseWritesTotal: number;
-        /**
-         * Aggregated number of collections per period.
-         */
-        collections: Metric[];
-        /**
-         * Aggregated number of documents per period.
-         */
-        documents: Metric[];
-        /**
-         * Aggregated storage used in bytes per period.
-         */
-        storage: Metric[];
-        /**
-         * An array of aggregated number of database reads.
-         */
-        databaseReads: Metric[];
-        /**
-         * An array of aggregated number of database writes.
-         */
-        databaseWrites: Metric[];
     }
 
     /**
@@ -3295,7 +3167,7 @@ export namespace Models {
          */
         mode: string;
         /**
-         * User type who triggered the audit log. Possible values: user, admin, guest, keyProject, keyAccount, keyOrganization.
+         * User type who triggered the audit log. Possible values: user, admin, guest, hidden, keyProject, keyAccount, keyOrganization.
          */
         userType: string;
         /**
@@ -3764,6 +3636,76 @@ export namespace Models {
     }
 
     /**
+     * Notification
+     */
+    export type Notification = {
+        /**
+         * Notification ID.
+         */
+        $id: string;
+        /**
+         * Notification creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Notification update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Stable message ID used for dedup.
+         */
+        messageId?: string;
+        /**
+         * Notification type: info, warning, error.
+         */
+        type: string;
+        /**
+         * Channel: email, sms, push, console, webhook.
+         */
+        channel: string;
+        /**
+         * Resource type this notification is addressed to.
+         */
+        resourceType: string;
+        /**
+         * Resource ID this notification is addressed to.
+         */
+        resourceId: string;
+        /**
+         * Parent resource type for the notification.
+         */
+        parentResourceType: string;
+        /**
+         * Parent resource ID for the notification.
+         */
+        parentResourceId: string;
+        /**
+         * Project the notification pertains to.
+         */
+        projectId?: string;
+        /**
+         * Notification title.
+         */
+        title: string;
+        /**
+         * Notification body.
+         */
+        body: string;
+        /**
+         * Whether the notification has been read.
+         */
+        read?: boolean;
+        /**
+         * First time the notification was viewed from a notification logo.
+         */
+        firstSeen?: string;
+        /**
+         * Most recent time the notification was viewed from a notification logo.
+         */
+        lastSeen?: string;
+    }
+
+    /**
      * Token
      */
     export type Token = {
@@ -3801,40 +3743,6 @@ export namespace Models {
          * JWT encoded string.
          */
         jwt: string;
-    }
-
-    /**
-     * Locale
-     */
-    export type Locale = {
-        /**
-         * User IP address.
-         */
-        ip: string;
-        /**
-         * Country code in [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1) two-character format
-         */
-        countryCode: string;
-        /**
-         * Country name. This field support localization.
-         */
-        country: string;
-        /**
-         * Continent code. A two character continent code "AF" for Africa, "AN" for Antarctica, "AS" for Asia, "EU" for Europe, "NA" for North America, "OC" for Oceania, and "SA" for South America.
-         */
-        continentCode: string;
-        /**
-         * Continent name. This field support localization.
-         */
-        continent: string;
-        /**
-         * True if country is part of the European Union.
-         */
-        eu: boolean;
-        /**
-         * Currency code in [ISO 4217-1](http://en.wikipedia.org/wiki/ISO_4217) three-character format
-         */
-        currency: string;
     }
 
     /**
@@ -5256,6 +5164,10 @@ export namespace Models {
          */
         status: string;
         /**
+         * Stage progress (completed or skipped) with timestamps and actor types, keyed by stage id.
+         */
+        onboarding: object;
+        /**
          * List of auth methods.
          */
         authMethods: ProjectAuthMethod[];
@@ -6415,6 +6327,14 @@ export namespace Models {
          * OpenID Connect user info endpoint URL.
          */
         userInfoURL: string;
+        /**
+         * OpenID Connect prompt values controlling the authentication and consent screens.
+         */
+        prompt: OAuth2OidcPrompt[];
+        /**
+         * Maximum authentication age in seconds. When set, the user must have authenticated within this many seconds.
+         */
+        maxAge?: number;
     }
 
     /**
@@ -8170,14 +8090,6 @@ export namespace Models {
          */
         screenshotsGeneratedTotal: number;
         /**
-         * An array of aggregated number of Imagine credits in the given period.
-         */
-        imagineCredits: Metric[];
-        /**
-         * Total aggregated number of Imagine credits.
-         */
-        imagineCreditsTotal: number;
-        /**
          * Current aggregated number of open Realtime connections.
          */
         realtimeConnectionsTotal: number;
@@ -8353,6 +8265,32 @@ export namespace Models {
          * The region where the schedule is deployed.
          */
         region: string;
+    }
+
+    /**
+     * Stage
+     */
+    export type Stage = {
+        /**
+         * Stage ID.
+         */
+        id: string;
+        /**
+         * SDK method key (namespace.name) for this stage.
+         */
+        sdk: string;
+        /**
+         * Stage status.
+         */
+        status: string;
+        /**
+         * When the stage was completed or skipped, in ISO 8601 format.
+         */
+        at: string;
+        /**
+         * Actor type when the stage was recorded.
+         */
+        actorType: string;
     }
 
     /**
@@ -9315,14 +9253,6 @@ export namespace Models {
          * Hostname.
          */
         hostname: string;
-        /**
-         * Country two-character ISO 3166-1 alpha code.
-         */
-        countryCode: string;
-        /**
-         * Country name.
-         */
-        countryName: string;
     }
 
     /**
@@ -9684,19 +9614,19 @@ export namespace Models {
         /**
          * Backup start time in ISO 8601 format.
          */
-        startedAt: string;
+        startedAt?: string;
         /**
          * Backup completion time in ISO 8601 format.
          */
-        completedAt: string;
+        completedAt?: string;
         /**
          * Backup verification time in ISO 8601 format.
          */
-        verifiedAt: string;
+        verifiedAt?: string;
         /**
          * Backup expiration time in ISO 8601 format.
          */
-        expiresAt: string;
+        expiresAt?: string;
         /**
          * Error message if backup failed.
          */
@@ -9956,9 +9886,13 @@ export namespace Models {
          */
         domains: number;
         /**
-         * Log days
+         * Activity log days
          */
-        logs: number;
+        activityLogs: number;
+        /**
+         * Usage history days
+         */
+        usageLogs: number;
         /**
          * Number of days of console inactivity before a project is paused. 0 means pausing is disabled.
          */
@@ -10083,6 +10017,10 @@ export namespace Models {
          * Details of the program this plan is a part of.
          */
         program?: Program;
+        /**
+         * Dedicated database limits available to this plan.
+         */
+        dedicatedDatabases?: BillingPlanDedicatedDatabaseLimits;
     }
 
     /**
@@ -10152,6 +10090,92 @@ export namespace Models {
     }
 
     /**
+     * dedicatedDatabaseLimits
+     */
+    export type BillingPlanDedicatedDatabaseLimits = {
+        /**
+         * Minimum CPU allocation in millicores.
+         */
+        minCpu?: number;
+        /**
+         * Maximum CPU allocation in millicores.
+         */
+        maxCpu?: number;
+        /**
+         * Minimum memory allocation in megabytes.
+         */
+        minMemoryMb?: number;
+        /**
+         * Maximum memory allocation in megabytes.
+         */
+        maxMemoryMb?: number;
+        /**
+         * Minimum storage allocation in gigabytes.
+         */
+        minStorageGb?: number;
+        /**
+         * Maximum storage allocation in gigabytes.
+         */
+        maxStorageGb?: number;
+        /**
+         * Maximum number of dedicated databases per project.
+         */
+        maxDatabasesPerProject?: number;
+        /**
+         * Maximum number of high-availability replicas per dedicated database.
+         */
+        maxReplicas?: number;
+        /**
+         * Maximum number of client connections.
+         */
+        maxConnections?: number;
+        /**
+         * Maximum number of entries allowed in the IP allowlist.
+         */
+        maxIpAllowlistSize?: number;
+        /**
+         * Maximum number of database extensions that can be enabled.
+         */
+        maxExtensions?: number;
+        /**
+         * Maximum number of days a backup can be retained.
+         */
+        maxBackupRetentionDays?: number;
+        /**
+         * Maximum number of days of point-in-time recovery data that can be retained.
+         */
+        maxPitrRetentionDays?: number;
+        /**
+         * Maximum number of rows a single SQL API query can return.
+         */
+        maxSqlApiMaxRows?: number;
+        /**
+         * Maximum response size in bytes for a single SQL API query.
+         */
+        maxSqlApiMaxBytes?: number;
+        /**
+         * Maximum execution time in seconds for a single SQL API query.
+         */
+        maxSqlApiTimeoutSeconds?: number;
+        /**
+         * Maximum number of SQL statement types that can be permitted through the SQL API.
+         */
+        maxSqlApiAllowedStatements?: number;
+        /**
+         * SQL statement types permitted through the SQL API.
+         */
+        allowedSqlStatements?: string[];
+        /**
+         * Storage classes available for dedicated databases.
+         */
+        allowedStorageClasses?: string[];
+        /**
+         * Replica synchronization modes available for dedicated databases.
+         */
+        allowedSyncModes?: string[];
+    }
+
+    /**
      * BillingPlanSupportedAddons
      */
     export type BillingPlanSupportedAddons = {
@@ -10159,6 +10183,14 @@ export namespace Models {
          * Whether the plan supports BAA (Business Associate Agreement) addon
          */
         baa: boolean;
+        /**
+         * Whether the plan supports Premium Geo DB addon (project-level)
+         */
+        premiumGeoDB: boolean;
+        /**
+         * Whether the plan supports Premium Geo DB addon (organization-level)
+         */
+        premiumGeoDBOrg: boolean;
     }
 
     /**
@@ -10177,6 +10209,10 @@ export namespace Models {
          * Resource identifier that is blocked
          */
         resourceId: string;
+        /**
+         * Block mode. full blocks reads and writes; readOnly blocks writes only.
+         */
+        mode: string;
         /**
          * Reason for the block. Can be null if no reason was provided.
          */
@@ -10266,7 +10302,7 @@ export namespace Models {
          */
         ssl: boolean;
         /**
-         * Database engine. Possible values: postgres, mysql, mariadb, mongodb.
+         * Database engine. Possible values: postgresql, mysql, mariadb, mongodb.
          */
         engine: string;
         /**
@@ -10340,32 +10376,6 @@ export namespace Models {
     }
 
     /**
-     * Connection
-     */
-    export type DedicatedDatabaseConnection = {
-        /**
-         * Connection ID.
-         */
-        $id: string;
-        /**
-         * Connection username.
-         */
-        username: string;
-        /**
-         * Database name.
-         */
-        database: string;
-        /**
-         * Connection role. Common values: readonly, readwrite.
-         */
-        role: string;
-        /**
-         * Connection creation date in ISO 8601 format.
-         */
-        $createdAt: string;
-    }
-
-    /**
      * Coupon
      */
     export type Coupon = {
@@ -10401,60 +10411,6 @@ export namespace Models {
          * If the coupon is only valid for new organizations or not.
          */
         onlyNewOrgs: boolean;
-    }
-
-    /**
-     * Credentials
-     */
-    export type DedicatedDatabaseCredentials = {
-        /**
-         * Database ID.
-         */
-        $id: string;
-        /**
-         * Database hostname.
-         */
-        host: string;
-        /**
-         * Database port.
-         */
-        port: number;
-        /**
-         * Database username.
-         */
-        username: string;
-        /**
-         * Database password.
-         */
-        password: string;
-        /**
-         * Database name.
-         */
-        database: string;
-        /**
-         * Database TCP hostname or address.
-         */
-        tcpHost: string;
-        /**
-         * Database TCP port.
-         */
-        tcpPort: number;
-        /**
-         * Database name for direct TCP connections.
-         */
-        tcpDatabase: string;
-        /**
-         * Database engine. Possible values: postgres, mysql, mariadb, mongodb.
-         */
-        engine: string;
-        /**
-         * Whether SSL is required.
-         */
-        ssl: boolean;
-        /**
-         * Full connection string.
-         */
-        connectionString: string;
     }
 
     /**
@@ -10536,6 +10492,64 @@ export namespace Models {
     }
 
     /**
+     * Database Migration
+     */
+    export type DatabaseMigration = {
+        /**
+         * Database migration ID.
+         */
+        $id: string;
+        /**
+         * Migration creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Migration update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Project ID that owns the migrating database.
+         */
+        projectId: string;
+        /**
+         * Logical database ID being migrated.
+         */
+        databaseId: string;
+        /**
+         * Dedicated compute specification provisioned for the migration target.
+         */
+        specification: string;
+        /**
+         * Migration phase. Possible values: pending, provisioned, capturing, backfilling, catching_up, verifying, ready_to_cutover, cutover, soaking, done, failed, rolled_back.
+         */
+        phase: string;
+        /**
+         * Number of documents still pending replication to the target.
+         */
+        lagDocuments: number;
+        /**
+         * Time the migrated data was verified against the source in ISO 8601 format.
+         */
+        verifiedAt: string;
+        /**
+         * Time routing was flipped to the target in ISO 8601 format.
+         */
+        cutoverAt: string;
+        /**
+         * Time the post-cutover soak window ends in ISO 8601 format.
+         */
+        soakUntil: string;
+        /**
+         * Whether the migration cuts over automatically once ready.
+         */
+        autoCutover: boolean;
+        /**
+         * Whether the migration is paused.
+         */
+        paused: boolean;
+    }
+
+    /**
      * DedicatedDatabase
      */
     export type DedicatedDatabase = {
@@ -10560,11 +10574,11 @@ export namespace Models {
          */
         name: string;
         /**
-         * Product API that owns this database: compute, documentsdb, or vectorsdb.
+         * Product API that owns this database: nativedb, documentsdb, or vectorsdb.
          */
         api: string;
         /**
-         * Database engine: postgres, mysql, mariadb, or mongodb.
+         * Database engine: postgresql, mysql, mariadb, or mongodb.
          */
         engine: string;
         /**
@@ -10610,11 +10624,15 @@ export namespace Models {
         /**
          * Last activity timestamp in ISO 8601 format.
          */
-        lastAccessedAt: string;
+        lastAccessedAt?: string;
         /**
-         * Timestamp when container will be considered idle and scale to zero (ISO 8601 format).
+         * Display-only timestamp when the database is expected to be considered idle (ISO 8601 format). Derived from last activity; lifecycle transitions are driven by lifecycleState.
          */
-        idleUntil: string;
+        idleUntil?: string;
+        /**
+         * Idle-lifecycle state of the database. Possible values: active, warm, cold, hibernated.
+         */
+        lifecycleState: string;
         /**
          * Minutes of inactivity before container scales to zero.
          */
@@ -10650,7 +10668,7 @@ export namespace Models {
         /**
          * Replication sync mode: async, sync, or quorum.
          */
-        highAvailabilitySyncMode: string;
+        syncMode: string;
         /**
          * Maximum concurrent connections.
          */
@@ -10670,15 +10688,7 @@ export namespace Models {
         /**
          * Whether point-in-time recovery is enabled.
          */
-        backupPitr: boolean;
-        /**
-         * Backup schedule in cron format.
-         */
-        backupCron: string;
-        /**
-         * Number of days to retain backups.
-         */
-        backupRetentionDays: number;
+        pitr: boolean;
         /**
          * Number of days to retain PITR data.
          */
@@ -10840,7 +10850,7 @@ export namespace Models {
          */
         ready: boolean;
         /**
-         * Database engine: postgres, mysql, mariadb, or mongodb.
+         * Database engine: postgresql, mysql, mariadb, or mongodb.
          */
         engine: string;
         /**
@@ -11294,19 +11304,19 @@ export namespace Models {
     }
 
     /**
-     * HAReplica
+     * Member
      */
-    export type DedicatedDatabaseHAReplica = {
+    export type DedicatedDatabaseMember = {
         /**
-         * Replica identifier.
+         * Member identifier.
          */
         $id: string;
         /**
-         * Replica role. Possible values: primary (accepts reads and writes), replica (read-only follower).
+         * Member role. Possible values: primary (accepts reads and writes), replica (read-only follower).
          */
         role: string;
         /**
-         * Replica health status. Possible values: healthy (fully synced), degraded (lagging behind primary), unhealthy (replication broken or unreachable).
+         * Member pod status. Possible values: active (running), pending, notFound (pod missing), or the lowercased pod phase reported by the cluster.
          */
         status: string;
         /**
@@ -11316,25 +11326,21 @@ export namespace Models {
     }
 
     /**
-     * HAStatus
+     * Replicas
      */
-    export type DedicatedDatabaseHAStatus = {
+    export type DedicatedDatabaseReplicas = {
         /**
-         * Whether high availability is enabled.
+         * Number of configured replicas. Zero means high availability is disabled.
          */
-        enabled: boolean;
-        /**
-         * Number of configured replicas.
-         */
-        replicaCount: number;
+        replicas: number;
         /**
          * Replication sync mode. Possible values: async (asynchronous, fastest), sync (synchronous, strong consistency), quorum (quorum-based, majority of replicas must confirm).
          */
         syncMode: string;
         /**
-         * List of replica statuses.
+         * Per-pod statuses for the primary and every replica.
          */
-        replicas: DedicatedDatabaseHAReplica[];
+        members: DedicatedDatabaseMember[];
     }
 
     /**
@@ -11605,6 +11611,10 @@ export namespace Models {
          * Addon ID to use when calling the addon validate endpoint. Empty when authentication is not for an addon.
          */
         addonId: string;
+        /**
+         * Project ID for project-level addon payments. Empty for organization-level addons.
+         */
+        projectId: string;
     }
 
     /**
@@ -11988,6 +11998,28 @@ export namespace Models {
     }
 
     /**
+     * Postgres extension
+     */
+    export type PostgresExtension = {
+        /**
+         * Extension key used with CREATE EXTENSION.
+         */
+        key: string;
+        /**
+         * Human-readable extension name.
+         */
+        name: string;
+        /**
+         * Short description of what the extension provides.
+         */
+        description: string;
+        /**
+         * Category the extension belongs to.
+         */
+        category: string;
+    }
+
+    /**
      * Program
      */
     export type Program = {
@@ -12027,20 +12059,6 @@ export namespace Models {
          * Billing plan ID that this is program is associated with.
          */
         billingPlanId: string;
-    }
-
-    /**
-     * QueryExplanation
-     */
-    export type DedicatedDatabaseQueryExplanation = {
-        /**
-         * Structured query execution plan. Contents are engine-specific.
-         */
-        plan: Record<string, any>[];
-        /**
-         * Raw EXPLAIN output from the database engine.
-         */
-        raw: string;
     }
 
     /**
@@ -12174,32 +12192,6 @@ export namespace Models {
     }
 
     /**
-     * SlowQuery
-     */
-    export type DedicatedDatabaseSlowQuery = {
-        /**
-         * The SQL query text.
-         */
-        query: string;
-        /**
-         * Query duration in milliseconds.
-         */
-        durationMs: number;
-        /**
-         * Number of times this query has been executed.
-         */
-        calls: number;
-        /**
-         * Database user that executed the query.
-         */
-        user: string;
-        /**
-         * Database name.
-         */
-        database: string;
-    }
-
-    /**
      * Specification
      */
     export type DedicatedDatabaseSpecification = {
@@ -12274,7 +12266,7 @@ export namespace Models {
         /**
          * High availability replica price as a fraction of the specification cost.
          */
-        haReplicaRate: number;
+        replicaRate: number;
         /**
          * Cross-region replica price as a fraction of the specification cost.
          */
@@ -12345,6 +12337,84 @@ export namespace Models {
          * Whether the volume is mounted.
          */
         mounted: boolean;
+    }
+
+    /**
+     * Locale
+     */
+    export type CloudLocale = {
+        /**
+         * User IP address.
+         */
+        ip: string;
+        /**
+         * Country code in [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1) two-character format
+         */
+        countryCode: string;
+        /**
+         * Country name. This field support localization.
+         */
+        country: string;
+        /**
+         * Continent code. A two character continent code "AF" for Africa, "AN" for Antarctica, "AS" for Asia, "EU" for Europe, "NA" for North America, "OC" for Oceania, and "SA" for South America.
+         */
+        continentCode: string;
+        /**
+         * Continent name. This field support localization.
+         */
+        continent: string;
+        /**
+         * True if country is part of the European Union.
+         */
+        eu: boolean;
+        /**
+         * Currency code in [ISO 4217-1](http://en.wikipedia.org/wiki/ISO_4217) three-character format
+         */
+        currency: string;
+        /**
+         * City
+         */
+        city?: string;
+        /**
+         * Name of timezone
+         */
+        timeZone?: string;
+        /**
+         * Postal code
+         */
+        postalCode?: string;
+        /**
+         * Latitude
+         */
+        latitude?: number;
+        /**
+         * Longitude
+         */
+        longitude?: number;
+        /**
+         * Autonomous System Number (ASN) of the IP
+         */
+        autonomousSystemNumber?: string;
+        /**
+         * Organization that owns the ASN
+         */
+        autonomousSystemOrganization?: string;
+        /**
+         * Internet service provider of the IP
+         */
+        isp?: string;
+        /**
+         * Connection type of the IP (e.g. cable, cellular, corporate)
+         */
+        connectionType?: string;
+        /**
+         * User type classification of the IP (e.g. residential, business, hosting)
+         */
+        connectionUsageType?: string;
+        /**
+         * Registered organization of the IP
+         */
+        connectionOrganization?: string;
     }
 
     /**
@@ -12438,6 +12508,10 @@ export namespace Models {
          */
         hostname?: string;
         /**
+         * Caller IP address when broken down by `ip`.
+         */
+        ip?: string;
+        /**
          * Operating system name when broken down by `osName`.
          */
         osName?: string;
@@ -12462,9 +12536,9 @@ export namespace Models {
          */
         resourceId?: string;
         /**
-         * Resource type when broken down by `resource` (gauges only).
+         * Resource type when broken down by `resourceType`.
          */
-        resource?: string;
+        resourceType?: string;
     }
 
     /**
@@ -12549,14 +12623,6 @@ export namespace Models {
          * Aggregated stats for total file transformations.
          */
         screenshotsGeneratedTotal: number;
-        /**
-         * Aggregated stats for imagine credits.
-         */
-        imagineCredits: Metric[];
-        /**
-         * Aggregated stats for total imagine credits.
-         */
-        imagineCreditsTotal: number;
         /**
          * Aggregated stats for total users.
          */
@@ -12716,10 +12782,6 @@ export namespace Models {
          */
         screenshotsGeneratedTotal: number;
         /**
-         * Aggregated stats for imagine credits.
-         */
-        imagineCredits: number;
-        /**
          * Aggregated stats for realtime connections.
          */
         realtimeConnections: number;
@@ -12761,6 +12823,14 @@ export namespace Models {
          * Resource ID
          */
         resourceId: string;
+        /**
+         * Dedicated database engine type for per-database line items (e.g. postgresql). Empty for other resources.
+         */
+        type: string;
+        /**
+         * Dedicated database specification slug for per-database line items (e.g. s-2vcpu-2gb). Empty for other resources.
+         */
+        specification: string;
     }
 
     /**
@@ -13064,6 +13134,20 @@ export namespace Models {
     }
 
     /**
+     * OAuth2 PAR
+     */
+    export type Oauth2PAR = {
+        /**
+         * Authorization request handle to pass to the authorize endpoint.
+         */
+        request_uri: string;
+        /**
+         * Lifetime of the authorization request handle in seconds.
+         */
+        expires_in: number;
+    }
+
+    /**
      * OAuth2 Token
      */
     export type Oauth2Token = {
@@ -13095,6 +13179,62 @@ export namespace Models {
          * OpenID Connect ID token. Returned when the `openid` scope is granted.
          */
         id_token?: string;
+    }
+
+    /**
+     * OAuth2 Project
+     */
+    export type Oauth2Project = {
+        /**
+         * Project ID.
+         */
+        $id: string;
+        /**
+         * Region ID the project is deployed in.
+         */
+        region: string;
+        /**
+         * API endpoint of the region the project is deployed in. Empty when the region has no public hostname configured.
+         */
+        endpoint: string;
+    }
+
+    /**
+     * OAuth2 Organization
+     */
+    export type Oauth2Organization = {
+        /**
+         * Organization ID.
+         */
+        $id: string;
+    }
+
+    /**
+     * OAuth2 accessible projects list
+     */
+    export type Oauth2ProjectList = {
+        /**
+         * Total number of projects that matched your query.
+         */
+        total: number;
+        /**
+         * List of projects.
+         */
+        projects: Oauth2Project[];
+    }
+
+    /**
+     * OAuth2 accessible organizations list
+     */
+    export type Oauth2OrganizationList = {
+        /**
+         * Total number of organizations that matched your query.
+         */
+        total: number;
+        /**
+         * List of organizations.
+         */
+        organizations: Oauth2Organization[];
     }
 
     /**
@@ -13238,31 +13378,17 @@ export namespace Models {
     }
 
     /**
-     * Dedicated database connections list
+     * Database Migrations List
      */
-    export type DedicatedDatabaseConnectionList = {
+    export type DatabaseMigrationList = {
         /**
-         * Total number of connections that matched your query.
+         * Total number of migrations that matched your query.
          */
         total: number;
         /**
-         * List of connections.
+         * List of migrations.
          */
-        connections: DedicatedDatabaseConnection[];
-    }
-
-    /**
-     * Dedicated database slow queries list
-     */
-    export type DedicatedDatabaseSlowQueryList = {
-        /**
-         * Total number of slowQueries that matched your query.
-         */
-        total: number;
-        /**
-         * List of slowQueries.
-         */
-        slowQueries: DedicatedDatabaseSlowQuery[];
+        migrations: DatabaseMigration[];
     }
 
     /**
@@ -13347,6 +13473,20 @@ export namespace Models {
          * List of paymentMethods.
          */
         paymentMethods: PaymentMethod[];
+    }
+
+    /**
+     * Postgres extensions list
+     */
+    export type PostgresExtensionList = {
+        /**
+         * Total number of extensions that matched your query.
+         */
+        total: number;
+        /**
+         * List of extensions.
+         */
+        extensions: PostgresExtension[];
     }
 
     /**

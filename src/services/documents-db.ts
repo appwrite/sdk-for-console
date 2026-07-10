@@ -2,7 +2,6 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { UsageRange } from '../enums/usage-range';
 import { DocumentsDBIndexType } from '../enums/documents-db-index-type';
 import { OrderBy } from '../enums/order-by';
 
@@ -81,11 +80,11 @@ export class DocumentsDB {
      * @param {string} params.databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} params.dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
+     * @param {string} params.specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
-    create(params: { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string }): Promise<Models.Database>;
+    create(params: { databaseId: string, name: string, enabled?: boolean, specification?: string }): Promise<Models.Database>;
     /**
      * Create a new Database.
      * 
@@ -93,33 +92,33 @@ export class DocumentsDB {
      * @param {string} databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} dedicatedDatabaseId - Optional dedicated database (compute) ID to attach this database to. Leave empty to create a database on the shared pool.
+     * @param {string} specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string): Promise<Models.Database>;
+    create(databaseId: string, name: string, enabled?: boolean, specification?: string): Promise<Models.Database>;
     create(
-        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string } | string,
+        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean, specification?: string } | string,
         ...rest: [(string)?, (boolean)?, (string)?]    
     ): Promise<Models.Database> {
-        let params: { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string };
+        let params: { databaseId: string, name: string, enabled?: boolean, specification?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean, dedicatedDatabaseId?: string };
+            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean, specification?: string };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                dedicatedDatabaseId: rest[2] as string            
+                specification: rest[2] as string            
             };
         }
         
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
-        const dedicatedDatabaseId = params.dedicatedDatabaseId;
+        const specification = params.specification;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
@@ -139,8 +138,8 @@ export class DocumentsDB {
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
         }
-        if (typeof dedicatedDatabaseId !== 'undefined') {
-            payload['dedicatedDatabaseId'] = dedicatedDatabaseId;
+        if (typeof specification !== 'undefined') {
+            payload['specification'] = specification;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -434,59 +433,6 @@ export class DocumentsDB {
 
         return this.client.call(
             'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * List usage metrics and statistics for all databases in the project. You can view the total number of databases, collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {UsageRange} params.range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDatabases>}
-     */
-    listUsage(params?: { range?: UsageRange }): Promise<Models.UsageDatabases>;
-    /**
-     * List usage metrics and statistics for all databases in the project. You can view the total number of databases, collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {UsageRange} range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDatabases>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    listUsage(range?: UsageRange): Promise<Models.UsageDatabases>;
-    listUsage(
-        paramsOrFirst?: { range?: UsageRange } | UsageRange    
-    ): Promise<Models.UsageDatabases> {
-        let params: { range?: UsageRange };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('range' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { range?: UsageRange };
-        } else {
-            params = {
-                range: paramsOrFirst as UsageRange            
-            };
-        }
-        
-        const range = params.range;
-
-
-        const apiPath = '/documentsdb/usage';
-        const payload: Payload = {};
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload
@@ -2412,135 +2358,6 @@ export class DocumentsDB {
 
         return this.client.call(
             'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get usage metrics and statistics for a collection. Returning the total number of documents. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.collectionId - Collection ID.
-     * @param {UsageRange} params.range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageCollection>}
-     */
-    getCollectionUsage(params: { databaseId: string, collectionId: string, range?: UsageRange }): Promise<Models.UsageCollection>;
-    /**
-     * Get usage metrics and statistics for a collection. Returning the total number of documents. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} collectionId - Collection ID.
-     * @param {UsageRange} range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageCollection>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getCollectionUsage(databaseId: string, collectionId: string, range?: UsageRange): Promise<Models.UsageCollection>;
-    getCollectionUsage(
-        paramsOrFirst: { databaseId: string, collectionId: string, range?: UsageRange } | string,
-        ...rest: [(string)?, (UsageRange)?]    
-    ): Promise<Models.UsageCollection> {
-        let params: { databaseId: string, collectionId: string, range?: UsageRange };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, range?: UsageRange };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                collectionId: rest[0] as string,
-                range: rest[1] as UsageRange            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const collectionId = params.collectionId;
-        const range = params.range;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-        if (typeof collectionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "collectionId"');
-        }
-
-        const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}/usage'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
-        const payload: Payload = {};
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get usage metrics and statistics for a database. You can view the total number of collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {UsageRange} params.range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDocumentsDB>}
-     */
-    getUsage(params: { databaseId: string, range?: UsageRange }): Promise<Models.UsageDocumentsDB>;
-    /**
-     * Get usage metrics and statistics for a database. You can view the total number of collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {UsageRange} range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDocumentsDB>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getUsage(databaseId: string, range?: UsageRange): Promise<Models.UsageDocumentsDB>;
-    getUsage(
-        paramsOrFirst: { databaseId: string, range?: UsageRange } | string,
-        ...rest: [(UsageRange)?]    
-    ): Promise<Models.UsageDocumentsDB> {
-        let params: { databaseId: string, range?: UsageRange };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, range?: UsageRange };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                range: rest[0] as UsageRange            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const range = params.range;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-
-        const apiPath = '/documentsdb/{databaseId}/usage'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
-        const payload: Payload = {};
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload

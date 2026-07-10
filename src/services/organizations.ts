@@ -454,6 +454,62 @@ export class Organizations {
     }
 
     /**
+     * Create a Premium Geo DB addon for an organization.
+     * 
+     *
+     * @param {string} params.organizationId - Organization ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     */
+    createPremiumGeoDBAddon(params: { organizationId: string }): Promise<Models.Addon>;
+    /**
+     * Create a Premium Geo DB addon for an organization.
+     * 
+     *
+     * @param {string} organizationId - Organization ID
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Addon>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createPremiumGeoDBAddon(organizationId: string): Promise<Models.Addon>;
+    createPremiumGeoDBAddon(
+        paramsOrFirst: { organizationId: string } | string    
+    ): Promise<Models.Addon> {
+        let params: { organizationId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { organizationId: string };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string            
+            };
+        }
+        
+        const organizationId = params.organizationId;
+
+        if (typeof organizationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "organizationId"');
+        }
+
+        const apiPath = '/organizations/{organizationId}/addons/premium-geo-db'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Get the details of a billing addon for an organization.
      * 
      *
