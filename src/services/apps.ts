@@ -76,7 +76,7 @@ export class Apps {
      *
      * @param {string} params.appId - Application ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Application name.
-     * @param {string[]} params.redirectUris - Redirect URIs (array of valid URLs).
+     * @param {string[]} params.redirectUris - Redirect URIs. Each must be an https URL, an http loopback URL (localhost, 127.0.0.1, [::1]), or a private-use scheme URI (e.g. com.example.app:/oauth), and must not contain a fragment.
      * @param {string} params.description - Application description shown to users during OAuth2 consent.
      * @param {string} params.clientUri - Application homepage URL shown to users during OAuth2 consent.
      * @param {string} params.logoUri - Application logo URL shown to users during OAuth2 consent.
@@ -88,7 +88,7 @@ export class Apps {
      * @param {string[]} params.images - Application image URLs shown to users during OAuth2 consent. Maximum of 100 images are allowed.
      * @param {string} params.supportUrl - Application support URL shown to users during OAuth2 consent.
      * @param {string} params.dataDeletionUrl - Application data deletion URL shown to users during OAuth2 consent.
-     * @param {string[]} params.postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout (array of valid URLs). After ending the user session, the logout endpoint only redirects to URIs in this list.
+     * @param {string[]} params.postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout. Each must be an https URL, an http loopback URL, or a private-use scheme URI, and must not contain a fragment. After ending the user session, the logout endpoint only redirects to URIs in this list.
      * @param {boolean} params.enabled - Is application enabled?
      * @param {string} params.type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
      * @param {boolean} params.deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
@@ -102,7 +102,7 @@ export class Apps {
      *
      * @param {string} appId - Application ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Application name.
-     * @param {string[]} redirectUris - Redirect URIs (array of valid URLs).
+     * @param {string[]} redirectUris - Redirect URIs. Each must be an https URL, an http loopback URL (localhost, 127.0.0.1, [::1]), or a private-use scheme URI (e.g. com.example.app:/oauth), and must not contain a fragment.
      * @param {string} description - Application description shown to users during OAuth2 consent.
      * @param {string} clientUri - Application homepage URL shown to users during OAuth2 consent.
      * @param {string} logoUri - Application logo URL shown to users during OAuth2 consent.
@@ -114,7 +114,7 @@ export class Apps {
      * @param {string[]} images - Application image URLs shown to users during OAuth2 consent. Maximum of 100 images are allowed.
      * @param {string} supportUrl - Application support URL shown to users during OAuth2 consent.
      * @param {string} dataDeletionUrl - Application data deletion URL shown to users during OAuth2 consent.
-     * @param {string[]} postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout (array of valid URLs). After ending the user session, the logout endpoint only redirects to URIs in this list.
+     * @param {string[]} postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout. Each must be an https URL, an http loopback URL, or a private-use scheme URI, and must not contain a fragment. After ending the user session, the logout endpoint only redirects to URIs in this list.
      * @param {boolean} enabled - Is application enabled?
      * @param {string} type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
      * @param {boolean} deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
@@ -262,9 +262,34 @@ export class Apps {
     }
 
     /**
+     * List scopes an application can request during the OAuth2 flow.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AppScopeList>}
+     */
+    listOAuth2Scopes(): Promise<Models.AppScopeList> {
+
+        const apiPath = '/apps/scopes/oauth2';
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Get an application by its unique ID.
      *
-     * @param {string} params.appId - Application unique ID.
+     * @param {string} params.appId - Application unique ID or HTTPS client ID metadata document URL.
      * @throws {AppwriteException}
      * @returns {Promise<Models.App>}
      */
@@ -272,7 +297,7 @@ export class Apps {
     /**
      * Get an application by its unique ID.
      *
-     * @param {string} appId - Application unique ID.
+     * @param {string} appId - Application unique ID or HTTPS client ID metadata document URL.
      * @throws {AppwriteException}
      * @returns {Promise<Models.App>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -331,8 +356,8 @@ export class Apps {
      * @param {string} params.supportUrl - Application support URL shown to users during OAuth2 consent.
      * @param {string} params.dataDeletionUrl - Application data deletion URL shown to users during OAuth2 consent.
      * @param {boolean} params.enabled - Is application enabled?
-     * @param {string[]} params.redirectUris - Redirect URIs (array of valid URLs).
-     * @param {string[]} params.postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout (array of valid URLs). After ending the user session, the logout endpoint only redirects to URIs in this list.
+     * @param {string[]} params.redirectUris - Redirect URIs. Each must be an https URL, an http loopback URL (localhost, 127.0.0.1, [::1]), or a private-use scheme URI (e.g. com.example.app:/oauth), and must not contain a fragment.
+     * @param {string[]} params.postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout. Each must be an https URL, an http loopback URL, or a private-use scheme URI, and must not contain a fragment. After ending the user session, the logout endpoint only redirects to URIs in this list.
      * @param {string} params.type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
      * @param {boolean} params.deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
      * @throws {AppwriteException}
@@ -356,8 +381,8 @@ export class Apps {
      * @param {string} supportUrl - Application support URL shown to users during OAuth2 consent.
      * @param {string} dataDeletionUrl - Application data deletion URL shown to users during OAuth2 consent.
      * @param {boolean} enabled - Is application enabled?
-     * @param {string[]} redirectUris - Redirect URIs (array of valid URLs).
-     * @param {string[]} postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout (array of valid URLs). After ending the user session, the logout endpoint only redirects to URIs in this list.
+     * @param {string[]} redirectUris - Redirect URIs. Each must be an https URL, an http loopback URL (localhost, 127.0.0.1, [::1]), or a private-use scheme URI (e.g. com.example.app:/oauth), and must not contain a fragment.
+     * @param {string[]} postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout. Each must be an https URL, an http loopback URL, or a private-use scheme URI, and must not contain a fragment. After ending the user session, the logout endpoint only redirects to URIs in this list.
      * @param {string} type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
      * @param {boolean} deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
      * @throws {AppwriteException}
@@ -539,6 +564,71 @@ export class Apps {
 
         return this.client.call(
             'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update the labels of an application. Labels are read-only for clients; only a server SDK using a project API key can set them. Replaces the previous labels.
+     *
+     * @param {string} params.appId - Application unique ID.
+     * @param {string[]} params.labels - Array of application labels. Replaces the previous labels. Maximum of 1000 labels are allowed, each up to 36 alphanumeric characters long.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.App>}
+     */
+    updateLabels(params: { appId: string, labels: string[] }): Promise<Models.App>;
+    /**
+     * Update the labels of an application. Labels are read-only for clients; only a server SDK using a project API key can set them. Replaces the previous labels.
+     *
+     * @param {string} appId - Application unique ID.
+     * @param {string[]} labels - Array of application labels. Replaces the previous labels. Maximum of 1000 labels are allowed, each up to 36 alphanumeric characters long.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.App>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateLabels(appId: string, labels: string[]): Promise<Models.App>;
+    updateLabels(
+        paramsOrFirst: { appId: string, labels: string[] } | string,
+        ...rest: [(string[])?]    
+    ): Promise<Models.App> {
+        let params: { appId: string, labels: string[] };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { appId: string, labels: string[] };
+        } else {
+            params = {
+                appId: paramsOrFirst as string,
+                labels: rest[0] as string[]            
+            };
+        }
+        
+        const appId = params.appId;
+        const labels = params.labels;
+
+        if (typeof appId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "appId"');
+        }
+        if (typeof labels === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "labels"');
+        }
+
+        const apiPath = '/apps/{appId}/labels'.replace('{appId}', encodeURIComponent(String(appId)));
+        const payload: Payload = {};
+        if (typeof labels !== 'undefined') {
+            payload['labels'] = labels;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'put',
             uri,
             apiHeaders,
             payload

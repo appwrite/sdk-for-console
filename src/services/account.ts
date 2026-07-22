@@ -515,6 +515,365 @@ export class Account {
     }
 
     /**
+     * Get a list of the OAuth2 consents the current user has given to third-party apps.
+     *
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2ConsentList>}
+     */
+    listConsents(params?: { queries?: string[], total?: boolean }): Promise<Models.Oauth2ConsentList>;
+    /**
+     * Get a list of the OAuth2 consents the current user has given to third-party apps.
+     *
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2ConsentList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listConsents(queries?: string[], total?: boolean): Promise<Models.Oauth2ConsentList>;
+    listConsents(
+        paramsOrFirst?: { queries?: string[], total?: boolean } | string[],
+        ...rest: [(boolean)?]    
+    ): Promise<Models.Oauth2ConsentList> {
+        let params: { queries?: string[], total?: boolean };
+        
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { queries?: string[], total?: boolean };
+        } else {
+            params = {
+                queries: paramsOrFirst as string[],
+                total: rest[0] as boolean            
+            };
+        }
+        
+        const queries = params.queries;
+        const total = params.total;
+
+
+        const apiPath = '/account/consents';
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            payload['total'] = total;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get an OAuth2 consent the current user has given to a third-party app by its unique ID.
+     *
+     * @param {string} params.consentId - Consent unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2Consent>}
+     */
+    getConsent(params: { consentId: string }): Promise<Models.Oauth2Consent>;
+    /**
+     * Get an OAuth2 consent the current user has given to a third-party app by its unique ID.
+     *
+     * @param {string} consentId - Consent unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2Consent>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getConsent(consentId: string): Promise<Models.Oauth2Consent>;
+    getConsent(
+        paramsOrFirst: { consentId: string } | string    
+    ): Promise<Models.Oauth2Consent> {
+        let params: { consentId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { consentId: string };
+        } else {
+            params = {
+                consentId: paramsOrFirst as string            
+            };
+        }
+        
+        const consentId = params.consentId;
+
+        if (typeof consentId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "consentId"');
+        }
+
+        const apiPath = '/account/consents/{consentId}'.replace('{consentId}', encodeURIComponent(String(consentId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Delete an OAuth2 consent by its unique ID. All token families issued under the consent are revoked, and the app must ask for consent again to regain access.
+     *
+     * @param {string} params.consentId - Consent unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteConsent(params: { consentId: string }): Promise<{}>;
+    /**
+     * Delete an OAuth2 consent by its unique ID. All token families issued under the consent are revoked, and the app must ask for consent again to regain access.
+     *
+     * @param {string} consentId - Consent unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteConsent(consentId: string): Promise<{}>;
+    deleteConsent(
+        paramsOrFirst: { consentId: string } | string    
+    ): Promise<{}> {
+        let params: { consentId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { consentId: string };
+        } else {
+            params = {
+                consentId: paramsOrFirst as string            
+            };
+        }
+        
+        const consentId = params.consentId;
+
+        if (typeof consentId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "consentId"');
+        }
+
+        const apiPath = '/account/consents/{consentId}'.replace('{consentId}', encodeURIComponent(String(consentId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get a list of the token families issued under an OAuth2 consent. Each entry represents one authorized device or session; the token secrets themselves are never returned.
+     *
+     * @param {string} params.consentId - Consent unique ID.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2ConsentTokenList>}
+     */
+    listConsentTokens(params: { consentId: string, queries?: string[], total?: boolean }): Promise<Models.Oauth2ConsentTokenList>;
+    /**
+     * Get a list of the token families issued under an OAuth2 consent. Each entry represents one authorized device or session; the token secrets themselves are never returned.
+     *
+     * @param {string} consentId - Consent unique ID.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2ConsentTokenList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listConsentTokens(consentId: string, queries?: string[], total?: boolean): Promise<Models.Oauth2ConsentTokenList>;
+    listConsentTokens(
+        paramsOrFirst: { consentId: string, queries?: string[], total?: boolean } | string,
+        ...rest: [(string[])?, (boolean)?]    
+    ): Promise<Models.Oauth2ConsentTokenList> {
+        let params: { consentId: string, queries?: string[], total?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { consentId: string, queries?: string[], total?: boolean };
+        } else {
+            params = {
+                consentId: paramsOrFirst as string,
+                queries: rest[0] as string[],
+                total: rest[1] as boolean            
+            };
+        }
+        
+        const consentId = params.consentId;
+        const queries = params.queries;
+        const total = params.total;
+
+        if (typeof consentId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "consentId"');
+        }
+
+        const apiPath = '/account/consents/{consentId}/tokens'.replace('{consentId}', encodeURIComponent(String(consentId)));
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            payload['total'] = total;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get a token family issued under an OAuth2 consent by its unique ID. The token secrets themselves are never returned.
+     *
+     * @param {string} params.consentId - Consent unique ID.
+     * @param {string} params.tokenId - Token unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2ConsentToken>}
+     */
+    getConsentToken(params: { consentId: string, tokenId: string }): Promise<Models.Oauth2ConsentToken>;
+    /**
+     * Get a token family issued under an OAuth2 consent by its unique ID. The token secrets themselves are never returned.
+     *
+     * @param {string} consentId - Consent unique ID.
+     * @param {string} tokenId - Token unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2ConsentToken>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getConsentToken(consentId: string, tokenId: string): Promise<Models.Oauth2ConsentToken>;
+    getConsentToken(
+        paramsOrFirst: { consentId: string, tokenId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.Oauth2ConsentToken> {
+        let params: { consentId: string, tokenId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { consentId: string, tokenId: string };
+        } else {
+            params = {
+                consentId: paramsOrFirst as string,
+                tokenId: rest[0] as string            
+            };
+        }
+        
+        const consentId = params.consentId;
+        const tokenId = params.tokenId;
+
+        if (typeof consentId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "consentId"');
+        }
+        if (typeof tokenId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "tokenId"');
+        }
+
+        const apiPath = '/account/consents/{consentId}/tokens/{tokenId}'.replace('{consentId}', encodeURIComponent(String(consentId))).replace('{tokenId}', encodeURIComponent(String(tokenId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Delete a token family issued under an OAuth2 consent by its unique ID. The access and refresh tokens of the family stop working immediately; other token families and the consent itself are unaffected.
+     *
+     * @param {string} params.consentId - Consent unique ID.
+     * @param {string} params.tokenId - Token unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteConsentToken(params: { consentId: string, tokenId: string }): Promise<{}>;
+    /**
+     * Delete a token family issued under an OAuth2 consent by its unique ID. The access and refresh tokens of the family stop working immediately; other token families and the consent itself are unaffected.
+     *
+     * @param {string} consentId - Consent unique ID.
+     * @param {string} tokenId - Token unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteConsentToken(consentId: string, tokenId: string): Promise<{}>;
+    deleteConsentToken(
+        paramsOrFirst: { consentId: string, tokenId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<{}> {
+        let params: { consentId: string, tokenId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { consentId: string, tokenId: string };
+        } else {
+            params = {
+                consentId: paramsOrFirst as string,
+                tokenId: rest[0] as string            
+            };
+        }
+        
+        const consentId = params.consentId;
+        const tokenId = params.tokenId;
+
+        if (typeof consentId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "consentId"');
+        }
+        if (typeof tokenId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "tokenId"');
+        }
+
+        const apiPath = '/account/consents/{consentId}/tokens/{tokenId}'.replace('{consentId}', encodeURIComponent(String(consentId))).replace('{tokenId}', encodeURIComponent(String(tokenId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Get coupon details for an account.
      *
      * @param {string} params.couponId - ID of the coupon
@@ -3153,7 +3512,7 @@ export class Account {
      * A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
      * 
      *
-     * @param {OAuthProvider} params.provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
+     * @param {OAuthProvider} params.provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
      * @param {string} params.success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} params.failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} params.scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
@@ -3169,7 +3528,7 @@ export class Account {
      * A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
      * 
      *
-     * @param {OAuthProvider} provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
+     * @param {OAuthProvider} provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
      * @param {string} success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
@@ -3928,7 +4287,7 @@ export class Account {
      * 
      * A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
      *
-     * @param {OAuthProvider} params.provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
+     * @param {OAuthProvider} params.provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
      * @param {string} params.success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} params.failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} params.scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
@@ -3943,7 +4302,7 @@ export class Account {
      * 
      * A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
      *
-     * @param {OAuthProvider} provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
+     * @param {OAuthProvider} provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, salesforce, slack, spotify, stripe, tradeshift, tradeshiftBox, twitch, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
      * @param {string} success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.

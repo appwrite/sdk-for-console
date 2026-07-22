@@ -1,5 +1,18 @@
 # Change Log
 
+## 15.4.0
+
+* Updated: Removed the `Health` service
+* Updated: Removed usage methods `getUsage`, `listUsage`, `getCollectionUsage`, `getTableUsage`, and `getBucketUsage` across services
+* Updated: Removed `newSpecification` parameter from `backups.createRestoration()`
+* Added: Account OAuth2 consent methods `listConsents`, `getConsent`, `deleteConsent`, `listConsentTokens`, `getConsentToken`, and `deleteConsentToken`
+* Added: `apps.listOAuth2Scopes()` and `apps.updateLabels()` methods
+* Added: `oauth2.authorizePost()` and `oauth2.logoutPost()` methods
+* Added: `project.updateOAuth2Appwrite()` method
+* Added: `token` parameter to `functions.getDeploymentDownload()` and `sites.getDeploymentDownload()`
+* Added: Geolocation, connection, and SDK attribution fields on `ActivityEvent`
+* Updated: `AppSecret.secret` is always empty; the secret is returned only on creation
+
 ## 15.3.0
 
 * Updated: Split the `Compute` service into engine-specific `Mysql`, `Postgresql`, and `Mongo` services

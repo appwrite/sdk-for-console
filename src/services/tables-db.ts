@@ -2,7 +2,6 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { UsageRange } from '../enums/usage-range';
 import { RelationshipType } from '../enums/relationship-type';
 import { RelationMutate } from '../enums/relation-mutate';
 import { TablesDBIndexType } from '../enums/tables-db-index-type';
@@ -91,10 +90,11 @@ export class TablesDB {
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
      * @param {string} params.specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
+     * @param {number} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
-    create(params: { databaseId: string, name: string, enabled?: boolean, specification?: string }): Promise<Models.Database>;
+    create(params: { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number }): Promise<Models.Database>;
     /**
      * Create a new Database.
      * 
@@ -103,25 +103,27 @@ export class TablesDB {
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
      * @param {string} specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
+     * @param {number} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(databaseId: string, name: string, enabled?: boolean, specification?: string): Promise<Models.Database>;
+    create(databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number): Promise<Models.Database>;
     create(
-        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean, specification?: string } | string,
-        ...rest: [(string)?, (boolean)?, (string)?]    
+        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number } | string,
+        ...rest: [(string)?, (boolean)?, (string)?, (number)?]    
     ): Promise<Models.Database> {
-        let params: { databaseId: string, name: string, enabled?: boolean, specification?: string };
+        let params: { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean, specification?: string };
+            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                specification: rest[2] as string            
+                specification: rest[2] as string,
+                replicas: rest[3] as number            
             };
         }
         
@@ -129,6 +131,7 @@ export class TablesDB {
         const name = params.name;
         const enabled = params.enabled;
         const specification = params.specification;
+        const replicas = params.replicas;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
@@ -151,6 +154,9 @@ export class TablesDB {
         if (typeof specification !== 'undefined') {
             payload['specification'] = specification;
         }
+        if (typeof replicas !== 'undefined') {
+            payload['replicas'] = replicas;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -161,6 +167,31 @@ export class TablesDB {
 
         return this.client.call(
             'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List the dedicated database specifications available on the current plan. Each specification reports its resource limits, pricing, and whether it is enabled for the organization.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseSpecificationList>}
+     */
+    listSpecifications(): Promise<Models.DedicatedDatabaseSpecificationList> {
+
+        const apiPath = '/tablesdb/specifications';
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
             uri,
             apiHeaders,
             payload
@@ -512,59 +543,6 @@ export class TablesDB {
     }
 
     /**
-     * List usage metrics and statistics for all databases in the project. You can view the total number of databases, tables, rows, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {UsageRange} params.range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDatabases>}
-     */
-    listUsage(params?: { range?: UsageRange }): Promise<Models.UsageDatabases>;
-    /**
-     * List usage metrics and statistics for all databases in the project. You can view the total number of databases, tables, rows, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {UsageRange} range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDatabases>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    listUsage(range?: UsageRange): Promise<Models.UsageDatabases>;
-    listUsage(
-        paramsOrFirst?: { range?: UsageRange } | UsageRange    
-    ): Promise<Models.UsageDatabases> {
-        let params: { range?: UsageRange };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('range' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { range?: UsageRange };
-        } else {
-            params = {
-                range: paramsOrFirst as UsageRange            
-            };
-        }
-        
-        const range = params.range;
-
-
-        const apiPath = '/tablesdb/usage';
-        const payload: Payload = {};
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
      * Get a database by its unique ID. This endpoint response returns a JSON object with the database metadata.
      *
      * @param {string} params.databaseId - Database ID.
@@ -623,40 +601,44 @@ export class TablesDB {
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {number} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
-    update(params: { databaseId: string, name?: string, enabled?: boolean }): Promise<Models.Database>;
+    update(params: { databaseId: string, name?: string, enabled?: boolean, replicas?: number }): Promise<Models.Database>;
     /**
      * Update a database by its unique ID.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {number} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(databaseId: string, name?: string, enabled?: boolean): Promise<Models.Database>;
+    update(databaseId: string, name?: string, enabled?: boolean, replicas?: number): Promise<Models.Database>;
     update(
-        paramsOrFirst: { databaseId: string, name?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (boolean)?]    
+        paramsOrFirst: { databaseId: string, name?: string, enabled?: boolean, replicas?: number } | string,
+        ...rest: [(string)?, (boolean)?, (number)?]    
     ): Promise<Models.Database> {
-        let params: { databaseId: string, name?: string, enabled?: boolean };
+        let params: { databaseId: string, name?: string, enabled?: boolean, replicas?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name?: string, enabled?: boolean };
+            params = (paramsOrFirst || {}) as { databaseId: string, name?: string, enabled?: boolean, replicas?: number };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
-                enabled: rest[1] as boolean            
+                enabled: rest[1] as boolean,
+                replicas: rest[2] as number            
             };
         }
         
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
+        const replicas = params.replicas;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
@@ -669,6 +651,9 @@ export class TablesDB {
         }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
+        }
+        if (typeof replicas !== 'undefined') {
+            payload['replicas'] = replicas;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -733,6 +718,68 @@ export class TablesDB {
 
         return this.client.call(
             'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     */
+    createFailover(params: { databaseId: string, targetReplicaId?: string }): Promise<Models.DedicatedDatabase>;
+    /**
+     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabase>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createFailover(databaseId: string, targetReplicaId?: string): Promise<Models.DedicatedDatabase>;
+    createFailover(
+        paramsOrFirst: { databaseId: string, targetReplicaId?: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.DedicatedDatabase> {
+        let params: { databaseId: string, targetReplicaId?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, targetReplicaId?: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                targetReplicaId: rest[0] as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const targetReplicaId = params.targetReplicaId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/tablesdb/{databaseId}/failovers'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof targetReplicaId !== 'undefined') {
+            payload['targetReplicaId'] = targetReplicaId;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
             uri,
             apiHeaders,
             payload
@@ -974,6 +1021,112 @@ export class TablesDB {
 
         return this.client.call(
             'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get high availability status for a dedicated database. Returns replica statuses, replication lag, and sync mode.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseReplicas>}
+     */
+    getReplicas(params: { databaseId: string }): Promise<Models.DedicatedDatabaseReplicas>;
+    /**
+     * Get high availability status for a dedicated database. Returns replica statuses, replication lag, and sync mode.
+     *
+     * @param {string} databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseReplicas>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getReplicas(databaseId: string): Promise<Models.DedicatedDatabaseReplicas>;
+    getReplicas(
+        paramsOrFirst: { databaseId: string } | string    
+    ): Promise<Models.DedicatedDatabaseReplicas> {
+        let params: { databaseId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/tablesdb/{databaseId}/replicas'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get real-time health and status information for a dedicated database. Returns health status, readiness, uptime, connection info, replica status, and volume information.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DatabaseStatus>}
+     */
+    getStatus(params: { databaseId: string }): Promise<Models.DatabaseStatus>;
+    /**
+     * Get real-time health and status information for a dedicated database. Returns health status, readiness, uptime, connection info, replica status, and volume information.
+     *
+     * @param {string} databaseId - Database ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DatabaseStatus>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getStatus(databaseId: string): Promise<Models.DatabaseStatus>;
+    getStatus(
+        paramsOrFirst: { databaseId: string } | string    
+    ): Promise<Models.DatabaseStatus> {
+        let params: { databaseId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/tablesdb/{databaseId}/status'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
             uri,
             apiHeaders,
             payload
@@ -6597,135 +6750,6 @@ export class TablesDB {
 
         return this.client.call(
             'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get usage metrics and statistics for a table. Returning the total number of rows. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.tableId - Table ID.
-     * @param {UsageRange} params.range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageTable>}
-     */
-    getTableUsage(params: { databaseId: string, tableId: string, range?: UsageRange }): Promise<Models.UsageTable>;
-    /**
-     * Get usage metrics and statistics for a table. Returning the total number of rows. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} tableId - Table ID.
-     * @param {UsageRange} range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageTable>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getTableUsage(databaseId: string, tableId: string, range?: UsageRange): Promise<Models.UsageTable>;
-    getTableUsage(
-        paramsOrFirst: { databaseId: string, tableId: string, range?: UsageRange } | string,
-        ...rest: [(string)?, (UsageRange)?]    
-    ): Promise<Models.UsageTable> {
-        let params: { databaseId: string, tableId: string, range?: UsageRange };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, range?: UsageRange };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                tableId: rest[0] as string,
-                range: rest[1] as UsageRange            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const tableId = params.tableId;
-        const range = params.range;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-        if (typeof tableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "tableId"');
-        }
-
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/usage'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get usage metrics and statistics for a database. You can view the total number of tables, rows, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {UsageRange} params.range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDatabase>}
-     */
-    getUsage(params: { databaseId: string, range?: UsageRange }): Promise<Models.UsageDatabase>;
-    /**
-     * Get usage metrics and statistics for a database. You can view the total number of tables, rows, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {UsageRange} range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDatabase>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getUsage(databaseId: string, range?: UsageRange): Promise<Models.UsageDatabase>;
-    getUsage(
-        paramsOrFirst: { databaseId: string, range?: UsageRange } | string,
-        ...rest: [(UsageRange)?]    
-    ): Promise<Models.UsageDatabase> {
-        let params: { databaseId: string, range?: UsageRange };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, range?: UsageRange };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                range: rest[0] as UsageRange            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const range = params.range;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-
-        const apiPath = '/tablesdb/{databaseId}/usage'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
-        const payload: Payload = {};
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload

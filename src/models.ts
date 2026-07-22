@@ -14,14 +14,13 @@ import { ProjectProtocolId } from "./enums/project-protocol-id"
 import { OAuth2GooglePrompt } from "./enums/o-auth-2-google-prompt"
 import { OAuth2OidcPrompt } from "./enums/o-auth-2-oidc-prompt"
 import { PlatformType } from "./enums/platform-type"
-import { HealthAntivirusStatus } from "./enums/health-antivirus-status"
-import { HealthCheckStatus } from "./enums/health-check-status"
 import { ProxyRuleDeploymentResourceType } from "./enums/proxy-rule-deployment-resource-type"
 import { ProxyRuleStatus } from "./enums/proxy-rule-status"
 import { MessageStatus } from "./enums/message-status"
 import { BillingPlanGroup } from "./enums/billing-plan-group"
 import { DomainTransferStatusEnum } from "./enums/domain-transfer-status-enum"
 import { DomainPurchaseStatus } from "./enums/domain-purchase-status"
+import { WafRuleAction } from "./enums/waf-rule-action"
 
 /**
  * Appwrite Models
@@ -641,20 +640,6 @@ export namespace Models {
     }
 
     /**
-     * Status List
-     */
-    export type HealthStatusList = {
-        /**
-         * Total number of statuses that matched your query.
-         */
-        total: number;
-        /**
-         * List of statuses.
-         */
-        statuses: HealthStatus[];
-    }
-
-    /**
      * Rule List
      */
     export type ProxyRuleList = {
@@ -917,17 +902,29 @@ export namespace Models {
          */
         type: DatabaseType;
         /**
-         * Database status. Possible values: `provisioning`, `ready` or `failed`
+         * Dedicated database lifecycle status. Null when the database has no valid dedicated backing.
          */
-        status: DatabaseStatus;
+        status?: DatabaseStatus;
+        /**
+         * Underlying engine of the dedicated backing: postgresql, mysql, mariadb, or mongodb. A managed product (tablesdb, documentsdb, vectorsdb) reports the engine it runs on, so its type and engine can differ. Null when the database has no dedicated backing.
+         */
+        engine?: string;
+        /**
+         * Compute specification identifier of the dedicated backing, e.g. s-2vcpu-2gb. Null when the database has no dedicated backing.
+         */
+        specification?: string;
+        /**
+         * Number of secondary high availability replicas, excluding the primary. Null when backing configuration is unavailable.
+         */
+        replicas?: number;
         /**
          * Database backup policies.
          */
-        policies: BackupPolicy[];
+        policies?: BackupPolicy[];
         /**
          * Database backup archives.
          */
-        archives: BackupArchive[];
+        archives?: BackupArchive[];
     }
 
     /**
@@ -3746,6 +3743,84 @@ export namespace Models {
     }
 
     /**
+     * Locale
+     */
+    export type Locale = {
+        /**
+         * User IP address.
+         */
+        ip: string;
+        /**
+         * Country code in [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1) two-character format
+         */
+        countryCode: string;
+        /**
+         * Country name. This field support localization.
+         */
+        country: string;
+        /**
+         * Continent code. A two character continent code "AF" for Africa, "AN" for Antarctica, "AS" for Asia, "EU" for Europe, "NA" for North America, "OC" for Oceania, and "SA" for South America.
+         */
+        continentCode: string;
+        /**
+         * Continent name. This field support localization.
+         */
+        continent: string;
+        /**
+         * True if country is part of the European Union.
+         */
+        eu: boolean;
+        /**
+         * Currency code in [ISO 4217-1](http://en.wikipedia.org/wiki/ISO_4217) three-character format
+         */
+        currency: string;
+        /**
+         * City
+         */
+        city?: string;
+        /**
+         * Name of timezone
+         */
+        timeZone?: string;
+        /**
+         * Postal code
+         */
+        postalCode?: string;
+        /**
+         * Latitude
+         */
+        latitude?: number;
+        /**
+         * Longitude
+         */
+        longitude?: number;
+        /**
+         * Autonomous System Number (ASN) of the IP
+         */
+        autonomousSystemNumber?: string;
+        /**
+         * Organization that owns the ASN
+         */
+        autonomousSystemOrganization?: string;
+        /**
+         * Internet service provider of the IP
+         */
+        isp?: string;
+        /**
+         * Connection type of the IP (e.g. cable, cellular, corporate)
+         */
+        connectionType?: string;
+        /**
+         * User type classification of the IP (e.g. residential, business, hosting)
+         */
+        connectionUsageType?: string;
+        /**
+         * Registered organization of the IP
+         */
+        connectionOrganization?: string;
+    }
+
+    /**
      * LocaleCode
      */
     export type LocaleCode = {
@@ -5188,6 +5263,10 @@ export namespace Models {
          */
         consoleAccessedAt: string;
         /**
+         * Whether WAF enforcement is enabled for the project.
+         */
+        wafEnabled: boolean;
+        /**
          * Billing limits reached
          */
         billingLimits?: BillingLimits;
@@ -5203,6 +5282,10 @@ export namespace Models {
          * OAuth2 server allowed scopes
          */
         oAuth2ServerScopes?: string[];
+        /**
+         * OAuth2 server scopes used when an authorization request omits the scope parameter
+         */
+        oAuth2ServerDefaultScopes?: string[];
         /**
          * OAuth2 server accepted RFC 9396 authorization_details types
          */
@@ -6184,6 +6267,28 @@ export namespace Models {
     }
 
     /**
+     * OAuth2Appwrite
+     */
+    export type OAuth2Appwrite = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Appwrite OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Appwrite OAuth2 client secret.
+         */
+        clientSecret: string;
+    }
+
+    /**
      * OAuth2Authentik
      */
     export type OAuth2Authentik = {
@@ -6456,7 +6561,7 @@ export namespace Models {
         /**
          * List of OAuth2 providers.
          */
-        providers: (Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft)[];
+        providers: (Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Appwrite | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft)[];
     }
 
     /**
@@ -6936,96 +7041,6 @@ export namespace Models {
     }
 
     /**
-     * Health Antivirus
-     */
-    export type HealthAntivirus = {
-        /**
-         * Antivirus version.
-         */
-        version: string;
-        /**
-         * Antivirus status. Possible values are: `disabled`, `offline`, `online`
-         */
-        status: HealthAntivirusStatus;
-    }
-
-    /**
-     * Health Queue
-     */
-    export type HealthQueue = {
-        /**
-         * Amount of actions in the queue.
-         */
-        size: number;
-    }
-
-    /**
-     * Health Status
-     */
-    export type HealthStatus = {
-        /**
-         * Name of the service.
-         */
-        name: string;
-        /**
-         * Duration in milliseconds how long the health check took.
-         */
-        ping: number;
-        /**
-         * Service status. Possible values are: `pass`, `fail`
-         */
-        status: HealthCheckStatus;
-    }
-
-    /**
-     * Health Certificate
-     */
-    export type HealthCertificate = {
-        /**
-         * Certificate name
-         */
-        name: string;
-        /**
-         * Subject SN
-         */
-        subjectSN: string;
-        /**
-         * Issuer organisation
-         */
-        issuerOrganisation: string;
-        /**
-         * Valid from
-         */
-        validFrom: string;
-        /**
-         * Valid to
-         */
-        validTo: string;
-        /**
-         * Signature type SN
-         */
-        signatureTypeSN: string;
-    }
-
-    /**
-     * Health Time
-     */
-    export type HealthTime = {
-        /**
-         * Current unix timestamp on trustful remote server.
-         */
-        remoteTime: number;
-        /**
-         * Current unix timestamp of local server where Appwrite runs.
-         */
-        localTime: number;
-        /**
-         * Difference of unix remote and local timestamps in milliseconds.
-         */
-        diff: number;
-    }
-
-    /**
      * Metric
      */
     export type Metric = {
@@ -7059,182 +7074,6 @@ export namespace Models {
          * The estimated value of this metric at the end of the period.
          */
         estimate?: number;
-    }
-
-    /**
-     * UsageDatabases
-     */
-    export type UsageDatabases = {
-        /**
-         * Time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of databases.
-         */
-        databasesTotal: number;
-        /**
-         * Total aggregated number  of collections.
-         */
-        collectionsTotal: number;
-        /**
-         * Total aggregated number  of tables.
-         */
-        tablesTotal: number;
-        /**
-         * Total aggregated number of documents.
-         */
-        documentsTotal: number;
-        /**
-         * Total aggregated number of rows.
-         */
-        rowsTotal: number;
-        /**
-         * Total aggregated number of total databases storage in bytes.
-         */
-        storageTotal: number;
-        /**
-         * Total number of databases reads.
-         */
-        databasesReadsTotal: number;
-        /**
-         * Total number of databases writes.
-         */
-        databasesWritesTotal: number;
-        /**
-         * Aggregated number of databases per period.
-         */
-        databases: Metric[];
-        /**
-         * Aggregated number of collections per period.
-         */
-        collections: Metric[];
-        /**
-         * Aggregated number of tables per period.
-         */
-        tables: Metric[];
-        /**
-         * Aggregated number of documents per period.
-         */
-        documents: Metric[];
-        /**
-         * Aggregated number of rows per period.
-         */
-        rows: Metric[];
-        /**
-         * An array of the aggregated number of databases storage in bytes per period.
-         */
-        storage: Metric[];
-        /**
-         * An array of aggregated number of database reads.
-         */
-        databasesReads: Metric[];
-        /**
-         * An array of aggregated number of database writes.
-         */
-        databasesWrites: Metric[];
-    }
-
-    /**
-     * UsageDatabase
-     */
-    export type UsageDatabase = {
-        /**
-         * Time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of collections.
-         */
-        collectionsTotal: number;
-        /**
-         * Total aggregated number of tables.
-         */
-        tablesTotal: number;
-        /**
-         * Total aggregated number of documents.
-         */
-        documentsTotal: number;
-        /**
-         * Total aggregated number of rows.
-         */
-        rowsTotal: number;
-        /**
-         * Total aggregated number of total storage used in bytes.
-         */
-        storageTotal: number;
-        /**
-         * Total number of databases reads.
-         */
-        databaseReadsTotal: number;
-        /**
-         * Total number of databases writes.
-         */
-        databaseWritesTotal: number;
-        /**
-         * Aggregated  number of collections per period.
-         */
-        collections: Metric[];
-        /**
-         * Aggregated  number of tables per period.
-         */
-        tables: Metric[];
-        /**
-         * Aggregated  number of documents per period.
-         */
-        documents: Metric[];
-        /**
-         * Aggregated  number of rows per period.
-         */
-        rows: Metric[];
-        /**
-         * Aggregated storage used in bytes per period.
-         */
-        storage: Metric[];
-        /**
-         * An array of aggregated number of database reads.
-         */
-        databaseReads: Metric[];
-        /**
-         * An array of aggregated number of database writes.
-         */
-        databaseWrites: Metric[];
-    }
-
-    /**
-     * UsageTable
-     */
-    export type UsageTable = {
-        /**
-         * Time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of of rows.
-         */
-        rowsTotal: number;
-        /**
-         * Aggregated  number of rows per period.
-         */
-        rows: Metric[];
-    }
-
-    /**
-     * UsageCollection
-     */
-    export type UsageCollection = {
-        /**
-         * Time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of of documents.
-         */
-        documentsTotal: number;
-        /**
-         * Aggregated  number of documents per period.
-         */
-        documents: Metric[];
     }
 
     /**
@@ -7279,538 +7118,6 @@ export namespace Models {
          * Aggregated number of online users per period.
          */
         presences: Metric[];
-    }
-
-    /**
-     * StorageUsage
-     */
-    export type UsageStorage = {
-        /**
-         * Time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of buckets
-         */
-        bucketsTotal: number;
-        /**
-         * Total aggregated number of files.
-         */
-        filesTotal: number;
-        /**
-         * Total aggregated number of files storage (in bytes).
-         */
-        filesStorageTotal: number;
-        /**
-         * Aggregated number of buckets per period.
-         */
-        buckets: Metric[];
-        /**
-         * Aggregated number of files per period.
-         */
-        files: Metric[];
-        /**
-         * Aggregated number of files storage (in bytes) per period .
-         */
-        storage: Metric[];
-    }
-
-    /**
-     * UsageBuckets
-     */
-    export type UsageBuckets = {
-        /**
-         * Time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of bucket files.
-         */
-        filesTotal: number;
-        /**
-         * Total aggregated number of bucket files storage (in bytes).
-         */
-        filesStorageTotal: number;
-        /**
-         * Aggregated  number of bucket files per period.
-         */
-        files: Metric[];
-        /**
-         * Aggregated  number of bucket storage files (in bytes) per period.
-         */
-        storage: Metric[];
-        /**
-         * Aggregated number of files transformations per period.
-         */
-        imageTransformations: Metric[];
-        /**
-         * Total aggregated number of files transformations.
-         */
-        imageTransformationsTotal: number;
-    }
-
-    /**
-     * UsageFunctions
-     */
-    export type UsageFunctions = {
-        /**
-         * Time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of functions.
-         */
-        functionsTotal: number;
-        /**
-         * Total aggregated number of functions deployments.
-         */
-        deploymentsTotal: number;
-        /**
-         * Total aggregated sum of functions deployment storage.
-         */
-        deploymentsStorageTotal: number;
-        /**
-         * Total aggregated number of functions build.
-         */
-        buildsTotal: number;
-        /**
-         * total aggregated sum of functions build storage.
-         */
-        buildsStorageTotal: number;
-        /**
-         * Total aggregated sum of functions build compute time.
-         */
-        buildsTimeTotal: number;
-        /**
-         * Total aggregated sum of functions build mbSeconds.
-         */
-        buildsMbSecondsTotal: number;
-        /**
-         * Total  aggregated number of functions execution.
-         */
-        executionsTotal: number;
-        /**
-         * Total aggregated sum of functions  execution compute time.
-         */
-        executionsTimeTotal: number;
-        /**
-         * Total aggregated sum of functions execution mbSeconds.
-         */
-        executionsMbSecondsTotal: number;
-        /**
-         * Aggregated number of functions per period.
-         */
-        functions: Metric[];
-        /**
-         * Aggregated number of functions deployment per period.
-         */
-        deployments: Metric[];
-        /**
-         * Aggregated number of  functions deployment storage per period.
-         */
-        deploymentsStorage: Metric[];
-        /**
-         * Total aggregated number of successful function builds.
-         */
-        buildsSuccessTotal: number;
-        /**
-         * Total aggregated number of failed function builds.
-         */
-        buildsFailedTotal: number;
-        /**
-         * Aggregated number of functions build per period.
-         */
-        builds: Metric[];
-        /**
-         * Aggregated sum of functions build storage per period.
-         */
-        buildsStorage: Metric[];
-        /**
-         * Aggregated sum of  functions build compute time per period.
-         */
-        buildsTime: Metric[];
-        /**
-         * Aggregated sum of functions build mbSeconds per period.
-         */
-        buildsMbSeconds: Metric[];
-        /**
-         * Aggregated number of  functions execution per period.
-         */
-        executions: Metric[];
-        /**
-         * Aggregated number of functions execution compute time per period.
-         */
-        executionsTime: Metric[];
-        /**
-         * Aggregated number of functions mbSeconds per period.
-         */
-        executionsMbSeconds: Metric[];
-        /**
-         * Aggregated number of successful function builds per period.
-         */
-        buildsSuccess: Metric[];
-        /**
-         * Aggregated number of failed function builds per period.
-         */
-        buildsFailed: Metric[];
-    }
-
-    /**
-     * UsageFunction
-     */
-    export type UsageFunction = {
-        /**
-         * The time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of function deployments.
-         */
-        deploymentsTotal: number;
-        /**
-         * Total aggregated sum of function deployments storage.
-         */
-        deploymentsStorageTotal: number;
-        /**
-         * Total aggregated number of function builds.
-         */
-        buildsTotal: number;
-        /**
-         * Total aggregated number of successful function builds.
-         */
-        buildsSuccessTotal: number;
-        /**
-         * Total aggregated number of failed function builds.
-         */
-        buildsFailedTotal: number;
-        /**
-         * total aggregated sum of function builds storage.
-         */
-        buildsStorageTotal: number;
-        /**
-         * Total aggregated sum of function builds compute time.
-         */
-        buildsTimeTotal: number;
-        /**
-         * Average builds compute time.
-         */
-        buildsTimeAverage: number;
-        /**
-         * Total aggregated sum of function builds mbSeconds.
-         */
-        buildsMbSecondsTotal: number;
-        /**
-         * Total  aggregated number of function executions.
-         */
-        executionsTotal: number;
-        /**
-         * Total aggregated sum of function  executions compute time.
-         */
-        executionsTimeTotal: number;
-        /**
-         * Total aggregated sum of function executions mbSeconds.
-         */
-        executionsMbSecondsTotal: number;
-        /**
-         * Aggregated number of function deployments per period.
-         */
-        deployments: Metric[];
-        /**
-         * Aggregated number of  function deployments storage per period.
-         */
-        deploymentsStorage: Metric[];
-        /**
-         * Aggregated number of function builds per period.
-         */
-        builds: Metric[];
-        /**
-         * Aggregated sum of function builds storage per period.
-         */
-        buildsStorage: Metric[];
-        /**
-         * Aggregated sum of function builds compute time per period.
-         */
-        buildsTime: Metric[];
-        /**
-         * Aggregated number of function builds mbSeconds per period.
-         */
-        buildsMbSeconds: Metric[];
-        /**
-         * Aggregated number of function executions per period.
-         */
-        executions: Metric[];
-        /**
-         * Aggregated number of function executions compute time per period.
-         */
-        executionsTime: Metric[];
-        /**
-         * Aggregated number of function mbSeconds per period.
-         */
-        executionsMbSeconds: Metric[];
-        /**
-         * Aggregated number of successful builds per period.
-         */
-        buildsSuccess: Metric[];
-        /**
-         * Aggregated number of failed builds per period.
-         */
-        buildsFailed: Metric[];
-    }
-
-    /**
-     * UsageSites
-     */
-    export type UsageSites = {
-        /**
-         * Time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of sites.
-         */
-        sitesTotal: number;
-        /**
-         * Aggregated number of sites per period.
-         */
-        sites: Metric[];
-        /**
-         * Total aggregated number of sites deployments.
-         */
-        deploymentsTotal: number;
-        /**
-         * Total aggregated sum of sites deployment storage.
-         */
-        deploymentsStorageTotal: number;
-        /**
-         * Total aggregated number of sites build.
-         */
-        buildsTotal: number;
-        /**
-         * total aggregated sum of sites build storage.
-         */
-        buildsStorageTotal: number;
-        /**
-         * Total aggregated sum of sites build compute time.
-         */
-        buildsTimeTotal: number;
-        /**
-         * Total aggregated sum of sites build mbSeconds.
-         */
-        buildsMbSecondsTotal: number;
-        /**
-         * Total  aggregated number of sites execution.
-         */
-        executionsTotal: number;
-        /**
-         * Total aggregated sum of sites  execution compute time.
-         */
-        executionsTimeTotal: number;
-        /**
-         * Total aggregated sum of sites execution mbSeconds.
-         */
-        executionsMbSecondsTotal: number;
-        /**
-         * Total aggregated number of requests.
-         */
-        requestsTotal: number;
-        /**
-         * Aggregated number of requests per period.
-         */
-        requests: Metric[];
-        /**
-         * Total aggregated inbound bandwidth.
-         */
-        inboundTotal: number;
-        /**
-         * Aggregated number of inbound bandwidth per period.
-         */
-        inbound: Metric[];
-        /**
-         * Total aggregated outbound bandwidth.
-         */
-        outboundTotal: number;
-        /**
-         * Aggregated number of outbound bandwidth per period.
-         */
-        outbound: Metric[];
-        /**
-         * Aggregated number of sites deployment per period.
-         */
-        deployments: Metric[];
-        /**
-         * Aggregated number of  sites deployment storage per period.
-         */
-        deploymentsStorage: Metric[];
-        /**
-         * Total aggregated number of successful site builds.
-         */
-        buildsSuccessTotal: number;
-        /**
-         * Total aggregated number of failed site builds.
-         */
-        buildsFailedTotal: number;
-        /**
-         * Aggregated number of sites build per period.
-         */
-        builds: Metric[];
-        /**
-         * Aggregated sum of sites build storage per period.
-         */
-        buildsStorage: Metric[];
-        /**
-         * Aggregated sum of  sites build compute time per period.
-         */
-        buildsTime: Metric[];
-        /**
-         * Aggregated sum of sites build mbSeconds per period.
-         */
-        buildsMbSeconds: Metric[];
-        /**
-         * Aggregated number of  sites execution per period.
-         */
-        executions: Metric[];
-        /**
-         * Aggregated number of sites execution compute time per period.
-         */
-        executionsTime: Metric[];
-        /**
-         * Aggregated number of sites mbSeconds per period.
-         */
-        executionsMbSeconds: Metric[];
-        /**
-         * Aggregated number of successful site builds per period.
-         */
-        buildsSuccess: Metric[];
-        /**
-         * Aggregated number of failed site builds per period.
-         */
-        buildsFailed: Metric[];
-    }
-
-    /**
-     * UsageSite
-     */
-    export type UsageSite = {
-        /**
-         * The time range of the usage stats.
-         */
-        range: string;
-        /**
-         * Total aggregated number of function deployments.
-         */
-        deploymentsTotal: number;
-        /**
-         * Total aggregated sum of function deployments storage.
-         */
-        deploymentsStorageTotal: number;
-        /**
-         * Total aggregated number of function builds.
-         */
-        buildsTotal: number;
-        /**
-         * Total aggregated number of successful function builds.
-         */
-        buildsSuccessTotal: number;
-        /**
-         * Total aggregated number of failed function builds.
-         */
-        buildsFailedTotal: number;
-        /**
-         * total aggregated sum of function builds storage.
-         */
-        buildsStorageTotal: number;
-        /**
-         * Total aggregated sum of function builds compute time.
-         */
-        buildsTimeTotal: number;
-        /**
-         * Average builds compute time.
-         */
-        buildsTimeAverage: number;
-        /**
-         * Total aggregated sum of function builds mbSeconds.
-         */
-        buildsMbSecondsTotal: number;
-        /**
-         * Total  aggregated number of function executions.
-         */
-        executionsTotal: number;
-        /**
-         * Total aggregated sum of function  executions compute time.
-         */
-        executionsTimeTotal: number;
-        /**
-         * Total aggregated sum of function executions mbSeconds.
-         */
-        executionsMbSecondsTotal: number;
-        /**
-         * Aggregated number of function deployments per period.
-         */
-        deployments: Metric[];
-        /**
-         * Aggregated number of  function deployments storage per period.
-         */
-        deploymentsStorage: Metric[];
-        /**
-         * Aggregated number of function builds per period.
-         */
-        builds: Metric[];
-        /**
-         * Aggregated sum of function builds storage per period.
-         */
-        buildsStorage: Metric[];
-        /**
-         * Aggregated sum of function builds compute time per period.
-         */
-        buildsTime: Metric[];
-        /**
-         * Aggregated number of function builds mbSeconds per period.
-         */
-        buildsMbSeconds: Metric[];
-        /**
-         * Aggregated number of function executions per period.
-         */
-        executions: Metric[];
-        /**
-         * Aggregated number of function executions compute time per period.
-         */
-        executionsTime: Metric[];
-        /**
-         * Aggregated number of function mbSeconds per period.
-         */
-        executionsMbSeconds: Metric[];
-        /**
-         * Aggregated number of successful builds per period.
-         */
-        buildsSuccess: Metric[];
-        /**
-         * Aggregated number of failed builds per period.
-         */
-        buildsFailed: Metric[];
-        /**
-         * Total aggregated number of requests.
-         */
-        requestsTotal: number;
-        /**
-         * Aggregated number of requests per period.
-         */
-        requests: Metric[];
-        /**
-         * Total aggregated inbound bandwidth.
-         */
-        inboundTotal: number;
-        /**
-         * Aggregated number of inbound bandwidth per period.
-         */
-        inbound: Metric[];
-        /**
-         * Total aggregated outbound bandwidth.
-         */
-        outboundTotal: number;
-        /**
-         * Aggregated number of outbound bandwidth per period.
-         */
-        outbound: Metric[];
     }
 
     /**
@@ -7913,30 +7220,6 @@ export namespace Models {
          * Aggregated number of executions per period.
          */
         executions: Metric[];
-        /**
-         * Aggregated breakdown in totals of executions by functions.
-         */
-        executionsBreakdown: MetricBreakdown[];
-        /**
-         * Aggregated breakdown in totals of usage by buckets.
-         */
-        bucketsBreakdown: MetricBreakdown[];
-        /**
-         * An array of the aggregated breakdown of storage usage by databases.
-         */
-        databasesStorageBreakdown: MetricBreakdown[];
-        /**
-         * Aggregated breakdown in totals of execution mbSeconds by functions.
-         */
-        executionsMbSecondsBreakdown: MetricBreakdown[];
-        /**
-         * Aggregated breakdown in totals of build mbSeconds by functions.
-         */
-        buildsMbSecondsBreakdown: MetricBreakdown[];
-        /**
-         * Aggregated breakdown in totals of functions storage size (in bytes).
-         */
-        functionsStorageBreakdown: MetricBreakdown[];
         /**
          * Aggregated stats for total auth phone.
          */
@@ -8371,6 +7654,10 @@ export namespace Models {
          * Defines if VCS (Version Control System) is enabled.
          */
         _APP_VCS_ENABLED: boolean;
+        /**
+         * List of configured VCS providers.
+         */
+        _APP_VCS_PROVIDERS: string[];
         /**
          * Defines if main domain is configured. If so, custom domains can be created.
          */
@@ -8888,9 +8175,41 @@ export namespace Models {
          */
         resources: string[];
         /**
-         * Id of the resource to migrate.
+         * ID of the resource being migrated.
          */
         resourceId: string;
+        /**
+         * Internal ID of the resource being migrated.
+         */
+        resourceInternalId: string;
+        /**
+         * Type of the resource being migrated.
+         */
+        resourceType: string;
+        /**
+         * ID of the parent resource that contains the migrated resource.
+         */
+        parentResourceId: string;
+        /**
+         * Internal ID of the parent resource that contains the migrated resource.
+         */
+        parentResourceInternalId: string;
+        /**
+         * Type of the parent resource that contains the migrated resource.
+         */
+        parentResourceType: string;
+        /**
+         * ID of the destination resource created or overwritten by the migration.
+         */
+        destinationResourceId: string;
+        /**
+         * Internal ID of the destination resource created or overwritten by the migration.
+         */
+        destinationResourceInternalId: string;
+        /**
+         * Type of the destination resource created or overwritten by the migration.
+         */
+        destinationResourceType: string;
         /**
          * A group of counters that represent the total progress of the migration.
          */
@@ -9238,6 +8557,42 @@ export namespace Models {
          */
         country: string;
         /**
+         * Continent code.
+         */
+        continentCode: string;
+        /**
+         * City name.
+         */
+        city: string;
+        /**
+         * Region/state chain.
+         */
+        subdivisions: string;
+        /**
+         * Internet service provider.
+         */
+        isp: string;
+        /**
+         * Autonomous System Number (ASN).
+         */
+        autonomousSystemNumber: string;
+        /**
+         * Organization that owns the ASN.
+         */
+        autonomousSystemOrganization: string;
+        /**
+         * Connection type (e.g. cable, cellular, corporate).
+         */
+        connectionType: string;
+        /**
+         * User type (e.g. residential, business, hosting).
+         */
+        connectionUsageType: string;
+        /**
+         * Registered organization of the IP.
+         */
+        connectionOrganization: string;
+        /**
          * Log creation date in ISO 8601 format.
          */
         time: string;
@@ -9253,6 +8608,14 @@ export namespace Models {
          * Hostname.
          */
         hostname: string;
+        /**
+         * Name of the SDK that triggered the event.
+         */
+        sdk: string;
+        /**
+         * Version of the SDK that triggered the event.
+         */
+        sdkVersion: string;
     }
 
     /**
@@ -9802,6 +9165,10 @@ export namespace Models {
          */
         webhooks: number;
         /**
+         * Maximum WAF rules per project
+         */
+        wafRules: number;
+        /**
          * Projects
          */
         projects: number;
@@ -9893,6 +9260,10 @@ export namespace Models {
          * Usage history days
          */
         usageLogs: number;
+        /**
+         * Usage log time intervals allowed for this plan (e.g. 15m, 1h, 1d).
+         */
+        usageLogsIntervals?: string[];
         /**
          * Number of days of console inactivity before a project is paused. 0 means pausing is disabled.
          */
@@ -10117,10 +9488,6 @@ export namespace Models {
          * Maximum storage allocation in gigabytes.
          */
         maxStorageGb?: number;
-        /**
-         * Maximum number of dedicated databases per project.
-         */
-        maxDatabasesPerProject?: number;
         /**
          * Maximum number of high-availability replicas per dedicated database.
          */
@@ -10574,7 +9941,7 @@ export namespace Models {
          */
         name: string;
         /**
-         * Product API that owns this database: nativedb, documentsdb, or vectorsdb.
+         * Product API that owns this database: tablesdb, documentsdb, vectorsdb, mysql, postgresql, or mongodb.
          */
         api: string;
         /**
@@ -10613,6 +9980,10 @@ export namespace Models {
          * Full database connection string (URI format).
          */
         connectionString: string;
+        /**
+         * Whether SSL/TLS is required for client connections.
+         */
+        ssl: boolean;
         /**
          * Database status. Possible values: provisioning, ready, inactive, paused, failed, deleted, restoring, scaling.
          */
@@ -10669,6 +10040,10 @@ export namespace Models {
          * Replication sync mode: async, sync, or quorum.
          */
         syncMode: string;
+        /**
+         * Number of cross-region replicas. Cross-region availability is enabled when greater than 0.
+         */
+        crossRegionReplicas: number;
         /**
          * Maximum concurrent connections.
          */
@@ -11301,6 +10676,10 @@ export namespace Models {
          * List of available extensions that can be installed.
          */
         available: string[];
+        /**
+         * Curated metadata (display name, description, category) for each available extension.
+         */
+        metadata: PostgresExtension[];
     }
 
     /**
@@ -11316,7 +10695,7 @@ export namespace Models {
          */
         role: string;
         /**
-         * Member pod status. Possible values: active (running), pending, notFound (pod missing), or the lowercased pod phase reported by the cluster.
+         * Member pod status. Possible values: provisioning (pod missing or Pending), starting (Running but not Ready), active (Running and Ready), failed (Failed phase or CrashLoopBackOff container), or the lowercased pod phase reported by the cluster.
          */
         status: string;
         /**
@@ -12272,10 +11651,6 @@ export namespace Models {
          */
         crossRegionReplicaRate: number;
         /**
-         * Cross-region transfer price as a fraction of the specification cost.
-         */
-        crossRegionRate: number;
-        /**
          * Point-in-time recovery price as a fraction of the specification cost.
          */
         pitrRate: number;
@@ -12340,84 +11715,6 @@ export namespace Models {
     }
 
     /**
-     * Locale
-     */
-    export type CloudLocale = {
-        /**
-         * User IP address.
-         */
-        ip: string;
-        /**
-         * Country code in [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1) two-character format
-         */
-        countryCode: string;
-        /**
-         * Country name. This field support localization.
-         */
-        country: string;
-        /**
-         * Continent code. A two character continent code "AF" for Africa, "AN" for Antarctica, "AS" for Asia, "EU" for Europe, "NA" for North America, "OC" for Oceania, and "SA" for South America.
-         */
-        continentCode: string;
-        /**
-         * Continent name. This field support localization.
-         */
-        continent: string;
-        /**
-         * True if country is part of the European Union.
-         */
-        eu: boolean;
-        /**
-         * Currency code in [ISO 4217-1](http://en.wikipedia.org/wiki/ISO_4217) three-character format
-         */
-        currency: string;
-        /**
-         * City
-         */
-        city?: string;
-        /**
-         * Name of timezone
-         */
-        timeZone?: string;
-        /**
-         * Postal code
-         */
-        postalCode?: string;
-        /**
-         * Latitude
-         */
-        latitude?: number;
-        /**
-         * Longitude
-         */
-        longitude?: number;
-        /**
-         * Autonomous System Number (ASN) of the IP
-         */
-        autonomousSystemNumber?: string;
-        /**
-         * Organization that owns the ASN
-         */
-        autonomousSystemOrganization?: string;
-        /**
-         * Internet service provider of the IP
-         */
-        isp?: string;
-        /**
-         * Connection type of the IP (e.g. cable, cellular, corporate)
-         */
-        connectionType?: string;
-        /**
-         * User type classification of the IP (e.g. residential, business, hosting)
-         */
-        connectionUsageType?: string;
-        /**
-         * Registered organization of the IP
-         */
-        connectionOrganization?: string;
-    }
-
-    /**
      * usageBillingPlan
      */
     export type UsageBillingPlan = {
@@ -12476,7 +11773,7 @@ export namespace Models {
          */
         time: string;
         /**
-         * Aggregated value for the bucket.
+         * Aggregated value for the bucket. Counters are whole numbers; gauge rates (e.g. queries per second) may be fractional.
          */
         value: number;
         /**
@@ -12499,6 +11796,42 @@ export namespace Models {
          * Country code when broken down by `country`.
          */
         country?: string;
+        /**
+         * Continent code when broken down by `continentCode`.
+         */
+        continentCode?: string;
+        /**
+         * City name when broken down by `city`.
+         */
+        city?: string;
+        /**
+         * Region/state chain when broken down by `subdivisions`.
+         */
+        subdivisions?: string;
+        /**
+         * Internet service provider when broken down by `isp`.
+         */
+        isp?: string;
+        /**
+         * Autonomous System Number (ASN) when broken down by `autonomousSystemNumber`.
+         */
+        autonomousSystemNumber?: string;
+        /**
+         * Organization owning the ASN when broken down by `autonomousSystemOrganization`.
+         */
+        autonomousSystemOrganization?: string;
+        /**
+         * Connection type (e.g. cable, cellular, corporate) when broken down by `connectionType`.
+         */
+        connectionType?: string;
+        /**
+         * User type (e.g. residential, business, hosting) when broken down by `connectionUsageType`.
+         */
+        connectionUsageType?: string;
+        /**
+         * Registered organization of the IP when broken down by `connectionOrganization`.
+         */
+        connectionOrganization?: string;
         /**
          * Appwrite region when broken down by `region`.
          */
@@ -12524,6 +11857,14 @@ export namespace Models {
          */
         clientName?: string;
         /**
+         * SDK name when broken down by `sdk`.
+         */
+        sdk?: string;
+        /**
+         * SDK version when broken down by `sdkVersion`.
+         */
+        sdkVersion?: string;
+        /**
          * Device classification when broken down by `deviceName`.
          */
         deviceName?: string;
@@ -12539,6 +11880,10 @@ export namespace Models {
          * Resource type when broken down by `resourceType`.
          */
         resourceType?: string;
+        /**
+         * Replica ordinal when broken down by `ordinal`. 0 is the primary; 1+ are replicas.
+         */
+        ordinal?: string;
     }
 
     /**
@@ -12886,6 +12231,10 @@ export namespace Models {
          */
         tags: string[];
         /**
+         * Application labels. Read-only for clients; only a server SDK using a project API key can update them.
+         */
+        labels: string[];
+        /**
          * Application image URLs shown to users during OAuth2 consent.
          */
         images: string[];
@@ -12952,7 +12301,7 @@ export namespace Models {
          */
         appId: string;
         /**
-         * Hashed application client secret.
+         * Always empty. The application client secret is returned only once, in the response of the createSecret method.
          */
         secret: string;
         /**
@@ -12994,7 +12343,7 @@ export namespace Models {
          */
         appId: string;
         /**
-         * Application client secret. Returned in full only when the secret is created; subsequent reads return a masked value.
+         * Application client secret. Returned only when the secret is created; subsequent reads always return an empty value.
          */
         secret: string;
         /**
@@ -13013,6 +12362,32 @@ export namespace Models {
          * Time the secret was last used for authentication in ISO 8601 format. Null if never used.
          */
         lastAccessedAt?: string;
+    }
+
+    /**
+     * AppScope
+     */
+    export type AppScope = {
+        /**
+         * Scope value as requested by apps.
+         */
+        value: string;
+        /**
+         * Human-readable description of what the scope grants.
+         */
+        description: string;
+        /**
+         * What the scope grants access to. One of `account`, `project`, or `organization`. Only `project` and `organization` scopes are installable.
+         */
+        type: string;
+        /**
+         * Scope category, used to group scopes on consent and installation screens.
+         */
+        category: string;
+        /**
+         * Whether the scope is deprecated. Deprecated scopes can still be requested but should not be offered for new grants.
+         */
+        deprecated: boolean;
     }
 
     /**
@@ -13182,6 +12557,442 @@ export namespace Models {
     }
 
     /**
+     * OAuth2 Consent
+     */
+    export type Oauth2Consent = {
+        /**
+         * Consent ID.
+         */
+        $id: string;
+        /**
+         * Consent creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Consent update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the user the consent belongs to.
+         */
+        userId: string;
+        /**
+         * ID of the registered app the consent was given to. Empty for URL-form (CIMD) clients.
+         */
+        appId: string;
+        /**
+         * Client ID metadata document URL of the client the consent was given to. Empty for registered apps.
+         */
+        cimdUrl: string;
+        /**
+         * OAuth2 scopes the user consented to.
+         */
+        scopes: string[];
+        /**
+         * RFC 8707 resource indicators the user consented to.
+         */
+        resources: string[];
+        /**
+         * Authorization details the user consented to, as a JSON string. Each entry has a `type` plus project-defined fields.
+         */
+        authorizationDetails: string;
+        /**
+         * Consent expiration time in ISO 8601 format. Empty when the consent has no token-bound expiry yet.
+         */
+        expire: string;
+    }
+
+    /**
+     * OAuth2 Consent Token
+     */
+    export type Oauth2ConsentToken = {
+        /**
+         * Token family ID.
+         */
+        $id: string;
+        /**
+         * Token creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Token update date in ISO 8601 format. Refreshing the token family updates this.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the consent the token family was issued under.
+         */
+        consentId: string;
+        /**
+         * ID of the user the token family belongs to.
+         */
+        userId: string;
+        /**
+         * ID of the registered app the token family was issued to. Empty for URL-form (CIMD) clients.
+         */
+        appId: string;
+        /**
+         * Client ID metadata document URL of the client the token family was issued to. Empty for registered apps.
+         */
+        cimdUrl: string;
+        /**
+         * OAuth2 scopes granted on the token family.
+         */
+        scopes: string[];
+        /**
+         * RFC 8707 resource indicators granted on the token family.
+         */
+        resources: string[];
+        /**
+         * Authorization details granted on the token family, as a JSON string. Each entry has a `type` plus project-defined fields.
+         */
+        authorizationDetails: string;
+        /**
+         * Expiration time of the current access token of this family in ISO 8601 format.
+         */
+        expire: string;
+    }
+
+    /**
+     * WafRule
+     */
+    export type WafRule = {
+        /**
+         * Rule ID.
+         */
+        $id: string;
+        /**
+         * WAF rule creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * WAF rule last update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human friendly rule name.
+         */
+        name: string;
+        /**
+         * Optional description for the rule.
+         */
+        description: string;
+        /**
+         * Team ID.
+         */
+        teamId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Resource type the rule is scoped to.
+         */
+        resourceType: string;
+        /**
+         * Resource identifier. Empty for API-wide rules.
+         */
+        resourceId: string;
+        /**
+         * Action performed when the rule matches.
+         */
+        action: WafRuleAction;
+        /**
+         * Evaluation priority. Lower values execute earlier.
+         */
+        priority: number;
+        /**
+         * Whether the rule is active.
+         */
+        enabled: boolean;
+        /**
+         * List of conditions evaluated for this rule.
+         */
+        conditions: object;
+        /**
+         * Action specific configuration.
+         */
+        config: object;
+    }
+
+    /**
+     * WafRuleBypass
+     */
+    export type WafRuleBypass = {
+        /**
+         * Rule ID.
+         */
+        $id: string;
+        /**
+         * WAF rule creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * WAF rule last update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human friendly rule name.
+         */
+        name: string;
+        /**
+         * Optional description for the rule.
+         */
+        description: string;
+        /**
+         * Team ID.
+         */
+        teamId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Resource type the rule is scoped to.
+         */
+        resourceType: string;
+        /**
+         * Resource identifier. Empty for API-wide rules.
+         */
+        resourceId: string;
+        /**
+         * Action performed when the rule matches.
+         */
+        action: WafRuleAction;
+        /**
+         * Evaluation priority. Lower values execute earlier.
+         */
+        priority: number;
+        /**
+         * Whether the rule is active.
+         */
+        enabled: boolean;
+        /**
+         * List of conditions evaluated for this rule.
+         */
+        conditions: object;
+        /**
+         * Action specific configuration.
+         */
+        config: object;
+    }
+
+    /**
+     * WafRuleDeny
+     */
+    export type WafRuleDeny = {
+        /**
+         * Rule ID.
+         */
+        $id: string;
+        /**
+         * WAF rule creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * WAF rule last update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human friendly rule name.
+         */
+        name: string;
+        /**
+         * Optional description for the rule.
+         */
+        description: string;
+        /**
+         * Team ID.
+         */
+        teamId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Resource type the rule is scoped to.
+         */
+        resourceType: string;
+        /**
+         * Resource identifier. Empty for API-wide rules.
+         */
+        resourceId: string;
+        /**
+         * Action performed when the rule matches.
+         */
+        action: WafRuleAction;
+        /**
+         * Evaluation priority. Lower values execute earlier.
+         */
+        priority: number;
+        /**
+         * Whether the rule is active.
+         */
+        enabled: boolean;
+        /**
+         * List of conditions evaluated for this rule.
+         */
+        conditions: object;
+        /**
+         * Action specific configuration.
+         */
+        config: object;
+    }
+
+    /**
+     * WafRuleRateLimit
+     */
+    export type WafRuleRateLimit = {
+        /**
+         * Rule ID.
+         */
+        $id: string;
+        /**
+         * WAF rule creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * WAF rule last update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human friendly rule name.
+         */
+        name: string;
+        /**
+         * Optional description for the rule.
+         */
+        description: string;
+        /**
+         * Team ID.
+         */
+        teamId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Resource type the rule is scoped to.
+         */
+        resourceType: string;
+        /**
+         * Resource identifier. Empty for API-wide rules.
+         */
+        resourceId: string;
+        /**
+         * Action performed when the rule matches.
+         */
+        action: WafRuleAction;
+        /**
+         * Evaluation priority. Lower values execute earlier.
+         */
+        priority: number;
+        /**
+         * Whether the rule is active.
+         */
+        enabled: boolean;
+        /**
+         * List of conditions evaluated for this rule.
+         */
+        conditions: object;
+        /**
+         * Action specific configuration.
+         */
+        config: object;
+        /**
+         * Maximum number of matching requests allowed for the given interval.
+         */
+        limit: number;
+        /**
+         * Interval in seconds for the rate limit window.
+         */
+        interval: number;
+    }
+
+    /**
+     * WafRuleRedirect
+     */
+    export type WafRuleRedirect = {
+        /**
+         * Rule ID.
+         */
+        $id: string;
+        /**
+         * WAF rule creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * WAF rule last update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human friendly rule name.
+         */
+        name: string;
+        /**
+         * Optional description for the rule.
+         */
+        description: string;
+        /**
+         * Team ID.
+         */
+        teamId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Resource type the rule is scoped to.
+         */
+        resourceType: string;
+        /**
+         * Resource identifier. Empty for API-wide rules.
+         */
+        resourceId: string;
+        /**
+         * Action performed when the rule matches.
+         */
+        action: WafRuleAction;
+        /**
+         * Evaluation priority. Lower values execute earlier.
+         */
+        priority: number;
+        /**
+         * Whether the rule is active.
+         */
+        enabled: boolean;
+        /**
+         * List of conditions evaluated for this rule.
+         */
+        conditions: object;
+        /**
+         * Action specific configuration.
+         */
+        config: object;
+        /**
+         * Target location for the redirect.
+         */
+        location: string;
+        /**
+         * HTTP status code used for the redirect.
+         */
+        statusCode: number;
+    }
+
+    /**
+     * WAF rule list
+     */
+    export type WafRuleList = {
+        /**
+         * Total number of rules that matched your query.
+         */
+        total: number;
+        /**
+         * List of rules.
+         */
+        rules: WafRule[];
+    }
+
+    /**
      * OAuth2 Project
      */
     export type Oauth2Project = {
@@ -13235,6 +13046,34 @@ export namespace Models {
          * List of organizations.
          */
         organizations: Oauth2Organization[];
+    }
+
+    /**
+     * OAuth2 consents list
+     */
+    export type Oauth2ConsentList = {
+        /**
+         * Total number of consents that matched your query.
+         */
+        total: number;
+        /**
+         * List of consents.
+         */
+        consents: Oauth2Consent[];
+    }
+
+    /**
+     * OAuth2 consent tokens list
+     */
+    export type Oauth2ConsentTokenList = {
+        /**
+         * Total number of tokens that matched your query.
+         */
+        total: number;
+        /**
+         * List of tokens.
+         */
+        tokens: Oauth2ConsentToken[];
     }
 
     /**
@@ -13529,5 +13368,19 @@ export namespace Models {
          * List of secrets.
          */
         secrets: AppSecret[];
+    }
+
+    /**
+     * App scopes list
+     */
+    export type AppScopeList = {
+        /**
+         * Total number of scopes that matched your query.
+         */
+        total: number;
+        /**
+         * List of scopes.
+         */
+        scopes: AppScope[];
     }
 }

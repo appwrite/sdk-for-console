@@ -20,6 +20,7 @@ const result = await oauth2.authorize({
     maxAge: 0, // optional
     authorizationDetails: '<AUTHORIZATION_DETAILS>', // optional
     resource: '', // optional
+    audience: '<AUDIENCE>', // optional
     requestUri: '<REQUEST_URI>' // optional
 });
 

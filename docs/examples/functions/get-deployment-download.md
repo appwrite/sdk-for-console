@@ -10,7 +10,8 @@ const functions = new Functions(client);
 const result = functions.getDeploymentDownload({
     functionId: '<FUNCTION_ID>',
     deploymentId: '<DEPLOYMENT_ID>',
-    type: DeploymentDownloadType.Source // optional
+    type: DeploymentDownloadType.Source, // optional
+    token: '<TOKEN>' // optional
 });
 
 console.log(result);

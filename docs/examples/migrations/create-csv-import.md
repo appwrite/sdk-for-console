@@ -10,7 +10,8 @@ const migrations = new Migrations(client);
 const result = await migrations.createCSVImport({
     bucketId: '<BUCKET_ID>',
     fileId: '<FILE_ID>',
-    resourceId: '<ID1:ID2>',
+    databaseId: '<DATABASE_ID>',
+    collectionId: '<COLLECTION_ID>',
     internalFile: false, // optional
     onDuplicate: OnDuplicate.Fail // optional
 });

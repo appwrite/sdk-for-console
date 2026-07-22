@@ -6,7 +6,6 @@ import { Framework } from '../enums/framework';
 import { BuildRuntime } from '../enums/build-runtime';
 import { Adapter } from '../enums/adapter';
 import { SiteTemplateUseCase } from '../enums/site-template-use-case';
-import { UsageRange } from '../enums/usage-range';
 import { TemplateReferenceType } from '../enums/template-reference-type';
 import { VCSReferenceType } from '../enums/vcs-reference-type';
 import { DeploymentDownloadType } from '../enums/deployment-download-type';
@@ -498,59 +497,6 @@ export class Sites {
 
         const apiPath = '/sites/templates/{templateId}'.replace('{templateId}', encodeURIComponent(String(templateId)));
         const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get usage metrics and statistics for all sites in the project. View statistics including total deployments, builds, logs, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
-     *
-     * @param {UsageRange} params.range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageSites>}
-     */
-    listUsage(params?: { range?: UsageRange }): Promise<Models.UsageSites>;
-    /**
-     * Get usage metrics and statistics for all sites in the project. View statistics including total deployments, builds, logs, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
-     *
-     * @param {UsageRange} range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageSites>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    listUsage(range?: UsageRange): Promise<Models.UsageSites>;
-    listUsage(
-        paramsOrFirst?: { range?: UsageRange } | UsageRange    
-    ): Promise<Models.UsageSites> {
-        let params: { range?: UsageRange };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('range' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { range?: UsageRange };
-        } else {
-            params = {
-                range: paramsOrFirst as UsageRange            
-            };
-        }
-        
-        const range = params.range;
-
-
-        const apiPath = '/sites/usage';
-        const payload: Payload = {};
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1519,40 +1465,44 @@ export class Sites {
      * @param {string} params.siteId - Site ID.
      * @param {string} params.deploymentId - Deployment ID.
      * @param {DeploymentDownloadType} params.type - Deployment file to download. Can be: "source", "output".
+     * @param {string} params.token - Presigned source-download token for accessing this deployment without a session (jobs-service).
      * @throws {AppwriteException}
      * @returns {string}
      */
-    getDeploymentDownload(params: { siteId: string, deploymentId: string, type?: DeploymentDownloadType }): string;
+    getDeploymentDownload(params: { siteId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string }): string;
     /**
      * Get a site deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
      *
      * @param {string} siteId - Site ID.
      * @param {string} deploymentId - Deployment ID.
      * @param {DeploymentDownloadType} type - Deployment file to download. Can be: "source", "output".
+     * @param {string} token - Presigned source-download token for accessing this deployment without a session (jobs-service).
      * @throws {AppwriteException}
      * @returns {string}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getDeploymentDownload(siteId: string, deploymentId: string, type?: DeploymentDownloadType): string;
+    getDeploymentDownload(siteId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string): string;
     getDeploymentDownload(
-        paramsOrFirst: { siteId: string, deploymentId: string, type?: DeploymentDownloadType } | string,
-        ...rest: [(string)?, (DeploymentDownloadType)?]    
+        paramsOrFirst: { siteId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string } | string,
+        ...rest: [(string)?, (DeploymentDownloadType)?, (string)?]    
     ): string {
-        let params: { siteId: string, deploymentId: string, type?: DeploymentDownloadType };
+        let params: { siteId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { siteId: string, deploymentId: string, type?: DeploymentDownloadType };
+            params = (paramsOrFirst || {}) as { siteId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string };
         } else {
             params = {
                 siteId: paramsOrFirst as string,
                 deploymentId: rest[0] as string,
-                type: rest[1] as DeploymentDownloadType            
+                type: rest[1] as DeploymentDownloadType,
+                token: rest[2] as string            
             };
         }
         
         const siteId = params.siteId;
         const deploymentId = params.deploymentId;
         const type = params.type;
+        const token = params.token;
 
         if (typeof siteId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "siteId"');
@@ -1565,6 +1515,9 @@ export class Sites {
         const payload: Payload = {};
         if (typeof type !== 'undefined') {
             payload['type'] = type;
+        }
+        if (typeof token !== 'undefined') {
+            payload['token'] = token;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1830,67 +1783,6 @@ export class Sites {
 
         return this.client.call(
             'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get usage metrics and statistics for a for a specific site. View statistics including total deployments, builds, executions, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
-     *
-     * @param {string} params.siteId - Site ID.
-     * @param {UsageRange} params.range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageSite>}
-     */
-    getUsage(params: { siteId: string, range?: UsageRange }): Promise<Models.UsageSite>;
-    /**
-     * Get usage metrics and statistics for a for a specific site. View statistics including total deployments, builds, executions, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
-     *
-     * @param {string} siteId - Site ID.
-     * @param {UsageRange} range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageSite>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getUsage(siteId: string, range?: UsageRange): Promise<Models.UsageSite>;
-    getUsage(
-        paramsOrFirst: { siteId: string, range?: UsageRange } | string,
-        ...rest: [(UsageRange)?]    
-    ): Promise<Models.UsageSite> {
-        let params: { siteId: string, range?: UsageRange };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { siteId: string, range?: UsageRange };
-        } else {
-            params = {
-                siteId: paramsOrFirst as string,
-                range: rest[0] as UsageRange            
-            };
-        }
-        
-        const siteId = params.siteId;
-        const range = params.range;
-
-        if (typeof siteId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "siteId"');
-        }
-
-        const apiPath = '/sites/{siteId}/usage'.replace('{siteId}', encodeURIComponent(String(siteId)));
-        const payload: Payload = {};
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload

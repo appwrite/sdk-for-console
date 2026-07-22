@@ -14,6 +14,8 @@ const result = await mysql.update({
     specification: '<SPECIFICATION>', // optional
     replicas: 0, // optional
     syncMode: 'async', // optional
+    crossRegionReplicas: 0, // optional
+    standbyRegion: '<STANDBY_REGION>', // optional
     networkIdleTimeoutSeconds: 60, // optional
     networkIPAllowlist: [], // optional
     idleTimeoutMinutes: 5, // optional

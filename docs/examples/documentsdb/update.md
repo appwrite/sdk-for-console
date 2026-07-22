@@ -10,7 +10,8 @@ const documentsDB = new DocumentsDB(client);
 const result = await documentsDB.update({
     databaseId: '<DATABASE_ID>',
     name: '<NAME>',
-    enabled: false // optional
+    enabled: false, // optional
+    replicas: 0 // optional
 });
 
 console.log(result);

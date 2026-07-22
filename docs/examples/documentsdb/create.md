@@ -11,7 +11,8 @@ const result = await documentsDB.create({
     databaseId: '<DATABASE_ID>',
     name: '<NAME>',
     enabled: false, // optional
-    specification: 'serverless' // optional
+    specification: 'serverless', // optional
+    replicas: 0 // optional
 });
 
 console.log(result);
