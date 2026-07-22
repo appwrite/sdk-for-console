@@ -2,7 +2,6 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
-import { UsageRange } from '../enums/usage-range';
 import { RelationshipType } from '../enums/relationship-type';
 import { RelationMutate } from '../enums/relation-mutate';
 import { DatabasesIndexType } from '../enums/databases-index-type';
@@ -506,60 +505,6 @@ export class Databases {
 
         return this.client.call(
             'post',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * List usage metrics and statistics for all databases in the project. You can view the total number of databases, collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {UsageRange} params.range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDatabases>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.listUsage` instead.
-     */
-    listUsage(params?: { range?: UsageRange }): Promise<Models.UsageDatabases>;
-    /**
-     * List usage metrics and statistics for all databases in the project. You can view the total number of databases, collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {UsageRange} range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDatabases>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    listUsage(range?: UsageRange): Promise<Models.UsageDatabases>;
-    listUsage(
-        paramsOrFirst?: { range?: UsageRange } | UsageRange    
-    ): Promise<Models.UsageDatabases> {
-        let params: { range?: UsageRange };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('range' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { range?: UsageRange };
-        } else {
-            params = {
-                range: paramsOrFirst as UsageRange            
-            };
-        }
-        
-        const range = params.range;
-
-
-        const apiPath = '/databases/usage';
-        const payload: Payload = {};
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload
@@ -6421,137 +6366,6 @@ export class Databases {
 
         return this.client.call(
             'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get usage metrics and statistics for a collection. Returning the total number of documents. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.collectionId - Collection ID.
-     * @param {UsageRange} params.range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageCollection>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.getTableUsage` instead.
-     */
-    getCollectionUsage(params: { databaseId: string, collectionId: string, range?: UsageRange }): Promise<Models.UsageCollection>;
-    /**
-     * Get usage metrics and statistics for a collection. Returning the total number of documents. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} collectionId - Collection ID.
-     * @param {UsageRange} range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageCollection>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getCollectionUsage(databaseId: string, collectionId: string, range?: UsageRange): Promise<Models.UsageCollection>;
-    getCollectionUsage(
-        paramsOrFirst: { databaseId: string, collectionId: string, range?: UsageRange } | string,
-        ...rest: [(string)?, (UsageRange)?]    
-    ): Promise<Models.UsageCollection> {
-        let params: { databaseId: string, collectionId: string, range?: UsageRange };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, range?: UsageRange };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                collectionId: rest[0] as string,
-                range: rest[1] as UsageRange            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const collectionId = params.collectionId;
-        const range = params.range;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-        if (typeof collectionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "collectionId"');
-        }
-
-        const apiPath = '/databases/{databaseId}/collections/{collectionId}/usage'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{collectionId}', encodeURIComponent(String(collectionId)));
-        const payload: Payload = {};
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get usage metrics and statistics for a database. You can view the total number of collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {UsageRange} params.range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDatabase>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.getUsage` instead.
-     */
-    getUsage(params: { databaseId: string, range?: UsageRange }): Promise<Models.UsageDatabase>;
-    /**
-     * Get usage metrics and statistics for a database. You can view the total number of collections, documents, and storage usage. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {UsageRange} range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageDatabase>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getUsage(databaseId: string, range?: UsageRange): Promise<Models.UsageDatabase>;
-    getUsage(
-        paramsOrFirst: { databaseId: string, range?: UsageRange } | string,
-        ...rest: [(UsageRange)?]    
-    ): Promise<Models.UsageDatabase> {
-        let params: { databaseId: string, range?: UsageRange };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, range?: UsageRange };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                range: rest[0] as UsageRange            
-            };
-        }
-        
-        const databaseId = params.databaseId;
-        const range = params.range;
-
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
-        }
-
-        const apiPath = '/databases/{databaseId}/usage'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
-        const payload: Payload = {};
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload

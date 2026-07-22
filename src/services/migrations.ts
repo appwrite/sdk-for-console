@@ -18,7 +18,7 @@ export class Migrations {
     /**
      * List all migrations in the current project. This endpoint returns a list of all migrations including their status, progress, and any errors that occurred during the migration process.
      *
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: status, stage, source, destination, resources, resourceId, resourceType, statusCounters, resourceData, errors
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: status, stage, source, destination, resources, resourceId, resourceInternalId, resourceType, parentResourceId, parentResourceInternalId, parentResourceType, destinationResourceId, destinationResourceInternalId, destinationResourceType, statusCounters, resourceData, errors
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -28,7 +28,7 @@ export class Migrations {
     /**
      * List all migrations in the current project. This endpoint returns a list of all migrations including their status, progress, and any errors that occurred during the migration process.
      *
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: status, stage, source, destination, resources, resourceId, resourceType, statusCounters, resourceData, errors
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: status, stage, source, destination, resources, resourceId, resourceInternalId, resourceType, parentResourceId, parentResourceInternalId, parentResourceType, destinationResourceId, destinationResourceInternalId, destinationResourceType, statusCounters, resourceData, errors
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -268,7 +268,8 @@ export class Migrations {
     /**
      * Export documents to a CSV file from your Appwrite database. This endpoint allows you to export documents to a CSV file stored in a secure internal bucket. You'll receive an email with a download link when the export is complete.
      *
-     * @param {string} params.resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database to export.
+     * @param {string} params.databaseId - Database ID containing the source collection.
+     * @param {string} params.collectionId - Collection ID to export documents from.
      * @param {string} params.filename - The name of the file to be created for the export, excluding the .csv extension.
      * @param {string[]} params.columns - List of attributes to export. If empty, all attributes will be exported. You can use the `*` wildcard to export all attributes from the collection.
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK to filter documents to export. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long.
@@ -280,11 +281,12 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createCSVExport(params: { resourceId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean }): Promise<Models.Migration>;
+    createCSVExport(params: { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean }): Promise<Models.Migration>;
     /**
      * Export documents to a CSV file from your Appwrite database. This endpoint allows you to export documents to a CSV file stored in a secure internal bucket. You'll receive an email with a download link when the export is complete.
      *
-     * @param {string} resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database to export.
+     * @param {string} databaseId - Database ID containing the source collection.
+     * @param {string} collectionId - Collection ID to export documents from.
      * @param {string} filename - The name of the file to be created for the export, excluding the .csv extension.
      * @param {string[]} columns - List of attributes to export. If empty, all attributes will be exported. You can use the `*` wildcard to export all attributes from the collection.
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK to filter documents to export. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long.
@@ -297,30 +299,32 @@ export class Migrations {
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createCSVExport(resourceId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean): Promise<Models.Migration>;
+    createCSVExport(databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean): Promise<Models.Migration>;
     createCSVExport(
-        paramsOrFirst: { resourceId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean } | string,
-        ...rest: [(string)?, (string[])?, (string[])?, (string)?, (string)?, (string)?, (boolean)?, (boolean)?]    
+        paramsOrFirst: { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean } | string,
+        ...rest: [(string)?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (string)?, (boolean)?, (boolean)?]    
     ): Promise<Models.Migration> {
-        let params: { resourceId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean };
+        let params: { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resourceId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean };
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean };
         } else {
             params = {
-                resourceId: paramsOrFirst as string,
-                filename: rest[0] as string,
-                columns: rest[1] as string[],
-                queries: rest[2] as string[],
-                delimiter: rest[3] as string,
-                enclosure: rest[4] as string,
-                escape: rest[5] as string,
-                header: rest[6] as boolean,
-                notify: rest[7] as boolean            
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                filename: rest[1] as string,
+                columns: rest[2] as string[],
+                queries: rest[3] as string[],
+                delimiter: rest[4] as string,
+                enclosure: rest[5] as string,
+                escape: rest[6] as string,
+                header: rest[7] as boolean,
+                notify: rest[8] as boolean            
             };
         }
         
-        const resourceId = params.resourceId;
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
         const filename = params.filename;
         const columns = params.columns;
         const queries = params.queries;
@@ -330,8 +334,11 @@ export class Migrations {
         const header = params.header;
         const notify = params.notify;
 
-        if (typeof resourceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resourceId"');
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
         }
         if (typeof filename === 'undefined') {
             throw new AppwriteException('Missing required parameter: "filename"');
@@ -339,8 +346,11 @@ export class Migrations {
 
         const apiPath = '/migrations/csv/exports';
         const payload: Payload = {};
-        if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+        if (typeof databaseId !== 'undefined') {
+            payload['databaseId'] = databaseId;
+        }
+        if (typeof collectionId !== 'undefined') {
+            payload['collectionId'] = collectionId;
         }
         if (typeof filename !== 'undefined') {
             payload['filename'] = filename;
@@ -387,47 +397,51 @@ export class Migrations {
      *
      * @param {string} params.bucketId - Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
      * @param {string} params.fileId - File ID.
-     * @param {string} params.resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database.
+     * @param {string} params.databaseId - Database ID containing the target collection.
+     * @param {string} params.collectionId - Collection ID to import documents into.
      * @param {boolean} params.internalFile - Is the file stored in an internal bucket?
      * @param {OnDuplicate} params.onDuplicate - Behavior when a row with an existing $id is encountered. "fail" (default): abort on first conflict. "skip": silently ignore. "overwrite": replace existing row.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createCSVImport(params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate }): Promise<Models.Migration>;
+    createCSVImport(params: { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate }): Promise<Models.Migration>;
     /**
      * Import documents from a CSV file into your Appwrite database. This endpoint allows you to import documents from a CSV file uploaded to Appwrite Storage bucket.
      *
      * @param {string} bucketId - Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
      * @param {string} fileId - File ID.
-     * @param {string} resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database.
+     * @param {string} databaseId - Database ID containing the target collection.
+     * @param {string} collectionId - Collection ID to import documents into.
      * @param {boolean} internalFile - Is the file stored in an internal bucket?
      * @param {OnDuplicate} onDuplicate - Behavior when a row with an existing $id is encountered. "fail" (default): abort on first conflict. "skip": silently ignore. "overwrite": replace existing row.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createCSVImport(bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate): Promise<Models.Migration>;
+    createCSVImport(bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate): Promise<Models.Migration>;
     createCSVImport(
-        paramsOrFirst: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate } | string,
-        ...rest: [(string)?, (string)?, (boolean)?, (OnDuplicate)?]    
+        paramsOrFirst: { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate } | string,
+        ...rest: [(string)?, (string)?, (string)?, (boolean)?, (OnDuplicate)?]    
     ): Promise<Models.Migration> {
-        let params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
+        let params: { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
+            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
         } else {
             params = {
                 bucketId: paramsOrFirst as string,
                 fileId: rest[0] as string,
-                resourceId: rest[1] as string,
-                internalFile: rest[2] as boolean,
-                onDuplicate: rest[3] as OnDuplicate            
+                databaseId: rest[1] as string,
+                collectionId: rest[2] as string,
+                internalFile: rest[3] as boolean,
+                onDuplicate: rest[4] as OnDuplicate            
             };
         }
         
         const bucketId = params.bucketId;
         const fileId = params.fileId;
-        const resourceId = params.resourceId;
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
         const internalFile = params.internalFile;
         const onDuplicate = params.onDuplicate;
 
@@ -437,8 +451,11 @@ export class Migrations {
         if (typeof fileId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "fileId"');
         }
-        if (typeof resourceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resourceId"');
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
         const apiPath = '/migrations/csv/imports';
@@ -449,8 +466,11 @@ export class Migrations {
         if (typeof fileId !== 'undefined') {
             payload['fileId'] = fileId;
         }
-        if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+        if (typeof databaseId !== 'undefined') {
+            payload['databaseId'] = databaseId;
+        }
+        if (typeof collectionId !== 'undefined') {
+            payload['collectionId'] = collectionId;
         }
         if (typeof internalFile !== 'undefined') {
             payload['internalFile'] = internalFile;
@@ -613,7 +633,8 @@ export class Migrations {
      * Export documents to a JSON file from your Appwrite database. This endpoint allows you to export documents to a JSON file stored in a secure internal bucket. You'll receive an email with a download link when the export is complete.
      * 
      *
-     * @param {string} params.resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database to export.
+     * @param {string} params.databaseId - Database ID containing the source collection.
+     * @param {string} params.collectionId - Collection ID to export documents from.
      * @param {string} params.filename - The name of the file to be created for the export, excluding the .json extension.
      * @param {string[]} params.columns - List of attributes to export. If empty, all attributes will be exported. You can use the `*` wildcard to export all attributes from the collection.
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK to filter documents to export. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long.
@@ -621,12 +642,13 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createJSONExport(params: { resourceId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean }): Promise<Models.Migration>;
+    createJSONExport(params: { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean }): Promise<Models.Migration>;
     /**
      * Export documents to a JSON file from your Appwrite database. This endpoint allows you to export documents to a JSON file stored in a secure internal bucket. You'll receive an email with a download link when the export is complete.
      * 
      *
-     * @param {string} resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database to export.
+     * @param {string} databaseId - Database ID containing the source collection.
+     * @param {string} collectionId - Collection ID to export documents from.
      * @param {string} filename - The name of the file to be created for the export, excluding the .json extension.
      * @param {string[]} columns - List of attributes to export. If empty, all attributes will be exported. You can use the `*` wildcard to export all attributes from the collection.
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK to filter documents to export. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long.
@@ -635,33 +657,38 @@ export class Migrations {
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createJSONExport(resourceId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean): Promise<Models.Migration>;
+    createJSONExport(databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean): Promise<Models.Migration>;
     createJSONExport(
-        paramsOrFirst: { resourceId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean } | string,
-        ...rest: [(string)?, (string[])?, (string[])?, (boolean)?]    
+        paramsOrFirst: { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean } | string,
+        ...rest: [(string)?, (string)?, (string[])?, (string[])?, (boolean)?]    
     ): Promise<Models.Migration> {
-        let params: { resourceId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean };
+        let params: { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resourceId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean };
+            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean };
         } else {
             params = {
-                resourceId: paramsOrFirst as string,
-                filename: rest[0] as string,
-                columns: rest[1] as string[],
-                queries: rest[2] as string[],
-                notify: rest[3] as boolean            
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                filename: rest[1] as string,
+                columns: rest[2] as string[],
+                queries: rest[3] as string[],
+                notify: rest[4] as boolean            
             };
         }
         
-        const resourceId = params.resourceId;
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
         const filename = params.filename;
         const columns = params.columns;
         const queries = params.queries;
         const notify = params.notify;
 
-        if (typeof resourceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resourceId"');
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
         }
         if (typeof filename === 'undefined') {
             throw new AppwriteException('Missing required parameter: "filename"');
@@ -669,8 +696,11 @@ export class Migrations {
 
         const apiPath = '/migrations/json/exports';
         const payload: Payload = {};
-        if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+        if (typeof databaseId !== 'undefined') {
+            payload['databaseId'] = databaseId;
+        }
+        if (typeof collectionId !== 'undefined') {
+            payload['collectionId'] = collectionId;
         }
         if (typeof filename !== 'undefined') {
             payload['filename'] = filename;
@@ -706,48 +736,52 @@ export class Migrations {
      *
      * @param {string} params.bucketId - Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
      * @param {string} params.fileId - File ID.
-     * @param {string} params.resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database.
+     * @param {string} params.databaseId - Database ID containing the target collection.
+     * @param {string} params.collectionId - Collection ID to import documents into.
      * @param {boolean} params.internalFile - Is the file stored in an internal bucket?
      * @param {OnDuplicate} params.onDuplicate - Behavior when a row with an existing $id is encountered. "fail" (default): abort on first conflict. "skip": silently ignore. "overwrite": replace existing row.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createJSONImport(params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate }): Promise<Models.Migration>;
+    createJSONImport(params: { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate }): Promise<Models.Migration>;
     /**
      * Import documents from a JSON file into your Appwrite database. This endpoint allows you to import documents from a JSON file uploaded to Appwrite Storage bucket.
      * 
      *
      * @param {string} bucketId - Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
      * @param {string} fileId - File ID.
-     * @param {string} resourceId - Composite ID in the format {databaseId:collectionId}, identifying a collection within a database.
+     * @param {string} databaseId - Database ID containing the target collection.
+     * @param {string} collectionId - Collection ID to import documents into.
      * @param {boolean} internalFile - Is the file stored in an internal bucket?
      * @param {OnDuplicate} onDuplicate - Behavior when a row with an existing $id is encountered. "fail" (default): abort on first conflict. "skip": silently ignore. "overwrite": replace existing row.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createJSONImport(bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate): Promise<Models.Migration>;
+    createJSONImport(bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate): Promise<Models.Migration>;
     createJSONImport(
-        paramsOrFirst: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate } | string,
-        ...rest: [(string)?, (string)?, (boolean)?, (OnDuplicate)?]    
+        paramsOrFirst: { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate } | string,
+        ...rest: [(string)?, (string)?, (string)?, (boolean)?, (OnDuplicate)?]    
     ): Promise<Models.Migration> {
-        let params: { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
+        let params: { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, resourceId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
+            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
         } else {
             params = {
                 bucketId: paramsOrFirst as string,
                 fileId: rest[0] as string,
-                resourceId: rest[1] as string,
-                internalFile: rest[2] as boolean,
-                onDuplicate: rest[3] as OnDuplicate            
+                databaseId: rest[1] as string,
+                collectionId: rest[2] as string,
+                internalFile: rest[3] as boolean,
+                onDuplicate: rest[4] as OnDuplicate            
             };
         }
         
         const bucketId = params.bucketId;
         const fileId = params.fileId;
-        const resourceId = params.resourceId;
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
         const internalFile = params.internalFile;
         const onDuplicate = params.onDuplicate;
 
@@ -757,8 +791,11 @@ export class Migrations {
         if (typeof fileId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "fileId"');
         }
-        if (typeof resourceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resourceId"');
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+        if (typeof collectionId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "collectionId"');
         }
 
         const apiPath = '/migrations/json/imports';
@@ -769,8 +806,11 @@ export class Migrations {
         if (typeof fileId !== 'undefined') {
             payload['fileId'] = fileId;
         }
-        if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+        if (typeof databaseId !== 'undefined') {
+            payload['databaseId'] = databaseId;
+        }
+        if (typeof collectionId !== 'undefined') {
+            payload['collectionId'] = collectionId;
         }
         if (typeof internalFile !== 'undefined') {
             payload['internalFile'] = internalFile;

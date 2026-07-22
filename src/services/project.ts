@@ -980,10 +980,11 @@ export class Project {
      * @param {number} params.userCodeLength - Number of characters in the device flow user code, excluding the formatting separator. Shorter codes are easier to type but weaker; pair short codes with short expiry. Leave empty to use default 8.
      * @param {string} params.userCodeFormat - Character set for device flow user codes: `numeric` (digits only — best for numeric keypads and TV remotes), `alphabetic` (letters only), or `alphanumeric` (letters and digits — highest entropy per character). Defaults to `alphanumeric`.
      * @param {number} params.deviceCodeDuration - Lifetime in seconds of device flow device codes and user codes. Device codes are intentionally short-lived. Leave empty to use default 600.
+     * @param {string[]} params.defaultScopes - List of OAuth2 scopes used when an authorization request omits the scope parameter. Every default scope must also be allowed by the OAuth2 server. Maximum of 100 scopes are allowed, each up to 128 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateOAuth2Server(params: { enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number }): Promise<Models.Project>;
+    updateOAuth2Server(params: { enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number, defaultScopes?: string[] }): Promise<Models.Project>;
     /**
      * Update the OAuth2 server (OIDC provider) configuration.
      *
@@ -1000,19 +1001,20 @@ export class Project {
      * @param {number} userCodeLength - Number of characters in the device flow user code, excluding the formatting separator. Shorter codes are easier to type but weaker; pair short codes with short expiry. Leave empty to use default 8.
      * @param {string} userCodeFormat - Character set for device flow user codes: `numeric` (digits only — best for numeric keypads and TV remotes), `alphabetic` (letters only), or `alphanumeric` (letters and digits — highest entropy per character). Defaults to `alphanumeric`.
      * @param {number} deviceCodeDuration - Lifetime in seconds of device flow device codes and user codes. Device codes are intentionally short-lived. Leave empty to use default 600.
+     * @param {string[]} defaultScopes - List of OAuth2 scopes used when an authorization request omits the scope parameter. Every default scope must also be allowed by the OAuth2 server. Maximum of 100 scopes are allowed, each up to 128 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateOAuth2Server(enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number): Promise<Models.Project>;
+    updateOAuth2Server(enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number, defaultScopes?: string[]): Promise<Models.Project>;
     updateOAuth2Server(
-        paramsOrFirst: { enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number } | boolean,
-        ...rest: [(string)?, (string[])?, (string[])?, (number)?, (number)?, (number)?, (number)?, (boolean)?, (string)?, (number)?, (string)?, (number)?]    
+        paramsOrFirst: { enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number, defaultScopes?: string[] } | boolean,
+        ...rest: [(string)?, (string[])?, (string[])?, (number)?, (number)?, (number)?, (number)?, (boolean)?, (string)?, (number)?, (string)?, (number)?, (string[])?]    
     ): Promise<Models.Project> {
-        let params: { enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number };
+        let params: { enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number, defaultScopes?: string[] };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number };
+            params = (paramsOrFirst || {}) as { enabled: boolean, authorizationUrl: string, scopes?: string[], authorizationDetailsTypes?: string[], accessTokenDuration?: number, refreshTokenDuration?: number, publicAccessTokenDuration?: number, publicRefreshTokenDuration?: number, confidentialPkce?: boolean, verificationUrl?: string, userCodeLength?: number, userCodeFormat?: string, deviceCodeDuration?: number, defaultScopes?: string[] };
         } else {
             params = {
                 enabled: paramsOrFirst as boolean,
@@ -1027,7 +1029,8 @@ export class Project {
                 verificationUrl: rest[8] as string,
                 userCodeLength: rest[9] as number,
                 userCodeFormat: rest[10] as string,
-                deviceCodeDuration: rest[11] as number            
+                deviceCodeDuration: rest[11] as number,
+                defaultScopes: rest[12] as string[]            
             };
         }
         
@@ -1044,6 +1047,7 @@ export class Project {
         const userCodeLength = params.userCodeLength;
         const userCodeFormat = params.userCodeFormat;
         const deviceCodeDuration = params.deviceCodeDuration;
+        const defaultScopes = params.defaultScopes;
 
         if (typeof enabled === 'undefined') {
             throw new AppwriteException('Missing required parameter: "enabled"');
@@ -1092,6 +1096,9 @@ export class Project {
         }
         if (typeof deviceCodeDuration !== 'undefined') {
             payload['deviceCodeDuration'] = deviceCodeDuration;
+        }
+        if (typeof defaultScopes !== 'undefined') {
+            payload['defaultScopes'] = defaultScopes;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1241,6 +1248,75 @@ export class Project {
         }
         if (typeof p8File !== 'undefined') {
             payload['p8File'] = p8File;
+        }
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update the project OAuth2 Appwrite configuration.
+     *
+     * @param {string} params.clientId - 'Client ID' of Appwrite OAuth2 app. For example: 6a42000000000000b5a0
+     * @param {string} params.clientSecret - 'Client Secret' of Appwrite OAuth2 app. For example: b86afd000000000000000000000000000000000000000000000000000ced5f93
+     * @param {boolean} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.OAuth2Appwrite>}
+     */
+    updateOAuth2Appwrite(params?: { clientId?: string, clientSecret?: string, enabled?: boolean }): Promise<Models.OAuth2Appwrite>;
+    /**
+     * Update the project OAuth2 Appwrite configuration.
+     *
+     * @param {string} clientId - 'Client ID' of Appwrite OAuth2 app. For example: 6a42000000000000b5a0
+     * @param {string} clientSecret - 'Client Secret' of Appwrite OAuth2 app. For example: b86afd000000000000000000000000000000000000000000000000000ced5f93
+     * @param {boolean} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.OAuth2Appwrite>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateOAuth2Appwrite(clientId?: string, clientSecret?: string, enabled?: boolean): Promise<Models.OAuth2Appwrite>;
+    updateOAuth2Appwrite(
+        paramsOrFirst?: { clientId?: string, clientSecret?: string, enabled?: boolean } | string,
+        ...rest: [(string)?, (boolean)?]    
+    ): Promise<Models.OAuth2Appwrite> {
+        let params: { clientId?: string, clientSecret?: string, enabled?: boolean };
+        
+        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { clientId?: string, clientSecret?: string, enabled?: boolean };
+        } else {
+            params = {
+                clientId: paramsOrFirst as string,
+                clientSecret: rest[0] as string,
+                enabled: rest[1] as boolean            
+            };
+        }
+        
+        const clientId = params.clientId;
+        const clientSecret = params.clientSecret;
+        const enabled = params.enabled;
+
+
+        const apiPath = '/project/oauth2/appwrite';
+        const payload: Payload = {};
+        if (typeof clientId !== 'undefined') {
+            payload['clientId'] = clientId;
+        }
+        if (typeof clientSecret !== 'undefined') {
+            payload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;

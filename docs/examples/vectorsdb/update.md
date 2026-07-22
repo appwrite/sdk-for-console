@@ -10,7 +10,8 @@ const vectorsDB = new VectorsDB(client);
 const result = await vectorsDB.update({
     databaseId: '<DATABASE_ID>',
     name: '<NAME>',
-    enabled: false // optional
+    enabled: false, // optional
+    replicas: 0 // optional
 });
 
 console.log(result);

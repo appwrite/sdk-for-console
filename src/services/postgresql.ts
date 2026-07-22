@@ -72,6 +72,7 @@ export class Postgresql {
      * @param {string} params.specification - Specification identifier. Drives the allocated CPU, memory, storage, storage class, and connection ceiling.
      * @param {number} params.replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} params.syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
+     * @param {string} params.standbyRegion - Standby region for a cross-region replica. When set, a replica is provisioned in this region for cross-region high availability. Must differ from the database region.
      * @param {number} params.networkIdleTimeoutSeconds - Connection idle timeout in seconds.
      * @param {string[]} params.networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
      * @param {number} params.idleTimeoutMinutes - Minutes of inactivity before container scales to zero.
@@ -80,11 +81,11 @@ export class Postgresql {
      * @param {boolean} params.storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
      * @param {number} params.storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
      * @param {number} params.storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
-     * @param {string} params.api - Product API that owns this database: nativedb (raw, direct-access), tablesdb, documentsdb, or vectorsdb. tablesdb/documentsdb/vectorsdb databases are reached only through their product APIs.
+     * @param {string} params.api - Product API that owns this database: tablesdb, documentsdb, or vectorsdb. Omit for a raw database reached directly; its api is its engine. tablesdb/documentsdb/vectorsdb databases are reached only through their product APIs.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
-    create(params: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string }): Promise<Models.DedicatedDatabase>;
+    create(params: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string }): Promise<Models.DedicatedDatabase>;
     /**
      * Create a new dedicated database with the chosen engine and configuration. Status will be 'provisioning' until the database is ready.
      *
@@ -94,6 +95,7 @@ export class Postgresql {
      * @param {string} specification - Specification identifier. Drives the allocated CPU, memory, storage, storage class, and connection ceiling.
      * @param {number} replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
+     * @param {string} standbyRegion - Standby region for a cross-region replica. When set, a replica is provisioned in this region for cross-region high availability. Must differ from the database region.
      * @param {number} networkIdleTimeoutSeconds - Connection idle timeout in seconds.
      * @param {string[]} networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
      * @param {number} idleTimeoutMinutes - Minutes of inactivity before container scales to zero.
@@ -102,20 +104,20 @@ export class Postgresql {
      * @param {boolean} storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
      * @param {number} storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
      * @param {number} storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
-     * @param {string} api - Product API that owns this database: nativedb (raw, direct-access), tablesdb, documentsdb, or vectorsdb. tablesdb/documentsdb/vectorsdb databases are reached only through their product APIs.
+     * @param {string} api - Product API that owns this database: tablesdb, documentsdb, or vectorsdb. Omit for a raw database reached directly; its api is its engine. tablesdb/documentsdb/vectorsdb databases are reached only through their product APIs.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string): Promise<Models.DedicatedDatabase>;
+    create(databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string): Promise<Models.DedicatedDatabase>;
     create(
-        paramsOrFirst: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?, (number)?, (string[])?, (number)?, (boolean)?, (number)?, (boolean)?, (number)?, (number)?, (string)?]    
+        paramsOrFirst: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?, (string)?, (number)?, (string[])?, (number)?, (boolean)?, (number)?, (boolean)?, (number)?, (number)?, (string)?]    
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string };
+        let params: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string };
+            params = (paramsOrFirst || {}) as { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -124,15 +126,16 @@ export class Postgresql {
                 specification: rest[2] as string,
                 replicas: rest[3] as number,
                 syncMode: rest[4] as string,
-                networkIdleTimeoutSeconds: rest[5] as number,
-                networkIPAllowlist: rest[6] as string[],
-                idleTimeoutMinutes: rest[7] as number,
-                pitr: rest[8] as boolean,
-                pitrRetentionDays: rest[9] as number,
-                storageAutoscaling: rest[10] as boolean,
-                storageAutoscalingThresholdPercent: rest[11] as number,
-                storageAutoscalingMaxGb: rest[12] as number,
-                api: rest[13] as string            
+                standbyRegion: rest[5] as string,
+                networkIdleTimeoutSeconds: rest[6] as number,
+                networkIPAllowlist: rest[7] as string[],
+                idleTimeoutMinutes: rest[8] as number,
+                pitr: rest[9] as boolean,
+                pitrRetentionDays: rest[10] as number,
+                storageAutoscaling: rest[11] as boolean,
+                storageAutoscalingThresholdPercent: rest[12] as number,
+                storageAutoscalingMaxGb: rest[13] as number,
+                api: rest[14] as string            
             };
         }
         
@@ -142,6 +145,7 @@ export class Postgresql {
         const specification = params.specification;
         const replicas = params.replicas;
         const syncMode = params.syncMode;
+        const standbyRegion = params.standbyRegion;
         const networkIdleTimeoutSeconds = params.networkIdleTimeoutSeconds;
         const networkIPAllowlist = params.networkIPAllowlist;
         const idleTimeoutMinutes = params.idleTimeoutMinutes;
@@ -178,6 +182,9 @@ export class Postgresql {
         }
         if (typeof syncMode !== 'undefined') {
             payload['syncMode'] = syncMode;
+        }
+        if (typeof standbyRegion !== 'undefined') {
+            payload['standbyRegion'] = standbyRegion;
         }
         if (typeof networkIdleTimeoutSeconds !== 'undefined') {
             payload['networkIdleTimeoutSeconds'] = networkIdleTimeoutSeconds;
@@ -309,6 +316,8 @@ export class Postgresql {
      * @param {string} params.specification - Specification. Changes cpu, memory, storage, connection ceiling, and node pool based on specification config. Resource changes are applied via rolling cutover with zero downtime.
      * @param {number} params.replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} params.syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
+     * @param {number} params.crossRegionReplicas - Number of cross-region standby replicas (0-1). Cross-region replication is enabled when greater than 0.
+     * @param {string} params.standbyRegion - Standby region for the cross-region replica. Required when enabling cross-region replication and no standby region is already configured. Must differ from the database region.
      * @param {number} params.networkIdleTimeoutSeconds - Connection idle timeout in seconds (60-86400).
      * @param {string[]} params.networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
      * @param {number} params.idleTimeoutMinutes - Minutes before container scales to zero.
@@ -327,7 +336,7 @@ export class Postgresql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
-    update(params: { databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number }): Promise<Models.DedicatedDatabase>;
+    update(params: { databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, crossRegionReplicas?: number, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number }): Promise<Models.DedicatedDatabase>;
     /**
      * Update a dedicated database configuration. All changes are applied with zero downtime. Specification changes (cpu, memory, storage) are handled via rolling cutover. Storage expansion is done online. All other settings are applied in-place.
      *
@@ -337,6 +346,8 @@ export class Postgresql {
      * @param {string} specification - Specification. Changes cpu, memory, storage, connection ceiling, and node pool based on specification config. Resource changes are applied via rolling cutover with zero downtime.
      * @param {number} replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
+     * @param {number} crossRegionReplicas - Number of cross-region standby replicas (0-1). Cross-region replication is enabled when greater than 0.
+     * @param {string} standbyRegion - Standby region for the cross-region replica. Required when enabling cross-region replication and no standby region is already configured. Must differ from the database region.
      * @param {number} networkIdleTimeoutSeconds - Connection idle timeout in seconds (60-86400).
      * @param {string[]} networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
      * @param {number} idleTimeoutMinutes - Minutes before container scales to zero.
@@ -356,15 +367,15 @@ export class Postgresql {
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number): Promise<Models.DedicatedDatabase>;
+    update(databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, crossRegionReplicas?: number, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number): Promise<Models.DedicatedDatabase>;
     update(
-        paramsOrFirst: { databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?, (number)?, (string[])?, (number)?, (boolean)?, (number)?, (boolean)?, (number)?, (number)?, (number)?, (number)?, (boolean)?, (string[])?, (number)?, (number)?, (number)?]    
+        paramsOrFirst: { databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, crossRegionReplicas?: number, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?, (number)?, (string)?, (number)?, (string[])?, (number)?, (boolean)?, (number)?, (boolean)?, (number)?, (number)?, (number)?, (number)?, (boolean)?, (string[])?, (number)?, (number)?, (number)?]    
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number };
+        let params: { databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, crossRegionReplicas?: number, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number };
+            params = (paramsOrFirst || {}) as { databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, crossRegionReplicas?: number, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -373,21 +384,23 @@ export class Postgresql {
                 specification: rest[2] as string,
                 replicas: rest[3] as number,
                 syncMode: rest[4] as string,
-                networkIdleTimeoutSeconds: rest[5] as number,
-                networkIPAllowlist: rest[6] as string[],
-                idleTimeoutMinutes: rest[7] as number,
-                pitr: rest[8] as boolean,
-                pitrRetentionDays: rest[9] as number,
-                storageAutoscaling: rest[10] as boolean,
-                storageAutoscalingThresholdPercent: rest[11] as number,
-                storageAutoscalingMaxGb: rest[12] as number,
-                metricsTraceSampleRate: rest[13] as number,
-                metricsSlowQueryLogThresholdMs: rest[14] as number,
-                sqlApiEnabled: rest[15] as boolean,
-                sqlApiAllowedStatements: rest[16] as string[],
-                sqlApiMaxRows: rest[17] as number,
-                sqlApiMaxBytes: rest[18] as number,
-                sqlApiTimeoutSeconds: rest[19] as number            
+                crossRegionReplicas: rest[5] as number,
+                standbyRegion: rest[6] as string,
+                networkIdleTimeoutSeconds: rest[7] as number,
+                networkIPAllowlist: rest[8] as string[],
+                idleTimeoutMinutes: rest[9] as number,
+                pitr: rest[10] as boolean,
+                pitrRetentionDays: rest[11] as number,
+                storageAutoscaling: rest[12] as boolean,
+                storageAutoscalingThresholdPercent: rest[13] as number,
+                storageAutoscalingMaxGb: rest[14] as number,
+                metricsTraceSampleRate: rest[15] as number,
+                metricsSlowQueryLogThresholdMs: rest[16] as number,
+                sqlApiEnabled: rest[17] as boolean,
+                sqlApiAllowedStatements: rest[18] as string[],
+                sqlApiMaxRows: rest[19] as number,
+                sqlApiMaxBytes: rest[20] as number,
+                sqlApiTimeoutSeconds: rest[21] as number            
             };
         }
         
@@ -397,6 +410,8 @@ export class Postgresql {
         const specification = params.specification;
         const replicas = params.replicas;
         const syncMode = params.syncMode;
+        const crossRegionReplicas = params.crossRegionReplicas;
+        const standbyRegion = params.standbyRegion;
         const networkIdleTimeoutSeconds = params.networkIdleTimeoutSeconds;
         const networkIPAllowlist = params.networkIPAllowlist;
         const idleTimeoutMinutes = params.idleTimeoutMinutes;
@@ -433,6 +448,12 @@ export class Postgresql {
         }
         if (typeof syncMode !== 'undefined') {
             payload['syncMode'] = syncMode;
+        }
+        if (typeof crossRegionReplicas !== 'undefined') {
+            payload['crossRegionReplicas'] = crossRegionReplicas;
+        }
+        if (typeof standbyRegion !== 'undefined') {
+            payload['standbyRegion'] = standbyRegion;
         }
         if (typeof networkIdleTimeoutSeconds !== 'undefined') {
             payload['networkIdleTimeoutSeconds'] = networkIdleTimeoutSeconds;

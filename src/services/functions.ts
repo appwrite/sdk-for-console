@@ -5,7 +5,6 @@ import type { Models } from '../models';
 import { Runtime } from '../enums/runtime';
 import { ProjectKeyScopes } from '../enums/project-key-scopes';
 import { FunctionTemplateUseCase } from '../enums/function-template-use-case';
-import { UsageRange } from '../enums/usage-range';
 import { TemplateReferenceType } from '../enums/template-reference-type';
 import { VCSReferenceType } from '../enums/vcs-reference-type';
 import { DeploymentDownloadType } from '../enums/deployment-download-type';
@@ -495,59 +494,6 @@ export class Functions {
 
         const apiPath = '/functions/templates/{templateId}'.replace('{templateId}', encodeURIComponent(String(templateId)));
         const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get usage metrics and statistics for all functions in the project. View statistics including total deployments, builds, logs, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
-     *
-     * @param {UsageRange} params.range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageFunctions>}
-     */
-    listUsage(params?: { range?: UsageRange }): Promise<Models.UsageFunctions>;
-    /**
-     * Get usage metrics and statistics for all functions in the project. View statistics including total deployments, builds, logs, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
-     *
-     * @param {UsageRange} range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageFunctions>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    listUsage(range?: UsageRange): Promise<Models.UsageFunctions>;
-    listUsage(
-        paramsOrFirst?: { range?: UsageRange } | UsageRange    
-    ): Promise<Models.UsageFunctions> {
-        let params: { range?: UsageRange };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('range' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { range?: UsageRange };
-        } else {
-            params = {
-                range: paramsOrFirst as UsageRange            
-            };
-        }
-        
-        const range = params.range;
-
-
-        const apiPath = '/functions/usage';
-        const payload: Payload = {};
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1517,40 +1463,44 @@ export class Functions {
      * @param {string} params.functionId - Function ID.
      * @param {string} params.deploymentId - Deployment ID.
      * @param {DeploymentDownloadType} params.type - Deployment file to download. Can be: "source", "output".
+     * @param {string} params.token - Presigned source-download token for accessing this deployment without a session (jobs-service).
      * @throws {AppwriteException}
      * @returns {string}
      */
-    getDeploymentDownload(params: { functionId: string, deploymentId: string, type?: DeploymentDownloadType }): string;
+    getDeploymentDownload(params: { functionId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string }): string;
     /**
      * Get a function deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
      *
      * @param {string} functionId - Function ID.
      * @param {string} deploymentId - Deployment ID.
      * @param {DeploymentDownloadType} type - Deployment file to download. Can be: "source", "output".
+     * @param {string} token - Presigned source-download token for accessing this deployment without a session (jobs-service).
      * @throws {AppwriteException}
      * @returns {string}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getDeploymentDownload(functionId: string, deploymentId: string, type?: DeploymentDownloadType): string;
+    getDeploymentDownload(functionId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string): string;
     getDeploymentDownload(
-        paramsOrFirst: { functionId: string, deploymentId: string, type?: DeploymentDownloadType } | string,
-        ...rest: [(string)?, (DeploymentDownloadType)?]    
+        paramsOrFirst: { functionId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string } | string,
+        ...rest: [(string)?, (DeploymentDownloadType)?, (string)?]    
     ): string {
-        let params: { functionId: string, deploymentId: string, type?: DeploymentDownloadType };
+        let params: { functionId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, deploymentId: string, type?: DeploymentDownloadType };
+            params = (paramsOrFirst || {}) as { functionId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 deploymentId: rest[0] as string,
-                type: rest[1] as DeploymentDownloadType            
+                type: rest[1] as DeploymentDownloadType,
+                token: rest[2] as string            
             };
         }
         
         const functionId = params.functionId;
         const deploymentId = params.deploymentId;
         const type = params.type;
+        const token = params.token;
 
         if (typeof functionId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "functionId"');
@@ -1563,6 +1513,9 @@ export class Functions {
         const payload: Payload = {};
         if (typeof type !== 'undefined') {
             payload['type'] = type;
+        }
+        if (typeof token !== 'undefined') {
+            payload['token'] = token;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1924,67 +1877,6 @@ export class Functions {
 
         return this.client.call(
             'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
-    }
-
-    /**
-     * Get usage metrics and statistics for a for a specific function. View statistics including total deployments, builds, executions, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
-     *
-     * @param {string} params.functionId - Function ID.
-     * @param {UsageRange} params.range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageFunction>}
-     */
-    getUsage(params: { functionId: string, range?: UsageRange }): Promise<Models.UsageFunction>;
-    /**
-     * Get usage metrics and statistics for a for a specific function. View statistics including total deployments, builds, executions, storage usage, and compute time. The response includes both current totals and historical data for each metric. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, defaults to 30 days.
-     *
-     * @param {string} functionId - Function ID.
-     * @param {UsageRange} range - Date range.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageFunction>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getUsage(functionId: string, range?: UsageRange): Promise<Models.UsageFunction>;
-    getUsage(
-        paramsOrFirst: { functionId: string, range?: UsageRange } | string,
-        ...rest: [(UsageRange)?]    
-    ): Promise<Models.UsageFunction> {
-        let params: { functionId: string, range?: UsageRange };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, range?: UsageRange };
-        } else {
-            params = {
-                functionId: paramsOrFirst as string,
-                range: rest[0] as UsageRange            
-            };
-        }
-        
-        const functionId = params.functionId;
-        const range = params.range;
-
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
-        }
-
-        const apiPath = '/functions/{functionId}/usage'.replace('{functionId}', encodeURIComponent(String(functionId)));
-        const payload: Payload = {};
-        if (typeof range !== 'undefined') {
-            payload['range'] = range;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
-        return this.client.call(
-            'get',
             uri,
             apiHeaders,
             payload

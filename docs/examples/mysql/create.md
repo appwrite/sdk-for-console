@@ -14,6 +14,7 @@ const result = await mysql.create({
     specification: '<SPECIFICATION>', // optional
     replicas: 0, // optional
     syncMode: 'async', // optional
+    standbyRegion: '<STANDBY_REGION>', // optional
     networkIdleTimeoutSeconds: 60, // optional
     networkIPAllowlist: [], // optional
     idleTimeoutMinutes: 5, // optional
@@ -22,7 +23,7 @@ const result = await mysql.create({
     storageAutoscaling: false, // optional
     storageAutoscalingThresholdPercent: 50, // optional
     storageAutoscalingMaxGb: 0, // optional
-    api: 'nativedb' // optional
+    api: 'tablesdb' // optional
 });
 
 console.log(result);
