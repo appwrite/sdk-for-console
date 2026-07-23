@@ -262,6 +262,31 @@ export class Apps {
     }
 
     /**
+     * List scopes an application can request when installed on a team.
+     *
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AppScopeList>}
+     */
+    listInstallationScopes(): Promise<Models.AppScopeList> {
+
+        const apiPath = '/apps/scopes/installations';
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * List scopes an application can request during the OAuth2 flow.
      *
      * @throws {AppwriteException}
@@ -360,10 +385,12 @@ export class Apps {
      * @param {string[]} params.postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout. Each must be an https URL, an http loopback URL, or a private-use scheme URI, and must not contain a fragment. After ending the user session, the logout endpoint only redirects to URIs in this list.
      * @param {string} params.type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
      * @param {boolean} params.deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
+     * @param {string[]} params.installationScopes - Scopes the application requests when installed on a team. Organization-level and project-level scopes only; use the list scopes endpoint with `type=installation` to discover available values. Maximum of 100 scopes are allowed.
+     * @param {string} params.installationRedirectUrl - URL users are redirected to after creating or updating an installation of this application. Must be an https URL, an http loopback URL (localhost, 127.0.0.1, [::1]), or a private-use scheme URI, and must not contain a fragment. Leave empty for no redirect.
      * @throws {AppwriteException}
      * @returns {Promise<Models.App>}
      */
-    update(params: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean }): Promise<Models.App>;
+    update(params: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean, installationScopes?: string[], installationRedirectUrl?: string }): Promise<Models.App>;
     /**
      * Update an application by its unique ID.
      *
@@ -385,19 +412,21 @@ export class Apps {
      * @param {string[]} postLogoutRedirectUris - Post-logout redirect URIs for OpenID Connect RP-Initiated Logout. Each must be an https URL, an http loopback URL, or a private-use scheme URI, and must not contain a fragment. After ending the user session, the logout endpoint only redirects to URIs in this list.
      * @param {string} type - OAuth2 client type. Use `public` for SPAs, mobile, and native apps that cannot keep a `client_secret` — PKCE is then required at the token endpoint. Use `confidential` for server-side clients that present a `client_secret`. Defaults to `confidential`.
      * @param {boolean} deviceFlow - Allow this client to use the OAuth2 Device Authorization Grant (RFC 8628) for input-constrained devices such as TVs and CLIs. Defaults to false.
+     * @param {string[]} installationScopes - Scopes the application requests when installed on a team. Organization-level and project-level scopes only; use the list scopes endpoint with `type=installation` to discover available values. Maximum of 100 scopes are allowed.
+     * @param {string} installationRedirectUrl - URL users are redirected to after creating or updating an installation of this application. Must be an https URL, an http loopback URL (localhost, 127.0.0.1, [::1]), or a private-use scheme URI, and must not contain a fragment. Leave empty for no redirect.
      * @throws {AppwriteException}
      * @returns {Promise<Models.App>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean): Promise<Models.App>;
+    update(appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean, installationScopes?: string[], installationRedirectUrl?: string): Promise<Models.App>;
     update(
-        paramsOrFirst: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string[])?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (boolean)?, (string[])?, (string[])?, (string)?, (boolean)?]    
+        paramsOrFirst: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean, installationScopes?: string[], installationRedirectUrl?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string[])?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (boolean)?, (string[])?, (string[])?, (string)?, (boolean)?, (string[])?, (string)?]    
     ): Promise<Models.App> {
-        let params: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean };
+        let params: { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean, installationScopes?: string[], installationRedirectUrl?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean };
+            params = (paramsOrFirst || {}) as { appId: string, name: string, description?: string, clientUri?: string, logoUri?: string, privacyPolicyUrl?: string, termsUrl?: string, contacts?: string[], tagline?: string, tags?: string[], images?: string[], supportUrl?: string, dataDeletionUrl?: string, enabled?: boolean, redirectUris?: string[], postLogoutRedirectUris?: string[], type?: string, deviceFlow?: boolean, installationScopes?: string[], installationRedirectUrl?: string };
         } else {
             params = {
                 appId: paramsOrFirst as string,
@@ -417,7 +446,9 @@ export class Apps {
                 redirectUris: rest[13] as string[],
                 postLogoutRedirectUris: rest[14] as string[],
                 type: rest[15] as string,
-                deviceFlow: rest[16] as boolean            
+                deviceFlow: rest[16] as boolean,
+                installationScopes: rest[17] as string[],
+                installationRedirectUrl: rest[18] as string            
             };
         }
         
@@ -439,6 +470,8 @@ export class Apps {
         const postLogoutRedirectUris = params.postLogoutRedirectUris;
         const type = params.type;
         const deviceFlow = params.deviceFlow;
+        const installationScopes = params.installationScopes;
+        const installationRedirectUrl = params.installationRedirectUrl;
 
         if (typeof appId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "appId"');
@@ -500,6 +533,12 @@ export class Apps {
         if (typeof deviceFlow !== 'undefined') {
             payload['deviceFlow'] = deviceFlow;
         }
+        if (typeof installationScopes !== 'undefined') {
+            payload['installationScopes'] = installationScopes;
+        }
+        if (typeof installationRedirectUrl !== 'undefined') {
+            payload['installationRedirectUrl'] = installationRedirectUrl;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -553,6 +592,251 @@ export class Apps {
         }
 
         const apiPath = '/apps/{appId}'.replace('{appId}', encodeURIComponent(String(appId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List app keys for an application.
+     *
+     * @param {string} params.appId - Application unique ID.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AppKeyList>}
+     */
+    listKeys(params: { appId: string, queries?: string[], total?: boolean }): Promise<Models.AppKeyList>;
+    /**
+     * List app keys for an application.
+     *
+     * @param {string} appId - Application unique ID.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AppKeyList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listKeys(appId: string, queries?: string[], total?: boolean): Promise<Models.AppKeyList>;
+    listKeys(
+        paramsOrFirst: { appId: string, queries?: string[], total?: boolean } | string,
+        ...rest: [(string[])?, (boolean)?]    
+    ): Promise<Models.AppKeyList> {
+        let params: { appId: string, queries?: string[], total?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { appId: string, queries?: string[], total?: boolean };
+        } else {
+            params = {
+                appId: paramsOrFirst as string,
+                queries: rest[0] as string[],
+                total: rest[1] as boolean            
+            };
+        }
+        
+        const appId = params.appId;
+        const queries = params.queries;
+        const total = params.total;
+
+        if (typeof appId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "appId"');
+        }
+
+        const apiPath = '/apps/{appId}/keys'.replace('{appId}', encodeURIComponent(String(appId)));
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            payload['total'] = total;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a new app key for an application. App keys carry no scopes; send one in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header to list the application's installations and create installation access tokens.
+     *
+     * @param {string} params.appId - Application unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AppKey>}
+     */
+    createKey(params: { appId: string }): Promise<Models.AppKey>;
+    /**
+     * Create a new app key for an application. App keys carry no scopes; send one in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header to list the application's installations and create installation access tokens.
+     *
+     * @param {string} appId - Application unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AppKey>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createKey(appId: string): Promise<Models.AppKey>;
+    createKey(
+        paramsOrFirst: { appId: string } | string    
+    ): Promise<Models.AppKey> {
+        let params: { appId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { appId: string };
+        } else {
+            params = {
+                appId: paramsOrFirst as string            
+            };
+        }
+        
+        const appId = params.appId;
+
+        if (typeof appId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "appId"');
+        }
+
+        const apiPath = '/apps/{appId}/keys'.replace('{appId}', encodeURIComponent(String(appId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get an app key by its unique ID.
+     *
+     * @param {string} params.appId - Application unique ID.
+     * @param {string} params.keyId - App key unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AppKey>}
+     */
+    getKey(params: { appId: string, keyId: string }): Promise<Models.AppKey>;
+    /**
+     * Get an app key by its unique ID.
+     *
+     * @param {string} appId - Application unique ID.
+     * @param {string} keyId - App key unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AppKey>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getKey(appId: string, keyId: string): Promise<Models.AppKey>;
+    getKey(
+        paramsOrFirst: { appId: string, keyId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.AppKey> {
+        let params: { appId: string, keyId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { appId: string, keyId: string };
+        } else {
+            params = {
+                appId: paramsOrFirst as string,
+                keyId: rest[0] as string            
+            };
+        }
+        
+        const appId = params.appId;
+        const keyId = params.keyId;
+
+        if (typeof appId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "appId"');
+        }
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+
+        const apiPath = '/apps/{appId}/keys/{keyId}'.replace('{appId}', encodeURIComponent(String(appId))).replace('{keyId}', encodeURIComponent(String(keyId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Delete an app key by its unique ID.
+     *
+     * @param {string} params.appId - Application unique ID.
+     * @param {string} params.keyId - App key unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteKey(params: { appId: string, keyId: string }): Promise<{}>;
+    /**
+     * Delete an app key by its unique ID.
+     *
+     * @param {string} appId - Application unique ID.
+     * @param {string} keyId - App key unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteKey(appId: string, keyId: string): Promise<{}>;
+    deleteKey(
+        paramsOrFirst: { appId: string, keyId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<{}> {
+        let params: { appId: string, keyId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { appId: string, keyId: string };
+        } else {
+            params = {
+                appId: paramsOrFirst as string,
+                keyId: rest[0] as string            
+            };
+        }
+        
+        const appId = params.appId;
+        const keyId = params.keyId;
+
+        if (typeof appId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "appId"');
+        }
+        if (typeof keyId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "keyId"');
+        }
+
+        const apiPath = '/apps/{appId}/keys/{keyId}'.replace('{appId}', encodeURIComponent(String(appId))).replace('{keyId}', encodeURIComponent(String(keyId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 

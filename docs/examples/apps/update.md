@@ -25,7 +25,9 @@ const result = await apps.update({
     redirectUris: [], // optional
     postLogoutRedirectUris: [], // optional
     type: 'public', // optional
-    deviceFlow: false // optional
+    deviceFlow: false, // optional
+    installationScopes: [], // optional
+    installationRedirectUrl: 'https://example.com' // optional
 });
 
 console.log(result);
