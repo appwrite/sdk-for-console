@@ -92,4 +92,5 @@ export enum QuerySuggestionResource {
     DedicatedDatabaseOperations = 'dedicateddatabaseoperations',
     DedicatedDatabaseBackups = 'dedicateddatabasebackups',
     DedicatedDatabaseRestorations = 'dedicateddatabaserestorations',
+    DedicatedDatabaseBranches = 'dedicateddatabasebranches',
 }

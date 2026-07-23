@@ -1,5 +1,15 @@
 # Change Log
 
+## 15.5.0
+
+* Updated: Removed `projects.createDevKey()` method
+* Added: `apps` key management methods `listKeys`, `createKey`, `getKey`, `deleteKey`, and `listInstallationScopes`
+* Added: `installationScopes` and `installationRedirectUrl` parameters to `apps.update()`
+* Added: app installation management methods to `organization` and `teams` services
+* Added: `installationAccessTokenDuration` parameter to `project.updateOAuth2Server()`
+* Added: `vectorsDB.createQuery()` for querying documents via POST request body
+* Added: organization installation key scopes
+
 ## 15.4.0
 
 * Updated: Removed the `Health` service

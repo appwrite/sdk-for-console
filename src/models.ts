@@ -5307,6 +5307,10 @@ export namespace Models {
          */
         oAuth2ServerPublicRefreshTokenDuration?: number;
         /**
+         * OAuth2 server access token duration in seconds for app installation access tokens
+         */
+        oAuth2ServerInstallationAccessTokenDuration?: number;
+        /**
          * When enabled, PKCE is required for confidential clients (server-side flows using client_secret). PKCE is always required for public clients regardless of this setting.
          */
         oAuth2ServerConfidentialPkce?: boolean;
@@ -12275,6 +12279,14 @@ export namespace Models {
          */
         userId: string;
         /**
+         * Scopes the application requests when installed on a team. Organization-level and project-level scopes only.
+         */
+        installationScopes: string[];
+        /**
+         * URL users are redirected to after creating or updating an installation of this application. Empty for no redirect.
+         */
+        installationRedirectUrl: string;
+        /**
          * List of application secrets.
          */
         secrets: AppSecret[];
@@ -12388,6 +12400,94 @@ export namespace Models {
          * Whether the scope is deprecated. Deprecated scopes can still be requested but should not be offered for new grants.
          */
         deprecated: boolean;
+    }
+
+    /**
+     * AppInstallation
+     */
+    export type AppInstallation = {
+        /**
+         * Installation ID.
+         */
+        $id: string;
+        /**
+         * Installation creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Installation update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the installed application.
+         */
+        appId: string;
+        /**
+         * ID of the team the application is installed on.
+         */
+        teamId: string;
+        /**
+         * Scopes granted to the application. Snapshot of the application's installation scopes taken when the installation was created or last updated.
+         */
+        scopes: string[];
+        /**
+         * Authorization details granted to the application. Rich authorization request (RFC 9396) style entries; the Appwrite Console stores authorized project IDs here.
+         */
+        authorizationDetails: object;
+        /**
+         * ID of the user who created the installation.
+         */
+        createdById: string;
+        /**
+         * Name of the user who created the installation.
+         */
+        createdByName: string;
+        /**
+         * Time an access token was last issued for the installation in ISO 8601 format. Null if never used.
+         */
+        lastAccessedAt?: string;
+    }
+
+    /**
+     * AppKey
+     */
+    export type AppKey = {
+        /**
+         * App key ID.
+         */
+        $id: string;
+        /**
+         * App key creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * App key update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Application ID this app key belongs to.
+         */
+        appId: string;
+        /**
+         * App key secret.
+         */
+        secret: string;
+        /**
+         * Last few characters of the app key secret, used to help identify it.
+         */
+        hint: string;
+        /**
+         * ID of the user who created the app key.
+         */
+        createdById: string;
+        /**
+         * Name of the user who created the app key.
+         */
+        createdByName: string;
+        /**
+         * Time the app key was last used for authentication in ISO 8601 format. Null if never used.
+         */
+        lastAccessedAt?: string;
     }
 
     /**
@@ -13382,5 +13482,33 @@ export namespace Models {
          * List of scopes.
          */
         scopes: AppScope[];
+    }
+
+    /**
+     * App installations list
+     */
+    export type AppInstallationList = {
+        /**
+         * Total number of installations that matched your query.
+         */
+        total: number;
+        /**
+         * List of installations.
+         */
+        installations: AppInstallation[];
+    }
+
+    /**
+     * App keys list
+     */
+    export type AppKeyList = {
+        /**
+         * Total number of keys that matched your query.
+         */
+        total: number;
+        /**
+         * List of keys.
+         */
+        keys: AppKey[];
     }
 }
