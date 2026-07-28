@@ -1,5 +1,13 @@
 # Change Log
 
+## 15.7.0
+
+* Added: `waf.createChallengeRule()` and `waf.updateChallengeRule()` for managing challenge rules
+* Added: `WafRuleChallenge` model
+* Added: `specification` parameter to `update()` on `tablesDB`, `documentsDB`, and `vectorsDB`
+* Added: `folder` parameter to `storage.createFile()` for placing files in virtual folders
+* Updated: `backups.createRestoration()` documents in-place restores when `newResourceId` is omitted
+
 ## 15.6.0
 
 * Added: `apps` installation methods `listInstallations`, `getInstallation`, `deleteInstallation`, and `createInstallationToken`

@@ -1554,7 +1554,7 @@ export class Mongo {
     }
 
     /**
-     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates.
+     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation by a failover that did not finish also accepts this call as a repair, provided `targetReplicaId` names the member to promote.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
@@ -1563,7 +1563,7 @@ export class Mongo {
      */
     createFailover(params: { databaseId: string, targetReplicaId?: string }): Promise<Models.DedicatedDatabase>;
     /**
-     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates.
+     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation by a failover that did not finish also accepts this call as a repair, provided `targetReplicaId` names the member to promote.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.

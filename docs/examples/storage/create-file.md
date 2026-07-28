@@ -11,7 +11,8 @@ const result = await storage.createFile({
     bucketId: '<BUCKET_ID>',
     fileId: '<FILE_ID>',
     file: document.getElementById('uploader').files[0],
-    permissions: [Permission.read(Role.any())] // optional
+    permissions: [Permission.read(Role.any())], // optional
+    folder: '' // optional
 });
 
 console.log(result);
