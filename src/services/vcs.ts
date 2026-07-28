@@ -99,7 +99,7 @@ export class Vcs {
      * @param {string} params.installationId - Installation Id
      * @param {VCSDetectionType} params.type - Detector type. Must be one of the following: runtime, framework
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit, offset, and equal on namespace.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProviderRepositoryRuntimeList | Models.ProviderRepositoryFrameworkList>}
      */
@@ -110,7 +110,7 @@ export class Vcs {
      * @param {string} installationId - Installation Id
      * @param {VCSDetectionType} type - Detector type. Must be one of the following: runtime, framework
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit, offset, and equal on namespace.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProviderRepositoryRuntimeList | Models.ProviderRepositoryFrameworkList>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -177,40 +177,44 @@ export class Vcs {
      * @param {string} params.installationId - Installation Id
      * @param {string} params.name - Repository name (slug)
      * @param {boolean} params.xprivate - Mark repository public or private
+     * @param {string} params.providerNamespace - Namespace of the git repository. Defaults to the installation's own namespace.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProviderRepository>}
      */
-    createRepository(params: { installationId: string, name: string, xprivate: boolean }): Promise<Models.ProviderRepository>;
+    createRepository(params: { installationId: string, name: string, xprivate: boolean, providerNamespace?: string }): Promise<Models.ProviderRepository>;
     /**
      * Create a new GitHub repository through your installation. This endpoint allows you to create either a public or private repository by specifying a name and visibility setting. The repository will be created under your GitHub user account or organization, depending on your installation type. The GitHub installation must be properly configured and have the necessary permissions for repository creation.
      *
      * @param {string} installationId - Installation Id
      * @param {string} name - Repository name (slug)
      * @param {boolean} xprivate - Mark repository public or private
+     * @param {string} providerNamespace - Namespace of the git repository. Defaults to the installation's own namespace.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProviderRepository>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRepository(installationId: string, name: string, xprivate: boolean): Promise<Models.ProviderRepository>;
+    createRepository(installationId: string, name: string, xprivate: boolean, providerNamespace?: string): Promise<Models.ProviderRepository>;
     createRepository(
-        paramsOrFirst: { installationId: string, name: string, xprivate: boolean } | string,
-        ...rest: [(string)?, (boolean)?]    
+        paramsOrFirst: { installationId: string, name: string, xprivate: boolean, providerNamespace?: string } | string,
+        ...rest: [(string)?, (boolean)?, (string)?]    
     ): Promise<Models.ProviderRepository> {
-        let params: { installationId: string, name: string, xprivate: boolean };
+        let params: { installationId: string, name: string, xprivate: boolean, providerNamespace?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { installationId: string, name: string, xprivate: boolean };
+            params = (paramsOrFirst || {}) as { installationId: string, name: string, xprivate: boolean, providerNamespace?: string };
         } else {
             params = {
                 installationId: paramsOrFirst as string,
                 name: rest[0] as string,
-                xprivate: rest[1] as boolean            
+                xprivate: rest[1] as boolean,
+                providerNamespace: rest[2] as string            
             };
         }
         
         const installationId = params.installationId;
         const name = params.name;
         const xprivate = params.xprivate;
+        const providerNamespace = params.providerNamespace;
 
         if (typeof installationId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "installationId"');
@@ -229,6 +233,9 @@ export class Vcs {
         }
         if (typeof xprivate !== 'undefined') {
             payload['private'] = xprivate;
+        }
+        if (typeof providerNamespace !== 'undefined') {
+            payload['providerNamespace'] = providerNamespace;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -701,6 +708,74 @@ export class Vcs {
 
         return this.client.call(
             'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * List provider namespaces available to a VCS installation. This can include the user personal namespace and any groups or organizations the installation can browse.
+     *
+     * @param {string} params.installationId - Installation Id
+     * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.VcsNamespaceList>}
+     */
+    listNamespaces(params: { installationId: string, search?: string, queries?: string[] }): Promise<Models.VcsNamespaceList>;
+    /**
+     * List provider namespaces available to a VCS installation. This can include the user personal namespace and any groups or organizations the installation can browse.
+     *
+     * @param {string} installationId - Installation Id
+     * @param {string} search - Search term to filter your list results. Max length: 256 chars.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.VcsNamespaceList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listNamespaces(installationId: string, search?: string, queries?: string[]): Promise<Models.VcsNamespaceList>;
+    listNamespaces(
+        paramsOrFirst: { installationId: string, search?: string, queries?: string[] } | string,
+        ...rest: [(string)?, (string[])?]    
+    ): Promise<Models.VcsNamespaceList> {
+        let params: { installationId: string, search?: string, queries?: string[] };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { installationId: string, search?: string, queries?: string[] };
+        } else {
+            params = {
+                installationId: paramsOrFirst as string,
+                search: rest[0] as string,
+                queries: rest[1] as string[]            
+            };
+        }
+        
+        const installationId = params.installationId;
+        const search = params.search;
+        const queries = params.queries;
+
+        if (typeof installationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "installationId"');
+        }
+
+        const apiPath = '/vcs/installations/{installationId}/namespaces'.replace('{installationId}', encodeURIComponent(String(installationId)));
+        const payload: Payload = {};
+        if (typeof search !== 'undefined') {
+            payload['search'] = search;
+        }
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
             uri,
             apiHeaders,
             payload

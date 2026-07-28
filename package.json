@@ -2,7 +2,7 @@
   "name": "@appwrite.io/console",
   "homepage": "https://appwrite.io/support",
   "description": "Appwrite is an open-source self-hosted backend server that abstracts and simplifies complex and repetitive development tasks behind a very simple REST API",
-  "version": "15.5.0",
+  "version": "15.6.0",
   "license": "BSD-3-Clause",
   "main": "dist/cjs/sdk.js",
   "exports": {
@@ -44,6 +44,9 @@
     "serve-handler": "6.1.7",
     "tslib": "2.8.1",
     "typescript": "5.9.3"
+  },
+  "overrides": {
+    "brace-expansion": "5.0.8"
   },
   "jsdelivr": "dist/iife/sdk.js",
   "unpkg": "dist/iife/sdk.js"

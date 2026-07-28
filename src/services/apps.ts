@@ -610,6 +610,259 @@ export class Apps {
     }
 
     /**
+     * List installations of an application. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header, or a caller with update access to the app.
+     *
+     * @param {string} params.appId - Application unique ID.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AppInstallationList>}
+     */
+    listInstallations(params: { appId: string, queries?: string[], total?: boolean }): Promise<Models.AppInstallationList>;
+    /**
+     * List installations of an application. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header, or a caller with update access to the app.
+     *
+     * @param {string} appId - Application unique ID.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AppInstallationList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listInstallations(appId: string, queries?: string[], total?: boolean): Promise<Models.AppInstallationList>;
+    listInstallations(
+        paramsOrFirst: { appId: string, queries?: string[], total?: boolean } | string,
+        ...rest: [(string[])?, (boolean)?]    
+    ): Promise<Models.AppInstallationList> {
+        let params: { appId: string, queries?: string[], total?: boolean };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { appId: string, queries?: string[], total?: boolean };
+        } else {
+            params = {
+                appId: paramsOrFirst as string,
+                queries: rest[0] as string[],
+                total: rest[1] as boolean            
+            };
+        }
+        
+        const appId = params.appId;
+        const queries = params.queries;
+        const total = params.total;
+
+        if (typeof appId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "appId"');
+        }
+
+        const apiPath = '/apps/{appId}/installations'.replace('{appId}', encodeURIComponent(String(appId)));
+        const payload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            payload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            payload['total'] = total;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Get an installation of an application by its unique ID. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header, or a caller with update access to the app.
+     *
+     * @param {string} params.appId - Application unique ID.
+     * @param {string} params.installationId - Installation unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AppInstallation>}
+     */
+    getInstallation(params: { appId: string, installationId: string }): Promise<Models.AppInstallation>;
+    /**
+     * Get an installation of an application by its unique ID. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header, or a caller with update access to the app.
+     *
+     * @param {string} appId - Application unique ID.
+     * @param {string} installationId - Installation unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AppInstallation>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getInstallation(appId: string, installationId: string): Promise<Models.AppInstallation>;
+    getInstallation(
+        paramsOrFirst: { appId: string, installationId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.AppInstallation> {
+        let params: { appId: string, installationId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { appId: string, installationId: string };
+        } else {
+            params = {
+                appId: paramsOrFirst as string,
+                installationId: rest[0] as string            
+            };
+        }
+        
+        const appId = params.appId;
+        const installationId = params.installationId;
+
+        if (typeof appId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "appId"');
+        }
+        if (typeof installationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "installationId"');
+        }
+
+        const apiPath = '/apps/{appId}/installations/{installationId}'.replace('{appId}', encodeURIComponent(String(appId))).replace('{installationId}', encodeURIComponent(String(installationId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Delete an installation of an application by its unique ID. Requires a caller with update access to the app. Previously issued installation access tokens are revoked.
+     *
+     * @param {string} params.appId - Application unique ID.
+     * @param {string} params.installationId - Installation unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteInstallation(params: { appId: string, installationId: string }): Promise<{}>;
+    /**
+     * Delete an installation of an application by its unique ID. Requires a caller with update access to the app. Previously issued installation access tokens are revoked.
+     *
+     * @param {string} appId - Application unique ID.
+     * @param {string} installationId - Installation unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteInstallation(appId: string, installationId: string): Promise<{}>;
+    deleteInstallation(
+        paramsOrFirst: { appId: string, installationId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<{}> {
+        let params: { appId: string, installationId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { appId: string, installationId: string };
+        } else {
+            params = {
+                appId: paramsOrFirst as string,
+                installationId: rest[0] as string            
+            };
+        }
+        
+        const appId = params.appId;
+        const installationId = params.installationId;
+
+        if (typeof appId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "appId"');
+        }
+        if (typeof installationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "installationId"');
+        }
+
+        const apiPath = '/apps/{appId}/installations/{installationId}'.replace('{appId}', encodeURIComponent(String(appId))).replace('{installationId}', encodeURIComponent(String(installationId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'delete',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a token for an installation of an application. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header, or a caller with update access to the app. The returned token carries the scopes and authorization details granted to the installation, and can be used as an `Authorization: Bearer` header everywhere OAuth2 access tokens are accepted. Multiple tokens can be active for the same installation at once; each token stays valid until it expires or the installation is updated or deleted.
+     *
+     * @param {string} params.appId - Application unique ID.
+     * @param {string} params.installationId - Installation unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2Token>}
+     */
+    createInstallationToken(params: { appId: string, installationId: string }): Promise<Models.Oauth2Token>;
+    /**
+     * Create a token for an installation of an application. Requires an app key sent in the `X-Appwrite-Key` header alongside the `X-Appwrite-App` header, or a caller with update access to the app. The returned token carries the scopes and authorization details granted to the installation, and can be used as an `Authorization: Bearer` header everywhere OAuth2 access tokens are accepted. Multiple tokens can be active for the same installation at once; each token stays valid until it expires or the installation is updated or deleted.
+     *
+     * @param {string} appId - Application unique ID.
+     * @param {string} installationId - Installation unique ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Oauth2Token>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createInstallationToken(appId: string, installationId: string): Promise<Models.Oauth2Token>;
+    createInstallationToken(
+        paramsOrFirst: { appId: string, installationId: string } | string,
+        ...rest: [(string)?]    
+    ): Promise<Models.Oauth2Token> {
+        let params: { appId: string, installationId: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { appId: string, installationId: string };
+        } else {
+            params = {
+                appId: paramsOrFirst as string,
+                installationId: rest[0] as string            
+            };
+        }
+        
+        const appId = params.appId;
+        const installationId = params.installationId;
+
+        if (typeof appId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "appId"');
+        }
+        if (typeof installationId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "installationId"');
+        }
+
+        const apiPath = '/apps/{appId}/installations/{installationId}/tokens'.replace('{appId}', encodeURIComponent(String(appId))).replace('{installationId}', encodeURIComponent(String(installationId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * List app keys for an application.
      *
      * @param {string} params.appId - Application unique ID.

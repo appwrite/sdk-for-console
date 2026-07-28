@@ -2022,6 +2022,81 @@ export class Postgresql {
     }
 
     /**
+     * List the lifecycle operations recorded for a dedicated database, newest first. Every provision, update, restore, backup and replication action is recorded here with its outcome, including an attempt that was abandoned because another worker took over the database.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.status - Filter by operation status.
+     * @param {number} params.limit - Maximum number of operations to return.
+     * @param {number} params.offset - Number of operations to skip.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseOperationList>}
+     */
+    listOperations(params: { databaseId: string, status?: string, limit?: number, offset?: number }): Promise<Models.DedicatedDatabaseOperationList>;
+    /**
+     * List the lifecycle operations recorded for a dedicated database, newest first. Every provision, update, restore, backup and replication action is recorded here with its outcome, including an attempt that was abandoned because another worker took over the database.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} status - Filter by operation status.
+     * @param {number} limit - Maximum number of operations to return.
+     * @param {number} offset - Number of operations to skip.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseOperationList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listOperations(databaseId: string, status?: string, limit?: number, offset?: number): Promise<Models.DedicatedDatabaseOperationList>;
+    listOperations(
+        paramsOrFirst: { databaseId: string, status?: string, limit?: number, offset?: number } | string,
+        ...rest: [(string)?, (number)?, (number)?]    
+    ): Promise<Models.DedicatedDatabaseOperationList> {
+        let params: { databaseId: string, status?: string, limit?: number, offset?: number };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { databaseId: string, status?: string, limit?: number, offset?: number };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                status: rest[0] as string,
+                limit: rest[1] as number,
+                offset: rest[2] as number            
+            };
+        }
+        
+        const databaseId = params.databaseId;
+        const status = params.status;
+        const limit = params.limit;
+        const offset = params.offset;
+
+        if (typeof databaseId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "databaseId"');
+        }
+
+        const apiPath = '/postgresql/{databaseId}/operations'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const payload: Payload = {};
+        if (typeof status !== 'undefined') {
+            payload['status'] = status;
+        }
+        if (typeof limit !== 'undefined') {
+            payload['limit'] = limit;
+        }
+        if (typeof offset !== 'undefined') {
+            payload['offset'] = offset;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'get',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
      * Get available point-in-time recovery windows for a dedicated database. Returns the earliest and latest recovery points.
      *
      * @param {string} params.databaseId - Database ID.

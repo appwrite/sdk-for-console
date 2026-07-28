@@ -7,11 +7,10 @@ const client = new Client()
 
 const vcs = new Vcs(client);
 
-const result = await vcs.createRepository({
+const result = await vcs.listNamespaces({
     installationId: '<INSTALLATION_ID>',
-    name: '<NAME>',
-    xprivate: false,
-    providerNamespace: '<PROVIDER_NAMESPACE>' // optional
+    search: '<SEARCH>', // optional
+    queries: [] // optional
 });
 
 console.log(result);

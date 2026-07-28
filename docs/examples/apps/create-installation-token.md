@@ -1,14 +1,15 @@
 ```javascript
-import { Client, Activities } from "@appwrite.io/console";
+import { Client, Apps } from "@appwrite.io/console";
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const activities = new Activities(client);
+const apps = new Apps(client);
 
-const result = await activities.listEvents({
-    queries: [] // optional
+const result = await apps.createInstallationToken({
+    appId: '<APP_ID>',
+    installationId: '<INSTALLATION_ID>'
 });
 
 console.log(result);
