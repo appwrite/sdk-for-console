@@ -388,6 +388,46 @@ export namespace Models {
     }
 
     /**
+     * VcsNamespace
+     */
+    export type VcsNamespace = {
+        /**
+         * VCS (Version Control System) namespace ID.
+         */
+        $id: string;
+        /**
+         * VCS (Version Control System) namespace display name.
+         */
+        name: string;
+        /**
+         * VCS (Version Control System) namespace path, used to filter repositories by namespace.
+         */
+        path: string;
+        /**
+         * Namespace type. Either the user's personal namespace or a group/organization.
+         */
+        type: string;
+        /**
+         * Namespace avatar URL.
+         */
+        avatarUrl: string;
+    }
+
+    /**
+     * VCS Namespaces List
+     */
+    export type VcsNamespaceList = {
+        /**
+         * Total number of namespaces that matched your query.
+         */
+        total: number;
+        /**
+         * List of namespaces.
+         */
+        namespaces: VcsNamespace[];
+    }
+
+    /**
      * Branches List
      */
     export type BranchList = {
@@ -3862,6 +3902,14 @@ export namespace Models {
          * File name.
          */
         name: string;
+        /**
+         * Virtual folder containing the file, with a trailing slash. Empty for the bucket root.
+         */
+        folder: string;
+        /**
+         * Full virtual path of the file: the folder followed by the file name.
+         */
+        key: string;
         /**
          * File MD5 signature.
          */
@@ -8995,6 +9043,10 @@ export namespace Models {
          */
         expiresAt?: string;
         /**
+         * Transaction-log position the backup anchors at, in the engine's own notation: PostgreSQL `{walSegment}|{lsn}`, MySQL and MariaDB `{binlogFile}|{offset}`, MongoDB `{seconds}|{increment}`. Empty when the backup recorded no position, which is the case for backup types that carry none.
+         */
+        logPosition?: string;
+        /**
          * Error message if backup failed.
          */
         error: string;
@@ -10706,6 +10758,70 @@ export namespace Models {
          * Replication lag in seconds.
          */
         lagSeconds: number;
+    }
+
+    /**
+     * Operation
+     */
+    export type DedicatedDatabaseOperation = {
+        /**
+         * Operation ID.
+         */
+        $id: string;
+        /**
+         * Operation creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Database ID the operation ran against.
+         */
+        databaseId: string;
+        /**
+         * Operation type, such as provision, update, restore, pausing, resuming, failover, backup-create or cross-region-enable.
+         */
+        type: string;
+        /**
+         * Operation status. Possible values: running (in progress), completed (finished successfully), failed (ended in an error).
+         */
+        status: string;
+        /**
+         * Number of times this operation has been attempted.
+         */
+        attempts: number;
+        /**
+         * Time the operation was requested, in ISO 8601 format.
+         */
+        requestedAt?: string;
+        /**
+         * Time the operation started, in ISO 8601 format.
+         */
+        startedAt?: string;
+        /**
+         * Time the operation reached a terminal state, in ISO 8601 format.
+         */
+        completedAt?: string;
+        /**
+         * Machine-readable failure code. `LockLost` marks an attempt that was fenced and abandoned because another worker took over the database.
+         */
+        errorCode: string;
+        /**
+         * Failure message if the operation failed.
+         */
+        errorMessage: string;
+    }
+
+    /**
+     * OperationList
+     */
+    export type DedicatedDatabaseOperationList = {
+        /**
+         * Total number of operations.
+         */
+        total: number;
+        /**
+         * List of operations.
+         */
+        operations: DedicatedDatabaseOperation[];
     }
 
     /**

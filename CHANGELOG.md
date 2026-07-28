@@ -1,5 +1,17 @@
 # Change Log
 
+## 15.6.0
+
+* Added: `apps` installation methods `listInstallations`, `getInstallation`, `deleteInstallation`, and `createInstallationToken`
+* Added: `vcs.listNamespaces()` for listing provider namespaces available to an installation
+* Added: `providerNamespace` parameter to `vcs.createRepository()`
+* Added: `listOperations()` on `tablesDB`, `documentsDB`, `vectorsDB`, `mysql`, `postgresql`, and `mongo` for dedicated database lifecycle operations
+* Added: `VcsNamespace`, `VcsNamespaceList`, `DedicatedDatabaseOperation`, and `DedicatedDatabaseOperationList` models
+* Fixed: `activities.listEvents()` takes `queries` as `string[]` instead of `string`
+* Updated: `vcs.listRepositories()` supports `equal` on namespace in queries
+* Updated: `storage.listFiles()` documents `folder` as a filterable attribute
+* Updated: Usage metric docs distinguish an empty `points[]` from a genuine zero value
+
 ## 15.5.0
 
 * Updated: Removed `projects.createDevKey()` method

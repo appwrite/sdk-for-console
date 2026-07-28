@@ -145,6 +145,8 @@ export class Usage {
     /**
      * Aggregate usage gauge snapshots. Gauges are point-in-time values (storage totals, resource counts, …); each point carries the latest snapshot in its interval via `argMax(value, time)`. `metrics[]` (1-10) is required; the response always contains one entry per requested metric, each with its own `points[]` time series.
      * 
+     * A metric with no stored samples in the window returns an empty `points[]`. A metric that really did read zero returns a point whose `value` is `0`, so "no such series" and "a genuine zero" are different answers.
+     * 
      * **Two response shapes**:
      * - Omit `interval` for a flat top-N table — `argMax(value, time)` per dimension combination over the whole window, no time axis. Useful for "top 10 resources by current storage".
      * - Pass `interval` (`1m`, `15m`, `30m`, `1h`, `1d`) for a time series — one snapshot per (time bucket × dimension combination).
@@ -167,6 +169,8 @@ export class Usage {
     listGauges(params: { metrics: string[], queries?: string[], interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number }): Promise<Models.UsageGaugeList>;
     /**
      * Aggregate usage gauge snapshots. Gauges are point-in-time values (storage totals, resource counts, …); each point carries the latest snapshot in its interval via `argMax(value, time)`. `metrics[]` (1-10) is required; the response always contains one entry per requested metric, each with its own `points[]` time series.
+     * 
+     * A metric with no stored samples in the window returns an empty `points[]`. A metric that really did read zero returns a point whose `value` is `0`, so "no such series" and "a genuine zero" are different answers.
      * 
      * **Two response shapes**:
      * - Omit `interval` for a flat top-N table — `argMax(value, time)` per dimension combination over the whole window, no time axis. Useful for "top 10 resources by current storage".
