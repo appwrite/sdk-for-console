@@ -81,7 +81,7 @@ export class Waf {
     }
 
     /**
-     * Create a bypass WAF rule.
+     * Create a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} params.ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
@@ -97,7 +97,7 @@ export class Waf {
      */
     createBypassRule(params: { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleBypass>;
     /**
-     * Create a bypass WAF rule.
+     * Create a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
@@ -196,7 +196,7 @@ export class Waf {
     }
 
     /**
-     * Update a bypass WAF rule.
+     * Update a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} params.ruleId - Rule ID.
@@ -212,7 +212,7 @@ export class Waf {
      */
     updateBypassRule(params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleBypass>;
     /**
-     * Update a bypass WAF rule.
+     * Update a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} ruleId - Rule ID.
@@ -302,7 +302,242 @@ export class Waf {
     }
 
     /**
-     * Create a deny WAF rule.
+     * Create a challenge WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+     * 
+     *
+     * @param {string} params.ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
+     * @param {string} params.resourceType - Resource type the rule applies to.
+     * @param {string} params.name - Rule name.
+     * @param {string} params.resourceId - Resource identifier. Required for functions and sites.
+     * @param {string} params.description - Optional description for the rule.
+     * @param {string} params.challengeType - Challenge type enforced by the rule.
+     * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean} params.enabled - Set to false to create the rule in a disabled state.
+     * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.WafRuleChallenge>}
+     */
+    createChallengeRule(params: { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleChallenge>;
+    /**
+     * Create a challenge WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+     * 
+     *
+     * @param {string} ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
+     * @param {string} resourceType - Resource type the rule applies to.
+     * @param {string} name - Rule name.
+     * @param {string} resourceId - Resource identifier. Required for functions and sites.
+     * @param {string} description - Optional description for the rule.
+     * @param {string} challengeType - Challenge type enforced by the rule.
+     * @param {number} priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean} enabled - Set to false to create the rule in a disabled state.
+     * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.WafRuleChallenge>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createChallengeRule(ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string): Promise<Models.WafRuleChallenge>;
+    createChallengeRule(
+        paramsOrFirst: { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (boolean)?, (string)?]    
+    ): Promise<Models.WafRuleChallenge> {
+        let params: { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string };
+        } else {
+            params = {
+                ruleId: paramsOrFirst as string,
+                resourceType: rest[0] as string,
+                name: rest[1] as string,
+                resourceId: rest[2] as string,
+                description: rest[3] as string,
+                challengeType: rest[4] as string,
+                priority: rest[5] as number,
+                enabled: rest[6] as boolean,
+                conditions: rest[7] as string            
+            };
+        }
+        
+        const ruleId = params.ruleId;
+        const resourceType = params.resourceType;
+        const name = params.name;
+        const resourceId = params.resourceId;
+        const description = params.description;
+        const challengeType = params.challengeType;
+        const priority = params.priority;
+        const enabled = params.enabled;
+        const conditions = params.conditions;
+
+        if (typeof ruleId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "ruleId"');
+        }
+        if (typeof resourceType === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "resourceType"');
+        }
+        if (typeof name === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "name"');
+        }
+
+        const apiPath = '/waf/rules/challenge';
+        const payload: Payload = {};
+        if (typeof ruleId !== 'undefined') {
+            payload['ruleId'] = ruleId;
+        }
+        if (typeof resourceType !== 'undefined') {
+            payload['resourceType'] = resourceType;
+        }
+        if (typeof resourceId !== 'undefined') {
+            payload['resourceId'] = resourceId;
+        }
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof description !== 'undefined') {
+            payload['description'] = description;
+        }
+        if (typeof challengeType !== 'undefined') {
+            payload['challengeType'] = challengeType;
+        }
+        if (typeof priority !== 'undefined') {
+            payload['priority'] = priority;
+        }
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        if (typeof conditions !== 'undefined') {
+            payload['conditions'] = conditions;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'post',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Update a challenge WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+     * 
+     *
+     * @param {string} params.ruleId - Rule ID.
+     * @param {string} params.resourceType - Resource type the rule applies to.
+     * @param {string} params.resourceId - Resource identifier. Required for functions and sites.
+     * @param {string} params.name - Rule name.
+     * @param {string} params.description - Optional description for the rule.
+     * @param {string} params.challengeType - Challenge type enforced by the rule.
+     * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean} params.enabled - Set to false to disable the rule.
+     * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.WafRuleChallenge>}
+     */
+    updateChallengeRule(params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleChallenge>;
+    /**
+     * Update a challenge WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+     * 
+     *
+     * @param {string} ruleId - Rule ID.
+     * @param {string} resourceType - Resource type the rule applies to.
+     * @param {string} resourceId - Resource identifier. Required for functions and sites.
+     * @param {string} name - Rule name.
+     * @param {string} description - Optional description for the rule.
+     * @param {string} challengeType - Challenge type enforced by the rule.
+     * @param {number} priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean} enabled - Set to false to disable the rule.
+     * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.WafRuleChallenge>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateChallengeRule(ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string): Promise<Models.WafRuleChallenge>;
+    updateChallengeRule(
+        paramsOrFirst: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (boolean)?, (string)?]    
+    ): Promise<Models.WafRuleChallenge> {
+        let params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string };
+        
+        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+            params = (paramsOrFirst || {}) as { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string };
+        } else {
+            params = {
+                ruleId: paramsOrFirst as string,
+                resourceType: rest[0] as string,
+                resourceId: rest[1] as string,
+                name: rest[2] as string,
+                description: rest[3] as string,
+                challengeType: rest[4] as string,
+                priority: rest[5] as number,
+                enabled: rest[6] as boolean,
+                conditions: rest[7] as string            
+            };
+        }
+        
+        const ruleId = params.ruleId;
+        const resourceType = params.resourceType;
+        const resourceId = params.resourceId;
+        const name = params.name;
+        const description = params.description;
+        const challengeType = params.challengeType;
+        const priority = params.priority;
+        const enabled = params.enabled;
+        const conditions = params.conditions;
+
+        if (typeof ruleId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "ruleId"');
+        }
+
+        const apiPath = '/waf/rules/challenge/{ruleId}'.replace('{ruleId}', encodeURIComponent(String(ruleId)));
+        const payload: Payload = {};
+        if (typeof resourceType !== 'undefined') {
+            payload['resourceType'] = resourceType;
+        }
+        if (typeof resourceId !== 'undefined') {
+            payload['resourceId'] = resourceId;
+        }
+        if (typeof name !== 'undefined') {
+            payload['name'] = name;
+        }
+        if (typeof description !== 'undefined') {
+            payload['description'] = description;
+        }
+        if (typeof challengeType !== 'undefined') {
+            payload['challengeType'] = challengeType;
+        }
+        if (typeof priority !== 'undefined') {
+            payload['priority'] = priority;
+        }
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        if (typeof conditions !== 'undefined') {
+            payload['conditions'] = conditions;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            'accept': 'application/json',
+        }
+
+        return this.client.call(
+            'patch',
+            uri,
+            apiHeaders,
+            payload
+        );
+    }
+
+    /**
+     * Create a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} params.ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
@@ -318,7 +553,7 @@ export class Waf {
      */
     createDenyRule(params: { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleDeny>;
     /**
-     * Create a deny WAF rule.
+     * Create a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
@@ -417,7 +652,7 @@ export class Waf {
     }
 
     /**
-     * Update a deny WAF rule.
+     * Update a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} params.ruleId - Rule ID.
@@ -433,7 +668,7 @@ export class Waf {
      */
     updateDenyRule(params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleDeny>;
     /**
-     * Update a deny WAF rule.
+     * Update a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} ruleId - Rule ID.
@@ -523,7 +758,7 @@ export class Waf {
     }
 
     /**
-     * Create a rate limit WAF rule.
+     * Create a rate limit WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} params.ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
@@ -541,7 +776,7 @@ export class Waf {
      */
     createRateLimitRule(params: { ruleId: string, resourceType: string, name: string, limit: number, interval: number, resourceId?: string, description?: string, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleRateLimit>;
     /**
-     * Create a rate limit WAF rule.
+     * Create a rate limit WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
@@ -658,7 +893,7 @@ export class Waf {
     }
 
     /**
-     * Update a rate limit WAF rule.
+     * Update a rate limit WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} params.ruleId - Rule ID.
@@ -676,7 +911,7 @@ export class Waf {
      */
     updateRateLimitRule(params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, limit?: number, interval?: number, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleRateLimit>;
     /**
-     * Update a rate limit WAF rule.
+     * Update a rate limit WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} ruleId - Rule ID.
@@ -778,7 +1013,7 @@ export class Waf {
     }
 
     /**
-     * Create a redirect WAF rule.
+     * Create a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} params.ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
@@ -796,7 +1031,7 @@ export class Waf {
      */
     createRedirectRule(params: { ruleId: string, resourceType: string, name: string, location: string, statusCode: number, resourceId?: string, description?: string, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleRedirect>;
     /**
-     * Create a redirect WAF rule.
+     * Create a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
@@ -913,7 +1148,7 @@ export class Waf {
     }
 
     /**
-     * Update a redirect WAF rule.
+     * Update a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} params.ruleId - Rule ID.
@@ -931,7 +1166,7 @@ export class Waf {
      */
     updateRedirectRule(params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, location?: string, statusCode?: number, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleRedirect>;
     /**
-     * Update a redirect WAF rule.
+     * Update a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} ruleId - Rule ID.

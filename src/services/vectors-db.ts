@@ -660,43 +660,47 @@ export class VectorsDB {
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {string} params.specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
      * @param {number} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
-    update(params: { databaseId: string, name: string, enabled?: boolean, replicas?: number }): Promise<Models.Database>;
+    update(params: { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number }): Promise<Models.Database>;
     /**
      * Update a database by its unique ID.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {string} specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
      * @param {number} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(databaseId: string, name: string, enabled?: boolean, replicas?: number): Promise<Models.Database>;
+    update(databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number): Promise<Models.Database>;
     update(
-        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean, replicas?: number } | string,
-        ...rest: [(string)?, (boolean)?, (number)?]    
+        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number } | string,
+        ...rest: [(string)?, (boolean)?, (string)?, (number)?]    
     ): Promise<Models.Database> {
-        let params: { databaseId: string, name: string, enabled?: boolean, replicas?: number };
+        let params: { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean, replicas?: number };
+            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                replicas: rest[2] as number            
+                specification: rest[2] as string,
+                replicas: rest[3] as number            
             };
         }
         
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
+        const specification = params.specification;
         const replicas = params.replicas;
 
         if (typeof databaseId === 'undefined') {
@@ -713,6 +717,9 @@ export class VectorsDB {
         }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
+        }
+        if (typeof specification !== 'undefined') {
+            payload['specification'] = specification;
         }
         if (typeof replicas !== 'undefined') {
             payload['replicas'] = replicas;
@@ -2428,7 +2435,7 @@ export class VectorsDB {
     }
 
     /**
-     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates.
+     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation by a failover that did not finish also accepts this call as a repair, provided `targetReplicaId` names the member to promote.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
@@ -2437,7 +2444,7 @@ export class VectorsDB {
      */
     createFailover(params: { databaseId: string, targetReplicaId?: string }): Promise<Models.DedicatedDatabase>;
     /**
-     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates.
+     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation by a failover that did not finish also accepts this call as a repair, provided `targetReplicaId` names the member to promote.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.

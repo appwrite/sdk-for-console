@@ -13055,6 +13055,72 @@ export namespace Models {
     }
 
     /**
+     * WafRuleChallenge
+     */
+    export type WafRuleChallenge = {
+        /**
+         * Rule ID.
+         */
+        $id: string;
+        /**
+         * WAF rule creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * WAF rule last update time in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human friendly rule name.
+         */
+        name: string;
+        /**
+         * Optional description for the rule.
+         */
+        description: string;
+        /**
+         * Team ID.
+         */
+        teamId: string;
+        /**
+         * Project ID.
+         */
+        projectId: string;
+        /**
+         * Resource type the rule is scoped to.
+         */
+        resourceType: string;
+        /**
+         * Resource identifier. Empty for API-wide rules.
+         */
+        resourceId: string;
+        /**
+         * Action performed when the rule matches.
+         */
+        action: WafRuleAction;
+        /**
+         * Evaluation priority. Lower values execute earlier.
+         */
+        priority: number;
+        /**
+         * Whether the rule is active.
+         */
+        enabled: boolean;
+        /**
+         * List of conditions evaluated for this rule.
+         */
+        conditions: object;
+        /**
+         * Action specific configuration.
+         */
+        config: object;
+        /**
+         * Challenge type enforced when the rule matches.
+         */
+        challengeType: string;
+    }
+
+    /**
      * WafRuleRateLimit
      */
     export type WafRuleRateLimit = {

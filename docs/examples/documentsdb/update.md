@@ -11,6 +11,7 @@ const result = await documentsDB.update({
     databaseId: '<DATABASE_ID>',
     name: '<NAME>',
     enabled: false, // optional
+    specification: 'serverless', // optional
     replicas: 0 // optional
 });
 

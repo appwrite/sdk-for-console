@@ -535,10 +535,11 @@ export class Storage {
      * @param {string} params.fileId - File ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {File} params.file - Binary file. Appwrite SDKs provide helpers to handle file input. [Learn about file input](https://appwrite.io/docs/products/storage/upload-download#input-file).
      * @param {string[]} params.permissions - An array of permission strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+     * @param {string} params.folder - Virtual folder to place the file in, for example "photos/2026". Nest folders with `/`. Defaults to the bucket root.
      * @throws {AppwriteException}
      * @returns {Promise<Models.File>}
      */
-    createFile(params: { bucketId: string, fileId: string, file: File, permissions?: string[], onProgress?: (progress: UploadProgress) => void }): Promise<Models.File>;
+    createFile(params: { bucketId: string, fileId: string, file: File, permissions?: string[], folder?: string, onProgress?: (progress: UploadProgress) => void }): Promise<Models.File>;
     /**
      * Create a new file. Before using this route, you should create a new bucket resource using either a [server integration](https://appwrite.io/docs/server/storage#storageCreateBucket) API or directly from your Appwrite console.
      * 
@@ -553,35 +554,38 @@ export class Storage {
      * @param {string} fileId - File ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {File} file - Binary file. Appwrite SDKs provide helpers to handle file input. [Learn about file input](https://appwrite.io/docs/products/storage/upload-download#input-file).
      * @param {string[]} permissions - An array of permission strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+     * @param {string} folder - Virtual folder to place the file in, for example "photos/2026". Nest folders with `/`. Defaults to the bucket root.
      * @throws {AppwriteException}
      * @returns {Promise<Models.File>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createFile(bucketId: string, fileId: string, file: File, permissions?: string[], onProgress?: (progress: UploadProgress) => void): Promise<Models.File>;
+    createFile(bucketId: string, fileId: string, file: File, permissions?: string[], folder?: string, onProgress?: (progress: UploadProgress) => void): Promise<Models.File>;
     createFile(
-        paramsOrFirst: { bucketId: string, fileId: string, file: File, permissions?: string[], onProgress?: (progress: UploadProgress) => void } | string,
-        ...rest: [(string)?, (File)?, (string[])?,((progress: UploadProgress) => void)?]    
+        paramsOrFirst: { bucketId: string, fileId: string, file: File, permissions?: string[], folder?: string, onProgress?: (progress: UploadProgress) => void } | string,
+        ...rest: [(string)?, (File)?, (string[])?, (string)?,((progress: UploadProgress) => void)?]    
     ): Promise<Models.File> {
-        let params: { bucketId: string, fileId: string, file: File, permissions?: string[] };
+        let params: { bucketId: string, fileId: string, file: File, permissions?: string[], folder?: string };
         let onProgress: ((progress: UploadProgress) => void);
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, file: File, permissions?: string[] };
+            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, file: File, permissions?: string[], folder?: string };
             onProgress = paramsOrFirst?.onProgress as ((progress: UploadProgress) => void);
         } else {
             params = {
                 bucketId: paramsOrFirst as string,
                 fileId: rest[0] as string,
                 file: rest[1] as File,
-                permissions: rest[2] as string[]            
+                permissions: rest[2] as string[],
+                folder: rest[3] as string            
             };
-            onProgress = rest[3] as ((progress: UploadProgress) => void);
+            onProgress = rest[4] as ((progress: UploadProgress) => void);
         }
         
         const bucketId = params.bucketId;
         const fileId = params.fileId;
         const file = params.file;
         const permissions = params.permissions;
+        const folder = params.folder;
 
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucketId"');
@@ -603,6 +607,9 @@ export class Storage {
         }
         if (typeof permissions !== 'undefined') {
             payload['permissions'] = permissions;
+        }
+        if (typeof folder !== 'undefined') {
+            payload['folder'] = folder;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
