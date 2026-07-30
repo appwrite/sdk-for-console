@@ -22,8 +22,7 @@ const result = await mysql.create({
     pitrRetentionDays: 1, // optional
     storageAutoscaling: false, // optional
     storageAutoscalingThresholdPercent: 50, // optional
-    storageAutoscalingMaxGb: 0, // optional
-    api: 'tablesdb' // optional
+    storageAutoscalingMaxGb: 0 // optional
 });
 
 console.log(result);

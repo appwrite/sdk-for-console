@@ -946,7 +946,7 @@ export namespace Models {
          */
         status?: DatabaseStatus;
         /**
-         * Underlying engine of the dedicated backing: postgresql, mysql, mariadb, or mongodb. A managed product (tablesdb, documentsdb, vectorsdb) reports the engine it runs on, so its type and engine can differ. Null when the database has no dedicated backing.
+         * Underlying engine of the dedicated backing: postgresql, mysql, or mongodb. A managed product (tablesdb, documentsdb, vectorsdb) reports the engine it runs on, so its type and engine can differ. Null when the database has no dedicated backing.
          */
         engine?: string;
         /**
@@ -9019,6 +9019,14 @@ export namespace Models {
          */
         type: string;
         /**
+         * Backup type that was requested. Differs from `type` when the backend could not run the requested type and took a different one instead, in which case `fallbackReason` explains why. Empty for backups taken before the requested type was recorded.
+         */
+        requestedType: string;
+        /**
+         * Why the backend ran a different backup type than the one requested. Empty when the backup ran as requested.
+         */
+        fallbackReason: string;
+        /**
          * Backup status. Possible values: pending (queued for processing), running (currently in progress), completed (successfully finished), failed (encountered an error), verified (integrity check passed).
          */
         status: string;
@@ -9705,7 +9713,7 @@ export namespace Models {
          */
         host: string;
         /**
-         * Branch port.
+         * Branch port. Null until the backing reports one.
          */
         port: number;
         /**
@@ -9725,7 +9733,7 @@ export namespace Models {
          */
         ssl: boolean;
         /**
-         * Database engine. Possible values: postgresql, mysql, mariadb, mongodb.
+         * Database engine. Possible values: postgresql, mysql, mongodb.
          */
         engine: string;
         /**
@@ -9947,6 +9955,14 @@ export namespace Models {
          */
         phase: string;
         /**
+         * Number of times a migration step has failed and been recorded.
+         */
+        attempt: number;
+        /**
+         * Reason the most recent migration step failed, empty while none has.
+         */
+        lastError: string;
+        /**
          * Number of documents still pending replication to the target.
          */
         lagDocuments: number;
@@ -10001,7 +10017,7 @@ export namespace Models {
          */
         api: string;
         /**
-         * Database engine: postgresql, mysql, mariadb, or mongodb.
+         * Database engine: postgresql, mysql, or mongodb.
          */
         engine: string;
         /**
@@ -10021,7 +10037,7 @@ export namespace Models {
          */
         hostname: string;
         /**
-         * Database port for connections.
+         * Database port for connections. Derived from the engine when the backing has not reported one yet.
          */
         connectionPort: number;
         /**
@@ -10101,7 +10117,7 @@ export namespace Models {
          */
         crossRegionReplicas: number;
         /**
-         * Maximum concurrent connections.
+         * Maximum concurrent client connections. This is the limit a client pool may reach; the engine's own max_connections reported by the status endpoint is a smaller backend limit the pooler multiplexes onto and does not constrain a client pool.
          */
         networkMaxConnections: number;
         /**
@@ -10281,7 +10297,7 @@ export namespace Models {
          */
         ready: boolean;
         /**
-         * Database engine: postgresql, mysql, mariadb, or mongodb.
+         * Database engine: postgresql, mysql, or mongodb.
          */
         engine: string;
         /**
@@ -10297,7 +10313,31 @@ export namespace Models {
          */
         connections: DatabaseStatusConnections;
         /**
-         * List of database replicas and their status.
+         * Requested replication sync mode. Possible values: async, sync, quorum. Compare with effectiveSyncMode for what the primary is enforcing.
+         */
+        syncMode: string;
+        /**
+         * Replication sync mode the primary is actually enforcing. Null when high availability is disabled or the state could not be read.
+         */
+        effectiveSyncMode?: string;
+        /**
+         * Whether the enforced replication is weaker than the requested syncMode.
+         */
+        syncDegraded: boolean;
+        /**
+         * Number of standby acknowledgements the primary waits for before a write is committed.
+         */
+        syncAcknowledgements: number;
+        /**
+         * Number of standbys registered with the primary for synchronous replication.
+         */
+        syncStandbyCount: number;
+        /**
+         * Whether the reported sync state was read from the engine. When false the state could not be confirmed and the other sync fields carry no reading.
+         */
+        syncStateConfirmed: boolean;
+        /**
+         * List of database replicas and their status. Every configured member appears, including one the backend has not brought up, which is reported as not healthy.
          */
         replicas: DatabaseStatusReplica[];
         /**
@@ -10747,11 +10787,11 @@ export namespace Models {
          */
         $id: string;
         /**
-         * Member role. Possible values: primary (accepts reads and writes), replica (read-only follower).
+         * Member role. Possible values: primary (accepts reads and writes), replica (read-only follower), unknown (placement not established; reported while a transition is moving or restarting the topology and this member has not been probed, so no member can be named the write target).
          */
         role: string;
         /**
-         * Member pod status. Possible values: provisioning (pod missing or Pending), starting (Running but not Ready), active (Running and Ready), failed (Failed phase or CrashLoopBackOff container), or the lowercased pod phase reported by the cluster.
+         * Member pod status. Possible values: pending (configured but absent from the backend topology, so nothing is bringing it up), provisioning (pod missing or Pending), starting (Running but not Ready), active (Running and Ready), failed (Failed phase or CrashLoopBackOff container), or the lowercased pod phase reported by the cluster.
          */
         status: string;
         /**
@@ -10833,9 +10873,29 @@ export namespace Models {
          */
         replicas: number;
         /**
-         * Replication sync mode. Possible values: async (asynchronous, fastest), sync (synchronous, strong consistency), quorum (quorum-based, majority of replicas must confirm).
+         * Requested replication sync mode. Possible values: async (asynchronous, fastest), sync (synchronous, strong consistency), quorum (quorum-based, majority of replicas must confirm). This is what was asked for; compare it with effectiveSyncMode for what the primary is enforcing.
          */
         syncMode: string;
+        /**
+         * Replication sync mode the primary is actually enforcing. Null when high availability is disabled or the state could not be read. A value below the requested syncMode means writes are being acknowledged with weaker durability than configured.
+         */
+        effectiveSyncMode?: string;
+        /**
+         * Whether the enforced replication is weaker than the requested syncMode.
+         */
+        syncDegraded: boolean;
+        /**
+         * Number of standby acknowledgements the primary waits for before a write is committed. Zero means writes are acknowledged locally.
+         */
+        syncAcknowledgements: number;
+        /**
+         * Number of standbys registered with the primary for synchronous replication.
+         */
+        syncStandbyCount: number;
+        /**
+         * Whether the reported sync state was read from the engine. When false the state could not be confirmed and the other sync fields carry no reading.
+         */
+        syncStateConfirmed: boolean;
         /**
          * Per-pod statuses for the primary and every replica.
          */
@@ -11463,7 +11523,7 @@ export namespace Models {
          */
         mode: string;
         /**
-         * Maximum number of pooled connections.
+         * Client-connection ceiling the pooler accepts. Enforced on MySQL and MariaDB; on PostgreSQL the pooler has no client cap, so this reports the database's advertised networkMaxConnections and cannot be set here.
          */
         maxConnections: number;
         /**
@@ -11785,7 +11845,7 @@ export namespace Models {
          */
         current: number;
         /**
-         * Maximum allowed connections.
+         * The engine's own max_connections. On a pooled database this is the backend limit the pooler multiplexes onto, not the ceiling a client pool may reach — that is networkMaxConnections on the database resource.
          */
         max: number;
     }
@@ -11795,11 +11855,11 @@ export namespace Models {
      */
     export type DatabaseStatusReplica = {
         /**
-         * StatefulSet pod index (0 = primary, 1+ = replicas).
+         * Member index within the database. Read `role` for which member accepts writes: a failover moves the primary without renumbering the indexes.
          */
         index: number;
         /**
-         * Replica role: primary or replica.
+         * Member role. Possible values: primary (accepts reads and writes), replica (read-only follower), unknown (placement not established; reported while a transition is moving or restarting the topology, so no member can be named the write target).
          */
         role: string;
         /**
@@ -13118,6 +13178,14 @@ export namespace Models {
          * Challenge type enforced when the rule matches.
          */
         challengeType: string;
+        /**
+         * Challenge difficulty from 1 (easiest) to 5 (hardest) enforced when the rule matches.
+         */
+        difficulty: number;
+        /**
+         * Seconds a visitor stays cleared after passing the challenge before being challenged again.
+         */
+        ttl: number;
     }
 
     /**
@@ -13188,6 +13256,10 @@ export namespace Models {
          * Interval in seconds for the rate limit window.
          */
         interval: number;
+        /**
+         * Rate limit key: `ip` limits per client IP, `userId` limits per authenticated user.
+         */
+        key: string;
     }
 
     /**

@@ -8,7 +8,7 @@ const client = new Client()
 const project = new Project(client);
 
 const result = await project.updateSessionDurationPolicy({
-    duration: 5
+    duration: 60
 });
 
 console.log(result);

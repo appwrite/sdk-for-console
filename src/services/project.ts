@@ -5642,7 +5642,7 @@ export class Project {
      * 
      * Keep in mind, while password history policy is disabled, the history is not being stored. Enabling the policy will not have any history on existing users, and it will only start to collect and enforce the policy on password changes since the policy is enabled.
      *
-     * @param {number} params.total - Set the password history length per user. Value can be between 1 and 5000, or null to disable the limit.
+     * @param {number} params.total - Set the password history length per user. Value can be between 1 and 20, or null to disable the limit.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
@@ -5652,7 +5652,7 @@ export class Project {
      * 
      * Keep in mind, while password history policy is disabled, the history is not being stored. Enabling the policy will not have any history on existing users, and it will only start to collect and enforce the policy on password changes since the policy is enabled.
      *
-     * @param {number} total - Set the password history length per user. Value can be between 1 and 5000, or null to disable the limit.
+     * @param {number} total - Set the password history length per user. Value can be between 1 and 20, or null to disable the limit.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -5898,7 +5898,7 @@ export class Project {
     /**
      * Update maximum duration how long sessions created within a project should stay active for.
      *
-     * @param {number} params.duration - Maximum session length in seconds. Minium allowed value is 5 second, and maximum is 1 year, which is 31536000 seconds.
+     * @param {number} params.duration - Maximum session length in seconds. Minium allowed value is 60 seconds, and maximum is 1 year, which is 31536000 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
@@ -5906,7 +5906,7 @@ export class Project {
     /**
      * Update maximum duration how long sessions created within a project should stay active for.
      *
-     * @param {number} duration - Maximum session length in seconds. Minium allowed value is 5 second, and maximum is 1 year, which is 31536000 seconds.
+     * @param {number} duration - Maximum session length in seconds. Minium allowed value is 60 seconds, and maximum is 1 year, which is 31536000 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -6012,27 +6012,27 @@ export class Project {
     /**
      * Update the maximum number of sessions allowed per user. When the limit is hit, the oldest session will be deleted to make room for new one.
      *
-     * @param {number} params.total - Set the maximum number of sessions allowed per user. Value can be between 1 and 5000, or null to disable the limit.
+     * @param {number} params.total - Set the maximum number of sessions allowed per user. Value can be between 1 and 100.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateSessionLimitPolicy(params: { total?: number }): Promise<Models.Project>;
+    updateSessionLimitPolicy(params: { total: number }): Promise<Models.Project>;
     /**
      * Update the maximum number of sessions allowed per user. When the limit is hit, the oldest session will be deleted to make room for new one.
      *
-     * @param {number} total - Set the maximum number of sessions allowed per user. Value can be between 1 and 5000, or null to disable the limit.
+     * @param {number} total - Set the maximum number of sessions allowed per user. Value can be between 1 and 100.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateSessionLimitPolicy(total?: number): Promise<Models.Project>;
+    updateSessionLimitPolicy(total: number): Promise<Models.Project>;
     updateSessionLimitPolicy(
-        paramsOrFirst?: { total?: number } | number    
+        paramsOrFirst: { total: number } | number    
     ): Promise<Models.Project> {
-        let params: { total?: number };
+        let params: { total: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { total?: number };
+            params = (paramsOrFirst || {}) as { total: number };
         } else {
             params = {
                 total: paramsOrFirst as number            
@@ -6069,7 +6069,7 @@ export class Project {
     /**
      * Update the maximum number of users in the project. When the limit is hit or amount of existing users already exceeded the limit, all users remain active, but new user sign up will be prohibited.
      *
-     * @param {number} params.total - Set the maximum number of users allowed in the project. Value can be between 1 and 5000, or null to disable the limit.
+     * @param {number} params.total - Set the maximum number of users allowed in the project. Value can be between 0 and 10000. Use 0 or null to disable the limit.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
@@ -6077,7 +6077,7 @@ export class Project {
     /**
      * Update the maximum number of users in the project. When the limit is hit or amount of existing users already exceeded the limit, all users remain active, but new user sign up will be prohibited.
      *
-     * @param {number} total - Set the maximum number of users allowed in the project. Value can be between 1 and 5000, or null to disable the limit.
+     * @param {number} total - Set the maximum number of users allowed in the project. Value can be between 0 and 10000. Use 0 or null to disable the limit.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      * @deprecated Use the object parameter style method for a better developer experience.

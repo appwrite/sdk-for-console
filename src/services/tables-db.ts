@@ -91,10 +91,11 @@ export class TablesDB {
      * @param {boolean} params.enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
      * @param {string} params.specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @param {number} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
+     * @param {string} params.syncMode - Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
-    create(params: { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number }): Promise<Models.Database>;
+    create(params: { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number, syncMode?: string }): Promise<Models.Database>;
     /**
      * Create a new Database.
      * 
@@ -104,26 +105,28 @@ export class TablesDB {
      * @param {boolean} enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
      * @param {string} specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @param {number} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
+     * @param {string} syncMode - Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number): Promise<Models.Database>;
+    create(databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number, syncMode?: string): Promise<Models.Database>;
     create(
-        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number } | string,
-        ...rest: [(string)?, (boolean)?, (string)?, (number)?]    
+        paramsOrFirst: { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number, syncMode?: string } | string,
+        ...rest: [(string)?, (boolean)?, (string)?, (number)?, (string)?]    
     ): Promise<Models.Database> {
-        let params: { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number };
+        let params: { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number, syncMode?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number };
+            params = (paramsOrFirst || {}) as { databaseId: string, name: string, enabled?: boolean, specification?: string, replicas?: number, syncMode?: string };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
                 specification: rest[2] as string,
-                replicas: rest[3] as number            
+                replicas: rest[3] as number,
+                syncMode: rest[4] as string            
             };
         }
         
@@ -132,6 +135,7 @@ export class TablesDB {
         const enabled = params.enabled;
         const specification = params.specification;
         const replicas = params.replicas;
+        const syncMode = params.syncMode;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
@@ -156,6 +160,9 @@ export class TablesDB {
         }
         if (typeof replicas !== 'undefined') {
             payload['replicas'] = replicas;
+        }
+        if (typeof syncMode !== 'undefined') {
+            payload['syncMode'] = syncMode;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -603,10 +610,11 @@ export class TablesDB {
      * @param {boolean} params.enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
      * @param {string} params.specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
      * @param {number} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
+     * @param {string} params.syncMode - Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
-    update(params: { databaseId: string, name?: string, enabled?: boolean, specification?: string, replicas?: number }): Promise<Models.Database>;
+    update(params: { databaseId: string, name?: string, enabled?: boolean, specification?: string, replicas?: number, syncMode?: string }): Promise<Models.Database>;
     /**
      * Update a database by its unique ID.
      *
@@ -615,26 +623,28 @@ export class TablesDB {
      * @param {boolean} enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
      * @param {string} specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
      * @param {number} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
+     * @param {string} syncMode - Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(databaseId: string, name?: string, enabled?: boolean, specification?: string, replicas?: number): Promise<Models.Database>;
+    update(databaseId: string, name?: string, enabled?: boolean, specification?: string, replicas?: number, syncMode?: string): Promise<Models.Database>;
     update(
-        paramsOrFirst: { databaseId: string, name?: string, enabled?: boolean, specification?: string, replicas?: number } | string,
-        ...rest: [(string)?, (boolean)?, (string)?, (number)?]    
+        paramsOrFirst: { databaseId: string, name?: string, enabled?: boolean, specification?: string, replicas?: number, syncMode?: string } | string,
+        ...rest: [(string)?, (boolean)?, (string)?, (number)?, (string)?]    
     ): Promise<Models.Database> {
-        let params: { databaseId: string, name?: string, enabled?: boolean, specification?: string, replicas?: number };
+        let params: { databaseId: string, name?: string, enabled?: boolean, specification?: string, replicas?: number, syncMode?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name?: string, enabled?: boolean, specification?: string, replicas?: number };
+            params = (paramsOrFirst || {}) as { databaseId: string, name?: string, enabled?: boolean, specification?: string, replicas?: number, syncMode?: string };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
                 specification: rest[2] as string,
-                replicas: rest[3] as number            
+                replicas: rest[3] as number,
+                syncMode: rest[4] as string            
             };
         }
         
@@ -643,6 +653,7 @@ export class TablesDB {
         const enabled = params.enabled;
         const specification = params.specification;
         const replicas = params.replicas;
+        const syncMode = params.syncMode;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
@@ -661,6 +672,9 @@ export class TablesDB {
         }
         if (typeof replicas !== 'undefined') {
             payload['replicas'] = replicas;
+        }
+        if (typeof syncMode !== 'undefined') {
+            payload['syncMode'] = syncMode;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

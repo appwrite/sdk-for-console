@@ -8,7 +8,7 @@ const client = new Client()
 const project = new Project(client);
 
 const result = await project.updateUserLimitPolicy({
-    total: 1
+    total: 0
 });
 
 console.log(result);
