@@ -16,7 +16,9 @@ const result = await waf.updateChallengeRule({
     challengeType: 'compute', // optional
     priority: -100000, // optional
     enabled: false, // optional
-    conditions: '' // optional
+    conditions: '', // optional
+    difficulty: 1, // optional
+    ttl: 900 // optional
 });
 
 console.log(result);

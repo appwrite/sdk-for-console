@@ -1,5 +1,21 @@
 # Change Log
 
+## 15.8.0
+
+* Breaking: `create()` on `mysql`, `postgresql`, and `mongo` no longer accepts `api`
+* Breaking: `project.updateSessionLimitPolicy()` now requires `total`
+* Added: `syncMode` parameter to `create()` and `update()` on `tablesDB`, `documentsDB`, and `vectorsDB`
+* Added: `difficulty` and `ttl` parameters to `waf.createChallengeRule()` and `waf.updateChallengeRule()`
+* Added: `key` parameter to `waf.createRateLimitRule()` and `waf.updateRateLimitRule()`
+* Added: replication sync state fields to `DatabaseStatus` and `DedicatedDatabaseReplicas`
+* Added: `syncMode` to the `DedicatedDatabase` model
+* Added: `difficulty` and `ttl` to `WafRuleChallenge`, and `key` to `WafRuleRateLimit`
+* Added: `requestedType` and `fallbackReason` to `DedicatedDatabaseBackup`
+* Added: `attempt` and `lastError` to `DatabaseMigration`
+* Added: `node-26` to the `Runtime` and `BuildRuntime` enums
+* Updated: `DatabaseStatusReplica.role` documents the `unknown` role during topology transitions
+* Updated: Project policy limits for password history, session duration, session count, and users
+
 ## 15.7.0
 
 * Added: `waf.createChallengeRule()` and `waf.updateChallengeRule()` for managing challenge rules

@@ -302,7 +302,7 @@ export class Waf {
     }
 
     /**
-     * Create a challenge WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+     * Create a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} params.ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
@@ -314,12 +314,14 @@ export class Waf {
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to create the rule in a disabled state.
      * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {number} params.difficulty - Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
+     * @param {number} params.ttl - How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleChallenge>}
      */
-    createChallengeRule(params: { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleChallenge>;
+    createChallengeRule(params: { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string, difficulty?: number, ttl?: number }): Promise<Models.WafRuleChallenge>;
     /**
-     * Create a challenge WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+     * Create a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
@@ -331,19 +333,21 @@ export class Waf {
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to create the rule in a disabled state.
      * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {number} difficulty - Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
+     * @param {number} ttl - How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleChallenge>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createChallengeRule(ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string): Promise<Models.WafRuleChallenge>;
+    createChallengeRule(ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string, difficulty?: number, ttl?: number): Promise<Models.WafRuleChallenge>;
     createChallengeRule(
-        paramsOrFirst: { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (boolean)?, (string)?]    
+        paramsOrFirst: { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string, difficulty?: number, ttl?: number } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (boolean)?, (string)?, (number)?, (number)?]    
     ): Promise<Models.WafRuleChallenge> {
-        let params: { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string };
+        let params: { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string, difficulty?: number, ttl?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string };
+            params = (paramsOrFirst || {}) as { ruleId: string, resourceType: string, name: string, resourceId?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string, difficulty?: number, ttl?: number };
         } else {
             params = {
                 ruleId: paramsOrFirst as string,
@@ -354,7 +358,9 @@ export class Waf {
                 challengeType: rest[4] as string,
                 priority: rest[5] as number,
                 enabled: rest[6] as boolean,
-                conditions: rest[7] as string            
+                conditions: rest[7] as string,
+                difficulty: rest[8] as number,
+                ttl: rest[9] as number            
             };
         }
         
@@ -367,6 +373,8 @@ export class Waf {
         const priority = params.priority;
         const enabled = params.enabled;
         const conditions = params.conditions;
+        const difficulty = params.difficulty;
+        const ttl = params.ttl;
 
         if (typeof ruleId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ruleId"');
@@ -407,6 +415,12 @@ export class Waf {
         if (typeof conditions !== 'undefined') {
             payload['conditions'] = conditions;
         }
+        if (typeof difficulty !== 'undefined') {
+            payload['difficulty'] = difficulty;
+        }
+        if (typeof ttl !== 'undefined') {
+            payload['ttl'] = ttl;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -424,7 +438,7 @@ export class Waf {
     }
 
     /**
-     * Update a challenge WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+     * Update a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} params.ruleId - Rule ID.
@@ -436,12 +450,14 @@ export class Waf {
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to disable the rule.
      * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {number} params.difficulty - Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
+     * @param {number} params.ttl - How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleChallenge>}
      */
-    updateChallengeRule(params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleChallenge>;
+    updateChallengeRule(params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string, difficulty?: number, ttl?: number }): Promise<Models.WafRuleChallenge>;
     /**
-     * Update a challenge WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+     * Update a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} ruleId - Rule ID.
@@ -453,19 +469,21 @@ export class Waf {
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to disable the rule.
      * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {number} difficulty - Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
+     * @param {number} ttl - How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleChallenge>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateChallengeRule(ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string): Promise<Models.WafRuleChallenge>;
+    updateChallengeRule(ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string, difficulty?: number, ttl?: number): Promise<Models.WafRuleChallenge>;
     updateChallengeRule(
-        paramsOrFirst: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (boolean)?, (string)?]    
+        paramsOrFirst: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string, difficulty?: number, ttl?: number } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (boolean)?, (string)?, (number)?, (number)?]    
     ): Promise<Models.WafRuleChallenge> {
-        let params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string };
+        let params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string, difficulty?: number, ttl?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string };
+            params = (paramsOrFirst || {}) as { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, challengeType?: string, priority?: number, enabled?: boolean, conditions?: string, difficulty?: number, ttl?: number };
         } else {
             params = {
                 ruleId: paramsOrFirst as string,
@@ -476,7 +494,9 @@ export class Waf {
                 challengeType: rest[4] as string,
                 priority: rest[5] as number,
                 enabled: rest[6] as boolean,
-                conditions: rest[7] as string            
+                conditions: rest[7] as string,
+                difficulty: rest[8] as number,
+                ttl: rest[9] as number            
             };
         }
         
@@ -489,6 +509,8 @@ export class Waf {
         const priority = params.priority;
         const enabled = params.enabled;
         const conditions = params.conditions;
+        const difficulty = params.difficulty;
+        const ttl = params.ttl;
 
         if (typeof ruleId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ruleId"');
@@ -519,6 +541,12 @@ export class Waf {
         }
         if (typeof conditions !== 'undefined') {
             payload['conditions'] = conditions;
+        }
+        if (typeof difficulty !== 'undefined') {
+            payload['difficulty'] = difficulty;
+        }
+        if (typeof ttl !== 'undefined') {
+            payload['ttl'] = ttl;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -758,7 +786,7 @@ export class Waf {
     }
 
     /**
-     * Create a rate limit WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+     * Create a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} params.ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
@@ -768,15 +796,16 @@ export class Waf {
      * @param {number} params.interval - Interval in seconds used for rate limiting.
      * @param {string} params.resourceId - Resource identifier. Required for functions and sites.
      * @param {string} params.description - Optional description for the rule.
+     * @param {string} params.key - Rate limit key. Use `ip` to limit per client IP or `userId` to limit per authenticated user. Requests without an authenticated user skip `userId` rules.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to create the rule in a disabled state.
      * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRateLimit>}
      */
-    createRateLimitRule(params: { ruleId: string, resourceType: string, name: string, limit: number, interval: number, resourceId?: string, description?: string, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleRateLimit>;
+    createRateLimitRule(params: { ruleId: string, resourceType: string, name: string, limit: number, interval: number, resourceId?: string, description?: string, key?: string, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleRateLimit>;
     /**
-     * Create a rate limit WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+     * Create a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
@@ -786,6 +815,7 @@ export class Waf {
      * @param {number} interval - Interval in seconds used for rate limiting.
      * @param {string} resourceId - Resource identifier. Required for functions and sites.
      * @param {string} description - Optional description for the rule.
+     * @param {string} key - Rate limit key. Use `ip` to limit per client IP or `userId` to limit per authenticated user. Requests without an authenticated user skip `userId` rules.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to create the rule in a disabled state.
      * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
@@ -793,15 +823,15 @@ export class Waf {
      * @returns {Promise<Models.WafRuleRateLimit>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRateLimitRule(ruleId: string, resourceType: string, name: string, limit: number, interval: number, resourceId?: string, description?: string, priority?: number, enabled?: boolean, conditions?: string): Promise<Models.WafRuleRateLimit>;
+    createRateLimitRule(ruleId: string, resourceType: string, name: string, limit: number, interval: number, resourceId?: string, description?: string, key?: string, priority?: number, enabled?: boolean, conditions?: string): Promise<Models.WafRuleRateLimit>;
     createRateLimitRule(
-        paramsOrFirst: { ruleId: string, resourceType: string, name: string, limit: number, interval: number, resourceId?: string, description?: string, priority?: number, enabled?: boolean, conditions?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (number)?, (string)?, (string)?, (number)?, (boolean)?, (string)?]    
+        paramsOrFirst: { ruleId: string, resourceType: string, name: string, limit: number, interval: number, resourceId?: string, description?: string, key?: string, priority?: number, enabled?: boolean, conditions?: string } | string,
+        ...rest: [(string)?, (string)?, (number)?, (number)?, (string)?, (string)?, (string)?, (number)?, (boolean)?, (string)?]    
     ): Promise<Models.WafRuleRateLimit> {
-        let params: { ruleId: string, resourceType: string, name: string, limit: number, interval: number, resourceId?: string, description?: string, priority?: number, enabled?: boolean, conditions?: string };
+        let params: { ruleId: string, resourceType: string, name: string, limit: number, interval: number, resourceId?: string, description?: string, key?: string, priority?: number, enabled?: boolean, conditions?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { ruleId: string, resourceType: string, name: string, limit: number, interval: number, resourceId?: string, description?: string, priority?: number, enabled?: boolean, conditions?: string };
+            params = (paramsOrFirst || {}) as { ruleId: string, resourceType: string, name: string, limit: number, interval: number, resourceId?: string, description?: string, key?: string, priority?: number, enabled?: boolean, conditions?: string };
         } else {
             params = {
                 ruleId: paramsOrFirst as string,
@@ -811,9 +841,10 @@ export class Waf {
                 interval: rest[3] as number,
                 resourceId: rest[4] as string,
                 description: rest[5] as string,
-                priority: rest[6] as number,
-                enabled: rest[7] as boolean,
-                conditions: rest[8] as string            
+                key: rest[6] as string,
+                priority: rest[7] as number,
+                enabled: rest[8] as boolean,
+                conditions: rest[9] as string            
             };
         }
         
@@ -824,6 +855,7 @@ export class Waf {
         const interval = params.interval;
         const resourceId = params.resourceId;
         const description = params.description;
+        const key = params.key;
         const priority = params.priority;
         const enabled = params.enabled;
         const conditions = params.conditions;
@@ -867,6 +899,9 @@ export class Waf {
         if (typeof interval !== 'undefined') {
             payload['interval'] = interval;
         }
+        if (typeof key !== 'undefined') {
+            payload['key'] = key;
+        }
         if (typeof priority !== 'undefined') {
             payload['priority'] = priority;
         }
@@ -893,7 +928,7 @@ export class Waf {
     }
 
     /**
-     * Update a rate limit WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+     * Update a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} params.ruleId - Rule ID.
@@ -903,15 +938,16 @@ export class Waf {
      * @param {string} params.description - Optional description for the rule.
      * @param {number} params.limit - Maximum number of matching requests allowed in the configured interval.
      * @param {number} params.interval - Interval in seconds used for rate limiting.
+     * @param {string} params.key - Rate limit key. Use `ip` to limit per client IP or `userId` to limit per authenticated user. Requests without an authenticated user skip `userId` rules.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to disable the rule.
      * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRateLimit>}
      */
-    updateRateLimitRule(params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, limit?: number, interval?: number, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleRateLimit>;
+    updateRateLimitRule(params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, limit?: number, interval?: number, key?: string, priority?: number, enabled?: boolean, conditions?: string }): Promise<Models.WafRuleRateLimit>;
     /**
-     * Update a rate limit WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
+     * Update a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      * 
      *
      * @param {string} ruleId - Rule ID.
@@ -921,6 +957,7 @@ export class Waf {
      * @param {string} description - Optional description for the rule.
      * @param {number} limit - Maximum number of matching requests allowed in the configured interval.
      * @param {number} interval - Interval in seconds used for rate limiting.
+     * @param {string} key - Rate limit key. Use `ip` to limit per client IP or `userId` to limit per authenticated user. Requests without an authenticated user skip `userId` rules.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to disable the rule.
      * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
@@ -928,15 +965,15 @@ export class Waf {
      * @returns {Promise<Models.WafRuleRateLimit>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRateLimitRule(ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, limit?: number, interval?: number, priority?: number, enabled?: boolean, conditions?: string): Promise<Models.WafRuleRateLimit>;
+    updateRateLimitRule(ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, limit?: number, interval?: number, key?: string, priority?: number, enabled?: boolean, conditions?: string): Promise<Models.WafRuleRateLimit>;
     updateRateLimitRule(
-        paramsOrFirst: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, limit?: number, interval?: number, priority?: number, enabled?: boolean, conditions?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (number)?, (number)?, (number)?, (boolean)?, (string)?]    
+        paramsOrFirst: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, limit?: number, interval?: number, key?: string, priority?: number, enabled?: boolean, conditions?: string } | string,
+        ...rest: [(string)?, (string)?, (string)?, (string)?, (number)?, (number)?, (string)?, (number)?, (boolean)?, (string)?]    
     ): Promise<Models.WafRuleRateLimit> {
-        let params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, limit?: number, interval?: number, priority?: number, enabled?: boolean, conditions?: string };
+        let params: { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, limit?: number, interval?: number, key?: string, priority?: number, enabled?: boolean, conditions?: string };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, limit?: number, interval?: number, priority?: number, enabled?: boolean, conditions?: string };
+            params = (paramsOrFirst || {}) as { ruleId: string, resourceType?: string, resourceId?: string, name?: string, description?: string, limit?: number, interval?: number, key?: string, priority?: number, enabled?: boolean, conditions?: string };
         } else {
             params = {
                 ruleId: paramsOrFirst as string,
@@ -946,9 +983,10 @@ export class Waf {
                 description: rest[3] as string,
                 limit: rest[4] as number,
                 interval: rest[5] as number,
-                priority: rest[6] as number,
-                enabled: rest[7] as boolean,
-                conditions: rest[8] as string            
+                key: rest[6] as string,
+                priority: rest[7] as number,
+                enabled: rest[8] as boolean,
+                conditions: rest[9] as string            
             };
         }
         
@@ -959,6 +997,7 @@ export class Waf {
         const description = params.description;
         const limit = params.limit;
         const interval = params.interval;
+        const key = params.key;
         const priority = params.priority;
         const enabled = params.enabled;
         const conditions = params.conditions;
@@ -986,6 +1025,9 @@ export class Waf {
         }
         if (typeof interval !== 'undefined') {
             payload['interval'] = interval;
+        }
+        if (typeof key !== 'undefined') {
+            payload['key'] = key;
         }
         if (typeof priority !== 'undefined') {
             payload['priority'] = priority;

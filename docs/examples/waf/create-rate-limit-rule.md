@@ -15,6 +15,7 @@ const result = await waf.createRateLimitRule({
     interval: 1,
     resourceId: '<RESOURCE_ID>', // optional
     description: '<DESCRIPTION>', // optional
+    key: 'ip', // optional
     priority: -100000, // optional
     enabled: false, // optional
     conditions: '' // optional

@@ -81,11 +81,10 @@ export class Mongo {
      * @param {boolean} params.storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
      * @param {number} params.storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
      * @param {number} params.storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
-     * @param {string} params.api - Product API that owns this database: tablesdb, documentsdb, or vectorsdb. Omit for a raw database reached directly; its api is its engine. tablesdb/documentsdb/vectorsdb databases are reached only through their product APIs.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
-    create(params: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string }): Promise<Models.DedicatedDatabase>;
+    create(params: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number }): Promise<Models.DedicatedDatabase>;
     /**
      * Create a new dedicated database with the chosen engine and configuration. Status will be 'provisioning' until the database is ready.
      *
@@ -104,20 +103,19 @@ export class Mongo {
      * @param {boolean} storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
      * @param {number} storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
      * @param {number} storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
-     * @param {string} api - Product API that owns this database: tablesdb, documentsdb, or vectorsdb. Omit for a raw database reached directly; its api is its engine. tablesdb/documentsdb/vectorsdb databases are reached only through their product APIs.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string): Promise<Models.DedicatedDatabase>;
+    create(databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number): Promise<Models.DedicatedDatabase>;
     create(
-        paramsOrFirst: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?, (string)?, (number)?, (string[])?, (number)?, (boolean)?, (number)?, (boolean)?, (number)?, (number)?, (string)?]    
+        paramsOrFirst: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number } | string,
+        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?, (string)?, (number)?, (string[])?, (number)?, (boolean)?, (number)?, (boolean)?, (number)?, (number)?]    
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string };
+        let params: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, api?: string };
+            params = (paramsOrFirst || {}) as { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -134,8 +132,7 @@ export class Mongo {
                 pitrRetentionDays: rest[10] as number,
                 storageAutoscaling: rest[11] as boolean,
                 storageAutoscalingThresholdPercent: rest[12] as number,
-                storageAutoscalingMaxGb: rest[13] as number,
-                api: rest[14] as string            
+                storageAutoscalingMaxGb: rest[13] as number            
             };
         }
         
@@ -154,7 +151,6 @@ export class Mongo {
         const storageAutoscaling = params.storageAutoscaling;
         const storageAutoscalingThresholdPercent = params.storageAutoscalingThresholdPercent;
         const storageAutoscalingMaxGb = params.storageAutoscalingMaxGb;
-        const api = params.api;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "databaseId"');
@@ -209,9 +205,6 @@ export class Mongo {
         }
         if (typeof storageAutoscalingMaxGb !== 'undefined') {
             payload['storageAutoscalingMaxGb'] = storageAutoscalingMaxGb;
-        }
-        if (typeof api !== 'undefined') {
-            payload['api'] = api;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
