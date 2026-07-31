@@ -1,5 +1,9 @@
 # Change Log
 
+## 15.9.0
+
+* Added: `client.setOrganization()` to send the `X-Appwrite-Organization` header
+
 ## 15.8.0
 
 * Breaking: `create()` on `mysql`, `postgresql`, and `mongo` no longer accepts `api`
