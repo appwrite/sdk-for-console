@@ -2,6 +2,11 @@ import { Service } from '../service';
 import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
 import type { Models } from '../models';
 
+import { UsageInterval } from '../enums/usage-interval';
+import { UsageEventDimension } from '../enums/usage-event-dimension';
+import { UsageOrderBy } from '../enums/usage-order-by';
+import { UsageOrderDirection } from '../enums/usage-order-direction';
+import { UsageGaugeDimension } from '../enums/usage-gauge-dimension';
 
 export class Usage {
     client: Client;
@@ -19,20 +24,20 @@ export class Usage {
      * 
      * `dimensions[]` breaks each point down by one or more attributes (service, path, status, country, …). `queries[]` filters the underlying events using the standard Utopia query syntax — `equal("path", ["/v1/storage/files"])`, `equal("resourceType", ["bucket"])`, `equal("resourceId", ["abc123"])`, `startsWith("path", ["/v1/storage"])`, `equal("status", ["200", "201"])`, `isNotNull("resourceId")`. Supported attributes: see `queries[]` param. Supported methods: `equal`, `notEqual`, `contains`, `startsWith`, `endsWith`, `isNull`, `isNotNull`. Pass multiple metrics to render stacked charts in one round-trip. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N by aggregated value. When `startAt` is omitted, the default window adapts to `interval` (or 7d when interval is omitted).
      *
-     * @param {string[]} params.metrics - One to ten metric names. Single-metric callers pass a one-element array. Example: `metrics[]=executions` or `metrics[]=executions&metrics[]=executions.compute` for stacked charts.
+     * @param {string[]} params.metrics - One to ten metric names. Single-metric callers pass a one-element array. Example: `metrics[]=executions` or `metrics[]=executions&metrics[]=executions.compute` for stacked charts. On console: `metrics[]=affiliates.clicks`.
      * @param {string[]} params.queries - Up to 10 filter queries in Utopia syntax. Allowed attributes: path, method, status, service, resourceType, resourceId, teamId, country, continentCode, city, region, hostname, ip, osName, clientType, clientName, deviceName, sdk, sdkVersion. Allowed methods: equal, notEqual, contains, startsWith, endsWith, isNull, isNotNull. Example: `queries[]=equal("resourceType", ["bucket"])`.
-     * @param {string} params.interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
-     * @param {string[]} params.dimensions - Break-down dimensions (max 10). Allowed: path, method, status, service, resourceType, country, continentCode, city, region, hostname, ip, osName, clientType, clientName, deviceName, sdk, sdkVersion, teamId, resourceId.
+     * @param {UsageInterval} params.interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
+     * @param {UsageEventDimension[]} params.dimensions - Break-down dimensions (max 10). Allowed: path, method, status, service, resourceType, country, continentCode, city, region, hostname, ip, osName, clientType, clientName, deviceName, sdk, sdkVersion, teamId, resourceId.
      * @param {string} params.startAt - Range start in ISO 8601. Defaults adapt to interval (7d for the no-interval aggregate).
      * @param {string} params.endAt - Range end in ISO 8601. Defaults to the current time.
-     * @param {string} params.orderBy - Column to order by. Allowed: time, value. Default time when an interval is set; otherwise value.
-     * @param {string} params.orderDir - Sort direction: asc or desc. Default desc — paired with the default limit, returns the most recent / highest-value groups first.
+     * @param {UsageOrderBy} params.orderBy - Column to order by. Allowed: time, value. Default time when an interval is set; otherwise value.
+     * @param {UsageOrderDirection} params.orderDir - Sort direction: asc or desc. Default desc — paired with the default limit, returns the most recent / highest-value groups first.
      * @param {number} params.limit - Maximum rows to return (1-5000).
      * @param {number} params.offset - Pagination offset (0-100000).
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageEventList>}
      */
-    listEvents(params: { metrics: string[], queries?: string[], interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number }): Promise<Models.UsageEventList>;
+    listEvents(params: { metrics: string[], queries?: string[], interval?: UsageInterval, dimensions?: UsageEventDimension[], startAt?: string, endAt?: string, orderBy?: UsageOrderBy, orderDir?: UsageOrderDirection, limit?: number, offset?: number }): Promise<Models.UsageEventList>;
     /**
      * Aggregate usage event metrics. `metrics[]` (1-10) is required; the response always contains one entry per requested metric, each with its own `points[]` time series.
      * 
@@ -42,39 +47,39 @@ export class Usage {
      * 
      * `dimensions[]` breaks each point down by one or more attributes (service, path, status, country, …). `queries[]` filters the underlying events using the standard Utopia query syntax — `equal("path", ["/v1/storage/files"])`, `equal("resourceType", ["bucket"])`, `equal("resourceId", ["abc123"])`, `startsWith("path", ["/v1/storage"])`, `equal("status", ["200", "201"])`, `isNotNull("resourceId")`. Supported attributes: see `queries[]` param. Supported methods: `equal`, `notEqual`, `contains`, `startsWith`, `endsWith`, `isNull`, `isNotNull`. Pass multiple metrics to render stacked charts in one round-trip. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N by aggregated value. When `startAt` is omitted, the default window adapts to `interval` (or 7d when interval is omitted).
      *
-     * @param {string[]} metrics - One to ten metric names. Single-metric callers pass a one-element array. Example: `metrics[]=executions` or `metrics[]=executions&metrics[]=executions.compute` for stacked charts.
+     * @param {string[]} metrics - One to ten metric names. Single-metric callers pass a one-element array. Example: `metrics[]=executions` or `metrics[]=executions&metrics[]=executions.compute` for stacked charts. On console: `metrics[]=affiliates.clicks`.
      * @param {string[]} queries - Up to 10 filter queries in Utopia syntax. Allowed attributes: path, method, status, service, resourceType, resourceId, teamId, country, continentCode, city, region, hostname, ip, osName, clientType, clientName, deviceName, sdk, sdkVersion. Allowed methods: equal, notEqual, contains, startsWith, endsWith, isNull, isNotNull. Example: `queries[]=equal("resourceType", ["bucket"])`.
-     * @param {string} interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
-     * @param {string[]} dimensions - Break-down dimensions (max 10). Allowed: path, method, status, service, resourceType, country, continentCode, city, region, hostname, ip, osName, clientType, clientName, deviceName, sdk, sdkVersion, teamId, resourceId.
+     * @param {UsageInterval} interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
+     * @param {UsageEventDimension[]} dimensions - Break-down dimensions (max 10). Allowed: path, method, status, service, resourceType, country, continentCode, city, region, hostname, ip, osName, clientType, clientName, deviceName, sdk, sdkVersion, teamId, resourceId.
      * @param {string} startAt - Range start in ISO 8601. Defaults adapt to interval (7d for the no-interval aggregate).
      * @param {string} endAt - Range end in ISO 8601. Defaults to the current time.
-     * @param {string} orderBy - Column to order by. Allowed: time, value. Default time when an interval is set; otherwise value.
-     * @param {string} orderDir - Sort direction: asc or desc. Default desc — paired with the default limit, returns the most recent / highest-value groups first.
+     * @param {UsageOrderBy} orderBy - Column to order by. Allowed: time, value. Default time when an interval is set; otherwise value.
+     * @param {UsageOrderDirection} orderDir - Sort direction: asc or desc. Default desc — paired with the default limit, returns the most recent / highest-value groups first.
      * @param {number} limit - Maximum rows to return (1-5000).
      * @param {number} offset - Pagination offset (0-100000).
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageEventList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listEvents(metrics: string[], queries?: string[], interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number): Promise<Models.UsageEventList>;
+    listEvents(metrics: string[], queries?: string[], interval?: UsageInterval, dimensions?: UsageEventDimension[], startAt?: string, endAt?: string, orderBy?: UsageOrderBy, orderDir?: UsageOrderDirection, limit?: number, offset?: number): Promise<Models.UsageEventList>;
     listEvents(
-        paramsOrFirst: { metrics: string[], queries?: string[], interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number } | string[],
-        ...rest: [(string[])?, (string)?, (string[])?, (string)?, (string)?, (string)?, (string)?, (number)?, (number)?]    
+        paramsOrFirst: { metrics: string[], queries?: string[], interval?: UsageInterval, dimensions?: UsageEventDimension[], startAt?: string, endAt?: string, orderBy?: UsageOrderBy, orderDir?: UsageOrderDirection, limit?: number, offset?: number } | string[],
+        ...rest: [(string[])?, (UsageInterval)?, (UsageEventDimension[])?, (string)?, (string)?, (UsageOrderBy)?, (UsageOrderDirection)?, (number)?, (number)?]    
     ): Promise<Models.UsageEventList> {
-        let params: { metrics: string[], queries?: string[], interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number };
+        let params: { metrics: string[], queries?: string[], interval?: UsageInterval, dimensions?: UsageEventDimension[], startAt?: string, endAt?: string, orderBy?: UsageOrderBy, orderDir?: UsageOrderDirection, limit?: number, offset?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { metrics: string[], queries?: string[], interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number };
+            params = (paramsOrFirst || {}) as { metrics: string[], queries?: string[], interval?: UsageInterval, dimensions?: UsageEventDimension[], startAt?: string, endAt?: string, orderBy?: UsageOrderBy, orderDir?: UsageOrderDirection, limit?: number, offset?: number };
         } else {
             params = {
                 metrics: paramsOrFirst as string[],
                 queries: rest[0] as string[],
-                interval: rest[1] as string,
-                dimensions: rest[2] as string[],
+                interval: rest[1] as UsageInterval,
+                dimensions: rest[2] as UsageEventDimension[],
                 startAt: rest[3] as string,
                 endAt: rest[4] as string,
-                orderBy: rest[5] as string,
-                orderDir: rest[6] as string,
+                orderBy: rest[5] as UsageOrderBy,
+                orderDir: rest[6] as UsageOrderDirection,
                 limit: rest[7] as number,
                 offset: rest[8] as number            
             };
@@ -151,22 +156,22 @@ export class Usage {
      * - Omit `interval` for a flat top-N table — `argMax(value, time)` per dimension combination over the whole window, no time axis. Useful for "top 10 resources by current storage".
      * - Pass `interval` (`1m`, `15m`, `30m`, `1h`, `1d`) for a time series — one snapshot per (time bucket × dimension combination).
      * 
-     * `dimensions[]` breaks each point down further. Supported on gauges: `resourceId`, `teamId`, `service`, `resourceType`, `ordinal`. `service` and `resourceType` enable per-service / per-resource-type panels (e.g. storage-by-service: group `files.storage`, `deployments.storage`, `builds.storage`, `databases.storage` by `service`). `ordinal` separates per-node series for multi-node resources such as dedicated databases (0 is the primary; 1+ are replicas). `queries[]` filters the underlying rows using the standard Utopia query syntax — `equal("resourceType", ["bucket"])`, `equal("resourceId", ["abc123"])`, `equal("teamId", ["team_x"])`, `equal("ordinal", ["0"])`, `isNotNull("teamId")`. Supported attributes: see `queries[]` param. Supported methods: `equal`, `notEqual`, `isNull`, `isNotNull`. Pass multiple metrics to render stacked charts in one round-trip. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N. When `startAt` is omitted, the default window adapts to interval (or 7d when interval is omitted).
+     * `dimensions[]` breaks each point down further. Supported on gauges: `resourceId`, `teamId`, `service`, `resourceType`, `ordinal`. `service` and `resourceType` enable per-service / per-resource-type panels (e.g. storage-by-service: group `files.storage`, `deployments.storage`, `builds.storage`, `databases.storage` by `service`). `ordinal` separates per-node series for multi-node resources such as dedicated databases. It is a stable per-node identity, not a role — ordinal 0 is the first member created, and a failover can leave the primary on any ordinal, so read the role from the database's replicas endpoint rather than inferring it here. `queries[]` filters the underlying rows using the standard Utopia query syntax — `equal("resourceType", ["bucket"])`, `equal("resourceId", ["abc123"])`, `equal("teamId", ["team_x"])`, `equal("ordinal", ["0"])`, `isNotNull("teamId")`. Supported attributes: see `queries[]` param. Supported methods: `equal`, `notEqual`, `isNull`, `isNotNull`. Pass multiple metrics to render stacked charts in one round-trip. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N. When `startAt` is omitted, the default window adapts to interval (or 7d when interval is omitted).
      *
      * @param {string[]} params.metrics - One to ten metric names. Single-metric callers pass a one-element array. Example: `metrics[]=files.storage` or `metrics[]=files.storage&metrics[]=deployments.storage` for stacked charts.
      * @param {string[]} params.queries - Up to 10 filter queries in Utopia syntax. Allowed attributes: service, resourceType, resourceId, teamId, ordinal. Allowed methods: equal, notEqual, isNull, isNotNull. Example: `queries[]=equal("resourceType", ["bucket"])`.
-     * @param {string} params.interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
-     * @param {string[]} params.dimensions - Break-down dimensions. Allowed: resourceId, teamId, service, resourceType, ordinal.
+     * @param {UsageInterval} params.interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
+     * @param {UsageGaugeDimension[]} params.dimensions - Break-down dimensions. Allowed: resourceId, teamId, service, resourceType, ordinal.
      * @param {string} params.startAt - Range start in ISO 8601. Defaults to endAt - 7d.
      * @param {string} params.endAt - Range end in ISO 8601. Defaults to the current time.
-     * @param {string} params.orderBy - Column to order by. Allowed: time, value. Default time.
-     * @param {string} params.orderDir - Sort direction: asc or desc. Default desc — paired with the default limit, this returns the most recent groups first. Pass asc for chronological charting.
+     * @param {UsageOrderBy} params.orderBy - Column to order by. Allowed: time, value. Default time.
+     * @param {UsageOrderDirection} params.orderDir - Sort direction: asc or desc. Default desc — paired with the default limit, this returns the most recent groups first. Pass asc for chronological charting.
      * @param {number} params.limit - Maximum rows to return (1-5000).
      * @param {number} params.offset - Pagination offset (0-100000).
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageGaugeList>}
      */
-    listGauges(params: { metrics: string[], queries?: string[], interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number }): Promise<Models.UsageGaugeList>;
+    listGauges(params: { metrics: string[], queries?: string[], interval?: UsageInterval, dimensions?: UsageGaugeDimension[], startAt?: string, endAt?: string, orderBy?: UsageOrderBy, orderDir?: UsageOrderDirection, limit?: number, offset?: number }): Promise<Models.UsageGaugeList>;
     /**
      * Aggregate usage gauge snapshots. Gauges are point-in-time values (storage totals, resource counts, …); each point carries the latest snapshot in its interval via `argMax(value, time)`. `metrics[]` (1-10) is required; the response always contains one entry per requested metric, each with its own `points[]` time series.
      * 
@@ -176,41 +181,41 @@ export class Usage {
      * - Omit `interval` for a flat top-N table — `argMax(value, time)` per dimension combination over the whole window, no time axis. Useful for "top 10 resources by current storage".
      * - Pass `interval` (`1m`, `15m`, `30m`, `1h`, `1d`) for a time series — one snapshot per (time bucket × dimension combination).
      * 
-     * `dimensions[]` breaks each point down further. Supported on gauges: `resourceId`, `teamId`, `service`, `resourceType`, `ordinal`. `service` and `resourceType` enable per-service / per-resource-type panels (e.g. storage-by-service: group `files.storage`, `deployments.storage`, `builds.storage`, `databases.storage` by `service`). `ordinal` separates per-node series for multi-node resources such as dedicated databases (0 is the primary; 1+ are replicas). `queries[]` filters the underlying rows using the standard Utopia query syntax — `equal("resourceType", ["bucket"])`, `equal("resourceId", ["abc123"])`, `equal("teamId", ["team_x"])`, `equal("ordinal", ["0"])`, `isNotNull("teamId")`. Supported attributes: see `queries[]` param. Supported methods: `equal`, `notEqual`, `isNull`, `isNotNull`. Pass multiple metrics to render stacked charts in one round-trip. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N. When `startAt` is omitted, the default window adapts to interval (or 7d when interval is omitted).
+     * `dimensions[]` breaks each point down further. Supported on gauges: `resourceId`, `teamId`, `service`, `resourceType`, `ordinal`. `service` and `resourceType` enable per-service / per-resource-type panels (e.g. storage-by-service: group `files.storage`, `deployments.storage`, `builds.storage`, `databases.storage` by `service`). `ordinal` separates per-node series for multi-node resources such as dedicated databases. It is a stable per-node identity, not a role — ordinal 0 is the first member created, and a failover can leave the primary on any ordinal, so read the role from the database's replicas endpoint rather than inferring it here. `queries[]` filters the underlying rows using the standard Utopia query syntax — `equal("resourceType", ["bucket"])`, `equal("resourceId", ["abc123"])`, `equal("teamId", ["team_x"])`, `equal("ordinal", ["0"])`, `isNotNull("teamId")`. Supported attributes: see `queries[]` param. Supported methods: `equal`, `notEqual`, `isNull`, `isNotNull`. Pass multiple metrics to render stacked charts in one round-trip. `orderBy=value`+`orderDir=desc`+`limit=N` returns the top-N. When `startAt` is omitted, the default window adapts to interval (or 7d when interval is omitted).
      *
      * @param {string[]} metrics - One to ten metric names. Single-metric callers pass a one-element array. Example: `metrics[]=files.storage` or `metrics[]=files.storage&metrics[]=deployments.storage` for stacked charts.
      * @param {string[]} queries - Up to 10 filter queries in Utopia syntax. Allowed attributes: service, resourceType, resourceId, teamId, ordinal. Allowed methods: equal, notEqual, isNull, isNotNull. Example: `queries[]=equal("resourceType", ["bucket"])`.
-     * @param {string} interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
-     * @param {string[]} dimensions - Break-down dimensions. Allowed: resourceId, teamId, service, resourceType, ordinal.
+     * @param {UsageInterval} interval - Time interval size. Omit (null) for a flat aggregate over the whole window. Allowed: 1m, 15m, 30m, 1h, 1d.
+     * @param {UsageGaugeDimension[]} dimensions - Break-down dimensions. Allowed: resourceId, teamId, service, resourceType, ordinal.
      * @param {string} startAt - Range start in ISO 8601. Defaults to endAt - 7d.
      * @param {string} endAt - Range end in ISO 8601. Defaults to the current time.
-     * @param {string} orderBy - Column to order by. Allowed: time, value. Default time.
-     * @param {string} orderDir - Sort direction: asc or desc. Default desc — paired with the default limit, this returns the most recent groups first. Pass asc for chronological charting.
+     * @param {UsageOrderBy} orderBy - Column to order by. Allowed: time, value. Default time.
+     * @param {UsageOrderDirection} orderDir - Sort direction: asc or desc. Default desc — paired with the default limit, this returns the most recent groups first. Pass asc for chronological charting.
      * @param {number} limit - Maximum rows to return (1-5000).
      * @param {number} offset - Pagination offset (0-100000).
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageGaugeList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listGauges(metrics: string[], queries?: string[], interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number): Promise<Models.UsageGaugeList>;
+    listGauges(metrics: string[], queries?: string[], interval?: UsageInterval, dimensions?: UsageGaugeDimension[], startAt?: string, endAt?: string, orderBy?: UsageOrderBy, orderDir?: UsageOrderDirection, limit?: number, offset?: number): Promise<Models.UsageGaugeList>;
     listGauges(
-        paramsOrFirst: { metrics: string[], queries?: string[], interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number } | string[],
-        ...rest: [(string[])?, (string)?, (string[])?, (string)?, (string)?, (string)?, (string)?, (number)?, (number)?]    
+        paramsOrFirst: { metrics: string[], queries?: string[], interval?: UsageInterval, dimensions?: UsageGaugeDimension[], startAt?: string, endAt?: string, orderBy?: UsageOrderBy, orderDir?: UsageOrderDirection, limit?: number, offset?: number } | string[],
+        ...rest: [(string[])?, (UsageInterval)?, (UsageGaugeDimension[])?, (string)?, (string)?, (UsageOrderBy)?, (UsageOrderDirection)?, (number)?, (number)?]    
     ): Promise<Models.UsageGaugeList> {
-        let params: { metrics: string[], queries?: string[], interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number };
+        let params: { metrics: string[], queries?: string[], interval?: UsageInterval, dimensions?: UsageGaugeDimension[], startAt?: string, endAt?: string, orderBy?: UsageOrderBy, orderDir?: UsageOrderDirection, limit?: number, offset?: number };
         
         if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { metrics: string[], queries?: string[], interval?: string, dimensions?: string[], startAt?: string, endAt?: string, orderBy?: string, orderDir?: string, limit?: number, offset?: number };
+            params = (paramsOrFirst || {}) as { metrics: string[], queries?: string[], interval?: UsageInterval, dimensions?: UsageGaugeDimension[], startAt?: string, endAt?: string, orderBy?: UsageOrderBy, orderDir?: UsageOrderDirection, limit?: number, offset?: number };
         } else {
             params = {
                 metrics: paramsOrFirst as string[],
                 queries: rest[0] as string[],
-                interval: rest[1] as string,
-                dimensions: rest[2] as string[],
+                interval: rest[1] as UsageInterval,
+                dimensions: rest[2] as UsageGaugeDimension[],
                 startAt: rest[3] as string,
                 endAt: rest[4] as string,
-                orderBy: rest[5] as string,
-                orderDir: rest[6] as string,
+                orderBy: rest[5] as UsageOrderBy,
+                orderDir: rest[6] as UsageOrderDirection,
                 limit: rest[7] as number,
                 offset: rest[8] as number            
             };

@@ -355,6 +355,7 @@ class Client {
         endpointRealtime: string;
         project: string;
         key: string;
+        organization: string;
         jwt: string;
         bearer: string;
         locale: string;
@@ -373,6 +374,7 @@ class Client {
         endpointRealtime: '',
         project: '',
         key: '',
+        organization: '',
         jwt: '',
         bearer: '',
         locale: '',
@@ -394,8 +396,8 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '15.8.0',
-        'X-Appwrite-Response-Format': '1.9.5',
+        'x-sdk-version': '16.0.0',
+        'X-Appwrite-Response-Format': '1.9.6',
     };
 
     /**
@@ -531,6 +533,20 @@ class Client {
     setKey(value: string): this {
         this.headers['X-Appwrite-Key'] = value;
         this.config.key = value;
+        return this;
+    }
+    /**
+     * Set Organization
+     *
+     * Your organization ID
+     *
+     * @param value string
+     *
+     * @return {this}
+     */
+    setOrganization(value: string): this {
+        this.headers['X-Appwrite-Organization'] = value;
+        this.config.organization = value;
         return this;
     }
     /**
