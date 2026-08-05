@@ -97,6 +97,7 @@ export enum ProjectKeyScopes {
     WafRulesRead = 'wafRules.read',
     WafRulesWrite = 'wafRules.write',
     EventsRead = 'events.read',
+    ProxyInvalidationsWrite = 'proxy.invalidations.write',
     AppsRead = 'apps.read',
     AppsWrite = 'apps.write',
     Oauth2Read = 'oauth2.read',

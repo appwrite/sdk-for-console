@@ -3735,7 +3735,7 @@ export class Account {
     /**
      * Use this endpoint to get a logged in user's session using a Session ID. Inputting 'current' will return the current session being used.
      *
-     * @param {string} params.sessionId - Session ID. Use the string 'current' to get the current device session.
+     * @param {string} params.sessionId - Session ID. Use the string 'current' to get the current device session. Defaults to 'current'.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Session>}
      */
@@ -3743,7 +3743,7 @@ export class Account {
     /**
      * Use this endpoint to get a logged in user's session using a Session ID. Inputting 'current' will return the current session being used.
      *
-     * @param {string} sessionId - Session ID. Use the string 'current' to get the current device session.
+     * @param {string} sessionId - Session ID. Use the string 'current' to get the current device session. Defaults to 'current'.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Session>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -3788,7 +3788,7 @@ export class Account {
     /**
      * Use this endpoint to extend a session's length. Extending a session is useful when session expiry is short. If the session was created using an OAuth provider, this endpoint refreshes the access token from the provider.
      *
-     * @param {string} params.sessionId - Session ID. Use the string 'current' to update the current device session.
+     * @param {string} params.sessionId - Session ID. Use the string 'current' to update the current device session. Defaults to 'current'.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Session>}
      */
@@ -3796,7 +3796,7 @@ export class Account {
     /**
      * Use this endpoint to extend a session's length. Extending a session is useful when session expiry is short. If the session was created using an OAuth provider, this endpoint refreshes the access token from the provider.
      *
-     * @param {string} sessionId - Session ID. Use the string 'current' to update the current device session.
+     * @param {string} sessionId - Session ID. Use the string 'current' to update the current device session. Defaults to 'current'.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Session>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -3842,7 +3842,7 @@ export class Account {
     /**
      * Logout the user. Use 'current' as the session ID to logout on this device, use a session ID to logout on another device. If you're looking to logout the user on all devices, use [Delete Sessions](https://appwrite.io/docs/references/cloud/client-web/account#deleteSessions) instead.
      *
-     * @param {string} params.sessionId - Session ID. Use the string 'current' to delete the current device session.
+     * @param {string} params.sessionId - Session ID. Use the string 'current' to delete the current device session. Defaults to 'current'.
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
@@ -3850,7 +3850,7 @@ export class Account {
     /**
      * Logout the user. Use 'current' as the session ID to logout on this device, use a session ID to logout on another device. If you're looking to logout the user on all devices, use [Delete Sessions](https://appwrite.io/docs/references/cloud/client-web/account#deleteSessions) instead.
      *
-     * @param {string} sessionId - Session ID. Use the string 'current' to delete the current device session.
+     * @param {string} sessionId - Session ID. Use the string 'current' to delete the current device session. Defaults to 'current'.
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      * @deprecated Use the object parameter style method for a better developer experience.

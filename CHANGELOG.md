@@ -1,8 +1,18 @@
 # Change Log
 
-## 15.9.0
+## 16.0.0
 
-* Added: `client.setOrganization()` to send the `X-Appwrite-Organization` header
+* Breaking: Moved `vectorsDB.createTextEmbeddings()` to the new `Embeddings` service
+* Breaking: `usage.listEvents()` `interval`, `dimensions`, `orderBy`, and `orderDir` now take enums
+* Breaking: `usage.listGauges()` `interval`, `dimensions`, `orderBy`, and `orderDir` now take enums
+* Added: `Affiliates` service for referral links, referrals, and rewards
+* Added: `Embeddings` service with `createTextEmbeddings()`
+* Added: `proxy.createInvalidation()` with the `ProxyInvalidation` model and `InvalidationType` enum
+* Added: `Client.setOrganization()` for organization-scoped requests
+* Added: `UsageInterval`, `UsageEventDimension`, `UsageGaugeDimension`, `UsageOrderBy`, `UsageOrderDirection` enums
+* Added: affiliate resources to the `QuerySuggestionResource` enum
+* Added: `proxy.invalidations.write` to the `ProjectKeyScopes` enum
+* Added: `affiliates.clicks` as a `usage.listEvents()` metric
 
 ## 15.8.0
 

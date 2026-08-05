@@ -7363,35 +7363,35 @@ export namespace Models {
         /**
          * Aggregated number of text embedding calls per period.
          */
-        embeddingsText: Metric;
+        embeddingsText: Metric[];
         /**
          * Aggregated number of tokens processed by text embeddings per period.
          */
-        embeddingsTextTokens: Metric;
+        embeddingsTextTokens: Metric[];
         /**
          * Aggregated duration spent generating text embeddings per period.
          */
-        embeddingsTextDuration: Metric;
+        embeddingsTextDuration: Metric[];
         /**
          * Aggregated number of errors while generating text embeddings per period.
          */
-        embeddingsTextErrors: Metric;
+        embeddingsTextErrors: Metric[];
         /**
          * Total aggregated number of text embedding calls.
          */
-        embeddingsTextTotal: Metric;
+        embeddingsTextTotal: number;
         /**
          * Total aggregated number of tokens processed by text.
          */
-        embeddingsTextTokensTotal: Metric;
+        embeddingsTextTokensTotal: number;
         /**
          * Total aggregated duration spent generating text embeddings.
          */
-        embeddingsTextDurationTotal: Metric;
+        embeddingsTextDurationTotal: number;
         /**
          * Total aggregated number of errors while generating text embeddings.
          */
-        embeddingsTextErrorsTotal: Metric;
+        embeddingsTextErrorsTotal: number;
         /**
          * Aggregated number of function executions per period.
          */
@@ -8785,6 +8785,170 @@ export namespace Models {
     }
 
     /**
+     * AffiliateLink
+     */
+    export type AffiliateLink = {
+        /**
+         * Link ID. This is the shareable referral code.
+         */
+        $id: string;
+        /**
+         * Link creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Link update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * User ID of the link owner.
+         */
+        userId: string;
+        /**
+         * Optional link name.
+         */
+        name: string;
+        /**
+         * Link status. Can be one of `active` or `disabled`.
+         */
+        status: string;
+    }
+
+    /**
+     * Affiliate links list
+     */
+    export type AffiliateLinkList = {
+        /**
+         * Total number of links that matched your query.
+         */
+        total: number;
+        /**
+         * List of links.
+         */
+        links: AffiliateLink[];
+    }
+
+    /**
+     * AffiliateReferral
+     */
+    export type AffiliateReferral = {
+        /**
+         * Referral ID.
+         */
+        $id: string;
+        /**
+         * Referral creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Referral update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Affiliate link ID used for attribution.
+         */
+        linkId: string;
+        /**
+         * Privacy-safe truncated referred user ID.
+         */
+        referredUserMaskedId: string;
+        /**
+         * ISO 3166-1 alpha-2 country code of the referred user at signup, when available.
+         */
+        referredUserCountry: string;
+        /**
+         * Referral status. Can be one of `pending`, `converted`, or `expired`. `expired` is derived from `expiresAt` when still pending.
+         */
+        status: string;
+        /**
+         * Attribution time in ISO 8601 format.
+         */
+        attributedAt: string;
+        /**
+         * Attribution expiry time in ISO 8601 format.
+         */
+        expiresAt: string;
+        /**
+         * Conversion time in ISO 8601 format.
+         */
+        convertedAt?: string;
+    }
+
+    /**
+     * Affiliate referrals list
+     */
+    export type AffiliateReferralList = {
+        /**
+         * Total number of referrals that matched your query.
+         */
+        total: number;
+        /**
+         * List of referrals.
+         */
+        referrals: AffiliateReferral[];
+    }
+
+    /**
+     * AffiliateReward
+     */
+    export type AffiliateReward = {
+        /**
+         * Reward ID.
+         */
+        $id: string;
+        /**
+         * Reward creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Reward update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * User ID of the reward owner.
+         */
+        userId: string;
+        /**
+         * Affiliate link ID that earned this reward.
+         */
+        linkId: string;
+        /**
+         * Referral ID that earned this reward.
+         */
+        referralId: string;
+        /**
+         * Reward amount in USD.
+         */
+        amount: number;
+        /**
+         * Reward status. Can be one of `pending` or `claimed`.
+         */
+        status: string;
+        /**
+         * Organization ID the reward was claimed on.
+         */
+        teamId?: string;
+        /**
+         * Credit document ID created when the reward was claimed.
+         */
+        creditId?: string;
+    }
+
+    /**
+     * Affiliate rewards list
+     */
+    export type AffiliateRewardList = {
+        /**
+         * Total number of rewards that matched your query.
+         */
+        total: number;
+        /**
+         * List of rewards.
+         */
+        rewards: AffiliateReward[];
+    }
+
+    /**
      * Breakdown
      */
     export type AggregationBreakdown = {
@@ -9223,7 +9387,7 @@ export namespace Models {
         /**
          * Members
          */
-        members: number;
+        members?: number;
         /**
          * Webhooks
          */
@@ -9319,7 +9483,7 @@ export namespace Models {
         /**
          * Activity log days
          */
-        activityLogs: number;
+        activityLogs?: number;
         /**
          * Usage history days
          */
@@ -9415,7 +9579,7 @@ export namespace Models {
         /**
          * Does plan support backup policies.
          */
-        backupsEnabled: boolean;
+        backupsEnabled?: boolean;
         /**
          * Whether usage addons are calculated per project.
          */
@@ -9427,7 +9591,7 @@ export namespace Models {
         /**
          * How many policies does plan support
          */
-        backupPolicies: number;
+        backupPolicies?: number;
         /**
          * Maximum function and site deployment size in MB
          */
@@ -9465,11 +9629,11 @@ export namespace Models {
         /**
          * Addon seats
          */
-        seats: BillingPlanAddonDetails;
+        seats?: BillingPlanAddonDetails;
         /**
          * Addon projects
          */
-        projects: BillingPlanAddonDetails;
+        projects?: BillingPlanAddonDetails;
     }
 
     /**
@@ -9495,7 +9659,7 @@ export namespace Models {
         /**
          * Price currency
          */
-        currency: string;
+        currency?: string;
         /**
          * Price
          */
@@ -10017,7 +10181,7 @@ export namespace Models {
          */
         api: string;
         /**
-         * Database engine: postgresql, mysql, or mongodb.
+         * Database engine: postgresql, mysql, or mongodb. Null until the backing reports one.
          */
         engine: string;
         /**
@@ -10445,9 +10609,9 @@ export namespace Models {
          */
         renewalPrice: number;
         /**
-         * Transfer status for domains being transferred in.
+         * Transfer status for domains being transferred in. Null when the domain is not being transferred.
          */
-        transferStatus: DomainTransferStatusEnum;
+        transferStatus?: DomainTransferStatusEnum;
         /**
          * Team ID.
          */
@@ -10795,9 +10959,9 @@ export namespace Models {
          */
         status: string;
         /**
-         * Replication lag in seconds.
+         * Replication lag in seconds. Null when the lag is not known: a primary has none to report, and a member the backend has not probed has none yet.
          */
-        lagSeconds: number;
+        lagSeconds?: number;
     }
 
     /**
@@ -10900,6 +11064,28 @@ export namespace Models {
          * Per-pod statuses for the primary and every replica.
          */
         members: DedicatedDatabaseMember[];
+    }
+
+    /**
+     * Invalidation
+     */
+    export type ProxyInvalidation = {
+        /**
+         * Domain name.
+         */
+        domain: string;
+        /**
+         * Invalidation type. Possible values are "tag", "path", or "all".
+         */
+        type: string;
+        /**
+         * Invalidated reference. Depending on type this is a cache tag name, a URL path, or empty when type is all.
+         */
+        reference: string;
+        /**
+         * Invalidation status.
+         */
+        status: string;
     }
 
     /**
@@ -11029,9 +11215,9 @@ export namespace Models {
          */
         prefs: Preferences;
         /**
-         * Project budget limit
+         * Project budget limit. Null when no budget is set.
          */
-        billingBudget: number;
+        billingBudget?: number;
         /**
          * Project budget limit
          */
@@ -11067,7 +11253,7 @@ export namespace Models {
         /**
          * Start date of trial.
          */
-        billingTrialStartDate: string;
+        billingTrialStartDate?: string;
         /**
          * Number of trial days.
          */
@@ -11087,11 +11273,11 @@ export namespace Models {
         /**
          * Default payment method.
          */
-        billingAddressId: string;
+        billingAddressId?: string;
         /**
          * Backup payment method.
          */
-        backupPaymentMethodId: string;
+        backupPaymentMethodId?: string;
         /**
          * Team status.
          */
@@ -11099,27 +11285,27 @@ export namespace Models {
         /**
          * Remarks on team status.
          */
-        remarks: string;
+        remarks?: string;
         /**
          * Organization agreements
          */
-        agreementBAA: string;
+        agreementBAA?: string;
         /**
          * Program manager's name.
          */
-        programManagerName: string;
+        programManagerName?: string;
         /**
          * Program manager's calendar link.
          */
-        programManagerCalendar: string;
+        programManagerCalendar?: string;
         /**
          * Program's discord channel name.
          */
-        programDiscordChannelName: string;
+        programDiscordChannelName?: string;
         /**
          * Program's discord channel URL.
          */
-        programDiscordChannelUrl: string;
+        programDiscordChannelUrl?: string;
         /**
          * Billing limits reached
          */
@@ -11127,11 +11313,11 @@ export namespace Models {
         /**
          * Billing plan selected for downgrade.
          */
-        billingPlanDowngrade: string;
+        billingPlanDowngrade?: string;
         /**
          * Tax Id
          */
-        billingTaxId: string;
+        billingTaxId?: string;
         /**
          * Marked for deletion
          */
@@ -11633,9 +11819,9 @@ export namespace Models {
          */
         name: string;
         /**
-         * Does the organization have access to this region.
+         * Does the organization have access to this region. Null when access has not been resolved.
          */
-        available: boolean;
+        available?: boolean;
         /**
          * Does the backend support this region.
          */
@@ -11909,7 +12095,7 @@ export namespace Models {
         /**
          * Member additional resources
          */
-        member: AdditionalResource;
+        member?: AdditionalResource;
         /**
          * Realtime additional resources
          */
@@ -11921,7 +12107,7 @@ export namespace Models {
         /**
          * Realtime bandwidth additional resources
          */
-        realtimeBandwidth: AdditionalResource;
+        realtimeBandwidth?: AdditionalResource;
         /**
          * Storage additional resources
          */
@@ -11941,7 +12127,7 @@ export namespace Models {
         /**
          * Credits additional resources
          */
-        credits: AdditionalResource;
+        credits?: AdditionalResource;
     }
 
     /**
@@ -12061,7 +12247,7 @@ export namespace Models {
          */
         resourceType?: string;
         /**
-         * Replica ordinal when broken down by `ordinal`. 0 is the primary; 1+ are replicas.
+         * Node ordinal when broken down by `ordinal`. A stable per-node identity, not a role: ordinal 0 is the first member created, and a failover can leave the primary on any ordinal. Read the role from the database's replicas endpoint.
          */
         ordinal?: string;
     }
