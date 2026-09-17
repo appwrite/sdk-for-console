@@ -1189,6 +1189,7 @@ export class Storage {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         payload['project'] = this.client.config.project;
+        payload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
@@ -1428,6 +1429,7 @@ export class Storage {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         payload['project'] = this.client.config.project;
+        payload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
@@ -1508,6 +1510,7 @@ export class Storage {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         payload['project'] = this.client.config.project;
+        payload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);

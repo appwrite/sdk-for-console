@@ -2,6 +2,7 @@
 
 ## 16.1.0
 
+* Fixed: `impersonateuserid` is carried again by every client URL builder — the avatar helpers, `functions`/`sites` `getDeploymentDownload()`, `organizations` `getInvoiceDownload()`/`getInvoiceView()`, and `storage` `getFileDownload()`/`getFilePreview()`/`getFileView()`. The browser loads these URLs directly and cannot send the impersonation header, so an impersonating console operator was served their own resources or a 401
 * Breaking: the `Addon` enum is now `AddonKey`
 * Breaking: removed `EmbeddingModel.Bgesmall` and `EmbeddingModel.Embeddinggemma`
 * Breaking: removed `ProjectKeyScopes.DedicatedDatabasesExecute`; dedicated database execution follows `databases.write`
