@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Backups, BackupServices } from "@appwrite.io/console";
+import { Client, Backups, BackupServices } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const backups = new Backups(client);
 
 const result = await backups.createArchive({
     services: [BackupServices.Databases],
-    resourceId: '<RESOURCE_ID>' // optional
+    resourceId: '<RESOURCE_ID>', // optional
 });
 
 console.log(result);

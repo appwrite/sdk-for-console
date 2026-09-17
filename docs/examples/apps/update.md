@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Apps } from "@appwrite.io/console";
+import { Client, Apps } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -27,7 +27,7 @@ const result = await apps.update({
     type: 'public', // optional
     deviceFlow: false, // optional
     installationScopes: [], // optional
-    installationRedirectUrl: 'https://example.com' // optional
+    installationRedirectUrl: 'https://example.com', // optional
 });
 
 console.log(result);

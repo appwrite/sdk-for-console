@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Domains } from "@appwrite.io/console";
+import { Client, Domains } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const domains = new Domains(client);
 
 const result = await domains.updateTransferIn({
     invoiceId: '<INVOICE_ID>',
-    organizationId: '<ORGANIZATION_ID>'
+    organizationId: '<ORGANIZATION_ID>',
 });
 
 console.log(result);

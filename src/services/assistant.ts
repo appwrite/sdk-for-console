@@ -1,7 +1,4 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
-import type { Models } from '../models';
-
+import { AppwriteException, Client, type Payload } from '../client';
 
 export class Assistant {
     client: Client;
@@ -11,7 +8,7 @@ export class Assistant {
     }
 
     /**
-     * Send a prompt to the AI assistant and receive a response. This endpoint allows you to interact with Appwrite's AI assistant by sending questions or prompts and receiving helpful responses in real-time through a server-sent events stream. 
+     * Send a prompt to the AI assistant and receive a response. This endpoint allows you to interact with Appwrite's AI assistant by sending questions or prompts and receiving helpful responses in real-time through a server-sent events stream.
      *
      * @param {string} params.prompt - Prompt. A string containing questions asked to the AI assistant.
      * @throws {AppwriteException}
@@ -19,7 +16,7 @@ export class Assistant {
      */
     chat(params: { prompt: string }): Promise<{}>;
     /**
-     * Send a prompt to the AI assistant and receive a response. This endpoint allows you to interact with Appwrite's AI assistant by sending questions or prompts and receiving helpful responses in real-time through a server-sent events stream. 
+     * Send a prompt to the AI assistant and receive a response. This endpoint allows you to interact with Appwrite's AI assistant by sending questions or prompts and receiving helpful responses in real-time through a server-sent events stream.
      *
      * @param {string} prompt - Prompt. A string containing questions asked to the AI assistant.
      * @throws {AppwriteException}
@@ -27,25 +24,26 @@ export class Assistant {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     chat(prompt: string): Promise<{}>;
-    chat(
-        paramsOrFirst: { prompt: string } | string    
-    ): Promise<{}> {
+    chat(paramsOrFirst: { prompt: string } | string): Promise<{}> {
         let params: { prompt: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { prompt: string };
         } else {
             params = {
-                prompt: paramsOrFirst as string            
+                prompt: paramsOrFirst as string,
             };
         }
-        
+
         const prompt = params.prompt;
 
         if (typeof prompt === 'undefined') {
             throw new AppwriteException('Missing required parameter: "prompt"');
         }
-
         const apiPath = '/console/assistant';
         const payload: Payload = {};
         if (typeof prompt !== 'undefined') {
@@ -56,14 +54,9 @@ export class Assistant {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'text/plain',
-        }
+            accept: 'text/plain',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 }

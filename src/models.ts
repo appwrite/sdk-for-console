@@ -1,32 +1,31 @@
-import { DatabaseType } from "./enums/database-type"
-import { DatabaseStatus } from "./enums/database-status"
-import { AttributeStatus } from "./enums/attribute-status"
-import { ColumnStatus } from "./enums/column-status"
-import { IndexStatus } from "./enums/index-status"
-import { DetectionFrameworkType } from "./enums/detection-framework-type"
-import { DetectionRuntimeType } from "./enums/detection-runtime-type"
-import { DeploymentStatus } from "./enums/deployment-status"
-import { ExecutionTrigger } from "./enums/execution-trigger"
-import { ExecutionStatus } from "./enums/execution-status"
-import { ProjectAuthMethodId } from "./enums/project-auth-method-id"
-import { ProjectServiceId } from "./enums/project-service-id"
-import { ProjectProtocolId } from "./enums/project-protocol-id"
-import { OAuth2GooglePrompt } from "./enums/o-auth-2-google-prompt"
-import { OAuth2OidcPrompt } from "./enums/o-auth-2-oidc-prompt"
-import { PlatformType } from "./enums/platform-type"
-import { ProxyRuleDeploymentResourceType } from "./enums/proxy-rule-deployment-resource-type"
-import { ProxyRuleStatus } from "./enums/proxy-rule-status"
-import { MessageStatus } from "./enums/message-status"
-import { BillingPlanGroup } from "./enums/billing-plan-group"
-import { DomainTransferStatusEnum } from "./enums/domain-transfer-status-enum"
-import { DomainPurchaseStatus } from "./enums/domain-purchase-status"
-import { WafRuleAction } from "./enums/waf-rule-action"
+import { DatabaseType } from './enums/database-type';
+import { AttributeStatus } from './enums/attribute-status';
+import { ColumnStatus } from './enums/column-status';
+import { IndexStatus } from './enums/index-status';
+import { DetectionFrameworkType } from './enums/detection-framework-type';
+import { DetectionRuntimeType } from './enums/detection-runtime-type';
+import { DeploymentStatus } from './enums/deployment-status';
+import { ExecutionResourceType } from './enums/execution-resource-type';
+import { ExecutionTrigger } from './enums/execution-trigger';
+import { ExecutionStatus } from './enums/execution-status';
+import { ProjectAuthMethodId } from './enums/project-auth-method-id';
+import { ProjectServiceId } from './enums/project-service-id';
+import { ProjectProtocolId } from './enums/project-protocol-id';
+import { OAuth2GooglePrompt } from './enums/o-auth-2-google-prompt';
+import { OAuth2OidcPrompt } from './enums/o-auth-2-oidc-prompt';
+import { PlatformType } from './enums/platform-type';
+import { ProxyRuleDeploymentResourceType } from './enums/proxy-rule-deployment-resource-type';
+import { ProxyRuleStatus } from './enums/proxy-rule-status';
+import { MessageStatus } from './enums/message-status';
+import { BillingPlanGroup } from './enums/billing-plan-group';
+import { DomainTransferStatusEnum } from './enums/domain-transfer-status-enum';
+import { DomainPurchaseStatus } from './enums/domain-purchase-status';
+import { WafRuleAction } from './enums/waf-rule-action';
 
 /**
  * Appwrite Models
  */
 export namespace Models {
-
     declare const __default: unique symbol;
 
     /**
@@ -41,12 +40,14 @@ export namespace Models {
          * List of rows.
          */
         rows: Row[];
-    }
+    };
 
     /**
      * Documents List
      */
-    export type DocumentList<Document extends Models.Document = Models.DefaultDocument> = {
+    export type DocumentList<
+        Document extends Models.Document = Models.DefaultDocument,
+    > = {
         /**
          * Total number of documents that matched your query.
          */
@@ -55,7 +56,7 @@ export namespace Models {
          * List of documents.
          */
         documents: Document[];
-    }
+    };
 
     /**
      * Presences List
@@ -69,7 +70,7 @@ export namespace Models {
          * List of presences.
          */
         presences: Presence[];
-    }
+    };
 
     /**
      * Tables List
@@ -83,7 +84,7 @@ export namespace Models {
          * List of tables.
          */
         tables: Table[];
-    }
+    };
 
     /**
      * Collections List
@@ -97,7 +98,7 @@ export namespace Models {
          * List of collections.
          */
         collections: Collection[];
-    }
+    };
 
     /**
      * Databases List
@@ -111,7 +112,7 @@ export namespace Models {
          * List of databases.
          */
         databases: Database[];
-    }
+    };
 
     /**
      * Indexes List
@@ -125,7 +126,7 @@ export namespace Models {
          * List of indexes.
          */
         indexes: Index[];
-    }
+    };
 
     /**
      * Column Indexes List
@@ -139,12 +140,14 @@ export namespace Models {
          * List of indexes.
          */
         indexes: ColumnIndex[];
-    }
+    };
 
     /**
      * Users List
      */
-    export type UserList<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
+    export type UserList<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    > = {
         /**
          * Total number of users that matched your query.
          */
@@ -153,7 +156,7 @@ export namespace Models {
          * List of users.
          */
         users: User<Preferences>[];
-    }
+    };
 
     /**
      * Sessions List
@@ -167,7 +170,7 @@ export namespace Models {
          * List of sessions.
          */
         sessions: Session[];
-    }
+    };
 
     /**
      * Identities List
@@ -181,7 +184,7 @@ export namespace Models {
          * List of identities.
          */
         identities: Identity[];
-    }
+    };
 
     /**
      * Notifications List
@@ -195,7 +198,7 @@ export namespace Models {
          * List of notifications.
          */
         notifications: Notification[];
-    }
+    };
 
     /**
      * Logs List
@@ -209,7 +212,7 @@ export namespace Models {
          * List of logs.
          */
         logs: Log[];
-    }
+    };
 
     /**
      * Files List
@@ -223,7 +226,7 @@ export namespace Models {
          * List of files.
          */
         files: File[];
-    }
+    };
 
     /**
      * Buckets List
@@ -237,7 +240,7 @@ export namespace Models {
          * List of buckets.
          */
         buckets: Bucket[];
-    }
+    };
 
     /**
      * Resource Tokens List
@@ -251,12 +254,14 @@ export namespace Models {
          * List of tokens.
          */
         tokens: ResourceToken[];
-    }
+    };
 
     /**
      * Teams List
      */
-    export type TeamList<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
+    export type TeamList<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    > = {
         /**
          * Total number of teams that matched your query.
          */
@@ -265,7 +270,7 @@ export namespace Models {
          * List of teams.
          */
         teams: Team<Preferences>[];
-    }
+    };
 
     /**
      * Memberships List
@@ -279,7 +284,7 @@ export namespace Models {
          * List of memberships.
          */
         memberships: Membership[];
-    }
+    };
 
     /**
      * Sites List
@@ -293,7 +298,7 @@ export namespace Models {
          * List of sites.
          */
         sites: Site[];
-    }
+    };
 
     /**
      * Site Templates List
@@ -307,7 +312,7 @@ export namespace Models {
          * List of templates.
          */
         templates: TemplateSite[];
-    }
+    };
 
     /**
      * Functions List
@@ -321,7 +326,7 @@ export namespace Models {
          * List of functions.
          */
         functions: Function[];
-    }
+    };
 
     /**
      * Function Templates List
@@ -335,7 +340,7 @@ export namespace Models {
          * List of templates.
          */
         templates: TemplateFunction[];
-    }
+    };
 
     /**
      * Installations List
@@ -349,7 +354,7 @@ export namespace Models {
          * List of installations.
          */
         installations: Installation[];
-    }
+    };
 
     /**
      * Framework Provider Repositories List
@@ -367,7 +372,7 @@ export namespace Models {
          * Provider repository list type.
          */
         type: string;
-    }
+    };
 
     /**
      * Runtime Provider Repositories List
@@ -385,7 +390,7 @@ export namespace Models {
          * Provider repository list type.
          */
         type: string;
-    }
+    };
 
     /**
      * VcsNamespace
@@ -411,7 +416,7 @@ export namespace Models {
          * Namespace avatar URL.
          */
         avatarUrl: string;
-    }
+    };
 
     /**
      * VCS Namespaces List
@@ -425,7 +430,7 @@ export namespace Models {
          * List of namespaces.
          */
         namespaces: VcsNamespace[];
-    }
+    };
 
     /**
      * Branches List
@@ -439,7 +444,7 @@ export namespace Models {
          * List of branches.
          */
         branches: Branch[];
-    }
+    };
 
     /**
      * Frameworks List
@@ -453,7 +458,7 @@ export namespace Models {
          * List of frameworks.
          */
         frameworks: Framework[];
-    }
+    };
 
     /**
      * Runtimes List
@@ -467,7 +472,7 @@ export namespace Models {
          * List of runtimes.
          */
         runtimes: Runtime[];
-    }
+    };
 
     /**
      * Deployments List
@@ -481,7 +486,7 @@ export namespace Models {
          * List of deployments.
          */
         deployments: Deployment[];
-    }
+    };
 
     /**
      * Executions List
@@ -495,7 +500,7 @@ export namespace Models {
          * List of executions.
          */
         executions: Execution[];
-    }
+    };
 
     /**
      * Projects List
@@ -509,7 +514,7 @@ export namespace Models {
          * List of projects.
          */
         projects: Project[];
-    }
+    };
 
     /**
      * Webhooks List
@@ -523,7 +528,7 @@ export namespace Models {
          * List of webhooks.
          */
         webhooks: Webhook[];
-    }
+    };
 
     /**
      * API Keys List
@@ -537,7 +542,7 @@ export namespace Models {
          * List of keys.
          */
         keys: Key[];
-    }
+    };
 
     /**
      * Dev Keys List
@@ -551,7 +556,7 @@ export namespace Models {
          * List of devKeys.
          */
         devKeys: DevKey[];
-    }
+    };
 
     /**
      * Countries List
@@ -565,7 +570,7 @@ export namespace Models {
          * List of countries.
          */
         countries: Country[];
-    }
+    };
 
     /**
      * Continents List
@@ -579,7 +584,7 @@ export namespace Models {
          * List of continents.
          */
         continents: Continent[];
-    }
+    };
 
     /**
      * Languages List
@@ -593,7 +598,7 @@ export namespace Models {
          * List of languages.
          */
         languages: Language[];
-    }
+    };
 
     /**
      * Currencies List
@@ -607,7 +612,7 @@ export namespace Models {
          * List of currencies.
          */
         currencies: Currency[];
-    }
+    };
 
     /**
      * Phones List
@@ -621,7 +626,7 @@ export namespace Models {
          * List of phones.
          */
         phones: Phone[];
-    }
+    };
 
     /**
      * Variables List
@@ -635,7 +640,7 @@ export namespace Models {
          * List of variables.
          */
         variables: Variable[];
-    }
+    };
 
     /**
      * Mock Numbers List
@@ -649,7 +654,7 @@ export namespace Models {
          * List of mockNumbers.
          */
         mockNumbers: MockNumber[];
-    }
+    };
 
     /**
      * Policies List
@@ -662,8 +667,24 @@ export namespace Models {
         /**
          * List of policies.
          */
-        policies: (Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail)[];
-    }
+        policies: (
+            | Models.PolicyPasswordDictionary
+            | Models.PolicyPasswordHistory
+            | Models.PolicyPasswordStrength
+            | Models.PolicyPasswordPersonalData
+            | Models.PolicySessionAlert
+            | Models.PolicySessionDuration
+            | Models.PolicySessionInvalidation
+            | Models.PolicySessionLimit
+            | Models.PolicyUserLimit
+            | Models.PolicyMembershipPrivacy
+            | Models.PolicyMfaFactors
+            | Models.PolicyDenyAliasedEmail
+            | Models.PolicyDenyDisposableEmail
+            | Models.PolicyDenyFreeEmail
+            | Models.PolicyDenyCorporateEmail
+        )[];
+    };
 
     /**
      * Email Templates List
@@ -677,7 +698,7 @@ export namespace Models {
          * List of templates.
          */
         templates: EmailTemplate[];
-    }
+    };
 
     /**
      * Rule List
@@ -691,7 +712,7 @@ export namespace Models {
          * List of rules.
          */
         rules: ProxyRule[];
-    }
+    };
 
     /**
      * Schedules List
@@ -705,7 +726,7 @@ export namespace Models {
          * List of schedules.
          */
         schedules: Schedule[];
-    }
+    };
 
     /**
      * Stages List
@@ -715,7 +736,7 @@ export namespace Models {
          * List of stages.
          */
         stages: Stage[];
-    }
+    };
 
     /**
      * Locale codes list
@@ -729,7 +750,7 @@ export namespace Models {
          * List of localeCodes.
          */
         localeCodes: LocaleCode[];
-    }
+    };
 
     /**
      * Provider list
@@ -743,7 +764,7 @@ export namespace Models {
          * List of providers.
          */
         providers: Provider[];
-    }
+    };
 
     /**
      * Message list
@@ -757,7 +778,7 @@ export namespace Models {
          * List of messages.
          */
         messages: Message[];
-    }
+    };
 
     /**
      * Topic list
@@ -771,7 +792,7 @@ export namespace Models {
          * List of topics.
          */
         topics: Topic[];
-    }
+    };
 
     /**
      * Subscriber list
@@ -785,7 +806,7 @@ export namespace Models {
          * List of subscribers.
          */
         subscribers: Subscriber[];
-    }
+    };
 
     /**
      * Target list
@@ -799,7 +820,7 @@ export namespace Models {
          * List of targets.
          */
         targets: Target[];
-    }
+    };
 
     /**
      * Transaction List
@@ -813,7 +834,7 @@ export namespace Models {
          * List of transactions.
          */
         transactions: Transaction[];
-    }
+    };
 
     /**
      * Migrations List
@@ -827,7 +848,7 @@ export namespace Models {
          * List of migrations.
          */
         migrations: Migration[];
-    }
+    };
 
     /**
      * Specifications List
@@ -841,7 +862,7 @@ export namespace Models {
          * List of specifications.
          */
         specifications: Specification[];
-    }
+    };
 
     /**
      * VCS Content List
@@ -855,7 +876,7 @@ export namespace Models {
          * List of contents.
          */
         contents: VcsContent[];
-    }
+    };
 
     /**
      * VectorsDB Collections List
@@ -869,7 +890,7 @@ export namespace Models {
          * List of collections.
          */
         collections: VectorsdbCollection[];
-    }
+    };
 
     /**
      * Embedding list
@@ -883,7 +904,7 @@ export namespace Models {
          * List of embeddings.
          */
         embeddings: Embedding[];
-    }
+    };
 
     /**
      * Insights List
@@ -897,7 +918,7 @@ export namespace Models {
          * List of insights.
          */
         insights: Insight[];
-    }
+    };
 
     /**
      * Reports List
@@ -911,7 +932,7 @@ export namespace Models {
          * List of reports.
          */
         reports: Report[];
-    }
+    };
 
     /**
      * Database
@@ -958,6 +979,18 @@ export namespace Models {
          */
         replicas?: number;
         /**
+         * Error message when the dedicated backing failed. Null when the database has no dedicated backing or has not failed.
+         */
+        error?: string;
+        /**
+         * Container status of the dedicated backing: active, inactive, or failed (a wake was declined because the backing namespace is gone). Null when the database has no dedicated backing or the runtime has not reported one.
+         */
+        containerStatus?: string;
+        /**
+         * Idle-lifecycle state of the dedicated backing: active, warm, cold, or hibernated. Null when the database has no dedicated backing or the runtime has not reported one.
+         */
+        lifecycleState?: string;
+        /**
          * Database backup policies.
          */
         policies?: BackupPolicy[];
@@ -965,7 +998,7 @@ export namespace Models {
          * Database backup archives.
          */
         archives?: BackupArchive[];
-    }
+    };
 
     /**
      * Embedding
@@ -987,7 +1020,7 @@ export namespace Models {
          * Error message if embedding generation fails. Empty string if no error.
          */
         error: string;
-    }
+    };
 
     /**
      * Collection
@@ -1028,7 +1061,26 @@ export namespace Models {
         /**
          * Collection attributes.
          */
-        attributes: (Models.AttributeBoolean | Models.AttributeBigint | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributePoint | Models.AttributeLine | Models.AttributePolygon | Models.AttributeVarchar | Models.AttributeText | Models.AttributeMediumtext | Models.AttributeLongtext | Models.AttributeString)[];
+        attributes: (
+            | Models.AttributeBoolean
+            | Models.AttributeBigint
+            | Models.AttributeInteger
+            | Models.AttributeFloat
+            | Models.AttributeEmail
+            | Models.AttributeEnum
+            | Models.AttributeUrl
+            | Models.AttributeIp
+            | Models.AttributeDatetime
+            | Models.AttributeRelationship
+            | Models.AttributePoint
+            | Models.AttributeLine
+            | Models.AttributePolygon
+            | Models.AttributeVarchar
+            | Models.AttributeText
+            | Models.AttributeMediumtext
+            | Models.AttributeLongtext
+            | Models.AttributeString
+        )[];
         /**
          * Collection indexes.
          */
@@ -1041,7 +1093,7 @@ export namespace Models {
          * Currently used document size in bytes based on defined attributes.
          */
         bytesUsed: number;
-    }
+    };
 
     /**
      * Attributes List
@@ -1054,8 +1106,27 @@ export namespace Models {
         /**
          * List of attributes.
          */
-        attributes: (Models.AttributeBoolean | Models.AttributeBigint | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributePoint | Models.AttributeLine | Models.AttributePolygon | Models.AttributeVarchar | Models.AttributeText | Models.AttributeMediumtext | Models.AttributeLongtext | Models.AttributeString)[];
-    }
+        attributes: (
+            | Models.AttributeBoolean
+            | Models.AttributeBigint
+            | Models.AttributeInteger
+            | Models.AttributeFloat
+            | Models.AttributeEmail
+            | Models.AttributeEnum
+            | Models.AttributeUrl
+            | Models.AttributeIp
+            | Models.AttributeDatetime
+            | Models.AttributeRelationship
+            | Models.AttributePoint
+            | Models.AttributeLine
+            | Models.AttributePolygon
+            | Models.AttributeVarchar
+            | Models.AttributeText
+            | Models.AttributeMediumtext
+            | Models.AttributeLongtext
+            | Models.AttributeString
+        )[];
+    };
 
     /**
      * AttributeString
@@ -1105,7 +1176,7 @@ export namespace Models {
          * Defines whether this attribute is encrypted or not.
          */
         encrypt?: boolean;
-    }
+    };
 
     /**
      * AttributeInteger
@@ -1155,7 +1226,7 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: number;
-    }
+    };
 
     /**
      * AttributeBigInt
@@ -1205,7 +1276,7 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: number | bigint;
-    }
+    };
 
     /**
      * AttributeFloat
@@ -1255,7 +1326,7 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: number;
-    }
+    };
 
     /**
      * AttributeBoolean
@@ -1297,7 +1368,7 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: boolean;
-    }
+    };
 
     /**
      * AttributeEmail
@@ -1343,7 +1414,7 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: string;
-    }
+    };
 
     /**
      * AttributeEnum
@@ -1393,7 +1464,7 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: string;
-    }
+    };
 
     /**
      * AttributeIP
@@ -1439,7 +1510,7 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: string;
-    }
+    };
 
     /**
      * AttributeURL
@@ -1485,7 +1556,7 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: string;
-    }
+    };
 
     /**
      * AttributeDatetime
@@ -1531,7 +1602,7 @@ export namespace Models {
          * Default value for attribute when not provided. Only null is optional
          */
         default?: string;
-    }
+    };
 
     /**
      * AttributeRelationship
@@ -1593,7 +1664,7 @@ export namespace Models {
          * Whether this is the parent or child side of the relationship
          */
         side: string;
-    }
+    };
 
     /**
      * AttributePoint
@@ -1635,7 +1706,7 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: number[];
-    }
+    };
 
     /**
      * AttributeLine
@@ -1677,7 +1748,7 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: number[][];
-    }
+    };
 
     /**
      * AttributePolygon
@@ -1719,7 +1790,7 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: number[][][];
-    }
+    };
 
     /**
      * AttributeVarchar
@@ -1769,7 +1840,7 @@ export namespace Models {
          * Defines whether this attribute is encrypted or not.
          */
         encrypt?: boolean;
-    }
+    };
 
     /**
      * AttributeText
@@ -1815,7 +1886,7 @@ export namespace Models {
          * Defines whether this attribute is encrypted or not.
          */
         encrypt?: boolean;
-    }
+    };
 
     /**
      * AttributeMediumtext
@@ -1861,7 +1932,7 @@ export namespace Models {
          * Defines whether this attribute is encrypted or not.
          */
         encrypt?: boolean;
-    }
+    };
 
     /**
      * AttributeLongtext
@@ -1907,7 +1978,7 @@ export namespace Models {
          * Defines whether this attribute is encrypted or not.
          */
         encrypt?: boolean;
-    }
+    };
 
     /**
      * VectorsDB Collection
@@ -1965,7 +2036,7 @@ export namespace Models {
          * Embedding dimension.
          */
         dimension: number;
-    }
+    };
 
     /**
      * AttributeObject
@@ -2003,7 +2074,7 @@ export namespace Models {
          * Attribute update date in ISO 8601 format.
          */
         $updatedAt: string;
-    }
+    };
 
     /**
      * AttributeVector
@@ -2045,7 +2116,7 @@ export namespace Models {
          * Vector dimensions.
          */
         size: number;
-    }
+    };
 
     /**
      * Table
@@ -2086,7 +2157,26 @@ export namespace Models {
         /**
          * Table columns.
          */
-        columns: (Models.ColumnBoolean | Models.ColumnBigint | Models.ColumnInteger | Models.ColumnFloat | Models.ColumnEmail | Models.ColumnEnum | Models.ColumnUrl | Models.ColumnIp | Models.ColumnDatetime | Models.ColumnRelationship | Models.ColumnPoint | Models.ColumnLine | Models.ColumnPolygon | Models.ColumnVarchar | Models.ColumnText | Models.ColumnMediumtext | Models.ColumnLongtext | Models.ColumnString)[];
+        columns: (
+            | Models.ColumnBoolean
+            | Models.ColumnBigint
+            | Models.ColumnInteger
+            | Models.ColumnFloat
+            | Models.ColumnEmail
+            | Models.ColumnEnum
+            | Models.ColumnUrl
+            | Models.ColumnIp
+            | Models.ColumnDatetime
+            | Models.ColumnRelationship
+            | Models.ColumnPoint
+            | Models.ColumnLine
+            | Models.ColumnPolygon
+            | Models.ColumnVarchar
+            | Models.ColumnText
+            | Models.ColumnMediumtext
+            | Models.ColumnLongtext
+            | Models.ColumnString
+        )[];
         /**
          * Table indexes.
          */
@@ -2099,7 +2189,7 @@ export namespace Models {
          * Currently used row size in bytes based on defined columns.
          */
         bytesUsed: number;
-    }
+    };
 
     /**
      * Columns List
@@ -2112,8 +2202,27 @@ export namespace Models {
         /**
          * List of columns.
          */
-        columns: (Models.ColumnBoolean | Models.ColumnBigint | Models.ColumnInteger | Models.ColumnFloat | Models.ColumnEmail | Models.ColumnEnum | Models.ColumnUrl | Models.ColumnIp | Models.ColumnDatetime | Models.ColumnRelationship | Models.ColumnPoint | Models.ColumnLine | Models.ColumnPolygon | Models.ColumnVarchar | Models.ColumnText | Models.ColumnMediumtext | Models.ColumnLongtext | Models.ColumnString)[];
-    }
+        columns: (
+            | Models.ColumnBoolean
+            | Models.ColumnBigint
+            | Models.ColumnInteger
+            | Models.ColumnFloat
+            | Models.ColumnEmail
+            | Models.ColumnEnum
+            | Models.ColumnUrl
+            | Models.ColumnIp
+            | Models.ColumnDatetime
+            | Models.ColumnRelationship
+            | Models.ColumnPoint
+            | Models.ColumnLine
+            | Models.ColumnPolygon
+            | Models.ColumnVarchar
+            | Models.ColumnText
+            | Models.ColumnMediumtext
+            | Models.ColumnLongtext
+            | Models.ColumnString
+        )[];
+    };
 
     /**
      * ColumnString
@@ -2163,7 +2272,7 @@ export namespace Models {
          * Defines whether this column is encrypted or not.
          */
         encrypt?: boolean;
-    }
+    };
 
     /**
      * ColumnInteger
@@ -2213,7 +2322,7 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: number;
-    }
+    };
 
     /**
      * ColumnBigInt
@@ -2263,7 +2372,7 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: number | bigint;
-    }
+    };
 
     /**
      * ColumnFloat
@@ -2313,7 +2422,7 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: number;
-    }
+    };
 
     /**
      * ColumnBoolean
@@ -2355,7 +2464,7 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: boolean;
-    }
+    };
 
     /**
      * ColumnEmail
@@ -2401,7 +2510,7 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: string;
-    }
+    };
 
     /**
      * ColumnEnum
@@ -2451,7 +2560,7 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: string;
-    }
+    };
 
     /**
      * ColumnIP
@@ -2497,7 +2606,7 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: string;
-    }
+    };
 
     /**
      * ColumnURL
@@ -2543,7 +2652,7 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: string;
-    }
+    };
 
     /**
      * ColumnDatetime
@@ -2589,7 +2698,7 @@ export namespace Models {
          * Default value for column when not provided. Only null is optional
          */
         default?: string;
-    }
+    };
 
     /**
      * ColumnRelationship
@@ -2651,7 +2760,7 @@ export namespace Models {
          * Whether this is the parent or child side of the relationship
          */
         side: string;
-    }
+    };
 
     /**
      * ColumnPoint
@@ -2693,7 +2802,7 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: number[];
-    }
+    };
 
     /**
      * ColumnLine
@@ -2735,7 +2844,7 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: number[][];
-    }
+    };
 
     /**
      * ColumnPolygon
@@ -2777,7 +2886,7 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: number[][][];
-    }
+    };
 
     /**
      * ColumnVarchar
@@ -2827,7 +2936,7 @@ export namespace Models {
          * Defines whether this column is encrypted or not.
          */
         encrypt?: boolean;
-    }
+    };
 
     /**
      * ColumnText
@@ -2873,7 +2982,7 @@ export namespace Models {
          * Defines whether this column is encrypted or not.
          */
         encrypt?: boolean;
-    }
+    };
 
     /**
      * ColumnMediumtext
@@ -2919,7 +3028,7 @@ export namespace Models {
          * Defines whether this column is encrypted or not.
          */
         encrypt?: boolean;
-    }
+    };
 
     /**
      * ColumnLongtext
@@ -2965,7 +3074,7 @@ export namespace Models {
          * Defines whether this column is encrypted or not.
          */
         encrypt?: boolean;
-    }
+    };
 
     /**
      * Index
@@ -3011,7 +3120,7 @@ export namespace Models {
          * Index orders.
          */
         orders?: string[];
-    }
+    };
 
     /**
      * Index
@@ -3057,7 +3166,7 @@ export namespace Models {
          * Index orders.
          */
         orders?: string[];
-    }
+    };
 
     /**
      * Row
@@ -3091,7 +3200,7 @@ export namespace Models {
          * Row permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
          */
         $permissions: string[];
-    }
+    };
 
     export type DefaultRow = Row & {
         [key: string]: any;
@@ -3130,7 +3239,7 @@ export namespace Models {
          * Document permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
          */
         $permissions: string[];
-    }
+    };
 
     export type DefaultDocument = Document & {
         [key: string]: any;
@@ -3177,7 +3286,7 @@ export namespace Models {
          * Presence metadata.
          */
         metadata?: object;
-    }
+    };
 
     /**
      * Log
@@ -3271,12 +3380,14 @@ export namespace Models {
          * Country name.
          */
         countryName: string;
-    }
+    };
 
     /**
      * User
      */
-    export type User<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
+    export type User<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    > = {
         /**
          * User ID.
          */
@@ -3381,7 +3492,7 @@ export namespace Models {
          * ID of the original actor performing the impersonation. Present only when the current request is impersonating another user. Internal audit logs attribute the action to this user, while the impersonated target is recorded only in internal audit payload data.
          */
         impersonatorUserId?: string;
-    }
+    };
 
     /**
      * AlgoMD5
@@ -3391,7 +3502,7 @@ export namespace Models {
          * Algo type.
          */
         type: string;
-    }
+    };
 
     /**
      * AlgoSHA
@@ -3401,7 +3512,7 @@ export namespace Models {
          * Algo type.
          */
         type: string;
-    }
+    };
 
     /**
      * AlgoPHPass
@@ -3411,7 +3522,7 @@ export namespace Models {
          * Algo type.
          */
         type: string;
-    }
+    };
 
     /**
      * AlgoBcrypt
@@ -3421,7 +3532,7 @@ export namespace Models {
          * Algo type.
          */
         type: string;
-    }
+    };
 
     /**
      * AlgoScrypt
@@ -3447,7 +3558,7 @@ export namespace Models {
          * Length used to compute hash.
          */
         length: number;
-    }
+    };
 
     /**
      * AlgoScryptModified
@@ -3469,7 +3580,7 @@ export namespace Models {
          * Key used to compute hash.
          */
         signerKey: string;
-    }
+    };
 
     /**
      * AlgoArgon2
@@ -3491,13 +3602,12 @@ export namespace Models {
          * Number of threads used to compute hash.
          */
         threads: number;
-    }
+    };
 
     /**
      * Preferences
      */
-    export type Preferences = {
-    }
+    export type Preferences = {};
 
     export type DefaultPreferences = Preferences & {
         [key: string]: any;
@@ -3624,7 +3734,7 @@ export namespace Models {
          * Most recent date in ISO 8601 format when the session successfully passed MFA challenge.
          */
         mfaUpdatedAt: string;
-    }
+    };
 
     /**
      * Identity
@@ -3670,7 +3780,7 @@ export namespace Models {
          * Identity Provider Refresh Token.
          */
         providerRefreshToken: string;
-    }
+    };
 
     /**
      * Notification
@@ -3740,7 +3850,7 @@ export namespace Models {
          * Most recent time the notification was viewed from a notification logo.
          */
         lastSeen?: string;
-    }
+    };
 
     /**
      * Token
@@ -3770,7 +3880,7 @@ export namespace Models {
          * Security phrase of a token. Empty if security phrase was not requested when creating a token. It includes randomly generated phrase which is also sent in the external resource such as email.
          */
         phrase: string;
-    }
+    };
 
     /**
      * JWT
@@ -3780,7 +3890,7 @@ export namespace Models {
          * JWT encoded string.
          */
         jwt: string;
-    }
+    };
 
     /**
      * Locale
@@ -3858,7 +3968,7 @@ export namespace Models {
          * Registered organization of the IP
          */
         connectionOrganization?: string;
-    }
+    };
 
     /**
      * LocaleCode
@@ -3872,7 +3982,7 @@ export namespace Models {
          * Locale name
          */
         name: string;
-    }
+    };
 
     /**
      * File
@@ -3942,7 +4052,7 @@ export namespace Models {
          * Compression algorithm used for the file. Will be one of none, [gzip](https://en.wikipedia.org/wiki/Gzip), or [zstd](https://en.wikipedia.org/wiki/Zstd).
          */
         compression: string;
-    }
+    };
 
     /**
      * Bucket
@@ -4004,7 +4114,7 @@ export namespace Models {
          * Total size of this bucket in bytes.
          */
         totalSize: number;
-    }
+    };
 
     /**
      * ResourceToken
@@ -4038,12 +4148,14 @@ export namespace Models {
          * Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
          */
         accessedAt: string;
-    }
+    };
 
     /**
      * Team
      */
-    export type Team<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
+    export type Team<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    > = {
         /**
          * Team ID.
          */
@@ -4068,7 +4180,7 @@ export namespace Models {
          * Team preferences as a key-value object
          */
         prefs: Preferences;
-    }
+    };
 
     /**
      * Membership
@@ -4134,7 +4246,7 @@ export namespace Models {
          * User list of roles
          */
         roles: string[];
-    }
+    };
 
     /**
      * Site
@@ -4204,6 +4316,10 @@ export namespace Models {
          * Status of latest deployment. Possible values are "waiting", "processing", "building", "ready", and "failed".
          */
         latestDeploymentStatus: string;
+        /**
+         * Allowed permission scopes.
+         */
+        scopes: string[];
         /**
          * Site variables.
          */
@@ -4276,7 +4392,7 @@ export namespace Models {
          * Name of fallback file to use instead of 404 page. If null, Appwrite 404 page will be displayed.
          */
         fallbackFile: string;
-    }
+    };
 
     /**
      * Template Site
@@ -4297,7 +4413,7 @@ export namespace Models {
         /**
          * URL hosting a template demo.
          */
-        demoUrl: string;
+        demoUrl?: string;
         /**
          * File URL with preview screenshot in dark theme preference.
          */
@@ -4334,7 +4450,7 @@ export namespace Models {
          * Site variables.
          */
         variables: TemplateVariable[];
-    }
+    };
 
     /**
      * Template Framework
@@ -4375,8 +4491,8 @@ export namespace Models {
         /**
          * Fallback file for SPA. Only relevant for static serve runtime.
          */
-        fallbackFile: string;
-    }
+        fallbackFile?: string;
+    };
 
     /**
      * Function
@@ -4510,7 +4626,7 @@ export namespace Models {
          * Machine specification for executions.
          */
         runtimeSpecification: string;
-    }
+    };
 
     /**
      * Template Function
@@ -4584,7 +4700,7 @@ export namespace Models {
          * Function scopes.
          */
         scopes: string[];
-    }
+    };
 
     /**
      * Template Runtime
@@ -4606,7 +4722,7 @@ export namespace Models {
          * Path to function in VCS (Version Control System) repository
          */
         providerRootDirectory: string;
-    }
+    };
 
     /**
      * Template Variable
@@ -4640,7 +4756,7 @@ export namespace Models {
          * Variable Type.
          */
         type: string;
-    }
+    };
 
     /**
      * Installation
@@ -4670,7 +4786,7 @@ export namespace Models {
          * VCS (Version Control System) installation ID.
          */
         providerInstallationId: string;
-    }
+    };
 
     /**
      * ProviderRepository
@@ -4716,7 +4832,7 @@ export namespace Models {
          * Environment variables found in .env files
          */
         variables: string[];
-    }
+    };
 
     /**
      * ProviderRepositoryFramework
@@ -4766,7 +4882,7 @@ export namespace Models {
          * Auto-detected framework. Empty if type is not "framework".
          */
         framework: string;
-    }
+    };
 
     /**
      * ProviderRepositoryRuntime
@@ -4816,7 +4932,7 @@ export namespace Models {
          * Auto-detected runtime. Empty if type is not "runtime".
          */
         runtime: string;
-    }
+    };
 
     /**
      * DetectionFramework
@@ -4846,7 +4962,7 @@ export namespace Models {
          * Site Output Directory
          */
         outputDirectory: string;
-    }
+    };
 
     /**
      * DetectionRuntime
@@ -4872,7 +4988,7 @@ export namespace Models {
          * Function install and build commands
          */
         commands: string;
-    }
+    };
 
     /**
      * DetectionVariable
@@ -4886,7 +5002,7 @@ export namespace Models {
          * Value of environment variable
          */
         value: string;
-    }
+    };
 
     /**
      * VcsContents
@@ -4904,7 +5020,7 @@ export namespace Models {
          * Name of directory or file.
          */
         name: string;
-    }
+    };
 
     /**
      * Branch
@@ -4914,7 +5030,7 @@ export namespace Models {
          * Branch Name.
          */
         name: string;
-    }
+    };
 
     /**
      * Runtime
@@ -4952,7 +5068,7 @@ export namespace Models {
          * List of supported architectures.
          */
         supports: string[];
-    }
+    };
 
     /**
      * Framework
@@ -4978,7 +5094,7 @@ export namespace Models {
          * List of supported adapters.
          */
         adapters: FrameworkAdapter[];
-    }
+    };
 
     /**
      * Framework Adapter
@@ -5003,8 +5119,8 @@ export namespace Models {
         /**
          * Name of fallback file to use instead of 404 page. If null, Appwrite 404 page will be displayed.
          */
-        fallbackFile: string;
-    }
+        fallbackFile?: string;
+    };
 
     /**
      * Deployment
@@ -5118,7 +5234,7 @@ export namespace Models {
          * The branch of the vcs repository
          */
         providerBranchUrl: string;
-    }
+    };
 
     /**
      * Execution
@@ -5141,19 +5257,23 @@ export namespace Models {
          */
         $permissions: string[];
         /**
-         * Function ID.
+         * Function or site ID.
          */
-        functionId: string;
+        resourceId: string;
         /**
-         * Function's deployment ID used to create the execution.
+         * Execution resource type.
+         */
+        resourceType: ExecutionResourceType;
+        /**
+         * Deployment ID used to create the execution.
          */
         deploymentId: string;
         /**
-         * The trigger that caused the function to execute. Possible values can be: `http`, `schedule`, or `event`.
+         * The trigger that caused the resource to execute. Possible values can be: `http`, `schedule`, or `event`.
          */
         trigger: ExecutionTrigger;
         /**
-         * The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, `failed`, or `scheduled`.
+         * The status of the resource execution. Possible values can be: `waiting`, `processing`, `completed`, `failed`, or `scheduled`.
          */
         status: ExecutionStatus;
         /**
@@ -5181,11 +5301,11 @@ export namespace Models {
          */
         responseHeaders: Headers[];
         /**
-         * Function logs. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
+         * Resource logs. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
          */
         logs: string;
         /**
-         * Function errors. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
+         * Resource errors. Includes the last 4,000 characters. This will return an empty string unless the response is returned using an API key or as part of a webhook payload.
          */
         errors: string;
         /**
@@ -5196,7 +5316,7 @@ export namespace Models {
          * The scheduled time for execution. If left empty, execution will be queued immediately.
          */
         scheduledAt?: string;
-    }
+    };
 
     /**
      * Project
@@ -5313,7 +5433,7 @@ export namespace Models {
         /**
          * Whether WAF enforcement is enabled for the project.
          */
-        wafEnabled: boolean;
+        wafEnabled?: boolean;
         /**
          * Billing limits reached
          */
@@ -5334,6 +5454,10 @@ export namespace Models {
          * OAuth2 server scopes used when an authorization request omits the scope parameter
          */
         oAuth2ServerDefaultScopes?: string[];
+        /**
+         * Scopes an application may request when installed on a team
+         */
+        oAuth2ServerInstallationScopes?: string[];
         /**
          * OAuth2 server accepted RFC 9396 authorization_details types
          */
@@ -5382,7 +5506,7 @@ export namespace Models {
          * OAuth2 server discovery URL
          */
         oAuth2ServerDiscoveryUrl?: string;
-    }
+    };
 
     /**
      * ProjectAuthMethod
@@ -5396,7 +5520,7 @@ export namespace Models {
          * Auth method status.
          */
         enabled: boolean;
-    }
+    };
 
     /**
      * ProjectService
@@ -5410,7 +5534,7 @@ export namespace Models {
          * Service status.
          */
         enabled: boolean;
-    }
+    };
 
     /**
      * ProjectProtocol
@@ -5424,7 +5548,7 @@ export namespace Models {
          * Protocol status.
          */
         enabled: boolean;
-    }
+    };
 
     /**
      * Webhook
@@ -5482,7 +5606,7 @@ export namespace Models {
          * Number of consecutive failed webhook attempts.
          */
         attempts: number;
-    }
+    };
 
     /**
      * Key
@@ -5524,7 +5648,7 @@ export namespace Models {
          * List of SDK user agents that used this key.
          */
         sdks: string[];
-    }
+    };
 
     /**
      * Ephemeral Key
@@ -5566,7 +5690,7 @@ export namespace Models {
          * List of SDK user agents that used this key.
          */
         sdks: string[];
-    }
+    };
 
     /**
      * DevKey
@@ -5604,7 +5728,7 @@ export namespace Models {
          * List of SDK user agents that used this key.
          */
         sdks: string[];
-    }
+    };
 
     /**
      * Mock Number
@@ -5615,7 +5739,7 @@ export namespace Models {
          */
         number: string;
         /**
-         * Mock OTP for the number. 
+         * Mock OTP for the number.
          */
         otp: string;
         /**
@@ -5626,7 +5750,7 @@ export namespace Models {
          * Attribute update date in ISO 8601 format.
          */
         $updatedAt: string;
-    }
+    };
 
     /**
      * OAuth2GitHub
@@ -5648,7 +5772,7 @@ export namespace Models {
          * GitHub OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Discord
@@ -5670,7 +5794,7 @@ export namespace Models {
          * Discord OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Figma
@@ -5692,7 +5816,7 @@ export namespace Models {
          * Figma OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Dropbox
@@ -5714,7 +5838,7 @@ export namespace Models {
          * Dropbox OAuth2 app secret.
          */
         appSecret: string;
-    }
+    };
 
     /**
      * OAuth2Dailymotion
@@ -5736,7 +5860,7 @@ export namespace Models {
          * Dailymotion OAuth2 API secret.
          */
         apiSecret: string;
-    }
+    };
 
     /**
      * OAuth2Bitbucket
@@ -5758,7 +5882,7 @@ export namespace Models {
          * Bitbucket OAuth2 secret.
          */
         secret: string;
-    }
+    };
 
     /**
      * OAuth2Bitly
@@ -5780,7 +5904,7 @@ export namespace Models {
          * Bitly OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Box
@@ -5802,7 +5926,7 @@ export namespace Models {
          * Box OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Autodesk
@@ -5824,7 +5948,7 @@ export namespace Models {
          * Autodesk OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Google
@@ -5850,7 +5974,7 @@ export namespace Models {
          * Google OAuth2 prompt values.
          */
         prompt: OAuth2GooglePrompt[];
-    }
+    };
 
     /**
      * OAuth2Zoom
@@ -5872,7 +5996,7 @@ export namespace Models {
          * Zoom OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Zoho
@@ -5894,7 +6018,7 @@ export namespace Models {
          * Zoho OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Yandex
@@ -5916,7 +6040,7 @@ export namespace Models {
          * Yandex OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2X
@@ -5938,7 +6062,7 @@ export namespace Models {
          * X OAuth2 secret key.
          */
         secretKey: string;
-    }
+    };
 
     /**
      * OAuth2WordPress
@@ -5960,7 +6084,7 @@ export namespace Models {
          * WordPress OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Twitch
@@ -5982,7 +6106,7 @@ export namespace Models {
          * Twitch OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Stripe
@@ -6004,7 +6128,7 @@ export namespace Models {
          * Stripe OAuth2 API secret key.
          */
         apiSecretKey: string;
-    }
+    };
 
     /**
      * OAuth2Spotify
@@ -6026,7 +6150,7 @@ export namespace Models {
          * Spotify OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Slack
@@ -6048,7 +6172,7 @@ export namespace Models {
          * Slack OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Podio
@@ -6070,7 +6194,7 @@ export namespace Models {
          * Podio OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Notion
@@ -6092,7 +6216,7 @@ export namespace Models {
          * Notion OAuth2 client secret.
          */
         oauthClientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Salesforce
@@ -6114,7 +6238,7 @@ export namespace Models {
          * Salesforce OAuth2 consumer secret.
          */
         customerSecret: string;
-    }
+    };
 
     /**
      * OAuth2Yahoo
@@ -6136,7 +6260,51 @@ export namespace Models {
          * Yahoo OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
+
+    /**
+     * OAuth2Cloudflare
+     */
+    export type OAuth2Cloudflare = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Cloudflare OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Cloudflare OAuth2 client secret.
+         */
+        clientSecret: string;
+    };
+
+    /**
+     * OAuth2HuggingFace
+     */
+    export type OAuth2HuggingFace = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Hugging Face OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Hugging Face OAuth2 client secret.
+         */
+        clientSecret: string;
+    };
 
     /**
      * OAuth2Linkedin
@@ -6158,7 +6326,7 @@ export namespace Models {
          * LinkedIn OAuth2 primary client secret.
          */
         primaryClientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Disqus
@@ -6180,7 +6348,7 @@ export namespace Models {
          * Disqus OAuth2 secret key.
          */
         secretKey: string;
-    }
+    };
 
     /**
      * OAuth2Amazon
@@ -6202,7 +6370,7 @@ export namespace Models {
          * Amazon OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Etsy
@@ -6224,7 +6392,7 @@ export namespace Models {
          * Etsy OAuth2 shared secret.
          */
         sharedSecret: string;
-    }
+    };
 
     /**
      * OAuth2Facebook
@@ -6246,7 +6414,7 @@ export namespace Models {
          * Facebook OAuth2 app secret.
          */
         appSecret: string;
-    }
+    };
 
     /**
      * OAuth2Tradeshift
@@ -6268,7 +6436,7 @@ export namespace Models {
          * Tradeshift OAuth2 client secret.
          */
         oauth2ClientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Paypal
@@ -6290,7 +6458,7 @@ export namespace Models {
          * PayPal OAuth2 secret key.
          */
         secretKey: string;
-    }
+    };
 
     /**
      * OAuth2Gitlab
@@ -6316,7 +6484,7 @@ export namespace Models {
          * GitLab OAuth2 endpoint URL. Defaults to https://gitlab.com for self-hosted instances.
          */
         endpoint: string;
-    }
+    };
 
     /**
      * OAuth2Appwrite
@@ -6338,7 +6506,7 @@ export namespace Models {
          * Appwrite OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Authentik
@@ -6364,7 +6532,7 @@ export namespace Models {
          * Authentik OAuth2 endpoint domain.
          */
         endpoint: string;
-    }
+    };
 
     /**
      * OAuth2Auth0
@@ -6390,7 +6558,7 @@ export namespace Models {
          * Auth0 OAuth2 endpoint domain.
          */
         endpoint: string;
-    }
+    };
 
     /**
      * OAuth2FusionAuth
@@ -6416,7 +6584,7 @@ export namespace Models {
          * FusionAuth OAuth2 endpoint domain.
          */
         endpoint: string;
-    }
+    };
 
     /**
      * OAuth2Keycloak
@@ -6446,7 +6614,7 @@ export namespace Models {
          * Keycloak OAuth2 realm name.
          */
         realmName: string;
-    }
+    };
 
     /**
      * OAuth2Oidc
@@ -6492,7 +6660,7 @@ export namespace Models {
          * Maximum authentication age in seconds. When set, the user must have authenticated within this many seconds.
          */
         maxAge?: number;
-    }
+    };
 
     /**
      * OAuth2Okta
@@ -6522,7 +6690,7 @@ export namespace Models {
          * Okta OAuth2 authorization server ID.
          */
         authorizationServerId: string;
-    }
+    };
 
     /**
      * OAuth2Kick
@@ -6544,7 +6712,7 @@ export namespace Models {
          * Kick OAuth2 client secret.
          */
         clientSecret: string;
-    }
+    };
 
     /**
      * OAuth2Apple
@@ -6574,7 +6742,7 @@ export namespace Models {
          * Apple OAuth2 .p8 private key file contents. The secret key wrapped by the PEM markers is 200 characters long.
          */
         p8File: string;
-    }
+    };
 
     /**
      * OAuth2Microsoft
@@ -6600,7 +6768,73 @@ export namespace Models {
          * Microsoft Entra ID tenant identifier. Use 'common', 'organizations', 'consumers' or a specific tenant ID.
          */
         tenant: string;
-    }
+    };
+
+    /**
+     * OAuth2Resend
+     */
+    export type OAuth2Resend = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Resend OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Resend OAuth2 client secret.
+         */
+        clientSecret: string;
+    };
+
+    /**
+     * OAuth2TikTok
+     */
+    export type OAuth2TikTok = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * TikTok OAuth2 client key.
+         */
+        clientId: string;
+        /**
+         * TikTok OAuth2 client secret.
+         */
+        clientSecret: string;
+    };
+
+    /**
+     * OAuth2Kakao
+     */
+    export type OAuth2Kakao = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Kakao OAuth2 REST API key.
+         */
+        clientId: string;
+        /**
+         * Kakao OAuth2 client secret.
+         */
+        clientSecret: string;
+    };
 
     /**
      * OAuth2 Providers List
@@ -6613,8 +6847,55 @@ export namespace Models {
         /**
          * List of OAuth2 providers.
          */
-        providers: (Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Appwrite | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft)[];
-    }
+        providers: (
+            | Models.OAuth2Github
+            | Models.OAuth2Discord
+            | Models.OAuth2Figma
+            | Models.OAuth2Dropbox
+            | Models.OAuth2Dailymotion
+            | Models.OAuth2Bitbucket
+            | Models.OAuth2Bitly
+            | Models.OAuth2Box
+            | Models.OAuth2Autodesk
+            | Models.OAuth2Google
+            | Models.OAuth2Zoom
+            | Models.OAuth2Zoho
+            | Models.OAuth2Yandex
+            | Models.OAuth2X
+            | Models.OAuth2WordPress
+            | Models.OAuth2Twitch
+            | Models.OAuth2Stripe
+            | Models.OAuth2Spotify
+            | Models.OAuth2Slack
+            | Models.OAuth2Podio
+            | Models.OAuth2Notion
+            | Models.OAuth2Salesforce
+            | Models.OAuth2Yahoo
+            | Models.OAuth2Linkedin
+            | Models.OAuth2Disqus
+            | Models.OAuth2Amazon
+            | Models.OAuth2Etsy
+            | Models.OAuth2Facebook
+            | Models.OAuth2Tradeshift
+            | Models.OAuth2Paypal
+            | Models.OAuth2Gitlab
+            | Models.OAuth2Appwrite
+            | Models.OAuth2Authentik
+            | Models.OAuth2Auth0
+            | Models.OAuth2FusionAuth
+            | Models.OAuth2Keycloak
+            | Models.OAuth2Oidc
+            | Models.OAuth2Apple
+            | Models.OAuth2Okta
+            | Models.OAuth2Kick
+            | Models.OAuth2Microsoft
+            | Models.OAuth2HuggingFace
+            | Models.OAuth2Resend
+            | Models.OAuth2Cloudflare
+            | Models.OAuth2TikTok
+            | Models.OAuth2Kakao
+        )[];
+    };
 
     /**
      * Policy Password Dictionary
@@ -6628,7 +6909,7 @@ export namespace Models {
          * Whether password dictionary policy is enabled.
          */
         enabled: boolean;
-    }
+    };
 
     /**
      * Policy Password History
@@ -6642,7 +6923,7 @@ export namespace Models {
          * Password history length. A value of 0 means the policy is disabled.
          */
         total: number;
-    }
+    };
 
     /**
      * Policy Password Strength
@@ -6672,7 +6953,7 @@ export namespace Models {
          * Whether passwords must include at least one symbol.
          */
         symbols: boolean;
-    }
+    };
 
     /**
      * Policy Password Personal Data
@@ -6686,7 +6967,7 @@ export namespace Models {
          * Whether password personal data policy is enabled.
          */
         enabled: boolean;
-    }
+    };
 
     /**
      * Policy Session Alert
@@ -6700,7 +6981,7 @@ export namespace Models {
          * Whether session alert policy is enabled.
          */
         enabled: boolean;
-    }
+    };
 
     /**
      * Policy Session Duration
@@ -6714,7 +6995,7 @@ export namespace Models {
          * Session duration in seconds.
          */
         duration: number;
-    }
+    };
 
     /**
      * Policy Session Invalidation
@@ -6728,7 +7009,7 @@ export namespace Models {
          * Whether session invalidation policy is enabled.
          */
         enabled: boolean;
-    }
+    };
 
     /**
      * Policy Session Limit
@@ -6742,7 +7023,7 @@ export namespace Models {
          * Maximum number of sessions allowed per user. A value of 0 means the policy is disabled.
          */
         total: number;
-    }
+    };
 
     /**
      * Policy User Limit
@@ -6756,7 +7037,7 @@ export namespace Models {
          * Maximum number of users allowed in the project. A value of 0 means the policy is disabled.
          */
         total: number;
-    }
+    };
 
     /**
      * Policy Membership Privacy
@@ -6790,7 +7071,33 @@ export namespace Models {
          * Whether user last access time is visible in memberships.
          */
         userAccessedAt: boolean;
-    }
+    };
+
+    /**
+     * Policy MFA Factors
+     */
+    export type PolicyMfaFactors = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether TOTP can be used to complete an MFA challenge.
+         */
+        totp: boolean;
+        /**
+         * Whether email can be used to complete an MFA challenge.
+         */
+        email: boolean;
+        /**
+         * Whether phone (SMS) can be used to complete an MFA challenge.
+         */
+        phone: boolean;
+        /**
+         * Whether the custom factor can be used to complete an MFA challenge.
+         */
+        custom: boolean;
+    };
 
     /**
      * Platform Web
@@ -6820,7 +7127,7 @@ export namespace Models {
          * Web app hostname. Empty string for other platforms.
          */
         hostname: string;
-    }
+    };
 
     /**
      * Platform Apple
@@ -6850,7 +7157,7 @@ export namespace Models {
          * Apple bundle identifier.
          */
         bundleIdentifier: string;
-    }
+    };
 
     /**
      * Platform Android
@@ -6880,7 +7187,7 @@ export namespace Models {
          * Android application ID.
          */
         applicationId: string;
-    }
+    };
 
     /**
      * Platform Windows
@@ -6910,7 +7217,7 @@ export namespace Models {
          * Windows package identifier name.
          */
         packageIdentifierName: string;
-    }
+    };
 
     /**
      * Platform Linux
@@ -6940,7 +7247,7 @@ export namespace Models {
          * Linux package name.
          */
         packageName: string;
-    }
+    };
 
     /**
      * Platforms List
@@ -6953,8 +7260,14 @@ export namespace Models {
         /**
          * List of platforms.
          */
-        platforms: (Models.PlatformWeb | Models.PlatformApple | Models.PlatformAndroid | Models.PlatformWindows | Models.PlatformLinux)[];
-    }
+        platforms: (
+            | Models.PlatformWeb
+            | Models.PlatformApple
+            | Models.PlatformAndroid
+            | Models.PlatformWindows
+            | Models.PlatformLinux
+        )[];
+    };
 
     /**
      * Variable
@@ -6992,7 +7305,7 @@ export namespace Models {
          * ID of resource to which the variable belongs. If resourceType is "project", it is empty. If resourceType is "function", it is ID of the function.
          */
         resourceId: string;
-    }
+    };
 
     /**
      * Country
@@ -7006,7 +7319,7 @@ export namespace Models {
          * Country two-character ISO 3166-1 alpha code.
          */
         code: string;
-    }
+    };
 
     /**
      * Continent
@@ -7020,7 +7333,7 @@ export namespace Models {
          * Continent two letter code.
          */
         code: string;
-    }
+    };
 
     /**
      * Language
@@ -7038,7 +7351,7 @@ export namespace Models {
          * Language native name.
          */
         nativeName: string;
-    }
+    };
 
     /**
      * Currency
@@ -7072,7 +7385,7 @@ export namespace Models {
          * Currency plural name
          */
         namePlural: string;
-    }
+    };
 
     /**
      * Phone
@@ -7090,7 +7403,7 @@ export namespace Models {
          * Country name.
          */
         countryName: string;
-    }
+    };
 
     /**
      * Metric
@@ -7104,7 +7417,7 @@ export namespace Models {
          * The date at which this metric was aggregated in ISO 8601 format.
          */
         date: string;
-    }
+    };
 
     /**
      * Metric Breakdown
@@ -7126,7 +7439,7 @@ export namespace Models {
          * The estimated value of this metric at the end of the period.
          */
         estimate?: number;
-    }
+    };
 
     /**
      * UsageUsers
@@ -7152,7 +7465,7 @@ export namespace Models {
          * Aggregated number of active sessions  per period.
          */
         sessions: Metric[];
-    }
+    };
 
     /**
      * UsagePresence
@@ -7170,7 +7483,7 @@ export namespace Models {
          * Aggregated number of online users per period.
          */
         presences: Metric[];
-    }
+    };
 
     /**
      * Project
@@ -7448,7 +7761,171 @@ export namespace Models {
          * Aggregated consumed Realtime bandwidth (in bytes) per period.
          */
         realtimeBandwidth: Metric[];
-    }
+    };
+
+    /**
+     * usageDataPoint
+     */
+    export type UsageDataPoint = {
+        /**
+         * Bucket start timestamp in ISO 8601. Omitted for flat dimension aggregates.
+         */
+        time?: string;
+        /**
+         * Aggregated value for the point.
+         */
+        value: number;
+        /**
+         * Value when broken down by `path`.
+         */
+        path?: string;
+        /**
+         * Value when broken down by `method`.
+         */
+        method?: string;
+        /**
+         * Value when broken down by `status`.
+         */
+        status?: string;
+        /**
+         * Value when broken down by `service`.
+         */
+        service?: string;
+        /**
+         * Value when broken down by `country`.
+         */
+        country?: string;
+        /**
+         * Value when broken down by `region`.
+         */
+        region?: string;
+        /**
+         * Value when broken down by `hostname`.
+         */
+        hostname?: string;
+        /**
+         * Value when broken down by `ip`.
+         */
+        ip?: string;
+        /**
+         * Value when broken down by `osName`.
+         */
+        osName?: string;
+        /**
+         * Value when broken down by `clientType`.
+         */
+        clientType?: string;
+        /**
+         * Value when broken down by `clientName`.
+         */
+        clientName?: string;
+        /**
+         * Value when broken down by `sdk`.
+         */
+        sdk?: string;
+        /**
+         * Value when broken down by `sdkVersion`.
+         */
+        sdkVersion?: string;
+        /**
+         * Value when broken down by `deviceName`.
+         */
+        deviceName?: string;
+        /**
+         * Value when broken down by `resourceId`.
+         */
+        resourceId?: string;
+        /**
+         * Value when broken down by `resourceType`.
+         */
+        resourceType?: string;
+        /**
+         * Value when broken down by `ordinal`.
+         */
+        ordinal?: string;
+        /**
+         * Continent code when broken down by `continentCode`.
+         */
+        continentCode?: string;
+        /**
+         * City name when broken down by `city`.
+         */
+        city?: string;
+        /**
+         * Region/state chain when broken down by `subdivisions`.
+         */
+        subdivisions?: string;
+        /**
+         * Internet service provider when broken down by `isp`.
+         */
+        isp?: string;
+        /**
+         * Autonomous System Number (ASN) when broken down by `autonomousSystemNumber`.
+         */
+        autonomousSystemNumber?: string;
+        /**
+         * Organization owning the ASN when broken down by `autonomousSystemOrganization`.
+         */
+        autonomousSystemOrganization?: string;
+        /**
+         * Connection type when broken down by `connectionType`.
+         */
+        connectionType?: string;
+        /**
+         * Connection usage type when broken down by `connectionUsageType`.
+         */
+        connectionUsageType?: string;
+        /**
+         * Registered organization of the IP when broken down by `connectionOrganization`.
+         */
+        connectionOrganization?: string;
+        /**
+         * Owning team ID when broken down by `teamId`.
+         */
+        teamId?: string;
+    };
+
+    /**
+     * usageMetric
+     */
+    export type UsageMetric = {
+        /**
+         * Metric key this series describes.
+         */
+        metric: string;
+        /**
+         * Data points in the requested order.
+         */
+        points: UsageDataPoint[];
+    };
+
+    /**
+     * usageEventList
+     */
+    export type UsageEventList = {
+        /**
+         * Requested interval, or an empty string for a flat aggregate.
+         */
+        interval: string;
+        /**
+         * One series per requested event metric.
+         */
+        metrics: UsageMetric[];
+    };
+
+    /**
+     * usageGaugeList
+     */
+    export type UsageGaugeList = {
+        /**
+         * Requested interval, or an empty string for a flat aggregate.
+         */
+        interval: string;
+        /**
+         * One series per requested gauge metric.
+         */
+        metrics: UsageMetric[];
+    };
 
     /**
      * Headers
@@ -7462,7 +7939,7 @@ export namespace Models {
          * Header value.
          */
         value: string;
-    }
+    };
 
     /**
      * Specification
@@ -7484,7 +7961,7 @@ export namespace Models {
          * Size slug.
          */
         slug: string;
-    }
+    };
 
     /**
      * Rule
@@ -7550,7 +8027,7 @@ export namespace Models {
          * Certificate auto-renewal date in ISO 8601 format.
          */
         renewAt: string;
-    }
+    };
 
     /**
      * Schedule
@@ -7600,7 +8077,7 @@ export namespace Models {
          * The region where the schedule is deployed.
          */
         region: string;
-    }
+    };
 
     /**
      * Stage
@@ -7626,7 +8103,7 @@ export namespace Models {
          * Actor type when the stage was recorded.
          */
         actorType: string;
-    }
+    };
 
     /**
      * EmailTemplate
@@ -7664,7 +8141,7 @@ export namespace Models {
          * Email subject
          */
         subject: string;
-    }
+    };
 
     /**
      * Console Variables
@@ -7710,6 +8187,14 @@ export namespace Models {
          * List of configured VCS providers.
          */
         _APP_VCS_PROVIDERS: string[];
+        /**
+         * List of configured VCS providers that support repository creation.
+         */
+        _APP_VCS_PROVIDERS_WITH_REPOSITORY_CREATION: string[];
+        /**
+         * List of configured VCS providers that can host public repositories.
+         */
+        _APP_VCS_PROVIDERS_WITH_PUBLIC_REPOSITORIES: string[];
         /**
          * Defines if main domain is configured. If so, custom domains can be created.
          */
@@ -7782,7 +8267,7 @@ export namespace Models {
          * Whether email verification for console users is required. Can be "true" or "false".
          */
         _APP_CONSOLE_EMAIL_VERIFICATION: string;
-    }
+    };
 
     /**
      * Console OAuth2 Provider Parameter
@@ -7804,7 +8289,7 @@ export namespace Models {
          * Optional hint for this parameter, typically calling out a common wrong value. Empty string when no hint is set.
          */
         hint: string;
-    }
+    };
 
     /**
      * Console OAuth2 Provider
@@ -7818,7 +8303,7 @@ export namespace Models {
          * List of parameters required to configure this OAuth2 provider.
          */
         parameters: ConsoleOAuth2ProviderParameter[];
-    }
+    };
 
     /**
      * Console OAuth2 Providers List
@@ -7832,7 +8317,7 @@ export namespace Models {
          * List of OAuth2 providers, each with the parameters required to configure it.
          */
         oAuth2Providers: ConsoleOAuth2Provider[];
-    }
+    };
 
     /**
      * Console Key Scope
@@ -7854,7 +8339,7 @@ export namespace Models {
          * Scope is deprecated.
          */
         deprecated: boolean;
-    }
+    };
 
     /**
      * Console Key Scopes List
@@ -7868,7 +8353,7 @@ export namespace Models {
          * List of key scopes, each with its ID and description.
          */
         scopes: ConsoleKeyScope[];
-    }
+    };
 
     /**
      * MFA Challenge
@@ -7890,7 +8375,33 @@ export namespace Models {
          * Token expiration date in ISO 8601 format.
          */
         expire: string;
-    }
+    };
+
+    /**
+     * MFA Challenge Secret
+     */
+    export type MfaChallengeSecret = {
+        /**
+         * Token ID.
+         */
+        $id: string;
+        /**
+         * Token creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * User ID.
+         */
+        userId: string;
+        /**
+         * Token expiration date in ISO 8601 format.
+         */
+        expire: string;
+        /**
+         * Challenge code to be delivered to the end user through a custom channel.
+         */
+        code: string;
+    };
 
     /**
      * MFA Recovery Codes
@@ -7900,7 +8411,7 @@ export namespace Models {
          * Recovery codes.
          */
         recoveryCodes: string[];
-    }
+    };
 
     /**
      * MFAType
@@ -7914,7 +8425,7 @@ export namespace Models {
          * URI for authenticator apps.
          */
         uri: string;
-    }
+    };
 
     /**
      * MFAFactors
@@ -7936,7 +8447,11 @@ export namespace Models {
          * Can recovery code be used for MFA challenge for this account.
          */
         recoveryCode: boolean;
-    }
+        /**
+         * Can custom factor be used for MFA challenge for this account.
+         */
+        custom: boolean;
+    };
 
     /**
      * Provider
@@ -7978,7 +8493,7 @@ export namespace Models {
          * Provider options.
          */
         options?: object;
-    }
+    };
 
     /**
      * Message
@@ -8036,7 +8551,7 @@ export namespace Models {
          * Status of delivery.
          */
         status: MessageStatus;
-    }
+    };
 
     /**
      * Topic
@@ -8074,7 +8589,7 @@ export namespace Models {
          * Subscribe permissions.
          */
         subscribe: string[];
-    }
+    };
 
     /**
      * Transaction
@@ -8104,7 +8619,7 @@ export namespace Models {
          * Expiration time in ISO 8601 format.
          */
         expiresAt: string;
-    }
+    };
 
     /**
      * Subscriber
@@ -8146,7 +8661,7 @@ export namespace Models {
          * The target provider type. Can be one of the following: `email`, `sms` or `push`.
          */
         providerType: string;
-    }
+    };
 
     /**
      * Target
@@ -8188,7 +8703,7 @@ export namespace Models {
          * Is the target expired.
          */
         expired: boolean;
-    }
+    };
 
     /**
      * Migration
@@ -8207,7 +8722,7 @@ export namespace Models {
          */
         $updatedAt: string;
         /**
-         * Migration status ( pending, processing, failed, completed ) 
+         * Migration status ( pending, processing, failed, completed )
          */
         status: string;
         /**
@@ -8269,7 +8784,7 @@ export namespace Models {
         /**
          * An array of objects containing the report data of the resources that were migrated.
          */
-        resourceData: object;
+        resourceData: Record<string, any>[];
         /**
          * All errors that occurred during the migration process.
          */
@@ -8278,7 +8793,7 @@ export namespace Models {
          * Migration options used during the migration process.
          */
         options: object;
-    }
+    };
 
     /**
      * Migration Report
@@ -8396,7 +8911,7 @@ export namespace Models {
          * Number of backup policies to be migrated.
          */
         backuppolicy: number;
-    }
+    };
 
     /**
      * Insight
@@ -8470,7 +8985,7 @@ export namespace Models {
          * User ID that dismissed the insight. Empty when not dismissed.
          */
         dismissedBy?: string;
-    }
+    };
 
     /**
      * InsightCTA
@@ -8492,7 +9007,7 @@ export namespace Models {
          * Parameter map the client should pass to the service method when this CTA is triggered. Keys match the target API's parameter names (e.g. databaseId/tableId/columns for tablesDB, databaseId/collectionId/attributes for the legacy Databases API).
          */
         params: object;
-    }
+    };
 
     /**
      * Report
@@ -8546,7 +9061,7 @@ export namespace Models {
          * Time the report was analyzed in ISO 8601 format.
          */
         analyzedAt?: string;
-    }
+    };
 
     /**
      * ActivityEvent
@@ -8668,7 +9183,7 @@ export namespace Models {
          * Version of the SDK that triggered the event.
          */
         sdkVersion: string;
-    }
+    };
 
     /**
      * AdditionalResource
@@ -8698,7 +9213,7 @@ export namespace Models {
          * Description on invoice
          */
         invoiceDesc: string;
-    }
+    };
 
     /**
      * Addon
@@ -8744,7 +9259,7 @@ export namespace Models {
          * Value to apply at the start of the next billing cycle. Null means no change is scheduled. For toggle addons, 0 means the addon will be removed at the next cycle.
          */
         nextValue?: number;
-    }
+    };
 
     /**
      * AddonPrice
@@ -8782,7 +9297,7 @@ export namespace Models {
          * When the current billing cycle ends.
          */
         billingCycleEnd: string;
-    }
+    };
 
     /**
      * AffiliateLink
@@ -8812,7 +9327,7 @@ export namespace Models {
          * Link status. Can be one of `active` or `disabled`.
          */
         status: string;
-    }
+    };
 
     /**
      * Affiliate links list
@@ -8826,7 +9341,7 @@ export namespace Models {
          * List of links.
          */
         links: AffiliateLink[];
-    }
+    };
 
     /**
      * AffiliateReferral
@@ -8872,7 +9387,7 @@ export namespace Models {
          * Conversion time in ISO 8601 format.
          */
         convertedAt?: string;
-    }
+    };
 
     /**
      * Affiliate referrals list
@@ -8886,7 +9401,7 @@ export namespace Models {
          * List of referrals.
          */
         referrals: AffiliateReferral[];
-    }
+    };
 
     /**
      * AffiliateReward
@@ -8932,7 +9447,7 @@ export namespace Models {
          * Credit document ID created when the reward was claimed.
          */
         creditId?: string;
-    }
+    };
 
     /**
      * Affiliate rewards list
@@ -8946,7 +9461,7 @@ export namespace Models {
          * List of rewards.
          */
         rewards: AffiliateReward[];
-    }
+    };
 
     /**
      * Breakdown
@@ -8969,10 +9484,10 @@ export namespace Models {
          */
         amount: number;
         /**
-         * 
+         *
          */
         resources: UsageResources[];
-    }
+    };
 
     /**
      * Team
@@ -9026,6 +9541,14 @@ export namespace Models {
          * Total databases storage usage
          */
         usageDatabasesStorage: number;
+        /**
+         * Total functions storage usage, deployments and builds together. Supersedes usageDeploymentsStorage and usageBuildsStorage.
+         */
+        usageFunctionsStorage: number;
+        /**
+         * Total sites storage usage, deployments and builds together. Supersedes usageDeploymentsStorage and usageBuildsStorage.
+         */
+        usageSitesStorage: number;
         /**
          * Total active users for the billing period
          */
@@ -9094,7 +9617,7 @@ export namespace Models {
          * Usage resources
          */
         resources: UsageResources[];
-    }
+    };
 
     /**
      * Archive
@@ -9148,7 +9671,7 @@ export namespace Models {
          * The resource type to backup. Set only if this archive should backup a single resource.
          */
         resourceType?: string;
-    }
+    };
 
     /**
      * Backup
@@ -9222,7 +9745,7 @@ export namespace Models {
          * Error message if backup failed.
          */
         error: string;
-    }
+    };
 
     /**
      * BackupList
@@ -9236,7 +9759,7 @@ export namespace Models {
          * List of backups.
          */
         backups: DedicatedDatabaseBackup[];
-    }
+    };
 
     /**
      * BackupStorageConfig
@@ -9262,7 +9785,7 @@ export namespace Models {
          * Custom endpoint for S3-compatible storage.
          */
         endpoint: string;
-    }
+    };
 
     /**
      * Address
@@ -9300,7 +9823,7 @@ export namespace Models {
          * postal code
          */
         postalCode: string;
-    }
+    };
 
     /**
      * Limits
@@ -9338,7 +9861,7 @@ export namespace Models {
          * Budget limit percentage
          */
         budgetLimit?: number;
-    }
+    };
 
     /**
      * billingPlan
@@ -9493,6 +10016,10 @@ export namespace Models {
          */
         usageLogsIntervals?: string[];
         /**
+         * Metrics this plan only records as a total. They cannot be broken down by dimension or filtered, because the stored events cover a fraction of the real traffic.
+         */
+        usageAggregateOnlyMetrics?: string[];
+        /**
          * Number of days of console inactivity before a project is paused. 0 means pausing is disabled.
          */
         projectInactivityDays: number;
@@ -9557,6 +10084,10 @@ export namespace Models {
          */
         supportsCredits: boolean;
         /**
+         * Does plan support dedicated databases.
+         */
+        supportsDedicatedDatabases: boolean;
+        /**
          * Does plan support blocking disposable email addresses.
          */
         supportsDisposableEmailValidation: boolean;
@@ -9617,10 +10148,14 @@ export namespace Models {
          */
         program?: Program;
         /**
+         * Included monthly dedicated-database compute credit in USD. Resets each billing cycle with no roll-over.
+         */
+        databaseComputeCredit: number;
+        /**
          * Dedicated database limits available to this plan.
          */
         dedicatedDatabases?: BillingPlanDedicatedDatabaseLimits;
-    }
+    };
 
     /**
      * Addon
@@ -9634,7 +10169,7 @@ export namespace Models {
          * Addon projects
          */
         projects?: BillingPlanAddonDetails;
-    }
+    };
 
     /**
      * Details
@@ -9672,7 +10207,7 @@ export namespace Models {
          * Description on invoice
          */
         invoiceDesc: string;
-    }
+    };
 
     /**
      * PlanLimits
@@ -9686,7 +10221,7 @@ export namespace Models {
          * Daily credits limit (if applicable)
          */
         dailyCredits?: number;
-    }
+    };
 
     /**
      * dedicatedDatabaseLimits
@@ -9768,7 +10303,7 @@ export namespace Models {
          * Replica synchronization modes available for dedicated databases.
          */
         allowedSyncModes?: string[];
-    }
+    };
 
     /**
      * BillingPlanSupportedAddons
@@ -9786,7 +10321,7 @@ export namespace Models {
          * Whether the plan supports Premium Geo DB addon (organization-level)
          */
         premiumGeoDBOrg: boolean;
-    }
+    };
 
     /**
      * Block
@@ -9836,7 +10371,7 @@ export namespace Models {
          * Billing plan of the organization that owns the project.
          */
         billingPlan: string;
-    }
+    };
 
     /**
      * BlockDelete
@@ -9850,7 +10385,7 @@ export namespace Models {
          * List of deleted blocks
          */
         blocks: Block[];
-    }
+    };
 
     /**
      * Branch
@@ -9881,7 +10416,7 @@ export namespace Models {
          */
         port: number;
         /**
-         * Database name the client sends for routing to the branch.
+         * Advertised catalog the client connects to. MySQL/MariaDB use default; Postgres uses the routing label.
          */
         database: string;
         /**
@@ -9904,17 +10439,21 @@ export namespace Models {
          * Full connection string for the branch.
          */
         connectionString: string;
-    }
+    };
 
     /**
      * BranchList
      */
     export type DedicatedDatabaseBranchList = {
         /**
+         * Total number of branches.
+         */
+        total: number;
+        /**
          * List of branches.
          */
         branches: DedicatedDatabaseBranch[];
-    }
+    };
 
     /**
      * Campaign
@@ -9968,7 +10507,7 @@ export namespace Models {
          * Is footer
          */
         footer?: boolean;
-    }
+    };
 
     /**
      * Coupon
@@ -10006,7 +10545,7 @@ export namespace Models {
          * If the coupon is only valid for new organizations or not.
          */
         onlyNewOrgs: boolean;
-    }
+    };
 
     /**
      * Credit
@@ -10056,7 +10595,7 @@ export namespace Models {
          * Status of the credit. Can be one of `disabled`, `active` or `expired`.
          */
         status: string;
-    }
+    };
 
     /**
      * CreditAvailable
@@ -10066,7 +10605,7 @@ export namespace Models {
          * Total available credits for the organization.
          */
         available: number;
-    }
+    };
 
     /**
      * CreditList
@@ -10084,7 +10623,7 @@ export namespace Models {
          * Total available credit balance in USD
          */
         available: number;
-    }
+    };
 
     /**
      * Database Migration
@@ -10131,6 +10670,10 @@ export namespace Models {
          */
         lagDocuments: number;
         /**
+         * Highest source changelog sequence applied to the target so far.
+         */
+        changelogWatermark: number;
+        /**
          * Time the migrated data was verified against the source in ISO 8601 format.
          */
         verifiedAt: string;
@@ -10143,14 +10686,18 @@ export namespace Models {
          */
         soakUntil: string;
         /**
-         * Whether the migration cuts over automatically once ready.
+         * Whether the migration cuts over automatically once ready. Set when the migration is created and never changed afterwards, so it always reports what was asked for.
          */
         autoCutover: boolean;
+        /**
+         * Whether a cutover has been requested and not yet attempted. Set by the cutover endpoint and cleared when the attempt is made, so a cutover that fails a check parks the migration again rather than retrying on its own.
+         */
+        cutoverRequested: boolean;
         /**
          * Whether the migration is paused.
          */
         paused: boolean;
-    }
+    };
 
     /**
      * DedicatedDatabase
@@ -10193,7 +10740,7 @@ export namespace Models {
          */
         specification: string;
         /**
-         * Database backend provider. Possible values: prisma, edge.
+         * Database backend provider. Possible values: edge.
          */
         backend: string;
         /**
@@ -10213,6 +10760,10 @@ export namespace Models {
          */
         connectionPassword: string;
         /**
+         * Committed generation of the primary connection credentials. Null until the rotation contract has been initialized.
+         */
+        credentialGeneration: number;
+        /**
          * Full database connection string (URI format).
          */
         connectionString: string;
@@ -10225,7 +10776,7 @@ export namespace Models {
          */
         status: string;
         /**
-         * Container status for lifecycle-managed database runtimes: active or inactive.
+         * Container status for lifecycle-managed database runtimes: active, inactive, or failed (a wake was declined because the backing namespace is gone).
          */
         containerStatus: string;
         /**
@@ -10257,6 +10808,18 @@ export namespace Models {
          */
         storage: number;
         /**
+         * Storage resize status. Possible values: idle (no resize in flight), resizing (the volume is growing towards storageTargetGb).
+         */
+        storageStatus: string;
+        /**
+         * Size in GB the volume is growing towards while storageStatus is resizing. 0 when no resize is in flight.
+         */
+        storageTargetGb: number;
+        /**
+         * Time the in-flight storage resize started, in ISO 8601 format.
+         */
+        storageResizeStartedAt?: string;
+        /**
          * Storage class. Currently always 'ssd'; DigitalOcean exposes a single block-storage class.
          */
         storageClass: string;
@@ -10276,10 +10839,6 @@ export namespace Models {
          * Replication sync mode: async, sync, or quorum.
          */
         syncMode: string;
-        /**
-         * Number of cross-region replicas. Cross-region availability is enabled when greater than 0.
-         */
-        crossRegionReplicas: number;
         /**
          * Maximum concurrent client connections. This is the limit a client pool may reach; the engine's own max_connections reported by the status endpoint is a smaller backend limit the pooler multiplexes onto and does not constrain a client pool.
          */
@@ -10313,7 +10872,7 @@ export namespace Models {
          */
         storageAutoscalingThresholdPercent: number;
         /**
-         * Maximum storage size in GB for autoscaling. 0 means no limit.
+         * Maximum storage size in GB for autoscaling. Defaults to 3 times the specification's storage. 0 means no limit.
          */
         storageAutoscalingMaxGb: number;
         /**
@@ -10352,7 +10911,7 @@ export namespace Models {
          * Error message if status is failed.
          */
         error: string;
-    }
+    };
 
     /**
      * Execution
@@ -10361,7 +10920,7 @@ export namespace Models {
         /**
          * Result rows as a list of column-name => value maps. Empty for non-returning statements.
          */
-        rows: object;
+        rows: Record<string, any>[];
         /**
          * Number of rows returned (for SELECT) or affected (for INSERT/UPDATE/DELETE).
          */
@@ -10382,7 +10941,7 @@ export namespace Models {
          * Serialised payload size in bytes.
          */
         bytes: number;
-    }
+    };
 
     /**
      * ExecutionColumn
@@ -10396,7 +10955,7 @@ export namespace Models {
          * Engine-specific column type (e.g. int4, text, timestamptz).
          */
         type: string;
-    }
+    };
 
     /**
      * Restoration
@@ -10411,9 +10970,13 @@ export namespace Models {
          */
         $createdAt: string;
         /**
-         * Database ID being restored.
+         * Database ID being restored into.
          */
         databaseId: string;
+        /**
+         * Source database ID when restoring a backup into another database.
+         */
+        sourceDatabaseId: string;
         /**
          * Project ID.
          */
@@ -10446,14 +11009,14 @@ export namespace Models {
          * Error message if restoration failed.
          */
         error: string;
-    }
+    };
 
     /**
      * Status
      */
     export type DatabaseStatus = {
         /**
-         * Overall health status: healthy, degraded, or unhealthy.
+         * Overall health status: healthy, degraded, unhealthy, or unknown when nothing could be measured.
          */
         health: string;
         /**
@@ -10497,9 +11060,9 @@ export namespace Models {
          */
         syncStandbyCount: number;
         /**
-         * Whether the reported sync state was read from the engine. When false the state could not be confirmed and the other sync fields carry no reading.
+         * Whether the other sync fields are an engine reading rather than a recorded estimate. True when the primary answered what it is enforcing, including when that answer contradicted the record, in which case the contradicted values are replaced by the ones the engine reports. False when the reading could not be taken: the probe did not answer, there was no engine to ask, or the values describe a configuration change just applied rather than anything measured. Absent when no engine was asked at all, so an unprobed database is distinguishable from an unconfirmed one. False never means a standby was found lagging, because it is the absence of a reading rather than a negative one, so draw no conclusion about replication health from it or from a response that omits it.
          */
-        syncStateConfirmed: boolean;
+        syncStateConfirmed?: boolean;
         /**
          * List of database replicas and their status. Every configured member appears, including one the backend has not brought up, which is reported as not healthy.
          */
@@ -10508,7 +11071,7 @@ export namespace Models {
          * Storage volume information.
          */
         volumes: DatabaseStatusVolume[];
-    }
+    };
 
     /**
      * DNSRecord
@@ -10562,7 +11125,7 @@ export namespace Models {
          * Comment for the DNS record.
          */
         comment: string;
-    }
+    };
 
     /**
      * Domain
@@ -10620,7 +11183,7 @@ export namespace Models {
          * Dns records
          */
         dnsRecords: DnsRecord[];
-    }
+    };
 
     /**
      * DomainPrice
@@ -10639,9 +11202,9 @@ export namespace Models {
          */
         available: boolean;
         /**
-         * Domain registration price.
+         * Domain registration price. Null when the price could not be resolved, for example for an unsupported TLD.
          */
-        price: number;
+        price?: number;
         /**
          * Price period in years.
          */
@@ -10650,7 +11213,15 @@ export namespace Models {
          * Whether the domain is a premium domain.
          */
         premium: boolean;
-    }
+        /**
+         * Domain renewal price for the same period. Null when the domain was not priced or the registrar has no renewal price for it.
+         */
+        renewalPrice?: number;
+        /**
+         * Renewal price period in years.
+         */
+        renewalPeriodYears: number;
+    };
 
     /**
      * DomainPurchase
@@ -10696,7 +11267,7 @@ export namespace Models {
          * Currency code.
          */
         currency: string;
-    }
+    };
 
     /**
      * DomainSuggestion
@@ -10718,7 +11289,7 @@ export namespace Models {
          * Is the domain available?
          */
         available: boolean;
-    }
+    };
 
     /**
      * domainTransferOut
@@ -10728,7 +11299,7 @@ export namespace Models {
          * Domain transfer authorization code.
          */
         authCode: string;
-    }
+    };
 
     /**
      * domainTransferStatus
@@ -10746,7 +11317,7 @@ export namespace Models {
          * Transfer status timestamp in ISO 8601 format.
          */
         timestamp: string;
-    }
+    };
 
     /**
      * Downgrade Feedback
@@ -10792,7 +11363,7 @@ export namespace Models {
          * Console version
          */
         version: string;
-    }
+    };
 
     /**
      * Estimation
@@ -10830,7 +11401,7 @@ export namespace Models {
          * Trial end date
          */
         trialEndDate?: string;
-    }
+    };
 
     /**
      * DeleteOrganization
@@ -10840,7 +11411,7 @@ export namespace Models {
          * List of unpaid invoices
          */
         unpaidInvoices: Invoice[];
-    }
+    };
 
     /**
      * Item
@@ -10854,7 +11425,7 @@ export namespace Models {
          * Gross payable amount
          */
         value: number;
-    }
+    };
 
     /**
      * EstimationPlanChange
@@ -10880,7 +11451,7 @@ export namespace Models {
          * Plan limits and compliance information
          */
         limits: PlanChangeLimits;
-    }
+    };
 
     /**
      * UpdatePlan
@@ -10922,7 +11493,7 @@ export namespace Models {
          * Organization's existing credits
          */
         organizationCredits: number;
-    }
+    };
 
     /**
      * Extensions
@@ -10940,7 +11511,7 @@ export namespace Models {
          * Curated metadata (display name, description, category) for each available extension.
          */
         metadata: PostgresExtension[];
-    }
+    };
 
     /**
      * Member
@@ -10959,10 +11530,14 @@ export namespace Models {
          */
         status: string;
         /**
-         * Replication lag in seconds. Null when the lag is not known: a primary has none to report, and a member the backend has not probed has none yet.
+         * Whether the engine reports this member's replication stream as up. Null when no reading was taken: a primary has no stream to report, and a member that is not active, or whose probe did not answer, has none yet. False is a reading and null is the absence of one, so the two are not interchangeable. Read it beside lagSeconds before expecting a failover that names no target to find a promotable standby: a member streaming at a known lag is one, and a member reporting null is not evidence either way.
+         */
+        replicating?: boolean;
+        /**
+         * Replication lag in seconds. Null when the lag is not known: a primary has none to report, and a member the backend has not probed has none yet. Also null against `replicating: true`, for a member that is streaming but whose engine printed no numeric lag.
          */
         lagSeconds?: number;
-    }
+    };
 
     /**
      * Operation
@@ -10981,11 +11556,11 @@ export namespace Models {
          */
         databaseId: string;
         /**
-         * Operation type, such as provision, update, restore, pausing, resuming, failover, backup-create or cross-region-enable.
+         * Operation type, such as provision, update, credentials-update, restore, pausing, resuming, failover, backup-create or cross-region-enable.
          */
         type: string;
         /**
-         * Operation status. Possible values: running (in progress), completed (finished successfully), failed (ended in an error).
+         * Operation status. Possible values: queued (accepted and waiting to resume), running (in progress), completed (finished successfully), failed (ended in an error).
          */
         status: string;
         /**
@@ -11005,14 +11580,14 @@ export namespace Models {
          */
         completedAt?: string;
         /**
-         * Machine-readable failure code. `LockLost` marks an attempt that was fenced and abandoned because another worker took over the database.
+         * Machine-readable failure code. `Interrupted` marks an attempt that ended before its outcome could be confirmed.
          */
         errorCode: string;
         /**
          * Failure message if the operation failed.
          */
         errorMessage: string;
-    }
+    };
 
     /**
      * OperationList
@@ -11026,7 +11601,7 @@ export namespace Models {
          * List of operations.
          */
         operations: DedicatedDatabaseOperation[];
-    }
+    };
 
     /**
      * Replicas
@@ -11057,14 +11632,14 @@ export namespace Models {
          */
         syncStandbyCount: number;
         /**
-         * Whether the reported sync state was read from the engine. When false the state could not be confirmed and the other sync fields carry no reading.
+         * Whether the other sync fields are an engine reading rather than a recorded estimate. True when the primary answered what it is enforcing, including when that answer contradicted the record, in which case the contradicted values are replaced by the ones the engine reports. False when the reading could not be taken: the probe did not answer, there was no engine to ask, or the values describe a configuration change just applied rather than anything measured. Absent when no engine was asked at all, so an unprobed database is distinguishable from an unconfirmed one. False never means a standby was found lagging, because it is the absence of a reading rather than a negative one, so draw no conclusion about replication health from it or from a response that omits it.
          */
-        syncStateConfirmed: boolean;
+        syncStateConfirmed?: boolean;
         /**
          * Per-pod statuses for the primary and every replica.
          */
         members: DedicatedDatabaseMember[];
-    }
+    };
 
     /**
      * Invalidation
@@ -11086,7 +11661,7 @@ export namespace Models {
          * Invalidation status.
          */
         status: string;
-    }
+    };
 
     /**
      * Invoice
@@ -11184,12 +11759,14 @@ export namespace Models {
          * End date of the invoice
          */
         to: string;
-    }
+    };
 
     /**
      * Organization
      */
-    export type Organization<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
+    export type Organization<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    > = {
         /**
          * Team ID.
          */
@@ -11330,7 +11907,7 @@ export namespace Models {
          * Selected projects
          */
         projects: string[];
-    }
+    };
 
     /**
      * PaymentAuthentication
@@ -11360,7 +11937,7 @@ export namespace Models {
          * Project ID for project-level addon payments. Empty for organization-level addons.
          */
         projectId: string;
-    }
+    };
 
     /**
      * paymentMethod
@@ -11446,7 +12023,7 @@ export namespace Models {
          * True when payment method has failed to process multiple times.
          */
         failed: boolean;
-    }
+    };
 
     /**
      * PITRWindows
@@ -11460,7 +12037,7 @@ export namespace Models {
          * Latest available recovery point.
          */
         latest: string;
-    }
+    };
 
     /**
      * PlanChangeEstimationDetails
@@ -11497,38 +12074,46 @@ export namespace Models {
         /**
          * Line items breakdown
          */
-        items: object;
+        items: Record<string, any>[];
         /**
          * Applied discounts breakdown
          */
-        discounts: object;
-    }
+        discounts: Record<string, any>[];
+    };
 
     /**
      * PlanChangeLimits
      */
     export type PlanChangeLimits = {
         /**
-         * Total number of projects in the organization
+         * Whether the plan change is allowed
          */
-        totalProjects: number;
+        canChangePlan: boolean;
+        /**
+         * Active addon keys that the target plan does not support. When non-empty, `canChangePlan` is false.
+         */
+        unsupportedAddons: string[];
+        /**
+         * Project count against the target plan limit
+         */
+        projects: PlanChangeResourceCompliance;
+        /**
+         * Organization member count against the target plan limit
+         */
+        members: PlanChangeResourceCompliance;
+        /**
+         * Custom domain count against the target plan limit
+         */
+        domains: PlanChangeResourceCompliance;
         /**
          * Number of projects exceeding target plan limits
          */
         nonCompliantProjects: number;
         /**
-         * Whether the plan change is allowed
+         * Per-project compliance details. Populated for downgrades only.
          */
-        canChangePlan: boolean;
-        /**
-         * Project compliance details
-         */
-        projects: PlanChangeProjectCompliance[];
-        /**
-         * Active addon keys that the target plan does not support. When non-empty, `canChangePlan` is false.
-         */
-        unsupportedAddons: string[];
-    }
+        projectCompliance: PlanChangeProjectCompliance[];
+    };
 
     /**
      * PlanChangeProjectCompliance
@@ -11554,7 +12139,7 @@ export namespace Models {
          * Failure reason when compliance could not be evaluated. Present only when the project DB or Regions API was unreachable; in that case `isCompliant` is false (fail closed) and `resources` is empty.
          */
         error?: string;
-    }
+    };
 
     /**
      * PlanChangeResourceCompliance
@@ -11573,7 +12158,7 @@ export namespace Models {
          */
         limit: number;
         /**
-         * Compliance status
+         * Compliance status. Either `over_limit` or `within_limit`.
          */
         status: string;
         /**
@@ -11581,10 +12166,10 @@ export namespace Models {
          */
         excess: number;
         /**
-         * Suggestion for resolving the compliance issue
+         * Suggestion for resolving the compliance issue. Empty when the resource is within limits.
          */
         resolutionHint: string;
-    }
+    };
 
     /**
      * backup
@@ -11638,7 +12223,7 @@ export namespace Models {
          * Is this policy enabled.
          */
         enabled: boolean;
-    }
+    };
 
     /**
      * Policy Deny Aliased Email
@@ -11652,7 +12237,7 @@ export namespace Models {
          * Whether the deny aliased email policy is enabled.
          */
         enabled: boolean;
-    }
+    };
 
     /**
      * Policy Deny Disposable Email
@@ -11666,7 +12251,7 @@ export namespace Models {
          * Whether the deny disposable email policy is enabled.
          */
         enabled: boolean;
-    }
+    };
 
     /**
      * Policy Deny Free Email
@@ -11680,7 +12265,7 @@ export namespace Models {
          * Whether the deny free email policy is enabled.
          */
         enabled: boolean;
-    }
+    };
 
     /**
      * Policy Deny Corporate Email
@@ -11694,7 +12279,7 @@ export namespace Models {
          * Whether the deny non-corporate email policy is enabled.
          */
         enabled: boolean;
-    }
+    };
 
     /**
      * PoolerConfig
@@ -11740,7 +12325,7 @@ export namespace Models {
          * Effective memory limit applied to the pooler sidecar container (Kubernetes quantity). Returns the proportional default (15% of DB memory, floor 128Mi) unless overridden.
          */
         poolerMemoryLimit: string;
-    }
+    };
 
     /**
      * Postgres extension
@@ -11762,7 +12347,7 @@ export namespace Models {
          * Category the extension belongs to.
          */
         category: string;
-    }
+    };
 
     /**
      * Program
@@ -11804,7 +12389,7 @@ export namespace Models {
          * Billing plan ID that this is program is associated with.
          */
         billingPlanId: string;
-    }
+    };
 
     /**
      * Region
@@ -11834,7 +12419,7 @@ export namespace Models {
          * Region flag code.
          */
         flag: string;
-    }
+    };
 
     /**
      * Restoration
@@ -11881,10 +12466,10 @@ export namespace Models {
          */
         resources: string[];
         /**
-         * Optional data in key-value object. 
+         * Optional data in key-value object.
          */
         options: string;
-    }
+    };
 
     /**
      * Dedicated database restorations list
@@ -11898,7 +12483,7 @@ export namespace Models {
          * List of restorations.
          */
         restorations: DedicatedDatabaseRestoration[];
-    }
+    };
 
     /**
      * Review
@@ -11920,7 +12505,7 @@ export namespace Models {
          * Review
          */
         review: string;
-    }
+    };
 
     /**
      * Roles
@@ -11934,7 +12519,7 @@ export namespace Models {
          * Array of roles assigned to current user.
          */
         roles: string[];
-    }
+    };
 
     /**
      * Specification
@@ -11952,6 +12537,22 @@ export namespace Models {
          * Monthly price of the specification in USD.
          */
         price: number;
+        /**
+         * Price per GB of storage above the included amount, per month, in USD.
+         */
+        storageOverageRate: number;
+        /**
+         * Price per GB of bandwidth above the included amount, per month, in USD.
+         */
+        bandwidthOverageRate: number;
+        /**
+         * High availability replica price as a fraction of the specification price.
+         */
+        replicaRate: number;
+        /**
+         * Point-in-time recovery price as a fraction of the specification price.
+         */
+        pitrRate: number;
         /**
          * Allocated CPU in millicores.
          */
@@ -11976,7 +12577,7 @@ export namespace Models {
          * Whether the specification is available on the current plan.
          */
         enabled: boolean;
-    }
+    };
 
     /**
      * SpecificationList
@@ -11990,37 +12591,7 @@ export namespace Models {
          * Total number of specifications.
          */
         total: number;
-        /**
-         * Overage and add-on pricing shared across all specifications.
-         */
-        pricing: DedicatedDatabaseSpecificationPricing;
-    }
-
-    /**
-     * SpecificationPricing
-     */
-    export type DedicatedDatabaseSpecificationPricing = {
-        /**
-         * Price per GB of storage above the included amount, per month, in USD.
-         */
-        storageOverageRate: number;
-        /**
-         * Price per GB of bandwidth above the included amount, per month, in USD.
-         */
-        bandwidthOverageRate: number;
-        /**
-         * High availability replica price as a fraction of the specification cost.
-         */
-        replicaRate: number;
-        /**
-         * Cross-region replica price as a fraction of the specification cost.
-         */
-        crossRegionReplicaRate: number;
-        /**
-         * Point-in-time recovery price as a fraction of the specification cost.
-         */
-        pitrRate: number;
-    }
+    };
 
     /**
      * Connections
@@ -12034,7 +12605,7 @@ export namespace Models {
          * The engine's own max_connections. On a pooled database this is the backend limit the pooler multiplexes onto, not the ceiling a client pool may reach — that is networkMaxConnections on the database resource.
          */
         max: number;
-    }
+    };
 
     /**
      * Replica
@@ -12053,10 +12624,14 @@ export namespace Models {
          */
         healthy: boolean;
         /**
-         * Replication lag in seconds (null for primary).
+         * Whether the engine reports this member's replication stream as up. Null when no reading was taken: a primary has no stream to report, and a member that is not healthy, or whose probe did not answer, has none yet. `healthy` is a reachability probe of the member itself and says nothing about replication, so a healthy member may still not be replicating.
+         */
+        replicating?: boolean;
+        /**
+         * Replication lag in seconds (null for primary). Also null against `replicating: true`, for a member that is streaming but whose engine printed no numeric lag.
          */
         lagSeconds?: number;
-    }
+    };
 
     /**
      * Volume
@@ -12078,7 +12653,7 @@ export namespace Models {
          * Whether the volume is mounted.
          */
         mounted: boolean;
-    }
+    };
 
     /**
      * usageBillingPlan
@@ -12128,171 +12703,7 @@ export namespace Models {
          * Credits additional resources
          */
         credits?: AdditionalResource;
-    }
-
-    /**
-     * usageDataPoint
-     */
-    export type UsageDataPoint = {
-        /**
-         * Bucket start timestamp (ISO 8601). When `interval` is omitted this is the request end time, marking the aggregate as-of moment.
-         */
-        time: string;
-        /**
-         * Aggregated value for the bucket. Counters are whole numbers; gauge rates (e.g. queries per second) may be fractional.
-         */
-        value: number;
-        /**
-         * API endpoint path when broken down by `path`.
-         */
-        path?: string;
-        /**
-         * HTTP method when broken down by `method`.
-         */
-        method?: string;
-        /**
-         * HTTP status code when broken down by `status`.
-         */
-        status?: string;
-        /**
-         * API service segment when broken down by `service`.
-         */
-        service?: string;
-        /**
-         * Country code when broken down by `country`.
-         */
-        country?: string;
-        /**
-         * Continent code when broken down by `continentCode`.
-         */
-        continentCode?: string;
-        /**
-         * City name when broken down by `city`.
-         */
-        city?: string;
-        /**
-         * Region/state chain when broken down by `subdivisions`.
-         */
-        subdivisions?: string;
-        /**
-         * Internet service provider when broken down by `isp`.
-         */
-        isp?: string;
-        /**
-         * Autonomous System Number (ASN) when broken down by `autonomousSystemNumber`.
-         */
-        autonomousSystemNumber?: string;
-        /**
-         * Organization owning the ASN when broken down by `autonomousSystemOrganization`.
-         */
-        autonomousSystemOrganization?: string;
-        /**
-         * Connection type (e.g. cable, cellular, corporate) when broken down by `connectionType`.
-         */
-        connectionType?: string;
-        /**
-         * User type (e.g. residential, business, hosting) when broken down by `connectionUsageType`.
-         */
-        connectionUsageType?: string;
-        /**
-         * Registered organization of the IP when broken down by `connectionOrganization`.
-         */
-        connectionOrganization?: string;
-        /**
-         * Appwrite region when broken down by `region`.
-         */
-        region?: string;
-        /**
-         * Caller origin hostname when broken down by `hostname`.
-         */
-        hostname?: string;
-        /**
-         * Caller IP address when broken down by `ip`.
-         */
-        ip?: string;
-        /**
-         * Operating system name when broken down by `osName`.
-         */
-        osName?: string;
-        /**
-         * Client type when broken down by `clientType`.
-         */
-        clientType?: string;
-        /**
-         * Client name when broken down by `clientName`.
-         */
-        clientName?: string;
-        /**
-         * SDK name when broken down by `sdk`.
-         */
-        sdk?: string;
-        /**
-         * SDK version when broken down by `sdkVersion`.
-         */
-        sdkVersion?: string;
-        /**
-         * Device classification when broken down by `deviceName`.
-         */
-        deviceName?: string;
-        /**
-         * Owning team ID when broken down by `teamId`.
-         */
-        teamId?: string;
-        /**
-         * External resource ID when broken down by `resourceId`.
-         */
-        resourceId?: string;
-        /**
-         * Resource type when broken down by `resourceType`.
-         */
-        resourceType?: string;
-        /**
-         * Node ordinal when broken down by `ordinal`. A stable per-node identity, not a role: ordinal 0 is the first member created, and a failover can leave the primary on any ordinal. Read the role from the database's replicas endpoint.
-         */
-        ordinal?: string;
-    }
-
-    /**
-     * usageEventList
-     */
-    export type UsageEventList = {
-        /**
-         * Time interval size (1h or 1d). Empty when the request omits `interval` — points then carry the request end time as their as-of marker.
-         */
-        interval: string;
-        /**
-         * One entry per requested metric, each carrying its own points[] time series (sums per bucket / dimension over time).
-         */
-        metrics: UsageMetric[];
-    }
-
-    /**
-     * usageGaugeList
-     */
-    export type UsageGaugeList = {
-        /**
-         * Time interval size (1h or 1d). Empty when the request omits `interval` — points then carry the request end time as their as-of marker.
-         */
-        interval: string;
-        /**
-         * One entry per requested metric, each carrying its own points[] time series (latest-snapshot per bucket / dimension via argMax over time).
-         */
-        metrics: UsageMetric[];
-    }
-
-    /**
-     * usageMetric
-     */
-    export type UsageMetric = {
-        /**
-         * Metric key this series describes.
-         */
-        metric: string;
-        /**
-         * Data points for this metric, ordered by time ascending. With `interval`, each entry is one bucket; without, each entry is one row of the dimensional or aggregate breakdown.
-         */
-        points: UsageDataPoint[];
-    }
+    };
 
     /**
      * Organization
@@ -12418,7 +12829,7 @@ export namespace Models {
          * Aggregated stats for total realtime bandwidth.
          */
         realtimeBandwidthTotal: number;
-    }
+    };
 
     /**
      * OrganizationProject
@@ -12431,11 +12842,11 @@ export namespace Models {
         /**
          * Aggregated stats for number of requests.
          */
-        bandwidth: Metric[];
+        bandwidth: number;
         /**
          * Aggregated stats for consumed bandwidth.
          */
-        users: Metric[];
+        users: number;
         /**
          * Aggregated stats for function executions.
          */
@@ -12443,11 +12854,11 @@ export namespace Models {
         /**
          * Aggregated stats for database reads.
          */
-        databasesReads: Metric[];
+        databasesReads: number;
         /**
          * Aggregated stats for database writes.
          */
-        databasesWrites: Metric[];
+        databasesWrites: number;
         /**
          * Aggregated stats for function executions in mb seconds.
          */
@@ -12479,7 +12890,7 @@ export namespace Models {
         /**
          * Aggregated stats for file transformations.
          */
-        imageTransformations: Metric[];
+        imageTransformations: number;
         /**
          * Aggregated stats for total file transformations.
          */
@@ -12487,7 +12898,7 @@ export namespace Models {
         /**
          * Aggregated stats for file transformations.
          */
-        screenshotsGenerated: Metric[];
+        screenshotsGenerated: number;
         /**
          * Aggregated stats for total file transformations.
          */
@@ -12504,7 +12915,7 @@ export namespace Models {
          * Aggregated stats for realtime bandwidth.
          */
         realtimeBandwidth: number;
-    }
+    };
 
     /**
      * Resource
@@ -12542,7 +12953,7 @@ export namespace Models {
          * Dedicated database specification slug for per-database line items (e.g. s-2vcpu-2gb). Empty for other resources.
          */
         specification: string;
-    }
+    };
 
     /**
      * App
@@ -12652,7 +13063,7 @@ export namespace Models {
          * List of application secrets.
          */
         secrets: AppSecret[];
-    }
+    };
 
     /**
      * AppSecret
@@ -12694,7 +13105,7 @@ export namespace Models {
          * Time the secret was last used for authentication in ISO 8601 format. Null if never used.
          */
         lastAccessedAt?: string;
-    }
+    };
 
     /**
      * AppSecretPlaintext
@@ -12736,7 +13147,7 @@ export namespace Models {
          * Time the secret was last used for authentication in ISO 8601 format. Null if never used.
          */
         lastAccessedAt?: string;
-    }
+    };
 
     /**
      * AppScope
@@ -12762,7 +13173,7 @@ export namespace Models {
          * Whether the scope is deprecated. Deprecated scopes can still be requested but should not be offered for new grants.
          */
         deprecated: boolean;
-    }
+    };
 
     /**
      * AppInstallation
@@ -12795,7 +13206,7 @@ export namespace Models {
         /**
          * Authorization details granted to the application. Rich authorization request (RFC 9396) style entries; the Appwrite Console stores authorized project IDs here.
          */
-        authorizationDetails: object;
+        authorizationDetails: Record<string, any>[];
         /**
          * ID of the user who created the installation.
          */
@@ -12808,7 +13219,7 @@ export namespace Models {
          * Time an access token was last issued for the installation in ISO 8601 format. Null if never used.
          */
         lastAccessedAt?: string;
-    }
+    };
 
     /**
      * AppKey
@@ -12850,7 +13261,7 @@ export namespace Models {
          * Time the app key was last used for authentication in ISO 8601 format. Null if never used.
          */
         lastAccessedAt?: string;
-    }
+    };
 
     /**
      * OAuth2 Authorize
@@ -12864,7 +13275,7 @@ export namespace Models {
          * URL the end user should be redirected to when the flow can complete without consent. Empty when consent is still required.
          */
         redirectUrl: string;
-    }
+    };
 
     /**
      * OAuth2 Approve
@@ -12874,7 +13285,7 @@ export namespace Models {
          * URL the end user should be redirected to after the grant is approved, carrying the authorization `code` and/or `id_token` along with the original `state`.
          */
         redirectUrl: string;
-    }
+    };
 
     /**
      * OAuth2 Reject
@@ -12884,7 +13295,7 @@ export namespace Models {
          * URL the end user should be redirected to after the grant is rejected, carrying an `access_denied` error.
          */
         redirectUrl: string;
-    }
+    };
 
     /**
      * OAuth2 Grant
@@ -12938,7 +13349,7 @@ export namespace Models {
          * Grant expiration time in ISO 8601 format.
          */
         expire: string;
-    }
+    };
 
     /**
      * OAuth2 Device Authorization
@@ -12968,7 +13379,7 @@ export namespace Models {
          * Minimum polling interval for the token endpoint in seconds.
          */
         interval: number;
-    }
+    };
 
     /**
      * OAuth2 PAR
@@ -12982,7 +13393,7 @@ export namespace Models {
          * Lifetime of the authorization request handle in seconds.
          */
         expires_in: number;
-    }
+    };
 
     /**
      * OAuth2 Token
@@ -13016,7 +13427,7 @@ export namespace Models {
          * OpenID Connect ID token. Returned when the `openid` scope is granted.
          */
         id_token?: string;
-    }
+    };
 
     /**
      * OAuth2 Consent
@@ -13062,7 +13473,7 @@ export namespace Models {
          * Consent expiration time in ISO 8601 format. Empty when the consent has no token-bound expiry yet.
          */
         expire: string;
-    }
+    };
 
     /**
      * OAuth2 Consent Token
@@ -13112,7 +13523,7 @@ export namespace Models {
          * Expiration time of the current access token of this family in ISO 8601 format.
          */
         expire: string;
-    }
+    };
 
     /**
      * WafRule
@@ -13169,12 +13580,12 @@ export namespace Models {
         /**
          * List of conditions evaluated for this rule.
          */
-        conditions: object;
+        conditions: Record<string, any>[];
         /**
          * Action specific configuration.
          */
         config: object;
-    }
+    };
 
     /**
      * WafRuleBypass
@@ -13231,12 +13642,12 @@ export namespace Models {
         /**
          * List of conditions evaluated for this rule.
          */
-        conditions: object;
+        conditions: Record<string, any>[];
         /**
          * Action specific configuration.
          */
         config: object;
-    }
+    };
 
     /**
      * WafRuleDeny
@@ -13293,12 +13704,12 @@ export namespace Models {
         /**
          * List of conditions evaluated for this rule.
          */
-        conditions: object;
+        conditions: Record<string, any>[];
         /**
          * Action specific configuration.
          */
         config: object;
-    }
+    };
 
     /**
      * WafRuleChallenge
@@ -13355,7 +13766,7 @@ export namespace Models {
         /**
          * List of conditions evaluated for this rule.
          */
-        conditions: object;
+        conditions: Record<string, any>[];
         /**
          * Action specific configuration.
          */
@@ -13372,7 +13783,7 @@ export namespace Models {
          * Seconds a visitor stays cleared after passing the challenge before being challenged again.
          */
         ttl: number;
-    }
+    };
 
     /**
      * WafRuleRateLimit
@@ -13429,7 +13840,7 @@ export namespace Models {
         /**
          * List of conditions evaluated for this rule.
          */
-        conditions: object;
+        conditions: Record<string, any>[];
         /**
          * Action specific configuration.
          */
@@ -13446,7 +13857,15 @@ export namespace Models {
          * Rate limit key: `ip` limits per client IP, `userId` limits per authenticated user.
          */
         key: string;
-    }
+        /**
+         * Rate limit strategy: `fixedWindow`, `slidingWindow`, or `tokenBucket`.
+         */
+        strategy: string;
+        /**
+         * Maximum burst capacity in tokens, applied by the `tokenBucket` strategy. The sustained refill rate is `limit / interval`. Defaults to `limit`.
+         */
+        maxBucketSize: number;
+    };
 
     /**
      * WafRuleRedirect
@@ -13503,7 +13922,7 @@ export namespace Models {
         /**
          * List of conditions evaluated for this rule.
          */
-        conditions: object;
+        conditions: Record<string, any>[];
         /**
          * Action specific configuration.
          */
@@ -13516,7 +13935,7 @@ export namespace Models {
          * HTTP status code used for the redirect.
          */
         statusCode: number;
-    }
+    };
 
     /**
      * WAF rule list
@@ -13530,7 +13949,7 @@ export namespace Models {
          * List of rules.
          */
         rules: WafRule[];
-    }
+    };
 
     /**
      * OAuth2 Project
@@ -13548,7 +13967,7 @@ export namespace Models {
          * API endpoint of the region the project is deployed in. Empty when the region has no public hostname configured.
          */
         endpoint: string;
-    }
+    };
 
     /**
      * OAuth2 Organization
@@ -13558,7 +13977,7 @@ export namespace Models {
          * Organization ID.
          */
         $id: string;
-    }
+    };
 
     /**
      * OAuth2 accessible projects list
@@ -13572,7 +13991,7 @@ export namespace Models {
          * List of projects.
          */
         projects: Oauth2Project[];
-    }
+    };
 
     /**
      * OAuth2 accessible organizations list
@@ -13586,7 +14005,7 @@ export namespace Models {
          * List of organizations.
          */
         organizations: Oauth2Organization[];
-    }
+    };
 
     /**
      * OAuth2 consents list
@@ -13600,7 +14019,7 @@ export namespace Models {
          * List of consents.
          */
         consents: Oauth2Consent[];
-    }
+    };
 
     /**
      * OAuth2 consent tokens list
@@ -13614,7 +14033,7 @@ export namespace Models {
          * List of tokens.
          */
         tokens: Oauth2ConsentToken[];
-    }
+    };
 
     /**
      * Activity event list
@@ -13628,7 +14047,7 @@ export namespace Models {
          * List of events.
          */
         events: ActivityEvent[];
-    }
+    };
 
     /**
      * Addons list
@@ -13642,7 +14061,7 @@ export namespace Models {
          * List of addons.
          */
         addons: Addon[];
-    }
+    };
 
     /**
      * Aggregation team list
@@ -13656,7 +14075,7 @@ export namespace Models {
          * List of aggregations.
          */
         aggregations: AggregationTeam[];
-    }
+    };
 
     /**
      * Backup archive list
@@ -13670,7 +14089,7 @@ export namespace Models {
          * List of archives.
          */
         archives: BackupArchive[];
-    }
+    };
 
     /**
      * Backup policy list
@@ -13684,7 +14103,7 @@ export namespace Models {
          * List of policies.
          */
         policies: BackupPolicy[];
-    }
+    };
 
     /**
      * Backup restoration list
@@ -13698,7 +14117,7 @@ export namespace Models {
          * List of restorations.
          */
         restorations: BackupRestoration[];
-    }
+    };
 
     /**
      * Billing address list
@@ -13712,7 +14131,7 @@ export namespace Models {
          * List of billingAddresses.
          */
         billingAddresses: BillingAddress[];
-    }
+    };
 
     /**
      * Billing invoices list
@@ -13726,7 +14145,7 @@ export namespace Models {
          * List of invoices.
          */
         invoices: Invoice[];
-    }
+    };
 
     /**
      * Billing plan list
@@ -13740,7 +14159,7 @@ export namespace Models {
          * List of plans.
          */
         plans: BillingPlan[];
-    }
+    };
 
     /**
      * Blocks list
@@ -13754,7 +14173,7 @@ export namespace Models {
          * List of blocks.
          */
         blocks: Block[];
-    }
+    };
 
     /**
      * Database Migrations List
@@ -13768,7 +14187,7 @@ export namespace Models {
          * List of migrations.
          */
         migrations: DatabaseMigration[];
-    }
+    };
 
     /**
      * Dedicated databases list
@@ -13782,7 +14201,7 @@ export namespace Models {
          * List of databases.
          */
         databases: DedicatedDatabase[];
-    }
+    };
 
     /**
      * DNS records list
@@ -13796,7 +14215,7 @@ export namespace Models {
          * List of dnsRecords.
          */
         dnsRecords: DnsRecord[];
-    }
+    };
 
     /**
      * Domain suggestions list
@@ -13810,7 +14229,21 @@ export namespace Models {
          * List of suggestions.
          */
         suggestions: DomainSuggestion[];
-    }
+    };
+
+    /**
+     * Domain prices list
+     */
+    export type DomainPricesList = {
+        /**
+         * Total number of prices that matched your query.
+         */
+        total: number;
+        /**
+         * List of prices.
+         */
+        prices: DomainPrice[];
+    };
 
     /**
      * Domains list
@@ -13824,12 +14257,14 @@ export namespace Models {
          * List of domains.
          */
         domains: Domain[];
-    }
+    };
 
     /**
      * Organizations list
      */
-    export type OrganizationList<Preferences extends Models.Preferences = Models.DefaultPreferences> = {
+    export type OrganizationList<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    > = {
         /**
          * Total number of teams that matched your query.
          */
@@ -13838,7 +14273,7 @@ export namespace Models {
          * List of teams.
          */
         teams: Organization<Preferences>[];
-    }
+    };
 
     /**
      * Payment methods list
@@ -13852,7 +14287,7 @@ export namespace Models {
          * List of paymentMethods.
          */
         paymentMethods: PaymentMethod[];
-    }
+    };
 
     /**
      * Postgres extensions list
@@ -13866,7 +14301,7 @@ export namespace Models {
          * List of extensions.
          */
         extensions: PostgresExtension[];
-    }
+    };
 
     /**
      * Regions list
@@ -13880,7 +14315,7 @@ export namespace Models {
          * List of regions.
          */
         regions: ConsoleRegion[];
-    }
+    };
 
     /**
      * Apps list
@@ -13894,7 +14329,7 @@ export namespace Models {
          * List of apps.
          */
         apps: App[];
-    }
+    };
 
     /**
      * App secrets list
@@ -13908,7 +14343,7 @@ export namespace Models {
          * List of secrets.
          */
         secrets: AppSecret[];
-    }
+    };
 
     /**
      * App scopes list
@@ -13922,7 +14357,7 @@ export namespace Models {
          * List of scopes.
          */
         scopes: AppScope[];
-    }
+    };
 
     /**
      * App installations list
@@ -13936,7 +14371,7 @@ export namespace Models {
          * List of installations.
          */
         installations: AppInstallation[];
-    }
+    };
 
     /**
      * App keys list
@@ -13950,5 +14385,5 @@ export namespace Models {
          * List of keys.
          */
         keys: AppKey[];
-    }
+    };
 }

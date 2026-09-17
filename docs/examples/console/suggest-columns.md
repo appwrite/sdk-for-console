@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Console } from "@appwrite.io/console";
+import { Client, Console } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +12,7 @@ const result = await xconsole.suggestColumns({
     tableId: '<TABLE_ID>',
     context: '<CONTEXT>', // optional
     min: 1, // optional
-    max: 1 // optional
+    max: 1, // optional
 });
 
 console.log(result);

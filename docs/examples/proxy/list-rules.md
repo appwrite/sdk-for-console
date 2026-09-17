@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Proxy } from "@appwrite.io/console";
+import { Client, Proxy } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const proxy = new Proxy(client);
 
 const result = await proxy.listRules({
     queries: [], // optional
-    total: false // optional
+    total: false, // optional
 });
 
 console.log(result);

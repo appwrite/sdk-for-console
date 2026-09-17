@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Project } from "@appwrite.io/console";
+import { Client, Project } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,9 +10,9 @@ const project = new Project(client);
 const result = await project.updateOAuth2Okta({
     clientId: '<CLIENT_ID>', // optional
     clientSecret: '<CLIENT_SECRET>', // optional
-    domain: '', // optional
+    domain: 'example.com', // optional
     authorizationServerId: '<AUTHORIZATION_SERVER_ID>', // optional
-    enabled: false // optional
+    enabled: false, // optional
 });
 
 console.log(result);

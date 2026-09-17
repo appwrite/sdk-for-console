@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Databases } from "@appwrite.io/console";
+import { Client, Databases } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const databases = new Databases(client);
 
 const result = await databases.getCollection({
     databaseId: '<DATABASE_ID>',
-    collectionId: '<COLLECTION_ID>'
+    collectionId: '<COLLECTION_ID>',
 });
 
 console.log(result);

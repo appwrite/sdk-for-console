@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Domains } from "@appwrite.io/console";
+import { Client, Domains } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,10 +13,10 @@ const result = await domains.updateRecordSRV({
     name: '',
     value: '<VALUE>',
     ttl: 1,
-    priority: null,
-    weight: null,
-    port: null,
-    comment: '<COMMENT>' // optional
+    priority: 0,
+    weight: 0,
+    port: 0,
+    comment: '<COMMENT>', // optional
 });
 
 console.log(result);

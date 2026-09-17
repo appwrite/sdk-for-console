@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Functions } from "@appwrite.io/console";
+import { Client, Functions } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const functions = new Functions(client);
 const result = await functions.createDuplicateDeployment({
     functionId: '<FUNCTION_ID>',
     deploymentId: '<DEPLOYMENT_ID>',
-    buildId: '<BUILD_ID>' // optional
+    buildId: '<BUILD_ID>', // optional
 });
 
 console.log(result);

@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Mongo } from "@appwrite.io/console";
+import { Client, Mongo } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const mongo = new Mongo(client);
 
 const result = await mongo.getReplicas({
-    databaseId: '<DATABASE_ID>'
+    databaseId: '<DATABASE_ID>',
 });
 
 console.log(result);

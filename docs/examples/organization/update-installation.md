@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Organization } from "@appwrite.io/console";
+import { Client, Organization } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const organization = new Organization(client);
 
 const result = await organization.updateInstallation({
     installationId: '<INSTALLATION_ID>',
-    authorizationDetails: '<AUTHORIZATION_DETAILS>' // optional
+    authorizationDetails: '<AUTHORIZATION_DETAILS>', // optional
 });
 
 console.log(result);

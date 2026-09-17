@@ -1,5 +1,9 @@
 ```javascript
-import { Client, Functions, DeploymentDownloadType } from "@appwrite.io/console";
+import {
+    Client,
+    Functions,
+    DeploymentDownloadType,
+} from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +15,7 @@ const result = functions.getDeploymentDownload({
     functionId: '<FUNCTION_ID>',
     deploymentId: '<DEPLOYMENT_ID>',
     type: DeploymentDownloadType.Source, // optional
-    token: '<TOKEN>' // optional
+    token: '<TOKEN>', // optional
 });
 
 console.log(result);

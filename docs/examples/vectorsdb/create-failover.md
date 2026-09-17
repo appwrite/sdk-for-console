@@ -1,5 +1,5 @@
 ```javascript
-import { Client, VectorsDB } from "@appwrite.io/console";
+import { Client, VectorsDB } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const vectorsDB = new VectorsDB(client);
 
 const result = await vectorsDB.createFailover({
     databaseId: '<DATABASE_ID>',
-    targetReplicaId: '<TARGET_REPLICA_ID>' // optional
+    targetReplicaId: '<TARGET_REPLICA_ID>', // optional
 });
 
 console.log(result);

@@ -1,10 +1,8 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
 
 import { ScheduleResourceType } from '../enums/schedule-resource-type';
 import { Status } from '../enums/status';
-
 export class Projects {
     client: Client;
 
@@ -14,7 +12,7 @@ export class Projects {
 
     /**
      * List all billing addons for a project.
-     * 
+     *
      *
      * @param {string} params.projectId - Project ID
      * @throws {AppwriteException}
@@ -23,7 +21,7 @@ export class Projects {
     listAddons(params: { projectId: string }): Promise<Models.AddonList>;
     /**
      * List all billing addons for a project.
-     * 
+     *
      *
      * @param {string} projectId - Project ID
      * @throws {AppwriteException}
@@ -32,53 +30,58 @@ export class Projects {
      */
     listAddons(projectId: string): Promise<Models.AddonList>;
     listAddons(
-        paramsOrFirst: { projectId: string } | string    
+        paramsOrFirst: { projectId: string } | string,
     ): Promise<Models.AddonList> {
         let params: { projectId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { projectId: string };
         } else {
             params = {
-                projectId: paramsOrFirst as string            
+                projectId: paramsOrFirst as string,
             };
         }
-        
+
         const projectId = params.projectId;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-
-        const apiPath = '/projects/{projectId}/addons'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const apiPath = '/projects/{projectId}/addons'.replace(
+            '{projectId}',
+            encodeURIComponent(String(projectId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Create a Premium Geo DB addon for a project.
-     * 
+     *
      *
      * @param {string} params.projectId - Project ID
      * @throws {AppwriteException}
      * @returns {Promise<Models.Addon>}
      */
-    createPremiumGeoDBAddon(params: { projectId: string }): Promise<Models.Addon>;
+    createPremiumGeoDBAddon(params: {
+        projectId: string;
+    }): Promise<Models.Addon>;
     /**
      * Create a Premium Geo DB addon for a project.
-     * 
+     *
      *
      * @param {string} projectId - Project ID
      * @throws {AppwriteException}
@@ -87,55 +90,61 @@ export class Projects {
      */
     createPremiumGeoDBAddon(projectId: string): Promise<Models.Addon>;
     createPremiumGeoDBAddon(
-        paramsOrFirst: { projectId: string } | string    
+        paramsOrFirst: { projectId: string } | string,
     ): Promise<Models.Addon> {
         let params: { projectId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { projectId: string };
         } else {
             params = {
-                projectId: paramsOrFirst as string            
+                projectId: paramsOrFirst as string,
             };
         }
-        
+
         const projectId = params.projectId;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-
-        const apiPath = '/projects/{projectId}/addons/premium-geo-db'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const apiPath = '/projects/{projectId}/addons/premium-geo-db'.replace(
+            '{projectId}',
+            encodeURIComponent(String(projectId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Get the details of a billing addon for a project.
-     * 
+     *
      *
      * @param {string} params.projectId - Project ID
      * @param {string} params.addonId - Addon ID
      * @throws {AppwriteException}
      * @returns {Promise<Models.Addon>}
      */
-    getAddon(params: { projectId: string, addonId: string }): Promise<Models.Addon>;
+    getAddon(params: {
+        projectId: string;
+        addonId: string;
+    }): Promise<Models.Addon>;
     /**
      * Get the details of a billing addon for a project.
-     * 
+     *
      *
      * @param {string} projectId - Project ID
      * @param {string} addonId - Addon ID
@@ -145,60 +154,67 @@ export class Projects {
      */
     getAddon(projectId: string, addonId: string): Promise<Models.Addon>;
     getAddon(
-        paramsOrFirst: { projectId: string, addonId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { projectId: string; addonId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Addon> {
-        let params: { projectId: string, addonId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, addonId: string };
+        let params: { projectId: string; addonId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                addonId: string;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                addonId: rest[0] as string            
+                addonId: rest[0] as string,
             };
         }
-        
+
         const projectId = params.projectId;
         const addonId = params.addonId;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-        if (typeof addonId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "addonId"');
+        if (typeof addonId === 'undefined' || addonId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "addonId"',
+            );
         }
-
-        const apiPath = '/projects/{projectId}/addons/{addonId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{addonId}', encodeURIComponent(String(addonId)));
+        const apiPath = '/projects/{projectId}/addons/{addonId}'
+            .replace('{projectId}', encodeURIComponent(String(projectId)))
+            .replace('{addonId}', encodeURIComponent(String(addonId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Delete a billing addon for a project.
-     * 
+     *
      *
      * @param {string} params.projectId - Project ID
      * @param {string} params.addonId - Addon ID
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteAddon(params: { projectId: string, addonId: string }): Promise<{}>;
+    deleteAddon(params: { projectId: string; addonId: string }): Promise<{}>;
     /**
      * Delete a billing addon for a project.
-     * 
+     *
      *
      * @param {string} projectId - Project ID
      * @param {string} addonId - Addon ID
@@ -208,61 +224,71 @@ export class Projects {
      */
     deleteAddon(projectId: string, addonId: string): Promise<{}>;
     deleteAddon(
-        paramsOrFirst: { projectId: string, addonId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { projectId: string; addonId: string } | string,
+        ...rest: [string?]
     ): Promise<{}> {
-        let params: { projectId: string, addonId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, addonId: string };
+        let params: { projectId: string; addonId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                addonId: string;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                addonId: rest[0] as string            
+                addonId: rest[0] as string,
             };
         }
-        
+
         const projectId = params.projectId;
         const addonId = params.addonId;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-        if (typeof addonId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "addonId"');
+        if (typeof addonId === 'undefined' || addonId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "addonId"',
+            );
         }
-
-        const apiPath = '/projects/{projectId}/addons/{addonId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{addonId}', encodeURIComponent(String(addonId)));
+        const apiPath = '/projects/{projectId}/addons/{addonId}'
+            .replace('{projectId}', encodeURIComponent(String(projectId)))
+            .replace('{addonId}', encodeURIComponent(String(addonId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
      * Confirm payment for a billing addon for a project.
-     * 
+     *
      *
      * @param {string} params.projectId - Project ID
      * @param {string} params.addonId - Addon ID
      * @throws {AppwriteException}
      * @returns {Promise<Models.Addon>}
      */
-    confirmAddonPayment(params: { projectId: string, addonId: string }): Promise<Models.Addon>;
+    confirmAddonPayment(params: {
+        projectId: string;
+        addonId: string;
+    }): Promise<Models.Addon>;
     /**
      * Confirm payment for a billing addon for a project.
-     * 
+     *
      *
      * @param {string} projectId - Project ID
      * @param {string} addonId - Addon ID
@@ -270,63 +296,76 @@ export class Projects {
      * @returns {Promise<Models.Addon>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    confirmAddonPayment(projectId: string, addonId: string): Promise<Models.Addon>;
     confirmAddonPayment(
-        paramsOrFirst: { projectId: string, addonId: string } | string,
-        ...rest: [(string)?]    
+        projectId: string,
+        addonId: string,
+    ): Promise<Models.Addon>;
+    confirmAddonPayment(
+        paramsOrFirst: { projectId: string; addonId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Addon> {
-        let params: { projectId: string, addonId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, addonId: string };
+        let params: { projectId: string; addonId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                addonId: string;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                addonId: rest[0] as string            
+                addonId: rest[0] as string,
             };
         }
-        
+
         const projectId = params.projectId;
         const addonId = params.addonId;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-        if (typeof addonId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "addonId"');
+        if (typeof addonId === 'undefined' || addonId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "addonId"',
+            );
         }
-
-        const apiPath = '/projects/{projectId}/addons/{addonId}/confirmations'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{addonId}', encodeURIComponent(String(addonId)));
+        const apiPath = '/projects/{projectId}/addons/{addonId}/confirmations'
+            .replace('{projectId}', encodeURIComponent(String(projectId)))
+            .replace('{addonId}', encodeURIComponent(String(addonId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Get the price details for a billing addon for a project, including the prorated amount for the remaining days in the current billing cycle.
-     * 
+     *
      *
      * @param {string} params.projectId - Project ID
      * @param {string} params.addon - Addon key identifier (e.g. premiumGeoDB).
      * @throws {AppwriteException}
      * @returns {Promise<Models.AddonPrice>}
      */
-    getAddonPrice(params: { projectId: string, addon: string }): Promise<Models.AddonPrice>;
+    getAddonPrice(params: {
+        projectId: string;
+        addon: string;
+    }): Promise<Models.AddonPrice>;
     /**
      * Get the price details for a billing addon for a project, including the prorated amount for the remaining days in the current billing cycle.
-     * 
+     *
      *
      * @param {string} projectId - Project ID
      * @param {string} addon - Addon key identifier (e.g. premiumGeoDB).
@@ -336,50 +375,55 @@ export class Projects {
      */
     getAddonPrice(projectId: string, addon: string): Promise<Models.AddonPrice>;
     getAddonPrice(
-        paramsOrFirst: { projectId: string, addon: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { projectId: string; addon: string } | string,
+        ...rest: [string?]
     ): Promise<Models.AddonPrice> {
-        let params: { projectId: string, addon: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, addon: string };
+        let params: { projectId: string; addon: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                addon: string;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                addon: rest[0] as string            
+                addon: rest[0] as string,
             };
         }
-        
+
         const projectId = params.projectId;
         const addon = params.addon;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-        if (typeof addon === 'undefined') {
+        if (typeof addon === 'undefined' || addon === '') {
             throw new AppwriteException('Missing required parameter: "addon"');
         }
-
-        const apiPath = '/projects/{projectId}/addons/{addon}/price'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{addon}', encodeURIComponent(String(addon)));
+        const apiPath = '/projects/{projectId}/addons/{addon}/price'
+            .replace('{projectId}', encodeURIComponent(String(projectId)))
+            .replace('{addon}', encodeURIComponent(String(addon)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Record console access to a project. This endpoint updates the last accessed timestamp for the project to track console activity.
-     * 
+     *
      *
      * @param {string} params.projectId - Project ID
      * @throws {AppwriteException}
@@ -388,7 +432,7 @@ export class Projects {
     updateConsoleAccess(params: { projectId: string }): Promise<{}>;
     /**
      * Record console access to a project. This endpoint updates the last accessed timestamp for the project to track console activity.
-     * 
+     *
      *
      * @param {string} projectId - Project ID
      * @throws {AppwriteException}
@@ -397,40 +441,43 @@ export class Projects {
      */
     updateConsoleAccess(projectId: string): Promise<{}>;
     updateConsoleAccess(
-        paramsOrFirst: { projectId: string } | string    
+        paramsOrFirst: { projectId: string } | string,
     ): Promise<{}> {
         let params: { projectId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { projectId: string };
         } else {
             params = {
-                projectId: paramsOrFirst as string            
+                projectId: paramsOrFirst as string,
             };
         }
-        
+
         const projectId = params.projectId;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-
-        const apiPath = '/projects/{projectId}/console-access'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const apiPath = '/projects/{projectId}/console-access'.replace(
+            '{projectId}',
+            encodeURIComponent(String(projectId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -441,7 +488,10 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DevKeyList>}
      */
-    listDevKeys(params: { projectId: string, queries?: string[] }): Promise<Models.DevKeyList>;
+    listDevKeys(params: {
+        projectId: string;
+        queries?: string[];
+    }): Promise<Models.DevKeyList>;
     /**
      * List all the project\'s dev keys. Dev keys are project specific and allow you to bypass rate limits and get better error logging during development.'
      *
@@ -451,30 +501,44 @@ export class Projects {
      * @returns {Promise<Models.DevKeyList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listDevKeys(projectId: string, queries?: string[]): Promise<Models.DevKeyList>;
     listDevKeys(
-        paramsOrFirst: { projectId: string, queries?: string[] } | string,
-        ...rest: [(string[])?]    
+        projectId: string,
+        queries?: string[],
+    ): Promise<Models.DevKeyList>;
+    listDevKeys(
+        paramsOrFirst: { projectId: string; queries?: string[] } | string,
+        ...rest: [string[]?]
     ): Promise<Models.DevKeyList> {
-        let params: { projectId: string, queries?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, queries?: string[] };
+        let params: { projectId: string; queries?: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                queries?: string[];
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                queries: rest[0] as string[]            
+                queries: rest[0] as string[],
             };
         }
-        
+
         const projectId = params.projectId;
         const queries = params.queries;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-
-        const apiPath = '/projects/{projectId}/dev-keys'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const apiPath = '/projects/{projectId}/dev-keys'.replace(
+            '{projectId}',
+            encodeURIComponent(String(projectId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -483,15 +547,10 @@ export class Projects {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -502,7 +561,10 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DevKey>}
      */
-    getDevKey(params: { projectId: string, keyId: string }): Promise<Models.DevKey>;
+    getDevKey(params: {
+        projectId: string;
+        keyId: string;
+    }): Promise<Models.DevKey>;
     /**
      * Get a project\'s dev key by its unique ID. Dev keys are project specific and allow you to bypass rate limits and get better error logging during development.
      *
@@ -514,45 +576,50 @@ export class Projects {
      */
     getDevKey(projectId: string, keyId: string): Promise<Models.DevKey>;
     getDevKey(
-        paramsOrFirst: { projectId: string, keyId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { projectId: string; keyId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.DevKey> {
-        let params: { projectId: string, keyId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, keyId: string };
+        let params: { projectId: string; keyId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                keyId: string;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                keyId: rest[0] as string            
+                keyId: rest[0] as string,
             };
         }
-        
+
         const projectId = params.projectId;
         const keyId = params.keyId;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-        if (typeof keyId === 'undefined') {
+        if (typeof keyId === 'undefined' || keyId === '') {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
-
-        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{keyId}', encodeURIComponent(String(keyId)));
+        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'
+            .replace('{projectId}', encodeURIComponent(String(projectId)))
+            .replace('{keyId}', encodeURIComponent(String(keyId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -565,7 +632,12 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DevKey>}
      */
-    updateDevKey(params: { projectId: string, keyId: string, name: string, expire: string }): Promise<Models.DevKey>;
+    updateDevKey(params: {
+        projectId: string;
+        keyId: string;
+        name: string;
+        expire: string;
+    }): Promise<Models.DevKey>;
     /**
      * Update a project\'s dev key by its unique ID. Use this endpoint to update a project\'s dev key name or expiration time.'
      *
@@ -577,33 +649,56 @@ export class Projects {
      * @returns {Promise<Models.DevKey>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateDevKey(projectId: string, keyId: string, name: string, expire: string): Promise<Models.DevKey>;
     updateDevKey(
-        paramsOrFirst: { projectId: string, keyId: string, name: string, expire: string } | string,
-        ...rest: [(string)?, (string)?, (string)?]    
+        projectId: string,
+        keyId: string,
+        name: string,
+        expire: string,
+    ): Promise<Models.DevKey>;
+    updateDevKey(
+        paramsOrFirst:
+            | { projectId: string; keyId: string; name: string; expire: string }
+            | string,
+        ...rest: [string?, string?, string?]
     ): Promise<Models.DevKey> {
-        let params: { projectId: string, keyId: string, name: string, expire: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, keyId: string, name: string, expire: string };
+        let params: {
+            projectId: string;
+            keyId: string;
+            name: string;
+            expire: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                keyId: string;
+                name: string;
+                expire: string;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
                 keyId: rest[0] as string,
                 name: rest[1] as string,
-                expire: rest[2] as string            
+                expire: rest[2] as string,
             };
         }
-        
+
         const projectId = params.projectId;
         const keyId = params.keyId;
         const name = params.name;
         const expire = params.expire;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-        if (typeof keyId === 'undefined') {
+        if (typeof keyId === 'undefined' || keyId === '') {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
         if (typeof name === 'undefined') {
@@ -612,8 +707,9 @@ export class Projects {
         if (typeof expire === 'undefined') {
             throw new AppwriteException('Missing required parameter: "expire"');
         }
-
-        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{keyId}', encodeURIComponent(String(keyId)));
+        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'
+            .replace('{projectId}', encodeURIComponent(String(projectId)))
+            .replace('{keyId}', encodeURIComponent(String(keyId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -626,15 +722,10 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
@@ -645,7 +736,7 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteDevKey(params: { projectId: string, keyId: string }): Promise<{}>;
+    deleteDevKey(params: { projectId: string; keyId: string }): Promise<{}>;
     /**
      * Delete a project\'s dev key by its unique ID. Once deleted, the key will no longer allow bypassing of rate limits and better logging of errors.
      *
@@ -657,45 +748,51 @@ export class Projects {
      */
     deleteDevKey(projectId: string, keyId: string): Promise<{}>;
     deleteDevKey(
-        paramsOrFirst: { projectId: string, keyId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { projectId: string; keyId: string } | string,
+        ...rest: [string?]
     ): Promise<{}> {
-        let params: { projectId: string, keyId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, keyId: string };
+        let params: { projectId: string; keyId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                keyId: string;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                keyId: rest[0] as string            
+                keyId: rest[0] as string,
             };
         }
-        
+
         const projectId = params.projectId;
         const keyId = params.keyId;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-        if (typeof keyId === 'undefined') {
+        if (typeof keyId === 'undefined' || keyId === '') {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
-
-        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{keyId}', encodeURIComponent(String(keyId)));
+        const apiPath = '/projects/{projectId}/dev-keys/{keyId}'
+            .replace('{projectId}', encodeURIComponent(String(projectId)))
+            .replace('{keyId}', encodeURIComponent(String(keyId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -707,7 +804,11 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ScheduleList>}
      */
-    listSchedules(params: { projectId: string, queries?: string[], total?: boolean }): Promise<Models.ScheduleList>;
+    listSchedules(params: {
+        projectId: string;
+        queries?: string[];
+        total?: boolean;
+    }): Promise<Models.ScheduleList>;
     /**
      * Get a list of all the project's schedules. You can use the query params to filter your results.
      *
@@ -718,32 +819,49 @@ export class Projects {
      * @returns {Promise<Models.ScheduleList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listSchedules(projectId: string, queries?: string[], total?: boolean): Promise<Models.ScheduleList>;
     listSchedules(
-        paramsOrFirst: { projectId: string, queries?: string[], total?: boolean } | string,
-        ...rest: [(string[])?, (boolean)?]    
+        projectId: string,
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.ScheduleList>;
+    listSchedules(
+        paramsOrFirst:
+            { projectId: string; queries?: string[]; total?: boolean } | string,
+        ...rest: [string[]?, boolean?]
     ): Promise<Models.ScheduleList> {
-        let params: { projectId: string, queries?: string[], total?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, queries?: string[], total?: boolean };
+        let params: { projectId: string; queries?: string[]; total?: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
                 queries: rest[0] as string[],
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const projectId = params.projectId;
         const queries = params.queries;
         const total = params.total;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-
-        const apiPath = '/projects/{projectId}/schedules'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const apiPath = '/projects/{projectId}/schedules'.replace(
+            '{projectId}',
+            encodeURIComponent(String(projectId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -755,15 +873,10 @@ export class Projects {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -778,7 +891,14 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Schedule>}
      */
-    createSchedule(params: { projectId: string, resourceType: ScheduleResourceType, resourceId: string, schedule: string, active?: boolean, data?: object }): Promise<Models.Schedule>;
+    createSchedule(params: {
+        projectId: string;
+        resourceType: ScheduleResourceType;
+        resourceId: string;
+        schedule: string;
+        active?: boolean;
+        data?: object;
+    }): Promise<Models.Schedule>;
     /**
      * Create a new schedule for a resource.
      *
@@ -792,15 +912,49 @@ export class Projects {
      * @returns {Promise<Models.Schedule>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSchedule(projectId: string, resourceType: ScheduleResourceType, resourceId: string, schedule: string, active?: boolean, data?: object): Promise<Models.Schedule>;
     createSchedule(
-        paramsOrFirst: { projectId: string, resourceType: ScheduleResourceType, resourceId: string, schedule: string, active?: boolean, data?: object } | string,
-        ...rest: [(ScheduleResourceType)?, (string)?, (string)?, (boolean)?, (object)?]    
+        projectId: string,
+        resourceType: ScheduleResourceType,
+        resourceId: string,
+        schedule: string,
+        active?: boolean,
+        data?: object,
+    ): Promise<Models.Schedule>;
+    createSchedule(
+        paramsOrFirst:
+            | {
+                  projectId: string;
+                  resourceType: ScheduleResourceType;
+                  resourceId: string;
+                  schedule: string;
+                  active?: boolean;
+                  data?: object;
+              }
+            | string,
+        ...rest: [ScheduleResourceType?, string?, string?, boolean?, object?]
     ): Promise<Models.Schedule> {
-        let params: { projectId: string, resourceType: ScheduleResourceType, resourceId: string, schedule: string, active?: boolean, data?: object };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, resourceType: ScheduleResourceType, resourceId: string, schedule: string, active?: boolean, data?: object };
+        let params: {
+            projectId: string;
+            resourceType: ScheduleResourceType;
+            resourceId: string;
+            schedule: string;
+            active?: boolean;
+            data?: object;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                resourceType: ScheduleResourceType;
+                resourceId: string;
+                schedule: string;
+                active?: boolean;
+                data?: object;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
@@ -808,10 +962,10 @@ export class Projects {
                 resourceId: rest[1] as string,
                 schedule: rest[2] as string,
                 active: rest[3] as boolean,
-                data: rest[4] as object            
+                data: rest[4] as object,
             };
         }
-        
+
         const projectId = params.projectId;
         const resourceType = params.resourceType;
         const resourceId = params.resourceId;
@@ -819,20 +973,30 @@ export class Projects {
         const active = params.active;
         const data = params.data;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
         if (typeof resourceType === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resourceType"');
+            throw new AppwriteException(
+                'Missing required parameter: "resourceType"',
+            );
         }
         if (typeof resourceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resourceId"');
+            throw new AppwriteException(
+                'Missing required parameter: "resourceId"',
+            );
         }
         if (typeof schedule === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "schedule"');
+            throw new AppwriteException(
+                'Missing required parameter: "schedule"',
+            );
         }
-
-        const apiPath = '/projects/{projectId}/schedules'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const apiPath = '/projects/{projectId}/schedules'.replace(
+            '{projectId}',
+            encodeURIComponent(String(projectId)),
+        );
         const payload: Payload = {};
         if (typeof resourceType !== 'undefined') {
             payload['resourceType'] = resourceType;
@@ -854,15 +1018,10 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -873,7 +1032,10 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Schedule>}
      */
-    getSchedule(params: { projectId: string, scheduleId: string }): Promise<Models.Schedule>;
+    getSchedule(params: {
+        projectId: string;
+        scheduleId: string;
+    }): Promise<Models.Schedule>;
     /**
      * Get a schedule by its unique ID.
      *
@@ -883,52 +1045,62 @@ export class Projects {
      * @returns {Promise<Models.Schedule>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getSchedule(projectId: string, scheduleId: string): Promise<Models.Schedule>;
     getSchedule(
-        paramsOrFirst: { projectId: string, scheduleId: string } | string,
-        ...rest: [(string)?]    
+        projectId: string,
+        scheduleId: string,
+    ): Promise<Models.Schedule>;
+    getSchedule(
+        paramsOrFirst: { projectId: string; scheduleId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Schedule> {
-        let params: { projectId: string, scheduleId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, scheduleId: string };
+        let params: { projectId: string; scheduleId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                scheduleId: string;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                scheduleId: rest[0] as string            
+                scheduleId: rest[0] as string,
             };
         }
-        
+
         const projectId = params.projectId;
         const scheduleId = params.scheduleId;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-        if (typeof scheduleId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "scheduleId"');
+        if (typeof scheduleId === 'undefined' || scheduleId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "scheduleId"',
+            );
         }
-
-        const apiPath = '/projects/{projectId}/schedules/{scheduleId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{scheduleId}', encodeURIComponent(String(scheduleId)));
+        const apiPath = '/projects/{projectId}/schedules/{scheduleId}'
+            .replace('{projectId}', encodeURIComponent(String(projectId)))
+            .replace('{scheduleId}', encodeURIComponent(String(scheduleId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Get the onboarding stages for the current project, including each stage’s SDK method key and status (for example pending, completed, or skipped).
-     * 
+     *
      *
      * @param {string} params.projectId - Project unique ID.
      * @throws {AppwriteException}
@@ -937,7 +1109,7 @@ export class Projects {
     listStages(params: { projectId: string }): Promise<Models.StageList>;
     /**
      * Get the onboarding stages for the current project, including each stage’s SDK method key and status (for example pending, completed, or skipped).
-     * 
+     *
      *
      * @param {string} projectId - Project unique ID.
      * @throws {AppwriteException}
@@ -946,44 +1118,47 @@ export class Projects {
      */
     listStages(projectId: string): Promise<Models.StageList>;
     listStages(
-        paramsOrFirst: { projectId: string } | string    
+        paramsOrFirst: { projectId: string } | string,
     ): Promise<Models.StageList> {
         let params: { projectId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { projectId: string };
         } else {
             params = {
-                projectId: paramsOrFirst as string            
+                projectId: paramsOrFirst as string,
             };
         }
-        
+
         const projectId = params.projectId;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-
-        const apiPath = '/projects/{projectId}/stages'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const apiPath = '/projects/{projectId}/stages'.replace(
+            '{projectId}',
+            encodeURIComponent(String(projectId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Update an onboarding stage for the current project. Use this endpoint to skip a stage or leave it unchanged without performing the related API action.
-     * 
+     *
      *
      * @param {string} params.projectId - Project unique ID.
      * @param {string} params.stageId - SDK method key (namespace.method).
@@ -991,10 +1166,14 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Stage>}
      */
-    updateStage(params: { projectId: string, stageId: string, skip?: boolean }): Promise<Models.Stage>;
+    updateStage(params: {
+        projectId: string;
+        stageId: string;
+        skip?: boolean;
+    }): Promise<Models.Stage>;
     /**
      * Update an onboarding stage for the current project. Use this endpoint to skip a stage or leave it unchanged without performing the related API action.
-     * 
+     *
      *
      * @param {string} projectId - Project unique ID.
      * @param {string} stageId - SDK method key (namespace.method).
@@ -1003,35 +1182,53 @@ export class Projects {
      * @returns {Promise<Models.Stage>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateStage(projectId: string, stageId: string, skip?: boolean): Promise<Models.Stage>;
     updateStage(
-        paramsOrFirst: { projectId: string, stageId: string, skip?: boolean } | string,
-        ...rest: [(string)?, (boolean)?]    
+        projectId: string,
+        stageId: string,
+        skip?: boolean,
+    ): Promise<Models.Stage>;
+    updateStage(
+        paramsOrFirst:
+            { projectId: string; stageId: string; skip?: boolean } | string,
+        ...rest: [string?, boolean?]
     ): Promise<Models.Stage> {
-        let params: { projectId: string, stageId: string, skip?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, stageId: string, skip?: boolean };
+        let params: { projectId: string; stageId: string; skip?: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                stageId: string;
+                skip?: boolean;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
                 stageId: rest[0] as string,
-                skip: rest[1] as boolean            
+                skip: rest[1] as boolean,
             };
         }
-        
+
         const projectId = params.projectId;
         const stageId = params.stageId;
         const skip = params.skip;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-        if (typeof stageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "stageId"');
+        if (typeof stageId === 'undefined' || stageId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "stageId"',
+            );
         }
-
-        const apiPath = '/projects/{projectId}/stages/{stageId}'.replace('{projectId}', encodeURIComponent(String(projectId))).replace('{stageId}', encodeURIComponent(String(stageId)));
+        const apiPath = '/projects/{projectId}/stages/{stageId}'
+            .replace('{projectId}', encodeURIComponent(String(projectId)))
+            .replace('{stageId}', encodeURIComponent(String(stageId)));
         const payload: Payload = {};
         if (typeof skip !== 'undefined') {
             payload['skip'] = skip;
@@ -1041,30 +1238,25 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
      * Update the status of a project. Can be used to archive/restore projects, and to restore paused projects. When restoring a paused project, the console fingerprint header must be provided and the project must not be blocked for any reason other than inactivity.
-     * 
+     *
      *
      * @param {string} params.projectId - Project ID
      * @param {Status} params.status - New status for the project
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    updateStatus(params: { projectId: string, status: Status }): Promise<{}>;
+    updateStatus(params: { projectId: string; status: Status }): Promise<{}>;
     /**
      * Update the status of a project. Can be used to archive/restore projects, and to restore paused projects. When restoring a paused project, the console fingerprint header must be provided and the project must not be blocked for any reason other than inactivity.
-     * 
+     *
      *
      * @param {string} projectId - Project ID
      * @param {Status} status - New status for the project
@@ -1074,31 +1266,42 @@ export class Projects {
      */
     updateStatus(projectId: string, status: Status): Promise<{}>;
     updateStatus(
-        paramsOrFirst: { projectId: string, status: Status } | string,
-        ...rest: [(Status)?]    
+        paramsOrFirst: { projectId: string; status: Status } | string,
+        ...rest: [Status?]
     ): Promise<{}> {
-        let params: { projectId: string, status: Status };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, status: Status };
+        let params: { projectId: string; status: Status };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                status: Status;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                status: rest[0] as Status            
+                status: rest[0] as Status,
             };
         }
-        
+
         const projectId = params.projectId;
         const status = params.status;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
         if (typeof status === 'undefined') {
             throw new AppwriteException('Missing required parameter: "status"');
         }
-
-        const apiPath = '/projects/{projectId}/status'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const apiPath = '/projects/{projectId}/status'.replace(
+            '{projectId}',
+            encodeURIComponent(String(projectId)),
+        );
         const payload: Payload = {};
         if (typeof status !== 'undefined') {
             payload['status'] = status;
@@ -1108,15 +1311,10 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1127,7 +1325,10 @@ export class Projects {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Project>}
      */
-    updateTeam(params: { projectId: string, teamId: string }): Promise<Models.Project>;
+    updateTeam(params: {
+        projectId: string;
+        teamId: string;
+    }): Promise<Models.Project>;
     /**
      * Update the team ID of a project allowing for it to be transferred to another team.
      *
@@ -1139,31 +1340,42 @@ export class Projects {
      */
     updateTeam(projectId: string, teamId: string): Promise<Models.Project>;
     updateTeam(
-        paramsOrFirst: { projectId: string, teamId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { projectId: string; teamId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Project> {
-        let params: { projectId: string, teamId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, teamId: string };
+        let params: { projectId: string; teamId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                teamId: string;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
-                teamId: rest[0] as string            
+                teamId: rest[0] as string,
             };
         }
-        
+
         const projectId = params.projectId;
         const teamId = params.teamId;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
-
-        const apiPath = '/projects/{projectId}/team'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const apiPath = '/projects/{projectId}/team'.replace(
+            '{projectId}',
+            encodeURIComponent(String(projectId)),
+        );
         const payload: Payload = {};
         if (typeof teamId !== 'undefined') {
             payload['teamId'] = teamId;
@@ -1173,14 +1385,9 @@ export class Projects {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 }

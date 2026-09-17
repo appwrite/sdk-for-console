@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Users } from "@appwrite.io/console";
+import { Client, Users } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -14,7 +14,7 @@ const result = await users.createScryptModifiedUser({
     passwordSalt: '<PASSWORD_SALT>',
     passwordSaltSeparator: '<PASSWORD_SALT_SEPARATOR>',
     passwordSignerKey: '<PASSWORD_SIGNER_KEY>',
-    name: '<NAME>' // optional
+    name: '<NAME>', // optional
 });
 
 console.log(result);

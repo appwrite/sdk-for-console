@@ -1,5 +1,5 @@
 ```javascript
-import { Client, VectorsDB } from "@appwrite.io/console";
+import { Client, VectorsDB } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +12,7 @@ const result = await vectorsDB.updateDocuments({
     collectionId: '<COLLECTION_ID>',
     data: {}, // optional
     queries: [], // optional
-    transactionId: '<TRANSACTION_ID>' // optional
+    transactionId: '<TRANSACTION_ID>', // optional
 });
 
 console.log(result);

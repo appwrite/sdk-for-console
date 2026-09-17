@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Users, AuthenticatorType } from "@appwrite.io/console";
+import { Client, Users, AuthenticatorType } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const users = new Users(client);
 
 const result = await users.deleteMFAAuthenticator({
     userId: '<USER_ID>',
-    type: AuthenticatorType.Totp
+    type: AuthenticatorType.Totp,
 });
 
 console.log(result);

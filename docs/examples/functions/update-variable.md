@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Functions } from "@appwrite.io/console";
+import { Client, Functions } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +12,7 @@ const result = await functions.updateVariable({
     variableId: '<VARIABLE_ID>',
     key: '<KEY>', // optional
     value: '<VALUE>', // optional
-    secret: false // optional
+    secret: false, // optional
 });
 
 console.log(result);

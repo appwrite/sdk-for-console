@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Apps } from "@appwrite.io/console";
+import { Client, Apps } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -26,7 +26,7 @@ const result = await apps.create({
     enabled: false, // optional
     type: 'public', // optional
     deviceFlow: false, // optional
-    teamId: '<TEAM_ID>' // optional
+    teamId: '<TEAM_ID>', // optional
 });
 
 console.log(result);

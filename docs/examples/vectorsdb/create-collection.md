@@ -1,5 +1,5 @@
 ```javascript
-import { Client, VectorsDB, Permission, Role } from "@appwrite.io/console";
+import { Client, VectorsDB, Permission, Role } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -14,7 +14,7 @@ const result = await vectorsDB.createCollection({
     dimension: 1,
     permissions: [Permission.read(Role.any())], // optional
     documentSecurity: false, // optional
-    enabled: false // optional
+    enabled: false, // optional
 });
 
 console.log(result);

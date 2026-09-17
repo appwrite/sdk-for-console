@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Waf } from "@appwrite.io/console";
+import { Client, Waf } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const waf = new Waf(client);
 
 const result = await waf.getRule({
-    ruleId: '<RULE_ID>'
+    ruleId: '<RULE_ID>',
 });
 
 console.log(result);

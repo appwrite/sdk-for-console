@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Project } from "@appwrite.io/console";
+import { Client, Project } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +12,7 @@ const result = await project.updateOAuth2Apple({
     keyId: '<KEY_ID>', // optional
     teamId: '<TEAM_ID>', // optional
     p8File: '<P8_FILE>', // optional
-    enabled: false // optional
+    enabled: false, // optional
 });
 
 console.log(result);

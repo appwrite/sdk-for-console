@@ -1,5 +1,11 @@
 ```javascript
-import { Client, Storage, Compression, Permission, Role } from "@appwrite.io/console";
+import {
+    Client,
+    Storage,
+    Compression,
+    Permission,
+    Role,
+} from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -18,7 +24,7 @@ const result = await storage.createBucket({
     compression: Compression.None, // optional
     encryption: false, // optional
     antivirus: false, // optional
-    transformations: false // optional
+    transformations: false, // optional
 });
 
 console.log(result);

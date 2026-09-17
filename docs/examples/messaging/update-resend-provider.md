@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Messaging } from "@appwrite.io/console";
+import { Client, Messaging } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -15,7 +15,7 @@ const result = await messaging.updateResendProvider({
     fromName: '<FROM_NAME>', // optional
     fromEmail: 'email@example.com', // optional
     replyToName: '<REPLY_TO_NAME>', // optional
-    replyToEmail: '<REPLY_TO_EMAIL>' // optional
+    replyToEmail: '<REPLY_TO_EMAIL>', // optional
 });
 
 console.log(result);

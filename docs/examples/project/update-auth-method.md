@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Project, ProjectAuthMethodId } from "@appwrite.io/console";
+import { Client, Project, ProjectAuthMethodId } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const project = new Project(client);
 
 const result = await project.updateAuthMethod({
     methodId: ProjectAuthMethodId.EmailPassword,
-    enabled: false
+    enabled: false,
 });
 
 console.log(result);

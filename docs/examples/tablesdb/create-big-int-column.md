@@ -1,5 +1,5 @@
 ```javascript
-import { Client, TablesDB } from "@appwrite.io/console";
+import { Client, TablesDB } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,12 +10,12 @@ const tablesDB = new TablesDB(client);
 const result = await tablesDB.createBigIntColumn({
     databaseId: '<DATABASE_ID>',
     tableId: '<TABLE_ID>',
-    key: '',
+    key: '<KEY>',
     required: false,
-    min: null, // optional
-    max: null, // optional
-    xdefault: null, // optional
-    array: false // optional
+    min: 0, // optional
+    max: 1000000, // optional
+    xdefault: 0, // optional
+    array: false, // optional
 });
 
 console.log(result);

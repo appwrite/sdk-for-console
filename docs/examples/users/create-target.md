@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Users, MessagingProviderType } from "@appwrite.io/console";
+import { Client, Users, MessagingProviderType } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,7 +13,7 @@ const result = await users.createTarget({
     providerType: MessagingProviderType.Email,
     identifier: '<IDENTIFIER>',
     providerId: '<PROVIDER_ID>', // optional
-    name: '<NAME>' // optional
+    name: '<NAME>', // optional
 });
 
 console.log(result);

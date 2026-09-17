@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Mysql } from "@appwrite.io/console";
+import { Client, Mysql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const mysql = new Mysql(client);
 
 const result = await mysql.getBackup({
     databaseId: '<DATABASE_ID>',
-    backupId: '<BACKUP_ID>'
+    backupId: '<BACKUP_ID>',
 });
 
 console.log(result);

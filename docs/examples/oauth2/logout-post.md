@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Oauth2 } from "@appwrite.io/console";
+import { Client, Oauth2 } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,7 +13,7 @@ const result = await oauth2.logoutPost({
     clientId: '<CLIENT_ID>', // optional
     postLogoutRedirectUri: 'https://example.com', // optional
     state: '<STATE>', // optional
-    uiLocales: '<UI_LOCALES>' // optional
+    uiLocales: '<UI_LOCALES>', // optional
 });
 
 console.log(result);

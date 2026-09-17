@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Mysql } from "@appwrite.io/console";
+import { Client, Mysql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -14,8 +14,6 @@ const result = await mysql.update({
     specification: '<SPECIFICATION>', // optional
     replicas: 0, // optional
     syncMode: 'async', // optional
-    crossRegionReplicas: 0, // optional
-    standbyRegion: '<STANDBY_REGION>', // optional
     networkIdleTimeoutSeconds: 60, // optional
     networkIPAllowlist: [], // optional
     idleTimeoutMinutes: 5, // optional
@@ -30,7 +28,7 @@ const result = await mysql.update({
     sqlApiAllowedStatements: [], // optional
     sqlApiMaxRows: 1, // optional
     sqlApiMaxBytes: 1024, // optional
-    sqlApiTimeoutSeconds: 1 // optional
+    sqlApiTimeoutSeconds: 1, // optional
 });
 
 console.log(result);

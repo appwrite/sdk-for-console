@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Apps } from "@appwrite.io/console";
+import { Client, Apps } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const apps = new Apps(client);
 
 const result = await apps.delete({
-    appId: '<APP_ID>'
+    appId: '<APP_ID>',
 });
 
 console.log(result);

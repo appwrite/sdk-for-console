@@ -1,9 +1,7 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
 
 import { UsageRange } from '../enums/usage-range';
-
 export class Presences {
     client: Client;
 
@@ -13,7 +11,7 @@ export class Presences {
 
     /**
      * List presence logs. Expired entries are filtered out automatically.
-     * 
+     *
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
@@ -21,10 +19,14 @@ export class Presences {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PresenceList>}
      */
-    list(params?: { queries?: string[], total?: boolean, ttl?: number }): Promise<Models.PresenceList>;
+    list(params?: {
+        queries?: string[];
+        total?: boolean;
+        ttl?: number;
+    }): Promise<Models.PresenceList>;
     /**
      * List presence logs. Expired entries are filtered out automatically.
-     * 
+     *
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
@@ -33,27 +35,40 @@ export class Presences {
      * @returns {Promise<Models.PresenceList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    list(queries?: string[], total?: boolean, ttl?: number): Promise<Models.PresenceList>;
     list(
-        paramsOrFirst?: { queries?: string[], total?: boolean, ttl?: number } | string[],
-        ...rest: [(boolean)?, (number)?]    
+        queries?: string[],
+        total?: boolean,
+        ttl?: number,
+    ): Promise<Models.PresenceList>;
+    list(
+        paramsOrFirst?:
+            { queries?: string[]; total?: boolean; ttl?: number } | string[],
+        ...rest: [boolean?, number?]
     ): Promise<Models.PresenceList> {
-        let params: { queries?: string[], total?: boolean, ttl?: number };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], total?: boolean, ttl?: number };
+        let params: { queries?: string[]; total?: boolean; ttl?: number };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                total?: boolean;
+                ttl?: number;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
                 total: rest[0] as boolean,
-                ttl: rest[1] as number            
+                ttl: rest[1] as number,
             };
         }
-        
+
         const queries = params.queries;
         const total = params.total;
         const ttl = params.ttl;
-
 
         const apiPath = '/presences';
         const payload: Payload = {};
@@ -70,20 +85,15 @@ export class Presences {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Get presence usage metrics, including the current total of online users and historical online user counts for the selected time range.
-     * 
+     *
      *
      * @param {UsageRange} params.range - Date range.
      * @throws {AppwriteException}
@@ -92,7 +102,7 @@ export class Presences {
     getUsage(params?: { range?: UsageRange }): Promise<Models.UsagePresence>;
     /**
      * Get presence usage metrics, including the current total of online users and historical online user counts for the selected time range.
-     * 
+     *
      *
      * @param {UsageRange} range - Date range.
      * @throws {AppwriteException}
@@ -101,20 +111,25 @@ export class Presences {
      */
     getUsage(range?: UsageRange): Promise<Models.UsagePresence>;
     getUsage(
-        paramsOrFirst?: { range?: UsageRange } | UsageRange    
+        paramsOrFirst?: { range?: UsageRange } | UsageRange,
     ): Promise<Models.UsagePresence> {
         let params: { range?: UsageRange };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('range' in paramsOrFirst))) {
+
+        if (
+            typeof paramsOrFirst === 'undefined' ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst) &&
+                'range' in paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { range?: UsageRange };
         } else {
             params = {
-                range: paramsOrFirst as UsageRange            
+                range: paramsOrFirst as UsageRange,
             };
         }
-        
-        const range = params.range;
 
+        const range = params.range;
 
         const apiPath = '/presences/usage';
         const payload: Payload = {};
@@ -125,20 +140,15 @@ export class Presences {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Get a presence log by its unique ID. Entries whose `expiresAt` is in the past are treated as not found.
-     * 
+     *
      *
      * @param {string} params.presenceId - Presence unique ID.
      * @throws {AppwriteException}
@@ -147,7 +157,7 @@ export class Presences {
     get(params: { presenceId: string }): Promise<Models.Presence>;
     /**
      * Get a presence log by its unique ID. Entries whose `expiresAt` is in the past are treated as not found.
-     * 
+     *
      *
      * @param {string} presenceId - Presence unique ID.
      * @throws {AppwriteException}
@@ -156,44 +166,47 @@ export class Presences {
      */
     get(presenceId: string): Promise<Models.Presence>;
     get(
-        paramsOrFirst: { presenceId: string } | string    
+        paramsOrFirst: { presenceId: string } | string,
     ): Promise<Models.Presence> {
         let params: { presenceId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { presenceId: string };
         } else {
             params = {
-                presenceId: paramsOrFirst as string            
+                presenceId: paramsOrFirst as string,
             };
         }
-        
+
         const presenceId = params.presenceId;
 
-        if (typeof presenceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "presenceId"');
+        if (typeof presenceId === 'undefined' || presenceId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "presenceId"',
+            );
         }
-
-        const apiPath = '/presences/{presenceId}'.replace('{presenceId}', encodeURIComponent(String(presenceId)));
+        const apiPath = '/presences/{presenceId}'.replace(
+            '{presenceId}',
+            encodeURIComponent(String(presenceId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Create or update a presence log by its user ID.
-     * 
+     *
      *
      * @param {string} params.presenceId - Presence unique ID.
      * @param {string} params.status - Presence status.
@@ -203,10 +216,16 @@ export class Presences {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Presence>}
      */
-    upsert(params: { presenceId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object }): Promise<Models.Presence>;
+    upsert(params: {
+        presenceId: string;
+        status: string;
+        permissions?: string[];
+        expiresAt?: string;
+        metadata?: object;
+    }): Promise<Models.Presence>;
     /**
      * Create or update a presence log by its user ID.
-     * 
+     *
      *
      * @param {string} presenceId - Presence unique ID.
      * @param {string} status - Presence status.
@@ -217,39 +236,73 @@ export class Presences {
      * @returns {Promise<Models.Presence>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    upsert(presenceId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object): Promise<Models.Presence>;
     upsert(
-        paramsOrFirst: { presenceId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object } | string,
-        ...rest: [(string)?, (string[])?, (string)?, (object)?]    
+        presenceId: string,
+        status: string,
+        permissions?: string[],
+        expiresAt?: string,
+        metadata?: object,
+    ): Promise<Models.Presence>;
+    upsert(
+        paramsOrFirst:
+            | {
+                  presenceId: string;
+                  status: string;
+                  permissions?: string[];
+                  expiresAt?: string;
+                  metadata?: object;
+              }
+            | string,
+        ...rest: [string?, string[]?, string?, object?]
     ): Promise<Models.Presence> {
-        let params: { presenceId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { presenceId: string, status: string, permissions?: string[], expiresAt?: string, metadata?: object };
+        let params: {
+            presenceId: string;
+            status: string;
+            permissions?: string[];
+            expiresAt?: string;
+            metadata?: object;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                presenceId: string;
+                status: string;
+                permissions?: string[];
+                expiresAt?: string;
+                metadata?: object;
+            };
         } else {
             params = {
                 presenceId: paramsOrFirst as string,
                 status: rest[0] as string,
                 permissions: rest[1] as string[],
                 expiresAt: rest[2] as string,
-                metadata: rest[3] as object            
+                metadata: rest[3] as object,
             };
         }
-        
+
         const presenceId = params.presenceId;
         const status = params.status;
         const permissions = params.permissions;
         const expiresAt = params.expiresAt;
         const metadata = params.metadata;
 
-        if (typeof presenceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "presenceId"');
+        if (typeof presenceId === 'undefined' || presenceId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "presenceId"',
+            );
         }
         if (typeof status === 'undefined') {
             throw new AppwriteException('Missing required parameter: "status"');
         }
-
-        const apiPath = '/presences/{presenceId}'.replace('{presenceId}', encodeURIComponent(String(presenceId)));
+        const apiPath = '/presences/{presenceId}'.replace(
+            '{presenceId}',
+            encodeURIComponent(String(presenceId)),
+        );
         const payload: Payload = {};
         if (typeof status !== 'undefined') {
             payload['status'] = status;
@@ -268,20 +321,15 @@ export class Presences {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
      * Update a presence log by its unique ID. Using the patch method you can pass only specific fields that will get updated.
-     * 
+     *
      *
      * @param {string} params.presenceId - Presence unique ID.
      * @param {string} params.status - Presence status.
@@ -292,10 +340,17 @@ export class Presences {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Presence>}
      */
-    update(params: { presenceId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean }): Promise<Models.Presence>;
+    update(params: {
+        presenceId: string;
+        status?: string;
+        expiresAt?: string;
+        metadata?: object;
+        permissions?: string[];
+        purge?: boolean;
+    }): Promise<Models.Presence>;
     /**
      * Update a presence log by its unique ID. Using the patch method you can pass only specific fields that will get updated.
-     * 
+     *
      *
      * @param {string} presenceId - Presence unique ID.
      * @param {string} status - Presence status.
@@ -307,15 +362,49 @@ export class Presences {
      * @returns {Promise<Models.Presence>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(presenceId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean): Promise<Models.Presence>;
     update(
-        paramsOrFirst: { presenceId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean } | string,
-        ...rest: [(string)?, (string)?, (object)?, (string[])?, (boolean)?]    
+        presenceId: string,
+        status?: string,
+        expiresAt?: string,
+        metadata?: object,
+        permissions?: string[],
+        purge?: boolean,
+    ): Promise<Models.Presence>;
+    update(
+        paramsOrFirst:
+            | {
+                  presenceId: string;
+                  status?: string;
+                  expiresAt?: string;
+                  metadata?: object;
+                  permissions?: string[];
+                  purge?: boolean;
+              }
+            | string,
+        ...rest: [string?, string?, object?, string[]?, boolean?]
     ): Promise<Models.Presence> {
-        let params: { presenceId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { presenceId: string, status?: string, expiresAt?: string, metadata?: object, permissions?: string[], purge?: boolean };
+        let params: {
+            presenceId: string;
+            status?: string;
+            expiresAt?: string;
+            metadata?: object;
+            permissions?: string[];
+            purge?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                presenceId: string;
+                status?: string;
+                expiresAt?: string;
+                metadata?: object;
+                permissions?: string[];
+                purge?: boolean;
+            };
         } else {
             params = {
                 presenceId: paramsOrFirst as string,
@@ -323,10 +412,10 @@ export class Presences {
                 expiresAt: rest[1] as string,
                 metadata: rest[2] as object,
                 permissions: rest[3] as string[],
-                purge: rest[4] as boolean            
+                purge: rest[4] as boolean,
             };
         }
-        
+
         const presenceId = params.presenceId;
         const status = params.status;
         const expiresAt = params.expiresAt;
@@ -334,11 +423,15 @@ export class Presences {
         const permissions = params.permissions;
         const purge = params.purge;
 
-        if (typeof presenceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "presenceId"');
+        if (typeof presenceId === 'undefined' || presenceId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "presenceId"',
+            );
         }
-
-        const apiPath = '/presences/{presenceId}'.replace('{presenceId}', encodeURIComponent(String(presenceId)));
+        const apiPath = '/presences/{presenceId}'.replace(
+            '{presenceId}',
+            encodeURIComponent(String(presenceId)),
+        );
         const payload: Payload = {};
         if (typeof status !== 'undefined') {
             payload['status'] = status;
@@ -360,20 +453,15 @@ export class Presences {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
      * Delete a presence log by its unique ID.
-     * 
+     *
      *
      * @param {string} params.presenceId - Presence unique ID.
      * @throws {AppwriteException}
@@ -382,7 +470,7 @@ export class Presences {
     delete(params: { presenceId: string }): Promise<{}>;
     /**
      * Delete a presence log by its unique ID.
-     * 
+     *
      *
      * @param {string} presenceId - Presence unique ID.
      * @throws {AppwriteException}
@@ -390,39 +478,41 @@ export class Presences {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     delete(presenceId: string): Promise<{}>;
-    delete(
-        paramsOrFirst: { presenceId: string } | string    
-    ): Promise<{}> {
+    delete(paramsOrFirst: { presenceId: string } | string): Promise<{}> {
         let params: { presenceId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { presenceId: string };
         } else {
             params = {
-                presenceId: paramsOrFirst as string            
+                presenceId: paramsOrFirst as string,
             };
         }
-        
+
         const presenceId = params.presenceId;
 
-        if (typeof presenceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "presenceId"');
+        if (typeof presenceId === 'undefined' || presenceId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "presenceId"',
+            );
         }
-
-        const apiPath = '/presences/{presenceId}'.replace('{presenceId}', encodeURIComponent(String(presenceId)));
+        const apiPath = '/presences/{presenceId}'.replace(
+            '{presenceId}',
+            encodeURIComponent(String(presenceId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 }

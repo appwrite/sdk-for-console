@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Vcs, VCSDetectionType } from "@appwrite.io/console";
+import { Client, Vcs, VCSDetectionType } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +11,7 @@ const result = await vcs.listRepositories({
     installationId: '<INSTALLATION_ID>',
     type: VCSDetectionType.Runtime,
     search: '<SEARCH>', // optional
-    queries: [] // optional
+    queries: [], // optional
 });
 
 console.log(result);

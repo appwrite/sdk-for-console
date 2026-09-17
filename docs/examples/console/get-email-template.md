@@ -1,5 +1,10 @@
 ```javascript
-import { Client, Console, ProjectEmailTemplateId, ProjectEmailTemplateLocale } from "@appwrite.io/console";
+import {
+    Client,
+    Console,
+    ProjectEmailTemplateId,
+    ProjectEmailTemplateLocale,
+} from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +14,7 @@ const xconsole = new Console(client);
 
 const result = await xconsole.getEmailTemplate({
     templateId: ProjectEmailTemplateId.Verification,
-    locale: ProjectEmailTemplateLocale.Af // optional
+    locale: ProjectEmailTemplateLocale.Af, // optional
 });
 
 console.log(result);

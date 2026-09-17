@@ -1,5 +1,5 @@
 ```javascript
-import { Client, VectorsDB, Permission, Role } from "@appwrite.io/console";
+import { Client, VectorsDB, Permission, Role } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,7 +13,7 @@ const result = await vectorsDB.upsertDocument({
     documentId: '<DOCUMENT_ID>',
     data: {}, // optional
     permissions: [Permission.read(Role.any())], // optional
-    transactionId: '<TRANSACTION_ID>' // optional
+    transactionId: '<TRANSACTION_ID>', // optional
 });
 
 console.log(result);

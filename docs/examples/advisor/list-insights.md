@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Advisor } from "@appwrite.io/console";
+import { Client, Advisor } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const advisor = new Advisor(client);
 const result = await advisor.listInsights({
     reportId: '<REPORT_ID>',
     queries: [], // optional
-    total: false // optional
+    total: false, // optional
 });
 
 console.log(result);

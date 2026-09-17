@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Functions } from "@appwrite.io/console";
+import { Client, Functions } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +11,7 @@ const result = await functions.listDeployments({
     functionId: '<FUNCTION_ID>',
     queries: [], // optional
     search: '<SEARCH>', // optional
-    total: false // optional
+    total: false, // optional
 });
 
 console.log(result);

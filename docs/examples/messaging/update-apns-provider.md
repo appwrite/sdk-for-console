@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Messaging } from "@appwrite.io/console";
+import { Client, Messaging } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -15,7 +15,7 @@ const result = await messaging.updateAPNSProvider({
     authKeyId: '<AUTH_KEY_ID>', // optional
     teamId: '<TEAM_ID>', // optional
     bundleId: '<BUNDLE_ID>', // optional
-    sandbox: false // optional
+    sandbox: false, // optional
 });
 
 console.log(result);

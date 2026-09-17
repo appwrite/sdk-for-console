@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Vcs } from "@appwrite.io/console";
+import { Client, Vcs } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +11,7 @@ const result = await vcs.createRepository({
     installationId: '<INSTALLATION_ID>',
     name: '<NAME>',
     xprivate: false,
-    providerNamespace: '<PROVIDER_NAMESPACE>' // optional
+    providerNamespace: '<PROVIDER_NAMESPACE>', // optional
 });
 
 console.log(result);

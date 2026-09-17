@@ -1,7 +1,5 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
-
 
 export class Tokens {
     client: Client;
@@ -20,7 +18,12 @@ export class Tokens {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ResourceTokenList>}
      */
-    list(params: { bucketId: string, fileId: string, queries?: string[], total?: boolean }): Promise<Models.ResourceTokenList>;
+    list(params: {
+        bucketId: string;
+        fileId: string;
+        queries?: string[];
+        total?: boolean;
+    }): Promise<Models.ResourceTokenList>;
     /**
      * List all the tokens created for a specific file or bucket. You can use the query params to filter your results.
      *
@@ -32,37 +35,66 @@ export class Tokens {
      * @returns {Promise<Models.ResourceTokenList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    list(bucketId: string, fileId: string, queries?: string[], total?: boolean): Promise<Models.ResourceTokenList>;
     list(
-        paramsOrFirst: { bucketId: string, fileId: string, queries?: string[], total?: boolean } | string,
-        ...rest: [(string)?, (string[])?, (boolean)?]    
+        bucketId: string,
+        fileId: string,
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.ResourceTokenList>;
+    list(
+        paramsOrFirst:
+            | {
+                  bucketId: string;
+                  fileId: string;
+                  queries?: string[];
+                  total?: boolean;
+              }
+            | string,
+        ...rest: [string?, string[]?, boolean?]
     ): Promise<Models.ResourceTokenList> {
-        let params: { bucketId: string, fileId: string, queries?: string[], total?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, queries?: string[], total?: boolean };
+        let params: {
+            bucketId: string;
+            fileId: string;
+            queries?: string[];
+            total?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                bucketId: string;
+                fileId: string;
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 bucketId: paramsOrFirst as string,
                 fileId: rest[0] as string,
                 queries: rest[1] as string[],
-                total: rest[2] as boolean            
+                total: rest[2] as boolean,
             };
         }
-        
+
         const bucketId = params.bucketId;
         const fileId = params.fileId;
         const queries = params.queries;
         const total = params.total;
 
-        if (typeof bucketId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "bucketId"');
+        if (typeof bucketId === 'undefined' || bucketId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "bucketId"',
+            );
         }
-        if (typeof fileId === 'undefined') {
+        if (typeof fileId === 'undefined' || fileId === '') {
             throw new AppwriteException('Missing required parameter: "fileId"');
         }
-
-        const apiPath = '/tokens/buckets/{bucketId}/files/{fileId}'.replace('{bucketId}', encodeURIComponent(String(bucketId))).replace('{fileId}', encodeURIComponent(String(fileId)));
+        const apiPath = '/tokens/buckets/{bucketId}/files/{fileId}'
+            .replace('{bucketId}', encodeURIComponent(String(bucketId)))
+            .replace('{fileId}', encodeURIComponent(String(fileId)));
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -74,15 +106,10 @@ export class Tokens {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -94,7 +121,11 @@ export class Tokens {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ResourceToken>}
      */
-    createFileToken(params: { bucketId: string, fileId: string, expire?: string }): Promise<Models.ResourceToken>;
+    createFileToken(params: {
+        bucketId: string;
+        fileId: string;
+        expire?: string;
+    }): Promise<Models.ResourceToken>;
     /**
      * Create a new token. A token is linked to a file. Token can be passed as a request URL search parameter.
      *
@@ -105,35 +136,51 @@ export class Tokens {
      * @returns {Promise<Models.ResourceToken>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createFileToken(bucketId: string, fileId: string, expire?: string): Promise<Models.ResourceToken>;
     createFileToken(
-        paramsOrFirst: { bucketId: string, fileId: string, expire?: string } | string,
-        ...rest: [(string)?, (string)?]    
+        bucketId: string,
+        fileId: string,
+        expire?: string,
+    ): Promise<Models.ResourceToken>;
+    createFileToken(
+        paramsOrFirst:
+            { bucketId: string; fileId: string; expire?: string } | string,
+        ...rest: [string?, string?]
     ): Promise<Models.ResourceToken> {
-        let params: { bucketId: string, fileId: string, expire?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, expire?: string };
+        let params: { bucketId: string; fileId: string; expire?: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                bucketId: string;
+                fileId: string;
+                expire?: string;
+            };
         } else {
             params = {
                 bucketId: paramsOrFirst as string,
                 fileId: rest[0] as string,
-                expire: rest[1] as string            
+                expire: rest[1] as string,
             };
         }
-        
+
         const bucketId = params.bucketId;
         const fileId = params.fileId;
         const expire = params.expire;
 
-        if (typeof bucketId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "bucketId"');
+        if (typeof bucketId === 'undefined' || bucketId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "bucketId"',
+            );
         }
-        if (typeof fileId === 'undefined') {
+        if (typeof fileId === 'undefined' || fileId === '') {
             throw new AppwriteException('Missing required parameter: "fileId"');
         }
-
-        const apiPath = '/tokens/buckets/{bucketId}/files/{fileId}'.replace('{bucketId}', encodeURIComponent(String(bucketId))).replace('{fileId}', encodeURIComponent(String(fileId)));
+        const apiPath = '/tokens/buckets/{bucketId}/files/{fileId}'
+            .replace('{bucketId}', encodeURIComponent(String(bucketId)))
+            .replace('{fileId}', encodeURIComponent(String(fileId)));
         const payload: Payload = {};
         if (typeof expire !== 'undefined') {
             payload['expire'] = expire;
@@ -143,15 +190,10 @@ export class Tokens {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -172,39 +214,42 @@ export class Tokens {
      */
     get(tokenId: string): Promise<Models.ResourceToken>;
     get(
-        paramsOrFirst: { tokenId: string } | string    
+        paramsOrFirst: { tokenId: string } | string,
     ): Promise<Models.ResourceToken> {
         let params: { tokenId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { tokenId: string };
         } else {
             params = {
-                tokenId: paramsOrFirst as string            
+                tokenId: paramsOrFirst as string,
             };
         }
-        
+
         const tokenId = params.tokenId;
 
-        if (typeof tokenId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "tokenId"');
+        if (typeof tokenId === 'undefined' || tokenId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "tokenId"',
+            );
         }
-
-        const apiPath = '/tokens/{tokenId}'.replace('{tokenId}', encodeURIComponent(String(tokenId)));
+        const apiPath = '/tokens/{tokenId}'.replace(
+            '{tokenId}',
+            encodeURIComponent(String(tokenId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -215,7 +260,10 @@ export class Tokens {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ResourceToken>}
      */
-    update(params: { tokenId: string, expire?: string }): Promise<Models.ResourceToken>;
+    update(params: {
+        tokenId: string;
+        expire?: string;
+    }): Promise<Models.ResourceToken>;
     /**
      * Update a token by its unique ID. Use this endpoint to update a token's expiry date.
      *
@@ -227,28 +275,39 @@ export class Tokens {
      */
     update(tokenId: string, expire?: string): Promise<Models.ResourceToken>;
     update(
-        paramsOrFirst: { tokenId: string, expire?: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { tokenId: string; expire?: string } | string,
+        ...rest: [string?]
     ): Promise<Models.ResourceToken> {
-        let params: { tokenId: string, expire?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { tokenId: string, expire?: string };
+        let params: { tokenId: string; expire?: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                tokenId: string;
+                expire?: string;
+            };
         } else {
             params = {
                 tokenId: paramsOrFirst as string,
-                expire: rest[0] as string            
+                expire: rest[0] as string,
             };
         }
-        
+
         const tokenId = params.tokenId;
         const expire = params.expire;
 
-        if (typeof tokenId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "tokenId"');
+        if (typeof tokenId === 'undefined' || tokenId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "tokenId"',
+            );
         }
-
-        const apiPath = '/tokens/{tokenId}'.replace('{tokenId}', encodeURIComponent(String(tokenId)));
+        const apiPath = '/tokens/{tokenId}'.replace(
+            '{tokenId}',
+            encodeURIComponent(String(tokenId)),
+        );
         const payload: Payload = {};
         if (typeof expire !== 'undefined') {
             payload['expire'] = expire;
@@ -258,15 +317,10 @@ export class Tokens {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -286,39 +340,41 @@ export class Tokens {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     delete(tokenId: string): Promise<{}>;
-    delete(
-        paramsOrFirst: { tokenId: string } | string    
-    ): Promise<{}> {
+    delete(paramsOrFirst: { tokenId: string } | string): Promise<{}> {
         let params: { tokenId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { tokenId: string };
         } else {
             params = {
-                tokenId: paramsOrFirst as string            
+                tokenId: paramsOrFirst as string,
             };
         }
-        
+
         const tokenId = params.tokenId;
 
-        if (typeof tokenId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "tokenId"');
+        if (typeof tokenId === 'undefined' || tokenId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "tokenId"',
+            );
         }
-
-        const apiPath = '/tokens/{tokenId}'.replace('{tokenId}', encodeURIComponent(String(tokenId)));
+        const apiPath = '/tokens/{tokenId}'.replace(
+            '{tokenId}',
+            encodeURIComponent(String(tokenId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 }

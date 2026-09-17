@@ -1,5 +1,4 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
 
 import { AppwriteMigrationResource } from '../enums/appwrite-migration-resource';
@@ -7,7 +6,6 @@ import { OnDuplicate } from '../enums/on-duplicate';
 import { FirebaseMigrationResource } from '../enums/firebase-migration-resource';
 import { NHostMigrationResource } from '../enums/n-host-migration-resource';
 import { SupabaseMigrationResource } from '../enums/supabase-migration-resource';
-
 export class Migrations {
     client: Client;
 
@@ -24,7 +22,11 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationList>}
      */
-    list(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.MigrationList>;
+    list(params?: {
+        queries?: string[];
+        search?: string;
+        total?: boolean;
+    }): Promise<Models.MigrationList>;
     /**
      * List all migrations in the current project. This endpoint returns a list of all migrations including their status, progress, and any errors that occurred during the migration process.
      *
@@ -35,27 +37,40 @@ export class Migrations {
      * @returns {Promise<Models.MigrationList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    list(queries?: string[], search?: string, total?: boolean): Promise<Models.MigrationList>;
     list(
-        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
-        ...rest: [(string)?, (boolean)?]    
+        queries?: string[],
+        search?: string,
+        total?: boolean,
+    ): Promise<Models.MigrationList>;
+    list(
+        paramsOrFirst?:
+            { queries?: string[]; search?: string; total?: boolean } | string[],
+        ...rest: [string?, boolean?]
     ): Promise<Models.MigrationList> {
-        let params: { queries?: string[], search?: string, total?: boolean };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
+        let params: { queries?: string[]; search?: string; total?: boolean };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                search?: string;
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
                 search: rest[0] as string,
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const queries = params.queries;
         const search = params.search;
         const total = params.total;
-
 
         const apiPath = '/migrations';
         const payload: Payload = {};
@@ -72,19 +87,14 @@ export class Migrations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
-     * Migrate data from another Appwrite project to your current project. This endpoint allows you to migrate resources like databases, collections, documents, users, and files from an existing Appwrite project. 
+     * Migrate data from another Appwrite project to your current project. This endpoint allows you to migrate resources like databases, collections, documents, users, and files from an existing Appwrite project.
      *
      * @param {AppwriteMigrationResource[]} params.resources - List of resources to migrate
      * @param {string} params.endpoint - Source Appwrite endpoint
@@ -94,9 +104,15 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createAppwriteMigration(params: { resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string, onDuplicate?: OnDuplicate }): Promise<Models.Migration>;
+    createAppwriteMigration(params: {
+        resources: AppwriteMigrationResource[];
+        endpoint: string;
+        projectId: string;
+        apiKey: string;
+        onDuplicate?: OnDuplicate;
+    }): Promise<Models.Migration>;
     /**
-     * Migrate data from another Appwrite project to your current project. This endpoint allows you to migrate resources like databases, collections, documents, users, and files from an existing Appwrite project. 
+     * Migrate data from another Appwrite project to your current project. This endpoint allows you to migrate resources like databases, collections, documents, users, and files from an existing Appwrite project.
      *
      * @param {AppwriteMigrationResource[]} resources - List of resources to migrate
      * @param {string} endpoint - Source Appwrite endpoint
@@ -107,25 +123,60 @@ export class Migrations {
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createAppwriteMigration(resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string, onDuplicate?: OnDuplicate): Promise<Models.Migration>;
     createAppwriteMigration(
-        paramsOrFirst: { resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string, onDuplicate?: OnDuplicate } | AppwriteMigrationResource[],
-        ...rest: [(string)?, (string)?, (string)?, (OnDuplicate)?]    
+        resources: AppwriteMigrationResource[],
+        endpoint: string,
+        projectId: string,
+        apiKey: string,
+        onDuplicate?: OnDuplicate,
+    ): Promise<Models.Migration>;
+    createAppwriteMigration(
+        paramsOrFirst:
+            | {
+                  resources: AppwriteMigrationResource[];
+                  endpoint: string;
+                  projectId: string;
+                  apiKey: string;
+                  onDuplicate?: OnDuplicate;
+              }
+            | AppwriteMigrationResource[],
+        ...rest: [string?, string?, string?, OnDuplicate?]
     ): Promise<Models.Migration> {
-        let params: { resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string, onDuplicate?: OnDuplicate };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'endpoint' in paramsOrFirst || 'projectId' in paramsOrFirst || 'apiKey' in paramsOrFirst || 'onDuplicate' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: AppwriteMigrationResource[], endpoint: string, projectId: string, apiKey: string, onDuplicate?: OnDuplicate };
+        let params: {
+            resources: AppwriteMigrationResource[];
+            endpoint: string;
+            projectId: string;
+            apiKey: string;
+            onDuplicate?: OnDuplicate;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst) &&
+            ('resources' in paramsOrFirst ||
+                'endpoint' in paramsOrFirst ||
+                'projectId' in paramsOrFirst ||
+                'apiKey' in paramsOrFirst ||
+                'onDuplicate' in paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                resources: AppwriteMigrationResource[];
+                endpoint: string;
+                projectId: string;
+                apiKey: string;
+                onDuplicate?: OnDuplicate;
+            };
         } else {
             params = {
                 resources: paramsOrFirst as AppwriteMigrationResource[],
                 endpoint: rest[0] as string,
                 projectId: rest[1] as string,
                 apiKey: rest[2] as string,
-                onDuplicate: rest[3] as OnDuplicate            
+                onDuplicate: rest[3] as OnDuplicate,
             };
         }
-        
+
         const resources = params.resources;
         const endpoint = params.endpoint;
         const projectId = params.projectId;
@@ -133,18 +184,23 @@ export class Migrations {
         const onDuplicate = params.onDuplicate;
 
         if (typeof resources === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resources"');
+            throw new AppwriteException(
+                'Missing required parameter: "resources"',
+            );
         }
         if (typeof endpoint === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "endpoint"');
+            throw new AppwriteException(
+                'Missing required parameter: "endpoint"',
+            );
         }
         if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
         if (typeof apiKey === 'undefined') {
             throw new AppwriteException('Missing required parameter: "apiKey"');
         }
-
         const apiPath = '/migrations/appwrite';
         const payload: Payload = {};
         if (typeof resources !== 'undefined') {
@@ -167,15 +223,10 @@ export class Migrations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -188,7 +239,12 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    getAppwriteReport(params: { resources: AppwriteMigrationResource[], endpoint: string, projectID: string, key: string }): Promise<Models.MigrationReport>;
+    getAppwriteReport(params: {
+        resources: AppwriteMigrationResource[];
+        endpoint: string;
+        projectID: string;
+        key: string;
+    }): Promise<Models.MigrationReport>;
     /**
      * Generate a report of the data in an Appwrite project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
@@ -200,42 +256,77 @@ export class Migrations {
      * @returns {Promise<Models.MigrationReport>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getAppwriteReport(resources: AppwriteMigrationResource[], endpoint: string, projectID: string, key: string): Promise<Models.MigrationReport>;
     getAppwriteReport(
-        paramsOrFirst: { resources: AppwriteMigrationResource[], endpoint: string, projectID: string, key: string } | AppwriteMigrationResource[],
-        ...rest: [(string)?, (string)?, (string)?]    
+        resources: AppwriteMigrationResource[],
+        endpoint: string,
+        projectID: string,
+        key: string,
+    ): Promise<Models.MigrationReport>;
+    getAppwriteReport(
+        paramsOrFirst:
+            | {
+                  resources: AppwriteMigrationResource[];
+                  endpoint: string;
+                  projectID: string;
+                  key: string;
+              }
+            | AppwriteMigrationResource[],
+        ...rest: [string?, string?, string?]
     ): Promise<Models.MigrationReport> {
-        let params: { resources: AppwriteMigrationResource[], endpoint: string, projectID: string, key: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'endpoint' in paramsOrFirst || 'projectID' in paramsOrFirst || 'key' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: AppwriteMigrationResource[], endpoint: string, projectID: string, key: string };
+        let params: {
+            resources: AppwriteMigrationResource[];
+            endpoint: string;
+            projectID: string;
+            key: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst) &&
+            ('resources' in paramsOrFirst ||
+                'endpoint' in paramsOrFirst ||
+                'projectID' in paramsOrFirst ||
+                'key' in paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                resources: AppwriteMigrationResource[];
+                endpoint: string;
+                projectID: string;
+                key: string;
+            };
         } else {
             params = {
                 resources: paramsOrFirst as AppwriteMigrationResource[],
                 endpoint: rest[0] as string,
                 projectID: rest[1] as string,
-                key: rest[2] as string            
+                key: rest[2] as string,
             };
         }
-        
+
         const resources = params.resources;
         const endpoint = params.endpoint;
         const projectID = params.projectID;
         const key = params.key;
 
         if (typeof resources === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resources"');
+            throw new AppwriteException(
+                'Missing required parameter: "resources"',
+            );
         }
         if (typeof endpoint === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "endpoint"');
+            throw new AppwriteException(
+                'Missing required parameter: "endpoint"',
+            );
         }
         if (typeof projectID === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectID"');
+            throw new AppwriteException(
+                'Missing required parameter: "projectID"',
+            );
         }
         if (typeof key === 'undefined') {
             throw new AppwriteException('Missing required parameter: "key"');
         }
-
         const apiPath = '/migrations/appwrite/report';
         const payload: Payload = {};
         if (typeof resources !== 'undefined') {
@@ -254,15 +345,10 @@ export class Migrations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -281,7 +367,18 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createCSVExport(params: { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean }): Promise<Models.Migration>;
+    createCSVExport(params: {
+        databaseId: string;
+        collectionId: string;
+        filename: string;
+        columns?: string[];
+        queries?: string[];
+        delimiter?: string;
+        enclosure?: string;
+        escape?: string;
+        header?: boolean;
+        notify?: boolean;
+    }): Promise<Models.Migration>;
     /**
      * Export documents to a CSV file from your Appwrite database. This endpoint allows you to export documents to a CSV file stored in a secure internal bucket. You'll receive an email with a download link when the export is complete.
      *
@@ -299,15 +396,75 @@ export class Migrations {
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createCSVExport(databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean): Promise<Models.Migration>;
     createCSVExport(
-        paramsOrFirst: { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (string)?, (boolean)?, (boolean)?]    
+        databaseId: string,
+        collectionId: string,
+        filename: string,
+        columns?: string[],
+        queries?: string[],
+        delimiter?: string,
+        enclosure?: string,
+        escape?: string,
+        header?: boolean,
+        notify?: boolean,
+    ): Promise<Models.Migration>;
+    createCSVExport(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  collectionId: string;
+                  filename: string;
+                  columns?: string[];
+                  queries?: string[];
+                  delimiter?: string;
+                  enclosure?: string;
+                  escape?: string;
+                  header?: boolean;
+                  notify?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string[]?,
+            string[]?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+            boolean?,
+        ]
     ): Promise<Models.Migration> {
-        let params: { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], delimiter?: string, enclosure?: string, escape?: string, header?: boolean, notify?: boolean };
+        let params: {
+            databaseId: string;
+            collectionId: string;
+            filename: string;
+            columns?: string[];
+            queries?: string[];
+            delimiter?: string;
+            enclosure?: string;
+            escape?: string;
+            header?: boolean;
+            notify?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                collectionId: string;
+                filename: string;
+                columns?: string[];
+                queries?: string[];
+                delimiter?: string;
+                enclosure?: string;
+                escape?: string;
+                header?: boolean;
+                notify?: boolean;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -319,10 +476,10 @@ export class Migrations {
                 enclosure: rest[5] as string,
                 escape: rest[6] as string,
                 header: rest[7] as boolean,
-                notify: rest[8] as boolean            
+                notify: rest[8] as boolean,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const collectionId = params.collectionId;
         const filename = params.filename;
@@ -335,15 +492,20 @@ export class Migrations {
         const notify = params.notify;
 
         if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
         if (typeof collectionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "collectionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "collectionId"',
+            );
         }
         if (typeof filename === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "filename"');
+            throw new AppwriteException(
+                'Missing required parameter: "filename"',
+            );
         }
-
         const apiPath = '/migrations/csv/exports';
         const payload: Payload = {};
         if (typeof databaseId !== 'undefined') {
@@ -381,15 +543,10 @@ export class Migrations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -404,7 +561,14 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createCSVImport(params: { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate }): Promise<Models.Migration>;
+    createCSVImport(params: {
+        bucketId: string;
+        fileId: string;
+        databaseId: string;
+        collectionId: string;
+        internalFile?: boolean;
+        onDuplicate?: OnDuplicate;
+    }): Promise<Models.Migration>;
     /**
      * Import documents from a CSV file into your Appwrite database. This endpoint allows you to import documents from a CSV file uploaded to Appwrite Storage bucket.
      *
@@ -418,15 +582,49 @@ export class Migrations {
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createCSVImport(bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate): Promise<Models.Migration>;
     createCSVImport(
-        paramsOrFirst: { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate } | string,
-        ...rest: [(string)?, (string)?, (string)?, (boolean)?, (OnDuplicate)?]    
+        bucketId: string,
+        fileId: string,
+        databaseId: string,
+        collectionId: string,
+        internalFile?: boolean,
+        onDuplicate?: OnDuplicate,
+    ): Promise<Models.Migration>;
+    createCSVImport(
+        paramsOrFirst:
+            | {
+                  bucketId: string;
+                  fileId: string;
+                  databaseId: string;
+                  collectionId: string;
+                  internalFile?: boolean;
+                  onDuplicate?: OnDuplicate;
+              }
+            | string,
+        ...rest: [string?, string?, string?, boolean?, OnDuplicate?]
     ): Promise<Models.Migration> {
-        let params: { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
+        let params: {
+            bucketId: string;
+            fileId: string;
+            databaseId: string;
+            collectionId: string;
+            internalFile?: boolean;
+            onDuplicate?: OnDuplicate;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                bucketId: string;
+                fileId: string;
+                databaseId: string;
+                collectionId: string;
+                internalFile?: boolean;
+                onDuplicate?: OnDuplicate;
+            };
         } else {
             params = {
                 bucketId: paramsOrFirst as string,
@@ -434,10 +632,10 @@ export class Migrations {
                 databaseId: rest[1] as string,
                 collectionId: rest[2] as string,
                 internalFile: rest[3] as boolean,
-                onDuplicate: rest[4] as OnDuplicate            
+                onDuplicate: rest[4] as OnDuplicate,
             };
         }
-        
+
         const bucketId = params.bucketId;
         const fileId = params.fileId;
         const databaseId = params.databaseId;
@@ -446,18 +644,23 @@ export class Migrations {
         const onDuplicate = params.onDuplicate;
 
         if (typeof bucketId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "bucketId"');
+            throw new AppwriteException(
+                'Missing required parameter: "bucketId"',
+            );
         }
         if (typeof fileId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "fileId"');
         }
         if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
         if (typeof collectionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "collectionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "collectionId"',
+            );
         }
-
         const apiPath = '/migrations/csv/imports';
         const payload: Payload = {};
         if (typeof bucketId !== 'undefined') {
@@ -483,28 +686,26 @@ export class Migrations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
-     * Migrate data from a Firebase project to your Appwrite project. This endpoint allows you to migrate resources like authentication and other supported services from a Firebase project. 
+     * Migrate data from a Firebase project to your Appwrite project. This endpoint allows you to migrate resources like authentication and other supported services from a Firebase project.
      *
      * @param {FirebaseMigrationResource[]} params.resources - List of resources to migrate
      * @param {string} params.serviceAccount - JSON of the Firebase service account credentials
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createFirebaseMigration(params: { resources: FirebaseMigrationResource[], serviceAccount: string }): Promise<Models.Migration>;
+    createFirebaseMigration(params: {
+        resources: FirebaseMigrationResource[];
+        serviceAccount: string;
+    }): Promise<Models.Migration>;
     /**
-     * Migrate data from a Firebase project to your Appwrite project. This endpoint allows you to migrate resources like authentication and other supported services from a Firebase project. 
+     * Migrate data from a Firebase project to your Appwrite project. This endpoint allows you to migrate resources like authentication and other supported services from a Firebase project.
      *
      * @param {FirebaseMigrationResource[]} resources - List of resources to migrate
      * @param {string} serviceAccount - JSON of the Firebase service account credentials
@@ -512,32 +713,51 @@ export class Migrations {
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createFirebaseMigration(resources: FirebaseMigrationResource[], serviceAccount: string): Promise<Models.Migration>;
     createFirebaseMigration(
-        paramsOrFirst: { resources: FirebaseMigrationResource[], serviceAccount: string } | FirebaseMigrationResource[],
-        ...rest: [(string)?]    
+        resources: FirebaseMigrationResource[],
+        serviceAccount: string,
+    ): Promise<Models.Migration>;
+    createFirebaseMigration(
+        paramsOrFirst:
+            | { resources: FirebaseMigrationResource[]; serviceAccount: string }
+            | FirebaseMigrationResource[],
+        ...rest: [string?]
     ): Promise<Models.Migration> {
-        let params: { resources: FirebaseMigrationResource[], serviceAccount: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'serviceAccount' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: FirebaseMigrationResource[], serviceAccount: string };
+        let params: {
+            resources: FirebaseMigrationResource[];
+            serviceAccount: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst) &&
+            ('resources' in paramsOrFirst || 'serviceAccount' in paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                resources: FirebaseMigrationResource[];
+                serviceAccount: string;
+            };
         } else {
             params = {
                 resources: paramsOrFirst as FirebaseMigrationResource[],
-                serviceAccount: rest[0] as string            
+                serviceAccount: rest[0] as string,
             };
         }
-        
+
         const resources = params.resources;
         const serviceAccount = params.serviceAccount;
 
         if (typeof resources === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resources"');
+            throw new AppwriteException(
+                'Missing required parameter: "resources"',
+            );
         }
         if (typeof serviceAccount === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "serviceAccount"');
+            throw new AppwriteException(
+                'Missing required parameter: "serviceAccount"',
+            );
         }
-
         const apiPath = '/migrations/firebase';
         const payload: Payload = {};
         if (typeof resources !== 'undefined') {
@@ -551,15 +771,10 @@ export class Migrations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -570,7 +785,10 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    getFirebaseReport(params: { resources: FirebaseMigrationResource[], serviceAccount: string }): Promise<Models.MigrationReport>;
+    getFirebaseReport(params: {
+        resources: FirebaseMigrationResource[];
+        serviceAccount: string;
+    }): Promise<Models.MigrationReport>;
     /**
      * Generate a report of the data in a Firebase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
@@ -580,32 +798,51 @@ export class Migrations {
      * @returns {Promise<Models.MigrationReport>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getFirebaseReport(resources: FirebaseMigrationResource[], serviceAccount: string): Promise<Models.MigrationReport>;
     getFirebaseReport(
-        paramsOrFirst: { resources: FirebaseMigrationResource[], serviceAccount: string } | FirebaseMigrationResource[],
-        ...rest: [(string)?]    
+        resources: FirebaseMigrationResource[],
+        serviceAccount: string,
+    ): Promise<Models.MigrationReport>;
+    getFirebaseReport(
+        paramsOrFirst:
+            | { resources: FirebaseMigrationResource[]; serviceAccount: string }
+            | FirebaseMigrationResource[],
+        ...rest: [string?]
     ): Promise<Models.MigrationReport> {
-        let params: { resources: FirebaseMigrationResource[], serviceAccount: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'serviceAccount' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: FirebaseMigrationResource[], serviceAccount: string };
+        let params: {
+            resources: FirebaseMigrationResource[];
+            serviceAccount: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst) &&
+            ('resources' in paramsOrFirst || 'serviceAccount' in paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                resources: FirebaseMigrationResource[];
+                serviceAccount: string;
+            };
         } else {
             params = {
                 resources: paramsOrFirst as FirebaseMigrationResource[],
-                serviceAccount: rest[0] as string            
+                serviceAccount: rest[0] as string,
             };
         }
-        
+
         const resources = params.resources;
         const serviceAccount = params.serviceAccount;
 
         if (typeof resources === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resources"');
+            throw new AppwriteException(
+                'Missing required parameter: "resources"',
+            );
         }
         if (typeof serviceAccount === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "serviceAccount"');
+            throw new AppwriteException(
+                'Missing required parameter: "serviceAccount"',
+            );
         }
-
         const apiPath = '/migrations/firebase/report';
         const payload: Payload = {};
         if (typeof resources !== 'undefined') {
@@ -618,20 +855,15 @@ export class Migrations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Export documents to a JSON file from your Appwrite database. This endpoint allows you to export documents to a JSON file stored in a secure internal bucket. You'll receive an email with a download link when the export is complete.
-     * 
+     *
      *
      * @param {string} params.databaseId - Database ID containing the source collection.
      * @param {string} params.collectionId - Collection ID to export documents from.
@@ -642,10 +874,17 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createJSONExport(params: { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean }): Promise<Models.Migration>;
+    createJSONExport(params: {
+        databaseId: string;
+        collectionId: string;
+        filename: string;
+        columns?: string[];
+        queries?: string[];
+        notify?: boolean;
+    }): Promise<Models.Migration>;
     /**
      * Export documents to a JSON file from your Appwrite database. This endpoint allows you to export documents to a JSON file stored in a secure internal bucket. You'll receive an email with a download link when the export is complete.
-     * 
+     *
      *
      * @param {string} databaseId - Database ID containing the source collection.
      * @param {string} collectionId - Collection ID to export documents from.
@@ -657,15 +896,49 @@ export class Migrations {
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createJSONExport(databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean): Promise<Models.Migration>;
     createJSONExport(
-        paramsOrFirst: { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string[])?, (string[])?, (boolean)?]    
+        databaseId: string,
+        collectionId: string,
+        filename: string,
+        columns?: string[],
+        queries?: string[],
+        notify?: boolean,
+    ): Promise<Models.Migration>;
+    createJSONExport(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  collectionId: string;
+                  filename: string;
+                  columns?: string[];
+                  queries?: string[];
+                  notify?: boolean;
+              }
+            | string,
+        ...rest: [string?, string?, string[]?, string[]?, boolean?]
     ): Promise<Models.Migration> {
-        let params: { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, collectionId: string, filename: string, columns?: string[], queries?: string[], notify?: boolean };
+        let params: {
+            databaseId: string;
+            collectionId: string;
+            filename: string;
+            columns?: string[];
+            queries?: string[];
+            notify?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                collectionId: string;
+                filename: string;
+                columns?: string[];
+                queries?: string[];
+                notify?: boolean;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -673,10 +946,10 @@ export class Migrations {
                 filename: rest[1] as string,
                 columns: rest[2] as string[],
                 queries: rest[3] as string[],
-                notify: rest[4] as boolean            
+                notify: rest[4] as boolean,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const collectionId = params.collectionId;
         const filename = params.filename;
@@ -685,15 +958,20 @@ export class Migrations {
         const notify = params.notify;
 
         if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
         if (typeof collectionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "collectionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "collectionId"',
+            );
         }
         if (typeof filename === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "filename"');
+            throw new AppwriteException(
+                'Missing required parameter: "filename"',
+            );
         }
-
         const apiPath = '/migrations/json/exports';
         const payload: Payload = {};
         if (typeof databaseId !== 'undefined') {
@@ -719,20 +997,15 @@ export class Migrations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Import documents from a JSON file into your Appwrite database. This endpoint allows you to import documents from a JSON file uploaded to Appwrite Storage bucket.
-     * 
+     *
      *
      * @param {string} params.bucketId - Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
      * @param {string} params.fileId - File ID.
@@ -743,10 +1016,17 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createJSONImport(params: { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate }): Promise<Models.Migration>;
+    createJSONImport(params: {
+        bucketId: string;
+        fileId: string;
+        databaseId: string;
+        collectionId: string;
+        internalFile?: boolean;
+        onDuplicate?: OnDuplicate;
+    }): Promise<Models.Migration>;
     /**
      * Import documents from a JSON file into your Appwrite database. This endpoint allows you to import documents from a JSON file uploaded to Appwrite Storage bucket.
-     * 
+     *
      *
      * @param {string} bucketId - Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](https://appwrite.io/docs/server/storage#createBucket).
      * @param {string} fileId - File ID.
@@ -758,15 +1038,49 @@ export class Migrations {
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createJSONImport(bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate): Promise<Models.Migration>;
     createJSONImport(
-        paramsOrFirst: { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate } | string,
-        ...rest: [(string)?, (string)?, (string)?, (boolean)?, (OnDuplicate)?]    
+        bucketId: string,
+        fileId: string,
+        databaseId: string,
+        collectionId: string,
+        internalFile?: boolean,
+        onDuplicate?: OnDuplicate,
+    ): Promise<Models.Migration>;
+    createJSONImport(
+        paramsOrFirst:
+            | {
+                  bucketId: string;
+                  fileId: string;
+                  databaseId: string;
+                  collectionId: string;
+                  internalFile?: boolean;
+                  onDuplicate?: OnDuplicate;
+              }
+            | string,
+        ...rest: [string?, string?, string?, boolean?, OnDuplicate?]
     ): Promise<Models.Migration> {
-        let params: { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { bucketId: string, fileId: string, databaseId: string, collectionId: string, internalFile?: boolean, onDuplicate?: OnDuplicate };
+        let params: {
+            bucketId: string;
+            fileId: string;
+            databaseId: string;
+            collectionId: string;
+            internalFile?: boolean;
+            onDuplicate?: OnDuplicate;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                bucketId: string;
+                fileId: string;
+                databaseId: string;
+                collectionId: string;
+                internalFile?: boolean;
+                onDuplicate?: OnDuplicate;
+            };
         } else {
             params = {
                 bucketId: paramsOrFirst as string,
@@ -774,10 +1088,10 @@ export class Migrations {
                 databaseId: rest[1] as string,
                 collectionId: rest[2] as string,
                 internalFile: rest[3] as boolean,
-                onDuplicate: rest[4] as OnDuplicate            
+                onDuplicate: rest[4] as OnDuplicate,
             };
         }
-        
+
         const bucketId = params.bucketId;
         const fileId = params.fileId;
         const databaseId = params.databaseId;
@@ -786,18 +1100,23 @@ export class Migrations {
         const onDuplicate = params.onDuplicate;
 
         if (typeof bucketId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "bucketId"');
+            throw new AppwriteException(
+                'Missing required parameter: "bucketId"',
+            );
         }
         if (typeof fileId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "fileId"');
         }
         if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
         if (typeof collectionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "collectionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "collectionId"',
+            );
         }
-
         const apiPath = '/migrations/json/imports';
         const payload: Payload = {};
         if (typeof bucketId !== 'undefined') {
@@ -823,19 +1142,14 @@ export class Migrations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
-     * Migrate data from an NHost project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from an NHost project. 
+     * Migrate data from an NHost project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from an NHost project.
      *
      * @param {NHostMigrationResource[]} params.resources - List of resources to migrate
      * @param {string} params.subdomain - Source's Subdomain
@@ -848,9 +1162,18 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createNHostMigration(params: { resources: NHostMigrationResource[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number }): Promise<Models.Migration>;
+    createNHostMigration(params: {
+        resources: NHostMigrationResource[];
+        subdomain: string;
+        region: string;
+        adminSecret: string;
+        database: string;
+        username: string;
+        password: string;
+        port?: number;
+    }): Promise<Models.Migration>;
     /**
-     * Migrate data from an NHost project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from an NHost project. 
+     * Migrate data from an NHost project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from an NHost project.
      *
      * @param {NHostMigrationResource[]} resources - List of resources to migrate
      * @param {string} subdomain - Source's Subdomain
@@ -864,15 +1187,65 @@ export class Migrations {
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createNHostMigration(resources: NHostMigrationResource[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number): Promise<Models.Migration>;
     createNHostMigration(
-        paramsOrFirst: { resources: NHostMigrationResource[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number } | NHostMigrationResource[],
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
+        resources: NHostMigrationResource[],
+        subdomain: string,
+        region: string,
+        adminSecret: string,
+        database: string,
+        username: string,
+        password: string,
+        port?: number,
+    ): Promise<Models.Migration>;
+    createNHostMigration(
+        paramsOrFirst:
+            | {
+                  resources: NHostMigrationResource[];
+                  subdomain: string;
+                  region: string;
+                  adminSecret: string;
+                  database: string;
+                  username: string;
+                  password: string;
+                  port?: number;
+              }
+            | NHostMigrationResource[],
+        ...rest: [string?, string?, string?, string?, string?, string?, number?]
     ): Promise<Models.Migration> {
-        let params: { resources: NHostMigrationResource[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'subdomain' in paramsOrFirst || 'region' in paramsOrFirst || 'adminSecret' in paramsOrFirst || 'database' in paramsOrFirst || 'username' in paramsOrFirst || 'password' in paramsOrFirst || 'port' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: NHostMigrationResource[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
+        let params: {
+            resources: NHostMigrationResource[];
+            subdomain: string;
+            region: string;
+            adminSecret: string;
+            database: string;
+            username: string;
+            password: string;
+            port?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst) &&
+            ('resources' in paramsOrFirst ||
+                'subdomain' in paramsOrFirst ||
+                'region' in paramsOrFirst ||
+                'adminSecret' in paramsOrFirst ||
+                'database' in paramsOrFirst ||
+                'username' in paramsOrFirst ||
+                'password' in paramsOrFirst ||
+                'port' in paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                resources: NHostMigrationResource[];
+                subdomain: string;
+                region: string;
+                adminSecret: string;
+                database: string;
+                username: string;
+                password: string;
+                port?: number;
+            };
         } else {
             params = {
                 resources: paramsOrFirst as NHostMigrationResource[],
@@ -882,10 +1255,10 @@ export class Migrations {
                 database: rest[3] as string,
                 username: rest[4] as string,
                 password: rest[5] as string,
-                port: rest[6] as number            
+                port: rest[6] as number,
             };
         }
-        
+
         const resources = params.resources;
         const subdomain = params.subdomain;
         const region = params.region;
@@ -896,27 +1269,38 @@ export class Migrations {
         const port = params.port;
 
         if (typeof resources === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resources"');
+            throw new AppwriteException(
+                'Missing required parameter: "resources"',
+            );
         }
         if (typeof subdomain === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "subdomain"');
+            throw new AppwriteException(
+                'Missing required parameter: "subdomain"',
+            );
         }
         if (typeof region === 'undefined') {
             throw new AppwriteException('Missing required parameter: "region"');
         }
         if (typeof adminSecret === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "adminSecret"');
+            throw new AppwriteException(
+                'Missing required parameter: "adminSecret"',
+            );
         }
         if (typeof database === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "database"');
+            throw new AppwriteException(
+                'Missing required parameter: "database"',
+            );
         }
         if (typeof username === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "username"');
+            throw new AppwriteException(
+                'Missing required parameter: "username"',
+            );
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
-
         const apiPath = '/migrations/nhost';
         const payload: Payload = {};
         if (typeof resources !== 'undefined') {
@@ -948,19 +1332,14 @@ export class Migrations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
-     * Generate a detailed report of the data in an NHost project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
+     * Generate a detailed report of the data in an NHost project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
      * @param {NHostMigrationResource[]} params.resources - List of resources to migrate.
      * @param {string} params.subdomain - Source's Subdomain.
@@ -973,9 +1352,18 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    getNHostReport(params: { resources: NHostMigrationResource[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number }): Promise<Models.MigrationReport>;
+    getNHostReport(params: {
+        resources: NHostMigrationResource[];
+        subdomain: string;
+        region: string;
+        adminSecret: string;
+        database: string;
+        username: string;
+        password: string;
+        port?: number;
+    }): Promise<Models.MigrationReport>;
     /**
-     * Generate a detailed report of the data in an NHost project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
+     * Generate a detailed report of the data in an NHost project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
      * @param {NHostMigrationResource[]} resources - List of resources to migrate.
      * @param {string} subdomain - Source's Subdomain.
@@ -989,15 +1377,65 @@ export class Migrations {
      * @returns {Promise<Models.MigrationReport>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getNHostReport(resources: NHostMigrationResource[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number): Promise<Models.MigrationReport>;
     getNHostReport(
-        paramsOrFirst: { resources: NHostMigrationResource[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number } | NHostMigrationResource[],
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
+        resources: NHostMigrationResource[],
+        subdomain: string,
+        region: string,
+        adminSecret: string,
+        database: string,
+        username: string,
+        password: string,
+        port?: number,
+    ): Promise<Models.MigrationReport>;
+    getNHostReport(
+        paramsOrFirst:
+            | {
+                  resources: NHostMigrationResource[];
+                  subdomain: string;
+                  region: string;
+                  adminSecret: string;
+                  database: string;
+                  username: string;
+                  password: string;
+                  port?: number;
+              }
+            | NHostMigrationResource[],
+        ...rest: [string?, string?, string?, string?, string?, string?, number?]
     ): Promise<Models.MigrationReport> {
-        let params: { resources: NHostMigrationResource[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'subdomain' in paramsOrFirst || 'region' in paramsOrFirst || 'adminSecret' in paramsOrFirst || 'database' in paramsOrFirst || 'username' in paramsOrFirst || 'password' in paramsOrFirst || 'port' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: NHostMigrationResource[], subdomain: string, region: string, adminSecret: string, database: string, username: string, password: string, port?: number };
+        let params: {
+            resources: NHostMigrationResource[];
+            subdomain: string;
+            region: string;
+            adminSecret: string;
+            database: string;
+            username: string;
+            password: string;
+            port?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst) &&
+            ('resources' in paramsOrFirst ||
+                'subdomain' in paramsOrFirst ||
+                'region' in paramsOrFirst ||
+                'adminSecret' in paramsOrFirst ||
+                'database' in paramsOrFirst ||
+                'username' in paramsOrFirst ||
+                'password' in paramsOrFirst ||
+                'port' in paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                resources: NHostMigrationResource[];
+                subdomain: string;
+                region: string;
+                adminSecret: string;
+                database: string;
+                username: string;
+                password: string;
+                port?: number;
+            };
         } else {
             params = {
                 resources: paramsOrFirst as NHostMigrationResource[],
@@ -1007,10 +1445,10 @@ export class Migrations {
                 database: rest[3] as string,
                 username: rest[4] as string,
                 password: rest[5] as string,
-                port: rest[6] as number            
+                port: rest[6] as number,
             };
         }
-        
+
         const resources = params.resources;
         const subdomain = params.subdomain;
         const region = params.region;
@@ -1021,27 +1459,38 @@ export class Migrations {
         const port = params.port;
 
         if (typeof resources === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resources"');
+            throw new AppwriteException(
+                'Missing required parameter: "resources"',
+            );
         }
         if (typeof subdomain === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "subdomain"');
+            throw new AppwriteException(
+                'Missing required parameter: "subdomain"',
+            );
         }
         if (typeof region === 'undefined') {
             throw new AppwriteException('Missing required parameter: "region"');
         }
         if (typeof adminSecret === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "adminSecret"');
+            throw new AppwriteException(
+                'Missing required parameter: "adminSecret"',
+            );
         }
         if (typeof database === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "database"');
+            throw new AppwriteException(
+                'Missing required parameter: "database"',
+            );
         }
         if (typeof username === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "username"');
+            throw new AppwriteException(
+                'Missing required parameter: "username"',
+            );
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
-
         const apiPath = '/migrations/nhost/report';
         const payload: Payload = {};
         if (typeof resources !== 'undefined') {
@@ -1072,19 +1521,14 @@ export class Migrations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
-     * Migrate data from a Supabase project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from a Supabase project. 
+     * Migrate data from a Supabase project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from a Supabase project.
      *
      * @param {SupabaseMigrationResource[]} params.resources - List of resources to migrate
      * @param {string} params.endpoint - Source's Supabase Endpoint
@@ -1096,9 +1540,17 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Migration>}
      */
-    createSupabaseMigration(params: { resources: SupabaseMigrationResource[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number }): Promise<Models.Migration>;
+    createSupabaseMigration(params: {
+        resources: SupabaseMigrationResource[];
+        endpoint: string;
+        apiKey: string;
+        databaseHost: string;
+        username: string;
+        password: string;
+        port?: number;
+    }): Promise<Models.Migration>;
     /**
-     * Migrate data from a Supabase project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from a Supabase project. 
+     * Migrate data from a Supabase project to your Appwrite project. This endpoint allows you to migrate resources like authentication, databases, and other supported services from a Supabase project.
      *
      * @param {SupabaseMigrationResource[]} resources - List of resources to migrate
      * @param {string} endpoint - Source's Supabase Endpoint
@@ -1111,15 +1563,60 @@ export class Migrations {
      * @returns {Promise<Models.Migration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSupabaseMigration(resources: SupabaseMigrationResource[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number): Promise<Models.Migration>;
     createSupabaseMigration(
-        paramsOrFirst: { resources: SupabaseMigrationResource[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number } | SupabaseMigrationResource[],
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
+        resources: SupabaseMigrationResource[],
+        endpoint: string,
+        apiKey: string,
+        databaseHost: string,
+        username: string,
+        password: string,
+        port?: number,
+    ): Promise<Models.Migration>;
+    createSupabaseMigration(
+        paramsOrFirst:
+            | {
+                  resources: SupabaseMigrationResource[];
+                  endpoint: string;
+                  apiKey: string;
+                  databaseHost: string;
+                  username: string;
+                  password: string;
+                  port?: number;
+              }
+            | SupabaseMigrationResource[],
+        ...rest: [string?, string?, string?, string?, string?, number?]
     ): Promise<Models.Migration> {
-        let params: { resources: SupabaseMigrationResource[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'endpoint' in paramsOrFirst || 'apiKey' in paramsOrFirst || 'databaseHost' in paramsOrFirst || 'username' in paramsOrFirst || 'password' in paramsOrFirst || 'port' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: SupabaseMigrationResource[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
+        let params: {
+            resources: SupabaseMigrationResource[];
+            endpoint: string;
+            apiKey: string;
+            databaseHost: string;
+            username: string;
+            password: string;
+            port?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst) &&
+            ('resources' in paramsOrFirst ||
+                'endpoint' in paramsOrFirst ||
+                'apiKey' in paramsOrFirst ||
+                'databaseHost' in paramsOrFirst ||
+                'username' in paramsOrFirst ||
+                'password' in paramsOrFirst ||
+                'port' in paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                resources: SupabaseMigrationResource[];
+                endpoint: string;
+                apiKey: string;
+                databaseHost: string;
+                username: string;
+                password: string;
+                port?: number;
+            };
         } else {
             params = {
                 resources: paramsOrFirst as SupabaseMigrationResource[],
@@ -1128,10 +1625,10 @@ export class Migrations {
                 databaseHost: rest[2] as string,
                 username: rest[3] as string,
                 password: rest[4] as string,
-                port: rest[5] as number            
+                port: rest[5] as number,
             };
         }
-        
+
         const resources = params.resources;
         const endpoint = params.endpoint;
         const apiKey = params.apiKey;
@@ -1141,24 +1638,33 @@ export class Migrations {
         const port = params.port;
 
         if (typeof resources === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resources"');
+            throw new AppwriteException(
+                'Missing required parameter: "resources"',
+            );
         }
         if (typeof endpoint === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "endpoint"');
+            throw new AppwriteException(
+                'Missing required parameter: "endpoint"',
+            );
         }
         if (typeof apiKey === 'undefined') {
             throw new AppwriteException('Missing required parameter: "apiKey"');
         }
         if (typeof databaseHost === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseHost"');
+            throw new AppwriteException(
+                'Missing required parameter: "databaseHost"',
+            );
         }
         if (typeof username === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "username"');
+            throw new AppwriteException(
+                'Missing required parameter: "username"',
+            );
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
-
         const apiPath = '/migrations/supabase';
         const payload: Payload = {};
         if (typeof resources !== 'undefined') {
@@ -1187,19 +1693,14 @@ export class Migrations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
-     * Generate a report of the data in a Supabase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
+     * Generate a report of the data in a Supabase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
      * @param {SupabaseMigrationResource[]} params.resources - List of resources to migrate
      * @param {string} params.endpoint - Source's Supabase Endpoint.
@@ -1211,9 +1712,17 @@ export class Migrations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MigrationReport>}
      */
-    getSupabaseReport(params: { resources: SupabaseMigrationResource[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number }): Promise<Models.MigrationReport>;
+    getSupabaseReport(params: {
+        resources: SupabaseMigrationResource[];
+        endpoint: string;
+        apiKey: string;
+        databaseHost: string;
+        username: string;
+        password: string;
+        port?: number;
+    }): Promise<Models.MigrationReport>;
     /**
-     * Generate a report of the data in a Supabase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated. 
+     * Generate a report of the data in a Supabase project before migrating. This endpoint analyzes the source project and returns information about the resources that can be migrated.
      *
      * @param {SupabaseMigrationResource[]} resources - List of resources to migrate
      * @param {string} endpoint - Source's Supabase Endpoint.
@@ -1226,15 +1735,60 @@ export class Migrations {
      * @returns {Promise<Models.MigrationReport>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getSupabaseReport(resources: SupabaseMigrationResource[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number): Promise<Models.MigrationReport>;
     getSupabaseReport(
-        paramsOrFirst: { resources: SupabaseMigrationResource[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number } | SupabaseMigrationResource[],
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (number)?]    
+        resources: SupabaseMigrationResource[],
+        endpoint: string,
+        apiKey: string,
+        databaseHost: string,
+        username: string,
+        password: string,
+        port?: number,
+    ): Promise<Models.MigrationReport>;
+    getSupabaseReport(
+        paramsOrFirst:
+            | {
+                  resources: SupabaseMigrationResource[];
+                  endpoint: string;
+                  apiKey: string;
+                  databaseHost: string;
+                  username: string;
+                  password: string;
+                  port?: number;
+              }
+            | SupabaseMigrationResource[],
+        ...rest: [string?, string?, string?, string?, string?, number?]
     ): Promise<Models.MigrationReport> {
-        let params: { resources: SupabaseMigrationResource[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resources' in paramsOrFirst || 'endpoint' in paramsOrFirst || 'apiKey' in paramsOrFirst || 'databaseHost' in paramsOrFirst || 'username' in paramsOrFirst || 'password' in paramsOrFirst || 'port' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resources: SupabaseMigrationResource[], endpoint: string, apiKey: string, databaseHost: string, username: string, password: string, port?: number };
+        let params: {
+            resources: SupabaseMigrationResource[];
+            endpoint: string;
+            apiKey: string;
+            databaseHost: string;
+            username: string;
+            password: string;
+            port?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst) &&
+            ('resources' in paramsOrFirst ||
+                'endpoint' in paramsOrFirst ||
+                'apiKey' in paramsOrFirst ||
+                'databaseHost' in paramsOrFirst ||
+                'username' in paramsOrFirst ||
+                'password' in paramsOrFirst ||
+                'port' in paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                resources: SupabaseMigrationResource[];
+                endpoint: string;
+                apiKey: string;
+                databaseHost: string;
+                username: string;
+                password: string;
+                port?: number;
+            };
         } else {
             params = {
                 resources: paramsOrFirst as SupabaseMigrationResource[],
@@ -1243,10 +1797,10 @@ export class Migrations {
                 databaseHost: rest[2] as string,
                 username: rest[3] as string,
                 password: rest[4] as string,
-                port: rest[5] as number            
+                port: rest[5] as number,
             };
         }
-        
+
         const resources = params.resources;
         const endpoint = params.endpoint;
         const apiKey = params.apiKey;
@@ -1256,24 +1810,33 @@ export class Migrations {
         const port = params.port;
 
         if (typeof resources === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resources"');
+            throw new AppwriteException(
+                'Missing required parameter: "resources"',
+            );
         }
         if (typeof endpoint === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "endpoint"');
+            throw new AppwriteException(
+                'Missing required parameter: "endpoint"',
+            );
         }
         if (typeof apiKey === 'undefined') {
             throw new AppwriteException('Missing required parameter: "apiKey"');
         }
         if (typeof databaseHost === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseHost"');
+            throw new AppwriteException(
+                'Missing required parameter: "databaseHost"',
+            );
         }
         if (typeof username === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "username"');
+            throw new AppwriteException(
+                'Missing required parameter: "username"',
+            );
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
-
         const apiPath = '/migrations/supabase/report';
         const payload: Payload = {};
         if (typeof resources !== 'undefined') {
@@ -1301,19 +1864,14 @@ export class Migrations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
-     * Get a migration by its unique ID. This endpoint returns detailed information about a specific migration including its current status, progress, and any errors that occurred during the migration process. 
+     * Get a migration by its unique ID. This endpoint returns detailed information about a specific migration including its current status, progress, and any errors that occurred during the migration process.
      *
      * @param {string} params.migrationId - Migration unique ID.
      * @throws {AppwriteException}
@@ -1321,7 +1879,7 @@ export class Migrations {
      */
     get(params: { migrationId: string }): Promise<Models.Migration>;
     /**
-     * Get a migration by its unique ID. This endpoint returns detailed information about a specific migration including its current status, progress, and any errors that occurred during the migration process. 
+     * Get a migration by its unique ID. This endpoint returns detailed information about a specific migration including its current status, progress, and any errors that occurred during the migration process.
      *
      * @param {string} migrationId - Migration unique ID.
      * @throws {AppwriteException}
@@ -1330,39 +1888,42 @@ export class Migrations {
      */
     get(migrationId: string): Promise<Models.Migration>;
     get(
-        paramsOrFirst: { migrationId: string } | string    
+        paramsOrFirst: { migrationId: string } | string,
     ): Promise<Models.Migration> {
         let params: { migrationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { migrationId: string };
         } else {
             params = {
-                migrationId: paramsOrFirst as string            
+                migrationId: paramsOrFirst as string,
             };
         }
-        
+
         const migrationId = params.migrationId;
 
-        if (typeof migrationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "migrationId"');
+        if (typeof migrationId === 'undefined' || migrationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "migrationId"',
+            );
         }
-
-        const apiPath = '/migrations/{migrationId}'.replace('{migrationId}', encodeURIComponent(String(migrationId)));
+        const apiPath = '/migrations/{migrationId}'.replace(
+            '{migrationId}',
+            encodeURIComponent(String(migrationId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1383,44 +1944,47 @@ export class Migrations {
      */
     retry(migrationId: string): Promise<Models.Migration>;
     retry(
-        paramsOrFirst: { migrationId: string } | string    
+        paramsOrFirst: { migrationId: string } | string,
     ): Promise<Models.Migration> {
         let params: { migrationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { migrationId: string };
         } else {
             params = {
-                migrationId: paramsOrFirst as string            
+                migrationId: paramsOrFirst as string,
             };
         }
-        
+
         const migrationId = params.migrationId;
 
-        if (typeof migrationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "migrationId"');
+        if (typeof migrationId === 'undefined' || migrationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "migrationId"',
+            );
         }
-
-        const apiPath = '/migrations/{migrationId}'.replace('{migrationId}', encodeURIComponent(String(migrationId)));
+        const apiPath = '/migrations/{migrationId}'.replace(
+            '{migrationId}',
+            encodeURIComponent(String(migrationId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
-     * Delete a migration by its unique ID. This endpoint allows you to remove a migration from your project's migration history. 
+     * Delete a migration by its unique ID. This endpoint allows you to remove a migration from your project's migration history.
      *
      * @param {string} params.migrationId - Migration ID.
      * @throws {AppwriteException}
@@ -1428,7 +1992,7 @@ export class Migrations {
      */
     delete(params: { migrationId: string }): Promise<{}>;
     /**
-     * Delete a migration by its unique ID. This endpoint allows you to remove a migration from your project's migration history. 
+     * Delete a migration by its unique ID. This endpoint allows you to remove a migration from your project's migration history.
      *
      * @param {string} migrationId - Migration ID.
      * @throws {AppwriteException}
@@ -1436,39 +2000,41 @@ export class Migrations {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     delete(migrationId: string): Promise<{}>;
-    delete(
-        paramsOrFirst: { migrationId: string } | string    
-    ): Promise<{}> {
+    delete(paramsOrFirst: { migrationId: string } | string): Promise<{}> {
         let params: { migrationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { migrationId: string };
         } else {
             params = {
-                migrationId: paramsOrFirst as string            
+                migrationId: paramsOrFirst as string,
             };
         }
-        
+
         const migrationId = params.migrationId;
 
-        if (typeof migrationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "migrationId"');
+        if (typeof migrationId === 'undefined' || migrationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "migrationId"',
+            );
         }
-
-        const apiPath = '/migrations/{migrationId}'.replace('{migrationId}', encodeURIComponent(String(migrationId)));
+        const apiPath = '/migrations/{migrationId}'.replace(
+            '{migrationId}',
+            encodeURIComponent(String(migrationId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 }

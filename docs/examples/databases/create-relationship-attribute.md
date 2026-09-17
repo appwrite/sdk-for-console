@@ -1,5 +1,10 @@
 ```javascript
-import { Client, Databases, RelationshipType, RelationMutate } from "@appwrite.io/console";
+import {
+    Client,
+    Databases,
+    RelationshipType,
+    RelationMutate,
+} from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,9 +18,9 @@ const result = await databases.createRelationshipAttribute({
     relatedCollectionId: '<RELATED_COLLECTION_ID>',
     type: RelationshipType.OneToOne,
     twoWay: false, // optional
-    key: '', // optional
-    twoWayKey: '', // optional
-    onDelete: RelationMutate.Cascade // optional
+    key: '<KEY>', // optional
+    twoWayKey: '<TWO_WAY_KEY>', // optional
+    onDelete: RelationMutate.Cascade, // optional
 });
 
 console.log(result);

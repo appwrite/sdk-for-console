@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Messaging } from "@appwrite.io/console";
+import { Client, Messaging } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const messaging = new Messaging(client);
 
 const result = await messaging.deleteTopic({
-    topicId: '<TOPIC_ID>'
+    topicId: '<TOPIC_ID>',
 });
 
 console.log(result);

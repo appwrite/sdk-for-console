@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Projects, ScheduleResourceType } from "@appwrite.io/console";
+import { Client, Projects, ScheduleResourceType } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,9 +11,9 @@ const result = await projects.createSchedule({
     projectId: '<PROJECT_ID>',
     resourceType: ScheduleResourceType.Function,
     resourceId: '<RESOURCE_ID>',
-    schedule: '',
+    schedule: '0 0 * * *',
     active: false, // optional
-    data: {} // optional
+    data: {}, // optional
 });
 
 console.log(result);

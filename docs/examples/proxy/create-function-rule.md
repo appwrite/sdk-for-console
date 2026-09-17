@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Proxy } from "@appwrite.io/console";
+import { Client, Proxy } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,9 +8,9 @@ const client = new Client()
 const proxy = new Proxy(client);
 
 const result = await proxy.createFunctionRule({
-    domain: '',
+    domain: 'example.com',
     functionId: '<FUNCTION_ID>',
-    branch: '<BRANCH>' // optional
+    branch: '<BRANCH>', // optional
 });
 
 console.log(result);

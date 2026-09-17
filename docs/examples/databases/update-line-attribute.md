@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Databases } from "@appwrite.io/console";
+import { Client, Databases } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,10 +10,14 @@ const databases = new Databases(client);
 const result = await databases.updateLineAttribute({
     databaseId: '<DATABASE_ID>',
     collectionId: '<COLLECTION_ID>',
-    key: '',
+    key: '<KEY>',
     required: false,
-    xdefault: [[1, 2], [3, 4], [5, 6]], // optional
-    newKey: '' // optional
+    xdefault: [
+        [1, 2],
+        [3, 4],
+        [5, 6],
+    ], // optional
+    newKey: '<NEW_KEY>', // optional
 });
 
 console.log(result);

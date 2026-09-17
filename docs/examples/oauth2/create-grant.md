@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Oauth2 } from "@appwrite.io/console";
+import { Client, Oauth2 } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const oauth2 = new Oauth2(client);
 
 const result = await oauth2.createGrant({
-    userCode: '<USER_CODE>'
+    userCode: '<USER_CODE>',
 });
 
 console.log(result);

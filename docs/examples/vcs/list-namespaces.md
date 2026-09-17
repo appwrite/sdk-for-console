@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Vcs } from "@appwrite.io/console";
+import { Client, Vcs } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const vcs = new Vcs(client);
 const result = await vcs.listNamespaces({
     installationId: '<INSTALLATION_ID>',
     search: '<SEARCH>', // optional
-    queries: [] // optional
+    queries: [], // optional
 });
 
 console.log(result);

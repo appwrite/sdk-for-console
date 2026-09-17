@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Organizations } from "@appwrite.io/console";
+import { Client, Organizations } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const organizations = new Organizations(client);
 
 const result = await organizations.deleteBackupPaymentMethod({
-    organizationId: '<ORGANIZATION_ID>'
+    organizationId: '<ORGANIZATION_ID>',
 });
 
 console.log(result);

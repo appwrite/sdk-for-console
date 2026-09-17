@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Messaging, SmtpEncryption } from "@appwrite.io/console";
+import { Client, Messaging, SmtpEncryption } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +11,7 @@ const result = await messaging.createSMTPProvider({
     providerId: '<PROVIDER_ID>',
     name: '<NAME>',
     host: '<HOST>',
-    port: 1, // optional
+    port: 587, // optional
     username: '<USERNAME>', // optional
     password: 'password', // optional
     encryption: SmtpEncryption.None, // optional
@@ -21,7 +21,7 @@ const result = await messaging.createSMTPProvider({
     fromEmail: 'email@example.com', // optional
     replyToName: '<REPLY_TO_NAME>', // optional
     replyToEmail: 'email@example.com', // optional
-    enabled: false // optional
+    enabled: false, // optional
 });
 
 console.log(result);

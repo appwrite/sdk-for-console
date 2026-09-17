@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Postgresql } from "@appwrite.io/console";
+import { Client, Postgresql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const postgresql = new Postgresql(client);
 const result = await postgresql.createBranch({
     databaseId: '<DATABASE_ID>',
     branchId: '<BRANCH_ID>', // optional
-    ttl: 300 // optional
+    ttl: 300, // optional
 });
 
 console.log(result);

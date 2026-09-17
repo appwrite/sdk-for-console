@@ -1,10 +1,9 @@
 import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
 
 import { Platform } from '../enums/platform';
-import { Addon } from '../enums/addon';
-
+import { AddonKey } from '../enums/addon-key';
 export class Organizations {
     client: Client;
 
@@ -20,7 +19,12 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.OrganizationList<Preferences>>}
      */
-    list<Preferences extends Models.Preferences = Models.DefaultPreferences>(params?: { queries?: string[], search?: string }): Promise<Models.OrganizationList<Preferences>>;
+    list<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params?: {
+        queries?: string[];
+        search?: string;
+    }): Promise<Models.OrganizationList<Preferences>>;
     /**
      * Get a list of all the teams in which the current user is a member. You can use the parameters to filter your results.
      *
@@ -30,25 +34,35 @@ export class Organizations {
      * @returns {Promise<Models.OrganizationList<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    list<Preferences extends Models.Preferences = Models.DefaultPreferences>(queries?: string[], search?: string): Promise<Models.OrganizationList<Preferences>>;
     list<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst?: { queries?: string[], search?: string } | string[],
-        ...rest: [(string)?]    
+        queries?: string[],
+        search?: string,
+    ): Promise<Models.OrganizationList<Preferences>>;
+    list<Preferences extends Models.Preferences = Models.DefaultPreferences>(
+        paramsOrFirst?: { queries?: string[]; search?: string } | string[],
+        ...rest: [string?]
     ): Promise<Models.OrganizationList<Preferences>> {
-        let params: { queries?: string[], search?: string };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string };
+        let params: { queries?: string[]; search?: string };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                search?: string;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
-                search: rest[0] as string            
+                search: rest[0] as string,
             };
         }
-        
+
         const queries = params.queries;
         const search = params.search;
-
 
         const apiPath = '/organizations';
         const payload: Payload = {};
@@ -62,20 +76,15 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Create a new organization.
-     * 
+     *
      *
      * @param {string} params.organizationId - Organization ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Organization name. Max length: 128 chars.
@@ -90,10 +99,25 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>}
      */
-    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform }): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
+    create<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        organizationId: string;
+        name: string;
+        billingPlan: string;
+        paymentMethodId?: string;
+        billingAddressId?: string;
+        invites?: string[];
+        couponId?: string;
+        taxId?: string;
+        budget?: number;
+        platform?: Platform;
+    }): Promise<
+        Models.Organization<Preferences> | Models.PaymentAuthentication
+    >;
     /**
      * Create a new organization.
-     * 
+     *
      *
      * @param {string} organizationId - Organization ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Organization name. Max length: 128 chars.
@@ -109,15 +133,77 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
     create<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number)?, (Platform)?]    
-    ): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication> {
-        let params: { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, name: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number, platform?: Platform };
+        organizationId: string,
+        name: string,
+        billingPlan: string,
+        paymentMethodId?: string,
+        billingAddressId?: string,
+        invites?: string[],
+        couponId?: string,
+        taxId?: string,
+        budget?: number,
+        platform?: Platform,
+    ): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
+    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(
+        paramsOrFirst:
+            | {
+                  organizationId: string;
+                  name: string;
+                  billingPlan: string;
+                  paymentMethodId?: string;
+                  billingAddressId?: string;
+                  invites?: string[];
+                  couponId?: string;
+                  taxId?: string;
+                  budget?: number;
+                  platform?: Platform;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            string?,
+            string[]?,
+            string?,
+            string?,
+            number?,
+            Platform?,
+        ]
+    ): Promise<
+        Models.Organization<Preferences> | Models.PaymentAuthentication
+    > {
+        let params: {
+            organizationId: string;
+            name: string;
+            billingPlan: string;
+            paymentMethodId?: string;
+            billingAddressId?: string;
+            invites?: string[];
+            couponId?: string;
+            taxId?: string;
+            budget?: number;
+            platform?: Platform;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                name: string;
+                billingPlan: string;
+                paymentMethodId?: string;
+                billingAddressId?: string;
+                invites?: string[];
+                couponId?: string;
+                taxId?: string;
+                budget?: number;
+                platform?: Platform;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
@@ -129,10 +215,10 @@ export class Organizations {
                 couponId: rest[5] as string,
                 taxId: rest[6] as string,
                 budget: rest[7] as number,
-                platform: rest[8] as Platform            
+                platform: rest[8] as Platform,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const name = params.name;
         const billingPlan = params.billingPlan;
@@ -145,15 +231,18 @@ export class Organizations {
         const platform = params.platform;
 
         if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         if (typeof billingPlan === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "billingPlan"');
+            throw new AppwriteException(
+                'Missing required parameter: "billingPlan"',
+            );
         }
-
         const apiPath = '/organizations';
         const payload: Payload = {};
         if (typeof organizationId !== 'undefined') {
@@ -191,15 +280,10 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -213,7 +297,13 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Estimation>}
      */
-    estimationCreateOrganization(params: { billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform }): Promise<Models.Estimation>;
+    estimationCreateOrganization(params: {
+        billingPlan: string;
+        paymentMethodId?: string;
+        invites?: string[];
+        couponId?: string;
+        platform?: Platform;
+    }): Promise<Models.Estimation>;
     /**
      * Get estimation for creating an organization.
      *
@@ -226,25 +316,55 @@ export class Organizations {
      * @returns {Promise<Models.Estimation>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    estimationCreateOrganization(billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform): Promise<Models.Estimation>;
     estimationCreateOrganization(
-        paramsOrFirst: { billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform } | string,
-        ...rest: [(string)?, (string[])?, (string)?, (Platform)?]    
+        billingPlan: string,
+        paymentMethodId?: string,
+        invites?: string[],
+        couponId?: string,
+        platform?: Platform,
+    ): Promise<Models.Estimation>;
+    estimationCreateOrganization(
+        paramsOrFirst:
+            | {
+                  billingPlan: string;
+                  paymentMethodId?: string;
+                  invites?: string[];
+                  couponId?: string;
+                  platform?: Platform;
+              }
+            | string,
+        ...rest: [string?, string[]?, string?, Platform?]
     ): Promise<Models.Estimation> {
-        let params: { billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { billingPlan: string, paymentMethodId?: string, invites?: string[], couponId?: string, platform?: Platform };
+        let params: {
+            billingPlan: string;
+            paymentMethodId?: string;
+            invites?: string[];
+            couponId?: string;
+            platform?: Platform;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                billingPlan: string;
+                paymentMethodId?: string;
+                invites?: string[];
+                couponId?: string;
+                platform?: Platform;
+            };
         } else {
             params = {
                 billingPlan: paramsOrFirst as string,
                 paymentMethodId: rest[0] as string,
                 invites: rest[1] as string[],
                 couponId: rest[2] as string,
-                platform: rest[3] as Platform            
+                platform: rest[3] as Platform,
             };
         }
-        
+
         const billingPlan = params.billingPlan;
         const paymentMethodId = params.paymentMethodId;
         const invites = params.invites;
@@ -252,9 +372,10 @@ export class Organizations {
         const platform = params.platform;
 
         if (typeof billingPlan === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "billingPlan"');
+            throw new AppwriteException(
+                'Missing required parameter: "billingPlan"',
+            );
         }
-
         const apiPath = '/organizations/estimations/create-organization';
         const payload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
@@ -277,15 +398,10 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -305,46 +421,47 @@ export class Organizations {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     delete(organizationId: string): Promise<{}>;
-    delete(
-        paramsOrFirst: { organizationId: string } | string    
-    ): Promise<{}> {
+    delete(paramsOrFirst: { organizationId: string } | string): Promise<{}> {
         let params: { organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { organizationId: string };
         } else {
             params = {
-                organizationId: paramsOrFirst as string            
+                organizationId: paramsOrFirst as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
      * List all billing addons for an organization.
-     * 
+     *
      *
      * @param {string} params.organizationId - Organization ID
      * @throws {AppwriteException}
@@ -353,7 +470,7 @@ export class Organizations {
     listAddons(params: { organizationId: string }): Promise<Models.AddonList>;
     /**
      * List all billing addons for an organization.
-     * 
+     *
      *
      * @param {string} organizationId - Organization ID
      * @throws {AppwriteException}
@@ -362,44 +479,47 @@ export class Organizations {
      */
     listAddons(organizationId: string): Promise<Models.AddonList>;
     listAddons(
-        paramsOrFirst: { organizationId: string } | string    
+        paramsOrFirst: { organizationId: string } | string,
     ): Promise<Models.AddonList> {
         let params: { organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { organizationId: string };
         } else {
             params = {
-                organizationId: paramsOrFirst as string            
+                organizationId: paramsOrFirst as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/addons'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/addons'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Create the BAA billing addon for an organization.
-     * 
+     *
      *
      * @param {string} params.organizationId - Organization ID
      * @throws {AppwriteException}
@@ -408,7 +528,7 @@ export class Organizations {
     createBaaAddon(params: { organizationId: string }): Promise<Models.Addon>;
     /**
      * Create the BAA billing addon for an organization.
-     * 
+     *
      *
      * @param {string} organizationId - Organization ID
      * @throws {AppwriteException}
@@ -417,54 +537,59 @@ export class Organizations {
      */
     createBaaAddon(organizationId: string): Promise<Models.Addon>;
     createBaaAddon(
-        paramsOrFirst: { organizationId: string } | string    
+        paramsOrFirst: { organizationId: string } | string,
     ): Promise<Models.Addon> {
         let params: { organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { organizationId: string };
         } else {
             params = {
-                organizationId: paramsOrFirst as string            
+                organizationId: paramsOrFirst as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/addons/baa'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/addons/baa'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Create a Premium Geo DB addon for an organization.
-     * 
+     *
      *
      * @param {string} params.organizationId - Organization ID
      * @throws {AppwriteException}
      * @returns {Promise<Models.Addon>}
      */
-    createPremiumGeoDBAddon(params: { organizationId: string }): Promise<Models.Addon>;
+    createPremiumGeoDBAddon(params: {
+        organizationId: string;
+    }): Promise<Models.Addon>;
     /**
      * Create a Premium Geo DB addon for an organization.
-     * 
+     *
      *
      * @param {string} organizationId - Organization ID
      * @throws {AppwriteException}
@@ -473,55 +598,62 @@ export class Organizations {
      */
     createPremiumGeoDBAddon(organizationId: string): Promise<Models.Addon>;
     createPremiumGeoDBAddon(
-        paramsOrFirst: { organizationId: string } | string    
+        paramsOrFirst: { organizationId: string } | string,
     ): Promise<Models.Addon> {
         let params: { organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { organizationId: string };
         } else {
             params = {
-                organizationId: paramsOrFirst as string            
+                organizationId: paramsOrFirst as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/addons/premium-geo-db'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath =
+            '/organizations/{organizationId}/addons/premium-geo-db'.replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Get the details of a billing addon for an organization.
-     * 
+     *
      *
      * @param {string} params.organizationId - Organization ID
      * @param {string} params.addonId - Addon ID
      * @throws {AppwriteException}
      * @returns {Promise<Models.Addon>}
      */
-    getAddon(params: { organizationId: string, addonId: string }): Promise<Models.Addon>;
+    getAddon(params: {
+        organizationId: string;
+        addonId: string;
+    }): Promise<Models.Addon>;
     /**
      * Get the details of a billing addon for an organization.
-     * 
+     *
      *
      * @param {string} organizationId - Organization ID
      * @param {string} addonId - Addon ID
@@ -531,60 +663,73 @@ export class Organizations {
      */
     getAddon(organizationId: string, addonId: string): Promise<Models.Addon>;
     getAddon(
-        paramsOrFirst: { organizationId: string, addonId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { organizationId: string; addonId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Addon> {
-        let params: { organizationId: string, addonId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, addonId: string };
+        let params: { organizationId: string; addonId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                addonId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                addonId: rest[0] as string            
+                addonId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const addonId = params.addonId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-        if (typeof addonId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "addonId"');
+        if (typeof addonId === 'undefined' || addonId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "addonId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/addons/{addonId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{addonId}', encodeURIComponent(String(addonId)));
+        const apiPath = '/organizations/{organizationId}/addons/{addonId}'
+            .replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            )
+            .replace('{addonId}', encodeURIComponent(String(addonId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Delete a billing addon for an organization.
-     * 
+     *
      *
      * @param {string} params.organizationId - Organization ID
      * @param {string} params.addonId - Addon ID
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteAddon(params: { organizationId: string, addonId: string }): Promise<{}>;
+    deleteAddon(params: {
+        organizationId: string;
+        addonId: string;
+    }): Promise<{}>;
     /**
      * Delete a billing addon for an organization.
-     * 
+     *
      *
      * @param {string} organizationId - Organization ID
      * @param {string} addonId - Addon ID
@@ -594,61 +739,74 @@ export class Organizations {
      */
     deleteAddon(organizationId: string, addonId: string): Promise<{}>;
     deleteAddon(
-        paramsOrFirst: { organizationId: string, addonId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { organizationId: string; addonId: string } | string,
+        ...rest: [string?]
     ): Promise<{}> {
-        let params: { organizationId: string, addonId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, addonId: string };
+        let params: { organizationId: string; addonId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                addonId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                addonId: rest[0] as string            
+                addonId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const addonId = params.addonId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-        if (typeof addonId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "addonId"');
+        if (typeof addonId === 'undefined' || addonId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "addonId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/addons/{addonId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{addonId}', encodeURIComponent(String(addonId)));
+        const apiPath = '/organizations/{organizationId}/addons/{addonId}'
+            .replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            )
+            .replace('{addonId}', encodeURIComponent(String(addonId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
      * Confirm payment for a billing addon for an organization.
-     * 
+     *
      *
      * @param {string} params.organizationId - Organization ID
      * @param {string} params.addonId - Addon ID
      * @throws {AppwriteException}
      * @returns {Promise<Models.Addon>}
      */
-    confirmAddonPayment(params: { organizationId: string, addonId: string }): Promise<Models.Addon>;
+    confirmAddonPayment(params: {
+        organizationId: string;
+        addonId: string;
+    }): Promise<Models.Addon>;
     /**
      * Confirm payment for a billing addon for an organization.
-     * 
+     *
      *
      * @param {string} organizationId - Organization ID
      * @param {string} addonId - Addon ID
@@ -656,111 +814,139 @@ export class Organizations {
      * @returns {Promise<Models.Addon>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    confirmAddonPayment(organizationId: string, addonId: string): Promise<Models.Addon>;
     confirmAddonPayment(
-        paramsOrFirst: { organizationId: string, addonId: string } | string,
-        ...rest: [(string)?]    
+        organizationId: string,
+        addonId: string,
+    ): Promise<Models.Addon>;
+    confirmAddonPayment(
+        paramsOrFirst: { organizationId: string; addonId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Addon> {
-        let params: { organizationId: string, addonId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, addonId: string };
+        let params: { organizationId: string; addonId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                addonId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                addonId: rest[0] as string            
+                addonId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const addonId = params.addonId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-        if (typeof addonId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "addonId"');
+        if (typeof addonId === 'undefined' || addonId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "addonId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/addons/{addonId}/confirmations'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{addonId}', encodeURIComponent(String(addonId)));
+        const apiPath =
+            '/organizations/{organizationId}/addons/{addonId}/confirmations'
+                .replace(
+                    '{organizationId}',
+                    encodeURIComponent(String(organizationId)),
+                )
+                .replace('{addonId}', encodeURIComponent(String(addonId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Get the price details for a billing addon for an organization.
-     * 
+     *
      *
      * @param {string} params.organizationId - Organization ID
-     * @param {Addon} params.addon - Addon key identifier (e.g. baa).
+     * @param {AddonKey} params.addon - Addon key identifier (e.g. baa).
      * @throws {AppwriteException}
      * @returns {Promise<Models.AddonPrice>}
      */
-    getAddonPrice(params: { organizationId: string, addon: Addon }): Promise<Models.AddonPrice>;
+    getAddonPrice(params: {
+        organizationId: string;
+        addon: AddonKey;
+    }): Promise<Models.AddonPrice>;
     /**
      * Get the price details for a billing addon for an organization.
-     * 
+     *
      *
      * @param {string} organizationId - Organization ID
-     * @param {Addon} addon - Addon key identifier (e.g. baa).
+     * @param {AddonKey} addon - Addon key identifier (e.g. baa).
      * @throws {AppwriteException}
      * @returns {Promise<Models.AddonPrice>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getAddonPrice(organizationId: string, addon: Addon): Promise<Models.AddonPrice>;
     getAddonPrice(
-        paramsOrFirst: { organizationId: string, addon: Addon } | string,
-        ...rest: [(Addon)?]    
+        organizationId: string,
+        addon: AddonKey,
+    ): Promise<Models.AddonPrice>;
+    getAddonPrice(
+        paramsOrFirst: { organizationId: string; addon: AddonKey } | string,
+        ...rest: [AddonKey?]
     ): Promise<Models.AddonPrice> {
-        let params: { organizationId: string, addon: Addon };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, addon: Addon };
+        let params: { organizationId: string; addon: AddonKey };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                addon: AddonKey;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                addon: rest[0] as Addon            
+                addon: rest[0] as AddonKey,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const addon = params.addon;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof addon === 'undefined') {
             throw new AppwriteException('Missing required parameter: "addon"');
         }
-
-        const apiPath = '/organizations/{organizationId}/addons/{addon}/price'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{addon}', encodeURIComponent(String(addon)));
+        const apiPath = '/organizations/{organizationId}/addons/{addon}/price'
+            .replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            )
+            .replace('{addon}', encodeURIComponent(String(addon)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -771,7 +957,10 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.AggregationTeamList>}
      */
-    listAggregations(params: { organizationId: string, queries?: string[] }): Promise<Models.AggregationTeamList>;
+    listAggregations(params: {
+        organizationId: string;
+        queries?: string[];
+    }): Promise<Models.AggregationTeamList>;
     /**
      * Get a list of all aggregations for an organization.
      *
@@ -781,30 +970,44 @@ export class Organizations {
      * @returns {Promise<Models.AggregationTeamList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listAggregations(organizationId: string, queries?: string[]): Promise<Models.AggregationTeamList>;
     listAggregations(
-        paramsOrFirst: { organizationId: string, queries?: string[] } | string,
-        ...rest: [(string[])?]    
+        organizationId: string,
+        queries?: string[],
+    ): Promise<Models.AggregationTeamList>;
+    listAggregations(
+        paramsOrFirst: { organizationId: string; queries?: string[] } | string,
+        ...rest: [string[]?]
     ): Promise<Models.AggregationTeamList> {
-        let params: { organizationId: string, queries?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, queries?: string[] };
+        let params: { organizationId: string; queries?: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                queries?: string[];
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                queries: rest[0] as string[]            
+                queries: rest[0] as string[],
             };
         }
-        
+
         const organizationId = params.organizationId;
         const queries = params.queries;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/aggregations'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/aggregations'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -813,15 +1016,10 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -834,7 +1032,12 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.AggregationTeam>}
      */
-    getAggregation(params: { organizationId: string, aggregationId: string, limit?: number, offset?: number }): Promise<Models.AggregationTeam>;
+    getAggregation(params: {
+        organizationId: string;
+        aggregationId: string;
+        limit?: number;
+        offset?: number;
+    }): Promise<Models.AggregationTeam>;
     /**
      * Get a specific aggregation using it's aggregation ID.
      *
@@ -846,37 +1049,75 @@ export class Organizations {
      * @returns {Promise<Models.AggregationTeam>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getAggregation(organizationId: string, aggregationId: string, limit?: number, offset?: number): Promise<Models.AggregationTeam>;
     getAggregation(
-        paramsOrFirst: { organizationId: string, aggregationId: string, limit?: number, offset?: number } | string,
-        ...rest: [(string)?, (number)?, (number)?]    
+        organizationId: string,
+        aggregationId: string,
+        limit?: number,
+        offset?: number,
+    ): Promise<Models.AggregationTeam>;
+    getAggregation(
+        paramsOrFirst:
+            | {
+                  organizationId: string;
+                  aggregationId: string;
+                  limit?: number;
+                  offset?: number;
+              }
+            | string,
+        ...rest: [string?, number?, number?]
     ): Promise<Models.AggregationTeam> {
-        let params: { organizationId: string, aggregationId: string, limit?: number, offset?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, aggregationId: string, limit?: number, offset?: number };
+        let params: {
+            organizationId: string;
+            aggregationId: string;
+            limit?: number;
+            offset?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                aggregationId: string;
+                limit?: number;
+                offset?: number;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 aggregationId: rest[0] as string,
                 limit: rest[1] as number,
-                offset: rest[2] as number            
+                offset: rest[2] as number,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const aggregationId = params.aggregationId;
         const limit = params.limit;
         const offset = params.offset;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-        if (typeof aggregationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "aggregationId"');
+        if (typeof aggregationId === 'undefined' || aggregationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "aggregationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/aggregations/{aggregationId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{aggregationId}', encodeURIComponent(String(aggregationId)));
+        const apiPath =
+            '/organizations/{organizationId}/aggregations/{aggregationId}'
+                .replace(
+                    '{organizationId}',
+                    encodeURIComponent(String(organizationId)),
+                )
+                .replace(
+                    '{aggregationId}',
+                    encodeURIComponent(String(aggregationId)),
+                );
         const payload: Payload = {};
         if (typeof limit !== 'undefined') {
             payload['limit'] = limit;
@@ -888,15 +1129,10 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -907,7 +1143,12 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setBillingAddress<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, billingAddressId: string }): Promise<Models.Organization<Preferences>>;
+    setBillingAddress<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        organizationId: string;
+        billingAddressId: string;
+    }): Promise<Models.Organization<Preferences>>;
     /**
      * Set a billing address for an organization.
      *
@@ -917,33 +1158,55 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    setBillingAddress<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, billingAddressId: string): Promise<Models.Organization<Preferences>>;
-    setBillingAddress<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, billingAddressId: string } | string,
-        ...rest: [(string)?]    
+    setBillingAddress<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        organizationId: string,
+        billingAddressId: string,
+    ): Promise<Models.Organization<Preferences>>;
+    setBillingAddress<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            { organizationId: string; billingAddressId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, billingAddressId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, billingAddressId: string };
+        let params: { organizationId: string; billingAddressId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                billingAddressId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                billingAddressId: rest[0] as string            
+                billingAddressId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const billingAddressId = params.billingAddressId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof billingAddressId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "billingAddressId"');
+            throw new AppwriteException(
+                'Missing required parameter: "billingAddressId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/billing-address'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath =
+            '/organizations/{organizationId}/billing-address'.replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            );
         const payload: Payload = {};
         if (typeof billingAddressId !== 'undefined') {
             payload['billingAddressId'] = billingAddressId;
@@ -953,15 +1216,10 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -982,40 +1240,44 @@ export class Organizations {
      */
     deleteBillingAddress(organizationId: string): Promise<{}>;
     deleteBillingAddress(
-        paramsOrFirst: { organizationId: string } | string    
+        paramsOrFirst: { organizationId: string } | string,
     ): Promise<{}> {
         let params: { organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { organizationId: string };
         } else {
             params = {
-                organizationId: paramsOrFirst as string            
+                organizationId: paramsOrFirst as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/billing-address'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath =
+            '/organizations/{organizationId}/billing-address'.replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -1026,7 +1288,10 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      */
-    getBillingAddress(params: { organizationId: string, billingAddressId: string }): Promise<Models.BillingAddress>;
+    getBillingAddress(params: {
+        organizationId: string;
+        billingAddressId: string;
+    }): Promise<Models.BillingAddress>;
     /**
      * Get a billing address using it's ID.
      *
@@ -1036,47 +1301,68 @@ export class Organizations {
      * @returns {Promise<Models.BillingAddress>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getBillingAddress(organizationId: string, billingAddressId: string): Promise<Models.BillingAddress>;
     getBillingAddress(
-        paramsOrFirst: { organizationId: string, billingAddressId: string } | string,
-        ...rest: [(string)?]    
+        organizationId: string,
+        billingAddressId: string,
+    ): Promise<Models.BillingAddress>;
+    getBillingAddress(
+        paramsOrFirst:
+            { organizationId: string; billingAddressId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.BillingAddress> {
-        let params: { organizationId: string, billingAddressId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, billingAddressId: string };
+        let params: { organizationId: string; billingAddressId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                billingAddressId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                billingAddressId: rest[0] as string            
+                billingAddressId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const billingAddressId = params.billingAddressId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-        if (typeof billingAddressId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "billingAddressId"');
+        if (
+            typeof billingAddressId === 'undefined' ||
+            billingAddressId === ''
+        ) {
+            throw new AppwriteException(
+                'Missing required parameter: "billingAddressId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/billing-addresses/{billingAddressId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{billingAddressId}', encodeURIComponent(String(billingAddressId)));
+        const apiPath =
+            '/organizations/{organizationId}/billing-addresses/{billingAddressId}'
+                .replace(
+                    '{organizationId}',
+                    encodeURIComponent(String(organizationId)),
+                )
+                .replace(
+                    '{billingAddressId}',
+                    encodeURIComponent(String(billingAddressId)),
+                );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1087,7 +1373,12 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setBillingEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, billingEmail: string }): Promise<Models.Organization<Preferences>>;
+    setBillingEmail<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        organizationId: string;
+        billingEmail: string;
+    }): Promise<Models.Organization<Preferences>>;
     /**
      * Set the current billing email for the organization.
      *
@@ -1097,33 +1388,54 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    setBillingEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, billingEmail: string): Promise<Models.Organization<Preferences>>;
-    setBillingEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, billingEmail: string } | string,
-        ...rest: [(string)?]    
+    setBillingEmail<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        organizationId: string,
+        billingEmail: string,
+    ): Promise<Models.Organization<Preferences>>;
+    setBillingEmail<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            { organizationId: string; billingEmail: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, billingEmail: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, billingEmail: string };
+        let params: { organizationId: string; billingEmail: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                billingEmail: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                billingEmail: rest[0] as string            
+                billingEmail: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const billingEmail = params.billingEmail;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof billingEmail === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "billingEmail"');
+            throw new AppwriteException(
+                'Missing required parameter: "billingEmail"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/billing-email'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/billing-email'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         if (typeof billingEmail !== 'undefined') {
             payload['billingEmail'] = billingEmail;
@@ -1133,15 +1445,10 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1153,7 +1460,13 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    updateBudget<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, budget?: number, alerts?: number[] }): Promise<Models.Organization<Preferences>>;
+    updateBudget<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        organizationId: string;
+        budget?: number;
+        alerts?: number[];
+    }): Promise<Models.Organization<Preferences>>;
     /**
      * Update the budget limit for an organization.
      *
@@ -1164,35 +1477,61 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateBudget<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, budget?: number, alerts?: number[]): Promise<Models.Organization<Preferences>>;
-    updateBudget<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, budget?: number, alerts?: number[] } | string,
-        ...rest: [(number)?, (number[])?]    
+    updateBudget<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        organizationId: string,
+        budget?: number,
+        alerts?: number[],
+    ): Promise<Models.Organization<Preferences>>;
+    updateBudget<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            | { organizationId: string; budget?: number; alerts?: number[] }
+            | string,
+        ...rest: [number?, number[]?]
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, budget?: number, alerts?: number[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, budget?: number, alerts?: number[] };
+        let params: {
+            organizationId: string;
+            budget?: number;
+            alerts?: number[];
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                budget?: number;
+                alerts?: number[];
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 budget: rest[0] as number,
-                alerts: rest[1] as number[]            
+                alerts: rest[1] as number[],
             };
         }
-        
+
         const organizationId = params.organizationId;
         const budget = params.budget;
         const alerts = params.alerts;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof budget === 'undefined') {
             throw new AppwriteException('Missing required parameter: "budget"');
         }
-
-        const apiPath = '/organizations/{organizationId}/budget'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/budget'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         if (typeof budget !== 'undefined') {
             payload['budget'] = budget;
@@ -1205,30 +1544,28 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
      * List all credits for an organization.
-     * 
+     *
      *
      * @param {string} params.organizationId - Organization ID
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, couponId, credits, expiration, status
      * @throws {AppwriteException}
      * @returns {Promise<Models.CreditList>}
      */
-    listCredits(params: { organizationId: string, queries?: string[] }): Promise<Models.CreditList>;
+    listCredits(params: {
+        organizationId: string;
+        queries?: string[];
+    }): Promise<Models.CreditList>;
     /**
      * List all credits for an organization.
-     * 
+     *
      *
      * @param {string} organizationId - Organization ID
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, couponId, credits, expiration, status
@@ -1236,30 +1573,44 @@ export class Organizations {
      * @returns {Promise<Models.CreditList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listCredits(organizationId: string, queries?: string[]): Promise<Models.CreditList>;
     listCredits(
-        paramsOrFirst: { organizationId: string, queries?: string[] } | string,
-        ...rest: [(string[])?]    
+        organizationId: string,
+        queries?: string[],
+    ): Promise<Models.CreditList>;
+    listCredits(
+        paramsOrFirst: { organizationId: string; queries?: string[] } | string,
+        ...rest: [string[]?]
     ): Promise<Models.CreditList> {
-        let params: { organizationId: string, queries?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, queries?: string[] };
+        let params: { organizationId: string; queries?: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                queries?: string[];
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                queries: rest[0] as string[]            
+                queries: rest[0] as string[],
             };
         }
-        
+
         const organizationId = params.organizationId;
         const queries = params.queries;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/credits'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/credits'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1268,15 +1619,10 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1287,7 +1633,10 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Credit>}
      */
-    addCredit(params: { organizationId: string, couponId: string }): Promise<Models.Credit>;
+    addCredit(params: {
+        organizationId: string;
+        couponId: string;
+    }): Promise<Models.Credit>;
     /**
      * Add credit to an organization using a coupon.
      *
@@ -1299,31 +1648,44 @@ export class Organizations {
      */
     addCredit(organizationId: string, couponId: string): Promise<Models.Credit>;
     addCredit(
-        paramsOrFirst: { organizationId: string, couponId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { organizationId: string; couponId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Credit> {
-        let params: { organizationId: string, couponId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, couponId: string };
+        let params: { organizationId: string; couponId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                couponId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                couponId: rest[0] as string            
+                couponId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const couponId = params.couponId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof couponId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "couponId"');
+            throw new AppwriteException(
+                'Missing required parameter: "couponId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/credits'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/credits'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         if (typeof couponId !== 'undefined') {
             payload['couponId'] = couponId;
@@ -1333,15 +1695,10 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1351,7 +1708,9 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.CreditAvailable>}
      */
-    getAvailableCredits(params: { organizationId: string }): Promise<Models.CreditAvailable>;
+    getAvailableCredits(params: {
+        organizationId: string;
+    }): Promise<Models.CreditAvailable>;
     /**
      * Get total available valid credits for an organization.
      *
@@ -1360,41 +1719,47 @@ export class Organizations {
      * @returns {Promise<Models.CreditAvailable>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getAvailableCredits(organizationId: string): Promise<Models.CreditAvailable>;
     getAvailableCredits(
-        paramsOrFirst: { organizationId: string } | string    
+        organizationId: string,
+    ): Promise<Models.CreditAvailable>;
+    getAvailableCredits(
+        paramsOrFirst: { organizationId: string } | string,
     ): Promise<Models.CreditAvailable> {
         let params: { organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { organizationId: string };
         } else {
             params = {
-                organizationId: paramsOrFirst as string            
+                organizationId: paramsOrFirst as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/credits/available'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath =
+            '/organizations/{organizationId}/credits/available'.replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1405,7 +1770,10 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Credit>}
      */
-    getCredit(params: { organizationId: string, creditId: string }): Promise<Models.Credit>;
+    getCredit(params: {
+        organizationId: string;
+        creditId: string;
+    }): Promise<Models.Credit>;
     /**
      * Get credit details.
      *
@@ -1417,45 +1785,55 @@ export class Organizations {
      */
     getCredit(organizationId: string, creditId: string): Promise<Models.Credit>;
     getCredit(
-        paramsOrFirst: { organizationId: string, creditId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { organizationId: string; creditId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Credit> {
-        let params: { organizationId: string, creditId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, creditId: string };
+        let params: { organizationId: string; creditId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                creditId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                creditId: rest[0] as string            
+                creditId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const creditId = params.creditId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-        if (typeof creditId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "creditId"');
+        if (typeof creditId === 'undefined' || creditId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "creditId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/credits/{creditId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{creditId}', encodeURIComponent(String(creditId)));
+        const apiPath = '/organizations/{organizationId}/credits/{creditId}'
+            .replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            )
+            .replace('{creditId}', encodeURIComponent(String(creditId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1465,7 +1843,9 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationDeleteOrganization>}
      */
-    estimationDeleteOrganization(params: { organizationId: string }): Promise<Models.EstimationDeleteOrganization>;
+    estimationDeleteOrganization(params: {
+        organizationId: string;
+    }): Promise<Models.EstimationDeleteOrganization>;
     /**
      * Get estimation for deleting an organization.
      *
@@ -1474,42 +1854,48 @@ export class Organizations {
      * @returns {Promise<Models.EstimationDeleteOrganization>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    estimationDeleteOrganization(organizationId: string): Promise<Models.EstimationDeleteOrganization>;
     estimationDeleteOrganization(
-        paramsOrFirst: { organizationId: string } | string    
+        organizationId: string,
+    ): Promise<Models.EstimationDeleteOrganization>;
+    estimationDeleteOrganization(
+        paramsOrFirst: { organizationId: string } | string,
     ): Promise<Models.EstimationDeleteOrganization> {
         let params: { organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { organizationId: string };
         } else {
             params = {
-                organizationId: paramsOrFirst as string            
+                organizationId: paramsOrFirst as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/estimations/delete-organization'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath =
+            '/organizations/{organizationId}/estimations/delete-organization'.replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1522,7 +1908,12 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationUpdatePlan>}
      */
-    estimationUpdatePlan(params: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string }): Promise<Models.EstimationUpdatePlan>;
+    estimationUpdatePlan(params: {
+        organizationId: string;
+        billingPlan: string;
+        invites?: string[];
+        couponId?: string;
+    }): Promise<Models.EstimationUpdatePlan>;
     /**
      * Get estimation for updating the organization plan.
      *
@@ -1534,37 +1925,70 @@ export class Organizations {
      * @returns {Promise<Models.EstimationUpdatePlan>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    estimationUpdatePlan(organizationId: string, billingPlan: string, invites?: string[], couponId?: string): Promise<Models.EstimationUpdatePlan>;
     estimationUpdatePlan(
-        paramsOrFirst: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string } | string,
-        ...rest: [(string)?, (string[])?, (string)?]    
+        organizationId: string,
+        billingPlan: string,
+        invites?: string[],
+        couponId?: string,
+    ): Promise<Models.EstimationUpdatePlan>;
+    estimationUpdatePlan(
+        paramsOrFirst:
+            | {
+                  organizationId: string;
+                  billingPlan: string;
+                  invites?: string[];
+                  couponId?: string;
+              }
+            | string,
+        ...rest: [string?, string[]?, string?]
     ): Promise<Models.EstimationUpdatePlan> {
-        let params: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: string, invites?: string[], couponId?: string };
+        let params: {
+            organizationId: string;
+            billingPlan: string;
+            invites?: string[];
+            couponId?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                billingPlan: string;
+                invites?: string[];
+                couponId?: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 billingPlan: rest[0] as string,
                 invites: rest[1] as string[],
-                couponId: rest[2] as string            
+                couponId: rest[2] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const billingPlan = params.billingPlan;
         const invites = params.invites;
         const couponId = params.couponId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof billingPlan === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "billingPlan"');
+            throw new AppwriteException(
+                'Missing required parameter: "billingPlan"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/estimations/update-plan'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath =
+            '/organizations/{organizationId}/estimations/update-plan'.replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            );
         const payload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
             payload['billingPlan'] = billingPlan;
@@ -1580,20 +2004,15 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
      * Submit feedback about downgrading from a paid plan to a lower tier. This helps the team understand user experience and improve the platform.
-     * 
+     *
      *
      * @param {string} params.organizationId - Organization Unique ID
      * @param {string} params.reason - Feedback reason
@@ -1603,10 +2022,16 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DowngradeFeedback>}
      */
-    createDowngradeFeedback(params: { organizationId: string, reason: string, message: string, fromPlanId: string, toPlanId: string }): Promise<Models.DowngradeFeedback>;
+    createDowngradeFeedback(params: {
+        organizationId: string;
+        reason: string;
+        message: string;
+        fromPlanId: string;
+        toPlanId: string;
+    }): Promise<Models.DowngradeFeedback>;
     /**
      * Submit feedback about downgrading from a paid plan to a lower tier. This helps the team understand user experience and improve the platform.
-     * 
+     *
      *
      * @param {string} organizationId - Organization Unique ID
      * @param {string} reason - Feedback reason
@@ -1617,48 +2042,89 @@ export class Organizations {
      * @returns {Promise<Models.DowngradeFeedback>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createDowngradeFeedback(organizationId: string, reason: string, message: string, fromPlanId: string, toPlanId: string): Promise<Models.DowngradeFeedback>;
     createDowngradeFeedback(
-        paramsOrFirst: { organizationId: string, reason: string, message: string, fromPlanId: string, toPlanId: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?]    
+        organizationId: string,
+        reason: string,
+        message: string,
+        fromPlanId: string,
+        toPlanId: string,
+    ): Promise<Models.DowngradeFeedback>;
+    createDowngradeFeedback(
+        paramsOrFirst:
+            | {
+                  organizationId: string;
+                  reason: string;
+                  message: string;
+                  fromPlanId: string;
+                  toPlanId: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, string?]
     ): Promise<Models.DowngradeFeedback> {
-        let params: { organizationId: string, reason: string, message: string, fromPlanId: string, toPlanId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, reason: string, message: string, fromPlanId: string, toPlanId: string };
+        let params: {
+            organizationId: string;
+            reason: string;
+            message: string;
+            fromPlanId: string;
+            toPlanId: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                reason: string;
+                message: string;
+                fromPlanId: string;
+                toPlanId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 reason: rest[0] as string,
                 message: rest[1] as string,
                 fromPlanId: rest[2] as string,
-                toPlanId: rest[3] as string            
+                toPlanId: rest[3] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const reason = params.reason;
         const message = params.message;
         const fromPlanId = params.fromPlanId;
         const toPlanId = params.toPlanId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof reason === 'undefined') {
             throw new AppwriteException('Missing required parameter: "reason"');
         }
         if (typeof message === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "message"');
+            throw new AppwriteException(
+                'Missing required parameter: "message"',
+            );
         }
         if (typeof fromPlanId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "fromPlanId"');
+            throw new AppwriteException(
+                'Missing required parameter: "fromPlanId"',
+            );
         }
         if (typeof toPlanId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "toPlanId"');
+            throw new AppwriteException(
+                'Missing required parameter: "toPlanId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/feedbacks/downgrade'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath =
+            '/organizations/{organizationId}/feedbacks/downgrade'.replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            );
         const payload: Payload = {};
         if (typeof reason !== 'undefined') {
             payload['reason'] = reason;
@@ -1677,15 +2143,10 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1696,7 +2157,10 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.InvoiceList>}
      */
-    listInvoices(params: { organizationId: string, queries?: string[] }): Promise<Models.InvoiceList>;
+    listInvoices(params: {
+        organizationId: string;
+        queries?: string[];
+    }): Promise<Models.InvoiceList>;
     /**
      * List all invoices for an organization.
      *
@@ -1706,30 +2170,44 @@ export class Organizations {
      * @returns {Promise<Models.InvoiceList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listInvoices(organizationId: string, queries?: string[]): Promise<Models.InvoiceList>;
     listInvoices(
-        paramsOrFirst: { organizationId: string, queries?: string[] } | string,
-        ...rest: [(string[])?]    
+        organizationId: string,
+        queries?: string[],
+    ): Promise<Models.InvoiceList>;
+    listInvoices(
+        paramsOrFirst: { organizationId: string; queries?: string[] } | string,
+        ...rest: [string[]?]
     ): Promise<Models.InvoiceList> {
-        let params: { organizationId: string, queries?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, queries?: string[] };
+        let params: { organizationId: string; queries?: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                queries?: string[];
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                queries: rest[0] as string[]            
+                queries: rest[0] as string[],
             };
         }
-        
+
         const organizationId = params.organizationId;
         const queries = params.queries;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/invoices'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/invoices'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1738,15 +2216,10 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1757,7 +2230,10 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Invoice>}
      */
-    getInvoice(params: { organizationId: string, invoiceId: string }): Promise<Models.Invoice>;
+    getInvoice(params: {
+        organizationId: string;
+        invoiceId: string;
+    }): Promise<Models.Invoice>;
     /**
      * Get an invoice by its unique ID.
      *
@@ -1767,47 +2243,60 @@ export class Organizations {
      * @returns {Promise<Models.Invoice>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getInvoice(organizationId: string, invoiceId: string): Promise<Models.Invoice>;
     getInvoice(
-        paramsOrFirst: { organizationId: string, invoiceId: string } | string,
-        ...rest: [(string)?]    
+        organizationId: string,
+        invoiceId: string,
+    ): Promise<Models.Invoice>;
+    getInvoice(
+        paramsOrFirst: { organizationId: string; invoiceId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Invoice> {
-        let params: { organizationId: string, invoiceId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, invoiceId: string };
+        let params: { organizationId: string; invoiceId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                invoiceId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                invoiceId: rest[0] as string            
+                invoiceId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const invoiceId = params.invoiceId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-        if (typeof invoiceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "invoiceId"');
+        if (typeof invoiceId === 'undefined' || invoiceId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "invoiceId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}'
+            .replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            )
+            .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1818,7 +2307,10 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {string}
      */
-    getInvoiceDownload(params: { organizationId: string, invoiceId: string }): string;
+    getInvoiceDownload(params: {
+        organizationId: string;
+        invoiceId: string;
+    }): string;
     /**
      * Download invoice in PDF
      *
@@ -1830,46 +2322,56 @@ export class Organizations {
      */
     getInvoiceDownload(organizationId: string, invoiceId: string): string;
     getInvoiceDownload(
-        paramsOrFirst: { organizationId: string, invoiceId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { organizationId: string; invoiceId: string } | string,
+        ...rest: [string?]
     ): string {
-        let params: { organizationId: string, invoiceId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, invoiceId: string };
+        let params: { organizationId: string; invoiceId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                invoiceId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                invoiceId: rest[0] as string            
+                invoiceId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const invoiceId = params.invoiceId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-        if (typeof invoiceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "invoiceId"');
+        if (typeof invoiceId === 'undefined' || invoiceId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "invoiceId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}/download'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+        const apiPath =
+            '/organizations/{organizationId}/invoices/{invoiceId}/download'
+                .replace(
+                    '{organizationId}',
+                    encodeURIComponent(String(organizationId)),
+                )
+                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
         payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-        
+
         return uri.toString();
     }
 
@@ -1882,7 +2384,11 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Invoice>}
      */
-    createInvoicePayment(params: { organizationId: string, invoiceId: string, paymentMethodId: string }): Promise<Models.Invoice>;
+    createInvoicePayment(params: {
+        organizationId: string;
+        invoiceId: string;
+        paymentMethodId: string;
+    }): Promise<Models.Invoice>;
     /**
      * Initiate payment for failed invoice to pay live from console
      *
@@ -1893,38 +2399,71 @@ export class Organizations {
      * @returns {Promise<Models.Invoice>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createInvoicePayment(organizationId: string, invoiceId: string, paymentMethodId: string): Promise<Models.Invoice>;
     createInvoicePayment(
-        paramsOrFirst: { organizationId: string, invoiceId: string, paymentMethodId: string } | string,
-        ...rest: [(string)?, (string)?]    
+        organizationId: string,
+        invoiceId: string,
+        paymentMethodId: string,
+    ): Promise<Models.Invoice>;
+    createInvoicePayment(
+        paramsOrFirst:
+            | {
+                  organizationId: string;
+                  invoiceId: string;
+                  paymentMethodId: string;
+              }
+            | string,
+        ...rest: [string?, string?]
     ): Promise<Models.Invoice> {
-        let params: { organizationId: string, invoiceId: string, paymentMethodId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, invoiceId: string, paymentMethodId: string };
+        let params: {
+            organizationId: string;
+            invoiceId: string;
+            paymentMethodId: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                invoiceId: string;
+                paymentMethodId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 invoiceId: rest[0] as string,
-                paymentMethodId: rest[1] as string            
+                paymentMethodId: rest[1] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const invoiceId = params.invoiceId;
         const paymentMethodId = params.paymentMethodId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-        if (typeof invoiceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "invoiceId"');
+        if (typeof invoiceId === 'undefined' || invoiceId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "invoiceId"',
+            );
         }
         if (typeof paymentMethodId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
+            throw new AppwriteException(
+                'Missing required parameter: "paymentMethodId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}/payments'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+        const apiPath =
+            '/organizations/{organizationId}/invoices/{invoiceId}/payments'
+                .replace(
+                    '{organizationId}',
+                    encodeURIComponent(String(organizationId)),
+                )
+                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
         const payload: Payload = {};
         if (typeof paymentMethodId !== 'undefined') {
             payload['paymentMethodId'] = paymentMethodId;
@@ -1934,15 +2473,10 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1953,7 +2487,10 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Invoice>}
      */
-    validateInvoice(params: { organizationId: string, invoiceId: string }): Promise<Models.Invoice>;
+    validateInvoice(params: {
+        organizationId: string;
+        invoiceId: string;
+    }): Promise<Models.Invoice>;
     /**
      * Validates the payment linked with the invoice and updates the invoice status if the payment status is changed.
      *
@@ -1963,48 +2500,62 @@ export class Organizations {
      * @returns {Promise<Models.Invoice>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    validateInvoice(organizationId: string, invoiceId: string): Promise<Models.Invoice>;
     validateInvoice(
-        paramsOrFirst: { organizationId: string, invoiceId: string } | string,
-        ...rest: [(string)?]    
+        organizationId: string,
+        invoiceId: string,
+    ): Promise<Models.Invoice>;
+    validateInvoice(
+        paramsOrFirst: { organizationId: string; invoiceId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Invoice> {
-        let params: { organizationId: string, invoiceId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, invoiceId: string };
+        let params: { organizationId: string; invoiceId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                invoiceId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                invoiceId: rest[0] as string            
+                invoiceId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const invoiceId = params.invoiceId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-        if (typeof invoiceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "invoiceId"');
+        if (typeof invoiceId === 'undefined' || invoiceId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "invoiceId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}/status'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+        const apiPath =
+            '/organizations/{organizationId}/invoices/{invoiceId}/status'
+                .replace(
+                    '{organizationId}',
+                    encodeURIComponent(String(organizationId)),
+                )
+                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2015,7 +2566,10 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {string}
      */
-    getInvoiceView(params: { organizationId: string, invoiceId: string }): string;
+    getInvoiceView(params: {
+        organizationId: string;
+        invoiceId: string;
+    }): string;
     /**
      * View invoice in PDF
      *
@@ -2027,46 +2581,56 @@ export class Organizations {
      */
     getInvoiceView(organizationId: string, invoiceId: string): string;
     getInvoiceView(
-        paramsOrFirst: { organizationId: string, invoiceId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { organizationId: string; invoiceId: string } | string,
+        ...rest: [string?]
     ): string {
-        let params: { organizationId: string, invoiceId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, invoiceId: string };
+        let params: { organizationId: string; invoiceId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                invoiceId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                invoiceId: rest[0] as string            
+                invoiceId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const invoiceId = params.invoiceId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-        if (typeof invoiceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "invoiceId"');
+        if (typeof invoiceId === 'undefined' || invoiceId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "invoiceId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}/view'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+        const apiPath =
+            '/organizations/{organizationId}/invoices/{invoiceId}/view'
+                .replace(
+                    '{organizationId}',
+                    encodeURIComponent(String(organizationId)),
+                )
+                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
-
         payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-        
+
         return uri.toString();
     }
 
@@ -2078,7 +2642,12 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setDefaultPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, paymentMethodId: string }): Promise<Models.Organization<Preferences>>;
+    setDefaultPaymentMethod<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        organizationId: string;
+        paymentMethodId: string;
+    }): Promise<Models.Organization<Preferences>>;
     /**
      * Set a organization's default payment method.
      *
@@ -2088,33 +2657,55 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    setDefaultPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, paymentMethodId: string): Promise<Models.Organization<Preferences>>;
-    setDefaultPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, paymentMethodId: string } | string,
-        ...rest: [(string)?]    
+    setDefaultPaymentMethod<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        organizationId: string,
+        paymentMethodId: string,
+    ): Promise<Models.Organization<Preferences>>;
+    setDefaultPaymentMethod<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            { organizationId: string; paymentMethodId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, paymentMethodId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, paymentMethodId: string };
+        let params: { organizationId: string; paymentMethodId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                paymentMethodId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                paymentMethodId: rest[0] as string            
+                paymentMethodId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const paymentMethodId = params.paymentMethodId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof paymentMethodId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
+            throw new AppwriteException(
+                'Missing required parameter: "paymentMethodId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/payment-method'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath =
+            '/organizations/{organizationId}/payment-method'.replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            );
         const payload: Payload = {};
         if (typeof paymentMethodId !== 'undefined') {
             payload['paymentMethodId'] = paymentMethodId;
@@ -2124,15 +2715,10 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2142,7 +2728,11 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    deleteDefaultPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string }): Promise<Models.Organization<Preferences>>;
+    deleteDefaultPaymentMethod<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        organizationId: string;
+    }): Promise<Models.Organization<Preferences>>;
     /**
      * Delete the default payment method for an organization.
      *
@@ -2151,57 +2741,70 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    deleteDefaultPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string): Promise<Models.Organization<Preferences>>;
-    deleteDefaultPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string } | string    
+    deleteDefaultPaymentMethod<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(organizationId: string): Promise<Models.Organization<Preferences>>;
+    deleteDefaultPaymentMethod<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { organizationId: string } | string,
     ): Promise<Models.Organization<Preferences>> {
         let params: { organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { organizationId: string };
         } else {
             params = {
-                organizationId: paramsOrFirst as string            
+                organizationId: paramsOrFirst as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/payment-method'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath =
+            '/organizations/{organizationId}/payment-method'.replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
      * Set an organization's backup payment method.
-     * 
+     *
      *
      * @param {string} params.organizationId - Organization ID
      * @param {string} params.paymentMethodId - Unique ID of payment method
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setBackupPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, paymentMethodId: string }): Promise<Models.Organization<Preferences>>;
+    setBackupPaymentMethod<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        organizationId: string;
+        paymentMethodId: string;
+    }): Promise<Models.Organization<Preferences>>;
     /**
      * Set an organization's backup payment method.
-     * 
+     *
      *
      * @param {string} organizationId - Organization ID
      * @param {string} paymentMethodId - Unique ID of payment method
@@ -2209,33 +2812,55 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    setBackupPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, paymentMethodId: string): Promise<Models.Organization<Preferences>>;
-    setBackupPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, paymentMethodId: string } | string,
-        ...rest: [(string)?]    
+    setBackupPaymentMethod<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        organizationId: string,
+        paymentMethodId: string,
+    ): Promise<Models.Organization<Preferences>>;
+    setBackupPaymentMethod<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            { organizationId: string; paymentMethodId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, paymentMethodId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, paymentMethodId: string };
+        let params: { organizationId: string; paymentMethodId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                paymentMethodId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                paymentMethodId: rest[0] as string            
+                paymentMethodId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const paymentMethodId = params.paymentMethodId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof paymentMethodId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
+            throw new AppwriteException(
+                'Missing required parameter: "paymentMethodId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/payment-method/backup'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath =
+            '/organizations/{organizationId}/payment-method/backup'.replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            );
         const payload: Payload = {};
         if (typeof paymentMethodId !== 'undefined') {
             payload['paymentMethodId'] = paymentMethodId;
@@ -2245,15 +2870,10 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2263,7 +2883,11 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    deleteBackupPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string }): Promise<Models.Organization<Preferences>>;
+    deleteBackupPaymentMethod<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        organizationId: string;
+    }): Promise<Models.Organization<Preferences>>;
     /**
      * Delete a backup payment method for an organization.
      *
@@ -2272,42 +2896,50 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    deleteBackupPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string): Promise<Models.Organization<Preferences>>;
-    deleteBackupPaymentMethod<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string } | string    
+    deleteBackupPaymentMethod<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(organizationId: string): Promise<Models.Organization<Preferences>>;
+    deleteBackupPaymentMethod<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { organizationId: string } | string,
     ): Promise<Models.Organization<Preferences>> {
         let params: { organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { organizationId: string };
         } else {
             params = {
-                organizationId: paramsOrFirst as string            
+                organizationId: paramsOrFirst as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/payment-method/backup'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath =
+            '/organizations/{organizationId}/payment-method/backup'.replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -2318,7 +2950,10 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      */
-    getPaymentMethod(params: { organizationId: string, paymentMethodId: string }): Promise<Models.PaymentMethod>;
+    getPaymentMethod(params: {
+        organizationId: string;
+        paymentMethodId: string;
+    }): Promise<Models.PaymentMethod>;
     /**
      * Get an organization's payment method using it's payment method ID.
      *
@@ -2328,47 +2963,65 @@ export class Organizations {
      * @returns {Promise<Models.PaymentMethod>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getPaymentMethod(organizationId: string, paymentMethodId: string): Promise<Models.PaymentMethod>;
     getPaymentMethod(
-        paramsOrFirst: { organizationId: string, paymentMethodId: string } | string,
-        ...rest: [(string)?]    
+        organizationId: string,
+        paymentMethodId: string,
+    ): Promise<Models.PaymentMethod>;
+    getPaymentMethod(
+        paramsOrFirst:
+            { organizationId: string; paymentMethodId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.PaymentMethod> {
-        let params: { organizationId: string, paymentMethodId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, paymentMethodId: string };
+        let params: { organizationId: string; paymentMethodId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                paymentMethodId: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                paymentMethodId: rest[0] as string            
+                paymentMethodId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const paymentMethodId = params.paymentMethodId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-        if (typeof paymentMethodId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
+        if (typeof paymentMethodId === 'undefined' || paymentMethodId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "paymentMethodId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/payment-methods/{paymentMethodId}'.replace('{organizationId}', encodeURIComponent(String(organizationId))).replace('{paymentMethodId}', encodeURIComponent(String(paymentMethodId)));
+        const apiPath =
+            '/organizations/{organizationId}/payment-methods/{paymentMethodId}'
+                .replace(
+                    '{organizationId}',
+                    encodeURIComponent(String(organizationId)),
+                )
+                .replace(
+                    '{paymentMethodId}',
+                    encodeURIComponent(String(paymentMethodId)),
+                );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2389,39 +3042,42 @@ export class Organizations {
      */
     getPlan(organizationId: string): Promise<Models.BillingPlan>;
     getPlan(
-        paramsOrFirst: { organizationId: string } | string    
+        paramsOrFirst: { organizationId: string } | string,
     ): Promise<Models.BillingPlan> {
         let params: { organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { organizationId: string };
         } else {
             params = {
-                organizationId: paramsOrFirst as string            
+                organizationId: paramsOrFirst as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/plan'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/plan'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2438,7 +3094,18 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number }): Promise<Models.Organization<Preferences>>;
+    updatePlan<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        organizationId: string;
+        billingPlan: string;
+        paymentMethodId?: string;
+        billingAddressId?: string;
+        invites?: string[];
+        couponId?: string;
+        taxId?: string;
+        budget?: number;
+    }): Promise<Models.Organization<Preferences>>;
     /**
      * Update the billing plan for an organization.
      *
@@ -2454,15 +3121,69 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number): Promise<Models.Organization<Preferences>>;
-    updatePlan<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string[])?, (string)?, (string)?, (number)?]    
+    updatePlan<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        organizationId: string,
+        billingPlan: string,
+        paymentMethodId?: string,
+        billingAddressId?: string,
+        invites?: string[],
+        couponId?: string,
+        taxId?: string,
+        budget?: number,
+    ): Promise<Models.Organization<Preferences>>;
+    updatePlan<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            | {
+                  organizationId: string;
+                  billingPlan: string;
+                  paymentMethodId?: string;
+                  billingAddressId?: string;
+                  invites?: string[];
+                  couponId?: string;
+                  taxId?: string;
+                  budget?: number;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            string[]?,
+            string?,
+            string?,
+            number?,
+        ]
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: string, paymentMethodId?: string, billingAddressId?: string, invites?: string[], couponId?: string, taxId?: string, budget?: number };
+        let params: {
+            organizationId: string;
+            billingPlan: string;
+            paymentMethodId?: string;
+            billingAddressId?: string;
+            invites?: string[];
+            couponId?: string;
+            taxId?: string;
+            budget?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                billingPlan: string;
+                paymentMethodId?: string;
+                billingAddressId?: string;
+                invites?: string[];
+                couponId?: string;
+                taxId?: string;
+                budget?: number;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
@@ -2472,10 +3193,10 @@ export class Organizations {
                 invites: rest[3] as string[],
                 couponId: rest[4] as string,
                 taxId: rest[5] as string,
-                budget: rest[6] as number            
+                budget: rest[6] as number,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const billingPlan = params.billingPlan;
         const paymentMethodId = params.paymentMethodId;
@@ -2485,14 +3206,20 @@ export class Organizations {
         const taxId = params.taxId;
         const budget = params.budget;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof billingPlan === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "billingPlan"');
+            throw new AppwriteException(
+                'Missing required parameter: "billingPlan"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/plan'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/plan'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
             payload['billingPlan'] = billingPlan;
@@ -2520,15 +3247,10 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2538,7 +3260,11 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    cancelDowngrade<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string }): Promise<Models.Organization<Preferences>>;
+    cancelDowngrade<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        organizationId: string;
+    }): Promise<Models.Organization<Preferences>>;
     /**
      * Cancel the downgrade initiated for an organization.
      *
@@ -2547,47 +3273,54 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    cancelDowngrade<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string): Promise<Models.Organization<Preferences>>;
-    cancelDowngrade<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string } | string    
+    cancelDowngrade<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(organizationId: string): Promise<Models.Organization<Preferences>>;
+    cancelDowngrade<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { organizationId: string } | string,
     ): Promise<Models.Organization<Preferences>> {
         let params: { organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { organizationId: string };
         } else {
             params = {
-                organizationId: paramsOrFirst as string            
+                organizationId: paramsOrFirst as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/plan/cancel'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/plan/cancel'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
      * Create a billing plan estimation for upgrading or downgrading an organization plan.
-     * 
+     *
      *
      * @param {string} params.organizationId - Organization ID
      * @param {string} params.billingPlan - Target billing plan
@@ -2596,10 +3329,15 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationPlanChange>}
      */
-    createPlanEstimation(params: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string }): Promise<Models.EstimationPlanChange>;
+    createPlanEstimation(params: {
+        organizationId: string;
+        billingPlan: string;
+        invites?: string[];
+        couponId?: string;
+    }): Promise<Models.EstimationPlanChange>;
     /**
      * Create a billing plan estimation for upgrading or downgrading an organization plan.
-     * 
+     *
      *
      * @param {string} organizationId - Organization ID
      * @param {string} billingPlan - Target billing plan
@@ -2609,37 +3347,70 @@ export class Organizations {
      * @returns {Promise<Models.EstimationPlanChange>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPlanEstimation(organizationId: string, billingPlan: string, invites?: string[], couponId?: string): Promise<Models.EstimationPlanChange>;
     createPlanEstimation(
-        paramsOrFirst: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string } | string,
-        ...rest: [(string)?, (string[])?, (string)?]    
+        organizationId: string,
+        billingPlan: string,
+        invites?: string[],
+        couponId?: string,
+    ): Promise<Models.EstimationPlanChange>;
+    createPlanEstimation(
+        paramsOrFirst:
+            | {
+                  organizationId: string;
+                  billingPlan: string;
+                  invites?: string[];
+                  couponId?: string;
+              }
+            | string,
+        ...rest: [string?, string[]?, string?]
     ): Promise<Models.EstimationPlanChange> {
-        let params: { organizationId: string, billingPlan: string, invites?: string[], couponId?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, billingPlan: string, invites?: string[], couponId?: string };
+        let params: {
+            organizationId: string;
+            billingPlan: string;
+            invites?: string[];
+            couponId?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                billingPlan: string;
+                invites?: string[];
+                couponId?: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 billingPlan: rest[0] as string,
                 invites: rest[1] as string[],
-                couponId: rest[2] as string            
+                couponId: rest[2] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const billingPlan = params.billingPlan;
         const invites = params.invites;
         const couponId = params.couponId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof billingPlan === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "billingPlan"');
+            throw new AppwriteException(
+                'Missing required parameter: "billingPlan"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/plan/estimations'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath =
+            '/organizations/{organizationId}/plan/estimations'.replace(
+                '{organizationId}',
+                encodeURIComponent(String(organizationId)),
+            );
         const payload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
             payload['billingPlan'] = billingPlan;
@@ -2655,15 +3426,10 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -2673,7 +3439,9 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ConsoleRegionList>}
      */
-    listRegions(params: { organizationId: string }): Promise<Models.ConsoleRegionList>;
+    listRegions(params: {
+        organizationId: string;
+    }): Promise<Models.ConsoleRegionList>;
     /**
      * Get all available regions for an organization.
      *
@@ -2684,39 +3452,42 @@ export class Organizations {
      */
     listRegions(organizationId: string): Promise<Models.ConsoleRegionList>;
     listRegions(
-        paramsOrFirst: { organizationId: string } | string    
+        paramsOrFirst: { organizationId: string } | string,
     ): Promise<Models.ConsoleRegionList> {
         let params: { organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { organizationId: string };
         } else {
             params = {
-                organizationId: paramsOrFirst as string            
+                organizationId: paramsOrFirst as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/regions'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/regions'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2727,7 +3498,10 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Roles>}
      */
-    getScopes(params: { organizationId: string, projectId?: string }): Promise<Models.Roles>;
+    getScopes(params: {
+        organizationId: string;
+        projectId?: string;
+    }): Promise<Models.Roles>;
     /**
      * Get Scopes
      *
@@ -2737,30 +3511,44 @@ export class Organizations {
      * @returns {Promise<Models.Roles>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getScopes(organizationId: string, projectId?: string): Promise<Models.Roles>;
     getScopes(
-        paramsOrFirst: { organizationId: string, projectId?: string } | string,
-        ...rest: [(string)?]    
+        organizationId: string,
+        projectId?: string,
+    ): Promise<Models.Roles>;
+    getScopes(
+        paramsOrFirst: { organizationId: string; projectId?: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Roles> {
-        let params: { organizationId: string, projectId?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, projectId?: string };
+        let params: { organizationId: string; projectId?: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                projectId?: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                projectId: rest[0] as string            
+                projectId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const projectId = params.projectId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/roles'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/roles'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         if (typeof projectId !== 'undefined') {
             payload['projectId'] = projectId;
@@ -2769,15 +3557,10 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2788,7 +3571,12 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, taxId?: string }): Promise<Models.Organization<Preferences>>;
+    setBillingTaxId<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        organizationId: string;
+        taxId?: string;
+    }): Promise<Models.Organization<Preferences>>;
     /**
      * Set an organization's billing tax ID.
      *
@@ -2798,33 +3586,51 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, taxId?: string): Promise<Models.Organization<Preferences>>;
-    setBillingTaxId<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, taxId?: string } | string,
-        ...rest: [(string)?]    
+    setBillingTaxId<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        organizationId: string,
+        taxId?: string,
+    ): Promise<Models.Organization<Preferences>>;
+    setBillingTaxId<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { organizationId: string; taxId?: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, taxId?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, taxId?: string };
+        let params: { organizationId: string; taxId?: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                taxId?: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                taxId: rest[0] as string            
+                taxId: rest[0] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const taxId = params.taxId;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof taxId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "taxId"');
         }
-
-        const apiPath = '/organizations/{organizationId}/taxId'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/taxId'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         if (typeof taxId !== 'undefined') {
             payload['taxId'] = taxId;
@@ -2834,15 +3640,10 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2854,7 +3655,11 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UsageOrganization>}
      */
-    getUsage(params: { organizationId: string, startDate?: string, endDate?: string }): Promise<Models.UsageOrganization>;
+    getUsage(params: {
+        organizationId: string;
+        startDate?: string;
+        endDate?: string;
+    }): Promise<Models.UsageOrganization>;
     /**
      * Get the usage data for an organization.
      *
@@ -2865,32 +3670,54 @@ export class Organizations {
      * @returns {Promise<Models.UsageOrganization>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getUsage(organizationId: string, startDate?: string, endDate?: string): Promise<Models.UsageOrganization>;
     getUsage(
-        paramsOrFirst: { organizationId: string, startDate?: string, endDate?: string } | string,
-        ...rest: [(string)?, (string)?]    
+        organizationId: string,
+        startDate?: string,
+        endDate?: string,
+    ): Promise<Models.UsageOrganization>;
+    getUsage(
+        paramsOrFirst:
+            | { organizationId: string; startDate?: string; endDate?: string }
+            | string,
+        ...rest: [string?, string?]
     ): Promise<Models.UsageOrganization> {
-        let params: { organizationId: string, startDate?: string, endDate?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, startDate?: string, endDate?: string };
+        let params: {
+            organizationId: string;
+            startDate?: string;
+            endDate?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                startDate?: string;
+                endDate?: string;
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 startDate: rest[0] as string,
-                endDate: rest[1] as string            
+                endDate: rest[1] as string,
             };
         }
-        
+
         const organizationId = params.organizationId;
         const startDate = params.startDate;
         const endDate = params.endDate;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/usage'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/usage'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         if (typeof startDate !== 'undefined') {
             payload['startDate'] = startDate;
@@ -2902,15 +3729,10 @@ export class Organizations {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2921,7 +3743,12 @@ export class Organizations {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    validatePayment<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { organizationId: string, invites?: string[] }): Promise<Models.Organization<Preferences>>;
+    validatePayment<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        organizationId: string;
+        invites?: string[];
+    }): Promise<Models.Organization<Preferences>>;
     /**
      * Validate payment for team after creation or upgrade.
      *
@@ -2931,30 +3758,48 @@ export class Organizations {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    validatePayment<Preferences extends Models.Preferences = Models.DefaultPreferences>(organizationId: string, invites?: string[]): Promise<Models.Organization<Preferences>>;
-    validatePayment<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { organizationId: string, invites?: string[] } | string,
-        ...rest: [(string[])?]    
+    validatePayment<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        organizationId: string,
+        invites?: string[],
+    ): Promise<Models.Organization<Preferences>>;
+    validatePayment<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { organizationId: string; invites?: string[] } | string,
+        ...rest: [string[]?]
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string, invites?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { organizationId: string, invites?: string[] };
+        let params: { organizationId: string; invites?: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                invites?: string[];
+            };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                invites: rest[0] as string[]            
+                invites: rest[0] as string[],
             };
         }
-        
+
         const organizationId = params.organizationId;
         const invites = params.invites;
 
-        if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/organizations/{organizationId}/validate'.replace('{organizationId}', encodeURIComponent(String(organizationId)));
+        const apiPath = '/organizations/{organizationId}/validate'.replace(
+            '{organizationId}',
+            encodeURIComponent(String(organizationId)),
+        );
         const payload: Payload = {};
         if (typeof invites !== 'undefined') {
             payload['invites'] = invites;
@@ -2964,14 +3809,9 @@ export class Organizations {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 }

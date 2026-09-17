@@ -1,5 +1,5 @@
 ```javascript
-import { Client, TablesDB, RelationMutate } from "@appwrite.io/console";
+import { Client, TablesDB, RelationMutate } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,9 +10,9 @@ const tablesDB = new TablesDB(client);
 const result = await tablesDB.updateRelationshipColumn({
     databaseId: '<DATABASE_ID>',
     tableId: '<TABLE_ID>',
-    key: '',
+    key: '<KEY>',
     onDelete: RelationMutate.Cascade, // optional
-    newKey: '' // optional
+    newKey: '<NEW_KEY>', // optional
 });
 
 console.log(result);

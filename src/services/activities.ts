@@ -1,7 +1,5 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
-
 
 export class Activities {
     client: Client;
@@ -17,7 +15,9 @@ export class Activities {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ActivityEventList>}
      */
-    listEvents(params?: { queries?: string[] }): Promise<Models.ActivityEventList>;
+    listEvents(params?: {
+        queries?: string[];
+    }): Promise<Models.ActivityEventList>;
     /**
      * List all events for selected filters.
      *
@@ -28,20 +28,24 @@ export class Activities {
      */
     listEvents(queries?: string[]): Promise<Models.ActivityEventList>;
     listEvents(
-        paramsOrFirst?: { queries?: string[] } | string[]    
+        paramsOrFirst?: { queries?: string[] } | string[],
     ): Promise<Models.ActivityEventList> {
         let params: { queries?: string[] };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            typeof paramsOrFirst === 'undefined' ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
             params = (paramsOrFirst || {}) as { queries?: string[] };
         } else {
             params = {
-                queries: paramsOrFirst as string[]            
+                queries: paramsOrFirst as string[],
             };
         }
-        
-        const queries = params.queries;
 
+        const queries = params.queries;
 
         const apiPath = '/activities/events';
         const payload: Payload = {};
@@ -52,20 +56,15 @@ export class Activities {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Get event by ID.
-     * 
+     *
      *
      * @param {string} params.eventId - Event ID.
      * @throws {AppwriteException}
@@ -74,7 +73,7 @@ export class Activities {
     getEvent(params: { eventId: string }): Promise<Models.ActivityEvent>;
     /**
      * Get event by ID.
-     * 
+     *
      *
      * @param {string} eventId - Event ID.
      * @throws {AppwriteException}
@@ -83,38 +82,41 @@ export class Activities {
      */
     getEvent(eventId: string): Promise<Models.ActivityEvent>;
     getEvent(
-        paramsOrFirst: { eventId: string } | string    
+        paramsOrFirst: { eventId: string } | string,
     ): Promise<Models.ActivityEvent> {
         let params: { eventId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { eventId: string };
         } else {
             params = {
-                eventId: paramsOrFirst as string            
+                eventId: paramsOrFirst as string,
             };
         }
-        
+
         const eventId = params.eventId;
 
-        if (typeof eventId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "eventId"');
+        if (typeof eventId === 'undefined' || eventId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "eventId"',
+            );
         }
-
-        const apiPath = '/activities/events/{eventId}'.replace('{eventId}', encodeURIComponent(String(eventId)));
+        const apiPath = '/activities/events/{eventId}'.replace(
+            '{eventId}',
+            encodeURIComponent(String(eventId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 }

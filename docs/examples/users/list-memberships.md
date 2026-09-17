@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Users } from "@appwrite.io/console";
+import { Client, Users } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +11,7 @@ const result = await users.listMemberships({
     userId: '<USER_ID>',
     queries: [], // optional
     search: '<SEARCH>', // optional
-    total: false // optional
+    total: false, // optional
 });
 
 console.log(result);

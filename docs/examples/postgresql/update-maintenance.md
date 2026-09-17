@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Postgresql } from "@appwrite.io/console";
+import { Client, Postgresql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const postgresql = new Postgresql(client);
 const result = await postgresql.updateMaintenance({
     databaseId: '<DATABASE_ID>',
     day: 'sun',
-    hourUtc: 0
+    hourUtc: 0,
 });
 
 console.log(result);

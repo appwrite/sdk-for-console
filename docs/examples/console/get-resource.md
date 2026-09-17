@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Console, ConsoleResourceType } from "@appwrite.io/console";
+import { Client, Console, ConsoleResourceType } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const xconsole = new Console(client);
 
 const result = await xconsole.getResource({
     value: '<VALUE>',
-    type: ConsoleResourceType.Rules
+    type: ConsoleResourceType.Rules,
 });
 
 console.log(result);

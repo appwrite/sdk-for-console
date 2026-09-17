@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Mongo } from "@appwrite.io/console";
+import { Client, Mongo } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -15,7 +15,7 @@ const result = await mongo.updateBackupStorage({
     secretKey: '<SECRET_KEY>',
     region: '<REGION>', // optional
     prefix: '<PREFIX>', // optional
-    endpoint: '<ENDPOINT>' // optional
+    endpoint: '<ENDPOINT>', // optional
 });
 
 console.log(result);

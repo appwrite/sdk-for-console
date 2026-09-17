@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Functions } from "@appwrite.io/console";
+import { Client, Functions } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +12,7 @@ const result = await functions.createDeployment({
     code: document.getElementById('uploader').files[0],
     activate: false,
     entrypoint: '<ENTRYPOINT>', // optional
-    commands: '<COMMANDS>' // optional
+    commands: '<COMMANDS>', // optional
 });
 
 console.log(result);

@@ -1,12 +1,10 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
 
 import { PasswordHash } from '../enums/password-hash';
 import { UsageRange } from '../enums/usage-range';
 import { AuthenticatorType } from '../enums/authenticator-type';
 import { MessagingProviderType } from '../enums/messaging-provider-type';
-
 export class Users {
     client: Client;
 
@@ -23,7 +21,13 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.UserList<Preferences>>}
      */
-    list<Preferences extends Models.Preferences = Models.DefaultPreferences>(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.UserList<Preferences>>;
+    list<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params?: {
+        queries?: string[];
+        search?: string;
+        total?: boolean;
+    }): Promise<Models.UserList<Preferences>>;
     /**
      * Get a list of all the project's users. You can use the query params to filter your results.
      *
@@ -34,27 +38,40 @@ export class Users {
      * @returns {Promise<Models.UserList<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    list<Preferences extends Models.Preferences = Models.DefaultPreferences>(queries?: string[], search?: string, total?: boolean): Promise<Models.UserList<Preferences>>;
     list<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
-        ...rest: [(string)?, (boolean)?]    
+        queries?: string[],
+        search?: string,
+        total?: boolean,
+    ): Promise<Models.UserList<Preferences>>;
+    list<Preferences extends Models.Preferences = Models.DefaultPreferences>(
+        paramsOrFirst?:
+            { queries?: string[]; search?: string; total?: boolean } | string[],
+        ...rest: [string?, boolean?]
     ): Promise<Models.UserList<Preferences>> {
-        let params: { queries?: string[], search?: string, total?: boolean };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
+        let params: { queries?: string[]; search?: string; total?: boolean };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                search?: string;
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
                 search: rest[0] as string,
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const queries = params.queries;
         const search = params.search;
         const total = params.total;
-
 
         const apiPath = '/users';
         const payload: Payload = {};
@@ -71,15 +88,10 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -93,7 +105,15 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email?: string, phone?: string, password?: string, name?: string }): Promise<Models.User<Preferences>>;
+    create<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        email?: string;
+        phone?: string;
+        password?: string;
+        name?: string;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user.
      *
@@ -106,25 +126,55 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, email?: string, phone?: string, password?: string, name?: string): Promise<Models.User<Preferences>>;
     create<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, email?: string, phone?: string, password?: string, name?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?]    
+        userId: string,
+        email?: string,
+        phone?: string,
+        password?: string,
+        name?: string,
+    ): Promise<Models.User<Preferences>>;
+    create<Preferences extends Models.Preferences = Models.DefaultPreferences>(
+        paramsOrFirst:
+            | {
+                  userId: string;
+                  email?: string;
+                  phone?: string;
+                  password?: string;
+                  name?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, string?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, email?: string, phone?: string, password?: string, name?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, email?: string, phone?: string, password?: string, name?: string };
+        let params: {
+            userId: string;
+            email?: string;
+            phone?: string;
+            password?: string;
+            name?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                email?: string;
+                phone?: string;
+                password?: string;
+                name?: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
                 email: rest[0] as string,
                 phone: rest[1] as string,
                 password: rest[2] as string,
-                name: rest[3] as string            
+                name: rest[3] as string,
             };
         }
-        
+
         const userId = params.userId;
         const email = params.email;
         const phone = params.phone;
@@ -134,7 +184,6 @@ export class Users {
         if (typeof userId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
         const apiPath = '/users';
         const payload: Payload = {};
         if (typeof userId !== 'undefined') {
@@ -157,15 +206,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -178,7 +222,14 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createArgon2User<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string }): Promise<Models.User<Preferences>>;
+    createArgon2User<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        email: string;
+        password: string;
+        name?: string;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [Argon2](https://en.wikipedia.org/wiki/Argon2) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -190,24 +241,49 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createArgon2User<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, email: string, password: string, name?: string): Promise<Models.User<Preferences>>;
-    createArgon2User<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, email: string, password: string, name?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?]    
+    createArgon2User<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        userId: string,
+        email: string,
+        password: string,
+        name?: string,
+    ): Promise<Models.User<Preferences>>;
+    createArgon2User<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            | { userId: string; email: string; password: string; name?: string }
+            | string,
+        ...rest: [string?, string?, string?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, email: string, password: string, name?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, email: string, password: string, name?: string };
+        let params: {
+            userId: string;
+            email: string;
+            password: string;
+            name?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                email: string;
+                password: string;
+                name?: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
                 email: rest[0] as string,
                 password: rest[1] as string,
-                name: rest[2] as string            
+                name: rest[2] as string,
             };
         }
-        
+
         const userId = params.userId;
         const email = params.email;
         const password = params.password;
@@ -220,9 +296,10 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
-
         const apiPath = '/users/argon2';
         const payload: Payload = {};
         if (typeof userId !== 'undefined') {
@@ -242,15 +319,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -263,7 +335,14 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createBcryptUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string }): Promise<Models.User<Preferences>>;
+    createBcryptUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        email: string;
+        password: string;
+        name?: string;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [Bcrypt](https://en.wikipedia.org/wiki/Bcrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -275,24 +354,49 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createBcryptUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, email: string, password: string, name?: string): Promise<Models.User<Preferences>>;
-    createBcryptUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, email: string, password: string, name?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?]    
+    createBcryptUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        userId: string,
+        email: string,
+        password: string,
+        name?: string,
+    ): Promise<Models.User<Preferences>>;
+    createBcryptUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            | { userId: string; email: string; password: string; name?: string }
+            | string,
+        ...rest: [string?, string?, string?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, email: string, password: string, name?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, email: string, password: string, name?: string };
+        let params: {
+            userId: string;
+            email: string;
+            password: string;
+            name?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                email: string;
+                password: string;
+                name?: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
                 email: rest[0] as string,
                 password: rest[1] as string,
-                name: rest[2] as string            
+                name: rest[2] as string,
             };
         }
-        
+
         const userId = params.userId;
         const email = params.email;
         const password = params.password;
@@ -305,9 +409,10 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
-
         const apiPath = '/users/bcrypt';
         const payload: Payload = {};
         if (typeof userId !== 'undefined') {
@@ -327,15 +432,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -347,7 +447,11 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.IdentityList>}
      */
-    listIdentities(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.IdentityList>;
+    listIdentities(params?: {
+        queries?: string[];
+        search?: string;
+        total?: boolean;
+    }): Promise<Models.IdentityList>;
     /**
      * Get identities for all users.
      *
@@ -358,27 +462,40 @@ export class Users {
      * @returns {Promise<Models.IdentityList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listIdentities(queries?: string[], search?: string, total?: boolean): Promise<Models.IdentityList>;
     listIdentities(
-        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
-        ...rest: [(string)?, (boolean)?]    
+        queries?: string[],
+        search?: string,
+        total?: boolean,
+    ): Promise<Models.IdentityList>;
+    listIdentities(
+        paramsOrFirst?:
+            { queries?: string[]; search?: string; total?: boolean } | string[],
+        ...rest: [string?, boolean?]
     ): Promise<Models.IdentityList> {
-        let params: { queries?: string[], search?: string, total?: boolean };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
+        let params: { queries?: string[]; search?: string; total?: boolean };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                search?: string;
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
                 search: rest[0] as string,
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const queries = params.queries;
         const search = params.search;
         const total = params.total;
-
 
         const apiPath = '/users/identities';
         const payload: Payload = {};
@@ -395,15 +512,10 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -424,39 +536,43 @@ export class Users {
      */
     deleteIdentity(identityId: string): Promise<{}>;
     deleteIdentity(
-        paramsOrFirst: { identityId: string } | string    
+        paramsOrFirst: { identityId: string } | string,
     ): Promise<{}> {
         let params: { identityId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { identityId: string };
         } else {
             params = {
-                identityId: paramsOrFirst as string            
+                identityId: paramsOrFirst as string,
             };
         }
-        
+
         const identityId = params.identityId;
 
-        if (typeof identityId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "identityId"');
+        if (typeof identityId === 'undefined' || identityId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "identityId"',
+            );
         }
-
-        const apiPath = '/users/identities/{identityId}'.replace('{identityId}', encodeURIComponent(String(identityId)));
+        const apiPath = '/users/identities/{identityId}'.replace(
+            '{identityId}',
+            encodeURIComponent(String(identityId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -469,7 +585,14 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createMD5User<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string }): Promise<Models.User<Preferences>>;
+    createMD5User<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        email: string;
+        password: string;
+        name?: string;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [MD5](https://en.wikipedia.org/wiki/MD5) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -481,24 +604,49 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createMD5User<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, email: string, password: string, name?: string): Promise<Models.User<Preferences>>;
-    createMD5User<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, email: string, password: string, name?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?]    
+    createMD5User<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        userId: string,
+        email: string,
+        password: string,
+        name?: string,
+    ): Promise<Models.User<Preferences>>;
+    createMD5User<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            | { userId: string; email: string; password: string; name?: string }
+            | string,
+        ...rest: [string?, string?, string?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, email: string, password: string, name?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, email: string, password: string, name?: string };
+        let params: {
+            userId: string;
+            email: string;
+            password: string;
+            name?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                email: string;
+                password: string;
+                name?: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
                 email: rest[0] as string,
                 password: rest[1] as string,
-                name: rest[2] as string            
+                name: rest[2] as string,
             };
         }
-        
+
         const userId = params.userId;
         const email = params.email;
         const password = params.password;
@@ -511,9 +659,10 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
-
         const apiPath = '/users/md5';
         const payload: Payload = {};
         if (typeof userId !== 'undefined') {
@@ -533,15 +682,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -554,7 +698,14 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createPHPassUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, name?: string }): Promise<Models.User<Preferences>>;
+    createPHPassUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        email: string;
+        password: string;
+        name?: string;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [PHPass](https://www.openwall.com/phpass/) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -566,24 +717,49 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPHPassUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, email: string, password: string, name?: string): Promise<Models.User<Preferences>>;
-    createPHPassUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, email: string, password: string, name?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?]    
+    createPHPassUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        userId: string,
+        email: string,
+        password: string,
+        name?: string,
+    ): Promise<Models.User<Preferences>>;
+    createPHPassUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            | { userId: string; email: string; password: string; name?: string }
+            | string,
+        ...rest: [string?, string?, string?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, email: string, password: string, name?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, email: string, password: string, name?: string };
+        let params: {
+            userId: string;
+            email: string;
+            password: string;
+            name?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                email: string;
+                password: string;
+                name?: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
                 email: rest[0] as string,
                 password: rest[1] as string,
-                name: rest[2] as string            
+                name: rest[2] as string,
             };
         }
-        
+
         const userId = params.userId;
         const email = params.email;
         const password = params.password;
@@ -596,9 +772,10 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
-
         const apiPath = '/users/phpass';
         const payload: Payload = {};
         if (typeof userId !== 'undefined') {
@@ -618,15 +795,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -644,7 +816,19 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createScryptUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, passwordSalt: string, passwordCpu: number, passwordMemory: number, passwordParallel: number, passwordLength: number, name?: string }): Promise<Models.User<Preferences>>;
+    createScryptUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        email: string;
+        password: string;
+        passwordSalt: string;
+        passwordCpu: number;
+        passwordMemory: number;
+        passwordParallel: number;
+        passwordLength: number;
+        name?: string;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [Scrypt](https://github.com/Tarsnap/scrypt) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -661,15 +845,74 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createScryptUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, email: string, password: string, passwordSalt: string, passwordCpu: number, passwordMemory: number, passwordParallel: number, passwordLength: number, name?: string): Promise<Models.User<Preferences>>;
-    createScryptUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, email: string, password: string, passwordSalt: string, passwordCpu: number, passwordMemory: number, passwordParallel: number, passwordLength: number, name?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (number)?, (number)?, (number)?, (string)?]    
+    createScryptUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        userId: string,
+        email: string,
+        password: string,
+        passwordSalt: string,
+        passwordCpu: number,
+        passwordMemory: number,
+        passwordParallel: number,
+        passwordLength: number,
+        name?: string,
+    ): Promise<Models.User<Preferences>>;
+    createScryptUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            | {
+                  userId: string;
+                  email: string;
+                  password: string;
+                  passwordSalt: string;
+                  passwordCpu: number;
+                  passwordMemory: number;
+                  passwordParallel: number;
+                  passwordLength: number;
+                  name?: string;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            number?,
+            number?,
+            number?,
+            number?,
+            string?,
+        ]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, email: string, password: string, passwordSalt: string, passwordCpu: number, passwordMemory: number, passwordParallel: number, passwordLength: number, name?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, email: string, password: string, passwordSalt: string, passwordCpu: number, passwordMemory: number, passwordParallel: number, passwordLength: number, name?: string };
+        let params: {
+            userId: string;
+            email: string;
+            password: string;
+            passwordSalt: string;
+            passwordCpu: number;
+            passwordMemory: number;
+            passwordParallel: number;
+            passwordLength: number;
+            name?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                email: string;
+                password: string;
+                passwordSalt: string;
+                passwordCpu: number;
+                passwordMemory: number;
+                passwordParallel: number;
+                passwordLength: number;
+                name?: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
@@ -680,10 +923,10 @@ export class Users {
                 passwordMemory: rest[4] as number,
                 passwordParallel: rest[5] as number,
                 passwordLength: rest[6] as number,
-                name: rest[7] as string            
+                name: rest[7] as string,
             };
         }
-        
+
         const userId = params.userId;
         const email = params.email;
         const password = params.password;
@@ -701,24 +944,35 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
         if (typeof passwordSalt === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordSalt"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordSalt"',
+            );
         }
         if (typeof passwordCpu === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordCpu"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordCpu"',
+            );
         }
         if (typeof passwordMemory === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordMemory"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordMemory"',
+            );
         }
         if (typeof passwordParallel === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordParallel"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordParallel"',
+            );
         }
         if (typeof passwordLength === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordLength"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordLength"',
+            );
         }
-
         const apiPath = '/users/scrypt';
         const payload: Payload = {};
         if (typeof userId !== 'undefined') {
@@ -753,15 +1007,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -777,7 +1026,17 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createScryptModifiedUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, passwordSalt: string, passwordSaltSeparator: string, passwordSignerKey: string, name?: string }): Promise<Models.User<Preferences>>;
+    createScryptModifiedUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        email: string;
+        password: string;
+        passwordSalt: string;
+        passwordSaltSeparator: string;
+        passwordSignerKey: string;
+        name?: string;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [Scrypt Modified](https://gist.github.com/Meldiron/eecf84a0225eccb5a378d45bb27462cc) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -792,15 +1051,57 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createScryptModifiedUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, email: string, password: string, passwordSalt: string, passwordSaltSeparator: string, passwordSignerKey: string, name?: string): Promise<Models.User<Preferences>>;
-    createScryptModifiedUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, email: string, password: string, passwordSalt: string, passwordSaltSeparator: string, passwordSignerKey: string, name?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
+    createScryptModifiedUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        userId: string,
+        email: string,
+        password: string,
+        passwordSalt: string,
+        passwordSaltSeparator: string,
+        passwordSignerKey: string,
+        name?: string,
+    ): Promise<Models.User<Preferences>>;
+    createScryptModifiedUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            | {
+                  userId: string;
+                  email: string;
+                  password: string;
+                  passwordSalt: string;
+                  passwordSaltSeparator: string;
+                  passwordSignerKey: string;
+                  name?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, string?, string?, string?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, email: string, password: string, passwordSalt: string, passwordSaltSeparator: string, passwordSignerKey: string, name?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, email: string, password: string, passwordSalt: string, passwordSaltSeparator: string, passwordSignerKey: string, name?: string };
+        let params: {
+            userId: string;
+            email: string;
+            password: string;
+            passwordSalt: string;
+            passwordSaltSeparator: string;
+            passwordSignerKey: string;
+            name?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                email: string;
+                password: string;
+                passwordSalt: string;
+                passwordSaltSeparator: string;
+                passwordSignerKey: string;
+                name?: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
@@ -809,10 +1110,10 @@ export class Users {
                 passwordSalt: rest[2] as string,
                 passwordSaltSeparator: rest[3] as string,
                 passwordSignerKey: rest[4] as string,
-                name: rest[5] as string            
+                name: rest[5] as string,
             };
         }
-        
+
         const userId = params.userId;
         const email = params.email;
         const password = params.password;
@@ -828,18 +1129,25 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
         if (typeof passwordSalt === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordSalt"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordSalt"',
+            );
         }
         if (typeof passwordSaltSeparator === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordSaltSeparator"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordSaltSeparator"',
+            );
         }
         if (typeof passwordSignerKey === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "passwordSignerKey"');
+            throw new AppwriteException(
+                'Missing required parameter: "passwordSignerKey"',
+            );
         }
-
         const apiPath = '/users/scrypt-modified';
         const payload: Payload = {};
         if (typeof userId !== 'undefined') {
@@ -868,15 +1176,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -890,7 +1193,15 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    createSHAUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string, password: string, passwordVersion?: PasswordHash, name?: string }): Promise<Models.User<Preferences>>;
+    createSHAUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        email: string;
+        password: string;
+        passwordVersion?: PasswordHash;
+        name?: string;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user. Password provided must be hashed with the [SHA](https://en.wikipedia.org/wiki/Secure_Hash_Algorithm) algorithm. Use the [POST /users](https://appwrite.io/docs/server/users#usersCreate) endpoint to create users with a plain text password.
      *
@@ -903,25 +1214,59 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSHAUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, email: string, password: string, passwordVersion?: PasswordHash, name?: string): Promise<Models.User<Preferences>>;
-    createSHAUser<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, email: string, password: string, passwordVersion?: PasswordHash, name?: string } | string,
-        ...rest: [(string)?, (string)?, (PasswordHash)?, (string)?]    
+    createSHAUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        userId: string,
+        email: string,
+        password: string,
+        passwordVersion?: PasswordHash,
+        name?: string,
+    ): Promise<Models.User<Preferences>>;
+    createSHAUser<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            | {
+                  userId: string;
+                  email: string;
+                  password: string;
+                  passwordVersion?: PasswordHash;
+                  name?: string;
+              }
+            | string,
+        ...rest: [string?, string?, PasswordHash?, string?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, email: string, password: string, passwordVersion?: PasswordHash, name?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, email: string, password: string, passwordVersion?: PasswordHash, name?: string };
+        let params: {
+            userId: string;
+            email: string;
+            password: string;
+            passwordVersion?: PasswordHash;
+            name?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                email: string;
+                password: string;
+                passwordVersion?: PasswordHash;
+                name?: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
                 email: rest[0] as string,
                 password: rest[1] as string,
                 passwordVersion: rest[2] as PasswordHash,
-                name: rest[3] as string            
+                name: rest[3] as string,
             };
         }
-        
+
         const userId = params.userId;
         const email = params.email;
         const password = params.password;
@@ -935,9 +1280,10 @@ export class Users {
             throw new AppwriteException('Missing required parameter: "email"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
-
         const apiPath = '/users/sha';
         const payload: Payload = {};
         if (typeof userId !== 'undefined') {
@@ -960,20 +1306,15 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Get usage metrics and statistics for all users in the project. You can view the total number of users and sessions. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     * 
+     *
      *
      * @param {UsageRange} params.range - Date range.
      * @throws {AppwriteException}
@@ -982,7 +1323,7 @@ export class Users {
     getUsage(params?: { range?: UsageRange }): Promise<Models.UsageUsers>;
     /**
      * Get usage metrics and statistics for all users in the project. You can view the total number of users and sessions. The response includes both current totals and historical data over time. Use the optional range parameter to specify the time window for historical data: 24h (last 24 hours), 30d (last 30 days), or 90d (last 90 days). If not specified, range defaults to 30 days.
-     * 
+     *
      *
      * @param {UsageRange} range - Date range.
      * @throws {AppwriteException}
@@ -991,20 +1332,25 @@ export class Users {
      */
     getUsage(range?: UsageRange): Promise<Models.UsageUsers>;
     getUsage(
-        paramsOrFirst?: { range?: UsageRange } | UsageRange    
+        paramsOrFirst?: { range?: UsageRange } | UsageRange,
     ): Promise<Models.UsageUsers> {
         let params: { range?: UsageRange };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('range' in paramsOrFirst))) {
+
+        if (
+            typeof paramsOrFirst === 'undefined' ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst) &&
+                'range' in paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { range?: UsageRange };
         } else {
             params = {
-                range: paramsOrFirst as UsageRange            
+                range: paramsOrFirst as UsageRange,
             };
         }
-        
-        const range = params.range;
 
+        const range = params.range;
 
         const apiPath = '/users/usage';
         const payload: Payload = {};
@@ -1015,15 +1361,10 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1033,7 +1374,9 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    get<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string }): Promise<Models.User<Preferences>>;
+    get<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: { userId: string }): Promise<Models.User<Preferences>>;
     /**
      * Get a user by its unique ID.
      *
@@ -1042,41 +1385,44 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    get<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string): Promise<Models.User<Preferences>>;
     get<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string } | string    
+        userId: string,
+    ): Promise<Models.User<Preferences>>;
+    get<Preferences extends Models.Preferences = Models.DefaultPreferences>(
+        paramsOrFirst: { userId: string } | string,
     ): Promise<Models.User<Preferences>> {
         let params: { userId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { userId: string };
         } else {
             params = {
-                userId: paramsOrFirst as string            
+                userId: paramsOrFirst as string,
             };
         }
-        
+
         const userId = params.userId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1096,40 +1442,40 @@ export class Users {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     delete(userId: string): Promise<{}>;
-    delete(
-        paramsOrFirst: { userId: string } | string    
-    ): Promise<{}> {
+    delete(paramsOrFirst: { userId: string } | string): Promise<{}> {
         let params: { userId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { userId: string };
         } else {
             params = {
-                userId: paramsOrFirst as string            
+                userId: paramsOrFirst as string,
             };
         }
-        
+
         const userId = params.userId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -1140,7 +1486,12 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, email: string }): Promise<Models.User<Preferences>>;
+    updateEmail<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        email: string;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Update the user email by its unique ID.
      *
@@ -1150,33 +1501,43 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, email: string): Promise<Models.User<Preferences>>;
-    updateEmail<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, email: string } | string,
-        ...rest: [(string)?]    
+    updateEmail<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(userId: string, email: string): Promise<Models.User<Preferences>>;
+    updateEmail<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { userId: string; email: string } | string,
+        ...rest: [string?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, email: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, email: string };
+        let params: { userId: string; email: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as { userId: string; email: string };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                email: rest[0] as string            
+                email: rest[0] as string,
             };
         }
-        
+
         const userId = params.userId;
         const email = params.email;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof email === 'undefined') {
             throw new AppwriteException('Missing required parameter: "email"');
         }
-
-        const apiPath = '/users/{userId}/email'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/email'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof email !== 'undefined') {
             payload['email'] = email;
@@ -1186,30 +1547,30 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
      * Enable or disable whether a user can impersonate other users. When impersonation headers are used, the request runs as the target user for API behavior, while internal audit logs still attribute the action to the original impersonator and store the impersonated target details only in internal audit payload data.
-     * 
+     *
      *
      * @param {string} params.userId - User ID.
      * @param {boolean} params.impersonator - Whether the user can impersonate other users. When true, the user can browse project users to choose a target and can pass impersonation headers to act as that user. Internal audit logs still attribute impersonated actions to the original impersonator and store the target user details only in internal audit payload data.
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateImpersonator<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, impersonator: boolean }): Promise<Models.User<Preferences>>;
+    updateImpersonator<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        impersonator: boolean;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Enable or disable whether a user can impersonate other users. When impersonation headers are used, the request runs as the target user for API behavior, while internal audit logs still attribute the action to the original impersonator and store the impersonated target details only in internal audit payload data.
-     * 
+     *
      *
      * @param {string} userId - User ID.
      * @param {boolean} impersonator - Whether the user can impersonate other users. When true, the user can browse project users to choose a target and can pass impersonation headers to act as that user. Internal audit logs still attribute impersonated actions to the original impersonator and store the target user details only in internal audit payload data.
@@ -1217,33 +1578,48 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateImpersonator<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, impersonator: boolean): Promise<Models.User<Preferences>>;
-    updateImpersonator<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, impersonator: boolean } | string,
-        ...rest: [(boolean)?]    
+    updateImpersonator<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(userId: string, impersonator: boolean): Promise<Models.User<Preferences>>;
+    updateImpersonator<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { userId: string; impersonator: boolean } | string,
+        ...rest: [boolean?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, impersonator: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, impersonator: boolean };
+        let params: { userId: string; impersonator: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                impersonator: boolean;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                impersonator: rest[0] as boolean            
+                impersonator: rest[0] as boolean,
             };
         }
-        
+
         const userId = params.userId;
         const impersonator = params.impersonator;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof impersonator === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "impersonator"');
+            throw new AppwriteException(
+                'Missing required parameter: "impersonator"',
+            );
         }
-
-        const apiPath = '/users/{userId}/impersonator'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/impersonator'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof impersonator !== 'undefined') {
             payload['impersonator'] = impersonator;
@@ -1253,63 +1629,77 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
      * Use this endpoint to create a JSON Web Token for user by its unique ID. You can use the resulting JWT to authenticate on behalf of the user. The JWT secret will become invalid if the session it uses gets deleted.
      *
      * @param {string} params.userId - User ID.
-     * @param {string} params.sessionId - Session ID. Use the string 'recent' to use the most recent session. Defaults to the most recent session.
+     * @param {string} params.sessionId - Session ID. Use the string 'recent()' to use the most recent session, which is also the default.
      * @param {number} params.duration - Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Jwt>}
      */
-    createJWT(params: { userId: string, sessionId?: string, duration?: number }): Promise<Models.Jwt>;
+    createJWT(params: {
+        userId: string;
+        sessionId?: string;
+        duration?: number;
+    }): Promise<Models.Jwt>;
     /**
      * Use this endpoint to create a JSON Web Token for user by its unique ID. You can use the resulting JWT to authenticate on behalf of the user. The JWT secret will become invalid if the session it uses gets deleted.
      *
      * @param {string} userId - User ID.
-     * @param {string} sessionId - Session ID. Use the string 'recent' to use the most recent session. Defaults to the most recent session.
+     * @param {string} sessionId - Session ID. Use the string 'recent()' to use the most recent session, which is also the default.
      * @param {number} duration - Time in seconds before JWT expires. Default duration is 900 seconds, and maximum is 3600 seconds.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Jwt>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createJWT(userId: string, sessionId?: string, duration?: number): Promise<Models.Jwt>;
     createJWT(
-        paramsOrFirst: { userId: string, sessionId?: string, duration?: number } | string,
-        ...rest: [(string)?, (number)?]    
+        userId: string,
+        sessionId?: string,
+        duration?: number,
+    ): Promise<Models.Jwt>;
+    createJWT(
+        paramsOrFirst:
+            { userId: string; sessionId?: string; duration?: number } | string,
+        ...rest: [string?, number?]
     ): Promise<Models.Jwt> {
-        let params: { userId: string, sessionId?: string, duration?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, sessionId?: string, duration?: number };
+        let params: { userId: string; sessionId?: string; duration?: number };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                sessionId?: string;
+                duration?: number;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
                 sessionId: rest[0] as string,
-                duration: rest[1] as number            
+                duration: rest[1] as number,
             };
         }
-        
+
         const userId = params.userId;
         const sessionId = params.sessionId;
         const duration = params.duration;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/jwts'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/jwts'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof sessionId !== 'undefined') {
             payload['sessionId'] = sessionId;
@@ -1322,20 +1712,15 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
-     * Update the user labels by its unique ID. 
-     * 
+     * Update the user labels by its unique ID.
+     *
      * Labels can be used to grant access to resources. While teams are a way for user's to share access to a resource, labels can be defined by the developer to grant access without an invitation. See the [Permissions docs](https://appwrite.io/docs/permissions) for more info.
      *
      * @param {string} params.userId - User ID.
@@ -1343,10 +1728,15 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateLabels<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, labels: string[] }): Promise<Models.User<Preferences>>;
+    updateLabels<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        labels: string[];
+    }): Promise<Models.User<Preferences>>;
     /**
-     * Update the user labels by its unique ID. 
-     * 
+     * Update the user labels by its unique ID.
+     *
      * Labels can be used to grant access to resources. While teams are a way for user's to share access to a resource, labels can be defined by the developer to grant access without an invitation. See the [Permissions docs](https://appwrite.io/docs/permissions) for more info.
      *
      * @param {string} userId - User ID.
@@ -1355,33 +1745,46 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateLabels<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, labels: string[]): Promise<Models.User<Preferences>>;
-    updateLabels<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, labels: string[] } | string,
-        ...rest: [(string[])?]    
+    updateLabels<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(userId: string, labels: string[]): Promise<Models.User<Preferences>>;
+    updateLabels<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { userId: string; labels: string[] } | string,
+        ...rest: [string[]?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, labels: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, labels: string[] };
+        let params: { userId: string; labels: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                labels: string[];
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                labels: rest[0] as string[]            
+                labels: rest[0] as string[],
             };
         }
-        
+
         const userId = params.userId;
         const labels = params.labels;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof labels === 'undefined') {
             throw new AppwriteException('Missing required parameter: "labels"');
         }
-
-        const apiPath = '/users/{userId}/labels'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/labels'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof labels !== 'undefined') {
             payload['labels'] = labels;
@@ -1391,15 +1794,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
@@ -1411,7 +1809,11 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.LogList>}
      */
-    listLogs(params: { userId: string, queries?: string[], total?: boolean }): Promise<Models.LogList>;
+    listLogs(params: {
+        userId: string;
+        queries?: string[];
+        total?: boolean;
+    }): Promise<Models.LogList>;
     /**
      * Get the user activity logs list by its unique ID.
      *
@@ -1422,32 +1824,47 @@ export class Users {
      * @returns {Promise<Models.LogList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listLogs(userId: string, queries?: string[], total?: boolean): Promise<Models.LogList>;
     listLogs(
-        paramsOrFirst: { userId: string, queries?: string[], total?: boolean } | string,
-        ...rest: [(string[])?, (boolean)?]    
+        userId: string,
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.LogList>;
+    listLogs(
+        paramsOrFirst:
+            { userId: string; queries?: string[]; total?: boolean } | string,
+        ...rest: [string[]?, boolean?]
     ): Promise<Models.LogList> {
-        let params: { userId: string, queries?: string[], total?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, queries?: string[], total?: boolean };
+        let params: { userId: string; queries?: string[]; total?: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
                 queries: rest[0] as string[],
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const userId = params.userId;
         const queries = params.queries;
         const total = params.total;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/logs'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/logs'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1459,15 +1876,10 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1480,7 +1892,12 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MembershipList>}
      */
-    listMemberships(params: { userId: string, queries?: string[], search?: string, total?: boolean }): Promise<Models.MembershipList>;
+    listMemberships(params: {
+        userId: string;
+        queries?: string[];
+        search?: string;
+        total?: boolean;
+    }): Promise<Models.MembershipList>;
     /**
      * Get the user membership list by its unique ID.
      *
@@ -1492,34 +1909,62 @@ export class Users {
      * @returns {Promise<Models.MembershipList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listMemberships(userId: string, queries?: string[], search?: string, total?: boolean): Promise<Models.MembershipList>;
     listMemberships(
-        paramsOrFirst: { userId: string, queries?: string[], search?: string, total?: boolean } | string,
-        ...rest: [(string[])?, (string)?, (boolean)?]    
+        userId: string,
+        queries?: string[],
+        search?: string,
+        total?: boolean,
+    ): Promise<Models.MembershipList>;
+    listMemberships(
+        paramsOrFirst:
+            | {
+                  userId: string;
+                  queries?: string[];
+                  search?: string;
+                  total?: boolean;
+              }
+            | string,
+        ...rest: [string[]?, string?, boolean?]
     ): Promise<Models.MembershipList> {
-        let params: { userId: string, queries?: string[], search?: string, total?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, queries?: string[], search?: string, total?: boolean };
+        let params: {
+            userId: string;
+            queries?: string[];
+            search?: string;
+            total?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                queries?: string[];
+                search?: string;
+                total?: boolean;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
                 queries: rest[0] as string[],
                 search: rest[1] as string,
-                total: rest[2] as boolean            
+                total: rest[2] as boolean,
             };
         }
-        
+
         const userId = params.userId;
         const queries = params.queries;
         const search = params.search;
         const total = params.total;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/memberships'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/memberships'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1534,15 +1979,10 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1554,7 +1994,12 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Users.updateMFA` instead.
      */
-    updateMfa<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, mfa: boolean }): Promise<Models.User<Preferences>>;
+    updateMfa<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        mfa: boolean;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Enable or disable MFA on a user account.
      *
@@ -1564,33 +2009,43 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateMfa<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, mfa: boolean): Promise<Models.User<Preferences>>;
-    updateMfa<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, mfa: boolean } | string,
-        ...rest: [(boolean)?]    
+    updateMfa<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(userId: string, mfa: boolean): Promise<Models.User<Preferences>>;
+    updateMfa<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { userId: string; mfa: boolean } | string,
+        ...rest: [boolean?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, mfa: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, mfa: boolean };
+        let params: { userId: string; mfa: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as { userId: string; mfa: boolean };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                mfa: rest[0] as boolean            
+                mfa: rest[0] as boolean,
             };
         }
-        
+
         const userId = params.userId;
         const mfa = params.mfa;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof mfa === 'undefined') {
             throw new AppwriteException('Missing required parameter: "mfa"');
         }
-
-        const apiPath = '/users/{userId}/mfa'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/mfa'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof mfa !== 'undefined') {
             payload['mfa'] = mfa;
@@ -1600,15 +2055,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1619,7 +2069,12 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateMFA<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, mfa: boolean }): Promise<Models.User<Preferences>>;
+    updateMFA<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        mfa: boolean;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Enable or disable MFA on a user account.
      *
@@ -1629,33 +2084,43 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateMFA<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, mfa: boolean): Promise<Models.User<Preferences>>;
-    updateMFA<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, mfa: boolean } | string,
-        ...rest: [(boolean)?]    
+    updateMFA<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(userId: string, mfa: boolean): Promise<Models.User<Preferences>>;
+    updateMFA<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { userId: string; mfa: boolean } | string,
+        ...rest: [boolean?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, mfa: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, mfa: boolean };
+        let params: { userId: string; mfa: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as { userId: string; mfa: boolean };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                mfa: rest[0] as boolean            
+                mfa: rest[0] as boolean,
             };
         }
-        
+
         const userId = params.userId;
         const mfa = params.mfa;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof mfa === 'undefined') {
             throw new AppwriteException('Missing required parameter: "mfa"');
         }
-
-        const apiPath = '/users/{userId}/mfa'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/mfa'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof mfa !== 'undefined') {
             payload['mfa'] = mfa;
@@ -1665,15 +2130,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1685,7 +2145,10 @@ export class Users {
      * @returns {Promise<{}>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Users.deleteMFAAuthenticator` instead.
      */
-    deleteMfaAuthenticator(params: { userId: string, type: AuthenticatorType }): Promise<{}>;
+    deleteMfaAuthenticator(params: {
+        userId: string;
+        type: AuthenticatorType;
+    }): Promise<{}>;
     /**
      * Delete an authenticator app.
      *
@@ -1695,47 +2158,54 @@ export class Users {
      * @returns {Promise<{}>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    deleteMfaAuthenticator(userId: string, type: AuthenticatorType): Promise<{}>;
     deleteMfaAuthenticator(
-        paramsOrFirst: { userId: string, type: AuthenticatorType } | string,
-        ...rest: [(AuthenticatorType)?]    
+        userId: string,
+        type: AuthenticatorType,
+    ): Promise<{}>;
+    deleteMfaAuthenticator(
+        paramsOrFirst: { userId: string; type: AuthenticatorType } | string,
+        ...rest: [AuthenticatorType?]
     ): Promise<{}> {
-        let params: { userId: string, type: AuthenticatorType };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, type: AuthenticatorType };
+        let params: { userId: string; type: AuthenticatorType };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                type: AuthenticatorType;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                type: rest[0] as AuthenticatorType            
+                type: rest[0] as AuthenticatorType,
             };
         }
-        
+
         const userId = params.userId;
         const type = params.type;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
-
-        const apiPath = '/users/{userId}/mfa/authenticators/{type}'.replace('{userId}', encodeURIComponent(String(userId))).replace('{type}', encodeURIComponent(String(type)));
+        const apiPath = '/users/{userId}/mfa/authenticators/{type}'
+            .replace('{userId}', encodeURIComponent(String(userId)))
+            .replace('{type}', encodeURIComponent(String(type)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -1746,7 +2216,10 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteMFAAuthenticator(params: { userId: string, type: AuthenticatorType }): Promise<{}>;
+    deleteMFAAuthenticator(params: {
+        userId: string;
+        type: AuthenticatorType;
+    }): Promise<{}>;
     /**
      * Delete an authenticator app.
      *
@@ -1756,47 +2229,126 @@ export class Users {
      * @returns {Promise<{}>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    deleteMFAAuthenticator(userId: string, type: AuthenticatorType): Promise<{}>;
     deleteMFAAuthenticator(
-        paramsOrFirst: { userId: string, type: AuthenticatorType } | string,
-        ...rest: [(AuthenticatorType)?]    
+        userId: string,
+        type: AuthenticatorType,
+    ): Promise<{}>;
+    deleteMFAAuthenticator(
+        paramsOrFirst: { userId: string; type: AuthenticatorType } | string,
+        ...rest: [AuthenticatorType?]
     ): Promise<{}> {
-        let params: { userId: string, type: AuthenticatorType };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, type: AuthenticatorType };
+        let params: { userId: string; type: AuthenticatorType };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                type: AuthenticatorType;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                type: rest[0] as AuthenticatorType            
+                type: rest[0] as AuthenticatorType,
             };
         }
-        
+
         const userId = params.userId;
         const type = params.type;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
-
-        const apiPath = '/users/{userId}/mfa/authenticators/{type}'.replace('{userId}', encodeURIComponent(String(userId))).replace('{type}', encodeURIComponent(String(type)));
+        const apiPath = '/users/{userId}/mfa/authenticators/{type}'
+            .replace('{userId}', encodeURIComponent(String(userId)))
+            .replace('{type}', encodeURIComponent(String(type)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        return this.client.call('delete', uri, apiHeaders, payload);
+    }
+
+    /**
+     * Get a custom MFA challenge for a user, including the code to be delivered through your own channel.
+     *
+     * @param {string} params.userId - User ID.
+     * @param {string} params.challengeId - ID of the challenge.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.MfaChallengeSecret>}
+     */
+    getMFAChallenge(params: {
+        userId: string;
+        challengeId: string;
+    }): Promise<Models.MfaChallengeSecret>;
+    /**
+     * Get a custom MFA challenge for a user, including the code to be delivered through your own channel.
+     *
+     * @param {string} userId - User ID.
+     * @param {string} challengeId - ID of the challenge.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.MfaChallengeSecret>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getMFAChallenge(
+        userId: string,
+        challengeId: string,
+    ): Promise<Models.MfaChallengeSecret>;
+    getMFAChallenge(
+        paramsOrFirst: { userId: string; challengeId: string } | string,
+        ...rest: [string?]
+    ): Promise<Models.MfaChallengeSecret> {
+        let params: { userId: string; challengeId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                challengeId: string;
+            };
+        } else {
+            params = {
+                userId: paramsOrFirst as string,
+                challengeId: rest[0] as string,
+            };
         }
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        const userId = params.userId;
+        const challengeId = params.challengeId;
+
+        if (typeof userId === 'undefined' || userId === '') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+        if (typeof challengeId === 'undefined' || challengeId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "challengeId"',
+            );
+        }
+        const apiPath = '/users/{userId}/mfa/challenges/{challengeId}'
+            .replace('{userId}', encodeURIComponent(String(userId)))
+            .replace('{challengeId}', encodeURIComponent(String(challengeId)));
+        const payload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            accept: 'application/json',
+        };
+
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1818,39 +2370,40 @@ export class Users {
      */
     listMfaFactors(userId: string): Promise<Models.MfaFactors>;
     listMfaFactors(
-        paramsOrFirst: { userId: string } | string    
+        paramsOrFirst: { userId: string } | string,
     ): Promise<Models.MfaFactors> {
         let params: { userId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { userId: string };
         } else {
             params = {
-                userId: paramsOrFirst as string            
+                userId: paramsOrFirst as string,
             };
         }
-        
+
         const userId = params.userId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/mfa/factors'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/mfa/factors'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1871,39 +2424,40 @@ export class Users {
      */
     listMFAFactors(userId: string): Promise<Models.MfaFactors>;
     listMFAFactors(
-        paramsOrFirst: { userId: string } | string    
+        paramsOrFirst: { userId: string } | string,
     ): Promise<Models.MfaFactors> {
         let params: { userId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { userId: string };
         } else {
             params = {
-                userId: paramsOrFirst as string            
+                userId: paramsOrFirst as string,
             };
         }
-        
+
         const userId = params.userId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/mfa/factors'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/mfa/factors'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1914,7 +2468,9 @@ export class Users {
      * @returns {Promise<Models.MfaRecoveryCodes>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Users.getMFARecoveryCodes` instead.
      */
-    getMfaRecoveryCodes(params: { userId: string }): Promise<Models.MfaRecoveryCodes>;
+    getMfaRecoveryCodes(params: {
+        userId: string;
+    }): Promise<Models.MfaRecoveryCodes>;
     /**
      * Get recovery codes that can be used as backup for MFA flow by User ID. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
      *
@@ -1925,39 +2481,40 @@ export class Users {
      */
     getMfaRecoveryCodes(userId: string): Promise<Models.MfaRecoveryCodes>;
     getMfaRecoveryCodes(
-        paramsOrFirst: { userId: string } | string    
+        paramsOrFirst: { userId: string } | string,
     ): Promise<Models.MfaRecoveryCodes> {
         let params: { userId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { userId: string };
         } else {
             params = {
-                userId: paramsOrFirst as string            
+                userId: paramsOrFirst as string,
             };
         }
-        
+
         const userId = params.userId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1967,7 +2524,9 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MfaRecoveryCodes>}
      */
-    getMFARecoveryCodes(params: { userId: string }): Promise<Models.MfaRecoveryCodes>;
+    getMFARecoveryCodes(params: {
+        userId: string;
+    }): Promise<Models.MfaRecoveryCodes>;
     /**
      * Get recovery codes that can be used as backup for MFA flow by User ID. Before getting codes, they must be generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
      *
@@ -1978,39 +2537,40 @@ export class Users {
      */
     getMFARecoveryCodes(userId: string): Promise<Models.MfaRecoveryCodes>;
     getMFARecoveryCodes(
-        paramsOrFirst: { userId: string } | string    
+        paramsOrFirst: { userId: string } | string,
     ): Promise<Models.MfaRecoveryCodes> {
         let params: { userId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { userId: string };
         } else {
             params = {
-                userId: paramsOrFirst as string            
+                userId: paramsOrFirst as string,
             };
         }
-        
+
         const userId = params.userId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2021,7 +2581,9 @@ export class Users {
      * @returns {Promise<Models.MfaRecoveryCodes>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Users.updateMFARecoveryCodes` instead.
      */
-    updateMfaRecoveryCodes(params: { userId: string }): Promise<Models.MfaRecoveryCodes>;
+    updateMfaRecoveryCodes(params: {
+        userId: string;
+    }): Promise<Models.MfaRecoveryCodes>;
     /**
      * Regenerate recovery codes that can be used as backup for MFA flow by User ID. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
      *
@@ -2032,40 +2594,41 @@ export class Users {
      */
     updateMfaRecoveryCodes(userId: string): Promise<Models.MfaRecoveryCodes>;
     updateMfaRecoveryCodes(
-        paramsOrFirst: { userId: string } | string    
+        paramsOrFirst: { userId: string } | string,
     ): Promise<Models.MfaRecoveryCodes> {
         let params: { userId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { userId: string };
         } else {
             params = {
-                userId: paramsOrFirst as string            
+                userId: paramsOrFirst as string,
             };
         }
-        
+
         const userId = params.userId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
@@ -2075,7 +2638,9 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MfaRecoveryCodes>}
      */
-    updateMFARecoveryCodes(params: { userId: string }): Promise<Models.MfaRecoveryCodes>;
+    updateMFARecoveryCodes(params: {
+        userId: string;
+    }): Promise<Models.MfaRecoveryCodes>;
     /**
      * Regenerate recovery codes that can be used as backup for MFA flow by User ID. Before regenerating codes, they must be first generated using [createMfaRecoveryCodes](/docs/references/cloud/client-web/account#createMfaRecoveryCodes) method.
      *
@@ -2086,40 +2651,41 @@ export class Users {
      */
     updateMFARecoveryCodes(userId: string): Promise<Models.MfaRecoveryCodes>;
     updateMFARecoveryCodes(
-        paramsOrFirst: { userId: string } | string    
+        paramsOrFirst: { userId: string } | string,
     ): Promise<Models.MfaRecoveryCodes> {
         let params: { userId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { userId: string };
         } else {
             params = {
-                userId: paramsOrFirst as string            
+                userId: paramsOrFirst as string,
             };
         }
-        
+
         const userId = params.userId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
@@ -2130,7 +2696,9 @@ export class Users {
      * @returns {Promise<Models.MfaRecoveryCodes>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Users.createMFARecoveryCodes` instead.
      */
-    createMfaRecoveryCodes(params: { userId: string }): Promise<Models.MfaRecoveryCodes>;
+    createMfaRecoveryCodes(params: {
+        userId: string;
+    }): Promise<Models.MfaRecoveryCodes>;
     /**
      * Generate recovery codes used as backup for MFA flow for User ID. Recovery codes can be used as a MFA verification type in [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method by client SDK.
      *
@@ -2141,40 +2709,41 @@ export class Users {
      */
     createMfaRecoveryCodes(userId: string): Promise<Models.MfaRecoveryCodes>;
     createMfaRecoveryCodes(
-        paramsOrFirst: { userId: string } | string    
+        paramsOrFirst: { userId: string } | string,
     ): Promise<Models.MfaRecoveryCodes> {
         let params: { userId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { userId: string };
         } else {
             params = {
-                userId: paramsOrFirst as string            
+                userId: paramsOrFirst as string,
             };
         }
-        
+
         const userId = params.userId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2184,7 +2753,9 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MfaRecoveryCodes>}
      */
-    createMFARecoveryCodes(params: { userId: string }): Promise<Models.MfaRecoveryCodes>;
+    createMFARecoveryCodes(params: {
+        userId: string;
+    }): Promise<Models.MfaRecoveryCodes>;
     /**
      * Generate recovery codes used as backup for MFA flow for User ID. Recovery codes can be used as a MFA verification type in [createMfaChallenge](/docs/references/cloud/client-web/account#createMfaChallenge) method by client SDK.
      *
@@ -2195,40 +2766,41 @@ export class Users {
      */
     createMFARecoveryCodes(userId: string): Promise<Models.MfaRecoveryCodes>;
     createMFARecoveryCodes(
-        paramsOrFirst: { userId: string } | string    
+        paramsOrFirst: { userId: string } | string,
     ): Promise<Models.MfaRecoveryCodes> {
         let params: { userId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { userId: string };
         } else {
             params = {
-                userId: paramsOrFirst as string            
+                userId: paramsOrFirst as string,
             };
         }
-        
+
         const userId = params.userId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/mfa/recovery-codes'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2239,7 +2811,12 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateName<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, name: string }): Promise<Models.User<Preferences>>;
+    updateName<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        name: string;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Update the user name by its unique ID.
      *
@@ -2249,33 +2826,43 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateName<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, name: string): Promise<Models.User<Preferences>>;
-    updateName<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, name: string } | string,
-        ...rest: [(string)?]    
+    updateName<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(userId: string, name: string): Promise<Models.User<Preferences>>;
+    updateName<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { userId: string; name: string } | string,
+        ...rest: [string?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, name: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, name: string };
+        let params: { userId: string; name: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as { userId: string; name: string };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                name: rest[0] as string            
+                name: rest[0] as string,
             };
         }
-        
+
         const userId = params.userId;
         const name = params.name;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
-        const apiPath = '/users/{userId}/name'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/name'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2285,15 +2872,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2304,7 +2886,12 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updatePassword<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, password: string }): Promise<Models.User<Preferences>>;
+    updatePassword<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        password: string;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Update the user password by its unique ID.
      *
@@ -2314,33 +2901,48 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePassword<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, password: string): Promise<Models.User<Preferences>>;
-    updatePassword<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, password: string } | string,
-        ...rest: [(string)?]    
+    updatePassword<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(userId: string, password: string): Promise<Models.User<Preferences>>;
+    updatePassword<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { userId: string; password: string } | string,
+        ...rest: [string?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, password: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, password: string };
+        let params: { userId: string; password: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                password: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                password: rest[0] as string            
+                password: rest[0] as string,
             };
         }
-        
+
         const userId = params.userId;
         const password = params.password;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof password === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "password"');
+            throw new AppwriteException(
+                'Missing required parameter: "password"',
+            );
         }
-
-        const apiPath = '/users/{userId}/password'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/password'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof password !== 'undefined') {
             payload['password'] = password;
@@ -2350,15 +2952,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2369,7 +2966,12 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updatePhone<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, number: string }): Promise<Models.User<Preferences>>;
+    updatePhone<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        number: string;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Update the user phone by its unique ID.
      *
@@ -2379,33 +2981,46 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePhone<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, number: string): Promise<Models.User<Preferences>>;
-    updatePhone<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, number: string } | string,
-        ...rest: [(string)?]    
+    updatePhone<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(userId: string, number: string): Promise<Models.User<Preferences>>;
+    updatePhone<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { userId: string; number: string } | string,
+        ...rest: [string?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, number: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, number: string };
+        let params: { userId: string; number: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                number: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                number: rest[0] as string            
+                number: rest[0] as string,
             };
         }
-        
+
         const userId = params.userId;
         const number = params.number;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof number === 'undefined') {
             throw new AppwriteException('Missing required parameter: "number"');
         }
-
-        const apiPath = '/users/{userId}/phone'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/phone'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof number !== 'undefined') {
             payload['number'] = number;
@@ -2415,15 +3030,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2433,7 +3043,9 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Preferences>}
      */
-    getPrefs<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string }): Promise<Preferences>;
+    getPrefs<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: { userId: string }): Promise<Preferences>;
     /**
      * Get the user preferences by its unique ID.
      *
@@ -2442,41 +3054,44 @@ export class Users {
      * @returns {Promise<Preferences>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getPrefs<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string): Promise<Preferences>;
-    getPrefs<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string } | string    
-    ): Promise<Preferences> {
+    getPrefs<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(userId: string): Promise<Preferences>;
+    getPrefs<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(paramsOrFirst: { userId: string } | string): Promise<Preferences> {
         let params: { userId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { userId: string };
         } else {
             params = {
-                userId: paramsOrFirst as string            
+                userId: paramsOrFirst as string,
             };
         }
-        
+
         const userId = params.userId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/prefs'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/prefs'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2487,7 +3102,9 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Preferences>}
      */
-    updatePrefs<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, prefs: object }): Promise<Preferences>;
+    updatePrefs<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: { userId: string; prefs: object }): Promise<Preferences>;
     /**
      * Update the user preferences by its unique ID. The object you pass is stored as is, and replaces any previous value. The maximum allowed prefs size is 64kB and throws error if exceeded.
      *
@@ -2497,33 +3114,43 @@ export class Users {
      * @returns {Promise<Preferences>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePrefs<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, prefs: object): Promise<Preferences>;
-    updatePrefs<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, prefs: object } | string,
-        ...rest: [(object)?]    
+    updatePrefs<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(userId: string, prefs: object): Promise<Preferences>;
+    updatePrefs<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { userId: string; prefs: object } | string,
+        ...rest: [object?]
     ): Promise<Preferences> {
-        let params: { userId: string, prefs: object };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, prefs: object };
+        let params: { userId: string; prefs: object };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as { userId: string; prefs: object };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                prefs: rest[0] as object            
+                prefs: rest[0] as object,
             };
         }
-        
+
         const userId = params.userId;
         const prefs = params.prefs;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof prefs === 'undefined') {
             throw new AppwriteException('Missing required parameter: "prefs"');
         }
-
-        const apiPath = '/users/{userId}/prefs'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/prefs'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof prefs !== 'undefined') {
             payload['prefs'] = prefs;
@@ -2533,15 +3160,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2552,7 +3174,10 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.SessionList>}
      */
-    listSessions(params: { userId: string, total?: boolean }): Promise<Models.SessionList>;
+    listSessions(params: {
+        userId: string;
+        total?: boolean;
+    }): Promise<Models.SessionList>;
     /**
      * Get the user sessions list by its unique ID.
      *
@@ -2564,28 +3189,37 @@ export class Users {
      */
     listSessions(userId: string, total?: boolean): Promise<Models.SessionList>;
     listSessions(
-        paramsOrFirst: { userId: string, total?: boolean } | string,
-        ...rest: [(boolean)?]    
+        paramsOrFirst: { userId: string; total?: boolean } | string,
+        ...rest: [boolean?]
     ): Promise<Models.SessionList> {
-        let params: { userId: string, total?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, total?: boolean };
+        let params: { userId: string; total?: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                total?: boolean;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                total: rest[0] as boolean            
+                total: rest[0] as boolean,
             };
         }
-        
+
         const userId = params.userId;
         const total = params.total;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/sessions'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/sessions'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof total !== 'undefined') {
             payload['total'] = total;
@@ -2594,20 +3228,15 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Creates a session for a user. Returns an immediately usable session object.
-     * 
+     *
      * If you want to generate a token for a custom authentication flow, use the [POST /users/{userId}/tokens](https://appwrite.io/docs/server/users#createToken) endpoint.
      *
      * @param {string} params.userId - User ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
@@ -2617,7 +3246,7 @@ export class Users {
     createSession(params: { userId: string }): Promise<Models.Session>;
     /**
      * Creates a session for a user. Returns an immediately usable session object.
-     * 
+     *
      * If you want to generate a token for a custom authentication flow, use the [POST /users/{userId}/tokens](https://appwrite.io/docs/server/users#createToken) endpoint.
      *
      * @param {string} userId - User ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
@@ -2627,40 +3256,41 @@ export class Users {
      */
     createSession(userId: string): Promise<Models.Session>;
     createSession(
-        paramsOrFirst: { userId: string } | string    
+        paramsOrFirst: { userId: string } | string,
     ): Promise<Models.Session> {
         let params: { userId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { userId: string };
         } else {
             params = {
-                userId: paramsOrFirst as string            
+                userId: paramsOrFirst as string,
             };
         }
-        
+
         const userId = params.userId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/sessions'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/sessions'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -2680,40 +3310,40 @@ export class Users {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     deleteSessions(userId: string): Promise<{}>;
-    deleteSessions(
-        paramsOrFirst: { userId: string } | string    
-    ): Promise<{}> {
+    deleteSessions(paramsOrFirst: { userId: string } | string): Promise<{}> {
         let params: { userId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { userId: string };
         } else {
             params = {
-                userId: paramsOrFirst as string            
+                userId: paramsOrFirst as string,
             };
         }
-        
+
         const userId = params.userId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/sessions'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/sessions'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -2724,7 +3354,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteSession(params: { userId: string, sessionId: string }): Promise<{}>;
+    deleteSession(params: { userId: string; sessionId: string }): Promise<{}>;
     /**
      * Delete a user sessions by its unique ID.
      *
@@ -2736,45 +3366,51 @@ export class Users {
      */
     deleteSession(userId: string, sessionId: string): Promise<{}>;
     deleteSession(
-        paramsOrFirst: { userId: string, sessionId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { userId: string; sessionId: string } | string,
+        ...rest: [string?]
     ): Promise<{}> {
-        let params: { userId: string, sessionId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, sessionId: string };
+        let params: { userId: string; sessionId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                sessionId: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                sessionId: rest[0] as string            
+                sessionId: rest[0] as string,
             };
         }
-        
+
         const userId = params.userId;
         const sessionId = params.sessionId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-        if (typeof sessionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "sessionId"');
+        if (typeof sessionId === 'undefined' || sessionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "sessionId"',
+            );
         }
-
-        const apiPath = '/users/{userId}/sessions/{sessionId}'.replace('{userId}', encodeURIComponent(String(userId))).replace('{sessionId}', encodeURIComponent(String(sessionId)));
+        const apiPath = '/users/{userId}/sessions/{sessionId}'
+            .replace('{userId}', encodeURIComponent(String(userId)))
+            .replace('{sessionId}', encodeURIComponent(String(sessionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -2785,7 +3421,12 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateStatus<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, status: boolean }): Promise<Models.User<Preferences>>;
+    updateStatus<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        status: boolean;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Update the user status by its unique ID. Use this endpoint as an alternative to deleting a user if you want to keep user's ID reserved.
      *
@@ -2795,33 +3436,46 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateStatus<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, status: boolean): Promise<Models.User<Preferences>>;
-    updateStatus<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, status: boolean } | string,
-        ...rest: [(boolean)?]    
+    updateStatus<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(userId: string, status: boolean): Promise<Models.User<Preferences>>;
+    updateStatus<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { userId: string; status: boolean } | string,
+        ...rest: [boolean?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, status: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, status: boolean };
+        let params: { userId: string; status: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                status: boolean;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                status: rest[0] as boolean            
+                status: rest[0] as boolean,
             };
         }
-        
+
         const userId = params.userId;
         const status = params.status;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof status === 'undefined') {
             throw new AppwriteException('Missing required parameter: "status"');
         }
-
-        const apiPath = '/users/{userId}/status'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/status'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof status !== 'undefined') {
             payload['status'] = status;
@@ -2831,15 +3485,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2851,7 +3500,11 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.TargetList>}
      */
-    listTargets(params: { userId: string, queries?: string[], total?: boolean }): Promise<Models.TargetList>;
+    listTargets(params: {
+        userId: string;
+        queries?: string[];
+        total?: boolean;
+    }): Promise<Models.TargetList>;
     /**
      * List the messaging targets that are associated with a user.
      *
@@ -2862,32 +3515,47 @@ export class Users {
      * @returns {Promise<Models.TargetList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listTargets(userId: string, queries?: string[], total?: boolean): Promise<Models.TargetList>;
     listTargets(
-        paramsOrFirst: { userId: string, queries?: string[], total?: boolean } | string,
-        ...rest: [(string[])?, (boolean)?]    
+        userId: string,
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.TargetList>;
+    listTargets(
+        paramsOrFirst:
+            { userId: string; queries?: string[]; total?: boolean } | string,
+        ...rest: [string[]?, boolean?]
     ): Promise<Models.TargetList> {
-        let params: { userId: string, queries?: string[], total?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, queries?: string[], total?: boolean };
+        let params: { userId: string; queries?: string[]; total?: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
                 queries: rest[0] as string[],
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const userId = params.userId;
         const queries = params.queries;
         const total = params.total;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/targets'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/targets'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -2899,15 +3567,10 @@ export class Users {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2922,7 +3585,14 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      */
-    createTarget(params: { userId: string, targetId: string, providerType: MessagingProviderType, identifier: string, providerId?: string, name?: string }): Promise<Models.Target>;
+    createTarget(params: {
+        userId: string;
+        targetId: string;
+        providerType: MessagingProviderType;
+        identifier: string;
+        providerId?: string;
+        name?: string;
+    }): Promise<Models.Target>;
     /**
      * Create a messaging target.
      *
@@ -2936,15 +3606,49 @@ export class Users {
      * @returns {Promise<Models.Target>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createTarget(userId: string, targetId: string, providerType: MessagingProviderType, identifier: string, providerId?: string, name?: string): Promise<Models.Target>;
     createTarget(
-        paramsOrFirst: { userId: string, targetId: string, providerType: MessagingProviderType, identifier: string, providerId?: string, name?: string } | string,
-        ...rest: [(string)?, (MessagingProviderType)?, (string)?, (string)?, (string)?]    
+        userId: string,
+        targetId: string,
+        providerType: MessagingProviderType,
+        identifier: string,
+        providerId?: string,
+        name?: string,
+    ): Promise<Models.Target>;
+    createTarget(
+        paramsOrFirst:
+            | {
+                  userId: string;
+                  targetId: string;
+                  providerType: MessagingProviderType;
+                  identifier: string;
+                  providerId?: string;
+                  name?: string;
+              }
+            | string,
+        ...rest: [string?, MessagingProviderType?, string?, string?, string?]
     ): Promise<Models.Target> {
-        let params: { userId: string, targetId: string, providerType: MessagingProviderType, identifier: string, providerId?: string, name?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, targetId: string, providerType: MessagingProviderType, identifier: string, providerId?: string, name?: string };
+        let params: {
+            userId: string;
+            targetId: string;
+            providerType: MessagingProviderType;
+            identifier: string;
+            providerId?: string;
+            name?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                targetId: string;
+                providerType: MessagingProviderType;
+                identifier: string;
+                providerId?: string;
+                name?: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
@@ -2952,10 +3656,10 @@ export class Users {
                 providerType: rest[1] as MessagingProviderType,
                 identifier: rest[2] as string,
                 providerId: rest[3] as string,
-                name: rest[4] as string            
+                name: rest[4] as string,
             };
         }
-        
+
         const userId = params.userId;
         const targetId = params.targetId;
         const providerType = params.providerType;
@@ -2963,20 +3667,28 @@ export class Users {
         const providerId = params.providerId;
         const name = params.name;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
         if (typeof providerType === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerType"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerType"',
+            );
         }
         if (typeof identifier === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "identifier"');
+            throw new AppwriteException(
+                'Missing required parameter: "identifier"',
+            );
         }
-
-        const apiPath = '/users/{userId}/targets'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/targets'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof targetId !== 'undefined') {
             payload['targetId'] = targetId;
@@ -2998,15 +3710,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -3017,7 +3724,10 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      */
-    getTarget(params: { userId: string, targetId: string }): Promise<Models.Target>;
+    getTarget(params: {
+        userId: string;
+        targetId: string;
+    }): Promise<Models.Target>;
     /**
      * Get a user's push notification target by ID.
      *
@@ -3029,45 +3739,50 @@ export class Users {
      */
     getTarget(userId: string, targetId: string): Promise<Models.Target>;
     getTarget(
-        paramsOrFirst: { userId: string, targetId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { userId: string; targetId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Target> {
-        let params: { userId: string, targetId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, targetId: string };
+        let params: { userId: string; targetId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                targetId: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                targetId: rest[0] as string            
+                targetId: rest[0] as string,
             };
         }
-        
+
         const userId = params.userId;
         const targetId = params.targetId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-        if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+        if (typeof targetId === 'undefined' || targetId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
-
-        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', encodeURIComponent(String(userId))).replace('{targetId}', encodeURIComponent(String(targetId)));
+        const apiPath = '/users/{userId}/targets/{targetId}'
+            .replace('{userId}', encodeURIComponent(String(userId)))
+            .replace('{targetId}', encodeURIComponent(String(targetId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -3081,7 +3796,13 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      */
-    updateTarget(params: { userId: string, targetId: string, identifier?: string, providerId?: string, name?: string }): Promise<Models.Target>;
+    updateTarget(params: {
+        userId: string;
+        targetId: string;
+        identifier?: string;
+        providerId?: string;
+        name?: string;
+    }): Promise<Models.Target>;
     /**
      * Update a messaging target.
      *
@@ -3094,39 +3815,72 @@ export class Users {
      * @returns {Promise<Models.Target>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateTarget(userId: string, targetId: string, identifier?: string, providerId?: string, name?: string): Promise<Models.Target>;
     updateTarget(
-        paramsOrFirst: { userId: string, targetId: string, identifier?: string, providerId?: string, name?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?]    
+        userId: string,
+        targetId: string,
+        identifier?: string,
+        providerId?: string,
+        name?: string,
+    ): Promise<Models.Target>;
+    updateTarget(
+        paramsOrFirst:
+            | {
+                  userId: string;
+                  targetId: string;
+                  identifier?: string;
+                  providerId?: string;
+                  name?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, string?]
     ): Promise<Models.Target> {
-        let params: { userId: string, targetId: string, identifier?: string, providerId?: string, name?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, targetId: string, identifier?: string, providerId?: string, name?: string };
+        let params: {
+            userId: string;
+            targetId: string;
+            identifier?: string;
+            providerId?: string;
+            name?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                targetId: string;
+                identifier?: string;
+                providerId?: string;
+                name?: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
                 targetId: rest[0] as string,
                 identifier: rest[1] as string,
                 providerId: rest[2] as string,
-                name: rest[3] as string            
+                name: rest[3] as string,
             };
         }
-        
+
         const userId = params.userId;
         const targetId = params.targetId;
         const identifier = params.identifier;
         const providerId = params.providerId;
         const name = params.name;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-        if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+        if (typeof targetId === 'undefined' || targetId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
-
-        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', encodeURIComponent(String(userId))).replace('{targetId}', encodeURIComponent(String(targetId)));
+        const apiPath = '/users/{userId}/targets/{targetId}'
+            .replace('{userId}', encodeURIComponent(String(userId)))
+            .replace('{targetId}', encodeURIComponent(String(targetId)));
         const payload: Payload = {};
         if (typeof identifier !== 'undefined') {
             payload['identifier'] = identifier;
@@ -3142,15 +3896,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -3161,7 +3910,7 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteTarget(params: { userId: string, targetId: string }): Promise<{}>;
+    deleteTarget(params: { userId: string; targetId: string }): Promise<{}>;
     /**
      * Delete a messaging target.
      *
@@ -3173,50 +3922,56 @@ export class Users {
      */
     deleteTarget(userId: string, targetId: string): Promise<{}>;
     deleteTarget(
-        paramsOrFirst: { userId: string, targetId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { userId: string; targetId: string } | string,
+        ...rest: [string?]
     ): Promise<{}> {
-        let params: { userId: string, targetId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, targetId: string };
+        let params: { userId: string; targetId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                targetId: string;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                targetId: rest[0] as string            
+                targetId: rest[0] as string,
             };
         }
-        
+
         const userId = params.userId;
         const targetId = params.targetId;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-        if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+        if (typeof targetId === 'undefined' || targetId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
-
-        const apiPath = '/users/{userId}/targets/{targetId}'.replace('{userId}', encodeURIComponent(String(userId))).replace('{targetId}', encodeURIComponent(String(targetId)));
+        const apiPath = '/users/{userId}/targets/{targetId}'
+            .replace('{userId}', encodeURIComponent(String(userId)))
+            .replace('{targetId}', encodeURIComponent(String(targetId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
      * Returns a token with a secret key for creating a session. Use the user ID and secret and submit a request to the [PUT /account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process.
-     * 
+     *
      *
      * @param {string} params.userId - User ID.
      * @param {number} params.length - Token length in characters. The default length is 6 characters
@@ -3224,10 +3979,14 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Token>}
      */
-    createToken(params: { userId: string, length?: number, expire?: number }): Promise<Models.Token>;
+    createToken(params: {
+        userId: string;
+        length?: number;
+        expire?: number;
+    }): Promise<Models.Token>;
     /**
      * Returns a token with a secret key for creating a session. Use the user ID and secret and submit a request to the [PUT /account/sessions/token](https://appwrite.io/docs/references/cloud/client-web/account#createSession) endpoint to complete the login process.
-     * 
+     *
      *
      * @param {string} userId - User ID.
      * @param {number} length - Token length in characters. The default length is 6 characters
@@ -3236,32 +3995,47 @@ export class Users {
      * @returns {Promise<Models.Token>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createToken(userId: string, length?: number, expire?: number): Promise<Models.Token>;
     createToken(
-        paramsOrFirst: { userId: string, length?: number, expire?: number } | string,
-        ...rest: [(number)?, (number)?]    
+        userId: string,
+        length?: number,
+        expire?: number,
+    ): Promise<Models.Token>;
+    createToken(
+        paramsOrFirst:
+            { userId: string; length?: number; expire?: number } | string,
+        ...rest: [number?, number?]
     ): Promise<Models.Token> {
-        let params: { userId: string, length?: number, expire?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, length?: number, expire?: number };
+        let params: { userId: string; length?: number; expire?: number };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                length?: number;
+                expire?: number;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
                 length: rest[0] as number,
-                expire: rest[1] as number            
+                expire: rest[1] as number,
             };
         }
-        
+
         const userId = params.userId;
         const length = params.length;
         const expire = params.expire;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
-
-        const apiPath = '/users/{userId}/tokens'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/tokens'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof length !== 'undefined') {
             payload['length'] = length;
@@ -3274,15 +4048,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -3293,7 +4062,12 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateEmailVerification<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, emailVerification: boolean }): Promise<Models.User<Preferences>>;
+    updateEmailVerification<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        emailVerification: boolean;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Update the user email verification status by its unique ID.
      *
@@ -3303,33 +4077,51 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateEmailVerification<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, emailVerification: boolean): Promise<Models.User<Preferences>>;
-    updateEmailVerification<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, emailVerification: boolean } | string,
-        ...rest: [(boolean)?]    
+    updateEmailVerification<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        userId: string,
+        emailVerification: boolean,
+    ): Promise<Models.User<Preferences>>;
+    updateEmailVerification<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { userId: string; emailVerification: boolean } | string,
+        ...rest: [boolean?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, emailVerification: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, emailVerification: boolean };
+        let params: { userId: string; emailVerification: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                emailVerification: boolean;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                emailVerification: rest[0] as boolean            
+                emailVerification: rest[0] as boolean,
             };
         }
-        
+
         const userId = params.userId;
         const emailVerification = params.emailVerification;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof emailVerification === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "emailVerification"');
+            throw new AppwriteException(
+                'Missing required parameter: "emailVerification"',
+            );
         }
-
-        const apiPath = '/users/{userId}/verification'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/verification'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof emailVerification !== 'undefined') {
             payload['emailVerification'] = emailVerification;
@@ -3339,15 +4131,10 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -3358,7 +4145,12 @@ export class Users {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updatePhoneVerification<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { userId: string, phoneVerification: boolean }): Promise<Models.User<Preferences>>;
+    updatePhoneVerification<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        phoneVerification: boolean;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Update the user phone verification status by its unique ID.
      *
@@ -3368,33 +4160,51 @@ export class Users {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePhoneVerification<Preferences extends Models.Preferences = Models.DefaultPreferences>(userId: string, phoneVerification: boolean): Promise<Models.User<Preferences>>;
-    updatePhoneVerification<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { userId: string, phoneVerification: boolean } | string,
-        ...rest: [(boolean)?]    
+    updatePhoneVerification<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        userId: string,
+        phoneVerification: boolean,
+    ): Promise<Models.User<Preferences>>;
+    updatePhoneVerification<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { userId: string; phoneVerification: boolean } | string,
+        ...rest: [boolean?]
     ): Promise<Models.User<Preferences>> {
-        let params: { userId: string, phoneVerification: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { userId: string, phoneVerification: boolean };
+        let params: { userId: string; phoneVerification: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                phoneVerification: boolean;
+            };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                phoneVerification: rest[0] as boolean            
+                phoneVerification: rest[0] as boolean,
             };
         }
-        
+
         const userId = params.userId;
         const phoneVerification = params.phoneVerification;
 
-        if (typeof userId === 'undefined') {
+        if (typeof userId === 'undefined' || userId === '') {
             throw new AppwriteException('Missing required parameter: "userId"');
         }
         if (typeof phoneVerification === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "phoneVerification"');
+            throw new AppwriteException(
+                'Missing required parameter: "phoneVerification"',
+            );
         }
-
-        const apiPath = '/users/{userId}/verification/phone'.replace('{userId}', encodeURIComponent(String(userId)));
+        const apiPath = '/users/{userId}/verification/phone'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
         const payload: Payload = {};
         if (typeof phoneVerification !== 'undefined') {
             payload['phoneVerification'] = phoneVerification;
@@ -3404,14 +4214,9 @@ export class Users {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 }

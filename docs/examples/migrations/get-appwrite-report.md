@@ -1,5 +1,9 @@
 ```javascript
-import { Client, Migrations, AppwriteMigrationResource } from "@appwrite.io/console";
+import {
+    Client,
+    Migrations,
+    AppwriteMigrationResource,
+} from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +15,7 @@ const result = await migrations.getAppwriteReport({
     resources: [AppwriteMigrationResource.User],
     endpoint: 'https://example.com',
     projectID: '<PROJECT_ID>',
-    key: '<KEY>'
+    key: '<KEY>',
 });
 
 console.log(result);

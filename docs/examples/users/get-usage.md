@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Users, UsageRange } from "@appwrite.io/console";
+import { Client, Users, UsageRange } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const users = new Users(client);
 
 const result = await users.getUsage({
-    range: UsageRange.24h // optional
+    range: UsageRange.Value24h, // optional
 });
 
 console.log(result);

@@ -1,5 +1,9 @@
 ```javascript
-import { Client, Migrations, FirebaseMigrationResource } from "@appwrite.io/console";
+import {
+    Client,
+    Migrations,
+    FirebaseMigrationResource,
+} from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +13,7 @@ const migrations = new Migrations(client);
 
 const result = await migrations.getFirebaseReport({
     resources: [FirebaseMigrationResource.User],
-    serviceAccount: '<SERVICE_ACCOUNT>'
+    serviceAccount: '<SERVICE_ACCOUNT>',
 });
 
 console.log(result);

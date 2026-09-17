@@ -1,5 +1,5 @@
 ```javascript
-import { Client, DocumentsDB } from "@appwrite.io/console";
+import { Client, DocumentsDB } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,7 +13,7 @@ const result = await documentsDB.listDocuments({
     queries: [], // optional
     transactionId: '<TRANSACTION_ID>', // optional
     total: false, // optional
-    ttl: 0 // optional
+    ttl: 0, // optional
 });
 
 console.log(result);

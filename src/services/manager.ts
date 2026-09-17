@@ -1,5 +1,4 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
 
 import { BlockResourceType } from '../enums/block-resource-type';
@@ -7,7 +6,6 @@ import { BlockMode } from '../enums/block-mode';
 import { Region } from '../enums/region';
 import { CacheTarget } from '../enums/cache-target';
 import { CacheDatabase } from '../enums/cache-database';
-
 export class Manager {
     client: Client;
 
@@ -27,7 +25,14 @@ export class Manager {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Block>}
      */
-    createBlock(params: { projectId: string, resourceType: BlockResourceType, resourceId?: string, mode?: BlockMode, reason?: string, expiredAt?: string }): Promise<Models.Block>;
+    createBlock(params: {
+        projectId: string;
+        resourceType: BlockResourceType;
+        resourceId?: string;
+        mode?: BlockMode;
+        reason?: string;
+        expiredAt?: string;
+    }): Promise<Models.Block>;
     /**
      * Creates a new resource block.
      *
@@ -41,15 +46,49 @@ export class Manager {
      * @returns {Promise<Models.Block>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createBlock(projectId: string, resourceType: BlockResourceType, resourceId?: string, mode?: BlockMode, reason?: string, expiredAt?: string): Promise<Models.Block>;
     createBlock(
-        paramsOrFirst: { projectId: string, resourceType: BlockResourceType, resourceId?: string, mode?: BlockMode, reason?: string, expiredAt?: string } | string,
-        ...rest: [(BlockResourceType)?, (string)?, (BlockMode)?, (string)?, (string)?]    
+        projectId: string,
+        resourceType: BlockResourceType,
+        resourceId?: string,
+        mode?: BlockMode,
+        reason?: string,
+        expiredAt?: string,
+    ): Promise<Models.Block>;
+    createBlock(
+        paramsOrFirst:
+            | {
+                  projectId: string;
+                  resourceType: BlockResourceType;
+                  resourceId?: string;
+                  mode?: BlockMode;
+                  reason?: string;
+                  expiredAt?: string;
+              }
+            | string,
+        ...rest: [BlockResourceType?, string?, BlockMode?, string?, string?]
     ): Promise<Models.Block> {
-        let params: { projectId: string, resourceType: BlockResourceType, resourceId?: string, mode?: BlockMode, reason?: string, expiredAt?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, resourceType: BlockResourceType, resourceId?: string, mode?: BlockMode, reason?: string, expiredAt?: string };
+        let params: {
+            projectId: string;
+            resourceType: BlockResourceType;
+            resourceId?: string;
+            mode?: BlockMode;
+            reason?: string;
+            expiredAt?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                resourceType: BlockResourceType;
+                resourceId?: string;
+                mode?: BlockMode;
+                reason?: string;
+                expiredAt?: string;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
@@ -57,10 +96,10 @@ export class Manager {
                 resourceId: rest[1] as string,
                 mode: rest[2] as BlockMode,
                 reason: rest[3] as string,
-                expiredAt: rest[4] as string            
+                expiredAt: rest[4] as string,
             };
         }
-        
+
         const projectId = params.projectId;
         const resourceType = params.resourceType;
         const resourceId = params.resourceId;
@@ -69,12 +108,15 @@ export class Manager {
         const expiredAt = params.expiredAt;
 
         if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
         if (typeof resourceType === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resourceType"');
+            throw new AppwriteException(
+                'Missing required parameter: "resourceType"',
+            );
         }
-
         const apiPath = '/manager/blocks';
         const payload: Payload = {};
         if (typeof projectId !== 'undefined') {
@@ -99,15 +141,10 @@ export class Manager {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -119,7 +156,11 @@ export class Manager {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BlockDelete>}
      */
-    deleteBlock(params: { projectId: string, resourceType: BlockResourceType, resourceId?: string }): Promise<Models.BlockDelete>;
+    deleteBlock(params: {
+        projectId: string;
+        resourceType: BlockResourceType;
+        resourceId?: string;
+    }): Promise<Models.BlockDelete>;
     /**
      * Deletes resource blocks for a project.
      *
@@ -130,34 +171,59 @@ export class Manager {
      * @returns {Promise<Models.BlockDelete>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    deleteBlock(projectId: string, resourceType: BlockResourceType, resourceId?: string): Promise<Models.BlockDelete>;
     deleteBlock(
-        paramsOrFirst: { projectId: string, resourceType: BlockResourceType, resourceId?: string } | string,
-        ...rest: [(BlockResourceType)?, (string)?]    
+        projectId: string,
+        resourceType: BlockResourceType,
+        resourceId?: string,
+    ): Promise<Models.BlockDelete>;
+    deleteBlock(
+        paramsOrFirst:
+            | {
+                  projectId: string;
+                  resourceType: BlockResourceType;
+                  resourceId?: string;
+              }
+            | string,
+        ...rest: [BlockResourceType?, string?]
     ): Promise<Models.BlockDelete> {
-        let params: { projectId: string, resourceType: BlockResourceType, resourceId?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { projectId: string, resourceType: BlockResourceType, resourceId?: string };
+        let params: {
+            projectId: string;
+            resourceType: BlockResourceType;
+            resourceId?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                resourceType: BlockResourceType;
+                resourceId?: string;
+            };
         } else {
             params = {
                 projectId: paramsOrFirst as string,
                 resourceType: rest[0] as BlockResourceType,
-                resourceId: rest[1] as string            
+                resourceId: rest[1] as string,
             };
         }
-        
+
         const projectId = params.projectId;
         const resourceType = params.resourceType;
         const resourceId = params.resourceId;
 
         if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
         if (typeof resourceType === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resourceType"');
+            throw new AppwriteException(
+                'Missing required parameter: "resourceType"',
+            );
         }
-
         const apiPath = '/manager/blocks';
         const payload: Payload = {};
         if (typeof projectId !== 'undefined') {
@@ -173,15 +239,10 @@ export class Manager {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -202,38 +263,41 @@ export class Manager {
      */
     listBlocks(projectId: string): Promise<Models.BlockList>;
     listBlocks(
-        paramsOrFirst: { projectId: string } | string    
+        paramsOrFirst: { projectId: string } | string,
     ): Promise<Models.BlockList> {
         let params: { projectId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { projectId: string };
         } else {
             params = {
-                projectId: paramsOrFirst as string            
+                projectId: paramsOrFirst as string,
             };
         }
-        
+
         const projectId = params.projectId;
 
-        if (typeof projectId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "projectId"');
+        if (typeof projectId === 'undefined' || projectId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
         }
-
-        const apiPath = '/manager/blocks/{projectId}'.replace('{projectId}', encodeURIComponent(String(projectId)));
+        const apiPath = '/manager/blocks/{projectId}'.replace(
+            '{projectId}',
+            encodeURIComponent(String(projectId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -249,7 +313,15 @@ export class Manager {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteCache(params?: { region?: Region, cache?: CacheTarget, all?: boolean, database?: CacheDatabase, projectId?: string, collectionId?: string, documentId?: string }): Promise<{}>;
+    deleteCache(params?: {
+        region?: Region;
+        cache?: CacheTarget;
+        all?: boolean;
+        database?: CacheDatabase;
+        projectId?: string;
+        collectionId?: string;
+        documentId?: string;
+    }): Promise<{}>;
     /**
      * Clears internal cache.
      *
@@ -264,15 +336,68 @@ export class Manager {
      * @returns {Promise<{}>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    deleteCache(region?: Region, cache?: CacheTarget, all?: boolean, database?: CacheDatabase, projectId?: string, collectionId?: string, documentId?: string): Promise<{}>;
     deleteCache(
-        paramsOrFirst?: { region?: Region, cache?: CacheTarget, all?: boolean, database?: CacheDatabase, projectId?: string, collectionId?: string, documentId?: string } | Region,
-        ...rest: [(CacheTarget)?, (boolean)?, (CacheDatabase)?, (string)?, (string)?, (string)?]    
+        region?: Region,
+        cache?: CacheTarget,
+        all?: boolean,
+        database?: CacheDatabase,
+        projectId?: string,
+        collectionId?: string,
+        documentId?: string,
+    ): Promise<{}>;
+    deleteCache(
+        paramsOrFirst?:
+            | {
+                  region?: Region;
+                  cache?: CacheTarget;
+                  all?: boolean;
+                  database?: CacheDatabase;
+                  projectId?: string;
+                  collectionId?: string;
+                  documentId?: string;
+              }
+            | Region,
+        ...rest: [
+            CacheTarget?,
+            boolean?,
+            CacheDatabase?,
+            string?,
+            string?,
+            string?,
+        ]
     ): Promise<{}> {
-        let params: { region?: Region, cache?: CacheTarget, all?: boolean, database?: CacheDatabase, projectId?: string, collectionId?: string, documentId?: string };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('region' in paramsOrFirst || 'cache' in paramsOrFirst || 'all' in paramsOrFirst || 'database' in paramsOrFirst || 'projectId' in paramsOrFirst || 'collectionId' in paramsOrFirst || 'documentId' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { region?: Region, cache?: CacheTarget, all?: boolean, database?: CacheDatabase, projectId?: string, collectionId?: string, documentId?: string };
+        let params: {
+            region?: Region;
+            cache?: CacheTarget;
+            all?: boolean;
+            database?: CacheDatabase;
+            projectId?: string;
+            collectionId?: string;
+            documentId?: string;
+        };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst) &&
+                ('region' in paramsOrFirst ||
+                    'cache' in paramsOrFirst ||
+                    'all' in paramsOrFirst ||
+                    'database' in paramsOrFirst ||
+                    'projectId' in paramsOrFirst ||
+                    'collectionId' in paramsOrFirst ||
+                    'documentId' in paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                region?: Region;
+                cache?: CacheTarget;
+                all?: boolean;
+                database?: CacheDatabase;
+                projectId?: string;
+                collectionId?: string;
+                documentId?: string;
+            };
         } else {
             params = {
                 region: paramsOrFirst as Region,
@@ -281,10 +406,10 @@ export class Manager {
                 database: rest[2] as CacheDatabase,
                 projectId: rest[3] as string,
                 collectionId: rest[4] as string,
-                documentId: rest[5] as string            
+                documentId: rest[5] as string,
             };
         }
-        
+
         const region = params.region;
         const cache = params.cache;
         const all = params.all;
@@ -292,7 +417,6 @@ export class Manager {
         const projectId = params.projectId;
         const collectionId = params.collectionId;
         const documentId = params.documentId;
-
 
         const apiPath = '/manager/cache';
         const payload: Payload = {};
@@ -321,15 +445,10 @@ export class Manager {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -342,7 +461,14 @@ export class Manager {
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
      */
-    updateUserStatus<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { status: boolean, userId?: string, email?: string, reason?: string }): Promise<Models.User<Preferences>>;
+    updateUserStatus<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        status: boolean;
+        userId?: string;
+        email?: string;
+        reason?: string;
+    }): Promise<Models.User<Preferences>>;
     /**
      * Updates a console user status using a user ID or email address.
      *
@@ -354,24 +480,54 @@ export class Manager {
      * @returns {Promise<Models.User<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateUserStatus<Preferences extends Models.Preferences = Models.DefaultPreferences>(status: boolean, userId?: string, email?: string, reason?: string): Promise<Models.User<Preferences>>;
-    updateUserStatus<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { status: boolean, userId?: string, email?: string, reason?: string } | boolean,
-        ...rest: [(string)?, (string)?, (string)?]    
+    updateUserStatus<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        status: boolean,
+        userId?: string,
+        email?: string,
+        reason?: string,
+    ): Promise<Models.User<Preferences>>;
+    updateUserStatus<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            | {
+                  status: boolean;
+                  userId?: string;
+                  email?: string;
+                  reason?: string;
+              }
+            | boolean,
+        ...rest: [string?, string?, string?]
     ): Promise<Models.User<Preferences>> {
-        let params: { status: boolean, userId?: string, email?: string, reason?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { status: boolean, userId?: string, email?: string, reason?: string };
+        let params: {
+            status: boolean;
+            userId?: string;
+            email?: string;
+            reason?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                status: boolean;
+                userId?: string;
+                email?: string;
+                reason?: string;
+            };
         } else {
             params = {
                 status: paramsOrFirst as boolean,
                 userId: rest[0] as string,
                 email: rest[1] as string,
-                reason: rest[2] as string            
+                reason: rest[2] as string,
             };
         }
-        
+
         const status = params.status;
         const userId = params.userId;
         const email = params.email;
@@ -380,7 +536,6 @@ export class Manager {
         if (typeof status === 'undefined') {
             throw new AppwriteException('Missing required parameter: "status"');
         }
-
         const apiPath = '/manager/users/status';
         const payload: Payload = {};
         if (typeof userId !== 'undefined') {
@@ -399,14 +554,9 @@ export class Manager {
 
         const apiHeaders: { [header: string]: string } = {
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 }

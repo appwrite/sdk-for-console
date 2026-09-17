@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Webhooks } from "@appwrite.io/console";
+import { Client, Webhooks } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const webhooks = new Webhooks(client);
 
 const result = await webhooks.list({
     queries: [], // optional
-    total: false // optional
+    total: false, // optional
 });
 
 console.log(result);

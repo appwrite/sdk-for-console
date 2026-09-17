@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Advisor } from "@appwrite.io/console";
+import { Client, Advisor } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const advisor = new Advisor(client);
 
 const result = await advisor.getReport({
-    reportId: '<REPORT_ID>'
+    reportId: '<REPORT_ID>',
 });
 
 console.log(result);

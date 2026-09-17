@@ -1,7 +1,5 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
-
 
 export class Mysql {
     client: Client;
@@ -17,7 +15,9 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseList>}
      */
-    list(params?: { queries?: string[] }): Promise<Models.DedicatedDatabaseList>;
+    list(params?: {
+        queries?: string[];
+    }): Promise<Models.DedicatedDatabaseList>;
     /**
      * List all dedicated databases. Results support pagination.
      *
@@ -28,20 +28,24 @@ export class Mysql {
      */
     list(queries?: string[]): Promise<Models.DedicatedDatabaseList>;
     list(
-        paramsOrFirst?: { queries?: string[] } | string[]    
+        paramsOrFirst?: { queries?: string[] } | string[],
     ): Promise<Models.DedicatedDatabaseList> {
         let params: { queries?: string[] };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            typeof paramsOrFirst === 'undefined' ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
             params = (paramsOrFirst || {}) as { queries?: string[] };
         } else {
             params = {
-                queries: paramsOrFirst as string[]            
+                queries: paramsOrFirst as string[],
             };
         }
-        
-        const queries = params.queries;
 
+        const queries = params.queries;
 
         const apiPath = '/mysql';
         const payload: Payload = {};
@@ -52,15 +56,10 @@ export class Mysql {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -72,7 +71,6 @@ export class Mysql {
      * @param {string} params.specification - Specification identifier. Drives the allocated CPU, memory, storage, storage class, and connection ceiling.
      * @param {number} params.replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} params.syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
-     * @param {string} params.standbyRegion - Standby region for a cross-region replica. When set, a replica is provisioned in this region for cross-region high availability. Must differ from the database region.
      * @param {number} params.networkIdleTimeoutSeconds - Connection idle timeout in seconds.
      * @param {string[]} params.networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
      * @param {number} params.idleTimeoutMinutes - Minutes of inactivity before container scales to zero.
@@ -80,11 +78,26 @@ export class Mysql {
      * @param {number} params.pitrRetentionDays - Number of days to retain PITR data.
      * @param {boolean} params.storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
      * @param {number} params.storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
-     * @param {number} params.storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
+     * @param {number} params.storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. Defaults to 3 times the specification's storage. 0 means no limit.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
-    create(params: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number }): Promise<Models.DedicatedDatabase>;
+    create(params: {
+        databaseId: string;
+        name: string;
+        version?: string;
+        specification?: string;
+        replicas?: number;
+        syncMode?: string;
+        networkIdleTimeoutSeconds?: number;
+        networkIPAllowlist?: string[];
+        idleTimeoutMinutes?: number;
+        pitr?: boolean;
+        pitrRetentionDays?: number;
+        storageAutoscaling?: boolean;
+        storageAutoscalingThresholdPercent?: number;
+        storageAutoscalingMaxGb?: number;
+    }): Promise<Models.DedicatedDatabase>;
     /**
      * Create a new dedicated database with the chosen engine and configuration. Status will be 'provisioning' until the database is ready.
      *
@@ -94,7 +107,6 @@ export class Mysql {
      * @param {string} specification - Specification identifier. Drives the allocated CPU, memory, storage, storage class, and connection ceiling.
      * @param {number} replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
-     * @param {string} standbyRegion - Standby region for a cross-region replica. When set, a replica is provisioned in this region for cross-region high availability. Must differ from the database region.
      * @param {number} networkIdleTimeoutSeconds - Connection idle timeout in seconds.
      * @param {string[]} networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
      * @param {number} idleTimeoutMinutes - Minutes of inactivity before container scales to zero.
@@ -102,20 +114,100 @@ export class Mysql {
      * @param {number} pitrRetentionDays - Number of days to retain PITR data.
      * @param {boolean} storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
      * @param {number} storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
-     * @param {number} storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
+     * @param {number} storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. Defaults to 3 times the specification's storage. 0 means no limit.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number): Promise<Models.DedicatedDatabase>;
     create(
-        paramsOrFirst: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?, (string)?, (number)?, (string[])?, (number)?, (boolean)?, (number)?, (boolean)?, (number)?, (number)?]    
+        databaseId: string,
+        name: string,
+        version?: string,
+        specification?: string,
+        replicas?: number,
+        syncMode?: string,
+        networkIdleTimeoutSeconds?: number,
+        networkIPAllowlist?: string[],
+        idleTimeoutMinutes?: number,
+        pitr?: boolean,
+        pitrRetentionDays?: number,
+        storageAutoscaling?: boolean,
+        storageAutoscalingThresholdPercent?: number,
+        storageAutoscalingMaxGb?: number,
+    ): Promise<Models.DedicatedDatabase>;
+    create(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  name: string;
+                  version?: string;
+                  specification?: string;
+                  replicas?: number;
+                  syncMode?: string;
+                  networkIdleTimeoutSeconds?: number;
+                  networkIPAllowlist?: string[];
+                  idleTimeoutMinutes?: number;
+                  pitr?: boolean;
+                  pitrRetentionDays?: number;
+                  storageAutoscaling?: boolean;
+                  storageAutoscalingThresholdPercent?: number;
+                  storageAutoscalingMaxGb?: number;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            number?,
+            string?,
+            number?,
+            string[]?,
+            number?,
+            boolean?,
+            number?,
+            boolean?,
+            number?,
+            number?,
+        ]
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name: string, version?: string, specification?: string, replicas?: number, syncMode?: string, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number };
+        let params: {
+            databaseId: string;
+            name: string;
+            version?: string;
+            specification?: string;
+            replicas?: number;
+            syncMode?: string;
+            networkIdleTimeoutSeconds?: number;
+            networkIPAllowlist?: string[];
+            idleTimeoutMinutes?: number;
+            pitr?: boolean;
+            pitrRetentionDays?: number;
+            storageAutoscaling?: boolean;
+            storageAutoscalingThresholdPercent?: number;
+            storageAutoscalingMaxGb?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                name: string;
+                version?: string;
+                specification?: string;
+                replicas?: number;
+                syncMode?: string;
+                networkIdleTimeoutSeconds?: number;
+                networkIPAllowlist?: string[];
+                idleTimeoutMinutes?: number;
+                pitr?: boolean;
+                pitrRetentionDays?: number;
+                storageAutoscaling?: boolean;
+                storageAutoscalingThresholdPercent?: number;
+                storageAutoscalingMaxGb?: number;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -124,41 +216,41 @@ export class Mysql {
                 specification: rest[2] as string,
                 replicas: rest[3] as number,
                 syncMode: rest[4] as string,
-                standbyRegion: rest[5] as string,
-                networkIdleTimeoutSeconds: rest[6] as number,
-                networkIPAllowlist: rest[7] as string[],
-                idleTimeoutMinutes: rest[8] as number,
-                pitr: rest[9] as boolean,
-                pitrRetentionDays: rest[10] as number,
-                storageAutoscaling: rest[11] as boolean,
-                storageAutoscalingThresholdPercent: rest[12] as number,
-                storageAutoscalingMaxGb: rest[13] as number            
+                networkIdleTimeoutSeconds: rest[5] as number,
+                networkIPAllowlist: rest[6] as string[],
+                idleTimeoutMinutes: rest[7] as number,
+                pitr: rest[8] as boolean,
+                pitrRetentionDays: rest[9] as number,
+                storageAutoscaling: rest[10] as boolean,
+                storageAutoscalingThresholdPercent: rest[11] as number,
+                storageAutoscalingMaxGb: rest[12] as number,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const name = params.name;
         const version = params.version;
         const specification = params.specification;
         const replicas = params.replicas;
         const syncMode = params.syncMode;
-        const standbyRegion = params.standbyRegion;
         const networkIdleTimeoutSeconds = params.networkIdleTimeoutSeconds;
         const networkIPAllowlist = params.networkIPAllowlist;
         const idleTimeoutMinutes = params.idleTimeoutMinutes;
         const pitr = params.pitr;
         const pitrRetentionDays = params.pitrRetentionDays;
         const storageAutoscaling = params.storageAutoscaling;
-        const storageAutoscalingThresholdPercent = params.storageAutoscalingThresholdPercent;
+        const storageAutoscalingThresholdPercent =
+            params.storageAutoscalingThresholdPercent;
         const storageAutoscalingMaxGb = params.storageAutoscalingMaxGb;
 
         if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/mysql';
         const payload: Payload = {};
         if (typeof databaseId !== 'undefined') {
@@ -179,9 +271,6 @@ export class Mysql {
         if (typeof syncMode !== 'undefined') {
             payload['syncMode'] = syncMode;
         }
-        if (typeof standbyRegion !== 'undefined') {
-            payload['standbyRegion'] = standbyRegion;
-        }
         if (typeof networkIdleTimeoutSeconds !== 'undefined') {
             payload['networkIdleTimeoutSeconds'] = networkIdleTimeoutSeconds;
         }
@@ -201,7 +290,8 @@ export class Mysql {
             payload['storageAutoscaling'] = storageAutoscaling;
         }
         if (typeof storageAutoscalingThresholdPercent !== 'undefined') {
-            payload['storageAutoscalingThresholdPercent'] = storageAutoscalingThresholdPercent;
+            payload['storageAutoscalingThresholdPercent'] =
+                storageAutoscalingThresholdPercent;
         }
         if (typeof storageAutoscalingMaxGb !== 'undefined') {
             payload['storageAutoscalingMaxGb'] = storageAutoscalingMaxGb;
@@ -211,40 +301,29 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
-     * List the dedicated database specifications available on the current plan. Each specification reports its resource limits, pricing, and whether it is enabled for the organization.
+     * List the dedicated database specifications available on the current plan. Each specification reports its resource limits, its own prices and overage rates, and whether it is enabled for the organization.
      *
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseSpecificationList>}
      */
     listSpecifications(): Promise<Models.DedicatedDatabaseSpecificationList> {
-
         const apiPath = '/mysql/specifications';
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -265,39 +344,42 @@ export class Mysql {
      */
     get(databaseId: string): Promise<Models.DedicatedDatabase>;
     get(
-        paramsOrFirst: { databaseId: string } | string    
+        paramsOrFirst: { databaseId: string } | string,
     ): Promise<Models.DedicatedDatabase> {
         let params: { databaseId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { databaseId: string };
         } else {
             params = {
-                databaseId: paramsOrFirst as string            
+                databaseId: paramsOrFirst as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -309,8 +391,6 @@ export class Mysql {
      * @param {string} params.specification - Specification. Changes cpu, memory, storage, connection ceiling, and node pool based on specification config. Resource changes are applied via rolling cutover with zero downtime.
      * @param {number} params.replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} params.syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
-     * @param {number} params.crossRegionReplicas - Number of cross-region standby replicas (0-1). Cross-region replication is enabled when greater than 0.
-     * @param {string} params.standbyRegion - Standby region for the cross-region replica. Required when enabling cross-region replication and no standby region is already configured. Must differ from the database region.
      * @param {number} params.networkIdleTimeoutSeconds - Connection idle timeout in seconds (60-86400).
      * @param {string[]} params.networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
      * @param {number} params.idleTimeoutMinutes - Minutes before container scales to zero.
@@ -329,7 +409,29 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
-    update(params: { databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, crossRegionReplicas?: number, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number }): Promise<Models.DedicatedDatabase>;
+    update(params: {
+        databaseId: string;
+        name?: string;
+        status?: string;
+        specification?: string;
+        replicas?: number;
+        syncMode?: string;
+        networkIdleTimeoutSeconds?: number;
+        networkIPAllowlist?: string[];
+        idleTimeoutMinutes?: number;
+        pitr?: boolean;
+        pitrRetentionDays?: number;
+        storageAutoscaling?: boolean;
+        storageAutoscalingThresholdPercent?: number;
+        storageAutoscalingMaxGb?: number;
+        metricsTraceSampleRate?: number;
+        metricsSlowQueryLogThresholdMs?: number;
+        sqlApiEnabled?: boolean;
+        sqlApiAllowedStatements?: string[];
+        sqlApiMaxRows?: number;
+        sqlApiMaxBytes?: number;
+        sqlApiTimeoutSeconds?: number;
+    }): Promise<Models.DedicatedDatabase>;
     /**
      * Update a dedicated database configuration. All changes are applied with zero downtime. Specification changes (cpu, memory, storage) are handled via rolling cutover. Storage expansion is done online. All other settings are applied in-place.
      *
@@ -339,8 +441,6 @@ export class Mysql {
      * @param {string} specification - Specification. Changes cpu, memory, storage, connection ceiling, and node pool based on specification config. Resource changes are applied via rolling cutover with zero downtime.
      * @param {number} replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
      * @param {string} syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
-     * @param {number} crossRegionReplicas - Number of cross-region standby replicas (0-1). Cross-region replication is enabled when greater than 0.
-     * @param {string} standbyRegion - Standby region for the cross-region replica. Required when enabling cross-region replication and no standby region is already configured. Must differ from the database region.
      * @param {number} networkIdleTimeoutSeconds - Connection idle timeout in seconds (60-86400).
      * @param {string[]} networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
      * @param {number} idleTimeoutMinutes - Minutes before container scales to zero.
@@ -360,15 +460,130 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, crossRegionReplicas?: number, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number): Promise<Models.DedicatedDatabase>;
     update(
-        paramsOrFirst: { databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, crossRegionReplicas?: number, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?, (number)?, (string)?, (number)?, (string[])?, (number)?, (boolean)?, (number)?, (boolean)?, (number)?, (number)?, (number)?, (number)?, (boolean)?, (string[])?, (number)?, (number)?, (number)?]    
+        databaseId: string,
+        name?: string,
+        status?: string,
+        specification?: string,
+        replicas?: number,
+        syncMode?: string,
+        networkIdleTimeoutSeconds?: number,
+        networkIPAllowlist?: string[],
+        idleTimeoutMinutes?: number,
+        pitr?: boolean,
+        pitrRetentionDays?: number,
+        storageAutoscaling?: boolean,
+        storageAutoscalingThresholdPercent?: number,
+        storageAutoscalingMaxGb?: number,
+        metricsTraceSampleRate?: number,
+        metricsSlowQueryLogThresholdMs?: number,
+        sqlApiEnabled?: boolean,
+        sqlApiAllowedStatements?: string[],
+        sqlApiMaxRows?: number,
+        sqlApiMaxBytes?: number,
+        sqlApiTimeoutSeconds?: number,
+    ): Promise<Models.DedicatedDatabase>;
+    update(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  name?: string;
+                  status?: string;
+                  specification?: string;
+                  replicas?: number;
+                  syncMode?: string;
+                  networkIdleTimeoutSeconds?: number;
+                  networkIPAllowlist?: string[];
+                  idleTimeoutMinutes?: number;
+                  pitr?: boolean;
+                  pitrRetentionDays?: number;
+                  storageAutoscaling?: boolean;
+                  storageAutoscalingThresholdPercent?: number;
+                  storageAutoscalingMaxGb?: number;
+                  metricsTraceSampleRate?: number;
+                  metricsSlowQueryLogThresholdMs?: number;
+                  sqlApiEnabled?: boolean;
+                  sqlApiAllowedStatements?: string[];
+                  sqlApiMaxRows?: number;
+                  sqlApiMaxBytes?: number;
+                  sqlApiTimeoutSeconds?: number;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            number?,
+            string?,
+            number?,
+            string[]?,
+            number?,
+            boolean?,
+            number?,
+            boolean?,
+            number?,
+            number?,
+            number?,
+            number?,
+            boolean?,
+            string[]?,
+            number?,
+            number?,
+            number?,
+        ]
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, crossRegionReplicas?: number, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, name?: string, status?: string, specification?: string, replicas?: number, syncMode?: string, crossRegionReplicas?: number, standbyRegion?: string, networkIdleTimeoutSeconds?: number, networkIPAllowlist?: string[], idleTimeoutMinutes?: number, pitr?: boolean, pitrRetentionDays?: number, storageAutoscaling?: boolean, storageAutoscalingThresholdPercent?: number, storageAutoscalingMaxGb?: number, metricsTraceSampleRate?: number, metricsSlowQueryLogThresholdMs?: number, sqlApiEnabled?: boolean, sqlApiAllowedStatements?: string[], sqlApiMaxRows?: number, sqlApiMaxBytes?: number, sqlApiTimeoutSeconds?: number };
+        let params: {
+            databaseId: string;
+            name?: string;
+            status?: string;
+            specification?: string;
+            replicas?: number;
+            syncMode?: string;
+            networkIdleTimeoutSeconds?: number;
+            networkIPAllowlist?: string[];
+            idleTimeoutMinutes?: number;
+            pitr?: boolean;
+            pitrRetentionDays?: number;
+            storageAutoscaling?: boolean;
+            storageAutoscalingThresholdPercent?: number;
+            storageAutoscalingMaxGb?: number;
+            metricsTraceSampleRate?: number;
+            metricsSlowQueryLogThresholdMs?: number;
+            sqlApiEnabled?: boolean;
+            sqlApiAllowedStatements?: string[];
+            sqlApiMaxRows?: number;
+            sqlApiMaxBytes?: number;
+            sqlApiTimeoutSeconds?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                name?: string;
+                status?: string;
+                specification?: string;
+                replicas?: number;
+                syncMode?: string;
+                networkIdleTimeoutSeconds?: number;
+                networkIPAllowlist?: string[];
+                idleTimeoutMinutes?: number;
+                pitr?: boolean;
+                pitrRetentionDays?: number;
+                storageAutoscaling?: boolean;
+                storageAutoscalingThresholdPercent?: number;
+                storageAutoscalingMaxGb?: number;
+                metricsTraceSampleRate?: number;
+                metricsSlowQueryLogThresholdMs?: number;
+                sqlApiEnabled?: boolean;
+                sqlApiAllowedStatements?: string[];
+                sqlApiMaxRows?: number;
+                sqlApiMaxBytes?: number;
+                sqlApiTimeoutSeconds?: number;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -377,55 +592,57 @@ export class Mysql {
                 specification: rest[2] as string,
                 replicas: rest[3] as number,
                 syncMode: rest[4] as string,
-                crossRegionReplicas: rest[5] as number,
-                standbyRegion: rest[6] as string,
-                networkIdleTimeoutSeconds: rest[7] as number,
-                networkIPAllowlist: rest[8] as string[],
-                idleTimeoutMinutes: rest[9] as number,
-                pitr: rest[10] as boolean,
-                pitrRetentionDays: rest[11] as number,
-                storageAutoscaling: rest[12] as boolean,
-                storageAutoscalingThresholdPercent: rest[13] as number,
-                storageAutoscalingMaxGb: rest[14] as number,
-                metricsTraceSampleRate: rest[15] as number,
-                metricsSlowQueryLogThresholdMs: rest[16] as number,
-                sqlApiEnabled: rest[17] as boolean,
-                sqlApiAllowedStatements: rest[18] as string[],
-                sqlApiMaxRows: rest[19] as number,
-                sqlApiMaxBytes: rest[20] as number,
-                sqlApiTimeoutSeconds: rest[21] as number            
+                networkIdleTimeoutSeconds: rest[5] as number,
+                networkIPAllowlist: rest[6] as string[],
+                idleTimeoutMinutes: rest[7] as number,
+                pitr: rest[8] as boolean,
+                pitrRetentionDays: rest[9] as number,
+                storageAutoscaling: rest[10] as boolean,
+                storageAutoscalingThresholdPercent: rest[11] as number,
+                storageAutoscalingMaxGb: rest[12] as number,
+                metricsTraceSampleRate: rest[13] as number,
+                metricsSlowQueryLogThresholdMs: rest[14] as number,
+                sqlApiEnabled: rest[15] as boolean,
+                sqlApiAllowedStatements: rest[16] as string[],
+                sqlApiMaxRows: rest[17] as number,
+                sqlApiMaxBytes: rest[18] as number,
+                sqlApiTimeoutSeconds: rest[19] as number,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const name = params.name;
         const status = params.status;
         const specification = params.specification;
         const replicas = params.replicas;
         const syncMode = params.syncMode;
-        const crossRegionReplicas = params.crossRegionReplicas;
-        const standbyRegion = params.standbyRegion;
         const networkIdleTimeoutSeconds = params.networkIdleTimeoutSeconds;
         const networkIPAllowlist = params.networkIPAllowlist;
         const idleTimeoutMinutes = params.idleTimeoutMinutes;
         const pitr = params.pitr;
         const pitrRetentionDays = params.pitrRetentionDays;
         const storageAutoscaling = params.storageAutoscaling;
-        const storageAutoscalingThresholdPercent = params.storageAutoscalingThresholdPercent;
+        const storageAutoscalingThresholdPercent =
+            params.storageAutoscalingThresholdPercent;
         const storageAutoscalingMaxGb = params.storageAutoscalingMaxGb;
         const metricsTraceSampleRate = params.metricsTraceSampleRate;
-        const metricsSlowQueryLogThresholdMs = params.metricsSlowQueryLogThresholdMs;
+        const metricsSlowQueryLogThresholdMs =
+            params.metricsSlowQueryLogThresholdMs;
         const sqlApiEnabled = params.sqlApiEnabled;
         const sqlApiAllowedStatements = params.sqlApiAllowedStatements;
         const sqlApiMaxRows = params.sqlApiMaxRows;
         const sqlApiMaxBytes = params.sqlApiMaxBytes;
         const sqlApiTimeoutSeconds = params.sqlApiTimeoutSeconds;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -441,12 +658,6 @@ export class Mysql {
         }
         if (typeof syncMode !== 'undefined') {
             payload['syncMode'] = syncMode;
-        }
-        if (typeof crossRegionReplicas !== 'undefined') {
-            payload['crossRegionReplicas'] = crossRegionReplicas;
-        }
-        if (typeof standbyRegion !== 'undefined') {
-            payload['standbyRegion'] = standbyRegion;
         }
         if (typeof networkIdleTimeoutSeconds !== 'undefined') {
             payload['networkIdleTimeoutSeconds'] = networkIdleTimeoutSeconds;
@@ -467,7 +678,8 @@ export class Mysql {
             payload['storageAutoscaling'] = storageAutoscaling;
         }
         if (typeof storageAutoscalingThresholdPercent !== 'undefined') {
-            payload['storageAutoscalingThresholdPercent'] = storageAutoscalingThresholdPercent;
+            payload['storageAutoscalingThresholdPercent'] =
+                storageAutoscalingThresholdPercent;
         }
         if (typeof storageAutoscalingMaxGb !== 'undefined') {
             payload['storageAutoscalingMaxGb'] = storageAutoscalingMaxGb;
@@ -476,7 +688,8 @@ export class Mysql {
             payload['metricsTraceSampleRate'] = metricsTraceSampleRate;
         }
         if (typeof metricsSlowQueryLogThresholdMs !== 'undefined') {
-            payload['metricsSlowQueryLogThresholdMs'] = metricsSlowQueryLogThresholdMs;
+            payload['metricsSlowQueryLogThresholdMs'] =
+                metricsSlowQueryLogThresholdMs;
         }
         if (typeof sqlApiEnabled !== 'undefined') {
             payload['sqlApiEnabled'] = sqlApiEnabled;
@@ -498,15 +711,10 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -526,41 +734,42 @@ export class Mysql {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     delete(databaseId: string): Promise<{}>;
-    delete(
-        paramsOrFirst: { databaseId: string } | string    
-    ): Promise<{}> {
+    delete(paramsOrFirst: { databaseId: string } | string): Promise<{}> {
         let params: { databaseId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { databaseId: string };
         } else {
             params = {
-                databaseId: paramsOrFirst as string            
+                databaseId: paramsOrFirst as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -571,7 +780,10 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseBackupList>}
      */
-    listBackups(params: { databaseId: string, queries?: string[] }): Promise<Models.DedicatedDatabaseBackupList>;
+    listBackups(params: {
+        databaseId: string;
+        queries?: string[];
+    }): Promise<Models.DedicatedDatabaseBackupList>;
     /**
      * List all backups for a dedicated database. Results can be filtered by status and type.
      *
@@ -581,30 +793,44 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabaseBackupList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listBackups(databaseId: string, queries?: string[]): Promise<Models.DedicatedDatabaseBackupList>;
     listBackups(
-        paramsOrFirst: { databaseId: string, queries?: string[] } | string,
-        ...rest: [(string[])?]    
+        databaseId: string,
+        queries?: string[],
+    ): Promise<Models.DedicatedDatabaseBackupList>;
+    listBackups(
+        paramsOrFirst: { databaseId: string; queries?: string[] } | string,
+        ...rest: [string[]?]
     ): Promise<Models.DedicatedDatabaseBackupList> {
-        let params: { databaseId: string, queries?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, queries?: string[] };
+        let params: { databaseId: string; queries?: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                queries?: string[];
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                queries: rest[0] as string[]            
+                queries: rest[0] as string[],
             };
         }
-        
+
         const databaseId = params.databaseId;
         const queries = params.queries;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/backups'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/backups'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -613,15 +839,10 @@ export class Mysql {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -632,7 +853,10 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseBackup>}
      */
-    createBackup(params: { databaseId: string, type?: string }): Promise<Models.DedicatedDatabaseBackup>;
+    createBackup(params: {
+        databaseId: string;
+        type?: string;
+    }): Promise<Models.DedicatedDatabaseBackup>;
     /**
      * Create a manual backup of a dedicated database. The backup will be created asynchronously and its status can be checked via the get backup endpoint.
      *
@@ -642,30 +866,44 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabaseBackup>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createBackup(databaseId: string, type?: string): Promise<Models.DedicatedDatabaseBackup>;
     createBackup(
-        paramsOrFirst: { databaseId: string, type?: string } | string,
-        ...rest: [(string)?]    
+        databaseId: string,
+        type?: string,
+    ): Promise<Models.DedicatedDatabaseBackup>;
+    createBackup(
+        paramsOrFirst: { databaseId: string; type?: string } | string,
+        ...rest: [string?]
     ): Promise<Models.DedicatedDatabaseBackup> {
-        let params: { databaseId: string, type?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, type?: string };
+        let params: { databaseId: string; type?: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                type?: string;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                type: rest[0] as string            
+                type: rest[0] as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const type = params.type;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/backups'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/backups'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof type !== 'undefined') {
             payload['type'] = type;
@@ -675,15 +913,10 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -694,7 +927,10 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicyList>}
      */
-    listBackupPolicies(params: { databaseId: string, queries?: string[] }): Promise<Models.BackupPolicyList>;
+    listBackupPolicies(params: {
+        databaseId: string;
+        queries?: string[];
+    }): Promise<Models.BackupPolicyList>;
     /**
      * List scheduled backup policies for a dedicated database.
      *
@@ -704,30 +940,44 @@ export class Mysql {
      * @returns {Promise<Models.BackupPolicyList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listBackupPolicies(databaseId: string, queries?: string[]): Promise<Models.BackupPolicyList>;
     listBackupPolicies(
-        paramsOrFirst: { databaseId: string, queries?: string[] } | string,
-        ...rest: [(string[])?]    
+        databaseId: string,
+        queries?: string[],
+    ): Promise<Models.BackupPolicyList>;
+    listBackupPolicies(
+        paramsOrFirst: { databaseId: string; queries?: string[] } | string,
+        ...rest: [string[]?]
     ): Promise<Models.BackupPolicyList> {
-        let params: { databaseId: string, queries?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, queries?: string[] };
+        let params: { databaseId: string; queries?: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                queries?: string[];
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                queries: rest[0] as string[]            
+                queries: rest[0] as string[],
             };
         }
-        
+
         const databaseId = params.databaseId;
         const queries = params.queries;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/backups/policies'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/backups/policies'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -736,15 +986,10 @@ export class Mysql {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -760,7 +1005,15 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
      */
-    createBackupPolicy(params: { databaseId: string, policyId: string, name: string, schedule: string, retention: number, type?: string, enabled?: boolean }): Promise<Models.BackupPolicy>;
+    createBackupPolicy(params: {
+        databaseId: string;
+        policyId: string;
+        name: string;
+        schedule: string;
+        retention: number;
+        type?: string;
+        enabled?: boolean;
+    }): Promise<Models.BackupPolicy>;
     /**
      * Create a scheduled backup policy for a dedicated database.
      *
@@ -775,15 +1028,53 @@ export class Mysql {
      * @returns {Promise<Models.BackupPolicy>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createBackupPolicy(databaseId: string, policyId: string, name: string, schedule: string, retention: number, type?: string, enabled?: boolean): Promise<Models.BackupPolicy>;
     createBackupPolicy(
-        paramsOrFirst: { databaseId: string, policyId: string, name: string, schedule: string, retention: number, type?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?, (boolean)?]    
+        databaseId: string,
+        policyId: string,
+        name: string,
+        schedule: string,
+        retention: number,
+        type?: string,
+        enabled?: boolean,
+    ): Promise<Models.BackupPolicy>;
+    createBackupPolicy(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  policyId: string;
+                  name: string;
+                  schedule: string;
+                  retention: number;
+                  type?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [string?, string?, string?, number?, string?, boolean?]
     ): Promise<Models.BackupPolicy> {
-        let params: { databaseId: string, policyId: string, name: string, schedule: string, retention: number, type?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, policyId: string, name: string, schedule: string, retention: number, type?: string, enabled?: boolean };
+        let params: {
+            databaseId: string;
+            policyId: string;
+            name: string;
+            schedule: string;
+            retention: number;
+            type?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                policyId: string;
+                name: string;
+                schedule: string;
+                retention: number;
+                type?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -792,10 +1083,10 @@ export class Mysql {
                 schedule: rest[2] as string,
                 retention: rest[3] as number,
                 type: rest[4] as string,
-                enabled: rest[5] as boolean            
+                enabled: rest[5] as boolean,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const policyId = params.policyId;
         const name = params.name;
@@ -804,23 +1095,33 @@ export class Mysql {
         const type = params.type;
         const enabled = params.enabled;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
         if (typeof policyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "policyId"');
+            throw new AppwriteException(
+                'Missing required parameter: "policyId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         if (typeof schedule === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "schedule"');
+            throw new AppwriteException(
+                'Missing required parameter: "schedule"',
+            );
         }
         if (typeof retention === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "retention"');
+            throw new AppwriteException(
+                'Missing required parameter: "retention"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/backups/policies'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/backups/policies'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof policyId !== 'undefined') {
             payload['policyId'] = policyId;
@@ -845,15 +1146,10 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -864,7 +1160,10 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
      */
-    getBackupPolicy(params: { databaseId: string, policyId: string }): Promise<Models.BackupPolicy>;
+    getBackupPolicy(params: {
+        databaseId: string;
+        policyId: string;
+    }): Promise<Models.BackupPolicy>;
     /**
      * Get a scheduled backup policy for a dedicated database.
      *
@@ -874,47 +1173,57 @@ export class Mysql {
      * @returns {Promise<Models.BackupPolicy>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getBackupPolicy(databaseId: string, policyId: string): Promise<Models.BackupPolicy>;
     getBackupPolicy(
-        paramsOrFirst: { databaseId: string, policyId: string } | string,
-        ...rest: [(string)?]    
+        databaseId: string,
+        policyId: string,
+    ): Promise<Models.BackupPolicy>;
+    getBackupPolicy(
+        paramsOrFirst: { databaseId: string; policyId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.BackupPolicy> {
-        let params: { databaseId: string, policyId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, policyId: string };
+        let params: { databaseId: string; policyId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                policyId: string;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                policyId: rest[0] as string            
+                policyId: rest[0] as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const policyId = params.policyId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-        if (typeof policyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "policyId"');
+        if (typeof policyId === 'undefined' || policyId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "policyId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/backups/policies/{policyId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{policyId}', encodeURIComponent(String(policyId)));
+        const apiPath = '/mysql/{databaseId}/backups/policies/{policyId}'
+            .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+            .replace('{policyId}', encodeURIComponent(String(policyId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -929,7 +1238,14 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
      */
-    updateBackupPolicy(params: { databaseId: string, policyId: string, name?: string, schedule?: string, retention?: number, enabled?: boolean }): Promise<Models.BackupPolicy>;
+    updateBackupPolicy(params: {
+        databaseId: string;
+        policyId: string;
+        name?: string;
+        schedule?: string;
+        retention?: number;
+        enabled?: boolean;
+    }): Promise<Models.BackupPolicy>;
     /**
      * Update a scheduled backup policy for a dedicated database.
      *
@@ -943,15 +1259,49 @@ export class Mysql {
      * @returns {Promise<Models.BackupPolicy>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateBackupPolicy(databaseId: string, policyId: string, name?: string, schedule?: string, retention?: number, enabled?: boolean): Promise<Models.BackupPolicy>;
     updateBackupPolicy(
-        paramsOrFirst: { databaseId: string, policyId: string, name?: string, schedule?: string, retention?: number, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (boolean)?]    
+        databaseId: string,
+        policyId: string,
+        name?: string,
+        schedule?: string,
+        retention?: number,
+        enabled?: boolean,
+    ): Promise<Models.BackupPolicy>;
+    updateBackupPolicy(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  policyId: string;
+                  name?: string;
+                  schedule?: string;
+                  retention?: number;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [string?, string?, string?, number?, boolean?]
     ): Promise<Models.BackupPolicy> {
-        let params: { databaseId: string, policyId: string, name?: string, schedule?: string, retention?: number, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, policyId: string, name?: string, schedule?: string, retention?: number, enabled?: boolean };
+        let params: {
+            databaseId: string;
+            policyId: string;
+            name?: string;
+            schedule?: string;
+            retention?: number;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                policyId: string;
+                name?: string;
+                schedule?: string;
+                retention?: number;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -959,10 +1309,10 @@ export class Mysql {
                 name: rest[1] as string,
                 schedule: rest[2] as string,
                 retention: rest[3] as number,
-                enabled: rest[4] as boolean            
+                enabled: rest[4] as boolean,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const policyId = params.policyId;
         const name = params.name;
@@ -970,14 +1320,19 @@ export class Mysql {
         const retention = params.retention;
         const enabled = params.enabled;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-        if (typeof policyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "policyId"');
+        if (typeof policyId === 'undefined' || policyId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "policyId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/backups/policies/{policyId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{policyId}', encodeURIComponent(String(policyId)));
+        const apiPath = '/mysql/{databaseId}/backups/policies/{policyId}'
+            .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+            .replace('{policyId}', encodeURIComponent(String(policyId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -996,15 +1351,10 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1015,7 +1365,10 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteBackupPolicy(params: { databaseId: string, policyId: string }): Promise<{}>;
+    deleteBackupPolicy(params: {
+        databaseId: string;
+        policyId: string;
+    }): Promise<{}>;
     /**
      * Delete a scheduled backup policy for a dedicated database. Backups already taken by the policy are kept until their retention expires.
      *
@@ -1027,46 +1380,53 @@ export class Mysql {
      */
     deleteBackupPolicy(databaseId: string, policyId: string): Promise<{}>;
     deleteBackupPolicy(
-        paramsOrFirst: { databaseId: string, policyId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { databaseId: string; policyId: string } | string,
+        ...rest: [string?]
     ): Promise<{}> {
-        let params: { databaseId: string, policyId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, policyId: string };
+        let params: { databaseId: string; policyId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                policyId: string;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                policyId: rest[0] as string            
+                policyId: rest[0] as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const policyId = params.policyId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-        if (typeof policyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "policyId"');
+        if (typeof policyId === 'undefined' || policyId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "policyId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/backups/policies/{policyId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{policyId}', encodeURIComponent(String(policyId)));
+        const apiPath = '/mysql/{databaseId}/backups/policies/{policyId}'
+            .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+            .replace('{policyId}', encodeURIComponent(String(policyId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -1083,7 +1443,16 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseBackupStorage>}
      */
-    updateBackupStorage(params: { databaseId: string, provider: string, bucket: string, accessKey: string, secretKey: string, region?: string, prefix?: string, endpoint?: string }): Promise<Models.DedicatedDatabaseBackupStorage>;
+    updateBackupStorage(params: {
+        databaseId: string;
+        provider: string;
+        bucket: string;
+        accessKey: string;
+        secretKey: string;
+        region?: string;
+        prefix?: string;
+        endpoint?: string;
+    }): Promise<Models.DedicatedDatabaseBackupStorage>;
     /**
      * Configure off-cluster backup storage for a dedicated database. Supports S3, GCS, and Azure Blob Storage destinations. Backups will be stored to the configured destination in addition to on-cluster storage.
      *
@@ -1099,15 +1468,57 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabaseBackupStorage>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateBackupStorage(databaseId: string, provider: string, bucket: string, accessKey: string, secretKey: string, region?: string, prefix?: string, endpoint?: string): Promise<Models.DedicatedDatabaseBackupStorage>;
     updateBackupStorage(
-        paramsOrFirst: { databaseId: string, provider: string, bucket: string, accessKey: string, secretKey: string, region?: string, prefix?: string, endpoint?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
+        databaseId: string,
+        provider: string,
+        bucket: string,
+        accessKey: string,
+        secretKey: string,
+        region?: string,
+        prefix?: string,
+        endpoint?: string,
+    ): Promise<Models.DedicatedDatabaseBackupStorage>;
+    updateBackupStorage(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  provider: string;
+                  bucket: string;
+                  accessKey: string;
+                  secretKey: string;
+                  region?: string;
+                  prefix?: string;
+                  endpoint?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, string?, string?, string?, string?]
     ): Promise<Models.DedicatedDatabaseBackupStorage> {
-        let params: { databaseId: string, provider: string, bucket: string, accessKey: string, secretKey: string, region?: string, prefix?: string, endpoint?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, provider: string, bucket: string, accessKey: string, secretKey: string, region?: string, prefix?: string, endpoint?: string };
+        let params: {
+            databaseId: string;
+            provider: string;
+            bucket: string;
+            accessKey: string;
+            secretKey: string;
+            region?: string;
+            prefix?: string;
+            endpoint?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                provider: string;
+                bucket: string;
+                accessKey: string;
+                secretKey: string;
+                region?: string;
+                prefix?: string;
+                endpoint?: string;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -1117,10 +1528,10 @@ export class Mysql {
                 secretKey: rest[3] as string,
                 region: rest[4] as string,
                 prefix: rest[5] as string,
-                endpoint: rest[6] as string            
+                endpoint: rest[6] as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const provider = params.provider;
         const bucket = params.bucket;
@@ -1130,23 +1541,33 @@ export class Mysql {
         const prefix = params.prefix;
         const endpoint = params.endpoint;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
         if (typeof provider === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "provider"');
+            throw new AppwriteException(
+                'Missing required parameter: "provider"',
+            );
         }
         if (typeof bucket === 'undefined') {
             throw new AppwriteException('Missing required parameter: "bucket"');
         }
         if (typeof accessKey === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "accessKey"');
+            throw new AppwriteException(
+                'Missing required parameter: "accessKey"',
+            );
         }
         if (typeof secretKey === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "secretKey"');
+            throw new AppwriteException(
+                'Missing required parameter: "secretKey"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/backups/storage'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/backups/storage'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof provider !== 'undefined') {
             payload['provider'] = provider;
@@ -1174,15 +1595,10 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
@@ -1193,7 +1609,10 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseBackup>}
      */
-    getBackup(params: { databaseId: string, backupId: string }): Promise<Models.DedicatedDatabaseBackup>;
+    getBackup(params: {
+        databaseId: string;
+        backupId: string;
+    }): Promise<Models.DedicatedDatabaseBackup>;
     /**
      * Get details of a specific database backup including its status, size, and timestamps.
      *
@@ -1203,47 +1622,57 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabaseBackup>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getBackup(databaseId: string, backupId: string): Promise<Models.DedicatedDatabaseBackup>;
     getBackup(
-        paramsOrFirst: { databaseId: string, backupId: string } | string,
-        ...rest: [(string)?]    
+        databaseId: string,
+        backupId: string,
+    ): Promise<Models.DedicatedDatabaseBackup>;
+    getBackup(
+        paramsOrFirst: { databaseId: string; backupId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.DedicatedDatabaseBackup> {
-        let params: { databaseId: string, backupId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, backupId: string };
+        let params: { databaseId: string; backupId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                backupId: string;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                backupId: rest[0] as string            
+                backupId: rest[0] as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const backupId = params.backupId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-        if (typeof backupId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "backupId"');
+        if (typeof backupId === 'undefined' || backupId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "backupId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/backups/{backupId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{backupId}', encodeURIComponent(String(backupId)));
+        const apiPath = '/mysql/{databaseId}/backups/{backupId}'
+            .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+            .replace('{backupId}', encodeURIComponent(String(backupId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1254,7 +1683,7 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteBackup(params: { databaseId: string, backupId: string }): Promise<{}>;
+    deleteBackup(params: { databaseId: string; backupId: string }): Promise<{}>;
     /**
      * Delete a database backup. This will permanently remove the backup from storage and cannot be undone.
      *
@@ -1266,46 +1695,53 @@ export class Mysql {
      */
     deleteBackup(databaseId: string, backupId: string): Promise<{}>;
     deleteBackup(
-        paramsOrFirst: { databaseId: string, backupId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { databaseId: string; backupId: string } | string,
+        ...rest: [string?]
     ): Promise<{}> {
-        let params: { databaseId: string, backupId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, backupId: string };
+        let params: { databaseId: string; backupId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                backupId: string;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                backupId: rest[0] as string            
+                backupId: rest[0] as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const backupId = params.backupId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-        if (typeof backupId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "backupId"');
+        if (typeof backupId === 'undefined' || backupId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "backupId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/backups/{backupId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{backupId}', encodeURIComponent(String(backupId)));
+        const apiPath = '/mysql/{databaseId}/backups/{backupId}'
+            .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+            .replace('{backupId}', encodeURIComponent(String(backupId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -1315,7 +1751,9 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseBranchList>}
      */
-    listBranches(params: { databaseId: string }): Promise<Models.DedicatedDatabaseBranchList>;
+    listBranches(params: {
+        databaseId: string;
+    }): Promise<Models.DedicatedDatabaseBranchList>;
     /**
      * List all ephemeral branches for a dedicated database. Returns branch metadata including ID, name, namespace, and expiration time.
      *
@@ -1324,41 +1762,46 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabaseBranchList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listBranches(databaseId: string): Promise<Models.DedicatedDatabaseBranchList>;
     listBranches(
-        paramsOrFirst: { databaseId: string } | string    
+        databaseId: string,
+    ): Promise<Models.DedicatedDatabaseBranchList>;
+    listBranches(
+        paramsOrFirst: { databaseId: string } | string,
     ): Promise<Models.DedicatedDatabaseBranchList> {
         let params: { databaseId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { databaseId: string };
         } else {
             params = {
-                databaseId: paramsOrFirst as string            
+                databaseId: paramsOrFirst as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/branches'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/branches'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1370,7 +1813,11 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
-    createBranch(params: { databaseId: string, branchId?: string, ttl?: number }): Promise<Models.DedicatedDatabase>;
+    createBranch(params: {
+        databaseId: string;
+        branchId?: string;
+        ttl?: number;
+    }): Promise<Models.DedicatedDatabase>;
     /**
      * Create an ephemeral database branch from the primary via PVC snapshot. The branch is a full copy of the database at the current point in time, useful for testing schema migrations or running experiments without affecting production data. Branches expire after the configured TTL (default 24 hours). The branch is created asynchronously.
      *
@@ -1381,32 +1828,49 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createBranch(databaseId: string, branchId?: string, ttl?: number): Promise<Models.DedicatedDatabase>;
     createBranch(
-        paramsOrFirst: { databaseId: string, branchId?: string, ttl?: number } | string,
-        ...rest: [(string)?, (number)?]    
+        databaseId: string,
+        branchId?: string,
+        ttl?: number,
+    ): Promise<Models.DedicatedDatabase>;
+    createBranch(
+        paramsOrFirst:
+            { databaseId: string; branchId?: string; ttl?: number } | string,
+        ...rest: [string?, number?]
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string, branchId?: string, ttl?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, branchId?: string, ttl?: number };
+        let params: { databaseId: string; branchId?: string; ttl?: number };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                branchId?: string;
+                ttl?: number;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 branchId: rest[0] as string,
-                ttl: rest[1] as number            
+                ttl: rest[1] as number,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const branchId = params.branchId;
         const ttl = params.ttl;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/branches'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/branches'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof branchId !== 'undefined') {
             payload['branchId'] = branchId;
@@ -1419,15 +1883,10 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1438,7 +1897,10 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
-    deleteBranch(params: { databaseId: string, branchId: string }): Promise<Models.DedicatedDatabase>;
+    deleteBranch(params: {
+        databaseId: string;
+        branchId: string;
+    }): Promise<Models.DedicatedDatabase>;
     /**
      * Delete an ephemeral database branch. This removes the branch namespace, its PVC, and the associated VolumeSnapshot. The deletion runs asynchronously and is irreversible.
      *
@@ -1448,102 +1910,119 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    deleteBranch(databaseId: string, branchId: string): Promise<Models.DedicatedDatabase>;
     deleteBranch(
-        paramsOrFirst: { databaseId: string, branchId: string } | string,
-        ...rest: [(string)?]    
+        databaseId: string,
+        branchId: string,
+    ): Promise<Models.DedicatedDatabase>;
+    deleteBranch(
+        paramsOrFirst: { databaseId: string; branchId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string, branchId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, branchId: string };
+        let params: { databaseId: string; branchId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                branchId: string;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                branchId: rest[0] as string            
+                branchId: rest[0] as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const branchId = params.branchId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-        if (typeof branchId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "branchId"');
+        if (typeof branchId === 'undefined' || branchId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "branchId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/branches/{branchId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{branchId}', encodeURIComponent(String(branchId)));
+        const apiPath = '/mysql/{databaseId}/branches/{branchId}'
+            .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+            .replace('{branchId}', encodeURIComponent(String(branchId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
-     * Rotate the primary connection credentials for a dedicated database. Generates a new password and updates the database atomically. Previous credentials stop working immediately. Returns the database with a refreshed connection string carrying the new password.
+     * Queue a rotation of the primary connection credentials for a dedicated database. A hibernated database is woken by the worker before rotation. List database operations until the returned operation reaches a terminal status, then fetch the database again for the refreshed connection string.
      *
      * @param {string} params.databaseId - Database ID.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.DedicatedDatabase>}
+     * @returns {Promise<Models.DedicatedDatabaseOperation>}
      */
-    updateCredentials(params: { databaseId: string }): Promise<Models.DedicatedDatabase>;
+    updateCredentials(params: {
+        databaseId: string;
+    }): Promise<Models.DedicatedDatabaseOperation>;
     /**
-     * Rotate the primary connection credentials for a dedicated database. Generates a new password and updates the database atomically. Previous credentials stop working immediately. Returns the database with a refreshed connection string carrying the new password.
+     * Queue a rotation of the primary connection credentials for a dedicated database. A hibernated database is woken by the worker before rotation. List database operations until the returned operation reaches a terminal status, then fetch the database again for the refreshed connection string.
      *
      * @param {string} databaseId - Database ID.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.DedicatedDatabase>}
+     * @returns {Promise<Models.DedicatedDatabaseOperation>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateCredentials(databaseId: string): Promise<Models.DedicatedDatabase>;
     updateCredentials(
-        paramsOrFirst: { databaseId: string } | string    
-    ): Promise<Models.DedicatedDatabase> {
+        databaseId: string,
+    ): Promise<Models.DedicatedDatabaseOperation>;
+    updateCredentials(
+        paramsOrFirst: { databaseId: string } | string,
+    ): Promise<Models.DedicatedDatabaseOperation> {
         let params: { databaseId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { databaseId: string };
         } else {
             params = {
-                databaseId: paramsOrFirst as string            
+                databaseId: paramsOrFirst as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/credentials'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/credentials'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1556,7 +2035,12 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseExecution>}
      */
-    createExecution(params: { databaseId: string, sql: string, bindings?: object, timeoutSeconds?: number }): Promise<Models.DedicatedDatabaseExecution>;
+    createExecution(params: {
+        databaseId: string;
+        sql: string;
+        bindings?: object;
+        timeoutSeconds?: number;
+    }): Promise<Models.DedicatedDatabaseExecution>;
     /**
      * Execute SQL through the console-facing Cloud endpoint. Cloud proxies through the edge platform to the per-database SQL API sidecar. Application traffic should bypass cloud entirely and POST directly to the per-database hostname: `https://db-{project}-{db}.{region}.appwrite.center/v1/sql/executions` with an `X-Appwrite-Key` header — that path scales to the whole DB fleet without a per-query cloud round-trip. The statement type must be on the database's configured allow-list. Use bound parameters for any user-supplied values — the API does not interpolate raw strings.
      *
@@ -1568,37 +2052,67 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabaseExecution>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createExecution(databaseId: string, sql: string, bindings?: object, timeoutSeconds?: number): Promise<Models.DedicatedDatabaseExecution>;
     createExecution(
-        paramsOrFirst: { databaseId: string, sql: string, bindings?: object, timeoutSeconds?: number } | string,
-        ...rest: [(string)?, (object)?, (number)?]    
+        databaseId: string,
+        sql: string,
+        bindings?: object,
+        timeoutSeconds?: number,
+    ): Promise<Models.DedicatedDatabaseExecution>;
+    createExecution(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  sql: string;
+                  bindings?: object;
+                  timeoutSeconds?: number;
+              }
+            | string,
+        ...rest: [string?, object?, number?]
     ): Promise<Models.DedicatedDatabaseExecution> {
-        let params: { databaseId: string, sql: string, bindings?: object, timeoutSeconds?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, sql: string, bindings?: object, timeoutSeconds?: number };
+        let params: {
+            databaseId: string;
+            sql: string;
+            bindings?: object;
+            timeoutSeconds?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                sql: string;
+                bindings?: object;
+                timeoutSeconds?: number;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 sql: rest[0] as string,
                 bindings: rest[1] as object,
-                timeoutSeconds: rest[2] as number            
+                timeoutSeconds: rest[2] as number,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const sql = params.sql;
         const bindings = params.bindings;
         const timeoutSeconds = params.timeoutSeconds;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
         if (typeof sql === 'undefined') {
             throw new AppwriteException('Missing required parameter: "sql"');
         }
-
-        const apiPath = '/mysql/{databaseId}/executions'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/executions'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof sql !== 'undefined') {
             payload['sql'] = sql;
@@ -1614,28 +2128,26 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
-     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation by a failover that did not finish also accepts this call as a repair, provided `targetReplicaId` names the member to promote.
+     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation also accepts this call as a repair once nothing is driving the operation it is stuck in. Repairing a failover that did not finish, a `failed` database, a stranded upgrade or migrate, or a stranded compute resize additionally requires `targetReplicaId` to name the member to promote, because the default target may be the member that operation already promoted.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
-    createFailover(params: { databaseId: string, targetReplicaId?: string }): Promise<Models.DedicatedDatabase>;
+    createFailover(params: {
+        databaseId: string;
+        targetReplicaId?: string;
+    }): Promise<Models.DedicatedDatabase>;
     /**
-     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation by a failover that did not finish also accepts this call as a repair, provided `targetReplicaId` names the member to promote.
+     * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation also accepts this call as a repair once nothing is driving the operation it is stuck in. Repairing a failover that did not finish, a `failed` database, a stranded upgrade or migrate, or a stranded compute resize additionally requires `targetReplicaId` to name the member to promote, because the default target may be the member that operation already promoted.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
@@ -1643,30 +2155,45 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createFailover(databaseId: string, targetReplicaId?: string): Promise<Models.DedicatedDatabase>;
     createFailover(
-        paramsOrFirst: { databaseId: string, targetReplicaId?: string } | string,
-        ...rest: [(string)?]    
+        databaseId: string,
+        targetReplicaId?: string,
+    ): Promise<Models.DedicatedDatabase>;
+    createFailover(
+        paramsOrFirst:
+            { databaseId: string; targetReplicaId?: string } | string,
+        ...rest: [string?]
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string, targetReplicaId?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, targetReplicaId?: string };
+        let params: { databaseId: string; targetReplicaId?: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                targetReplicaId?: string;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                targetReplicaId: rest[0] as string            
+                targetReplicaId: rest[0] as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const targetReplicaId = params.targetReplicaId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/failovers'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/failovers'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof targetReplicaId !== 'undefined') {
             payload['targetReplicaId'] = targetReplicaId;
@@ -1676,15 +2203,10 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1696,7 +2218,11 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
-    updateMaintenance(params: { databaseId: string, day: string, hourUtc: number }): Promise<Models.DedicatedDatabase>;
+    updateMaintenance(params: {
+        databaseId: string;
+        day: string;
+        hourUtc: number;
+    }): Promise<Models.DedicatedDatabase>;
     /**
      * Update the maintenance window for a dedicated database. Maintenance operations like minor version upgrades will be performed during this window.
      *
@@ -1707,38 +2233,57 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateMaintenance(databaseId: string, day: string, hourUtc: number): Promise<Models.DedicatedDatabase>;
     updateMaintenance(
-        paramsOrFirst: { databaseId: string, day: string, hourUtc: number } | string,
-        ...rest: [(string)?, (number)?]    
+        databaseId: string,
+        day: string,
+        hourUtc: number,
+    ): Promise<Models.DedicatedDatabase>;
+    updateMaintenance(
+        paramsOrFirst:
+            { databaseId: string; day: string; hourUtc: number } | string,
+        ...rest: [string?, number?]
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string, day: string, hourUtc: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, day: string, hourUtc: number };
+        let params: { databaseId: string; day: string; hourUtc: number };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                day: string;
+                hourUtc: number;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 day: rest[0] as string,
-                hourUtc: rest[1] as number            
+                hourUtc: rest[1] as number,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const day = params.day;
         const hourUtc = params.hourUtc;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
         if (typeof day === 'undefined') {
             throw new AppwriteException('Missing required parameter: "day"');
         }
         if (typeof hourUtc === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "hourUtc"');
+            throw new AppwriteException(
+                'Missing required parameter: "hourUtc"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/maintenance'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/maintenance'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof day !== 'undefined') {
             payload['day'] = day;
@@ -1751,15 +2296,10 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1771,7 +2311,11 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
-    createMigration(params: { databaseId: string, targetType: string, specification?: string }): Promise<Models.DedicatedDatabase>;
+    createMigration(params: {
+        databaseId: string;
+        targetType: string;
+        specification?: string;
+    }): Promise<Models.DedicatedDatabase>;
     /**
      * Migrate a database between shared and dedicated types. Shared to dedicated provisions an always-on dedicated instance; dedicated to shared converts to a serverless instance that scales to zero when idle. Data is copied to the target with a brief read-only window during cutover.
      *
@@ -1782,35 +2326,59 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createMigration(databaseId: string, targetType: string, specification?: string): Promise<Models.DedicatedDatabase>;
     createMigration(
-        paramsOrFirst: { databaseId: string, targetType: string, specification?: string } | string,
-        ...rest: [(string)?, (string)?]    
+        databaseId: string,
+        targetType: string,
+        specification?: string,
+    ): Promise<Models.DedicatedDatabase>;
+    createMigration(
+        paramsOrFirst:
+            | { databaseId: string; targetType: string; specification?: string }
+            | string,
+        ...rest: [string?, string?]
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string, targetType: string, specification?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, targetType: string, specification?: string };
+        let params: {
+            databaseId: string;
+            targetType: string;
+            specification?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                targetType: string;
+                specification?: string;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 targetType: rest[0] as string,
-                specification: rest[1] as string            
+                specification: rest[1] as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const targetType = params.targetType;
         const specification = params.specification;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
         if (typeof targetType === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetType"');
+            throw new AppwriteException(
+                'Missing required parameter: "targetType"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/migrations'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/migrations'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof targetType !== 'undefined') {
             payload['targetType'] = targetType;
@@ -1823,15 +2391,10 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1844,7 +2407,12 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseOperationList>}
      */
-    listOperations(params: { databaseId: string, status?: string, limit?: number, offset?: number }): Promise<Models.DedicatedDatabaseOperationList>;
+    listOperations(params: {
+        databaseId: string;
+        status?: string;
+        limit?: number;
+        offset?: number;
+    }): Promise<Models.DedicatedDatabaseOperationList>;
     /**
      * List the lifecycle operations recorded for a dedicated database, newest first. Every provision, update, restore, backup and replication action is recorded here with its outcome, including an attempt that was abandoned because another worker took over the database.
      *
@@ -1856,34 +2424,64 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabaseOperationList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listOperations(databaseId: string, status?: string, limit?: number, offset?: number): Promise<Models.DedicatedDatabaseOperationList>;
     listOperations(
-        paramsOrFirst: { databaseId: string, status?: string, limit?: number, offset?: number } | string,
-        ...rest: [(string)?, (number)?, (number)?]    
+        databaseId: string,
+        status?: string,
+        limit?: number,
+        offset?: number,
+    ): Promise<Models.DedicatedDatabaseOperationList>;
+    listOperations(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  status?: string;
+                  limit?: number;
+                  offset?: number;
+              }
+            | string,
+        ...rest: [string?, number?, number?]
     ): Promise<Models.DedicatedDatabaseOperationList> {
-        let params: { databaseId: string, status?: string, limit?: number, offset?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, status?: string, limit?: number, offset?: number };
+        let params: {
+            databaseId: string;
+            status?: string;
+            limit?: number;
+            offset?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                status?: string;
+                limit?: number;
+                offset?: number;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 status: rest[0] as string,
                 limit: rest[1] as number,
-                offset: rest[2] as number            
+                offset: rest[2] as number,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const status = params.status;
         const limit = params.limit;
         const offset = params.offset;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/operations'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/operations'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof status !== 'undefined') {
             payload['status'] = status;
@@ -1898,15 +2496,10 @@ export class Mysql {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1916,7 +2509,9 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabasePITRWindows>}
      */
-    getPitr(params: { databaseId: string }): Promise<Models.DedicatedDatabasePITRWindows>;
+    getPitr(params: {
+        databaseId: string;
+    }): Promise<Models.DedicatedDatabasePITRWindows>;
     /**
      * Get available point-in-time recovery windows for a dedicated database. Returns the earliest and latest recovery points.
      *
@@ -1927,39 +2522,42 @@ export class Mysql {
      */
     getPitr(databaseId: string): Promise<Models.DedicatedDatabasePITRWindows>;
     getPitr(
-        paramsOrFirst: { databaseId: string } | string    
+        paramsOrFirst: { databaseId: string } | string,
     ): Promise<Models.DedicatedDatabasePITRWindows> {
         let params: { databaseId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { databaseId: string };
         } else {
             params = {
-                databaseId: paramsOrFirst as string            
+                databaseId: paramsOrFirst as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/pitr'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/pitr'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1969,7 +2567,9 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabasePooler>}
      */
-    getPooler(params: { databaseId: string }): Promise<Models.DedicatedDatabasePooler>;
+    getPooler(params: {
+        databaseId: string;
+    }): Promise<Models.DedicatedDatabasePooler>;
     /**
      * Get the connection pooler configuration for a dedicated database. Returns pooler mode, max connections, and pool size settings.
      *
@@ -1980,39 +2580,42 @@ export class Mysql {
      */
     getPooler(databaseId: string): Promise<Models.DedicatedDatabasePooler>;
     getPooler(
-        paramsOrFirst: { databaseId: string } | string    
+        paramsOrFirst: { databaseId: string } | string,
     ): Promise<Models.DedicatedDatabasePooler> {
         let params: { databaseId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { databaseId: string };
         } else {
             params = {
-                databaseId: paramsOrFirst as string            
+                databaseId: paramsOrFirst as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/pooler'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/pooler'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2030,7 +2633,17 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabasePooler>}
      */
-    updatePooler(params: { databaseId: string, mode?: string, maxConnections?: number, defaultPoolSize?: number, readWriteSplitting?: boolean, poolerCpuRequest?: string, poolerCpuLimit?: string, poolerMemoryRequest?: string, poolerMemoryLimit?: string }): Promise<Models.DedicatedDatabasePooler>;
+    updatePooler(params: {
+        databaseId: string;
+        mode?: string;
+        maxConnections?: number;
+        defaultPoolSize?: number;
+        readWriteSplitting?: boolean;
+        poolerCpuRequest?: string;
+        poolerCpuLimit?: string;
+        poolerMemoryRequest?: string;
+        poolerMemoryLimit?: string;
+    }): Promise<Models.DedicatedDatabasePooler>;
     /**
      * Update the connection pooler configuration for a dedicated database. Configure pool mode, max connections, and pool sizes.
      *
@@ -2047,15 +2660,70 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabasePooler>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePooler(databaseId: string, mode?: string, maxConnections?: number, defaultPoolSize?: number, readWriteSplitting?: boolean, poolerCpuRequest?: string, poolerCpuLimit?: string, poolerMemoryRequest?: string, poolerMemoryLimit?: string): Promise<Models.DedicatedDatabasePooler>;
     updatePooler(
-        paramsOrFirst: { databaseId: string, mode?: string, maxConnections?: number, defaultPoolSize?: number, readWriteSplitting?: boolean, poolerCpuRequest?: string, poolerCpuLimit?: string, poolerMemoryRequest?: string, poolerMemoryLimit?: string } | string,
-        ...rest: [(string)?, (number)?, (number)?, (boolean)?, (string)?, (string)?, (string)?, (string)?]    
+        databaseId: string,
+        mode?: string,
+        maxConnections?: number,
+        defaultPoolSize?: number,
+        readWriteSplitting?: boolean,
+        poolerCpuRequest?: string,
+        poolerCpuLimit?: string,
+        poolerMemoryRequest?: string,
+        poolerMemoryLimit?: string,
+    ): Promise<Models.DedicatedDatabasePooler>;
+    updatePooler(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  mode?: string;
+                  maxConnections?: number;
+                  defaultPoolSize?: number;
+                  readWriteSplitting?: boolean;
+                  poolerCpuRequest?: string;
+                  poolerCpuLimit?: string;
+                  poolerMemoryRequest?: string;
+                  poolerMemoryLimit?: string;
+              }
+            | string,
+        ...rest: [
+            string?,
+            number?,
+            number?,
+            boolean?,
+            string?,
+            string?,
+            string?,
+            string?,
+        ]
     ): Promise<Models.DedicatedDatabasePooler> {
-        let params: { databaseId: string, mode?: string, maxConnections?: number, defaultPoolSize?: number, readWriteSplitting?: boolean, poolerCpuRequest?: string, poolerCpuLimit?: string, poolerMemoryRequest?: string, poolerMemoryLimit?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, mode?: string, maxConnections?: number, defaultPoolSize?: number, readWriteSplitting?: boolean, poolerCpuRequest?: string, poolerCpuLimit?: string, poolerMemoryRequest?: string, poolerMemoryLimit?: string };
+        let params: {
+            databaseId: string;
+            mode?: string;
+            maxConnections?: number;
+            defaultPoolSize?: number;
+            readWriteSplitting?: boolean;
+            poolerCpuRequest?: string;
+            poolerCpuLimit?: string;
+            poolerMemoryRequest?: string;
+            poolerMemoryLimit?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                mode?: string;
+                maxConnections?: number;
+                defaultPoolSize?: number;
+                readWriteSplitting?: boolean;
+                poolerCpuRequest?: string;
+                poolerCpuLimit?: string;
+                poolerMemoryRequest?: string;
+                poolerMemoryLimit?: string;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
@@ -2066,10 +2734,10 @@ export class Mysql {
                 poolerCpuRequest: rest[4] as string,
                 poolerCpuLimit: rest[5] as string,
                 poolerMemoryRequest: rest[6] as string,
-                poolerMemoryLimit: rest[7] as string            
+                poolerMemoryLimit: rest[7] as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const mode = params.mode;
         const maxConnections = params.maxConnections;
@@ -2080,11 +2748,15 @@ export class Mysql {
         const poolerMemoryRequest = params.poolerMemoryRequest;
         const poolerMemoryLimit = params.poolerMemoryLimit;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/pooler'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/pooler'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof mode !== 'undefined') {
             payload['mode'] = mode;
@@ -2115,15 +2787,10 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2133,7 +2800,9 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseReplicas>}
      */
-    getReplicas(params: { databaseId: string }): Promise<Models.DedicatedDatabaseReplicas>;
+    getReplicas(params: {
+        databaseId: string;
+    }): Promise<Models.DedicatedDatabaseReplicas>;
     /**
      * Get high availability status for a dedicated database. Returns replica statuses, replication lag, and sync mode.
      *
@@ -2144,39 +2813,42 @@ export class Mysql {
      */
     getReplicas(databaseId: string): Promise<Models.DedicatedDatabaseReplicas>;
     getReplicas(
-        paramsOrFirst: { databaseId: string } | string    
+        paramsOrFirst: { databaseId: string } | string,
     ): Promise<Models.DedicatedDatabaseReplicas> {
         let params: { databaseId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { databaseId: string };
         } else {
             params = {
-                databaseId: paramsOrFirst as string            
+                databaseId: paramsOrFirst as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/replicas'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/replicas'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2190,7 +2862,13 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseRestorationList>}
      */
-    listRestorations(params: { databaseId: string, status?: string, type?: string, limit?: number, offset?: number }): Promise<Models.DedicatedDatabaseRestorationList>;
+    listRestorations(params: {
+        databaseId: string;
+        status?: string;
+        type?: string;
+        limit?: number;
+        offset?: number;
+    }): Promise<Models.DedicatedDatabaseRestorationList>;
     /**
      * List all restorations for a dedicated database. Results can be filtered by status and type.
      *
@@ -2203,36 +2881,70 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabaseRestorationList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listRestorations(databaseId: string, status?: string, type?: string, limit?: number, offset?: number): Promise<Models.DedicatedDatabaseRestorationList>;
     listRestorations(
-        paramsOrFirst: { databaseId: string, status?: string, type?: string, limit?: number, offset?: number } | string,
-        ...rest: [(string)?, (string)?, (number)?, (number)?]    
+        databaseId: string,
+        status?: string,
+        type?: string,
+        limit?: number,
+        offset?: number,
+    ): Promise<Models.DedicatedDatabaseRestorationList>;
+    listRestorations(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  status?: string;
+                  type?: string;
+                  limit?: number;
+                  offset?: number;
+              }
+            | string,
+        ...rest: [string?, string?, number?, number?]
     ): Promise<Models.DedicatedDatabaseRestorationList> {
-        let params: { databaseId: string, status?: string, type?: string, limit?: number, offset?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, status?: string, type?: string, limit?: number, offset?: number };
+        let params: {
+            databaseId: string;
+            status?: string;
+            type?: string;
+            limit?: number;
+            offset?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                status?: string;
+                type?: string;
+                limit?: number;
+                offset?: number;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 status: rest[0] as string,
                 type: rest[1] as string,
                 limit: rest[2] as number,
-                offset: rest[3] as number            
+                offset: rest[3] as number,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const status = params.status;
         const type = params.type;
         const limit = params.limit;
         const offset = params.offset;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/restorations'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/restorations'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof status !== 'undefined') {
             payload['status'] = status;
@@ -2250,15 +2962,10 @@ export class Mysql {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2267,56 +2974,103 @@ export class Mysql {
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.type - Restoration type. Allowed values: backup, pitr. Use "backup" to restore from a specific backup, or "pitr" for point-in-time recovery.
      * @param {string} params.backupId - Backup ID to restore from (required for backup type).
+     * @param {string} params.targetDatabaseId - Existing database ID to restore into. The target must be distinct, ready, and use the same engine and version.
      * @param {string} params.targetTime - Target time for PITR (required for pitr type) as an [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) datetime.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseRestoration>}
      */
-    createRestoration(params: { databaseId: string, type?: string, backupId?: string, targetTime?: string }): Promise<Models.DedicatedDatabaseRestoration>;
+    createRestoration(params: {
+        databaseId: string;
+        type?: string;
+        backupId?: string;
+        targetDatabaseId?: string;
+        targetTime?: string;
+    }): Promise<Models.DedicatedDatabaseRestoration>;
     /**
      * Restore a database from a backup or to a specific point in time (PITR). For backup restoration, provide a backupId. For PITR, provide a targetTime as an ISO 8601 datetime. PITR requires the database to have PITR enabled and is only available for enterprise databases.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} type - Restoration type. Allowed values: backup, pitr. Use "backup" to restore from a specific backup, or "pitr" for point-in-time recovery.
      * @param {string} backupId - Backup ID to restore from (required for backup type).
+     * @param {string} targetDatabaseId - Existing database ID to restore into. The target must be distinct, ready, and use the same engine and version.
      * @param {string} targetTime - Target time for PITR (required for pitr type) as an [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) datetime.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseRestoration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRestoration(databaseId: string, type?: string, backupId?: string, targetTime?: string): Promise<Models.DedicatedDatabaseRestoration>;
     createRestoration(
-        paramsOrFirst: { databaseId: string, type?: string, backupId?: string, targetTime?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?]    
+        databaseId: string,
+        type?: string,
+        backupId?: string,
+        targetDatabaseId?: string,
+        targetTime?: string,
+    ): Promise<Models.DedicatedDatabaseRestoration>;
+    createRestoration(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  type?: string;
+                  backupId?: string;
+                  targetDatabaseId?: string;
+                  targetTime?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, string?]
     ): Promise<Models.DedicatedDatabaseRestoration> {
-        let params: { databaseId: string, type?: string, backupId?: string, targetTime?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, type?: string, backupId?: string, targetTime?: string };
+        let params: {
+            databaseId: string;
+            type?: string;
+            backupId?: string;
+            targetDatabaseId?: string;
+            targetTime?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                type?: string;
+                backupId?: string;
+                targetDatabaseId?: string;
+                targetTime?: string;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 type: rest[0] as string,
                 backupId: rest[1] as string,
-                targetTime: rest[2] as string            
+                targetDatabaseId: rest[2] as string,
+                targetTime: rest[3] as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const type = params.type;
         const backupId = params.backupId;
+        const targetDatabaseId = params.targetDatabaseId;
         const targetTime = params.targetTime;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/restorations'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/restorations'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof type !== 'undefined') {
             payload['type'] = type;
         }
         if (typeof backupId !== 'undefined') {
             payload['backupId'] = backupId;
+        }
+        if (typeof targetDatabaseId !== 'undefined') {
+            payload['targetDatabaseId'] = targetDatabaseId;
         }
         if (typeof targetTime !== 'undefined') {
             payload['targetTime'] = targetTime;
@@ -2326,15 +3080,10 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -2345,7 +3094,10 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseRestoration>}
      */
-    getRestoration(params: { databaseId: string, restorationId: string }): Promise<Models.DedicatedDatabaseRestoration>;
+    getRestoration(params: {
+        databaseId: string;
+        restorationId: string;
+    }): Promise<Models.DedicatedDatabaseRestoration>;
     /**
      * Get details of a specific database restoration including its status, type, and timestamps.
      *
@@ -2355,47 +3107,60 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabaseRestoration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getRestoration(databaseId: string, restorationId: string): Promise<Models.DedicatedDatabaseRestoration>;
     getRestoration(
-        paramsOrFirst: { databaseId: string, restorationId: string } | string,
-        ...rest: [(string)?]    
+        databaseId: string,
+        restorationId: string,
+    ): Promise<Models.DedicatedDatabaseRestoration>;
+    getRestoration(
+        paramsOrFirst: { databaseId: string; restorationId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.DedicatedDatabaseRestoration> {
-        let params: { databaseId: string, restorationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, restorationId: string };
+        let params: { databaseId: string; restorationId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                restorationId: string;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                restorationId: rest[0] as string            
+                restorationId: rest[0] as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const restorationId = params.restorationId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-        if (typeof restorationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "restorationId"');
+        if (typeof restorationId === 'undefined' || restorationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "restorationId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/restorations/{restorationId}'.replace('{databaseId}', encodeURIComponent(String(databaseId))).replace('{restorationId}', encodeURIComponent(String(restorationId)));
+        const apiPath = '/mysql/{databaseId}/restorations/{restorationId}'
+            .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+            .replace(
+                '{restorationId}',
+                encodeURIComponent(String(restorationId)),
+            );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2416,39 +3181,42 @@ export class Mysql {
      */
     getStatus(databaseId: string): Promise<Models.DatabaseStatus>;
     getStatus(
-        paramsOrFirst: { databaseId: string } | string    
+        paramsOrFirst: { databaseId: string } | string,
     ): Promise<Models.DatabaseStatus> {
         let params: { databaseId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { databaseId: string };
         } else {
             params = {
-                databaseId: paramsOrFirst as string            
+                databaseId: paramsOrFirst as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/status'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/status'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2459,7 +3227,10 @@ export class Mysql {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
-    createUpgrade(params: { databaseId: string, targetVersion: string }): Promise<Models.DedicatedDatabase>;
+    createUpgrade(params: {
+        databaseId: string;
+        targetVersion: string;
+    }): Promise<Models.DedicatedDatabase>;
     /**
      * Upgrade a dedicated database to a new engine version. Uses blue-green deployment for zero-downtime cutover.
      *
@@ -2469,33 +3240,49 @@ export class Mysql {
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createUpgrade(databaseId: string, targetVersion: string): Promise<Models.DedicatedDatabase>;
     createUpgrade(
-        paramsOrFirst: { databaseId: string, targetVersion: string } | string,
-        ...rest: [(string)?]    
+        databaseId: string,
+        targetVersion: string,
+    ): Promise<Models.DedicatedDatabase>;
+    createUpgrade(
+        paramsOrFirst: { databaseId: string; targetVersion: string } | string,
+        ...rest: [string?]
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string, targetVersion: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, targetVersion: string };
+        let params: { databaseId: string; targetVersion: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                targetVersion: string;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                targetVersion: rest[0] as string            
+                targetVersion: rest[0] as string,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const targetVersion = params.targetVersion;
 
-        if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
         if (typeof targetVersion === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetVersion"');
+            throw new AppwriteException(
+                'Missing required parameter: "targetVersion"',
+            );
         }
-
-        const apiPath = '/mysql/{databaseId}/upgrades'.replace('{databaseId}', encodeURIComponent(String(databaseId)));
+        const apiPath = '/mysql/{databaseId}/upgrades'.replace(
+            '{databaseId}',
+            encodeURIComponent(String(databaseId)),
+        );
         const payload: Payload = {};
         if (typeof targetVersion !== 'undefined') {
             payload['targetVersion'] = targetVersion;
@@ -2505,14 +3292,9 @@ export class Mysql {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 }

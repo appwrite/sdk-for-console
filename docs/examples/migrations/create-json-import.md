@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Migrations, OnDuplicate } from "@appwrite.io/console";
+import { Client, Migrations, OnDuplicate } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,7 +13,7 @@ const result = await migrations.createJSONImport({
     databaseId: '<DATABASE_ID>',
     collectionId: '<COLLECTION_ID>',
     internalFile: false, // optional
-    onDuplicate: OnDuplicate.Fail // optional
+    onDuplicate: OnDuplicate.Fail, // optional
 });
 
 console.log(result);

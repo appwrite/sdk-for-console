@@ -1,5 +1,5 @@
 ```javascript
-import { Client, TablesDB } from "@appwrite.io/console";
+import { Client, TablesDB } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const tablesDB = new TablesDB(client);
 
 const result = await tablesDB.deleteTable({
     databaseId: '<DATABASE_ID>',
-    tableId: '<TABLE_ID>'
+    tableId: '<TABLE_ID>',
 });
 
 console.log(result);

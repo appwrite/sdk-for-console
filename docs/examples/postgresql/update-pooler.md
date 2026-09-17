@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Postgresql } from "@appwrite.io/console";
+import { Client, Postgresql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -16,7 +16,7 @@ const result = await postgresql.updatePooler({
     poolerCpuRequest: '<POOLER_CPU_REQUEST>', // optional
     poolerCpuLimit: '<POOLER_CPU_LIMIT>', // optional
     poolerMemoryRequest: '<POOLER_MEMORY_REQUEST>', // optional
-    poolerMemoryLimit: '<POOLER_MEMORY_LIMIT>' // optional
+    poolerMemoryLimit: '<POOLER_MEMORY_LIMIT>', // optional
 });
 
 console.log(result);

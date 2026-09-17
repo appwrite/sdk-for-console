@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Messaging } from "@appwrite.io/console";
+import { Client, Messaging } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,7 +13,7 @@ const result = await messaging.updateTelesignProvider({
     enabled: false, // optional
     customerId: '<CUSTOMER_ID>', // optional
     apiKey: '<API_KEY>', // optional
-    from: '<FROM>' // optional
+    from: '<FROM>', // optional
 });
 
 console.log(result);

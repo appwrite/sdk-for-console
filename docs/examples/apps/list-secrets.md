@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Apps } from "@appwrite.io/console";
+import { Client, Apps } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const apps = new Apps(client);
 const result = await apps.listSecrets({
     appId: '<APP_ID>',
     queries: [], // optional
-    total: false // optional
+    total: false, // optional
 });
 
 console.log(result);

@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Account } from "@appwrite.io/console";
+import { Client, Account } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const account = new Account(client);
 
 const result = await account.updatePaymentMethodMandateOptions({
-    paymentMethodId: '<PAYMENT_METHOD_ID>'
+    paymentMethodId: '<PAYMENT_METHOD_ID>',
 });
 
 console.log(result);

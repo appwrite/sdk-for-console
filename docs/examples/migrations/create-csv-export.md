@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Migrations } from "@appwrite.io/console";
+import { Client, Migrations } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -17,7 +17,7 @@ const result = await migrations.createCSVExport({
     enclosure: '<ENCLOSURE>', // optional
     escape: '<ESCAPE>', // optional
     header: false, // optional
-    notify: false // optional
+    notify: false, // optional
 });
 
 console.log(result);

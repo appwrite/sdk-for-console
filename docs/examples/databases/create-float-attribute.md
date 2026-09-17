@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Databases } from "@appwrite.io/console";
+import { Client, Databases } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,12 +10,12 @@ const databases = new Databases(client);
 const result = await databases.createFloatAttribute({
     databaseId: '<DATABASE_ID>',
     collectionId: '<COLLECTION_ID>',
-    key: '',
+    key: '<KEY>',
     required: false,
-    min: null, // optional
-    max: null, // optional
-    xdefault: null, // optional
-    array: false // optional
+    min: 0, // optional
+    max: 100, // optional
+    xdefault: 10.5, // optional
+    array: false, // optional
 });
 
 console.log(result);

@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Organization } from "@appwrite.io/console";
+import { Client, Organization } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const organization = new Organization(client);
 
 const result = await organization.deleteMembership({
-    membershipId: '<MEMBERSHIP_ID>'
+    membershipId: '<MEMBERSHIP_ID>',
 });
 
 console.log(result);

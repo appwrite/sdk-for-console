@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Sites } from "@appwrite.io/console";
+import { Client, Sites } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,7 +13,7 @@ const result = await sites.createDeployment({
     installCommand: '<INSTALL_COMMAND>', // optional
     buildCommand: '<BUILD_COMMAND>', // optional
     outputDirectory: '<OUTPUT_DIRECTORY>', // optional
-    activate: false // optional
+    activate: false, // optional
 });
 
 console.log(result);

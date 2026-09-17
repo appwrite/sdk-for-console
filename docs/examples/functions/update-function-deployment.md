@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Functions } from "@appwrite.io/console";
+import { Client, Functions } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const functions = new Functions(client);
 
 const result = await functions.updateFunctionDeployment({
     functionId: '<FUNCTION_ID>',
-    deploymentId: '<DEPLOYMENT_ID>'
+    deploymentId: '<DEPLOYMENT_ID>',
 });
 
 console.log(result);

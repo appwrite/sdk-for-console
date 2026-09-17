@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Account } from "@appwrite.io/console";
+import { Client, Account } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -14,7 +14,7 @@ const result = await account.updateBillingAddress({
     streetAddress: '<STREET_ADDRESS>',
     addressLine2: '<ADDRESS_LINE2>', // optional
     state: '<STATE>', // optional
-    postalCode: '<POSTAL_CODE>' // optional
+    postalCode: '<POSTAL_CODE>', // optional
 });
 
 console.log(result);

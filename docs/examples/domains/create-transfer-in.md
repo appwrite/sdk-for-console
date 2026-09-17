@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Domains } from "@appwrite.io/console";
+import { Client, Domains } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,11 +8,11 @@ const client = new Client()
 const domains = new Domains(client);
 
 const result = await domains.createTransferIn({
-    domain: '',
+    domain: 'example.com',
     organizationId: '<ORGANIZATION_ID>',
     authCode: '<AUTH_CODE>',
     paymentMethodId: '<PAYMENT_METHOD_ID>',
-    autoRenewal: false // optional
+    autoRenewal: false, // optional
 });
 
 console.log(result);
