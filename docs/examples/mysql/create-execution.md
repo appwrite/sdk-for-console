@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Mysql } from "@appwrite.io/console";
+import { Client, Mysql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +11,7 @@ const result = await mysql.createExecution({
     databaseId: '<DATABASE_ID>',
     sql: '<SQL>',
     bindings: {}, // optional
-    timeoutSeconds: 1 // optional
+    timeoutSeconds: 1, // optional
 });
 
 console.log(result);

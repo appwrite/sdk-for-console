@@ -1,5 +1,10 @@
 import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    UploadProgress,
+} from '../client';
 import type { Models } from '../models';
 
 import { Runtime } from '../enums/runtime';
@@ -9,7 +14,6 @@ import { TemplateReferenceType } from '../enums/template-reference-type';
 import { VCSReferenceType } from '../enums/vcs-reference-type';
 import { DeploymentDownloadType } from '../enums/deployment-download-type';
 import { ExecutionMethod } from '../enums/execution-method';
-
 export class Functions {
     client: Client;
 
@@ -26,7 +30,11 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.FunctionList>}
      */
-    list(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.FunctionList>;
+    list(params?: {
+        queries?: string[];
+        search?: string;
+        total?: boolean;
+    }): Promise<Models.FunctionList>;
     /**
      * Get a list of all the project's functions. You can use the query params to filter your results.
      *
@@ -37,27 +45,40 @@ export class Functions {
      * @returns {Promise<Models.FunctionList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    list(queries?: string[], search?: string, total?: boolean): Promise<Models.FunctionList>;
     list(
-        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
-        ...rest: [(string)?, (boolean)?]    
+        queries?: string[],
+        search?: string,
+        total?: boolean,
+    ): Promise<Models.FunctionList>;
+    list(
+        paramsOrFirst?:
+            { queries?: string[]; search?: string; total?: boolean } | string[],
+        ...rest: [string?, boolean?]
     ): Promise<Models.FunctionList> {
-        let params: { queries?: string[], search?: string, total?: boolean };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
+        let params: { queries?: string[]; search?: string; total?: boolean };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                search?: string;
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
                 search: rest[0] as string,
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const queries = params.queries;
         const search = params.search;
         const total = params.total;
-
 
         const apiPath = '/functions';
         const payload: Payload = {};
@@ -74,15 +95,10 @@ export class Functions {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -113,7 +129,30 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    create(params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Function>;
+    create(params: {
+        functionId: string;
+        name: string;
+        runtime: Runtime;
+        execute?: string[];
+        events?: string[];
+        schedule?: string;
+        timeout?: number;
+        enabled?: boolean;
+        logging?: boolean;
+        entrypoint?: string;
+        commands?: string;
+        scopes?: ProjectKeyScopes[];
+        installationId?: string;
+        providerRepositoryId?: string;
+        providerBranch?: string;
+        providerSilentMode?: boolean;
+        providerRootDirectory?: string;
+        providerBranches?: string[];
+        providerPaths?: string[];
+        buildSpecification?: string;
+        runtimeSpecification?: string;
+        deploymentRetention?: number;
+    }): Promise<Models.Function>;
     /**
      * Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
      *
@@ -143,15 +182,135 @@ export class Functions {
      * @returns {Promise<Models.Function>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    create(functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Function>;
     create(
-        paramsOrFirst: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
-        ...rest: [(string)?, (Runtime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (ProjectKeyScopes[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (number)?]    
+        functionId: string,
+        name: string,
+        runtime: Runtime,
+        execute?: string[],
+        events?: string[],
+        schedule?: string,
+        timeout?: number,
+        enabled?: boolean,
+        logging?: boolean,
+        entrypoint?: string,
+        commands?: string,
+        scopes?: ProjectKeyScopes[],
+        installationId?: string,
+        providerRepositoryId?: string,
+        providerBranch?: string,
+        providerSilentMode?: boolean,
+        providerRootDirectory?: string,
+        providerBranches?: string[],
+        providerPaths?: string[],
+        buildSpecification?: string,
+        runtimeSpecification?: string,
+        deploymentRetention?: number,
+    ): Promise<Models.Function>;
+    create(
+        paramsOrFirst:
+            | {
+                  functionId: string;
+                  name: string;
+                  runtime: Runtime;
+                  execute?: string[];
+                  events?: string[];
+                  schedule?: string;
+                  timeout?: number;
+                  enabled?: boolean;
+                  logging?: boolean;
+                  entrypoint?: string;
+                  commands?: string;
+                  scopes?: ProjectKeyScopes[];
+                  installationId?: string;
+                  providerRepositoryId?: string;
+                  providerBranch?: string;
+                  providerSilentMode?: boolean;
+                  providerRootDirectory?: string;
+                  providerBranches?: string[];
+                  providerPaths?: string[];
+                  buildSpecification?: string;
+                  runtimeSpecification?: string;
+                  deploymentRetention?: number;
+              }
+            | string,
+        ...rest: [
+            string?,
+            Runtime?,
+            string[]?,
+            string[]?,
+            string?,
+            number?,
+            boolean?,
+            boolean?,
+            string?,
+            string?,
+            ProjectKeyScopes[]?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+            string?,
+            string[]?,
+            string[]?,
+            string?,
+            string?,
+            number?,
+        ]
     ): Promise<Models.Function> {
-        let params: { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+        let params: {
+            functionId: string;
+            name: string;
+            runtime: Runtime;
+            execute?: string[];
+            events?: string[];
+            schedule?: string;
+            timeout?: number;
+            enabled?: boolean;
+            logging?: boolean;
+            entrypoint?: string;
+            commands?: string;
+            scopes?: ProjectKeyScopes[];
+            installationId?: string;
+            providerRepositoryId?: string;
+            providerBranch?: string;
+            providerSilentMode?: boolean;
+            providerRootDirectory?: string;
+            providerBranches?: string[];
+            providerPaths?: string[];
+            buildSpecification?: string;
+            runtimeSpecification?: string;
+            deploymentRetention?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                name: string;
+                runtime: Runtime;
+                execute?: string[];
+                events?: string[];
+                schedule?: string;
+                timeout?: number;
+                enabled?: boolean;
+                logging?: boolean;
+                entrypoint?: string;
+                commands?: string;
+                scopes?: ProjectKeyScopes[];
+                installationId?: string;
+                providerRepositoryId?: string;
+                providerBranch?: string;
+                providerSilentMode?: boolean;
+                providerRootDirectory?: string;
+                providerBranches?: string[];
+                providerPaths?: string[];
+                buildSpecification?: string;
+                runtimeSpecification?: string;
+                deploymentRetention?: number;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
@@ -175,10 +334,10 @@ export class Functions {
                 providerPaths: rest[17] as string[],
                 buildSpecification: rest[18] as string,
                 runtimeSpecification: rest[19] as string,
-                deploymentRetention: rest[20] as number            
+                deploymentRetention: rest[20] as number,
             };
         }
-        
+
         const functionId = params.functionId;
         const name = params.name;
         const runtime = params.runtime;
@@ -203,15 +362,18 @@ export class Functions {
         const deploymentRetention = params.deploymentRetention;
 
         if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         if (typeof runtime === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "runtime"');
+            throw new AppwriteException(
+                'Missing required parameter: "runtime"',
+            );
         }
-
         const apiPath = '/functions';
         const payload: Payload = {};
         if (typeof functionId !== 'undefined') {
@@ -285,15 +447,10 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -303,56 +460,56 @@ export class Functions {
      * @returns {Promise<Models.RuntimeList>}
      */
     listRuntimes(): Promise<Models.RuntimeList> {
-
         const apiPath = '/functions/runtimes';
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * List allowed function specifications for this instance.
      *
-     * @param {string} params.type - Specification type to list. Can be one of: runtimes, builds.
+     * @param {string} params.type - Specification type to list. Can be one of: runtimes, builds. Defaults to runtimes.
      * @throws {AppwriteException}
      * @returns {Promise<Models.SpecificationList>}
      */
-    listSpecifications(params?: { type?: string }): Promise<Models.SpecificationList>;
+    listSpecifications(params?: {
+        type?: string;
+    }): Promise<Models.SpecificationList>;
     /**
      * List allowed function specifications for this instance.
      *
-     * @param {string} type - Specification type to list. Can be one of: runtimes, builds.
+     * @param {string} type - Specification type to list. Can be one of: runtimes, builds. Defaults to runtimes.
      * @throws {AppwriteException}
      * @returns {Promise<Models.SpecificationList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     listSpecifications(type?: string): Promise<Models.SpecificationList>;
     listSpecifications(
-        paramsOrFirst?: { type?: string } | string    
+        paramsOrFirst?: { type?: string } | string,
     ): Promise<Models.SpecificationList> {
         let params: { type?: string };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            typeof paramsOrFirst === 'undefined' ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
             params = (paramsOrFirst || {}) as { type?: string };
         } else {
             params = {
-                type: paramsOrFirst as string            
+                type: paramsOrFirst as string,
             };
         }
-        
-        const type = params.type;
 
+        const type = params.type;
 
         const apiPath = '/functions/specifications';
         const payload: Payload = {};
@@ -363,15 +520,10 @@ export class Functions {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -385,7 +537,13 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateFunctionList>}
      */
-    listTemplates(params?: { runtimes?: Runtime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean }): Promise<Models.TemplateFunctionList>;
+    listTemplates(params?: {
+        runtimes?: Runtime[];
+        useCases?: FunctionTemplateUseCase[];
+        limit?: number;
+        offset?: number;
+        total?: boolean;
+    }): Promise<Models.TemplateFunctionList>;
     /**
      * List available function templates. You can use template details in [createFunction](/docs/references/cloud/server-nodejs/functions#create) method.
      *
@@ -398,31 +556,66 @@ export class Functions {
      * @returns {Promise<Models.TemplateFunctionList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listTemplates(runtimes?: Runtime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean): Promise<Models.TemplateFunctionList>;
     listTemplates(
-        paramsOrFirst?: { runtimes?: Runtime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean } | Runtime[],
-        ...rest: [(FunctionTemplateUseCase[])?, (number)?, (number)?, (boolean)?]    
+        runtimes?: Runtime[],
+        useCases?: FunctionTemplateUseCase[],
+        limit?: number,
+        offset?: number,
+        total?: boolean,
+    ): Promise<Models.TemplateFunctionList>;
+    listTemplates(
+        paramsOrFirst?:
+            | {
+                  runtimes?: Runtime[];
+                  useCases?: FunctionTemplateUseCase[];
+                  limit?: number;
+                  offset?: number;
+                  total?: boolean;
+              }
+            | Runtime[],
+        ...rest: [FunctionTemplateUseCase[]?, number?, number?, boolean?]
     ): Promise<Models.TemplateFunctionList> {
-        let params: { runtimes?: Runtime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('runtimes' in paramsOrFirst || 'useCases' in paramsOrFirst || 'limit' in paramsOrFirst || 'offset' in paramsOrFirst || 'total' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { runtimes?: Runtime[], useCases?: FunctionTemplateUseCase[], limit?: number, offset?: number, total?: boolean };
+        let params: {
+            runtimes?: Runtime[];
+            useCases?: FunctionTemplateUseCase[];
+            limit?: number;
+            offset?: number;
+            total?: boolean;
+        };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst) &&
+                ('runtimes' in paramsOrFirst ||
+                    'useCases' in paramsOrFirst ||
+                    'limit' in paramsOrFirst ||
+                    'offset' in paramsOrFirst ||
+                    'total' in paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                runtimes?: Runtime[];
+                useCases?: FunctionTemplateUseCase[];
+                limit?: number;
+                offset?: number;
+                total?: boolean;
+            };
         } else {
             params = {
                 runtimes: paramsOrFirst as Runtime[],
                 useCases: rest[0] as FunctionTemplateUseCase[],
                 limit: rest[1] as number,
                 offset: rest[2] as number,
-                total: rest[3] as boolean            
+                total: rest[3] as boolean,
             };
         }
-        
+
         const runtimes = params.runtimes;
         const useCases = params.useCases;
         const limit = params.limit;
         const offset = params.offset;
         const total = params.total;
-
 
         const apiPath = '/functions/templates';
         const payload: Payload = {};
@@ -445,15 +638,10 @@ export class Functions {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -463,7 +651,9 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateFunction>}
      */
-    getTemplate(params: { templateId: string }): Promise<Models.TemplateFunction>;
+    getTemplate(params: {
+        templateId: string;
+    }): Promise<Models.TemplateFunction>;
     /**
      * Get a function template using ID. You can use template details in [createFunction](/docs/references/cloud/server-nodejs/functions#create) method.
      *
@@ -474,39 +664,42 @@ export class Functions {
      */
     getTemplate(templateId: string): Promise<Models.TemplateFunction>;
     getTemplate(
-        paramsOrFirst: { templateId: string } | string    
+        paramsOrFirst: { templateId: string } | string,
     ): Promise<Models.TemplateFunction> {
         let params: { templateId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { templateId: string };
         } else {
             params = {
-                templateId: paramsOrFirst as string            
+                templateId: paramsOrFirst as string,
             };
         }
-        
+
         const templateId = params.templateId;
 
-        if (typeof templateId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "templateId"');
+        if (typeof templateId === 'undefined' || templateId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "templateId"',
+            );
         }
-
-        const apiPath = '/functions/templates/{templateId}'.replace('{templateId}', encodeURIComponent(String(templateId)));
+        const apiPath = '/functions/templates/{templateId}'.replace(
+            '{templateId}',
+            encodeURIComponent(String(templateId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -527,39 +720,42 @@ export class Functions {
      */
     get(functionId: string): Promise<Models.Function>;
     get(
-        paramsOrFirst: { functionId: string } | string    
+        paramsOrFirst: { functionId: string } | string,
     ): Promise<Models.Function> {
         let params: { functionId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { functionId: string };
         } else {
             params = {
-                functionId: paramsOrFirst as string            
+                functionId: paramsOrFirst as string,
             };
         }
-        
+
         const functionId = params.functionId;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}'.replace('{functionId}', encodeURIComponent(String(functionId)));
+        const apiPath = '/functions/{functionId}'.replace(
+            '{functionId}',
+            encodeURIComponent(String(functionId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -590,7 +786,30 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    update(params: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number }): Promise<Models.Function>;
+    update(params: {
+        functionId: string;
+        name: string;
+        runtime?: Runtime;
+        execute?: string[];
+        events?: string[];
+        schedule?: string;
+        timeout?: number;
+        enabled?: boolean;
+        logging?: boolean;
+        entrypoint?: string;
+        commands?: string;
+        scopes?: ProjectKeyScopes[];
+        installationId?: string;
+        providerRepositoryId?: string;
+        providerBranch?: string;
+        providerSilentMode?: boolean;
+        providerRootDirectory?: string;
+        providerBranches?: string[];
+        providerPaths?: string[];
+        buildSpecification?: string;
+        runtimeSpecification?: string;
+        deploymentRetention?: number;
+    }): Promise<Models.Function>;
     /**
      * Update function by its unique ID.
      *
@@ -620,15 +839,135 @@ export class Functions {
      * @returns {Promise<Models.Function>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    update(functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number): Promise<Models.Function>;
     update(
-        paramsOrFirst: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number } | string,
-        ...rest: [(string)?, (Runtime)?, (string[])?, (string[])?, (string)?, (number)?, (boolean)?, (boolean)?, (string)?, (string)?, (ProjectKeyScopes[])?, (string)?, (string)?, (string)?, (boolean)?, (string)?, (string[])?, (string[])?, (string)?, (string)?, (number)?]    
+        functionId: string,
+        name: string,
+        runtime?: Runtime,
+        execute?: string[],
+        events?: string[],
+        schedule?: string,
+        timeout?: number,
+        enabled?: boolean,
+        logging?: boolean,
+        entrypoint?: string,
+        commands?: string,
+        scopes?: ProjectKeyScopes[],
+        installationId?: string,
+        providerRepositoryId?: string,
+        providerBranch?: string,
+        providerSilentMode?: boolean,
+        providerRootDirectory?: string,
+        providerBranches?: string[],
+        providerPaths?: string[],
+        buildSpecification?: string,
+        runtimeSpecification?: string,
+        deploymentRetention?: number,
+    ): Promise<Models.Function>;
+    update(
+        paramsOrFirst:
+            | {
+                  functionId: string;
+                  name: string;
+                  runtime?: Runtime;
+                  execute?: string[];
+                  events?: string[];
+                  schedule?: string;
+                  timeout?: number;
+                  enabled?: boolean;
+                  logging?: boolean;
+                  entrypoint?: string;
+                  commands?: string;
+                  scopes?: ProjectKeyScopes[];
+                  installationId?: string;
+                  providerRepositoryId?: string;
+                  providerBranch?: string;
+                  providerSilentMode?: boolean;
+                  providerRootDirectory?: string;
+                  providerBranches?: string[];
+                  providerPaths?: string[];
+                  buildSpecification?: string;
+                  runtimeSpecification?: string;
+                  deploymentRetention?: number;
+              }
+            | string,
+        ...rest: [
+            string?,
+            Runtime?,
+            string[]?,
+            string[]?,
+            string?,
+            number?,
+            boolean?,
+            boolean?,
+            string?,
+            string?,
+            ProjectKeyScopes[]?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+            string?,
+            string[]?,
+            string[]?,
+            string?,
+            string?,
+            number?,
+        ]
     ): Promise<Models.Function> {
-        let params: { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, name: string, runtime?: Runtime, execute?: string[], events?: string[], schedule?: string, timeout?: number, enabled?: boolean, logging?: boolean, entrypoint?: string, commands?: string, scopes?: ProjectKeyScopes[], installationId?: string, providerRepositoryId?: string, providerBranch?: string, providerSilentMode?: boolean, providerRootDirectory?: string, providerBranches?: string[], providerPaths?: string[], buildSpecification?: string, runtimeSpecification?: string, deploymentRetention?: number };
+        let params: {
+            functionId: string;
+            name: string;
+            runtime?: Runtime;
+            execute?: string[];
+            events?: string[];
+            schedule?: string;
+            timeout?: number;
+            enabled?: boolean;
+            logging?: boolean;
+            entrypoint?: string;
+            commands?: string;
+            scopes?: ProjectKeyScopes[];
+            installationId?: string;
+            providerRepositoryId?: string;
+            providerBranch?: string;
+            providerSilentMode?: boolean;
+            providerRootDirectory?: string;
+            providerBranches?: string[];
+            providerPaths?: string[];
+            buildSpecification?: string;
+            runtimeSpecification?: string;
+            deploymentRetention?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                name: string;
+                runtime?: Runtime;
+                execute?: string[];
+                events?: string[];
+                schedule?: string;
+                timeout?: number;
+                enabled?: boolean;
+                logging?: boolean;
+                entrypoint?: string;
+                commands?: string;
+                scopes?: ProjectKeyScopes[];
+                installationId?: string;
+                providerRepositoryId?: string;
+                providerBranch?: string;
+                providerSilentMode?: boolean;
+                providerRootDirectory?: string;
+                providerBranches?: string[];
+                providerPaths?: string[];
+                buildSpecification?: string;
+                runtimeSpecification?: string;
+                deploymentRetention?: number;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
@@ -652,10 +991,10 @@ export class Functions {
                 providerPaths: rest[17] as string[],
                 buildSpecification: rest[18] as string,
                 runtimeSpecification: rest[19] as string,
-                deploymentRetention: rest[20] as number            
+                deploymentRetention: rest[20] as number,
             };
         }
-        
+
         const functionId = params.functionId;
         const name = params.name;
         const runtime = params.runtime;
@@ -679,14 +1018,18 @@ export class Functions {
         const runtimeSpecification = params.runtimeSpecification;
         const deploymentRetention = params.deploymentRetention;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
-        const apiPath = '/functions/{functionId}'.replace('{functionId}', encodeURIComponent(String(functionId)));
+        const apiPath = '/functions/{functionId}'.replace(
+            '{functionId}',
+            encodeURIComponent(String(functionId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -756,15 +1099,10 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
@@ -784,40 +1122,42 @@ export class Functions {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     delete(functionId: string): Promise<{}>;
-    delete(
-        paramsOrFirst: { functionId: string } | string    
-    ): Promise<{}> {
+    delete(paramsOrFirst: { functionId: string } | string): Promise<{}> {
         let params: { functionId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { functionId: string };
         } else {
             params = {
-                functionId: paramsOrFirst as string            
+                functionId: paramsOrFirst as string,
             };
         }
-        
+
         const functionId = params.functionId;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}'.replace('{functionId}', encodeURIComponent(String(functionId)));
+        const apiPath = '/functions/{functionId}'.replace(
+            '{functionId}',
+            encodeURIComponent(String(functionId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -828,7 +1168,10 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
-    updateFunctionDeployment(params: { functionId: string, deploymentId: string }): Promise<Models.Function>;
+    updateFunctionDeployment(params: {
+        functionId: string;
+        deploymentId: string;
+    }): Promise<Models.Function>;
     /**
      * Update the function active deployment. Use this endpoint to switch the code deployment that should be used when visitor opens your function.
      *
@@ -838,33 +1181,49 @@ export class Functions {
      * @returns {Promise<Models.Function>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateFunctionDeployment(functionId: string, deploymentId: string): Promise<Models.Function>;
     updateFunctionDeployment(
-        paramsOrFirst: { functionId: string, deploymentId: string } | string,
-        ...rest: [(string)?]    
+        functionId: string,
+        deploymentId: string,
+    ): Promise<Models.Function>;
+    updateFunctionDeployment(
+        paramsOrFirst: { functionId: string; deploymentId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Function> {
-        let params: { functionId: string, deploymentId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, deploymentId: string };
+        let params: { functionId: string; deploymentId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                deploymentId: string;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
-                deploymentId: rest[0] as string            
+                deploymentId: rest[0] as string,
             };
         }
-        
+
         const functionId = params.functionId;
         const deploymentId = params.deploymentId;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof deploymentId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "deploymentId"');
+            throw new AppwriteException(
+                'Missing required parameter: "deploymentId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/deployment'.replace('{functionId}', encodeURIComponent(String(functionId)));
+        const apiPath = '/functions/{functionId}/deployment'.replace(
+            '{functionId}',
+            encodeURIComponent(String(functionId)),
+        );
         const payload: Payload = {};
         if (typeof deploymentId !== 'undefined') {
             payload['deploymentId'] = deploymentId;
@@ -874,15 +1233,10 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -895,7 +1249,12 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DeploymentList>}
      */
-    listDeployments(params: { functionId: string, queries?: string[], search?: string, total?: boolean }): Promise<Models.DeploymentList>;
+    listDeployments(params: {
+        functionId: string;
+        queries?: string[];
+        search?: string;
+        total?: boolean;
+    }): Promise<Models.DeploymentList>;
     /**
      * Get a list of all the function's code deployments. You can use the query params to filter your results.
      *
@@ -907,34 +1266,64 @@ export class Functions {
      * @returns {Promise<Models.DeploymentList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listDeployments(functionId: string, queries?: string[], search?: string, total?: boolean): Promise<Models.DeploymentList>;
     listDeployments(
-        paramsOrFirst: { functionId: string, queries?: string[], search?: string, total?: boolean } | string,
-        ...rest: [(string[])?, (string)?, (boolean)?]    
+        functionId: string,
+        queries?: string[],
+        search?: string,
+        total?: boolean,
+    ): Promise<Models.DeploymentList>;
+    listDeployments(
+        paramsOrFirst:
+            | {
+                  functionId: string;
+                  queries?: string[];
+                  search?: string;
+                  total?: boolean;
+              }
+            | string,
+        ...rest: [string[]?, string?, boolean?]
     ): Promise<Models.DeploymentList> {
-        let params: { functionId: string, queries?: string[], search?: string, total?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, queries?: string[], search?: string, total?: boolean };
+        let params: {
+            functionId: string;
+            queries?: string[];
+            search?: string;
+            total?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                queries?: string[];
+                search?: string;
+                total?: boolean;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 queries: rest[0] as string[],
                 search: rest[1] as string,
-                total: rest[2] as boolean            
+                total: rest[2] as boolean,
             };
         }
-        
+
         const functionId = params.functionId;
         const queries = params.queries;
         const search = params.search;
         const total = params.total;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/deployments'.replace('{functionId}', encodeURIComponent(String(functionId)));
+        const apiPath = '/functions/{functionId}/deployments'.replace(
+            '{functionId}',
+            encodeURIComponent(String(functionId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -949,22 +1338,17 @@ export class Functions {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Create a new function code deployment. Use this endpoint to upload a new version of your code function. To execute your newly uploaded code, you'll need to update the function's deployment to use your new deployment UID.
-     * 
+     *
      * This endpoint accepts a tar.gz file compressed with your code. Make sure to include any dependencies your code has within the compressed file. You can learn more about code packaging in the [Appwrite Cloud Functions tutorial](https://appwrite.io/docs/functions).
-     * 
+     *
      * Use the "command" param to set the entrypoint used to execute your code.
      *
      * @param {string} params.functionId - Function ID.
@@ -975,12 +1359,19 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    createDeployment(params: { functionId: string, code: File, activate: boolean, entrypoint?: string, commands?: string, onProgress?: (progress: UploadProgress) => void }): Promise<Models.Deployment>;
+    createDeployment(params: {
+        functionId: string;
+        code: File;
+        activate: boolean;
+        entrypoint?: string;
+        commands?: string;
+        onProgress?: (progress: UploadProgress) => void;
+    }): Promise<Models.Deployment>;
     /**
      * Create a new function code deployment. Use this endpoint to upload a new version of your code function. To execute your newly uploaded code, you'll need to update the function's deployment to use your new deployment UID.
-     * 
+     *
      * This endpoint accepts a tar.gz file compressed with your code. Make sure to include any dependencies your code has within the compressed file. You can learn more about code packaging in the [Appwrite Cloud Functions tutorial](https://appwrite.io/docs/functions).
-     * 
+     *
      * Use the "command" param to set the entrypoint used to execute your code.
      *
      * @param {string} functionId - Function ID.
@@ -992,45 +1383,91 @@ export class Functions {
      * @returns {Promise<Models.Deployment>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createDeployment(functionId: string, code: File, activate: boolean, entrypoint?: string, commands?: string, onProgress?: (progress: UploadProgress) => void): Promise<Models.Deployment>;
     createDeployment(
-        paramsOrFirst: { functionId: string, code: File, activate: boolean, entrypoint?: string, commands?: string, onProgress?: (progress: UploadProgress) => void } | string,
-        ...rest: [(File)?, (boolean)?, (string)?, (string)?,((progress: UploadProgress) => void)?]    
+        functionId: string,
+        code: File,
+        activate: boolean,
+        entrypoint?: string,
+        commands?: string,
+        onProgress?: (progress: UploadProgress) => void,
+    ): Promise<Models.Deployment>;
+    createDeployment(
+        paramsOrFirst:
+            | {
+                  functionId: string;
+                  code: File;
+                  activate: boolean;
+                  entrypoint?: string;
+                  commands?: string;
+                  onProgress?: (progress: UploadProgress) => void;
+              }
+            | string,
+        ...rest: [
+            File?,
+            boolean?,
+            string?,
+            string?,
+            ((progress: UploadProgress) => void)?,
+        ]
     ): Promise<Models.Deployment> {
-        let params: { functionId: string, code: File, activate: boolean, entrypoint?: string, commands?: string };
-        let onProgress: ((progress: UploadProgress) => void);
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, code: File, activate: boolean, entrypoint?: string, commands?: string };
-            onProgress = paramsOrFirst?.onProgress as ((progress: UploadProgress) => void);
+        let params: {
+            functionId: string;
+            code: File;
+            activate: boolean;
+            entrypoint?: string;
+            commands?: string;
+        };
+        let onProgress: (progress: UploadProgress) => void;
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                code: File;
+                activate: boolean;
+                entrypoint?: string;
+                commands?: string;
+            };
+            onProgress = paramsOrFirst?.onProgress as (
+                progress: UploadProgress,
+            ) => void;
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 code: rest[0] as File,
                 activate: rest[1] as boolean,
                 entrypoint: rest[2] as string,
-                commands: rest[3] as string            
+                commands: rest[3] as string,
             };
-            onProgress = rest[4] as ((progress: UploadProgress) => void);
+            onProgress = rest[4] as (progress: UploadProgress) => void;
         }
-        
+
         const functionId = params.functionId;
         const code = params.code;
         const activate = params.activate;
         const entrypoint = params.entrypoint;
         const commands = params.commands;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof code === 'undefined') {
             throw new AppwriteException('Missing required parameter: "code"');
         }
         if (typeof activate === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "activate"');
+            throw new AppwriteException(
+                'Missing required parameter: "activate"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/deployments'.replace('{functionId}', encodeURIComponent(String(functionId)));
+        const apiPath = '/functions/{functionId}/deployments'.replace(
+            '{functionId}',
+            encodeURIComponent(String(functionId)),
+        );
         const payload: Payload = {};
         if (typeof entrypoint !== 'undefined') {
             payload['entrypoint'] = entrypoint;
@@ -1049,15 +1486,15 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'multipart/form-data',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
         return this.client.chunkedUpload(
             'post',
             uri,
             apiHeaders,
             payload,
-            onProgress
+            onProgress,
         );
     }
 
@@ -1070,7 +1507,11 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    createDuplicateDeployment(params: { functionId: string, deploymentId: string, buildId?: string }): Promise<Models.Deployment>;
+    createDuplicateDeployment(params: {
+        functionId: string;
+        deploymentId: string;
+        buildId?: string;
+    }): Promise<Models.Deployment>;
     /**
      * Create a new build for an existing function deployment. This endpoint allows you to rebuild a deployment with the updated function configuration, including its entrypoint and build commands if they have been modified. The build process will be queued and executed asynchronously. The original deployment's code will be preserved and used for the new build.
      *
@@ -1081,35 +1522,59 @@ export class Functions {
      * @returns {Promise<Models.Deployment>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createDuplicateDeployment(functionId: string, deploymentId: string, buildId?: string): Promise<Models.Deployment>;
     createDuplicateDeployment(
-        paramsOrFirst: { functionId: string, deploymentId: string, buildId?: string } | string,
-        ...rest: [(string)?, (string)?]    
+        functionId: string,
+        deploymentId: string,
+        buildId?: string,
+    ): Promise<Models.Deployment>;
+    createDuplicateDeployment(
+        paramsOrFirst:
+            | { functionId: string; deploymentId: string; buildId?: string }
+            | string,
+        ...rest: [string?, string?]
     ): Promise<Models.Deployment> {
-        let params: { functionId: string, deploymentId: string, buildId?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, deploymentId: string, buildId?: string };
+        let params: {
+            functionId: string;
+            deploymentId: string;
+            buildId?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                deploymentId: string;
+                buildId?: string;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 deploymentId: rest[0] as string,
-                buildId: rest[1] as string            
+                buildId: rest[1] as string,
             };
         }
-        
+
         const functionId = params.functionId;
         const deploymentId = params.deploymentId;
         const buildId = params.buildId;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof deploymentId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "deploymentId"');
+            throw new AppwriteException(
+                'Missing required parameter: "deploymentId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/deployments/duplicate'.replace('{functionId}', encodeURIComponent(String(functionId)));
+        const apiPath = '/functions/{functionId}/deployments/duplicate'.replace(
+            '{functionId}',
+            encodeURIComponent(String(functionId)),
+        );
         const payload: Payload = {};
         if (typeof deploymentId !== 'undefined') {
             payload['deploymentId'] = deploymentId;
@@ -1122,20 +1587,15 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Create a deployment based on a template.
-     * 
+     *
      * Use this endpoint with combination of [listTemplates](https://appwrite.io/docs/products/functions/templates) to find the template details.
      *
      * @param {string} params.functionId - Function ID.
@@ -1148,10 +1608,18 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    createTemplateDeployment(params: { functionId: string, repository: string, owner: string, rootDirectory: string, type: TemplateReferenceType, reference: string, activate?: boolean }): Promise<Models.Deployment>;
+    createTemplateDeployment(params: {
+        functionId: string;
+        repository: string;
+        owner: string;
+        rootDirectory: string;
+        type: TemplateReferenceType;
+        reference: string;
+        activate?: boolean;
+    }): Promise<Models.Deployment>;
     /**
      * Create a deployment based on a template.
-     * 
+     *
      * Use this endpoint with combination of [listTemplates](https://appwrite.io/docs/products/functions/templates) to find the template details.
      *
      * @param {string} functionId - Function ID.
@@ -1165,15 +1633,60 @@ export class Functions {
      * @returns {Promise<Models.Deployment>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createTemplateDeployment(functionId: string, repository: string, owner: string, rootDirectory: string, type: TemplateReferenceType, reference: string, activate?: boolean): Promise<Models.Deployment>;
     createTemplateDeployment(
-        paramsOrFirst: { functionId: string, repository: string, owner: string, rootDirectory: string, type: TemplateReferenceType, reference: string, activate?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (TemplateReferenceType)?, (string)?, (boolean)?]    
+        functionId: string,
+        repository: string,
+        owner: string,
+        rootDirectory: string,
+        type: TemplateReferenceType,
+        reference: string,
+        activate?: boolean,
+    ): Promise<Models.Deployment>;
+    createTemplateDeployment(
+        paramsOrFirst:
+            | {
+                  functionId: string;
+                  repository: string;
+                  owner: string;
+                  rootDirectory: string;
+                  type: TemplateReferenceType;
+                  reference: string;
+                  activate?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            TemplateReferenceType?,
+            string?,
+            boolean?,
+        ]
     ): Promise<Models.Deployment> {
-        let params: { functionId: string, repository: string, owner: string, rootDirectory: string, type: TemplateReferenceType, reference: string, activate?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, repository: string, owner: string, rootDirectory: string, type: TemplateReferenceType, reference: string, activate?: boolean };
+        let params: {
+            functionId: string;
+            repository: string;
+            owner: string;
+            rootDirectory: string;
+            type: TemplateReferenceType;
+            reference: string;
+            activate?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                repository: string;
+                owner: string;
+                rootDirectory: string;
+                type: TemplateReferenceType;
+                reference: string;
+                activate?: boolean;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
@@ -1182,10 +1695,10 @@ export class Functions {
                 rootDirectory: rest[2] as string,
                 type: rest[3] as TemplateReferenceType,
                 reference: rest[4] as string,
-                activate: rest[5] as boolean            
+                activate: rest[5] as boolean,
             };
         }
-        
+
         const functionId = params.functionId;
         const repository = params.repository;
         const owner = params.owner;
@@ -1194,26 +1707,36 @@ export class Functions {
         const reference = params.reference;
         const activate = params.activate;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof repository === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "repository"');
+            throw new AppwriteException(
+                'Missing required parameter: "repository"',
+            );
         }
         if (typeof owner === 'undefined') {
             throw new AppwriteException('Missing required parameter: "owner"');
         }
         if (typeof rootDirectory === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "rootDirectory"');
+            throw new AppwriteException(
+                'Missing required parameter: "rootDirectory"',
+            );
         }
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
         if (typeof reference === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "reference"');
+            throw new AppwriteException(
+                'Missing required parameter: "reference"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/deployments/template'.replace('{functionId}', encodeURIComponent(String(functionId)));
+        const apiPath = '/functions/{functionId}/deployments/template'.replace(
+            '{functionId}',
+            encodeURIComponent(String(functionId)),
+        );
         const payload: Payload = {};
         if (typeof repository !== 'undefined') {
             payload['repository'] = repository;
@@ -1238,20 +1761,15 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Create a deployment when a function is connected to VCS.
-     * 
+     *
      * This endpoint lets you create deployment from a branch, commit, or a tag.
      *
      * @param {string} params.functionId - Function ID.
@@ -1261,10 +1779,15 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    createVcsDeployment(params: { functionId: string, type: VCSReferenceType, reference: string, activate?: boolean }): Promise<Models.Deployment>;
+    createVcsDeployment(params: {
+        functionId: string;
+        type: VCSReferenceType;
+        reference: string;
+        activate?: boolean;
+    }): Promise<Models.Deployment>;
     /**
      * Create a deployment when a function is connected to VCS.
-     * 
+     *
      * This endpoint lets you create deployment from a branch, commit, or a tag.
      *
      * @param {string} functionId - Function ID.
@@ -1275,40 +1798,72 @@ export class Functions {
      * @returns {Promise<Models.Deployment>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createVcsDeployment(functionId: string, type: VCSReferenceType, reference: string, activate?: boolean): Promise<Models.Deployment>;
     createVcsDeployment(
-        paramsOrFirst: { functionId: string, type: VCSReferenceType, reference: string, activate?: boolean } | string,
-        ...rest: [(VCSReferenceType)?, (string)?, (boolean)?]    
+        functionId: string,
+        type: VCSReferenceType,
+        reference: string,
+        activate?: boolean,
+    ): Promise<Models.Deployment>;
+    createVcsDeployment(
+        paramsOrFirst:
+            | {
+                  functionId: string;
+                  type: VCSReferenceType;
+                  reference: string;
+                  activate?: boolean;
+              }
+            | string,
+        ...rest: [VCSReferenceType?, string?, boolean?]
     ): Promise<Models.Deployment> {
-        let params: { functionId: string, type: VCSReferenceType, reference: string, activate?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, type: VCSReferenceType, reference: string, activate?: boolean };
+        let params: {
+            functionId: string;
+            type: VCSReferenceType;
+            reference: string;
+            activate?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                type: VCSReferenceType;
+                reference: string;
+                activate?: boolean;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 type: rest[0] as VCSReferenceType,
                 reference: rest[1] as string,
-                activate: rest[2] as boolean            
+                activate: rest[2] as boolean,
             };
         }
-        
+
         const functionId = params.functionId;
         const type = params.type;
         const reference = params.reference;
         const activate = params.activate;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
         if (typeof reference === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "reference"');
+            throw new AppwriteException(
+                'Missing required parameter: "reference"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/deployments/vcs'.replace('{functionId}', encodeURIComponent(String(functionId)));
+        const apiPath = '/functions/{functionId}/deployments/vcs'.replace(
+            '{functionId}',
+            encodeURIComponent(String(functionId)),
+        );
         const payload: Payload = {};
         if (typeof type !== 'undefined') {
             payload['type'] = type;
@@ -1324,15 +1879,10 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1343,7 +1893,10 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    getDeployment(params: { functionId: string, deploymentId: string }): Promise<Models.Deployment>;
+    getDeployment(params: {
+        functionId: string;
+        deploymentId: string;
+    }): Promise<Models.Deployment>;
     /**
      * Get a function deployment by its unique ID.
      *
@@ -1353,47 +1906,60 @@ export class Functions {
      * @returns {Promise<Models.Deployment>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getDeployment(functionId: string, deploymentId: string): Promise<Models.Deployment>;
     getDeployment(
-        paramsOrFirst: { functionId: string, deploymentId: string } | string,
-        ...rest: [(string)?]    
+        functionId: string,
+        deploymentId: string,
+    ): Promise<Models.Deployment>;
+    getDeployment(
+        paramsOrFirst: { functionId: string; deploymentId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Deployment> {
-        let params: { functionId: string, deploymentId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, deploymentId: string };
+        let params: { functionId: string; deploymentId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                deploymentId: string;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
-                deploymentId: rest[0] as string            
+                deploymentId: rest[0] as string,
             };
         }
-        
+
         const functionId = params.functionId;
         const deploymentId = params.deploymentId;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        if (typeof deploymentId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "deploymentId"');
+        if (typeof deploymentId === 'undefined' || deploymentId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "deploymentId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{deploymentId}', encodeURIComponent(String(deploymentId)));
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'
+            .replace('{functionId}', encodeURIComponent(String(functionId)))
+            .replace(
+                '{deploymentId}',
+                encodeURIComponent(String(deploymentId)),
+            );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1404,7 +1970,10 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteDeployment(params: { functionId: string, deploymentId: string }): Promise<{}>;
+    deleteDeployment(params: {
+        functionId: string;
+        deploymentId: string;
+    }): Promise<{}>;
     /**
      * Delete a code deployment by its unique ID.
      *
@@ -1416,45 +1985,56 @@ export class Functions {
      */
     deleteDeployment(functionId: string, deploymentId: string): Promise<{}>;
     deleteDeployment(
-        paramsOrFirst: { functionId: string, deploymentId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { functionId: string; deploymentId: string } | string,
+        ...rest: [string?]
     ): Promise<{}> {
-        let params: { functionId: string, deploymentId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, deploymentId: string };
+        let params: { functionId: string; deploymentId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                deploymentId: string;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
-                deploymentId: rest[0] as string            
+                deploymentId: rest[0] as string,
             };
         }
-        
+
         const functionId = params.functionId;
         const deploymentId = params.deploymentId;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        if (typeof deploymentId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "deploymentId"');
+        if (typeof deploymentId === 'undefined' || deploymentId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "deploymentId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{deploymentId}', encodeURIComponent(String(deploymentId)));
+        const apiPath = '/functions/{functionId}/deployments/{deploymentId}'
+            .replace('{functionId}', encodeURIComponent(String(functionId)))
+            .replace(
+                '{deploymentId}',
+                encodeURIComponent(String(deploymentId)),
+            );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -1467,7 +2047,12 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {string}
      */
-    getDeploymentDownload(params: { functionId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string }): string;
+    getDeploymentDownload(params: {
+        functionId: string;
+        deploymentId: string;
+        type?: DeploymentDownloadType;
+        token?: string;
+    }): string;
     /**
      * Get a function deployment content by its unique ID. The endpoint response return with a 'Content-Disposition: attachment' header that tells the browser to start downloading the file to user downloads directory.
      *
@@ -1479,37 +2064,72 @@ export class Functions {
      * @returns {string}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getDeploymentDownload(functionId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string): string;
     getDeploymentDownload(
-        paramsOrFirst: { functionId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string } | string,
-        ...rest: [(string)?, (DeploymentDownloadType)?, (string)?]    
+        functionId: string,
+        deploymentId: string,
+        type?: DeploymentDownloadType,
+        token?: string,
+    ): string;
+    getDeploymentDownload(
+        paramsOrFirst:
+            | {
+                  functionId: string;
+                  deploymentId: string;
+                  type?: DeploymentDownloadType;
+                  token?: string;
+              }
+            | string,
+        ...rest: [string?, DeploymentDownloadType?, string?]
     ): string {
-        let params: { functionId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, deploymentId: string, type?: DeploymentDownloadType, token?: string };
+        let params: {
+            functionId: string;
+            deploymentId: string;
+            type?: DeploymentDownloadType;
+            token?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                deploymentId: string;
+                type?: DeploymentDownloadType;
+                token?: string;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 deploymentId: rest[0] as string,
                 type: rest[1] as DeploymentDownloadType,
-                token: rest[2] as string            
+                token: rest[2] as string,
             };
         }
-        
+
         const functionId = params.functionId;
         const deploymentId = params.deploymentId;
         const type = params.type;
         const token = params.token;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        if (typeof deploymentId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "deploymentId"');
+        if (typeof deploymentId === 'undefined' || deploymentId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "deploymentId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/deployments/{deploymentId}/download'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{deploymentId}', encodeURIComponent(String(deploymentId)));
+        const apiPath =
+            '/functions/{functionId}/deployments/{deploymentId}/download'
+                .replace('{functionId}', encodeURIComponent(String(functionId)))
+                .replace(
+                    '{deploymentId}',
+                    encodeURIComponent(String(deploymentId)),
+                );
         const payload: Payload = {};
         if (typeof type !== 'undefined') {
             payload['type'] = type;
@@ -1519,18 +2139,13 @@ export class Functions {
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'accept': '*/*',
-        }
-
         payload['project'] = this.client.config.project;
         payload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Service.flatten(payload))) {
             uri.searchParams.append(key, value);
         }
-        
+
         return uri.toString();
     }
 
@@ -1542,7 +2157,10 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Deployment>}
      */
-    updateDeploymentStatus(params: { functionId: string, deploymentId: string }): Promise<Models.Deployment>;
+    updateDeploymentStatus(params: {
+        functionId: string;
+        deploymentId: string;
+    }): Promise<Models.Deployment>;
     /**
      * Cancel an ongoing function deployment build. If the build is already in progress, it will be stopped and marked as canceled. If the build hasn't started yet, it will be marked as canceled without executing. You cannot cancel builds that have already completed (status 'ready') or failed. The response includes the final build status and details.
      *
@@ -1552,48 +2170,62 @@ export class Functions {
      * @returns {Promise<Models.Deployment>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateDeploymentStatus(functionId: string, deploymentId: string): Promise<Models.Deployment>;
     updateDeploymentStatus(
-        paramsOrFirst: { functionId: string, deploymentId: string } | string,
-        ...rest: [(string)?]    
+        functionId: string,
+        deploymentId: string,
+    ): Promise<Models.Deployment>;
+    updateDeploymentStatus(
+        paramsOrFirst: { functionId: string; deploymentId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Deployment> {
-        let params: { functionId: string, deploymentId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, deploymentId: string };
+        let params: { functionId: string; deploymentId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                deploymentId: string;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
-                deploymentId: rest[0] as string            
+                deploymentId: rest[0] as string,
             };
         }
-        
+
         const functionId = params.functionId;
         const deploymentId = params.deploymentId;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        if (typeof deploymentId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "deploymentId"');
+        if (typeof deploymentId === 'undefined' || deploymentId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "deploymentId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/deployments/{deploymentId}/status'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{deploymentId}', encodeURIComponent(String(deploymentId)));
+        const apiPath =
+            '/functions/{functionId}/deployments/{deploymentId}/status'
+                .replace('{functionId}', encodeURIComponent(String(functionId)))
+                .replace(
+                    '{deploymentId}',
+                    encodeURIComponent(String(deploymentId)),
+                );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1605,7 +2237,11 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ExecutionList>}
      */
-    listExecutions(params: { functionId: string, queries?: string[], total?: boolean }): Promise<Models.ExecutionList>;
+    listExecutions(params: {
+        functionId: string;
+        queries?: string[];
+        total?: boolean;
+    }): Promise<Models.ExecutionList>;
     /**
      * Get a list of all the current user function execution logs. You can use the query params to filter your results.
      *
@@ -1616,32 +2252,50 @@ export class Functions {
      * @returns {Promise<Models.ExecutionList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listExecutions(functionId: string, queries?: string[], total?: boolean): Promise<Models.ExecutionList>;
     listExecutions(
-        paramsOrFirst: { functionId: string, queries?: string[], total?: boolean } | string,
-        ...rest: [(string[])?, (boolean)?]    
+        functionId: string,
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.ExecutionList>;
+    listExecutions(
+        paramsOrFirst:
+            | { functionId: string; queries?: string[]; total?: boolean }
+            | string,
+        ...rest: [string[]?, boolean?]
     ): Promise<Models.ExecutionList> {
-        let params: { functionId: string, queries?: string[], total?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, queries?: string[], total?: boolean };
+        let params: { functionId: string; queries?: string[]; total?: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 queries: rest[0] as string[],
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const functionId = params.functionId;
         const queries = params.queries;
         const total = params.total;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/executions'.replace('{functionId}', encodeURIComponent(String(functionId)));
+        const apiPath = '/functions/{functionId}/executions'.replace(
+            '{functionId}',
+            encodeURIComponent(String(functionId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1653,15 +2307,10 @@ export class Functions {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1677,7 +2326,15 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Execution>}
      */
-    createExecution(params: { functionId: string, body?: string, async?: boolean, xpath?: string, method?: ExecutionMethod, headers?: object, scheduledAt?: string }): Promise<Models.Execution>;
+    createExecution(params: {
+        functionId: string;
+        body?: string;
+        async?: boolean;
+        xpath?: string;
+        method?: ExecutionMethod;
+        headers?: object;
+        scheduledAt?: string;
+    }): Promise<Models.Execution>;
     /**
      * Trigger a function execution. The returned object will return you the current execution status. You can ping the `Get Execution` endpoint to get updates on the current execution status. Once this endpoint is called, your function execution process will start asynchronously.
      *
@@ -1692,15 +2349,60 @@ export class Functions {
      * @returns {Promise<Models.Execution>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createExecution(functionId: string, body?: string, async?: boolean, xpath?: string, method?: ExecutionMethod, headers?: object, scheduledAt?: string): Promise<Models.Execution>;
     createExecution(
-        paramsOrFirst: { functionId: string, body?: string, async?: boolean, xpath?: string, method?: ExecutionMethod, headers?: object, scheduledAt?: string } | string,
-        ...rest: [(string)?, (boolean)?, (string)?, (ExecutionMethod)?, (object)?, (string)?]    
+        functionId: string,
+        body?: string,
+        async?: boolean,
+        xpath?: string,
+        method?: ExecutionMethod,
+        headers?: object,
+        scheduledAt?: string,
+    ): Promise<Models.Execution>;
+    createExecution(
+        paramsOrFirst:
+            | {
+                  functionId: string;
+                  body?: string;
+                  async?: boolean;
+                  xpath?: string;
+                  method?: ExecutionMethod;
+                  headers?: object;
+                  scheduledAt?: string;
+              }
+            | string,
+        ...rest: [
+            string?,
+            boolean?,
+            string?,
+            ExecutionMethod?,
+            object?,
+            string?,
+        ]
     ): Promise<Models.Execution> {
-        let params: { functionId: string, body?: string, async?: boolean, xpath?: string, method?: ExecutionMethod, headers?: object, scheduledAt?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, body?: string, async?: boolean, xpath?: string, method?: ExecutionMethod, headers?: object, scheduledAt?: string };
+        let params: {
+            functionId: string;
+            body?: string;
+            async?: boolean;
+            xpath?: string;
+            method?: ExecutionMethod;
+            headers?: object;
+            scheduledAt?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                body?: string;
+                async?: boolean;
+                xpath?: string;
+                method?: ExecutionMethod;
+                headers?: object;
+                scheduledAt?: string;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
@@ -1709,10 +2411,10 @@ export class Functions {
                 xpath: rest[2] as string,
                 method: rest[3] as ExecutionMethod,
                 headers: rest[4] as object,
-                scheduledAt: rest[5] as string            
+                scheduledAt: rest[5] as string,
             };
         }
-        
+
         const functionId = params.functionId;
         const body = params.body;
         const async = params.async;
@@ -1721,11 +2423,15 @@ export class Functions {
         const headers = params.headers;
         const scheduledAt = params.scheduledAt;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/executions'.replace('{functionId}', encodeURIComponent(String(functionId)));
+        const apiPath = '/functions/{functionId}/executions'.replace(
+            '{functionId}',
+            encodeURIComponent(String(functionId)),
+        );
         const payload: Payload = {};
         if (typeof body !== 'undefined') {
             payload['body'] = body;
@@ -1750,15 +2456,10 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1769,7 +2470,10 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Execution>}
      */
-    getExecution(params: { functionId: string, executionId: string }): Promise<Models.Execution>;
+    getExecution(params: {
+        functionId: string;
+        executionId: string;
+    }): Promise<Models.Execution>;
     /**
      * Get a function execution log by its unique ID.
      *
@@ -1779,47 +2483,57 @@ export class Functions {
      * @returns {Promise<Models.Execution>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getExecution(functionId: string, executionId: string): Promise<Models.Execution>;
     getExecution(
-        paramsOrFirst: { functionId: string, executionId: string } | string,
-        ...rest: [(string)?]    
+        functionId: string,
+        executionId: string,
+    ): Promise<Models.Execution>;
+    getExecution(
+        paramsOrFirst: { functionId: string; executionId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Execution> {
-        let params: { functionId: string, executionId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, executionId: string };
+        let params: { functionId: string; executionId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                executionId: string;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
-                executionId: rest[0] as string            
+                executionId: rest[0] as string,
             };
         }
-        
+
         const functionId = params.functionId;
         const executionId = params.executionId;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        if (typeof executionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "executionId"');
+        if (typeof executionId === 'undefined' || executionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "executionId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/executions/{executionId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{executionId}', encodeURIComponent(String(executionId)));
+        const apiPath = '/functions/{functionId}/executions/{executionId}'
+            .replace('{functionId}', encodeURIComponent(String(functionId)))
+            .replace('{executionId}', encodeURIComponent(String(executionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1830,7 +2544,10 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteExecution(params: { functionId: string, executionId: string }): Promise<{}>;
+    deleteExecution(params: {
+        functionId: string;
+        executionId: string;
+    }): Promise<{}>;
     /**
      * Delete a function execution by its unique ID.
      *
@@ -1842,45 +2559,53 @@ export class Functions {
      */
     deleteExecution(functionId: string, executionId: string): Promise<{}>;
     deleteExecution(
-        paramsOrFirst: { functionId: string, executionId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { functionId: string; executionId: string } | string,
+        ...rest: [string?]
     ): Promise<{}> {
-        let params: { functionId: string, executionId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, executionId: string };
+        let params: { functionId: string; executionId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                executionId: string;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
-                executionId: rest[0] as string            
+                executionId: rest[0] as string,
             };
         }
-        
+
         const functionId = params.functionId;
         const executionId = params.executionId;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        if (typeof executionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "executionId"');
+        if (typeof executionId === 'undefined' || executionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "executionId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/executions/{executionId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{executionId}', encodeURIComponent(String(executionId)));
+        const apiPath = '/functions/{functionId}/executions/{executionId}'
+            .replace('{functionId}', encodeURIComponent(String(functionId)))
+            .replace('{executionId}', encodeURIComponent(String(executionId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -1892,7 +2617,11 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.VariableList>}
      */
-    listVariables(params: { functionId: string, queries?: string[], total?: boolean }): Promise<Models.VariableList>;
+    listVariables(params: {
+        functionId: string;
+        queries?: string[];
+        total?: boolean;
+    }): Promise<Models.VariableList>;
     /**
      * Get a list of all variables of a specific function.
      *
@@ -1903,32 +2632,50 @@ export class Functions {
      * @returns {Promise<Models.VariableList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listVariables(functionId: string, queries?: string[], total?: boolean): Promise<Models.VariableList>;
     listVariables(
-        paramsOrFirst: { functionId: string, queries?: string[], total?: boolean } | string,
-        ...rest: [(string[])?, (boolean)?]    
+        functionId: string,
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.VariableList>;
+    listVariables(
+        paramsOrFirst:
+            | { functionId: string; queries?: string[]; total?: boolean }
+            | string,
+        ...rest: [string[]?, boolean?]
     ): Promise<Models.VariableList> {
-        let params: { functionId: string, queries?: string[], total?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, queries?: string[], total?: boolean };
+        let params: { functionId: string; queries?: string[]; total?: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 queries: rest[0] as string[],
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const functionId = params.functionId;
         const queries = params.queries;
         const total = params.total;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/variables'.replace('{functionId}', encodeURIComponent(String(functionId)));
+        const apiPath = '/functions/{functionId}/variables'.replace(
+            '{functionId}',
+            encodeURIComponent(String(functionId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1940,15 +2687,10 @@ export class Functions {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1956,55 +2698,95 @@ export class Functions {
      *
      * @param {string} params.functionId - Function unique ID.
      * @param {string} params.variableId - Variable ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-     * @param {string} params.key - Variable key. Max length: 255 chars.
+     * @param {string} params.key - Variable key. Letters, digits and underscores only, must not start with a digit. Max length: 255 chars.
      * @param {string} params.value - Variable value. Max length: 8192 chars.
      * @param {boolean} params.secret - Secret variables can be updated or deleted, but only functions can read them during build and runtime.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    createVariable(params: { functionId: string, variableId: string, key: string, value: string, secret?: boolean }): Promise<Models.Variable>;
+    createVariable(params: {
+        functionId: string;
+        variableId: string;
+        key: string;
+        value: string;
+        secret?: boolean;
+    }): Promise<Models.Variable>;
     /**
      * Create a new function environment variable. These variables can be accessed in the function at runtime as environment variables.
      *
      * @param {string} functionId - Function unique ID.
      * @param {string} variableId - Variable ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-     * @param {string} key - Variable key. Max length: 255 chars.
+     * @param {string} key - Variable key. Letters, digits and underscores only, must not start with a digit. Max length: 255 chars.
      * @param {string} value - Variable value. Max length: 8192 chars.
      * @param {boolean} secret - Secret variables can be updated or deleted, but only functions can read them during build and runtime.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createVariable(functionId: string, variableId: string, key: string, value: string, secret?: boolean): Promise<Models.Variable>;
     createVariable(
-        paramsOrFirst: { functionId: string, variableId: string, key: string, value: string, secret?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (boolean)?]    
+        functionId: string,
+        variableId: string,
+        key: string,
+        value: string,
+        secret?: boolean,
+    ): Promise<Models.Variable>;
+    createVariable(
+        paramsOrFirst:
+            | {
+                  functionId: string;
+                  variableId: string;
+                  key: string;
+                  value: string;
+                  secret?: boolean;
+              }
+            | string,
+        ...rest: [string?, string?, string?, boolean?]
     ): Promise<Models.Variable> {
-        let params: { functionId: string, variableId: string, key: string, value: string, secret?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, variableId: string, key: string, value: string, secret?: boolean };
+        let params: {
+            functionId: string;
+            variableId: string;
+            key: string;
+            value: string;
+            secret?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                variableId: string;
+                key: string;
+                value: string;
+                secret?: boolean;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 variableId: rest[0] as string,
                 key: rest[1] as string,
                 value: rest[2] as string,
-                secret: rest[3] as boolean            
+                secret: rest[3] as boolean,
             };
         }
-        
+
         const functionId = params.functionId;
         const variableId = params.variableId;
         const key = params.key;
         const value = params.value;
         const secret = params.secret;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
         if (typeof variableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "variableId"');
+            throw new AppwriteException(
+                'Missing required parameter: "variableId"',
+            );
         }
         if (typeof key === 'undefined') {
             throw new AppwriteException('Missing required parameter: "key"');
@@ -2012,8 +2794,10 @@ export class Functions {
         if (typeof value === 'undefined') {
             throw new AppwriteException('Missing required parameter: "value"');
         }
-
-        const apiPath = '/functions/{functionId}/variables'.replace('{functionId}', encodeURIComponent(String(functionId)));
+        const apiPath = '/functions/{functionId}/variables'.replace(
+            '{functionId}',
+            encodeURIComponent(String(functionId)),
+        );
         const payload: Payload = {};
         if (typeof variableId !== 'undefined') {
             payload['variableId'] = variableId;
@@ -2032,15 +2816,10 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -2051,7 +2830,10 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    getVariable(params: { functionId: string, variableId: string }): Promise<Models.Variable>;
+    getVariable(params: {
+        functionId: string;
+        variableId: string;
+    }): Promise<Models.Variable>;
     /**
      * Get a variable by its unique ID.
      *
@@ -2061,47 +2843,57 @@ export class Functions {
      * @returns {Promise<Models.Variable>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getVariable(functionId: string, variableId: string): Promise<Models.Variable>;
     getVariable(
-        paramsOrFirst: { functionId: string, variableId: string } | string,
-        ...rest: [(string)?]    
+        functionId: string,
+        variableId: string,
+    ): Promise<Models.Variable>;
+    getVariable(
+        paramsOrFirst: { functionId: string; variableId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Variable> {
-        let params: { functionId: string, variableId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, variableId: string };
+        let params: { functionId: string; variableId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                variableId: string;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
-                variableId: rest[0] as string            
+                variableId: rest[0] as string,
             };
         }
-        
+
         const functionId = params.functionId;
         const variableId = params.variableId;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        if (typeof variableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "variableId"');
+        if (typeof variableId === 'undefined' || variableId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "variableId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{variableId}', encodeURIComponent(String(variableId)));
+        const apiPath = '/functions/{functionId}/variables/{variableId}'
+            .replace('{functionId}', encodeURIComponent(String(functionId)))
+            .replace('{variableId}', encodeURIComponent(String(variableId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -2109,58 +2901,99 @@ export class Functions {
      *
      * @param {string} params.functionId - Function unique ID.
      * @param {string} params.variableId - Variable unique ID.
-     * @param {string} params.key - Variable key. Max length: 255 chars.
+     * @param {string} params.key - Variable key. Letters, digits and underscores only, must not start with a digit. Max length: 255 chars.
      * @param {string} params.value - Variable value. Max length: 8192 chars.
      * @param {boolean} params.secret - Secret variables can be updated or deleted, but only functions can read them during build and runtime.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
-    updateVariable(params: { functionId: string, variableId: string, key?: string, value?: string, secret?: boolean }): Promise<Models.Variable>;
+    updateVariable(params: {
+        functionId: string;
+        variableId: string;
+        key?: string;
+        value?: string;
+        secret?: boolean;
+    }): Promise<Models.Variable>;
     /**
      * Update variable by its unique ID.
      *
      * @param {string} functionId - Function unique ID.
      * @param {string} variableId - Variable unique ID.
-     * @param {string} key - Variable key. Max length: 255 chars.
+     * @param {string} key - Variable key. Letters, digits and underscores only, must not start with a digit. Max length: 255 chars.
      * @param {string} value - Variable value. Max length: 8192 chars.
      * @param {boolean} secret - Secret variables can be updated or deleted, but only functions can read them during build and runtime.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateVariable(functionId: string, variableId: string, key?: string, value?: string, secret?: boolean): Promise<Models.Variable>;
     updateVariable(
-        paramsOrFirst: { functionId: string, variableId: string, key?: string, value?: string, secret?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (boolean)?]    
+        functionId: string,
+        variableId: string,
+        key?: string,
+        value?: string,
+        secret?: boolean,
+    ): Promise<Models.Variable>;
+    updateVariable(
+        paramsOrFirst:
+            | {
+                  functionId: string;
+                  variableId: string;
+                  key?: string;
+                  value?: string;
+                  secret?: boolean;
+              }
+            | string,
+        ...rest: [string?, string?, string?, boolean?]
     ): Promise<Models.Variable> {
-        let params: { functionId: string, variableId: string, key?: string, value?: string, secret?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, variableId: string, key?: string, value?: string, secret?: boolean };
+        let params: {
+            functionId: string;
+            variableId: string;
+            key?: string;
+            value?: string;
+            secret?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                variableId: string;
+                key?: string;
+                value?: string;
+                secret?: boolean;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
                 variableId: rest[0] as string,
                 key: rest[1] as string,
                 value: rest[2] as string,
-                secret: rest[3] as boolean            
+                secret: rest[3] as boolean,
             };
         }
-        
+
         const functionId = params.functionId;
         const variableId = params.variableId;
         const key = params.key;
         const value = params.value;
         const secret = params.secret;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        if (typeof variableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "variableId"');
+        if (typeof variableId === 'undefined' || variableId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "variableId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{variableId}', encodeURIComponent(String(variableId)));
+        const apiPath = '/functions/{functionId}/variables/{variableId}'
+            .replace('{functionId}', encodeURIComponent(String(functionId)))
+            .replace('{variableId}', encodeURIComponent(String(variableId)));
         const payload: Payload = {};
         if (typeof key !== 'undefined') {
             payload['key'] = key;
@@ -2176,15 +3009,10 @@ export class Functions {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
@@ -2195,7 +3023,10 @@ export class Functions {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteVariable(params: { functionId: string, variableId: string }): Promise<{}>;
+    deleteVariable(params: {
+        functionId: string;
+        variableId: string;
+    }): Promise<{}>;
     /**
      * Delete a variable by its unique ID.
      *
@@ -2207,44 +3038,52 @@ export class Functions {
      */
     deleteVariable(functionId: string, variableId: string): Promise<{}>;
     deleteVariable(
-        paramsOrFirst: { functionId: string, variableId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { functionId: string; variableId: string } | string,
+        ...rest: [string?]
     ): Promise<{}> {
-        let params: { functionId: string, variableId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { functionId: string, variableId: string };
+        let params: { functionId: string; variableId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                functionId: string;
+                variableId: string;
+            };
         } else {
             params = {
                 functionId: paramsOrFirst as string,
-                variableId: rest[0] as string            
+                variableId: rest[0] as string,
             };
         }
-        
+
         const functionId = params.functionId;
         const variableId = params.variableId;
 
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "functionId"');
+        if (typeof functionId === 'undefined' || functionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
         }
-        if (typeof variableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "variableId"');
+        if (typeof variableId === 'undefined' || variableId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "variableId"',
+            );
         }
-
-        const apiPath = '/functions/{functionId}/variables/{variableId}'.replace('{functionId}', encodeURIComponent(String(functionId))).replace('{variableId}', encodeURIComponent(String(variableId)));
+        const apiPath = '/functions/{functionId}/variables/{variableId}'
+            .replace('{functionId}', encodeURIComponent(String(functionId)))
+            .replace('{variableId}', encodeURIComponent(String(variableId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 }

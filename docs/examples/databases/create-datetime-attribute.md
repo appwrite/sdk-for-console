@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Databases } from "@appwrite.io/console";
+import { Client, Databases } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,10 +10,10 @@ const databases = new Databases(client);
 const result = await databases.createDatetimeAttribute({
     databaseId: '<DATABASE_ID>',
     collectionId: '<COLLECTION_ID>',
-    key: '',
+    key: '<KEY>',
     required: false,
     xdefault: '2020-10-15T06:38:00.000+00:00', // optional
-    array: false // optional
+    array: false, // optional
 });
 
 console.log(result);

@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Users } from "@appwrite.io/console";
+import { Client, Users } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const users = new Users(client);
 
 const result = await users.updateEmail({
     userId: '<USER_ID>',
-    email: 'email@example.com'
+    email: 'email@example.com',
 });
 
 console.log(result);

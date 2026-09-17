@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Console } from "@appwrite.io/console";
+import { Client, Console } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +11,7 @@ const result = await xconsole.suggestIndexes({
     databaseId: '<DATABASE_ID>',
     tableId: '<TABLE_ID>',
     min: 1, // optional
-    max: 1 // optional
+    max: 1, // optional
 });
 
 console.log(result);

@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Organizations } from "@appwrite.io/console";
+import { Client, Organizations } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +11,7 @@ const result = await organizations.getAggregation({
     organizationId: '<ORGANIZATION_ID>',
     aggregationId: '<AGGREGATION_ID>',
     limit: 0, // optional
-    offset: null // optional
+    offset: null, // optional
 });
 
 console.log(result);

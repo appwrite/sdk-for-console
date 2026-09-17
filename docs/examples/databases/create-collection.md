@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Databases, Permission, Role } from "@appwrite.io/console";
+import { Client, Databases, Permission, Role } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -15,7 +15,7 @@ const result = await databases.createCollection({
     documentSecurity: false, // optional
     enabled: false, // optional
     attributes: [], // optional
-    indexes: [] // optional
+    indexes: [], // optional
 });
 
 console.log(result);

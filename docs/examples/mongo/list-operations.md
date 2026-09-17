@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Mongo } from "@appwrite.io/console";
+import { Client, Mongo } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,9 +9,9 @@ const mongo = new Mongo(client);
 
 const result = await mongo.listOperations({
     databaseId: '<DATABASE_ID>',
-    status: 'running', // optional
+    status: 'queued', // optional
     limit: 1, // optional
-    offset: 0 // optional
+    offset: 0, // optional
 });
 
 console.log(result);

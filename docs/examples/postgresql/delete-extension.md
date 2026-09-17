@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Postgresql } from "@appwrite.io/console";
+import { Client, Postgresql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const postgresql = new Postgresql(client);
 
 const result = await postgresql.deleteExtension({
     databaseId: '<DATABASE_ID>',
-    extensionName: '<EXTENSION_NAME>'
+    extensionName: '<EXTENSION_NAME>',
 });
 
 console.log(result);

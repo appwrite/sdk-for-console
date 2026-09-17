@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Organizations } from "@appwrite.io/console";
+import { Client, Organizations } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const organizations = new Organizations(client);
 
 const result = await organizations.list({
     queries: [], // optional
-    search: '<SEARCH>' // optional
+    search: '<SEARCH>', // optional
 });
 
 console.log(result);

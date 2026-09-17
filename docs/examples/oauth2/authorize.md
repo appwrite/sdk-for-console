@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Oauth2 } from "@appwrite.io/console";
+import { Client, Oauth2 } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -21,7 +21,7 @@ const result = await oauth2.authorize({
     authorizationDetails: '<AUTHORIZATION_DETAILS>', // optional
     resource: '', // optional
     audience: '<AUDIENCE>', // optional
-    requestUri: '<REQUEST_URI>' // optional
+    requestUri: '<REQUEST_URI>', // optional
 });
 
 console.log(result);

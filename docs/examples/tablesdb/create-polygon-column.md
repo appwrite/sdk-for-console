@@ -1,5 +1,5 @@
 ```javascript
-import { Client, TablesDB } from "@appwrite.io/console";
+import { Client, TablesDB } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,9 +10,16 @@ const tablesDB = new TablesDB(client);
 const result = await tablesDB.createPolygonColumn({
     databaseId: '<DATABASE_ID>',
     tableId: '<TABLE_ID>',
-    key: '',
+    key: '<KEY>',
     required: false,
-    xdefault: [[[1, 2], [3, 4], [5, 6], [1, 2]]] // optional
+    xdefault: [
+        [
+            [1, 2],
+            [3, 4],
+            [5, 6],
+            [1, 2],
+        ],
+    ], // optional
 });
 
 console.log(result);

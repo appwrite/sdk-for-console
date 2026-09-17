@@ -1,10 +1,8 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
 
 import { MessagePriority } from '../enums/message-priority';
 import { SmtpEncryption } from '../enums/smtp-encryption';
-
 export class Messaging {
     client: Client;
 
@@ -21,7 +19,11 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.MessageList>}
      */
-    listMessages(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.MessageList>;
+    listMessages(params?: {
+        queries?: string[];
+        search?: string;
+        total?: boolean;
+    }): Promise<Models.MessageList>;
     /**
      * Get a list of all messages from the current Appwrite project.
      *
@@ -32,27 +34,40 @@ export class Messaging {
      * @returns {Promise<Models.MessageList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listMessages(queries?: string[], search?: string, total?: boolean): Promise<Models.MessageList>;
     listMessages(
-        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
-        ...rest: [(string)?, (boolean)?]    
+        queries?: string[],
+        search?: string,
+        total?: boolean,
+    ): Promise<Models.MessageList>;
+    listMessages(
+        paramsOrFirst?:
+            { queries?: string[]; search?: string; total?: boolean } | string[],
+        ...rest: [string?, boolean?]
     ): Promise<Models.MessageList> {
-        let params: { queries?: string[], search?: string, total?: boolean };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
+        let params: { queries?: string[]; search?: string; total?: boolean };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                search?: string;
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
                 search: rest[0] as string,
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const queries = params.queries;
         const search = params.search;
         const total = params.total;
-
 
         const apiPath = '/messaging/messages';
         const payload: Payload = {};
@@ -69,15 +84,10 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -98,7 +108,20 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Message>}
      */
-    createEmail(params: { messageId: string, subject: string, content: string, topics?: string[], users?: string[], targets?: string[], cc?: string[], bcc?: string[], attachments?: string[], draft?: boolean, html?: boolean, scheduledAt?: string }): Promise<Models.Message>;
+    createEmail(params: {
+        messageId: string;
+        subject: string;
+        content: string;
+        topics?: string[];
+        users?: string[];
+        targets?: string[];
+        cc?: string[];
+        bcc?: string[];
+        attachments?: string[];
+        draft?: boolean;
+        html?: boolean;
+        scheduledAt?: string;
+    }): Promise<Models.Message>;
     /**
      * Create a new email message.
      *
@@ -118,15 +141,85 @@ export class Messaging {
      * @returns {Promise<Models.Message>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createEmail(messageId: string, subject: string, content: string, topics?: string[], users?: string[], targets?: string[], cc?: string[], bcc?: string[], attachments?: string[], draft?: boolean, html?: boolean, scheduledAt?: string): Promise<Models.Message>;
     createEmail(
-        paramsOrFirst: { messageId: string, subject: string, content: string, topics?: string[], users?: string[], targets?: string[], cc?: string[], bcc?: string[], attachments?: string[], draft?: boolean, html?: boolean, scheduledAt?: string } | string,
-        ...rest: [(string)?, (string)?, (string[])?, (string[])?, (string[])?, (string[])?, (string[])?, (string[])?, (boolean)?, (boolean)?, (string)?]    
+        messageId: string,
+        subject: string,
+        content: string,
+        topics?: string[],
+        users?: string[],
+        targets?: string[],
+        cc?: string[],
+        bcc?: string[],
+        attachments?: string[],
+        draft?: boolean,
+        html?: boolean,
+        scheduledAt?: string,
+    ): Promise<Models.Message>;
+    createEmail(
+        paramsOrFirst:
+            | {
+                  messageId: string;
+                  subject: string;
+                  content: string;
+                  topics?: string[];
+                  users?: string[];
+                  targets?: string[];
+                  cc?: string[];
+                  bcc?: string[];
+                  attachments?: string[];
+                  draft?: boolean;
+                  html?: boolean;
+                  scheduledAt?: string;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string[]?,
+            string[]?,
+            string[]?,
+            string[]?,
+            string[]?,
+            string[]?,
+            boolean?,
+            boolean?,
+            string?,
+        ]
     ): Promise<Models.Message> {
-        let params: { messageId: string, subject: string, content: string, topics?: string[], users?: string[], targets?: string[], cc?: string[], bcc?: string[], attachments?: string[], draft?: boolean, html?: boolean, scheduledAt?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { messageId: string, subject: string, content: string, topics?: string[], users?: string[], targets?: string[], cc?: string[], bcc?: string[], attachments?: string[], draft?: boolean, html?: boolean, scheduledAt?: string };
+        let params: {
+            messageId: string;
+            subject: string;
+            content: string;
+            topics?: string[];
+            users?: string[];
+            targets?: string[];
+            cc?: string[];
+            bcc?: string[];
+            attachments?: string[];
+            draft?: boolean;
+            html?: boolean;
+            scheduledAt?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                messageId: string;
+                subject: string;
+                content: string;
+                topics?: string[];
+                users?: string[];
+                targets?: string[];
+                cc?: string[];
+                bcc?: string[];
+                attachments?: string[];
+                draft?: boolean;
+                html?: boolean;
+                scheduledAt?: string;
+            };
         } else {
             params = {
                 messageId: paramsOrFirst as string,
@@ -140,10 +233,10 @@ export class Messaging {
                 attachments: rest[7] as string[],
                 draft: rest[8] as boolean,
                 html: rest[9] as boolean,
-                scheduledAt: rest[10] as string            
+                scheduledAt: rest[10] as string,
             };
         }
-        
+
         const messageId = params.messageId;
         const subject = params.subject;
         const content = params.content;
@@ -158,15 +251,20 @@ export class Messaging {
         const scheduledAt = params.scheduledAt;
 
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
         if (typeof subject === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "subject"');
+            throw new AppwriteException(
+                'Missing required parameter: "subject"',
+            );
         }
         if (typeof content === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "content"');
+            throw new AppwriteException(
+                'Missing required parameter: "content"',
+            );
         }
-
         const apiPath = '/messaging/messages/email';
         const payload: Payload = {};
         if (typeof messageId !== 'undefined') {
@@ -210,20 +308,15 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Update an email message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
-     * 
+     *
      *
      * @param {string} params.messageId - Message ID.
      * @param {string[]} params.topics - List of Topic IDs.
@@ -240,10 +333,23 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Message>}
      */
-    updateEmail(params: { messageId: string, topics?: string[], users?: string[], targets?: string[], subject?: string, content?: string, draft?: boolean, html?: boolean, cc?: string[], bcc?: string[], scheduledAt?: string, attachments?: string[] }): Promise<Models.Message>;
+    updateEmail(params: {
+        messageId: string;
+        topics?: string[];
+        users?: string[];
+        targets?: string[];
+        subject?: string;
+        content?: string;
+        draft?: boolean;
+        html?: boolean;
+        cc?: string[];
+        bcc?: string[];
+        scheduledAt?: string;
+        attachments?: string[];
+    }): Promise<Models.Message>;
     /**
      * Update an email message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
-     * 
+     *
      *
      * @param {string} messageId - Message ID.
      * @param {string[]} topics - List of Topic IDs.
@@ -261,15 +367,85 @@ export class Messaging {
      * @returns {Promise<Models.Message>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateEmail(messageId: string, topics?: string[], users?: string[], targets?: string[], subject?: string, content?: string, draft?: boolean, html?: boolean, cc?: string[], bcc?: string[], scheduledAt?: string, attachments?: string[]): Promise<Models.Message>;
     updateEmail(
-        paramsOrFirst: { messageId: string, topics?: string[], users?: string[], targets?: string[], subject?: string, content?: string, draft?: boolean, html?: boolean, cc?: string[], bcc?: string[], scheduledAt?: string, attachments?: string[] } | string,
-        ...rest: [(string[])?, (string[])?, (string[])?, (string)?, (string)?, (boolean)?, (boolean)?, (string[])?, (string[])?, (string)?, (string[])?]    
+        messageId: string,
+        topics?: string[],
+        users?: string[],
+        targets?: string[],
+        subject?: string,
+        content?: string,
+        draft?: boolean,
+        html?: boolean,
+        cc?: string[],
+        bcc?: string[],
+        scheduledAt?: string,
+        attachments?: string[],
+    ): Promise<Models.Message>;
+    updateEmail(
+        paramsOrFirst:
+            | {
+                  messageId: string;
+                  topics?: string[];
+                  users?: string[];
+                  targets?: string[];
+                  subject?: string;
+                  content?: string;
+                  draft?: boolean;
+                  html?: boolean;
+                  cc?: string[];
+                  bcc?: string[];
+                  scheduledAt?: string;
+                  attachments?: string[];
+              }
+            | string,
+        ...rest: [
+            string[]?,
+            string[]?,
+            string[]?,
+            string?,
+            string?,
+            boolean?,
+            boolean?,
+            string[]?,
+            string[]?,
+            string?,
+            string[]?,
+        ]
     ): Promise<Models.Message> {
-        let params: { messageId: string, topics?: string[], users?: string[], targets?: string[], subject?: string, content?: string, draft?: boolean, html?: boolean, cc?: string[], bcc?: string[], scheduledAt?: string, attachments?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { messageId: string, topics?: string[], users?: string[], targets?: string[], subject?: string, content?: string, draft?: boolean, html?: boolean, cc?: string[], bcc?: string[], scheduledAt?: string, attachments?: string[] };
+        let params: {
+            messageId: string;
+            topics?: string[];
+            users?: string[];
+            targets?: string[];
+            subject?: string;
+            content?: string;
+            draft?: boolean;
+            html?: boolean;
+            cc?: string[];
+            bcc?: string[];
+            scheduledAt?: string;
+            attachments?: string[];
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                messageId: string;
+                topics?: string[];
+                users?: string[];
+                targets?: string[];
+                subject?: string;
+                content?: string;
+                draft?: boolean;
+                html?: boolean;
+                cc?: string[];
+                bcc?: string[];
+                scheduledAt?: string;
+                attachments?: string[];
+            };
         } else {
             params = {
                 messageId: paramsOrFirst as string,
@@ -283,10 +459,10 @@ export class Messaging {
                 cc: rest[7] as string[],
                 bcc: rest[8] as string[],
                 scheduledAt: rest[9] as string,
-                attachments: rest[10] as string[]            
+                attachments: rest[10] as string[],
             };
         }
-        
+
         const messageId = params.messageId;
         const topics = params.topics;
         const users = params.users;
@@ -300,11 +476,15 @@ export class Messaging {
         const scheduledAt = params.scheduledAt;
         const attachments = params.attachments;
 
-        if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+        if (typeof messageId === 'undefined' || messageId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-
-        const apiPath = '/messaging/messages/email/{messageId}'.replace('{messageId}', encodeURIComponent(String(messageId)));
+        const apiPath = '/messaging/messages/email/{messageId}'.replace(
+            '{messageId}',
+            encodeURIComponent(String(messageId)),
+        );
         const payload: Payload = {};
         if (typeof topics !== 'undefined') {
             payload['topics'] = topics;
@@ -344,15 +524,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -380,7 +555,27 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Message>}
      */
-    createPush(params: { messageId: string, title?: string, body?: string, topics?: string[], users?: string[], targets?: string[], data?: object, action?: string, image?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: number, draft?: boolean, scheduledAt?: string, contentAvailable?: boolean, critical?: boolean, priority?: MessagePriority }): Promise<Models.Message>;
+    createPush(params: {
+        messageId: string;
+        title?: string;
+        body?: string;
+        topics?: string[];
+        users?: string[];
+        targets?: string[];
+        data?: object;
+        action?: string;
+        image?: string;
+        icon?: string;
+        sound?: string;
+        color?: string;
+        tag?: string;
+        badge?: number;
+        draft?: boolean;
+        scheduledAt?: string;
+        contentAvailable?: boolean;
+        critical?: boolean;
+        priority?: MessagePriority;
+    }): Promise<Models.Message>;
     /**
      * Create a new push notification.
      *
@@ -407,15 +602,120 @@ export class Messaging {
      * @returns {Promise<Models.Message>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPush(messageId: string, title?: string, body?: string, topics?: string[], users?: string[], targets?: string[], data?: object, action?: string, image?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: number, draft?: boolean, scheduledAt?: string, contentAvailable?: boolean, critical?: boolean, priority?: MessagePriority): Promise<Models.Message>;
     createPush(
-        paramsOrFirst: { messageId: string, title?: string, body?: string, topics?: string[], users?: string[], targets?: string[], data?: object, action?: string, image?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: number, draft?: boolean, scheduledAt?: string, contentAvailable?: boolean, critical?: boolean, priority?: MessagePriority } | string,
-        ...rest: [(string)?, (string)?, (string[])?, (string[])?, (string[])?, (object)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (boolean)?, (string)?, (boolean)?, (boolean)?, (MessagePriority)?]    
+        messageId: string,
+        title?: string,
+        body?: string,
+        topics?: string[],
+        users?: string[],
+        targets?: string[],
+        data?: object,
+        action?: string,
+        image?: string,
+        icon?: string,
+        sound?: string,
+        color?: string,
+        tag?: string,
+        badge?: number,
+        draft?: boolean,
+        scheduledAt?: string,
+        contentAvailable?: boolean,
+        critical?: boolean,
+        priority?: MessagePriority,
+    ): Promise<Models.Message>;
+    createPush(
+        paramsOrFirst:
+            | {
+                  messageId: string;
+                  title?: string;
+                  body?: string;
+                  topics?: string[];
+                  users?: string[];
+                  targets?: string[];
+                  data?: object;
+                  action?: string;
+                  image?: string;
+                  icon?: string;
+                  sound?: string;
+                  color?: string;
+                  tag?: string;
+                  badge?: number;
+                  draft?: boolean;
+                  scheduledAt?: string;
+                  contentAvailable?: boolean;
+                  critical?: boolean;
+                  priority?: MessagePriority;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string[]?,
+            string[]?,
+            string[]?,
+            object?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            number?,
+            boolean?,
+            string?,
+            boolean?,
+            boolean?,
+            MessagePriority?,
+        ]
     ): Promise<Models.Message> {
-        let params: { messageId: string, title?: string, body?: string, topics?: string[], users?: string[], targets?: string[], data?: object, action?: string, image?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: number, draft?: boolean, scheduledAt?: string, contentAvailable?: boolean, critical?: boolean, priority?: MessagePriority };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { messageId: string, title?: string, body?: string, topics?: string[], users?: string[], targets?: string[], data?: object, action?: string, image?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: number, draft?: boolean, scheduledAt?: string, contentAvailable?: boolean, critical?: boolean, priority?: MessagePriority };
+        let params: {
+            messageId: string;
+            title?: string;
+            body?: string;
+            topics?: string[];
+            users?: string[];
+            targets?: string[];
+            data?: object;
+            action?: string;
+            image?: string;
+            icon?: string;
+            sound?: string;
+            color?: string;
+            tag?: string;
+            badge?: number;
+            draft?: boolean;
+            scheduledAt?: string;
+            contentAvailable?: boolean;
+            critical?: boolean;
+            priority?: MessagePriority;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                messageId: string;
+                title?: string;
+                body?: string;
+                topics?: string[];
+                users?: string[];
+                targets?: string[];
+                data?: object;
+                action?: string;
+                image?: string;
+                icon?: string;
+                sound?: string;
+                color?: string;
+                tag?: string;
+                badge?: number;
+                draft?: boolean;
+                scheduledAt?: string;
+                contentAvailable?: boolean;
+                critical?: boolean;
+                priority?: MessagePriority;
+            };
         } else {
             params = {
                 messageId: paramsOrFirst as string,
@@ -436,10 +736,10 @@ export class Messaging {
                 scheduledAt: rest[14] as string,
                 contentAvailable: rest[15] as boolean,
                 critical: rest[16] as boolean,
-                priority: rest[17] as MessagePriority            
+                priority: rest[17] as MessagePriority,
             };
         }
-        
+
         const messageId = params.messageId;
         const title = params.title;
         const body = params.body;
@@ -461,9 +761,10 @@ export class Messaging {
         const priority = params.priority;
 
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-
         const apiPath = '/messaging/messages/push';
         const payload: Payload = {};
         if (typeof messageId !== 'undefined') {
@@ -528,20 +829,15 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Update a push notification by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
-     * 
+     *
      *
      * @param {string} params.messageId - Message ID.
      * @param {string[]} params.topics - List of Topic IDs.
@@ -565,10 +861,30 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Message>}
      */
-    updatePush(params: { messageId: string, topics?: string[], users?: string[], targets?: string[], title?: string, body?: string, data?: object, action?: string, image?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: number, draft?: boolean, scheduledAt?: string, contentAvailable?: boolean, critical?: boolean, priority?: MessagePriority }): Promise<Models.Message>;
+    updatePush(params: {
+        messageId: string;
+        topics?: string[];
+        users?: string[];
+        targets?: string[];
+        title?: string;
+        body?: string;
+        data?: object;
+        action?: string;
+        image?: string;
+        icon?: string;
+        sound?: string;
+        color?: string;
+        tag?: string;
+        badge?: number;
+        draft?: boolean;
+        scheduledAt?: string;
+        contentAvailable?: boolean;
+        critical?: boolean;
+        priority?: MessagePriority;
+    }): Promise<Models.Message>;
     /**
      * Update a push notification by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
-     * 
+     *
      *
      * @param {string} messageId - Message ID.
      * @param {string[]} topics - List of Topic IDs.
@@ -593,15 +909,120 @@ export class Messaging {
      * @returns {Promise<Models.Message>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePush(messageId: string, topics?: string[], users?: string[], targets?: string[], title?: string, body?: string, data?: object, action?: string, image?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: number, draft?: boolean, scheduledAt?: string, contentAvailable?: boolean, critical?: boolean, priority?: MessagePriority): Promise<Models.Message>;
     updatePush(
-        paramsOrFirst: { messageId: string, topics?: string[], users?: string[], targets?: string[], title?: string, body?: string, data?: object, action?: string, image?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: number, draft?: boolean, scheduledAt?: string, contentAvailable?: boolean, critical?: boolean, priority?: MessagePriority } | string,
-        ...rest: [(string[])?, (string[])?, (string[])?, (string)?, (string)?, (object)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (boolean)?, (string)?, (boolean)?, (boolean)?, (MessagePriority)?]    
+        messageId: string,
+        topics?: string[],
+        users?: string[],
+        targets?: string[],
+        title?: string,
+        body?: string,
+        data?: object,
+        action?: string,
+        image?: string,
+        icon?: string,
+        sound?: string,
+        color?: string,
+        tag?: string,
+        badge?: number,
+        draft?: boolean,
+        scheduledAt?: string,
+        contentAvailable?: boolean,
+        critical?: boolean,
+        priority?: MessagePriority,
+    ): Promise<Models.Message>;
+    updatePush(
+        paramsOrFirst:
+            | {
+                  messageId: string;
+                  topics?: string[];
+                  users?: string[];
+                  targets?: string[];
+                  title?: string;
+                  body?: string;
+                  data?: object;
+                  action?: string;
+                  image?: string;
+                  icon?: string;
+                  sound?: string;
+                  color?: string;
+                  tag?: string;
+                  badge?: number;
+                  draft?: boolean;
+                  scheduledAt?: string;
+                  contentAvailable?: boolean;
+                  critical?: boolean;
+                  priority?: MessagePriority;
+              }
+            | string,
+        ...rest: [
+            string[]?,
+            string[]?,
+            string[]?,
+            string?,
+            string?,
+            object?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            number?,
+            boolean?,
+            string?,
+            boolean?,
+            boolean?,
+            MessagePriority?,
+        ]
     ): Promise<Models.Message> {
-        let params: { messageId: string, topics?: string[], users?: string[], targets?: string[], title?: string, body?: string, data?: object, action?: string, image?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: number, draft?: boolean, scheduledAt?: string, contentAvailable?: boolean, critical?: boolean, priority?: MessagePriority };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { messageId: string, topics?: string[], users?: string[], targets?: string[], title?: string, body?: string, data?: object, action?: string, image?: string, icon?: string, sound?: string, color?: string, tag?: string, badge?: number, draft?: boolean, scheduledAt?: string, contentAvailable?: boolean, critical?: boolean, priority?: MessagePriority };
+        let params: {
+            messageId: string;
+            topics?: string[];
+            users?: string[];
+            targets?: string[];
+            title?: string;
+            body?: string;
+            data?: object;
+            action?: string;
+            image?: string;
+            icon?: string;
+            sound?: string;
+            color?: string;
+            tag?: string;
+            badge?: number;
+            draft?: boolean;
+            scheduledAt?: string;
+            contentAvailable?: boolean;
+            critical?: boolean;
+            priority?: MessagePriority;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                messageId: string;
+                topics?: string[];
+                users?: string[];
+                targets?: string[];
+                title?: string;
+                body?: string;
+                data?: object;
+                action?: string;
+                image?: string;
+                icon?: string;
+                sound?: string;
+                color?: string;
+                tag?: string;
+                badge?: number;
+                draft?: boolean;
+                scheduledAt?: string;
+                contentAvailable?: boolean;
+                critical?: boolean;
+                priority?: MessagePriority;
+            };
         } else {
             params = {
                 messageId: paramsOrFirst as string,
@@ -622,10 +1043,10 @@ export class Messaging {
                 scheduledAt: rest[14] as string,
                 contentAvailable: rest[15] as boolean,
                 critical: rest[16] as boolean,
-                priority: rest[17] as MessagePriority            
+                priority: rest[17] as MessagePriority,
             };
         }
-        
+
         const messageId = params.messageId;
         const topics = params.topics;
         const users = params.users;
@@ -646,11 +1067,15 @@ export class Messaging {
         const critical = params.critical;
         const priority = params.priority;
 
-        if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+        if (typeof messageId === 'undefined' || messageId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-
-        const apiPath = '/messaging/messages/push/{messageId}'.replace('{messageId}', encodeURIComponent(String(messageId)));
+        const apiPath = '/messaging/messages/push/{messageId}'.replace(
+            '{messageId}',
+            encodeURIComponent(String(messageId)),
+        );
         const payload: Payload = {};
         if (typeof topics !== 'undefined') {
             payload['topics'] = topics;
@@ -711,15 +1136,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -736,7 +1156,15 @@ export class Messaging {
      * @returns {Promise<Models.Message>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Messaging.createSMS` instead.
      */
-    createSms(params: { messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], draft?: boolean, scheduledAt?: string }): Promise<Models.Message>;
+    createSms(params: {
+        messageId: string;
+        content: string;
+        topics?: string[];
+        users?: string[];
+        targets?: string[];
+        draft?: boolean;
+        scheduledAt?: string;
+    }): Promise<Models.Message>;
     /**
      * Create a new SMS message.
      *
@@ -751,15 +1179,53 @@ export class Messaging {
      * @returns {Promise<Models.Message>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSms(messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], draft?: boolean, scheduledAt?: string): Promise<Models.Message>;
     createSms(
-        paramsOrFirst: { messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], draft?: boolean, scheduledAt?: string } | string,
-        ...rest: [(string)?, (string[])?, (string[])?, (string[])?, (boolean)?, (string)?]    
+        messageId: string,
+        content: string,
+        topics?: string[],
+        users?: string[],
+        targets?: string[],
+        draft?: boolean,
+        scheduledAt?: string,
+    ): Promise<Models.Message>;
+    createSms(
+        paramsOrFirst:
+            | {
+                  messageId: string;
+                  content: string;
+                  topics?: string[];
+                  users?: string[];
+                  targets?: string[];
+                  draft?: boolean;
+                  scheduledAt?: string;
+              }
+            | string,
+        ...rest: [string?, string[]?, string[]?, string[]?, boolean?, string?]
     ): Promise<Models.Message> {
-        let params: { messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], draft?: boolean, scheduledAt?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], draft?: boolean, scheduledAt?: string };
+        let params: {
+            messageId: string;
+            content: string;
+            topics?: string[];
+            users?: string[];
+            targets?: string[];
+            draft?: boolean;
+            scheduledAt?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                messageId: string;
+                content: string;
+                topics?: string[];
+                users?: string[];
+                targets?: string[];
+                draft?: boolean;
+                scheduledAt?: string;
+            };
         } else {
             params = {
                 messageId: paramsOrFirst as string,
@@ -768,10 +1234,10 @@ export class Messaging {
                 users: rest[2] as string[],
                 targets: rest[3] as string[],
                 draft: rest[4] as boolean,
-                scheduledAt: rest[5] as string            
+                scheduledAt: rest[5] as string,
             };
         }
-        
+
         const messageId = params.messageId;
         const content = params.content;
         const topics = params.topics;
@@ -781,12 +1247,15 @@ export class Messaging {
         const scheduledAt = params.scheduledAt;
 
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
         if (typeof content === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "content"');
+            throw new AppwriteException(
+                'Missing required parameter: "content"',
+            );
         }
-
         const apiPath = '/messaging/messages/sms';
         const payload: Payload = {};
         if (typeof messageId !== 'undefined') {
@@ -815,15 +1284,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -839,7 +1303,15 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Message>}
      */
-    createSMS(params: { messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], draft?: boolean, scheduledAt?: string }): Promise<Models.Message>;
+    createSMS(params: {
+        messageId: string;
+        content: string;
+        topics?: string[];
+        users?: string[];
+        targets?: string[];
+        draft?: boolean;
+        scheduledAt?: string;
+    }): Promise<Models.Message>;
     /**
      * Create a new SMS message.
      *
@@ -854,15 +1326,53 @@ export class Messaging {
      * @returns {Promise<Models.Message>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSMS(messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], draft?: boolean, scheduledAt?: string): Promise<Models.Message>;
     createSMS(
-        paramsOrFirst: { messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], draft?: boolean, scheduledAt?: string } | string,
-        ...rest: [(string)?, (string[])?, (string[])?, (string[])?, (boolean)?, (string)?]    
+        messageId: string,
+        content: string,
+        topics?: string[],
+        users?: string[],
+        targets?: string[],
+        draft?: boolean,
+        scheduledAt?: string,
+    ): Promise<Models.Message>;
+    createSMS(
+        paramsOrFirst:
+            | {
+                  messageId: string;
+                  content: string;
+                  topics?: string[];
+                  users?: string[];
+                  targets?: string[];
+                  draft?: boolean;
+                  scheduledAt?: string;
+              }
+            | string,
+        ...rest: [string?, string[]?, string[]?, string[]?, boolean?, string?]
     ): Promise<Models.Message> {
-        let params: { messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], draft?: boolean, scheduledAt?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { messageId: string, content: string, topics?: string[], users?: string[], targets?: string[], draft?: boolean, scheduledAt?: string };
+        let params: {
+            messageId: string;
+            content: string;
+            topics?: string[];
+            users?: string[];
+            targets?: string[];
+            draft?: boolean;
+            scheduledAt?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                messageId: string;
+                content: string;
+                topics?: string[];
+                users?: string[];
+                targets?: string[];
+                draft?: boolean;
+                scheduledAt?: string;
+            };
         } else {
             params = {
                 messageId: paramsOrFirst as string,
@@ -871,10 +1381,10 @@ export class Messaging {
                 users: rest[2] as string[],
                 targets: rest[3] as string[],
                 draft: rest[4] as boolean,
-                scheduledAt: rest[5] as string            
+                scheduledAt: rest[5] as string,
             };
         }
-        
+
         const messageId = params.messageId;
         const content = params.content;
         const topics = params.topics;
@@ -884,12 +1394,15 @@ export class Messaging {
         const scheduledAt = params.scheduledAt;
 
         if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
         if (typeof content === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "content"');
+            throw new AppwriteException(
+                'Missing required parameter: "content"',
+            );
         }
-
         const apiPath = '/messaging/messages/sms';
         const payload: Payload = {};
         if (typeof messageId !== 'undefined') {
@@ -918,20 +1431,15 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Update an SMS message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
-     * 
+     *
      *
      * @param {string} params.messageId - Message ID.
      * @param {string[]} params.topics - List of Topic IDs.
@@ -944,10 +1452,18 @@ export class Messaging {
      * @returns {Promise<Models.Message>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Messaging.updateSMS` instead.
      */
-    updateSms(params: { messageId: string, topics?: string[], users?: string[], targets?: string[], content?: string, draft?: boolean, scheduledAt?: string }): Promise<Models.Message>;
+    updateSms(params: {
+        messageId: string;
+        topics?: string[];
+        users?: string[];
+        targets?: string[];
+        content?: string;
+        draft?: boolean;
+        scheduledAt?: string;
+    }): Promise<Models.Message>;
     /**
      * Update an SMS message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
-     * 
+     *
      *
      * @param {string} messageId - Message ID.
      * @param {string[]} topics - List of Topic IDs.
@@ -960,15 +1476,53 @@ export class Messaging {
      * @returns {Promise<Models.Message>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateSms(messageId: string, topics?: string[], users?: string[], targets?: string[], content?: string, draft?: boolean, scheduledAt?: string): Promise<Models.Message>;
     updateSms(
-        paramsOrFirst: { messageId: string, topics?: string[], users?: string[], targets?: string[], content?: string, draft?: boolean, scheduledAt?: string } | string,
-        ...rest: [(string[])?, (string[])?, (string[])?, (string)?, (boolean)?, (string)?]    
+        messageId: string,
+        topics?: string[],
+        users?: string[],
+        targets?: string[],
+        content?: string,
+        draft?: boolean,
+        scheduledAt?: string,
+    ): Promise<Models.Message>;
+    updateSms(
+        paramsOrFirst:
+            | {
+                  messageId: string;
+                  topics?: string[];
+                  users?: string[];
+                  targets?: string[];
+                  content?: string;
+                  draft?: boolean;
+                  scheduledAt?: string;
+              }
+            | string,
+        ...rest: [string[]?, string[]?, string[]?, string?, boolean?, string?]
     ): Promise<Models.Message> {
-        let params: { messageId: string, topics?: string[], users?: string[], targets?: string[], content?: string, draft?: boolean, scheduledAt?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { messageId: string, topics?: string[], users?: string[], targets?: string[], content?: string, draft?: boolean, scheduledAt?: string };
+        let params: {
+            messageId: string;
+            topics?: string[];
+            users?: string[];
+            targets?: string[];
+            content?: string;
+            draft?: boolean;
+            scheduledAt?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                messageId: string;
+                topics?: string[];
+                users?: string[];
+                targets?: string[];
+                content?: string;
+                draft?: boolean;
+                scheduledAt?: string;
+            };
         } else {
             params = {
                 messageId: paramsOrFirst as string,
@@ -977,10 +1531,10 @@ export class Messaging {
                 targets: rest[2] as string[],
                 content: rest[3] as string,
                 draft: rest[4] as boolean,
-                scheduledAt: rest[5] as string            
+                scheduledAt: rest[5] as string,
             };
         }
-        
+
         const messageId = params.messageId;
         const topics = params.topics;
         const users = params.users;
@@ -989,11 +1543,15 @@ export class Messaging {
         const draft = params.draft;
         const scheduledAt = params.scheduledAt;
 
-        if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+        if (typeof messageId === 'undefined' || messageId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-
-        const apiPath = '/messaging/messages/sms/{messageId}'.replace('{messageId}', encodeURIComponent(String(messageId)));
+        const apiPath = '/messaging/messages/sms/{messageId}'.replace(
+            '{messageId}',
+            encodeURIComponent(String(messageId)),
+        );
         const payload: Payload = {};
         if (typeof topics !== 'undefined') {
             payload['topics'] = topics;
@@ -1018,20 +1576,15 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
      * Update an SMS message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
-     * 
+     *
      *
      * @param {string} params.messageId - Message ID.
      * @param {string[]} params.topics - List of Topic IDs.
@@ -1043,10 +1596,18 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Message>}
      */
-    updateSMS(params: { messageId: string, topics?: string[], users?: string[], targets?: string[], content?: string, draft?: boolean, scheduledAt?: string }): Promise<Models.Message>;
+    updateSMS(params: {
+        messageId: string;
+        topics?: string[];
+        users?: string[];
+        targets?: string[];
+        content?: string;
+        draft?: boolean;
+        scheduledAt?: string;
+    }): Promise<Models.Message>;
     /**
      * Update an SMS message by its unique ID. This endpoint only works on messages that are in draft status. Messages that are already processing, sent, or failed cannot be updated.
-     * 
+     *
      *
      * @param {string} messageId - Message ID.
      * @param {string[]} topics - List of Topic IDs.
@@ -1059,15 +1620,53 @@ export class Messaging {
      * @returns {Promise<Models.Message>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateSMS(messageId: string, topics?: string[], users?: string[], targets?: string[], content?: string, draft?: boolean, scheduledAt?: string): Promise<Models.Message>;
     updateSMS(
-        paramsOrFirst: { messageId: string, topics?: string[], users?: string[], targets?: string[], content?: string, draft?: boolean, scheduledAt?: string } | string,
-        ...rest: [(string[])?, (string[])?, (string[])?, (string)?, (boolean)?, (string)?]    
+        messageId: string,
+        topics?: string[],
+        users?: string[],
+        targets?: string[],
+        content?: string,
+        draft?: boolean,
+        scheduledAt?: string,
+    ): Promise<Models.Message>;
+    updateSMS(
+        paramsOrFirst:
+            | {
+                  messageId: string;
+                  topics?: string[];
+                  users?: string[];
+                  targets?: string[];
+                  content?: string;
+                  draft?: boolean;
+                  scheduledAt?: string;
+              }
+            | string,
+        ...rest: [string[]?, string[]?, string[]?, string?, boolean?, string?]
     ): Promise<Models.Message> {
-        let params: { messageId: string, topics?: string[], users?: string[], targets?: string[], content?: string, draft?: boolean, scheduledAt?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { messageId: string, topics?: string[], users?: string[], targets?: string[], content?: string, draft?: boolean, scheduledAt?: string };
+        let params: {
+            messageId: string;
+            topics?: string[];
+            users?: string[];
+            targets?: string[];
+            content?: string;
+            draft?: boolean;
+            scheduledAt?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                messageId: string;
+                topics?: string[];
+                users?: string[];
+                targets?: string[];
+                content?: string;
+                draft?: boolean;
+                scheduledAt?: string;
+            };
         } else {
             params = {
                 messageId: paramsOrFirst as string,
@@ -1076,10 +1675,10 @@ export class Messaging {
                 targets: rest[2] as string[],
                 content: rest[3] as string,
                 draft: rest[4] as boolean,
-                scheduledAt: rest[5] as string            
+                scheduledAt: rest[5] as string,
             };
         }
-        
+
         const messageId = params.messageId;
         const topics = params.topics;
         const users = params.users;
@@ -1088,11 +1687,15 @@ export class Messaging {
         const draft = params.draft;
         const scheduledAt = params.scheduledAt;
 
-        if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+        if (typeof messageId === 'undefined' || messageId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-
-        const apiPath = '/messaging/messages/sms/{messageId}'.replace('{messageId}', encodeURIComponent(String(messageId)));
+        const apiPath = '/messaging/messages/sms/{messageId}'.replace(
+            '{messageId}',
+            encodeURIComponent(String(messageId)),
+        );
         const payload: Payload = {};
         if (typeof topics !== 'undefined') {
             payload['topics'] = topics;
@@ -1117,20 +1720,15 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
      * Get a message by its unique ID.
-     * 
+     *
      *
      * @param {string} params.messageId - Message ID.
      * @throws {AppwriteException}
@@ -1139,7 +1737,7 @@ export class Messaging {
     getMessage(params: { messageId: string }): Promise<Models.Message>;
     /**
      * Get a message by its unique ID.
-     * 
+     *
      *
      * @param {string} messageId - Message ID.
      * @throws {AppwriteException}
@@ -1148,39 +1746,42 @@ export class Messaging {
      */
     getMessage(messageId: string): Promise<Models.Message>;
     getMessage(
-        paramsOrFirst: { messageId: string } | string    
+        paramsOrFirst: { messageId: string } | string,
     ): Promise<Models.Message> {
         let params: { messageId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { messageId: string };
         } else {
             params = {
-                messageId: paramsOrFirst as string            
+                messageId: paramsOrFirst as string,
             };
         }
-        
+
         const messageId = params.messageId;
 
-        if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+        if (typeof messageId === 'undefined' || messageId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-
-        const apiPath = '/messaging/messages/{messageId}'.replace('{messageId}', encodeURIComponent(String(messageId)));
+        const apiPath = '/messaging/messages/{messageId}'.replace(
+            '{messageId}',
+            encodeURIComponent(String(messageId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1200,40 +1801,42 @@ export class Messaging {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     delete(messageId: string): Promise<{}>;
-    delete(
-        paramsOrFirst: { messageId: string } | string    
-    ): Promise<{}> {
+    delete(paramsOrFirst: { messageId: string } | string): Promise<{}> {
         let params: { messageId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { messageId: string };
         } else {
             params = {
-                messageId: paramsOrFirst as string            
+                messageId: paramsOrFirst as string,
             };
         }
-        
+
         const messageId = params.messageId;
 
-        if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+        if (typeof messageId === 'undefined' || messageId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-
-        const apiPath = '/messaging/messages/{messageId}'.replace('{messageId}', encodeURIComponent(String(messageId)));
+        const apiPath = '/messaging/messages/{messageId}'.replace(
+            '{messageId}',
+            encodeURIComponent(String(messageId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -1245,7 +1848,11 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.TargetList>}
      */
-    listTargets(params: { messageId: string, queries?: string[], total?: boolean }): Promise<Models.TargetList>;
+    listTargets(params: {
+        messageId: string;
+        queries?: string[];
+        total?: boolean;
+    }): Promise<Models.TargetList>;
     /**
      * Get a list of the targets associated with a message.
      *
@@ -1256,32 +1863,49 @@ export class Messaging {
      * @returns {Promise<Models.TargetList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listTargets(messageId: string, queries?: string[], total?: boolean): Promise<Models.TargetList>;
     listTargets(
-        paramsOrFirst: { messageId: string, queries?: string[], total?: boolean } | string,
-        ...rest: [(string[])?, (boolean)?]    
+        messageId: string,
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.TargetList>;
+    listTargets(
+        paramsOrFirst:
+            { messageId: string; queries?: string[]; total?: boolean } | string,
+        ...rest: [string[]?, boolean?]
     ): Promise<Models.TargetList> {
-        let params: { messageId: string, queries?: string[], total?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { messageId: string, queries?: string[], total?: boolean };
+        let params: { messageId: string; queries?: string[]; total?: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                messageId: string;
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 messageId: paramsOrFirst as string,
                 queries: rest[0] as string[],
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const messageId = params.messageId;
         const queries = params.queries;
         const total = params.total;
 
-        if (typeof messageId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "messageId"');
+        if (typeof messageId === 'undefined' || messageId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "messageId"',
+            );
         }
-
-        const apiPath = '/messaging/messages/{messageId}/targets'.replace('{messageId}', encodeURIComponent(String(messageId)));
+        const apiPath = '/messaging/messages/{messageId}/targets'.replace(
+            '{messageId}',
+            encodeURIComponent(String(messageId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1293,15 +1917,10 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1313,7 +1932,11 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProviderList>}
      */
-    listProviders(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.ProviderList>;
+    listProviders(params?: {
+        queries?: string[];
+        search?: string;
+        total?: boolean;
+    }): Promise<Models.ProviderList>;
     /**
      * Get a list of all providers from the current Appwrite project.
      *
@@ -1324,27 +1947,40 @@ export class Messaging {
      * @returns {Promise<Models.ProviderList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listProviders(queries?: string[], search?: string, total?: boolean): Promise<Models.ProviderList>;
     listProviders(
-        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
-        ...rest: [(string)?, (boolean)?]    
+        queries?: string[],
+        search?: string,
+        total?: boolean,
+    ): Promise<Models.ProviderList>;
+    listProviders(
+        paramsOrFirst?:
+            { queries?: string[]; search?: string; total?: boolean } | string[],
+        ...rest: [string?, boolean?]
     ): Promise<Models.ProviderList> {
-        let params: { queries?: string[], search?: string, total?: boolean };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
+        let params: { queries?: string[]; search?: string; total?: boolean };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                search?: string;
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
                 search: rest[0] as string,
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const queries = params.queries;
         const search = params.search;
         const total = params.total;
-
 
         const apiPath = '/messaging/providers';
         const payload: Payload = {};
@@ -1361,15 +1997,10 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1387,7 +2018,16 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Messaging.createAPNSProvider` instead.
      */
-    createApnsProvider(params: { providerId: string, name: string, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean, enabled?: boolean }): Promise<Models.Provider>;
+    createApnsProvider(params: {
+        providerId: string;
+        name: string;
+        authKey?: string;
+        authKeyId?: string;
+        teamId?: string;
+        bundleId?: string;
+        sandbox?: boolean;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new Apple Push Notification service provider.
      *
@@ -1403,15 +2043,65 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createApnsProvider(providerId: string, name: string, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean, enabled?: boolean): Promise<Models.Provider>;
     createApnsProvider(
-        paramsOrFirst: { providerId: string, name: string, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        authKey?: string,
+        authKeyId?: string,
+        teamId?: string,
+        bundleId?: string,
+        sandbox?: boolean,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createApnsProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  authKey?: string;
+                  authKeyId?: string;
+                  teamId?: string;
+                  bundleId?: string;
+                  sandbox?: boolean;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+            boolean?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            authKey?: string;
+            authKeyId?: string;
+            teamId?: string;
+            bundleId?: string;
+            sandbox?: boolean;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                authKey?: string;
+                authKeyId?: string;
+                teamId?: string;
+                bundleId?: string;
+                sandbox?: boolean;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -1421,10 +2111,10 @@ export class Messaging {
                 teamId: rest[3] as string,
                 bundleId: rest[4] as string,
                 sandbox: rest[5] as boolean,
-                enabled: rest[6] as boolean            
+                enabled: rest[6] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const authKey = params.authKey;
@@ -1435,12 +2125,13 @@ export class Messaging {
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/providers/apns';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -1472,15 +2163,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1497,7 +2183,16 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    createAPNSProvider(params: { providerId: string, name: string, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean, enabled?: boolean }): Promise<Models.Provider>;
+    createAPNSProvider(params: {
+        providerId: string;
+        name: string;
+        authKey?: string;
+        authKeyId?: string;
+        teamId?: string;
+        bundleId?: string;
+        sandbox?: boolean;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new Apple Push Notification service provider.
      *
@@ -1513,15 +2208,65 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createAPNSProvider(providerId: string, name: string, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean, enabled?: boolean): Promise<Models.Provider>;
     createAPNSProvider(
-        paramsOrFirst: { providerId: string, name: string, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (boolean)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        authKey?: string,
+        authKeyId?: string,
+        teamId?: string,
+        bundleId?: string,
+        sandbox?: boolean,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createAPNSProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  authKey?: string;
+                  authKeyId?: string;
+                  teamId?: string;
+                  bundleId?: string;
+                  sandbox?: boolean;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+            boolean?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            authKey?: string;
+            authKeyId?: string;
+            teamId?: string;
+            bundleId?: string;
+            sandbox?: boolean;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                authKey?: string;
+                authKeyId?: string;
+                teamId?: string;
+                bundleId?: string;
+                sandbox?: boolean;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -1531,10 +2276,10 @@ export class Messaging {
                 teamId: rest[3] as string,
                 bundleId: rest[4] as string,
                 sandbox: rest[5] as boolean,
-                enabled: rest[6] as boolean            
+                enabled: rest[6] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const authKey = params.authKey;
@@ -1545,12 +2290,13 @@ export class Messaging {
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/providers/apns';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -1582,15 +2328,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1608,7 +2349,16 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Messaging.updateAPNSProvider` instead.
      */
-    updateApnsProvider(params: { providerId: string, name?: string, enabled?: boolean, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean }): Promise<Models.Provider>;
+    updateApnsProvider(params: {
+        providerId: string;
+        name?: string;
+        enabled?: boolean;
+        authKey?: string;
+        authKeyId?: string;
+        teamId?: string;
+        bundleId?: string;
+        sandbox?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Update a Apple Push Notification service provider by its unique ID.
      *
@@ -1624,15 +2374,65 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateApnsProvider(providerId: string, name?: string, enabled?: boolean, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean): Promise<Models.Provider>;
     updateApnsProvider(
-        paramsOrFirst: { providerId: string, name?: string, enabled?: boolean, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean } | string,
-        ...rest: [(string)?, (boolean)?, (string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name?: string,
+        enabled?: boolean,
+        authKey?: string,
+        authKeyId?: string,
+        teamId?: string,
+        bundleId?: string,
+        sandbox?: boolean,
+    ): Promise<Models.Provider>;
+    updateApnsProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  enabled?: boolean;
+                  authKey?: string;
+                  authKeyId?: string;
+                  teamId?: string;
+                  bundleId?: string;
+                  sandbox?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            boolean?,
+            string?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, enabled?: boolean, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, enabled?: boolean, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean };
+        let params: {
+            providerId: string;
+            name?: string;
+            enabled?: boolean;
+            authKey?: string;
+            authKeyId?: string;
+            teamId?: string;
+            bundleId?: string;
+            sandbox?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                enabled?: boolean;
+                authKey?: string;
+                authKeyId?: string;
+                teamId?: string;
+                bundleId?: string;
+                sandbox?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -1642,10 +2442,10 @@ export class Messaging {
                 authKeyId: rest[3] as string,
                 teamId: rest[4] as string,
                 bundleId: rest[5] as string,
-                sandbox: rest[6] as boolean            
+                sandbox: rest[6] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const enabled = params.enabled;
@@ -1655,11 +2455,15 @@ export class Messaging {
         const bundleId = params.bundleId;
         const sandbox = params.sandbox;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/apns/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/apns/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1687,15 +2491,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1712,7 +2511,16 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    updateAPNSProvider(params: { providerId: string, name?: string, enabled?: boolean, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean }): Promise<Models.Provider>;
+    updateAPNSProvider(params: {
+        providerId: string;
+        name?: string;
+        enabled?: boolean;
+        authKey?: string;
+        authKeyId?: string;
+        teamId?: string;
+        bundleId?: string;
+        sandbox?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Update a Apple Push Notification service provider by its unique ID.
      *
@@ -1728,15 +2536,65 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateAPNSProvider(providerId: string, name?: string, enabled?: boolean, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean): Promise<Models.Provider>;
     updateAPNSProvider(
-        paramsOrFirst: { providerId: string, name?: string, enabled?: boolean, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean } | string,
-        ...rest: [(string)?, (boolean)?, (string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name?: string,
+        enabled?: boolean,
+        authKey?: string,
+        authKeyId?: string,
+        teamId?: string,
+        bundleId?: string,
+        sandbox?: boolean,
+    ): Promise<Models.Provider>;
+    updateAPNSProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  enabled?: boolean;
+                  authKey?: string;
+                  authKeyId?: string;
+                  teamId?: string;
+                  bundleId?: string;
+                  sandbox?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            boolean?,
+            string?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, enabled?: boolean, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, enabled?: boolean, authKey?: string, authKeyId?: string, teamId?: string, bundleId?: string, sandbox?: boolean };
+        let params: {
+            providerId: string;
+            name?: string;
+            enabled?: boolean;
+            authKey?: string;
+            authKeyId?: string;
+            teamId?: string;
+            bundleId?: string;
+            sandbox?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                enabled?: boolean;
+                authKey?: string;
+                authKeyId?: string;
+                teamId?: string;
+                bundleId?: string;
+                sandbox?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -1746,10 +2604,10 @@ export class Messaging {
                 authKeyId: rest[3] as string,
                 teamId: rest[4] as string,
                 bundleId: rest[5] as string,
-                sandbox: rest[6] as boolean            
+                sandbox: rest[6] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const enabled = params.enabled;
@@ -1759,11 +2617,15 @@ export class Messaging {
         const bundleId = params.bundleId;
         const sandbox = params.sandbox;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/apns/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/apns/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1791,15 +2653,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1813,7 +2670,12 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Messaging.createFCMProvider` instead.
      */
-    createFcmProvider(params: { providerId: string, name: string, serviceAccountJSON?: object, enabled?: boolean }): Promise<Models.Provider>;
+    createFcmProvider(params: {
+        providerId: string;
+        name: string;
+        serviceAccountJSON?: object;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new Firebase Cloud Messaging provider.
      *
@@ -1825,36 +2687,63 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createFcmProvider(providerId: string, name: string, serviceAccountJSON?: object, enabled?: boolean): Promise<Models.Provider>;
     createFcmProvider(
-        paramsOrFirst: { providerId: string, name: string, serviceAccountJSON?: object, enabled?: boolean } | string,
-        ...rest: [(string)?, (object)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        serviceAccountJSON?: object,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createFcmProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  serviceAccountJSON?: object;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [string?, object?, boolean?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, serviceAccountJSON?: object, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, serviceAccountJSON?: object, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            serviceAccountJSON?: object;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                serviceAccountJSON?: object;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
                 name: rest[0] as string,
                 serviceAccountJSON: rest[1] as object,
-                enabled: rest[2] as boolean            
+                enabled: rest[2] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const serviceAccountJSON = params.serviceAccountJSON;
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/providers/fcm';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -1874,15 +2763,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1895,7 +2779,12 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    createFCMProvider(params: { providerId: string, name: string, serviceAccountJSON?: object, enabled?: boolean }): Promise<Models.Provider>;
+    createFCMProvider(params: {
+        providerId: string;
+        name: string;
+        serviceAccountJSON?: object;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new Firebase Cloud Messaging provider.
      *
@@ -1907,36 +2796,63 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createFCMProvider(providerId: string, name: string, serviceAccountJSON?: object, enabled?: boolean): Promise<Models.Provider>;
     createFCMProvider(
-        paramsOrFirst: { providerId: string, name: string, serviceAccountJSON?: object, enabled?: boolean } | string,
-        ...rest: [(string)?, (object)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        serviceAccountJSON?: object,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createFCMProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  serviceAccountJSON?: object;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [string?, object?, boolean?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, serviceAccountJSON?: object, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, serviceAccountJSON?: object, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            serviceAccountJSON?: object;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                serviceAccountJSON?: object;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
                 name: rest[0] as string,
                 serviceAccountJSON: rest[1] as object,
-                enabled: rest[2] as boolean            
+                enabled: rest[2] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const serviceAccountJSON = params.serviceAccountJSON;
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/providers/fcm';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -1956,15 +2872,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1978,7 +2889,12 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Messaging.updateFCMProvider` instead.
      */
-    updateFcmProvider(params: { providerId: string, name?: string, enabled?: boolean, serviceAccountJSON?: object }): Promise<Models.Provider>;
+    updateFcmProvider(params: {
+        providerId: string;
+        name?: string;
+        enabled?: boolean;
+        serviceAccountJSON?: object;
+    }): Promise<Models.Provider>;
     /**
      * Update a Firebase Cloud Messaging provider by its unique ID.
      *
@@ -1990,34 +2906,64 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateFcmProvider(providerId: string, name?: string, enabled?: boolean, serviceAccountJSON?: object): Promise<Models.Provider>;
     updateFcmProvider(
-        paramsOrFirst: { providerId: string, name?: string, enabled?: boolean, serviceAccountJSON?: object } | string,
-        ...rest: [(string)?, (boolean)?, (object)?]    
+        providerId: string,
+        name?: string,
+        enabled?: boolean,
+        serviceAccountJSON?: object,
+    ): Promise<Models.Provider>;
+    updateFcmProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  enabled?: boolean;
+                  serviceAccountJSON?: object;
+              }
+            | string,
+        ...rest: [string?, boolean?, object?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, enabled?: boolean, serviceAccountJSON?: object };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, enabled?: boolean, serviceAccountJSON?: object };
+        let params: {
+            providerId: string;
+            name?: string;
+            enabled?: boolean;
+            serviceAccountJSON?: object;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                enabled?: boolean;
+                serviceAccountJSON?: object;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                serviceAccountJSON: rest[2] as object            
+                serviceAccountJSON: rest[2] as object,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const enabled = params.enabled;
         const serviceAccountJSON = params.serviceAccountJSON;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/fcm/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/fcm/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2033,15 +2979,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2054,7 +2995,12 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    updateFCMProvider(params: { providerId: string, name?: string, enabled?: boolean, serviceAccountJSON?: object }): Promise<Models.Provider>;
+    updateFCMProvider(params: {
+        providerId: string;
+        name?: string;
+        enabled?: boolean;
+        serviceAccountJSON?: object;
+    }): Promise<Models.Provider>;
     /**
      * Update a Firebase Cloud Messaging provider by its unique ID.
      *
@@ -2066,34 +3012,64 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateFCMProvider(providerId: string, name?: string, enabled?: boolean, serviceAccountJSON?: object): Promise<Models.Provider>;
     updateFCMProvider(
-        paramsOrFirst: { providerId: string, name?: string, enabled?: boolean, serviceAccountJSON?: object } | string,
-        ...rest: [(string)?, (boolean)?, (object)?]    
+        providerId: string,
+        name?: string,
+        enabled?: boolean,
+        serviceAccountJSON?: object,
+    ): Promise<Models.Provider>;
+    updateFCMProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  enabled?: boolean;
+                  serviceAccountJSON?: object;
+              }
+            | string,
+        ...rest: [string?, boolean?, object?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, enabled?: boolean, serviceAccountJSON?: object };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, enabled?: boolean, serviceAccountJSON?: object };
+        let params: {
+            providerId: string;
+            name?: string;
+            enabled?: boolean;
+            serviceAccountJSON?: object;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                enabled?: boolean;
+                serviceAccountJSON?: object;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                serviceAccountJSON: rest[2] as object            
+                serviceAccountJSON: rest[2] as object,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const enabled = params.enabled;
         const serviceAccountJSON = params.serviceAccountJSON;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/fcm/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/fcm/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2109,15 +3085,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2136,7 +3107,18 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    createMailgunProvider(params: { providerId: string, name: string, apiKey?: string, domain?: string, isEuRegion?: boolean, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean }): Promise<Models.Provider>;
+    createMailgunProvider(params: {
+        providerId: string;
+        name: string;
+        apiKey?: string;
+        domain?: string;
+        isEuRegion?: boolean;
+        fromName?: string;
+        fromEmail?: string;
+        replyToName?: string;
+        replyToEmail?: string;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new Mailgun provider.
      *
@@ -2154,15 +3136,75 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createMailgunProvider(providerId: string, name: string, apiKey?: string, domain?: string, isEuRegion?: boolean, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean): Promise<Models.Provider>;
     createMailgunProvider(
-        paramsOrFirst: { providerId: string, name: string, apiKey?: string, domain?: string, isEuRegion?: boolean, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (boolean)?, (string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        apiKey?: string,
+        domain?: string,
+        isEuRegion?: boolean,
+        fromName?: string,
+        fromEmail?: string,
+        replyToName?: string,
+        replyToEmail?: string,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createMailgunProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  apiKey?: string;
+                  domain?: string;
+                  isEuRegion?: boolean;
+                  fromName?: string;
+                  fromEmail?: string;
+                  replyToName?: string;
+                  replyToEmail?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            boolean?,
+            string?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, apiKey?: string, domain?: string, isEuRegion?: boolean, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, apiKey?: string, domain?: string, isEuRegion?: boolean, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            apiKey?: string;
+            domain?: string;
+            isEuRegion?: boolean;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                apiKey?: string;
+                domain?: string;
+                isEuRegion?: boolean;
+                fromName?: string;
+                fromEmail?: string;
+                replyToName?: string;
+                replyToEmail?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -2174,10 +3216,10 @@ export class Messaging {
                 fromEmail: rest[5] as string,
                 replyToName: rest[6] as string,
                 replyToEmail: rest[7] as string,
-                enabled: rest[8] as boolean            
+                enabled: rest[8] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const apiKey = params.apiKey;
@@ -2190,12 +3232,13 @@ export class Messaging {
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/providers/mailgun';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -2233,15 +3276,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -2260,7 +3298,18 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    updateMailgunProvider(params: { providerId: string, name?: string, apiKey?: string, domain?: string, isEuRegion?: boolean, enabled?: boolean, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string }): Promise<Models.Provider>;
+    updateMailgunProvider(params: {
+        providerId: string;
+        name?: string;
+        apiKey?: string;
+        domain?: string;
+        isEuRegion?: boolean;
+        enabled?: boolean;
+        fromName?: string;
+        fromEmail?: string;
+        replyToName?: string;
+        replyToEmail?: string;
+    }): Promise<Models.Provider>;
     /**
      * Update a Mailgun provider by its unique ID.
      *
@@ -2278,15 +3327,75 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateMailgunProvider(providerId: string, name?: string, apiKey?: string, domain?: string, isEuRegion?: boolean, enabled?: boolean, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string): Promise<Models.Provider>;
     updateMailgunProvider(
-        paramsOrFirst: { providerId: string, name?: string, apiKey?: string, domain?: string, isEuRegion?: boolean, enabled?: boolean, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (boolean)?, (boolean)?, (string)?, (string)?, (string)?, (string)?]    
+        providerId: string,
+        name?: string,
+        apiKey?: string,
+        domain?: string,
+        isEuRegion?: boolean,
+        enabled?: boolean,
+        fromName?: string,
+        fromEmail?: string,
+        replyToName?: string,
+        replyToEmail?: string,
+    ): Promise<Models.Provider>;
+    updateMailgunProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  apiKey?: string;
+                  domain?: string;
+                  isEuRegion?: boolean;
+                  enabled?: boolean;
+                  fromName?: string;
+                  fromEmail?: string;
+                  replyToName?: string;
+                  replyToEmail?: string;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            boolean?,
+            boolean?,
+            string?,
+            string?,
+            string?,
+            string?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, apiKey?: string, domain?: string, isEuRegion?: boolean, enabled?: boolean, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, apiKey?: string, domain?: string, isEuRegion?: boolean, enabled?: boolean, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string };
+        let params: {
+            providerId: string;
+            name?: string;
+            apiKey?: string;
+            domain?: string;
+            isEuRegion?: boolean;
+            enabled?: boolean;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                apiKey?: string;
+                domain?: string;
+                isEuRegion?: boolean;
+                enabled?: boolean;
+                fromName?: string;
+                fromEmail?: string;
+                replyToName?: string;
+                replyToEmail?: string;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -2298,10 +3407,10 @@ export class Messaging {
                 fromName: rest[5] as string,
                 fromEmail: rest[6] as string,
                 replyToName: rest[7] as string,
-                replyToEmail: rest[8] as string            
+                replyToEmail: rest[8] as string,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const apiKey = params.apiKey;
@@ -2313,11 +3422,15 @@ export class Messaging {
         const replyToName = params.replyToName;
         const replyToEmail = params.replyToEmail;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/mailgun/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/mailgun/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2351,15 +3464,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2374,7 +3482,14 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    createMsg91Provider(params: { providerId: string, name: string, templateId?: string, senderId?: string, authKey?: string, enabled?: boolean }): Promise<Models.Provider>;
+    createMsg91Provider(params: {
+        providerId: string;
+        name: string;
+        templateId?: string;
+        senderId?: string;
+        authKey?: string;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new MSG91 provider.
      *
@@ -2388,15 +3503,49 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createMsg91Provider(providerId: string, name: string, templateId?: string, senderId?: string, authKey?: string, enabled?: boolean): Promise<Models.Provider>;
     createMsg91Provider(
-        paramsOrFirst: { providerId: string, name: string, templateId?: string, senderId?: string, authKey?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        templateId?: string,
+        senderId?: string,
+        authKey?: string,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createMsg91Provider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  templateId?: string;
+                  senderId?: string;
+                  authKey?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [string?, string?, string?, string?, boolean?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, templateId?: string, senderId?: string, authKey?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, templateId?: string, senderId?: string, authKey?: string, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            templateId?: string;
+            senderId?: string;
+            authKey?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                templateId?: string;
+                senderId?: string;
+                authKey?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -2404,10 +3553,10 @@ export class Messaging {
                 templateId: rest[1] as string,
                 senderId: rest[2] as string,
                 authKey: rest[3] as string,
-                enabled: rest[4] as boolean            
+                enabled: rest[4] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const templateId = params.templateId;
@@ -2416,12 +3565,13 @@ export class Messaging {
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/providers/msg91';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -2447,15 +3597,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -2470,7 +3615,14 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    updateMsg91Provider(params: { providerId: string, name?: string, enabled?: boolean, templateId?: string, senderId?: string, authKey?: string }): Promise<Models.Provider>;
+    updateMsg91Provider(params: {
+        providerId: string;
+        name?: string;
+        enabled?: boolean;
+        templateId?: string;
+        senderId?: string;
+        authKey?: string;
+    }): Promise<Models.Provider>;
     /**
      * Update a MSG91 provider by its unique ID.
      *
@@ -2484,15 +3636,49 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateMsg91Provider(providerId: string, name?: string, enabled?: boolean, templateId?: string, senderId?: string, authKey?: string): Promise<Models.Provider>;
     updateMsg91Provider(
-        paramsOrFirst: { providerId: string, name?: string, enabled?: boolean, templateId?: string, senderId?: string, authKey?: string } | string,
-        ...rest: [(string)?, (boolean)?, (string)?, (string)?, (string)?]    
+        providerId: string,
+        name?: string,
+        enabled?: boolean,
+        templateId?: string,
+        senderId?: string,
+        authKey?: string,
+    ): Promise<Models.Provider>;
+    updateMsg91Provider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  enabled?: boolean;
+                  templateId?: string;
+                  senderId?: string;
+                  authKey?: string;
+              }
+            | string,
+        ...rest: [string?, boolean?, string?, string?, string?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, enabled?: boolean, templateId?: string, senderId?: string, authKey?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, enabled?: boolean, templateId?: string, senderId?: string, authKey?: string };
+        let params: {
+            providerId: string;
+            name?: string;
+            enabled?: boolean;
+            templateId?: string;
+            senderId?: string;
+            authKey?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                enabled?: boolean;
+                templateId?: string;
+                senderId?: string;
+                authKey?: string;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -2500,10 +3686,10 @@ export class Messaging {
                 enabled: rest[1] as boolean,
                 templateId: rest[2] as string,
                 senderId: rest[3] as string,
-                authKey: rest[4] as string            
+                authKey: rest[4] as string,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const enabled = params.enabled;
@@ -2511,11 +3697,15 @@ export class Messaging {
         const senderId = params.senderId;
         const authKey = params.authKey;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/msg91/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/msg91/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2537,15 +3727,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2562,7 +3747,16 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    createResendProvider(params: { providerId: string, name: string, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean }): Promise<Models.Provider>;
+    createResendProvider(params: {
+        providerId: string;
+        name: string;
+        apiKey?: string;
+        fromName?: string;
+        fromEmail?: string;
+        replyToName?: string;
+        replyToEmail?: string;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new Resend provider.
      *
@@ -2578,15 +3772,65 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createResendProvider(providerId: string, name: string, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean): Promise<Models.Provider>;
     createResendProvider(
-        paramsOrFirst: { providerId: string, name: string, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        apiKey?: string,
+        fromName?: string,
+        fromEmail?: string,
+        replyToName?: string,
+        replyToEmail?: string,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createResendProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  apiKey?: string;
+                  fromName?: string;
+                  fromEmail?: string;
+                  replyToName?: string;
+                  replyToEmail?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            apiKey?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                apiKey?: string;
+                fromName?: string;
+                fromEmail?: string;
+                replyToName?: string;
+                replyToEmail?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -2596,10 +3840,10 @@ export class Messaging {
                 fromEmail: rest[3] as string,
                 replyToName: rest[4] as string,
                 replyToEmail: rest[5] as string,
-                enabled: rest[6] as boolean            
+                enabled: rest[6] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const apiKey = params.apiKey;
@@ -2610,12 +3854,13 @@ export class Messaging {
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/providers/resend';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -2647,15 +3892,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -2672,7 +3912,16 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    updateResendProvider(params: { providerId: string, name?: string, enabled?: boolean, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string }): Promise<Models.Provider>;
+    updateResendProvider(params: {
+        providerId: string;
+        name?: string;
+        enabled?: boolean;
+        apiKey?: string;
+        fromName?: string;
+        fromEmail?: string;
+        replyToName?: string;
+        replyToEmail?: string;
+    }): Promise<Models.Provider>;
     /**
      * Update a Resend provider by its unique ID.
      *
@@ -2688,15 +3937,65 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateResendProvider(providerId: string, name?: string, enabled?: boolean, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string): Promise<Models.Provider>;
     updateResendProvider(
-        paramsOrFirst: { providerId: string, name?: string, enabled?: boolean, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string } | string,
-        ...rest: [(string)?, (boolean)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
+        providerId: string,
+        name?: string,
+        enabled?: boolean,
+        apiKey?: string,
+        fromName?: string,
+        fromEmail?: string,
+        replyToName?: string,
+        replyToEmail?: string,
+    ): Promise<Models.Provider>;
+    updateResendProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  enabled?: boolean;
+                  apiKey?: string;
+                  fromName?: string;
+                  fromEmail?: string;
+                  replyToName?: string;
+                  replyToEmail?: string;
+              }
+            | string,
+        ...rest: [
+            string?,
+            boolean?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, enabled?: boolean, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, enabled?: boolean, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string };
+        let params: {
+            providerId: string;
+            name?: string;
+            enabled?: boolean;
+            apiKey?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                enabled?: boolean;
+                apiKey?: string;
+                fromName?: string;
+                fromEmail?: string;
+                replyToName?: string;
+                replyToEmail?: string;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -2706,10 +4005,10 @@ export class Messaging {
                 fromName: rest[3] as string,
                 fromEmail: rest[4] as string,
                 replyToName: rest[5] as string,
-                replyToEmail: rest[6] as string            
+                replyToEmail: rest[6] as string,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const enabled = params.enabled;
@@ -2719,11 +4018,15 @@ export class Messaging {
         const replyToName = params.replyToName;
         const replyToEmail = params.replyToEmail;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/resend/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/resend/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2751,15 +4054,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2776,7 +4074,16 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    createSendgridProvider(params: { providerId: string, name: string, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean }): Promise<Models.Provider>;
+    createSendgridProvider(params: {
+        providerId: string;
+        name: string;
+        apiKey?: string;
+        fromName?: string;
+        fromEmail?: string;
+        replyToName?: string;
+        replyToEmail?: string;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new Sendgrid provider.
      *
@@ -2792,15 +4099,65 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSendgridProvider(providerId: string, name: string, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean): Promise<Models.Provider>;
     createSendgridProvider(
-        paramsOrFirst: { providerId: string, name: string, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        apiKey?: string,
+        fromName?: string,
+        fromEmail?: string,
+        replyToName?: string,
+        replyToEmail?: string,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createSendgridProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  apiKey?: string;
+                  fromName?: string;
+                  fromEmail?: string;
+                  replyToName?: string;
+                  replyToEmail?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            apiKey?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                apiKey?: string;
+                fromName?: string;
+                fromEmail?: string;
+                replyToName?: string;
+                replyToEmail?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -2810,10 +4167,10 @@ export class Messaging {
                 fromEmail: rest[3] as string,
                 replyToName: rest[4] as string,
                 replyToEmail: rest[5] as string,
-                enabled: rest[6] as boolean            
+                enabled: rest[6] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const apiKey = params.apiKey;
@@ -2824,12 +4181,13 @@ export class Messaging {
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/providers/sendgrid';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -2861,15 +4219,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -2886,7 +4239,16 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    updateSendgridProvider(params: { providerId: string, name?: string, enabled?: boolean, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string }): Promise<Models.Provider>;
+    updateSendgridProvider(params: {
+        providerId: string;
+        name?: string;
+        enabled?: boolean;
+        apiKey?: string;
+        fromName?: string;
+        fromEmail?: string;
+        replyToName?: string;
+        replyToEmail?: string;
+    }): Promise<Models.Provider>;
     /**
      * Update a Sendgrid provider by its unique ID.
      *
@@ -2902,15 +4264,65 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateSendgridProvider(providerId: string, name?: string, enabled?: boolean, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string): Promise<Models.Provider>;
     updateSendgridProvider(
-        paramsOrFirst: { providerId: string, name?: string, enabled?: boolean, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string } | string,
-        ...rest: [(string)?, (boolean)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
+        providerId: string,
+        name?: string,
+        enabled?: boolean,
+        apiKey?: string,
+        fromName?: string,
+        fromEmail?: string,
+        replyToName?: string,
+        replyToEmail?: string,
+    ): Promise<Models.Provider>;
+    updateSendgridProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  enabled?: boolean;
+                  apiKey?: string;
+                  fromName?: string;
+                  fromEmail?: string;
+                  replyToName?: string;
+                  replyToEmail?: string;
+              }
+            | string,
+        ...rest: [
+            string?,
+            boolean?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, enabled?: boolean, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, enabled?: boolean, apiKey?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string };
+        let params: {
+            providerId: string;
+            name?: string;
+            enabled?: boolean;
+            apiKey?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                enabled?: boolean;
+                apiKey?: string;
+                fromName?: string;
+                fromEmail?: string;
+                replyToName?: string;
+                replyToEmail?: string;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -2920,10 +4332,10 @@ export class Messaging {
                 fromName: rest[3] as string,
                 fromEmail: rest[4] as string,
                 replyToName: rest[5] as string,
-                replyToEmail: rest[6] as string            
+                replyToEmail: rest[6] as string,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const enabled = params.enabled;
@@ -2933,11 +4345,15 @@ export class Messaging {
         const replyToName = params.replyToName;
         const replyToEmail = params.replyToEmail;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/sendgrid/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/sendgrid/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2965,15 +4381,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -2992,7 +4403,18 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    createSesProvider(params: { providerId: string, name: string, accessKey?: string, secretKey?: string, region?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean }): Promise<Models.Provider>;
+    createSesProvider(params: {
+        providerId: string;
+        name: string;
+        accessKey?: string;
+        secretKey?: string;
+        region?: string;
+        fromName?: string;
+        fromEmail?: string;
+        replyToName?: string;
+        replyToEmail?: string;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new Amazon SES provider.
      *
@@ -3010,15 +4432,75 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSesProvider(providerId: string, name: string, accessKey?: string, secretKey?: string, region?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean): Promise<Models.Provider>;
     createSesProvider(
-        paramsOrFirst: { providerId: string, name: string, accessKey?: string, secretKey?: string, region?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        accessKey?: string,
+        secretKey?: string,
+        region?: string,
+        fromName?: string,
+        fromEmail?: string,
+        replyToName?: string,
+        replyToEmail?: string,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createSesProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  accessKey?: string;
+                  secretKey?: string;
+                  region?: string;
+                  fromName?: string;
+                  fromEmail?: string;
+                  replyToName?: string;
+                  replyToEmail?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, accessKey?: string, secretKey?: string, region?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, accessKey?: string, secretKey?: string, region?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            accessKey?: string;
+            secretKey?: string;
+            region?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                accessKey?: string;
+                secretKey?: string;
+                region?: string;
+                fromName?: string;
+                fromEmail?: string;
+                replyToName?: string;
+                replyToEmail?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -3030,10 +4512,10 @@ export class Messaging {
                 fromEmail: rest[5] as string,
                 replyToName: rest[6] as string,
                 replyToEmail: rest[7] as string,
-                enabled: rest[8] as boolean            
+                enabled: rest[8] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const accessKey = params.accessKey;
@@ -3046,12 +4528,13 @@ export class Messaging {
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/providers/ses';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -3089,15 +4572,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -3116,7 +4594,18 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    updateSesProvider(params: { providerId: string, name?: string, enabled?: boolean, accessKey?: string, secretKey?: string, region?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string }): Promise<Models.Provider>;
+    updateSesProvider(params: {
+        providerId: string;
+        name?: string;
+        enabled?: boolean;
+        accessKey?: string;
+        secretKey?: string;
+        region?: string;
+        fromName?: string;
+        fromEmail?: string;
+        replyToName?: string;
+        replyToEmail?: string;
+    }): Promise<Models.Provider>;
     /**
      * Update an Amazon SES provider by its unique ID.
      *
@@ -3134,15 +4623,75 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateSesProvider(providerId: string, name?: string, enabled?: boolean, accessKey?: string, secretKey?: string, region?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string): Promise<Models.Provider>;
     updateSesProvider(
-        paramsOrFirst: { providerId: string, name?: string, enabled?: boolean, accessKey?: string, secretKey?: string, region?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string } | string,
-        ...rest: [(string)?, (boolean)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?]    
+        providerId: string,
+        name?: string,
+        enabled?: boolean,
+        accessKey?: string,
+        secretKey?: string,
+        region?: string,
+        fromName?: string,
+        fromEmail?: string,
+        replyToName?: string,
+        replyToEmail?: string,
+    ): Promise<Models.Provider>;
+    updateSesProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  enabled?: boolean;
+                  accessKey?: string;
+                  secretKey?: string;
+                  region?: string;
+                  fromName?: string;
+                  fromEmail?: string;
+                  replyToName?: string;
+                  replyToEmail?: string;
+              }
+            | string,
+        ...rest: [
+            string?,
+            boolean?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, enabled?: boolean, accessKey?: string, secretKey?: string, region?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, enabled?: boolean, accessKey?: string, secretKey?: string, region?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string };
+        let params: {
+            providerId: string;
+            name?: string;
+            enabled?: boolean;
+            accessKey?: string;
+            secretKey?: string;
+            region?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                enabled?: boolean;
+                accessKey?: string;
+                secretKey?: string;
+                region?: string;
+                fromName?: string;
+                fromEmail?: string;
+                replyToName?: string;
+                replyToEmail?: string;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -3154,10 +4703,10 @@ export class Messaging {
                 fromName: rest[5] as string,
                 fromEmail: rest[6] as string,
                 replyToName: rest[7] as string,
-                replyToEmail: rest[8] as string            
+                replyToEmail: rest[8] as string,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const enabled = params.enabled;
@@ -3169,11 +4718,15 @@ export class Messaging {
         const replyToName = params.replyToName;
         const replyToEmail = params.replyToEmail;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/ses/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/ses/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -3207,15 +4760,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -3239,7 +4787,22 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Messaging.createSMTPProvider` instead.
      */
-    createSmtpProvider(params: { providerId: string, name: string, host: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean }): Promise<Models.Provider>;
+    createSmtpProvider(params: {
+        providerId: string;
+        name: string;
+        host: string;
+        port?: number;
+        username?: string;
+        password?: string;
+        encryption?: SmtpEncryption;
+        autoTLS?: boolean;
+        mailer?: string;
+        fromName?: string;
+        fromEmail?: string;
+        replyToName?: string;
+        replyToEmail?: string;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new SMTP provider.
      *
@@ -3261,15 +4824,95 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSmtpProvider(providerId: string, name: string, host: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean): Promise<Models.Provider>;
     createSmtpProvider(
-        paramsOrFirst: { providerId: string, name: string, host: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?, (string)?, (SmtpEncryption)?, (boolean)?, (string)?, (string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        host: string,
+        port?: number,
+        username?: string,
+        password?: string,
+        encryption?: SmtpEncryption,
+        autoTLS?: boolean,
+        mailer?: string,
+        fromName?: string,
+        fromEmail?: string,
+        replyToName?: string,
+        replyToEmail?: string,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createSmtpProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  host: string;
+                  port?: number;
+                  username?: string;
+                  password?: string;
+                  encryption?: SmtpEncryption;
+                  autoTLS?: boolean;
+                  mailer?: string;
+                  fromName?: string;
+                  fromEmail?: string;
+                  replyToName?: string;
+                  replyToEmail?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            number?,
+            string?,
+            string?,
+            SmtpEncryption?,
+            boolean?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, host: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, host: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            host: string;
+            port?: number;
+            username?: string;
+            password?: string;
+            encryption?: SmtpEncryption;
+            autoTLS?: boolean;
+            mailer?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                host: string;
+                port?: number;
+                username?: string;
+                password?: string;
+                encryption?: SmtpEncryption;
+                autoTLS?: boolean;
+                mailer?: string;
+                fromName?: string;
+                fromEmail?: string;
+                replyToName?: string;
+                replyToEmail?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -3285,10 +4928,10 @@ export class Messaging {
                 fromEmail: rest[9] as string,
                 replyToName: rest[10] as string,
                 replyToEmail: rest[11] as string,
-                enabled: rest[12] as boolean            
+                enabled: rest[12] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const host = params.host;
@@ -3305,7 +4948,9 @@ export class Messaging {
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -3313,7 +4958,6 @@ export class Messaging {
         if (typeof host === 'undefined') {
             throw new AppwriteException('Missing required parameter: "host"');
         }
-
         const apiPath = '/messaging/providers/smtp';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -3363,15 +5007,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -3394,7 +5033,22 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    createSMTPProvider(params: { providerId: string, name: string, host: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean }): Promise<Models.Provider>;
+    createSMTPProvider(params: {
+        providerId: string;
+        name: string;
+        host: string;
+        port?: number;
+        username?: string;
+        password?: string;
+        encryption?: SmtpEncryption;
+        autoTLS?: boolean;
+        mailer?: string;
+        fromName?: string;
+        fromEmail?: string;
+        replyToName?: string;
+        replyToEmail?: string;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new SMTP provider.
      *
@@ -3416,15 +5070,95 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSMTPProvider(providerId: string, name: string, host: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean): Promise<Models.Provider>;
     createSMTPProvider(
-        paramsOrFirst: { providerId: string, name: string, host: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?, (string)?, (SmtpEncryption)?, (boolean)?, (string)?, (string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        host: string,
+        port?: number,
+        username?: string,
+        password?: string,
+        encryption?: SmtpEncryption,
+        autoTLS?: boolean,
+        mailer?: string,
+        fromName?: string,
+        fromEmail?: string,
+        replyToName?: string,
+        replyToEmail?: string,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createSMTPProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  host: string;
+                  port?: number;
+                  username?: string;
+                  password?: string;
+                  encryption?: SmtpEncryption;
+                  autoTLS?: boolean;
+                  mailer?: string;
+                  fromName?: string;
+                  fromEmail?: string;
+                  replyToName?: string;
+                  replyToEmail?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            number?,
+            string?,
+            string?,
+            SmtpEncryption?,
+            boolean?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, host: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, host: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            host: string;
+            port?: number;
+            username?: string;
+            password?: string;
+            encryption?: SmtpEncryption;
+            autoTLS?: boolean;
+            mailer?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                host: string;
+                port?: number;
+                username?: string;
+                password?: string;
+                encryption?: SmtpEncryption;
+                autoTLS?: boolean;
+                mailer?: string;
+                fromName?: string;
+                fromEmail?: string;
+                replyToName?: string;
+                replyToEmail?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -3440,10 +5174,10 @@ export class Messaging {
                 fromEmail: rest[9] as string,
                 replyToName: rest[10] as string,
                 replyToEmail: rest[11] as string,
-                enabled: rest[12] as boolean            
+                enabled: rest[12] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const host = params.host;
@@ -3460,7 +5194,9 @@ export class Messaging {
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -3468,7 +5204,6 @@ export class Messaging {
         if (typeof host === 'undefined') {
             throw new AppwriteException('Missing required parameter: "host"');
         }
-
         const apiPath = '/messaging/providers/smtp';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -3518,15 +5253,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -3550,7 +5280,22 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `Messaging.updateSMTPProvider` instead.
      */
-    updateSmtpProvider(params: { providerId: string, name?: string, host?: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean }): Promise<Models.Provider>;
+    updateSmtpProvider(params: {
+        providerId: string;
+        name?: string;
+        host?: string;
+        port?: number;
+        username?: string;
+        password?: string;
+        encryption?: SmtpEncryption;
+        autoTLS?: boolean;
+        mailer?: string;
+        fromName?: string;
+        fromEmail?: string;
+        replyToName?: string;
+        replyToEmail?: string;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Update a SMTP provider by its unique ID.
      *
@@ -3572,15 +5317,95 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateSmtpProvider(providerId: string, name?: string, host?: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean): Promise<Models.Provider>;
     updateSmtpProvider(
-        paramsOrFirst: { providerId: string, name?: string, host?: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?, (string)?, (SmtpEncryption)?, (boolean)?, (string)?, (string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name?: string,
+        host?: string,
+        port?: number,
+        username?: string,
+        password?: string,
+        encryption?: SmtpEncryption,
+        autoTLS?: boolean,
+        mailer?: string,
+        fromName?: string,
+        fromEmail?: string,
+        replyToName?: string,
+        replyToEmail?: string,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    updateSmtpProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  host?: string;
+                  port?: number;
+                  username?: string;
+                  password?: string;
+                  encryption?: SmtpEncryption;
+                  autoTLS?: boolean;
+                  mailer?: string;
+                  fromName?: string;
+                  fromEmail?: string;
+                  replyToName?: string;
+                  replyToEmail?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            number?,
+            string?,
+            string?,
+            SmtpEncryption?,
+            boolean?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, host?: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, host?: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name?: string;
+            host?: string;
+            port?: number;
+            username?: string;
+            password?: string;
+            encryption?: SmtpEncryption;
+            autoTLS?: boolean;
+            mailer?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                host?: string;
+                port?: number;
+                username?: string;
+                password?: string;
+                encryption?: SmtpEncryption;
+                autoTLS?: boolean;
+                mailer?: string;
+                fromName?: string;
+                fromEmail?: string;
+                replyToName?: string;
+                replyToEmail?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -3596,10 +5421,10 @@ export class Messaging {
                 fromEmail: rest[9] as string,
                 replyToName: rest[10] as string,
                 replyToEmail: rest[11] as string,
-                enabled: rest[12] as boolean            
+                enabled: rest[12] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const host = params.host;
@@ -3615,11 +5440,15 @@ export class Messaging {
         const replyToEmail = params.replyToEmail;
         const enabled = params.enabled;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/smtp/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/smtp/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -3665,15 +5494,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -3696,7 +5520,22 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    updateSMTPProvider(params: { providerId: string, name?: string, host?: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean }): Promise<Models.Provider>;
+    updateSMTPProvider(params: {
+        providerId: string;
+        name?: string;
+        host?: string;
+        port?: number;
+        username?: string;
+        password?: string;
+        encryption?: SmtpEncryption;
+        autoTLS?: boolean;
+        mailer?: string;
+        fromName?: string;
+        fromEmail?: string;
+        replyToName?: string;
+        replyToEmail?: string;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Update a SMTP provider by its unique ID.
      *
@@ -3718,15 +5557,95 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateSMTPProvider(providerId: string, name?: string, host?: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean): Promise<Models.Provider>;
     updateSMTPProvider(
-        paramsOrFirst: { providerId: string, name?: string, host?: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?, (string)?, (SmtpEncryption)?, (boolean)?, (string)?, (string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name?: string,
+        host?: string,
+        port?: number,
+        username?: string,
+        password?: string,
+        encryption?: SmtpEncryption,
+        autoTLS?: boolean,
+        mailer?: string,
+        fromName?: string,
+        fromEmail?: string,
+        replyToName?: string,
+        replyToEmail?: string,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    updateSMTPProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  host?: string;
+                  port?: number;
+                  username?: string;
+                  password?: string;
+                  encryption?: SmtpEncryption;
+                  autoTLS?: boolean;
+                  mailer?: string;
+                  fromName?: string;
+                  fromEmail?: string;
+                  replyToName?: string;
+                  replyToEmail?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            number?,
+            string?,
+            string?,
+            SmtpEncryption?,
+            boolean?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+        ]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, host?: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, host?: string, port?: number, username?: string, password?: string, encryption?: SmtpEncryption, autoTLS?: boolean, mailer?: string, fromName?: string, fromEmail?: string, replyToName?: string, replyToEmail?: string, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name?: string;
+            host?: string;
+            port?: number;
+            username?: string;
+            password?: string;
+            encryption?: SmtpEncryption;
+            autoTLS?: boolean;
+            mailer?: string;
+            fromName?: string;
+            fromEmail?: string;
+            replyToName?: string;
+            replyToEmail?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                host?: string;
+                port?: number;
+                username?: string;
+                password?: string;
+                encryption?: SmtpEncryption;
+                autoTLS?: boolean;
+                mailer?: string;
+                fromName?: string;
+                fromEmail?: string;
+                replyToName?: string;
+                replyToEmail?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -3742,10 +5661,10 @@ export class Messaging {
                 fromEmail: rest[9] as string,
                 replyToName: rest[10] as string,
                 replyToEmail: rest[11] as string,
-                enabled: rest[12] as boolean            
+                enabled: rest[12] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const host = params.host;
@@ -3761,11 +5680,15 @@ export class Messaging {
         const replyToEmail = params.replyToEmail;
         const enabled = params.enabled;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/smtp/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/smtp/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -3811,15 +5734,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -3834,7 +5752,14 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    createTelesignProvider(params: { providerId: string, name: string, from?: string, customerId?: string, apiKey?: string, enabled?: boolean }): Promise<Models.Provider>;
+    createTelesignProvider(params: {
+        providerId: string;
+        name: string;
+        from?: string;
+        customerId?: string;
+        apiKey?: string;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new Telesign provider.
      *
@@ -3848,15 +5773,49 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createTelesignProvider(providerId: string, name: string, from?: string, customerId?: string, apiKey?: string, enabled?: boolean): Promise<Models.Provider>;
     createTelesignProvider(
-        paramsOrFirst: { providerId: string, name: string, from?: string, customerId?: string, apiKey?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        from?: string,
+        customerId?: string,
+        apiKey?: string,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createTelesignProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  from?: string;
+                  customerId?: string;
+                  apiKey?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [string?, string?, string?, string?, boolean?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, from?: string, customerId?: string, apiKey?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, from?: string, customerId?: string, apiKey?: string, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            from?: string;
+            customerId?: string;
+            apiKey?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                from?: string;
+                customerId?: string;
+                apiKey?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -3864,10 +5823,10 @@ export class Messaging {
                 from: rest[1] as string,
                 customerId: rest[2] as string,
                 apiKey: rest[3] as string,
-                enabled: rest[4] as boolean            
+                enabled: rest[4] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const from = params.from;
@@ -3876,12 +5835,13 @@ export class Messaging {
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/providers/telesign';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -3907,15 +5867,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -3930,7 +5885,14 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    updateTelesignProvider(params: { providerId: string, name?: string, enabled?: boolean, customerId?: string, apiKey?: string, from?: string }): Promise<Models.Provider>;
+    updateTelesignProvider(params: {
+        providerId: string;
+        name?: string;
+        enabled?: boolean;
+        customerId?: string;
+        apiKey?: string;
+        from?: string;
+    }): Promise<Models.Provider>;
     /**
      * Update a Telesign provider by its unique ID.
      *
@@ -3944,15 +5906,49 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateTelesignProvider(providerId: string, name?: string, enabled?: boolean, customerId?: string, apiKey?: string, from?: string): Promise<Models.Provider>;
     updateTelesignProvider(
-        paramsOrFirst: { providerId: string, name?: string, enabled?: boolean, customerId?: string, apiKey?: string, from?: string } | string,
-        ...rest: [(string)?, (boolean)?, (string)?, (string)?, (string)?]    
+        providerId: string,
+        name?: string,
+        enabled?: boolean,
+        customerId?: string,
+        apiKey?: string,
+        from?: string,
+    ): Promise<Models.Provider>;
+    updateTelesignProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  enabled?: boolean;
+                  customerId?: string;
+                  apiKey?: string;
+                  from?: string;
+              }
+            | string,
+        ...rest: [string?, boolean?, string?, string?, string?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, enabled?: boolean, customerId?: string, apiKey?: string, from?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, enabled?: boolean, customerId?: string, apiKey?: string, from?: string };
+        let params: {
+            providerId: string;
+            name?: string;
+            enabled?: boolean;
+            customerId?: string;
+            apiKey?: string;
+            from?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                enabled?: boolean;
+                customerId?: string;
+                apiKey?: string;
+                from?: string;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -3960,10 +5956,10 @@ export class Messaging {
                 enabled: rest[1] as boolean,
                 customerId: rest[2] as string,
                 apiKey: rest[3] as string,
-                from: rest[4] as string            
+                from: rest[4] as string,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const enabled = params.enabled;
@@ -3971,11 +5967,15 @@ export class Messaging {
         const apiKey = params.apiKey;
         const from = params.from;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/telesign/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/telesign/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -3997,15 +5997,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -4020,7 +6015,14 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    createTextmagicProvider(params: { providerId: string, name: string, from?: string, username?: string, apiKey?: string, enabled?: boolean }): Promise<Models.Provider>;
+    createTextmagicProvider(params: {
+        providerId: string;
+        name: string;
+        from?: string;
+        username?: string;
+        apiKey?: string;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new Textmagic provider.
      *
@@ -4034,15 +6036,49 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createTextmagicProvider(providerId: string, name: string, from?: string, username?: string, apiKey?: string, enabled?: boolean): Promise<Models.Provider>;
     createTextmagicProvider(
-        paramsOrFirst: { providerId: string, name: string, from?: string, username?: string, apiKey?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        from?: string,
+        username?: string,
+        apiKey?: string,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createTextmagicProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  from?: string;
+                  username?: string;
+                  apiKey?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [string?, string?, string?, string?, boolean?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, from?: string, username?: string, apiKey?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, from?: string, username?: string, apiKey?: string, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            from?: string;
+            username?: string;
+            apiKey?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                from?: string;
+                username?: string;
+                apiKey?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -4050,10 +6086,10 @@ export class Messaging {
                 from: rest[1] as string,
                 username: rest[2] as string,
                 apiKey: rest[3] as string,
-                enabled: rest[4] as boolean            
+                enabled: rest[4] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const from = params.from;
@@ -4062,12 +6098,13 @@ export class Messaging {
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/providers/textmagic';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -4093,15 +6130,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -4116,7 +6148,14 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    updateTextmagicProvider(params: { providerId: string, name?: string, enabled?: boolean, username?: string, apiKey?: string, from?: string }): Promise<Models.Provider>;
+    updateTextmagicProvider(params: {
+        providerId: string;
+        name?: string;
+        enabled?: boolean;
+        username?: string;
+        apiKey?: string;
+        from?: string;
+    }): Promise<Models.Provider>;
     /**
      * Update a Textmagic provider by its unique ID.
      *
@@ -4130,15 +6169,49 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateTextmagicProvider(providerId: string, name?: string, enabled?: boolean, username?: string, apiKey?: string, from?: string): Promise<Models.Provider>;
     updateTextmagicProvider(
-        paramsOrFirst: { providerId: string, name?: string, enabled?: boolean, username?: string, apiKey?: string, from?: string } | string,
-        ...rest: [(string)?, (boolean)?, (string)?, (string)?, (string)?]    
+        providerId: string,
+        name?: string,
+        enabled?: boolean,
+        username?: string,
+        apiKey?: string,
+        from?: string,
+    ): Promise<Models.Provider>;
+    updateTextmagicProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  enabled?: boolean;
+                  username?: string;
+                  apiKey?: string;
+                  from?: string;
+              }
+            | string,
+        ...rest: [string?, boolean?, string?, string?, string?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, enabled?: boolean, username?: string, apiKey?: string, from?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, enabled?: boolean, username?: string, apiKey?: string, from?: string };
+        let params: {
+            providerId: string;
+            name?: string;
+            enabled?: boolean;
+            username?: string;
+            apiKey?: string;
+            from?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                enabled?: boolean;
+                username?: string;
+                apiKey?: string;
+                from?: string;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -4146,10 +6219,10 @@ export class Messaging {
                 enabled: rest[1] as boolean,
                 username: rest[2] as string,
                 apiKey: rest[3] as string,
-                from: rest[4] as string            
+                from: rest[4] as string,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const enabled = params.enabled;
@@ -4157,11 +6230,15 @@ export class Messaging {
         const apiKey = params.apiKey;
         const from = params.from;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/textmagic/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/textmagic/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -4183,15 +6260,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -4206,7 +6278,14 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    createTwilioProvider(params: { providerId: string, name: string, from?: string, accountSid?: string, authToken?: string, enabled?: boolean }): Promise<Models.Provider>;
+    createTwilioProvider(params: {
+        providerId: string;
+        name: string;
+        from?: string;
+        accountSid?: string;
+        authToken?: string;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new Twilio provider.
      *
@@ -4220,15 +6299,49 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createTwilioProvider(providerId: string, name: string, from?: string, accountSid?: string, authToken?: string, enabled?: boolean): Promise<Models.Provider>;
     createTwilioProvider(
-        paramsOrFirst: { providerId: string, name: string, from?: string, accountSid?: string, authToken?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        from?: string,
+        accountSid?: string,
+        authToken?: string,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createTwilioProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  from?: string;
+                  accountSid?: string;
+                  authToken?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [string?, string?, string?, string?, boolean?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, from?: string, accountSid?: string, authToken?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, from?: string, accountSid?: string, authToken?: string, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            from?: string;
+            accountSid?: string;
+            authToken?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                from?: string;
+                accountSid?: string;
+                authToken?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -4236,10 +6349,10 @@ export class Messaging {
                 from: rest[1] as string,
                 accountSid: rest[2] as string,
                 authToken: rest[3] as string,
-                enabled: rest[4] as boolean            
+                enabled: rest[4] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const from = params.from;
@@ -4248,12 +6361,13 @@ export class Messaging {
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/providers/twilio';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -4279,15 +6393,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -4302,7 +6411,14 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    updateTwilioProvider(params: { providerId: string, name?: string, enabled?: boolean, accountSid?: string, authToken?: string, from?: string }): Promise<Models.Provider>;
+    updateTwilioProvider(params: {
+        providerId: string;
+        name?: string;
+        enabled?: boolean;
+        accountSid?: string;
+        authToken?: string;
+        from?: string;
+    }): Promise<Models.Provider>;
     /**
      * Update a Twilio provider by its unique ID.
      *
@@ -4316,15 +6432,49 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateTwilioProvider(providerId: string, name?: string, enabled?: boolean, accountSid?: string, authToken?: string, from?: string): Promise<Models.Provider>;
     updateTwilioProvider(
-        paramsOrFirst: { providerId: string, name?: string, enabled?: boolean, accountSid?: string, authToken?: string, from?: string } | string,
-        ...rest: [(string)?, (boolean)?, (string)?, (string)?, (string)?]    
+        providerId: string,
+        name?: string,
+        enabled?: boolean,
+        accountSid?: string,
+        authToken?: string,
+        from?: string,
+    ): Promise<Models.Provider>;
+    updateTwilioProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  enabled?: boolean;
+                  accountSid?: string;
+                  authToken?: string;
+                  from?: string;
+              }
+            | string,
+        ...rest: [string?, boolean?, string?, string?, string?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, enabled?: boolean, accountSid?: string, authToken?: string, from?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, enabled?: boolean, accountSid?: string, authToken?: string, from?: string };
+        let params: {
+            providerId: string;
+            name?: string;
+            enabled?: boolean;
+            accountSid?: string;
+            authToken?: string;
+            from?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                enabled?: boolean;
+                accountSid?: string;
+                authToken?: string;
+                from?: string;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -4332,10 +6482,10 @@ export class Messaging {
                 enabled: rest[1] as boolean,
                 accountSid: rest[2] as string,
                 authToken: rest[3] as string,
-                from: rest[4] as string            
+                from: rest[4] as string,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const enabled = params.enabled;
@@ -4343,11 +6493,15 @@ export class Messaging {
         const authToken = params.authToken;
         const from = params.from;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/twilio/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/twilio/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -4369,15 +6523,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -4392,7 +6541,14 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    createVonageProvider(params: { providerId: string, name: string, from?: string, apiKey?: string, apiSecret?: string, enabled?: boolean }): Promise<Models.Provider>;
+    createVonageProvider(params: {
+        providerId: string;
+        name: string;
+        from?: string;
+        apiKey?: string;
+        apiSecret?: string;
+        enabled?: boolean;
+    }): Promise<Models.Provider>;
     /**
      * Create a new Vonage provider.
      *
@@ -4406,15 +6562,49 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createVonageProvider(providerId: string, name: string, from?: string, apiKey?: string, apiSecret?: string, enabled?: boolean): Promise<Models.Provider>;
     createVonageProvider(
-        paramsOrFirst: { providerId: string, name: string, from?: string, apiKey?: string, apiSecret?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (boolean)?]    
+        providerId: string,
+        name: string,
+        from?: string,
+        apiKey?: string,
+        apiSecret?: string,
+        enabled?: boolean,
+    ): Promise<Models.Provider>;
+    createVonageProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name: string;
+                  from?: string;
+                  apiKey?: string;
+                  apiSecret?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [string?, string?, string?, string?, boolean?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name: string, from?: string, apiKey?: string, apiSecret?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name: string, from?: string, apiKey?: string, apiSecret?: string, enabled?: boolean };
+        let params: {
+            providerId: string;
+            name: string;
+            from?: string;
+            apiKey?: string;
+            apiSecret?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name: string;
+                from?: string;
+                apiKey?: string;
+                apiSecret?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -4422,10 +6612,10 @@ export class Messaging {
                 from: rest[1] as string,
                 apiKey: rest[2] as string,
                 apiSecret: rest[3] as string,
-                enabled: rest[4] as boolean            
+                enabled: rest[4] as boolean,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const from = params.from;
@@ -4434,12 +6624,13 @@ export class Messaging {
         const enabled = params.enabled;
 
         if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/providers/vonage';
         const payload: Payload = {};
         if (typeof providerId !== 'undefined') {
@@ -4465,15 +6656,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -4488,7 +6674,14 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Provider>}
      */
-    updateVonageProvider(params: { providerId: string, name?: string, enabled?: boolean, apiKey?: string, apiSecret?: string, from?: string }): Promise<Models.Provider>;
+    updateVonageProvider(params: {
+        providerId: string;
+        name?: string;
+        enabled?: boolean;
+        apiKey?: string;
+        apiSecret?: string;
+        from?: string;
+    }): Promise<Models.Provider>;
     /**
      * Update a Vonage provider by its unique ID.
      *
@@ -4502,15 +6695,49 @@ export class Messaging {
      * @returns {Promise<Models.Provider>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateVonageProvider(providerId: string, name?: string, enabled?: boolean, apiKey?: string, apiSecret?: string, from?: string): Promise<Models.Provider>;
     updateVonageProvider(
-        paramsOrFirst: { providerId: string, name?: string, enabled?: boolean, apiKey?: string, apiSecret?: string, from?: string } | string,
-        ...rest: [(string)?, (boolean)?, (string)?, (string)?, (string)?]    
+        providerId: string,
+        name?: string,
+        enabled?: boolean,
+        apiKey?: string,
+        apiSecret?: string,
+        from?: string,
+    ): Promise<Models.Provider>;
+    updateVonageProvider(
+        paramsOrFirst:
+            | {
+                  providerId: string;
+                  name?: string;
+                  enabled?: boolean;
+                  apiKey?: string;
+                  apiSecret?: string;
+                  from?: string;
+              }
+            | string,
+        ...rest: [string?, boolean?, string?, string?, string?]
     ): Promise<Models.Provider> {
-        let params: { providerId: string, name?: string, enabled?: boolean, apiKey?: string, apiSecret?: string, from?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { providerId: string, name?: string, enabled?: boolean, apiKey?: string, apiSecret?: string, from?: string };
+        let params: {
+            providerId: string;
+            name?: string;
+            enabled?: boolean;
+            apiKey?: string;
+            apiSecret?: string;
+            from?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                providerId: string;
+                name?: string;
+                enabled?: boolean;
+                apiKey?: string;
+                apiSecret?: string;
+                from?: string;
+            };
         } else {
             params = {
                 providerId: paramsOrFirst as string,
@@ -4518,10 +6745,10 @@ export class Messaging {
                 enabled: rest[1] as boolean,
                 apiKey: rest[2] as string,
                 apiSecret: rest[3] as string,
-                from: rest[4] as string            
+                from: rest[4] as string,
             };
         }
-        
+
         const providerId = params.providerId;
         const name = params.name;
         const enabled = params.enabled;
@@ -4529,11 +6756,15 @@ export class Messaging {
         const apiSecret = params.apiSecret;
         const from = params.from;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/vonage/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/vonage/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -4555,20 +6786,15 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
      * Get a provider by its unique ID.
-     * 
+     *
      *
      * @param {string} params.providerId - Provider ID.
      * @throws {AppwriteException}
@@ -4577,7 +6803,7 @@ export class Messaging {
     getProvider(params: { providerId: string }): Promise<Models.Provider>;
     /**
      * Get a provider by its unique ID.
-     * 
+     *
      *
      * @param {string} providerId - Provider ID.
      * @throws {AppwriteException}
@@ -4586,39 +6812,42 @@ export class Messaging {
      */
     getProvider(providerId: string): Promise<Models.Provider>;
     getProvider(
-        paramsOrFirst: { providerId: string } | string    
+        paramsOrFirst: { providerId: string } | string,
     ): Promise<Models.Provider> {
         let params: { providerId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { providerId: string };
         } else {
             params = {
-                providerId: paramsOrFirst as string            
+                providerId: paramsOrFirst as string,
             };
         }
-        
+
         const providerId = params.providerId;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -4639,39 +6868,43 @@ export class Messaging {
      */
     deleteProvider(providerId: string): Promise<{}>;
     deleteProvider(
-        paramsOrFirst: { providerId: string } | string    
+        paramsOrFirst: { providerId: string } | string,
     ): Promise<{}> {
         let params: { providerId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { providerId: string };
         } else {
             params = {
-                providerId: paramsOrFirst as string            
+                providerId: paramsOrFirst as string,
             };
         }
-        
+
         const providerId = params.providerId;
 
-        if (typeof providerId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "providerId"');
+        if (typeof providerId === 'undefined' || providerId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "providerId"',
+            );
         }
-
-        const apiPath = '/messaging/providers/{providerId}'.replace('{providerId}', encodeURIComponent(String(providerId)));
+        const apiPath = '/messaging/providers/{providerId}'.replace(
+            '{providerId}',
+            encodeURIComponent(String(providerId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -4683,7 +6916,11 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.TopicList>}
      */
-    listTopics(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.TopicList>;
+    listTopics(params?: {
+        queries?: string[];
+        search?: string;
+        total?: boolean;
+    }): Promise<Models.TopicList>;
     /**
      * Get a list of all topics from the current Appwrite project.
      *
@@ -4694,27 +6931,40 @@ export class Messaging {
      * @returns {Promise<Models.TopicList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listTopics(queries?: string[], search?: string, total?: boolean): Promise<Models.TopicList>;
     listTopics(
-        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
-        ...rest: [(string)?, (boolean)?]    
+        queries?: string[],
+        search?: string,
+        total?: boolean,
+    ): Promise<Models.TopicList>;
+    listTopics(
+        paramsOrFirst?:
+            { queries?: string[]; search?: string; total?: boolean } | string[],
+        ...rest: [string?, boolean?]
     ): Promise<Models.TopicList> {
-        let params: { queries?: string[], search?: string, total?: boolean };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
+        let params: { queries?: string[]; search?: string; total?: boolean };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                search?: string;
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
                 search: rest[0] as string,
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const queries = params.queries;
         const search = params.search;
         const total = params.total;
-
 
         const apiPath = '/messaging/topics';
         const payload: Payload = {};
@@ -4731,15 +6981,10 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -4751,7 +6996,11 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Topic>}
      */
-    createTopic(params: { topicId: string, name: string, subscribe?: string[] }): Promise<Models.Topic>;
+    createTopic(params: {
+        topicId: string;
+        name: string;
+        subscribe?: string[];
+    }): Promise<Models.Topic>;
     /**
      * Create a new topic.
      *
@@ -4762,34 +7011,48 @@ export class Messaging {
      * @returns {Promise<Models.Topic>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createTopic(topicId: string, name: string, subscribe?: string[]): Promise<Models.Topic>;
     createTopic(
-        paramsOrFirst: { topicId: string, name: string, subscribe?: string[] } | string,
-        ...rest: [(string)?, (string[])?]    
+        topicId: string,
+        name: string,
+        subscribe?: string[],
+    ): Promise<Models.Topic>;
+    createTopic(
+        paramsOrFirst:
+            { topicId: string; name: string; subscribe?: string[] } | string,
+        ...rest: [string?, string[]?]
     ): Promise<Models.Topic> {
-        let params: { topicId: string, name: string, subscribe?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { topicId: string, name: string, subscribe?: string[] };
+        let params: { topicId: string; name: string; subscribe?: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                topicId: string;
+                name: string;
+                subscribe?: string[];
+            };
         } else {
             params = {
                 topicId: paramsOrFirst as string,
                 name: rest[0] as string,
-                subscribe: rest[1] as string[]            
+                subscribe: rest[1] as string[],
             };
         }
-        
+
         const topicId = params.topicId;
         const name = params.name;
         const subscribe = params.subscribe;
 
         if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-
         const apiPath = '/messaging/topics';
         const payload: Payload = {};
         if (typeof topicId !== 'undefined') {
@@ -4806,20 +7069,15 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Get a topic by its unique ID.
-     * 
+     *
      *
      * @param {string} params.topicId - Topic ID.
      * @throws {AppwriteException}
@@ -4828,7 +7086,7 @@ export class Messaging {
     getTopic(params: { topicId: string }): Promise<Models.Topic>;
     /**
      * Get a topic by its unique ID.
-     * 
+     *
      *
      * @param {string} topicId - Topic ID.
      * @throws {AppwriteException}
@@ -4837,44 +7095,47 @@ export class Messaging {
      */
     getTopic(topicId: string): Promise<Models.Topic>;
     getTopic(
-        paramsOrFirst: { topicId: string } | string    
+        paramsOrFirst: { topicId: string } | string,
     ): Promise<Models.Topic> {
         let params: { topicId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { topicId: string };
         } else {
             params = {
-                topicId: paramsOrFirst as string            
+                topicId: paramsOrFirst as string,
             };
         }
-        
+
         const topicId = params.topicId;
 
-        if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+        if (typeof topicId === 'undefined' || topicId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
-
-        const apiPath = '/messaging/topics/{topicId}'.replace('{topicId}', encodeURIComponent(String(topicId)));
+        const apiPath = '/messaging/topics/{topicId}'.replace(
+            '{topicId}',
+            encodeURIComponent(String(topicId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Update a topic by its unique ID.
-     * 
+     *
      *
      * @param {string} params.topicId - Topic ID.
      * @param {string} params.name - Topic Name.
@@ -4882,10 +7143,14 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Topic>}
      */
-    updateTopic(params: { topicId: string, name?: string, subscribe?: string[] }): Promise<Models.Topic>;
+    updateTopic(params: {
+        topicId: string;
+        name?: string;
+        subscribe?: string[];
+    }): Promise<Models.Topic>;
     /**
      * Update a topic by its unique ID.
-     * 
+     *
      *
      * @param {string} topicId - Topic ID.
      * @param {string} name - Topic Name.
@@ -4894,32 +7159,49 @@ export class Messaging {
      * @returns {Promise<Models.Topic>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateTopic(topicId: string, name?: string, subscribe?: string[]): Promise<Models.Topic>;
     updateTopic(
-        paramsOrFirst: { topicId: string, name?: string, subscribe?: string[] } | string,
-        ...rest: [(string)?, (string[])?]    
+        topicId: string,
+        name?: string,
+        subscribe?: string[],
+    ): Promise<Models.Topic>;
+    updateTopic(
+        paramsOrFirst:
+            { topicId: string; name?: string; subscribe?: string[] } | string,
+        ...rest: [string?, string[]?]
     ): Promise<Models.Topic> {
-        let params: { topicId: string, name?: string, subscribe?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { topicId: string, name?: string, subscribe?: string[] };
+        let params: { topicId: string; name?: string; subscribe?: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                topicId: string;
+                name?: string;
+                subscribe?: string[];
+            };
         } else {
             params = {
                 topicId: paramsOrFirst as string,
                 name: rest[0] as string,
-                subscribe: rest[1] as string[]            
+                subscribe: rest[1] as string[],
             };
         }
-        
+
         const topicId = params.topicId;
         const name = params.name;
         const subscribe = params.subscribe;
 
-        if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+        if (typeof topicId === 'undefined' || topicId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
-
-        const apiPath = '/messaging/topics/{topicId}'.replace('{topicId}', encodeURIComponent(String(topicId)));
+        const apiPath = '/messaging/topics/{topicId}'.replace(
+            '{topicId}',
+            encodeURIComponent(String(topicId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -4932,15 +7214,10 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -4960,40 +7237,42 @@ export class Messaging {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     deleteTopic(topicId: string): Promise<{}>;
-    deleteTopic(
-        paramsOrFirst: { topicId: string } | string    
-    ): Promise<{}> {
+    deleteTopic(paramsOrFirst: { topicId: string } | string): Promise<{}> {
         let params: { topicId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { topicId: string };
         } else {
             params = {
-                topicId: paramsOrFirst as string            
+                topicId: paramsOrFirst as string,
             };
         }
-        
+
         const topicId = params.topicId;
 
-        if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+        if (typeof topicId === 'undefined' || topicId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
-
-        const apiPath = '/messaging/topics/{topicId}'.replace('{topicId}', encodeURIComponent(String(topicId)));
+        const apiPath = '/messaging/topics/{topicId}'.replace(
+            '{topicId}',
+            encodeURIComponent(String(topicId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -5006,7 +7285,12 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.SubscriberList>}
      */
-    listSubscribers(params: { topicId: string, queries?: string[], search?: string, total?: boolean }): Promise<Models.SubscriberList>;
+    listSubscribers(params: {
+        topicId: string;
+        queries?: string[];
+        search?: string;
+        total?: boolean;
+    }): Promise<Models.SubscriberList>;
     /**
      * Get a list of all subscribers from the current Appwrite project.
      *
@@ -5018,34 +7302,64 @@ export class Messaging {
      * @returns {Promise<Models.SubscriberList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listSubscribers(topicId: string, queries?: string[], search?: string, total?: boolean): Promise<Models.SubscriberList>;
     listSubscribers(
-        paramsOrFirst: { topicId: string, queries?: string[], search?: string, total?: boolean } | string,
-        ...rest: [(string[])?, (string)?, (boolean)?]    
+        topicId: string,
+        queries?: string[],
+        search?: string,
+        total?: boolean,
+    ): Promise<Models.SubscriberList>;
+    listSubscribers(
+        paramsOrFirst:
+            | {
+                  topicId: string;
+                  queries?: string[];
+                  search?: string;
+                  total?: boolean;
+              }
+            | string,
+        ...rest: [string[]?, string?, boolean?]
     ): Promise<Models.SubscriberList> {
-        let params: { topicId: string, queries?: string[], search?: string, total?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { topicId: string, queries?: string[], search?: string, total?: boolean };
+        let params: {
+            topicId: string;
+            queries?: string[];
+            search?: string;
+            total?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                topicId: string;
+                queries?: string[];
+                search?: string;
+                total?: boolean;
+            };
         } else {
             params = {
                 topicId: paramsOrFirst as string,
                 queries: rest[0] as string[],
                 search: rest[1] as string,
-                total: rest[2] as boolean            
+                total: rest[2] as boolean,
             };
         }
-        
+
         const topicId = params.topicId;
         const queries = params.queries;
         const search = params.search;
         const total = params.total;
 
-        if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+        if (typeof topicId === 'undefined' || topicId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
-
-        const apiPath = '/messaging/topics/{topicId}/subscribers'.replace('{topicId}', encodeURIComponent(String(topicId)));
+        const apiPath = '/messaging/topics/{topicId}/subscribers'.replace(
+            '{topicId}',
+            encodeURIComponent(String(topicId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -5060,15 +7374,10 @@ export class Messaging {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -5080,7 +7389,11 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Subscriber>}
      */
-    createSubscriber(params: { topicId: string, subscriberId: string, targetId: string }): Promise<Models.Subscriber>;
+    createSubscriber(params: {
+        topicId: string;
+        subscriberId: string;
+        targetId: string;
+    }): Promise<Models.Subscriber>;
     /**
      * Create a new subscriber.
      *
@@ -5091,38 +7404,60 @@ export class Messaging {
      * @returns {Promise<Models.Subscriber>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSubscriber(topicId: string, subscriberId: string, targetId: string): Promise<Models.Subscriber>;
     createSubscriber(
-        paramsOrFirst: { topicId: string, subscriberId: string, targetId: string } | string,
-        ...rest: [(string)?, (string)?]    
+        topicId: string,
+        subscriberId: string,
+        targetId: string,
+    ): Promise<Models.Subscriber>;
+    createSubscriber(
+        paramsOrFirst:
+            | { topicId: string; subscriberId: string; targetId: string }
+            | string,
+        ...rest: [string?, string?]
     ): Promise<Models.Subscriber> {
-        let params: { topicId: string, subscriberId: string, targetId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { topicId: string, subscriberId: string, targetId: string };
+        let params: { topicId: string; subscriberId: string; targetId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                topicId: string;
+                subscriberId: string;
+                targetId: string;
+            };
         } else {
             params = {
                 topicId: paramsOrFirst as string,
                 subscriberId: rest[0] as string,
-                targetId: rest[1] as string            
+                targetId: rest[1] as string,
             };
         }
-        
+
         const topicId = params.topicId;
         const subscriberId = params.subscriberId;
         const targetId = params.targetId;
 
-        if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+        if (typeof topicId === 'undefined' || topicId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
         if (typeof subscriberId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "subscriberId"');
+            throw new AppwriteException(
+                'Missing required parameter: "subscriberId"',
+            );
         }
         if (typeof targetId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "targetId"');
+            throw new AppwriteException(
+                'Missing required parameter: "targetId"',
+            );
         }
-
-        const apiPath = '/messaging/topics/{topicId}/subscribers'.replace('{topicId}', encodeURIComponent(String(topicId)));
+        const apiPath = '/messaging/topics/{topicId}/subscribers'.replace(
+            '{topicId}',
+            encodeURIComponent(String(topicId)),
+        );
         const payload: Payload = {};
         if (typeof subscriberId !== 'undefined') {
             payload['subscriberId'] = subscriberId;
@@ -5135,30 +7470,28 @@ export class Messaging {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Get a subscriber by its unique ID.
-     * 
+     *
      *
      * @param {string} params.topicId - Topic ID. The topic ID subscribed to.
      * @param {string} params.subscriberId - Subscriber ID.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Subscriber>}
      */
-    getSubscriber(params: { topicId: string, subscriberId: string }): Promise<Models.Subscriber>;
+    getSubscriber(params: {
+        topicId: string;
+        subscriberId: string;
+    }): Promise<Models.Subscriber>;
     /**
      * Get a subscriber by its unique ID.
-     * 
+     *
      *
      * @param {string} topicId - Topic ID. The topic ID subscribed to.
      * @param {string} subscriberId - Subscriber ID.
@@ -5166,47 +7499,60 @@ export class Messaging {
      * @returns {Promise<Models.Subscriber>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getSubscriber(topicId: string, subscriberId: string): Promise<Models.Subscriber>;
     getSubscriber(
-        paramsOrFirst: { topicId: string, subscriberId: string } | string,
-        ...rest: [(string)?]    
+        topicId: string,
+        subscriberId: string,
+    ): Promise<Models.Subscriber>;
+    getSubscriber(
+        paramsOrFirst: { topicId: string; subscriberId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Subscriber> {
-        let params: { topicId: string, subscriberId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { topicId: string, subscriberId: string };
+        let params: { topicId: string; subscriberId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                topicId: string;
+                subscriberId: string;
+            };
         } else {
             params = {
                 topicId: paramsOrFirst as string,
-                subscriberId: rest[0] as string            
+                subscriberId: rest[0] as string,
             };
         }
-        
+
         const topicId = params.topicId;
         const subscriberId = params.subscriberId;
 
-        if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+        if (typeof topicId === 'undefined' || topicId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
-        if (typeof subscriberId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "subscriberId"');
+        if (typeof subscriberId === 'undefined' || subscriberId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "subscriberId"',
+            );
         }
-
-        const apiPath = '/messaging/topics/{topicId}/subscribers/{subscriberId}'.replace('{topicId}', encodeURIComponent(String(topicId))).replace('{subscriberId}', encodeURIComponent(String(subscriberId)));
+        const apiPath = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
+            .replace('{topicId}', encodeURIComponent(String(topicId)))
+            .replace(
+                '{subscriberId}',
+                encodeURIComponent(String(subscriberId)),
+            );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -5217,7 +7563,10 @@ export class Messaging {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteSubscriber(params: { topicId: string, subscriberId: string }): Promise<{}>;
+    deleteSubscriber(params: {
+        topicId: string;
+        subscriberId: string;
+    }): Promise<{}>;
     /**
      * Delete a subscriber by its unique ID.
      *
@@ -5229,44 +7578,55 @@ export class Messaging {
      */
     deleteSubscriber(topicId: string, subscriberId: string): Promise<{}>;
     deleteSubscriber(
-        paramsOrFirst: { topicId: string, subscriberId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { topicId: string; subscriberId: string } | string,
+        ...rest: [string?]
     ): Promise<{}> {
-        let params: { topicId: string, subscriberId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { topicId: string, subscriberId: string };
+        let params: { topicId: string; subscriberId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                topicId: string;
+                subscriberId: string;
+            };
         } else {
             params = {
                 topicId: paramsOrFirst as string,
-                subscriberId: rest[0] as string            
+                subscriberId: rest[0] as string,
             };
         }
-        
+
         const topicId = params.topicId;
         const subscriberId = params.subscriberId;
 
-        if (typeof topicId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "topicId"');
+        if (typeof topicId === 'undefined' || topicId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "topicId"',
+            );
         }
-        if (typeof subscriberId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "subscriberId"');
+        if (typeof subscriberId === 'undefined' || subscriberId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "subscriberId"',
+            );
         }
-
-        const apiPath = '/messaging/topics/{topicId}/subscribers/{subscriberId}'.replace('{topicId}', encodeURIComponent(String(topicId))).replace('{subscriberId}', encodeURIComponent(String(subscriberId)));
+        const apiPath = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
+            .replace('{topicId}', encodeURIComponent(String(topicId)))
+            .replace(
+                '{subscriberId}',
+                encodeURIComponent(String(subscriberId)),
+            );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 }

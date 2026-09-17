@@ -1,5 +1,5 @@
 ```javascript
-import { Client, TablesDB } from "@appwrite.io/console";
+import { Client, TablesDB } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,12 +10,12 @@ const tablesDB = new TablesDB(client);
 const result = await tablesDB.createVarcharColumn({
     databaseId: '<DATABASE_ID>',
     tableId: '<TABLE_ID>',
-    key: '',
+    key: '<KEY>',
     size: 1,
     required: false,
-    xdefault: '<DEFAULT>', // optional
+    xdefault: 'Hello World', // optional
     array: false, // optional
-    encrypt: false // optional
+    encrypt: false, // optional
 });
 
 console.log(result);

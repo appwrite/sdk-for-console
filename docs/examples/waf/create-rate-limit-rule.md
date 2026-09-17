@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Waf } from "@appwrite.io/console";
+import { Client, Waf } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -16,9 +16,11 @@ const result = await waf.createRateLimitRule({
     resourceId: '<RESOURCE_ID>', // optional
     description: '<DESCRIPTION>', // optional
     key: 'ip', // optional
+    strategy: 'fixedWindow', // optional
+    maxBucketSize: 1, // optional
     priority: -100000, // optional
     enabled: false, // optional
-    conditions: '' // optional
+    conditions: '', // optional
 });
 
 console.log(result);

@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Affiliates } from "@appwrite.io/console";
+import { Client, Affiliates } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const affiliates = new Affiliates(client);
 
 const result = await affiliates.listReferrals({
-    queries: [] // optional
+    queries: [], // optional
 });
 
 console.log(result);

@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Console } from "@appwrite.io/console";
+import { Client, Console } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +12,7 @@ const result = await xconsole.createSource({
     referrer: 'https://example.com', // optional
     utmSource: '<UTM_SOURCE>', // optional
     utmCampaign: '<UTM_CAMPAIGN>', // optional
-    utmMedium: '<UTM_MEDIUM>' // optional
+    utmMedium: '<UTM_MEDIUM>', // optional
 });
 
 console.log(result);

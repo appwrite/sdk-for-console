@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Project } from "@appwrite.io/console";
+import { Client, Project } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +12,7 @@ const result = await project.updateOAuth2Keycloak({
     clientSecret: '<CLIENT_SECRET>', // optional
     endpoint: '<ENDPOINT>', // optional
     realmName: '<REALM_NAME>', // optional
-    enabled: false // optional
+    enabled: false, // optional
 });
 
 console.log(result);

@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Sites } from "@appwrite.io/console";
+import { Client, Sites } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const sites = new Sites(client);
 
 const result = await sites.get({
-    siteId: '<SITE_ID>'
+    siteId: '<SITE_ID>',
 });
 
 console.log(result);

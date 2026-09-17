@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Postgresql } from "@appwrite.io/console";
+import { Client, Postgresql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -14,7 +14,7 @@ const result = await postgresql.createBackupPolicy({
     schedule: '',
     retention: 1,
     type: 'full', // optional
-    enabled: false // optional
+    enabled: false, // optional
 });
 
 console.log(result);

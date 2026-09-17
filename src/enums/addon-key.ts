@@ -1,4 +1,4 @@
-export enum Addon {
+export enum AddonKey {
     Baa = 'baa',
     Premiumgeodb = 'premiumgeodb',
     Premiumgeodborg = 'premiumgeodborg',

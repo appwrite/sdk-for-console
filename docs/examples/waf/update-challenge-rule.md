@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Waf } from "@appwrite.io/console";
+import { Client, Waf } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -18,7 +18,7 @@ const result = await waf.updateChallengeRule({
     enabled: false, // optional
     conditions: '', // optional
     difficulty: 1, // optional
-    ttl: 900 // optional
+    ttl: 900, // optional
 });
 
 console.log(result);

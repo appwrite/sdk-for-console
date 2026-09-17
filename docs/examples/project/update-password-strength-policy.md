@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Project } from "@appwrite.io/console";
+import { Client, Project } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +12,7 @@ const result = await project.updatePasswordStrengthPolicy({
     uppercase: false, // optional
     lowercase: false, // optional
     number: false, // optional
-    symbols: false // optional
+    symbols: false, // optional
 });
 
 console.log(result);

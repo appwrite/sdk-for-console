@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Project, ProjectKeyScopes } from "@appwrite.io/console";
+import { Client, Project, ProjectKeyScopes } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const project = new Project(client);
 
 const result = await project.createEphemeralKey({
     scopes: [ProjectKeyScopes.ProjectRead],
-    duration: 600
+    duration: 600,
 });
 
 console.log(result);

@@ -1,5 +1,9 @@
 ```javascript
-import { Client, Migrations, NHostMigrationResource } from "@appwrite.io/console";
+import {
+    Client,
+    Migrations,
+    NHostMigrationResource,
+} from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -15,7 +19,7 @@ const result = await migrations.getNHostReport({
     database: '<DATABASE>',
     username: '<USERNAME>',
     password: 'password',
-    port: null // optional
+    port: 5432, // optional
 });
 
 console.log(result);

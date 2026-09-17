@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Messaging } from "@appwrite.io/console";
+import { Client, Messaging } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,7 +13,7 @@ const result = await messaging.createMsg91Provider({
     templateId: '<TEMPLATE_ID>', // optional
     senderId: '<SENDER_ID>', // optional
     authKey: '<AUTH_KEY>', // optional
-    enabled: false // optional
+    enabled: false, // optional
 });
 
 console.log(result);

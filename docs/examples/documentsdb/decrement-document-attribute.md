@@ -1,5 +1,5 @@
 ```javascript
-import { Client, DocumentsDB } from "@appwrite.io/console";
+import { Client, DocumentsDB } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,10 +11,10 @@ const result = await documentsDB.decrementDocumentAttribute({
     databaseId: '<DATABASE_ID>',
     collectionId: '<COLLECTION_ID>',
     documentId: '<DOCUMENT_ID>',
-    attribute: '',
-    value: null, // optional
-    min: null, // optional
-    transactionId: '<TRANSACTION_ID>' // optional
+    attribute: '<ATTRIBUTE>',
+    value: 1, // optional
+    min: 0, // optional
+    transactionId: '<TRANSACTION_ID>', // optional
 });
 
 console.log(result);

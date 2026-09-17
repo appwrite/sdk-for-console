@@ -1,5 +1,5 @@
 ```javascript
-import { Client, TablesDB, Permission, Role } from "@appwrite.io/console";
+import { Client, TablesDB, Permission, Role } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -15,7 +15,7 @@ const result = await tablesDB.createTable({
     rowSecurity: false, // optional
     enabled: false, // optional
     columns: [], // optional
-    indexes: [] // optional
+    indexes: [], // optional
 });
 
 console.log(result);

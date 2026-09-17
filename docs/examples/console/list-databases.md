@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Console } from "@appwrite.io/console";
+import { Client, Console } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const xconsole = new Console(client);
 const result = await xconsole.listDatabases({
     queries: [], // optional
     search: '<SEARCH>', // optional
-    total: false // optional
+    total: false, // optional
 });
 
 console.log(result);

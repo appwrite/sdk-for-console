@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Messaging } from "@appwrite.io/console";
+import { Client, Messaging } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -14,7 +14,7 @@ const result = await messaging.updateSMS({
     targets: [], // optional
     content: '<CONTENT>', // optional
     draft: false, // optional
-    scheduledAt: '2020-10-15T06:38:00.000+00:00' // optional
+    scheduledAt: '2020-10-15T06:38:00.000+00:00', // optional
 });
 
 console.log(result);

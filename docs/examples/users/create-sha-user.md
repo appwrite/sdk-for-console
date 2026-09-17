@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Users, PasswordHash } from "@appwrite.io/console";
+import { Client, Users, PasswordHash } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +12,7 @@ const result = await users.createSHAUser({
     email: 'email@example.com',
     password: 'password',
     passwordVersion: PasswordHash.Sha1, // optional
-    name: '<NAME>' // optional
+    name: '<NAME>', // optional
 });
 
 console.log(result);

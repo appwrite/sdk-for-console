@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Postgresql } from "@appwrite.io/console";
+import { Client, Postgresql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +12,7 @@ const result = await postgresql.listRestorations({
     status: 'pending', // optional
     type: 'backup', // optional
     limit: 1, // optional
-    offset: 0 // optional
+    offset: 0, // optional
 });
 
 console.log(result);

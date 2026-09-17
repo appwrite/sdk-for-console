@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Mysql } from "@appwrite.io/console";
+import { Client, Mysql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +11,8 @@ const result = await mysql.createRestoration({
     databaseId: '<DATABASE_ID>',
     type: 'backup', // optional
     backupId: '<BACKUP_ID>', // optional
-    targetTime: '2020-10-15T06:38:00.000+00:00' // optional
+    targetDatabaseId: '<TARGET_DATABASE_ID>', // optional
+    targetTime: '2020-10-15T06:38:00.000+00:00', // optional
 });
 
 console.log(result);

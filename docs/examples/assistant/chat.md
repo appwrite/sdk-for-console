@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Assistant } from "@appwrite.io/console";
+import { Client, Assistant } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const assistant = new Assistant(client);
 
 const result = await assistant.chat({
-    prompt: '<PROMPT>'
+    prompt: '<PROMPT>',
 });
 
 console.log(result);

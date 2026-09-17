@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Affiliates } from "@appwrite.io/console";
+import { Client, Affiliates } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const affiliates = new Affiliates(client);
 
 const result = await affiliates.getLink({
-    linkId: '<LINK_ID>'
+    linkId: '<LINK_ID>',
 });
 
 console.log(result);

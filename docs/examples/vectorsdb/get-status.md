@@ -1,5 +1,5 @@
 ```javascript
-import { Client, VectorsDB } from "@appwrite.io/console";
+import { Client, VectorsDB } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const vectorsDB = new VectorsDB(client);
 
 const result = await vectorsDB.getStatus({
-    databaseId: '<DATABASE_ID>'
+    databaseId: '<DATABASE_ID>',
 });
 
 console.log(result);

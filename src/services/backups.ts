@@ -1,9 +1,7 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
 
 import { BackupServices } from '../enums/backup-services';
-
 export class Backups {
     client: Client;
 
@@ -18,7 +16,9 @@ export class Backups {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupArchiveList>}
      */
-    listArchives(params?: { queries?: string[] }): Promise<Models.BackupArchiveList>;
+    listArchives(params?: {
+        queries?: string[];
+    }): Promise<Models.BackupArchiveList>;
     /**
      * List all archives for a project.
      *
@@ -29,20 +29,24 @@ export class Backups {
      */
     listArchives(queries?: string[]): Promise<Models.BackupArchiveList>;
     listArchives(
-        paramsOrFirst?: { queries?: string[] } | string[]    
+        paramsOrFirst?: { queries?: string[] } | string[],
     ): Promise<Models.BackupArchiveList> {
         let params: { queries?: string[] };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            typeof paramsOrFirst === 'undefined' ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
             params = (paramsOrFirst || {}) as { queries?: string[] };
         } else {
             params = {
-                queries: paramsOrFirst as string[]            
+                queries: paramsOrFirst as string[],
             };
         }
-        
-        const queries = params.queries;
 
+        const queries = params.queries;
 
         const apiPath = '/backups/archives';
         const payload: Payload = {};
@@ -53,15 +57,10 @@ export class Backups {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -72,7 +71,10 @@ export class Backups {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupArchive>}
      */
-    createArchive(params: { services: BackupServices[], resourceId?: string }): Promise<Models.BackupArchive>;
+    createArchive(params: {
+        services: BackupServices[];
+        resourceId?: string;
+    }): Promise<Models.BackupArchive>;
     /**
      * Create a new archive asynchronously for a project.
      *
@@ -82,29 +84,43 @@ export class Backups {
      * @returns {Promise<Models.BackupArchive>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createArchive(services: BackupServices[], resourceId?: string): Promise<Models.BackupArchive>;
     createArchive(
-        paramsOrFirst: { services: BackupServices[], resourceId?: string } | BackupServices[],
-        ...rest: [(string)?]    
+        services: BackupServices[],
+        resourceId?: string,
+    ): Promise<Models.BackupArchive>;
+    createArchive(
+        paramsOrFirst:
+            | { services: BackupServices[]; resourceId?: string }
+            | BackupServices[],
+        ...rest: [string?]
     ): Promise<Models.BackupArchive> {
-        let params: { services: BackupServices[], resourceId?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('services' in paramsOrFirst || 'resourceId' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { services: BackupServices[], resourceId?: string };
+        let params: { services: BackupServices[]; resourceId?: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst) &&
+            ('services' in paramsOrFirst || 'resourceId' in paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                services: BackupServices[];
+                resourceId?: string;
+            };
         } else {
             params = {
                 services: paramsOrFirst as BackupServices[],
-                resourceId: rest[0] as string            
+                resourceId: rest[0] as string,
             };
         }
-        
+
         const services = params.services;
         const resourceId = params.resourceId;
 
         if (typeof services === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "services"');
+            throw new AppwriteException(
+                'Missing required parameter: "services"',
+            );
         }
-
         const apiPath = '/backups/archives';
         const payload: Payload = {};
         if (typeof services !== 'undefined') {
@@ -118,15 +134,10 @@ export class Backups {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -147,39 +158,42 @@ export class Backups {
      */
     getArchive(archiveId: string): Promise<Models.BackupArchive>;
     getArchive(
-        paramsOrFirst: { archiveId: string } | string    
+        paramsOrFirst: { archiveId: string } | string,
     ): Promise<Models.BackupArchive> {
         let params: { archiveId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { archiveId: string };
         } else {
             params = {
-                archiveId: paramsOrFirst as string            
+                archiveId: paramsOrFirst as string,
             };
         }
-        
+
         const archiveId = params.archiveId;
 
-        if (typeof archiveId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "archiveId"');
+        if (typeof archiveId === 'undefined' || archiveId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "archiveId"',
+            );
         }
-
-        const apiPath = '/backups/archives/{archiveId}'.replace('{archiveId}', encodeURIComponent(String(archiveId)));
+        const apiPath = '/backups/archives/{archiveId}'.replace(
+            '{archiveId}',
+            encodeURIComponent(String(archiveId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -199,41 +213,42 @@ export class Backups {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     deleteArchive(archiveId: string): Promise<{}>;
-    deleteArchive(
-        paramsOrFirst: { archiveId: string } | string    
-    ): Promise<{}> {
+    deleteArchive(paramsOrFirst: { archiveId: string } | string): Promise<{}> {
         let params: { archiveId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { archiveId: string };
         } else {
             params = {
-                archiveId: paramsOrFirst as string            
+                archiveId: paramsOrFirst as string,
             };
         }
-        
+
         const archiveId = params.archiveId;
 
-        if (typeof archiveId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "archiveId"');
+        if (typeof archiveId === 'undefined' || archiveId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "archiveId"',
+            );
         }
-
-        const apiPath = '/backups/archives/{archiveId}'.replace('{archiveId}', encodeURIComponent(String(archiveId)));
+        const apiPath = '/backups/archives/{archiveId}'.replace(
+            '{archiveId}',
+            encodeURIComponent(String(archiveId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -243,7 +258,9 @@ export class Backups {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicyList>}
      */
-    listPolicies(params?: { queries?: string[] }): Promise<Models.BackupPolicyList>;
+    listPolicies(params?: {
+        queries?: string[];
+    }): Promise<Models.BackupPolicyList>;
     /**
      * List all policies for a project.
      *
@@ -254,20 +271,24 @@ export class Backups {
      */
     listPolicies(queries?: string[]): Promise<Models.BackupPolicyList>;
     listPolicies(
-        paramsOrFirst?: { queries?: string[] } | string[]    
+        paramsOrFirst?: { queries?: string[] } | string[],
     ): Promise<Models.BackupPolicyList> {
         let params: { queries?: string[] };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            typeof paramsOrFirst === 'undefined' ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
             params = (paramsOrFirst || {}) as { queries?: string[] };
         } else {
             params = {
-                queries: paramsOrFirst as string[]            
+                queries: paramsOrFirst as string[],
             };
         }
-        
-        const queries = params.queries;
 
+        const queries = params.queries;
 
         const apiPath = '/backups/policies';
         const payload: Payload = {};
@@ -278,15 +299,10 @@ export class Backups {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -302,7 +318,15 @@ export class Backups {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
      */
-    createPolicy(params: { policyId: string, services: BackupServices[], retention: number, schedule: string, name?: string, resourceId?: string, enabled?: boolean }): Promise<Models.BackupPolicy>;
+    createPolicy(params: {
+        policyId: string;
+        services: BackupServices[];
+        retention: number;
+        schedule: string;
+        name?: string;
+        resourceId?: string;
+        enabled?: boolean;
+    }): Promise<Models.BackupPolicy>;
     /**
      * Create a new backup policy.
      *
@@ -317,15 +341,60 @@ export class Backups {
      * @returns {Promise<Models.BackupPolicy>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPolicy(policyId: string, services: BackupServices[], retention: number, schedule: string, name?: string, resourceId?: string, enabled?: boolean): Promise<Models.BackupPolicy>;
     createPolicy(
-        paramsOrFirst: { policyId: string, services: BackupServices[], retention: number, schedule: string, name?: string, resourceId?: string, enabled?: boolean } | string,
-        ...rest: [(BackupServices[])?, (number)?, (string)?, (string)?, (string)?, (boolean)?]    
+        policyId: string,
+        services: BackupServices[],
+        retention: number,
+        schedule: string,
+        name?: string,
+        resourceId?: string,
+        enabled?: boolean,
+    ): Promise<Models.BackupPolicy>;
+    createPolicy(
+        paramsOrFirst:
+            | {
+                  policyId: string;
+                  services: BackupServices[];
+                  retention: number;
+                  schedule: string;
+                  name?: string;
+                  resourceId?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [
+            BackupServices[]?,
+            number?,
+            string?,
+            string?,
+            string?,
+            boolean?,
+        ]
     ): Promise<Models.BackupPolicy> {
-        let params: { policyId: string, services: BackupServices[], retention: number, schedule: string, name?: string, resourceId?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { policyId: string, services: BackupServices[], retention: number, schedule: string, name?: string, resourceId?: string, enabled?: boolean };
+        let params: {
+            policyId: string;
+            services: BackupServices[];
+            retention: number;
+            schedule: string;
+            name?: string;
+            resourceId?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                policyId: string;
+                services: BackupServices[];
+                retention: number;
+                schedule: string;
+                name?: string;
+                resourceId?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 policyId: paramsOrFirst as string,
@@ -334,10 +403,10 @@ export class Backups {
                 schedule: rest[2] as string,
                 name: rest[3] as string,
                 resourceId: rest[4] as string,
-                enabled: rest[5] as boolean            
+                enabled: rest[5] as boolean,
             };
         }
-        
+
         const policyId = params.policyId;
         const services = params.services;
         const retention = params.retention;
@@ -347,18 +416,25 @@ export class Backups {
         const enabled = params.enabled;
 
         if (typeof policyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "policyId"');
+            throw new AppwriteException(
+                'Missing required parameter: "policyId"',
+            );
         }
         if (typeof services === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "services"');
+            throw new AppwriteException(
+                'Missing required parameter: "services"',
+            );
         }
         if (typeof retention === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "retention"');
+            throw new AppwriteException(
+                'Missing required parameter: "retention"',
+            );
         }
         if (typeof schedule === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "schedule"');
+            throw new AppwriteException(
+                'Missing required parameter: "schedule"',
+            );
         }
-
         const apiPath = '/backups/policies';
         const payload: Payload = {};
         if (typeof policyId !== 'undefined') {
@@ -387,15 +463,10 @@ export class Backups {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -416,39 +487,42 @@ export class Backups {
      */
     getPolicy(policyId: string): Promise<Models.BackupPolicy>;
     getPolicy(
-        paramsOrFirst: { policyId: string } | string    
+        paramsOrFirst: { policyId: string } | string,
     ): Promise<Models.BackupPolicy> {
         let params: { policyId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { policyId: string };
         } else {
             params = {
-                policyId: paramsOrFirst as string            
+                policyId: paramsOrFirst as string,
             };
         }
-        
+
         const policyId = params.policyId;
 
-        if (typeof policyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "policyId"');
+        if (typeof policyId === 'undefined' || policyId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "policyId"',
+            );
         }
-
-        const apiPath = '/backups/policies/{policyId}'.replace('{policyId}', encodeURIComponent(String(policyId)));
+        const apiPath = '/backups/policies/{policyId}'.replace(
+            '{policyId}',
+            encodeURIComponent(String(policyId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -462,7 +536,13 @@ export class Backups {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
      */
-    updatePolicy(params: { policyId: string, name?: string, retention?: number, schedule?: string, enabled?: boolean }): Promise<Models.BackupPolicy>;
+    updatePolicy(params: {
+        policyId: string;
+        name?: string;
+        retention?: number;
+        schedule?: string;
+        enabled?: boolean;
+    }): Promise<Models.BackupPolicy>;
     /**
      * Update an existing policy using it's ID.
      *
@@ -475,36 +555,70 @@ export class Backups {
      * @returns {Promise<Models.BackupPolicy>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePolicy(policyId: string, name?: string, retention?: number, schedule?: string, enabled?: boolean): Promise<Models.BackupPolicy>;
     updatePolicy(
-        paramsOrFirst: { policyId: string, name?: string, retention?: number, schedule?: string, enabled?: boolean } | string,
-        ...rest: [(string)?, (number)?, (string)?, (boolean)?]    
+        policyId: string,
+        name?: string,
+        retention?: number,
+        schedule?: string,
+        enabled?: boolean,
+    ): Promise<Models.BackupPolicy>;
+    updatePolicy(
+        paramsOrFirst:
+            | {
+                  policyId: string;
+                  name?: string;
+                  retention?: number;
+                  schedule?: string;
+                  enabled?: boolean;
+              }
+            | string,
+        ...rest: [string?, number?, string?, boolean?]
     ): Promise<Models.BackupPolicy> {
-        let params: { policyId: string, name?: string, retention?: number, schedule?: string, enabled?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { policyId: string, name?: string, retention?: number, schedule?: string, enabled?: boolean };
+        let params: {
+            policyId: string;
+            name?: string;
+            retention?: number;
+            schedule?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                policyId: string;
+                name?: string;
+                retention?: number;
+                schedule?: string;
+                enabled?: boolean;
+            };
         } else {
             params = {
                 policyId: paramsOrFirst as string,
                 name: rest[0] as string,
                 retention: rest[1] as number,
                 schedule: rest[2] as string,
-                enabled: rest[3] as boolean            
+                enabled: rest[3] as boolean,
             };
         }
-        
+
         const policyId = params.policyId;
         const name = params.name;
         const retention = params.retention;
         const schedule = params.schedule;
         const enabled = params.enabled;
 
-        if (typeof policyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "policyId"');
+        if (typeof policyId === 'undefined' || policyId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "policyId"',
+            );
         }
-
-        const apiPath = '/backups/policies/{policyId}'.replace('{policyId}', encodeURIComponent(String(policyId)));
+        const apiPath = '/backups/policies/{policyId}'.replace(
+            '{policyId}',
+            encodeURIComponent(String(policyId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -523,15 +637,10 @@ export class Backups {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -551,54 +660,55 @@ export class Backups {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     deletePolicy(policyId: string): Promise<{}>;
-    deletePolicy(
-        paramsOrFirst: { policyId: string } | string    
-    ): Promise<{}> {
+    deletePolicy(paramsOrFirst: { policyId: string } | string): Promise<{}> {
         let params: { policyId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { policyId: string };
         } else {
             params = {
-                policyId: paramsOrFirst as string            
+                policyId: paramsOrFirst as string,
             };
         }
-        
+
         const policyId = params.policyId;
 
-        if (typeof policyId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "policyId"');
+        if (typeof policyId === 'undefined' || policyId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "policyId"',
+            );
         }
-
-        const apiPath = '/backups/policies/{policyId}'.replace('{policyId}', encodeURIComponent(String(policyId)));
+        const apiPath = '/backups/policies/{policyId}'.replace(
+            '{policyId}',
+            encodeURIComponent(String(policyId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
      * Create and trigger a new restoration for a backup on a project.
-     * 
+     *
      * For a backup of one database, the restoration resolves its destination before it is queued. When `newResourceId` is omitted, the archived database is restored in place and its own ID is returned in `options`. Pass a different `newResourceId` to restore alongside it as a new database instead.
-     * 
+     *
      * The restoration migration records the archived database in `resourceId` and `resourceType`, and the resolved database in `destinationResourceId` and `destinationResourceType`. Database types are stored canonically as `database`, `documentsdb`, or `vectorsdb`. Project-wide restorations leave these fields empty because they do not have a single source or destination database.
-     * 
+     *
      * To list every migration related to one database, use its canonical type in a nested `OR(AND(...), AND(...), AND(...))` across the root, parent, and destination relation pairs: `(resourceType, resourceId)`, `(parentResourceType, parentResourceId)`, and `(destinationResourceType, destinationResourceId)`. Legacy and TablesDB databases use `database`; the operational `resourceType` of a table migration is not rewritten to `tablesdb`.
-     * 
+     *
      * When restoring a DocumentsDB or VectorsDB database from a dedicated source, the restore provisions a fresh dedicated backing database at the source database's own specification and lands the data there. An in-place restore swaps the database onto that backing only once the restore has succeeded, and retires the backing it displaced only once that swap is confirmed, so the source keeps serving its own data until the restored data is in place and any failure leaves it untouched. A serverless source has no dedicated backing to clone and restores onto the archived database instead.
-     * 
+     *
      *
      * @param {string} params.archiveId - Backup archive ID to restore
      * @param {BackupServices[]} params.services - Array of services to restore
@@ -607,18 +717,23 @@ export class Backups {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupRestoration>}
      */
-    createRestoration(params: { archiveId: string, services: BackupServices[], newResourceId?: string, newResourceName?: string }): Promise<Models.BackupRestoration>;
+    createRestoration(params: {
+        archiveId: string;
+        services: BackupServices[];
+        newResourceId?: string;
+        newResourceName?: string;
+    }): Promise<Models.BackupRestoration>;
     /**
      * Create and trigger a new restoration for a backup on a project.
-     * 
+     *
      * For a backup of one database, the restoration resolves its destination before it is queued. When `newResourceId` is omitted, the archived database is restored in place and its own ID is returned in `options`. Pass a different `newResourceId` to restore alongside it as a new database instead.
-     * 
+     *
      * The restoration migration records the archived database in `resourceId` and `resourceType`, and the resolved database in `destinationResourceId` and `destinationResourceType`. Database types are stored canonically as `database`, `documentsdb`, or `vectorsdb`. Project-wide restorations leave these fields empty because they do not have a single source or destination database.
-     * 
+     *
      * To list every migration related to one database, use its canonical type in a nested `OR(AND(...), AND(...), AND(...))` across the root, parent, and destination relation pairs: `(resourceType, resourceId)`, `(parentResourceType, parentResourceId)`, and `(destinationResourceType, destinationResourceId)`. Legacy and TablesDB databases use `database`; the operational `resourceType` of a table migration is not rewritten to `tablesdb`.
-     * 
+     *
      * When restoring a DocumentsDB or VectorsDB database from a dedicated source, the restore provisions a fresh dedicated backing database at the source database's own specification and lands the data there. An in-place restore swaps the database onto that backing only once the restore has succeeded, and retires the backing it displaced only once that swap is confirmed, so the source keeps serving its own data until the restored data is in place and any failure leaves it untouched. A serverless source has no dedicated backing to clone and restores onto the archived database instead.
-     * 
+     *
      *
      * @param {string} archiveId - Backup archive ID to restore
      * @param {BackupServices[]} services - Array of services to restore
@@ -628,36 +743,65 @@ export class Backups {
      * @returns {Promise<Models.BackupRestoration>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRestoration(archiveId: string, services: BackupServices[], newResourceId?: string, newResourceName?: string): Promise<Models.BackupRestoration>;
     createRestoration(
-        paramsOrFirst: { archiveId: string, services: BackupServices[], newResourceId?: string, newResourceName?: string } | string,
-        ...rest: [(BackupServices[])?, (string)?, (string)?]    
+        archiveId: string,
+        services: BackupServices[],
+        newResourceId?: string,
+        newResourceName?: string,
+    ): Promise<Models.BackupRestoration>;
+    createRestoration(
+        paramsOrFirst:
+            | {
+                  archiveId: string;
+                  services: BackupServices[];
+                  newResourceId?: string;
+                  newResourceName?: string;
+              }
+            | string,
+        ...rest: [BackupServices[]?, string?, string?]
     ): Promise<Models.BackupRestoration> {
-        let params: { archiveId: string, services: BackupServices[], newResourceId?: string, newResourceName?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { archiveId: string, services: BackupServices[], newResourceId?: string, newResourceName?: string };
+        let params: {
+            archiveId: string;
+            services: BackupServices[];
+            newResourceId?: string;
+            newResourceName?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                archiveId: string;
+                services: BackupServices[];
+                newResourceId?: string;
+                newResourceName?: string;
+            };
         } else {
             params = {
                 archiveId: paramsOrFirst as string,
                 services: rest[0] as BackupServices[],
                 newResourceId: rest[1] as string,
-                newResourceName: rest[2] as string            
+                newResourceName: rest[2] as string,
             };
         }
-        
+
         const archiveId = params.archiveId;
         const services = params.services;
         const newResourceId = params.newResourceId;
         const newResourceName = params.newResourceName;
 
         if (typeof archiveId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "archiveId"');
+            throw new AppwriteException(
+                'Missing required parameter: "archiveId"',
+            );
         }
         if (typeof services === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "services"');
+            throw new AppwriteException(
+                'Missing required parameter: "services"',
+            );
         }
-
         const apiPath = '/backups/restoration';
         const payload: Payload = {};
         if (typeof archiveId !== 'undefined') {
@@ -677,15 +821,10 @@ export class Backups {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -695,7 +834,9 @@ export class Backups {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupRestorationList>}
      */
-    listRestorations(params?: { queries?: string[] }): Promise<Models.BackupRestorationList>;
+    listRestorations(params?: {
+        queries?: string[];
+    }): Promise<Models.BackupRestorationList>;
     /**
      * List all backup restorations for a project.
      *
@@ -706,20 +847,24 @@ export class Backups {
      */
     listRestorations(queries?: string[]): Promise<Models.BackupRestorationList>;
     listRestorations(
-        paramsOrFirst?: { queries?: string[] } | string[]    
+        paramsOrFirst?: { queries?: string[] } | string[],
     ): Promise<Models.BackupRestorationList> {
         let params: { queries?: string[] };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            typeof paramsOrFirst === 'undefined' ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
             params = (paramsOrFirst || {}) as { queries?: string[] };
         } else {
             params = {
-                queries: paramsOrFirst as string[]            
+                queries: paramsOrFirst as string[],
             };
         }
-        
-        const queries = params.queries;
 
+        const queries = params.queries;
 
         const apiPath = '/backups/restorations';
         const payload: Payload = {};
@@ -730,15 +875,10 @@ export class Backups {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -748,7 +888,9 @@ export class Backups {
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupRestoration>}
      */
-    getRestoration(params: { restorationId: string }): Promise<Models.BackupRestoration>;
+    getRestoration(params: {
+        restorationId: string;
+    }): Promise<Models.BackupRestoration>;
     /**
      * Get the current status of a backup restoration.
      *
@@ -759,38 +901,41 @@ export class Backups {
      */
     getRestoration(restorationId: string): Promise<Models.BackupRestoration>;
     getRestoration(
-        paramsOrFirst: { restorationId: string } | string    
+        paramsOrFirst: { restorationId: string } | string,
     ): Promise<Models.BackupRestoration> {
         let params: { restorationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { restorationId: string };
         } else {
             params = {
-                restorationId: paramsOrFirst as string            
+                restorationId: paramsOrFirst as string,
             };
         }
-        
+
         const restorationId = params.restorationId;
 
-        if (typeof restorationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "restorationId"');
+        if (typeof restorationId === 'undefined' || restorationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "restorationId"',
+            );
         }
-
-        const apiPath = '/backups/restorations/{restorationId}'.replace('{restorationId}', encodeURIComponent(String(restorationId)));
+        const apiPath = '/backups/restorations/{restorationId}'.replace(
+            '{restorationId}',
+            encodeURIComponent(String(restorationId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 }

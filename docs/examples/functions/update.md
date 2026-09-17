@@ -1,5 +1,10 @@
 ```javascript
-import { Client, Functions, Runtime, ProjectKeyScopes } from "@appwrite.io/console";
+import {
+    Client,
+    Functions,
+    Runtime,
+    ProjectKeyScopes,
+} from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,9 +16,9 @@ const result = await functions.update({
     functionId: '<FUNCTION_ID>',
     name: '<NAME>',
     runtime: Runtime.Node145, // optional
-    execute: ["any"], // optional
+    execute: ['any'], // optional
     events: [], // optional
-    schedule: '', // optional
+    schedule: '0 0 * * *', // optional
     timeout: 1, // optional
     enabled: false, // optional
     logging: false, // optional
@@ -27,9 +32,9 @@ const result = await functions.update({
     providerRootDirectory: '<PROVIDER_ROOT_DIRECTORY>', // optional
     providerBranches: [], // optional
     providerPaths: [], // optional
-    buildSpecification: '', // optional
-    runtimeSpecification: '', // optional
-    deploymentRetention: 0 // optional
+    buildSpecification: 's-1vcpu-512mb', // optional
+    runtimeSpecification: 's-1vcpu-512mb', // optional
+    deploymentRetention: 0, // optional
 });
 
 console.log(result);

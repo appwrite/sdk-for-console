@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Affiliates } from "@appwrite.io/console";
+import { Client, Affiliates } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const affiliates = new Affiliates(client);
 const result = await affiliates.updateReward({
     rewardId: '<REWARD_ID>',
     status: 'claimed',
-    organizationId: '<ORGANIZATION_ID>'
+    organizationId: '<ORGANIZATION_ID>',
 });
 
 console.log(result);

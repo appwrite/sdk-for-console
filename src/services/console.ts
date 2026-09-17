@@ -1,5 +1,4 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
 
 import { Platform } from '../enums/platform';
@@ -7,7 +6,6 @@ import { ConsoleResourceType } from '../enums/console-resource-type';
 import { QuerySuggestionResource } from '../enums/query-suggestion-resource';
 import { ProjectEmailTemplateId } from '../enums/project-email-template-id';
 import { ProjectEmailTemplateLocale } from '../enums/project-email-template-locale';
-
 export class Console {
     client: Client;
 
@@ -33,39 +31,42 @@ export class Console {
      */
     getCampaign(campaignId: string): Promise<Models.Campaign>;
     getCampaign(
-        paramsOrFirst: { campaignId: string } | string    
+        paramsOrFirst: { campaignId: string } | string,
     ): Promise<Models.Campaign> {
         let params: { campaignId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { campaignId: string };
         } else {
             params = {
-                campaignId: paramsOrFirst as string            
+                campaignId: paramsOrFirst as string,
             };
         }
-        
+
         const campaignId = params.campaignId;
 
-        if (typeof campaignId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "campaignId"');
+        if (typeof campaignId === 'undefined' || campaignId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "campaignId"',
+            );
         }
-
-        const apiPath = '/console/campaigns/{campaignId}'.replace('{campaignId}', encodeURIComponent(String(campaignId)));
+        const apiPath = '/console/campaigns/{campaignId}'.replace(
+            '{campaignId}',
+            encodeURIComponent(String(campaignId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -86,44 +87,47 @@ export class Console {
      */
     getCoupon(couponId: string): Promise<Models.Coupon>;
     getCoupon(
-        paramsOrFirst: { couponId: string } | string    
+        paramsOrFirst: { couponId: string } | string,
     ): Promise<Models.Coupon> {
         let params: { couponId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { couponId: string };
         } else {
             params = {
-                couponId: paramsOrFirst as string            
+                couponId: paramsOrFirst as string,
             };
         }
-        
+
         const couponId = params.couponId;
 
-        if (typeof couponId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "couponId"');
+        if (typeof couponId === 'undefined' || couponId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "couponId"',
+            );
         }
-
-        const apiPath = '/console/coupons/{couponId}'.replace('{couponId}', encodeURIComponent(String(couponId)));
+        const apiPath = '/console/coupons/{couponId}'.replace(
+            '{couponId}',
+            encodeURIComponent(String(couponId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Get a list of all the project's databases. You can use the query params to filter your results. This returns every database across all types and product APIs in a single call.
-     * 
+     *
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
@@ -131,10 +135,14 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DatabaseList>}
      */
-    listDatabases(params?: { queries?: string[], search?: string, total?: boolean }): Promise<Models.DatabaseList>;
+    listDatabases(params?: {
+        queries?: string[];
+        search?: string;
+        total?: boolean;
+    }): Promise<Models.DatabaseList>;
     /**
      * Get a list of all the project's databases. You can use the query params to filter your results. This returns every database across all types and product APIs in a single call.
-     * 
+     *
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
@@ -143,27 +151,40 @@ export class Console {
      * @returns {Promise<Models.DatabaseList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listDatabases(queries?: string[], search?: string, total?: boolean): Promise<Models.DatabaseList>;
     listDatabases(
-        paramsOrFirst?: { queries?: string[], search?: string, total?: boolean } | string[],
-        ...rest: [(string)?, (boolean)?]    
+        queries?: string[],
+        search?: string,
+        total?: boolean,
+    ): Promise<Models.DatabaseList>;
+    listDatabases(
+        paramsOrFirst?:
+            { queries?: string[]; search?: string; total?: boolean } | string[],
+        ...rest: [string?, boolean?]
     ): Promise<Models.DatabaseList> {
-        let params: { queries?: string[], search?: string, total?: boolean };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string, total?: boolean };
+        let params: { queries?: string[]; search?: string; total?: boolean };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                search?: string;
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
                 search: rest[0] as string,
-                total: rest[1] as boolean            
+                total: rest[1] as boolean,
             };
         }
-        
+
         const queries = params.queries;
         const search = params.search;
         const total = params.total;
-
 
         const apiPath = '/console/databases';
         const payload: Payload = {};
@@ -180,15 +201,10 @@ export class Console {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -198,22 +214,16 @@ export class Console {
      * @returns {Promise<Models.ConsoleOAuth2ProviderList>}
      */
     listOAuth2Providers(): Promise<Models.ConsoleOAuth2ProviderList> {
-
         const apiPath = '/console/oauth2-providers';
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -234,20 +244,25 @@ export class Console {
      */
     getPlans(platform?: Platform): Promise<Models.BillingPlanList>;
     getPlans(
-        paramsOrFirst?: { platform?: Platform } | Platform    
+        paramsOrFirst?: { platform?: Platform } | Platform,
     ): Promise<Models.BillingPlanList> {
         let params: { platform?: Platform };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('platform' in paramsOrFirst))) {
+
+        if (
+            typeof paramsOrFirst === 'undefined' ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst) &&
+                'platform' in paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { platform?: Platform };
         } else {
             params = {
-                platform: paramsOrFirst as Platform            
+                platform: paramsOrFirst as Platform,
             };
         }
-        
-        const platform = params.platform;
 
+        const platform = params.platform;
 
         const apiPath = '/console/plans';
         const payload: Payload = {};
@@ -258,15 +273,10 @@ export class Console {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -287,65 +297,60 @@ export class Console {
      */
     getPlan(planId: string): Promise<Models.BillingPlan>;
     getPlan(
-        paramsOrFirst: { planId: string } | string    
+        paramsOrFirst: { planId: string } | string,
     ): Promise<Models.BillingPlan> {
         let params: { planId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { planId: string };
         } else {
             params = {
-                planId: paramsOrFirst as string            
+                planId: paramsOrFirst as string,
             };
         }
-        
+
         const planId = params.planId;
 
-        if (typeof planId === 'undefined') {
+        if (typeof planId === 'undefined' || planId === '') {
             throw new AppwriteException('Missing required parameter: "planId"');
         }
-
-        const apiPath = '/console/plans/{planId}'.replace('{planId}', encodeURIComponent(String(planId)));
+        const apiPath = '/console/plans/{planId}'.replace(
+            '{planId}',
+            encodeURIComponent(String(planId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Get the catalog of Postgres extensions that can be installed on a dedicated Postgres database.
-     * 
+     *
      *
      * @throws {AppwriteException}
      * @returns {Promise<Models.PostgresExtensionList>}
      */
     listPostgresExtensions(): Promise<Models.PostgresExtensionList> {
-
         const apiPath = '/console/postgres-extensions';
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -366,39 +371,42 @@ export class Console {
      */
     getProgram(programId: string): Promise<Models.Program>;
     getProgram(
-        paramsOrFirst: { programId: string } | string    
+        paramsOrFirst: { programId: string } | string,
     ): Promise<Models.Program> {
         let params: { programId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { programId: string };
         } else {
             params = {
-                programId: paramsOrFirst as string            
+                programId: paramsOrFirst as string,
             };
         }
-        
+
         const programId = params.programId;
 
-        if (typeof programId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "programId"');
+        if (typeof programId === 'undefined' || programId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "programId"',
+            );
         }
-
-        const apiPath = '/console/programs/{programId}'.replace('{programId}', encodeURIComponent(String(programId)));
+        const apiPath = '/console/programs/{programId}'.replace(
+            '{programId}',
+            encodeURIComponent(String(programId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -408,7 +416,9 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
-    createProgramMembership<Preferences extends Models.Preferences = Models.DefaultPreferences>(params: { programId: string }): Promise<Models.Organization<Preferences>>;
+    createProgramMembership<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: { programId: string }): Promise<Models.Organization<Preferences>>;
     /**
      * Create a new membership for an account to a program.
      *
@@ -417,42 +427,49 @@ export class Console {
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createProgramMembership<Preferences extends Models.Preferences = Models.DefaultPreferences>(programId: string): Promise<Models.Organization<Preferences>>;
-    createProgramMembership<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst: { programId: string } | string    
+    createProgramMembership<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(programId: string): Promise<Models.Organization<Preferences>>;
+    createProgramMembership<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { programId: string } | string,
     ): Promise<Models.Organization<Preferences>> {
         let params: { programId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { programId: string };
         } else {
             params = {
-                programId: paramsOrFirst as string            
+                programId: paramsOrFirst as string,
             };
         }
-        
+
         const programId = params.programId;
 
-        if (typeof programId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "programId"');
+        if (typeof programId === 'undefined' || programId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "programId"',
+            );
         }
-
-        const apiPath = '/console/programs/{programId}/memberships'.replace('{programId}', encodeURIComponent(String(programId)));
+        const apiPath = '/console/programs/{programId}/memberships'.replace(
+            '{programId}',
+            encodeURIComponent(String(programId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -462,22 +479,16 @@ export class Console {
      * @returns {Promise<Models.ConsoleRegionList>}
      */
     listRegions(): Promise<Models.ConsoleRegionList> {
-
         const apiPath = '/console/regions';
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -488,7 +499,10 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    getResource(params: { value: string, type: ConsoleResourceType }): Promise<{}>;
+    getResource(params: {
+        value: string;
+        type: ConsoleResourceType;
+    }): Promise<{}>;
     /**
      * Check if a resource ID is available.
      *
@@ -500,20 +514,27 @@ export class Console {
      */
     getResource(value: string, type: ConsoleResourceType): Promise<{}>;
     getResource(
-        paramsOrFirst: { value: string, type: ConsoleResourceType } | string,
-        ...rest: [(ConsoleResourceType)?]    
+        paramsOrFirst: { value: string; type: ConsoleResourceType } | string,
+        ...rest: [ConsoleResourceType?]
     ): Promise<{}> {
-        let params: { value: string, type: ConsoleResourceType };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { value: string, type: ConsoleResourceType };
+        let params: { value: string; type: ConsoleResourceType };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                value: string;
+                type: ConsoleResourceType;
+            };
         } else {
             params = {
                 value: paramsOrFirst as string,
-                type: rest[0] as ConsoleResourceType            
+                type: rest[0] as ConsoleResourceType,
             };
         }
-        
+
         const value = params.value;
         const type = params.type;
 
@@ -523,7 +544,6 @@ export class Console {
         if (typeof type === 'undefined') {
             throw new AppwriteException('Missing required parameter: "type"');
         }
-
         const apiPath = '/console/resources';
         const payload: Payload = {};
         if (typeof value !== 'undefined') {
@@ -536,14 +556,10 @@ export class Console {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -553,22 +569,16 @@ export class Console {
      * @returns {Promise<Models.ConsoleKeyScopeList>}
      */
     listOrganizationScopes(): Promise<Models.ConsoleKeyScopeList> {
-
         const apiPath = '/console/scopes/organization';
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -578,22 +588,16 @@ export class Console {
      * @returns {Promise<Models.ConsoleKeyScopeList>}
      */
     listProjectScopes(): Promise<Models.ConsoleKeyScopeList> {
-
         const apiPath = '/console/scopes/project';
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -607,7 +611,13 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    createSource(params?: { ref?: string, referrer?: string, utmSource?: string, utmCampaign?: string, utmMedium?: string }): Promise<{}>;
+    createSource(params?: {
+        ref?: string;
+        referrer?: string;
+        utmSource?: string;
+        utmCampaign?: string;
+        utmMedium?: string;
+    }): Promise<{}>;
     /**
      * Create a new source.
      *
@@ -620,31 +630,61 @@ export class Console {
      * @returns {Promise<{}>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createSource(ref?: string, referrer?: string, utmSource?: string, utmCampaign?: string, utmMedium?: string): Promise<{}>;
     createSource(
-        paramsOrFirst?: { ref?: string, referrer?: string, utmSource?: string, utmCampaign?: string, utmMedium?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?]    
+        ref?: string,
+        referrer?: string,
+        utmSource?: string,
+        utmCampaign?: string,
+        utmMedium?: string,
+    ): Promise<{}>;
+    createSource(
+        paramsOrFirst?:
+            | {
+                  ref?: string;
+                  referrer?: string;
+                  utmSource?: string;
+                  utmCampaign?: string;
+                  utmMedium?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, string?]
     ): Promise<{}> {
-        let params: { ref?: string, referrer?: string, utmSource?: string, utmCampaign?: string, utmMedium?: string };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { ref?: string, referrer?: string, utmSource?: string, utmCampaign?: string, utmMedium?: string };
+        let params: {
+            ref?: string;
+            referrer?: string;
+            utmSource?: string;
+            utmCampaign?: string;
+            utmMedium?: string;
+        };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                ref?: string;
+                referrer?: string;
+                utmSource?: string;
+                utmCampaign?: string;
+                utmMedium?: string;
+            };
         } else {
             params = {
                 ref: paramsOrFirst as string,
                 referrer: rest[0] as string,
                 utmSource: rest[1] as string,
                 utmCampaign: rest[2] as string,
-                utmMedium: rest[3] as string            
+                utmMedium: rest[3] as string,
             };
         }
-        
+
         const ref = params.ref;
         const referrer = params.referrer;
         const utmSource = params.utmSource;
         const utmCampaign = params.utmCampaign;
         const utmMedium = params.utmMedium;
-
 
         const apiPath = '/console/sources';
         const payload: Payload = {};
@@ -668,15 +708,10 @@ export class Console {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -690,7 +725,13 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnList>}
      */
-    suggestColumns(params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number }): Promise<Models.ColumnList>;
+    suggestColumns(params: {
+        databaseId: string;
+        tableId: string;
+        context?: string;
+        min?: number;
+        max?: number;
+    }): Promise<Models.ColumnList>;
     /**
      * Suggests column names and their size limits based on the provided table name. The API will also analyze other tables in the same database to provide context-aware suggestions, ensuring consistency across schema design. Users may optionally provide custom context to further refine the suggestions.
      *
@@ -703,25 +744,55 @@ export class Console {
      * @returns {Promise<Models.ColumnList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    suggestColumns(databaseId: string, tableId: string, context?: string, min?: number, max?: number): Promise<Models.ColumnList>;
     suggestColumns(
-        paramsOrFirst: { databaseId: string, tableId: string, context?: string, min?: number, max?: number } | string,
-        ...rest: [(string)?, (string)?, (number)?, (number)?]    
+        databaseId: string,
+        tableId: string,
+        context?: string,
+        min?: number,
+        max?: number,
+    ): Promise<Models.ColumnList>;
+    suggestColumns(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  tableId: string;
+                  context?: string;
+                  min?: number;
+                  max?: number;
+              }
+            | string,
+        ...rest: [string?, string?, number?, number?]
     ): Promise<Models.ColumnList> {
-        let params: { databaseId: string, tableId: string, context?: string, min?: number, max?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, context?: string, min?: number, max?: number };
+        let params: {
+            databaseId: string;
+            tableId: string;
+            context?: string;
+            min?: number;
+            max?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                tableId: string;
+                context?: string;
+                min?: number;
+                max?: number;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 context: rest[1] as string,
                 min: rest[2] as number,
-                max: rest[3] as number            
+                max: rest[3] as number,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const tableId = params.tableId;
         const context = params.context;
@@ -729,12 +800,15 @@ export class Console {
         const max = params.max;
 
         if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
         if (typeof tableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "tableId"');
+            throw new AppwriteException(
+                'Missing required parameter: "tableId"',
+            );
         }
-
         const apiPath = '/console/suggestions/columns';
         const payload: Payload = {};
         if (typeof databaseId !== 'undefined') {
@@ -756,15 +830,10 @@ export class Console {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -777,7 +846,12 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnIndexList>}
      */
-    suggestIndexes(params: { databaseId: string, tableId: string, min?: number, max?: number }): Promise<Models.ColumnIndexList>;
+    suggestIndexes(params: {
+        databaseId: string;
+        tableId: string;
+        min?: number;
+        max?: number;
+    }): Promise<Models.ColumnIndexList>;
     /**
      * Suggests database indexes for table columns based on the provided table structure and existing columns. The API will also analyze the table's column types, names, and patterns to recommend optimal indexes that improve query performance for common database operations like filtering, sorting, and searching.
      *
@@ -789,36 +863,65 @@ export class Console {
      * @returns {Promise<Models.ColumnIndexList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    suggestIndexes(databaseId: string, tableId: string, min?: number, max?: number): Promise<Models.ColumnIndexList>;
     suggestIndexes(
-        paramsOrFirst: { databaseId: string, tableId: string, min?: number, max?: number } | string,
-        ...rest: [(string)?, (number)?, (number)?]    
+        databaseId: string,
+        tableId: string,
+        min?: number,
+        max?: number,
+    ): Promise<Models.ColumnIndexList>;
+    suggestIndexes(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  tableId: string;
+                  min?: number;
+                  max?: number;
+              }
+            | string,
+        ...rest: [string?, number?, number?]
     ): Promise<Models.ColumnIndexList> {
-        let params: { databaseId: string, tableId: string, min?: number, max?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { databaseId: string, tableId: string, min?: number, max?: number };
+        let params: {
+            databaseId: string;
+            tableId: string;
+            min?: number;
+            max?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                tableId: string;
+                min?: number;
+                max?: number;
+            };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 min: rest[1] as number,
-                max: rest[2] as number            
+                max: rest[2] as number,
             };
         }
-        
+
         const databaseId = params.databaseId;
         const tableId = params.tableId;
         const min = params.min;
         const max = params.max;
 
         if (typeof databaseId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "databaseId"');
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
         }
         if (typeof tableId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "tableId"');
+            throw new AppwriteException(
+                'Missing required parameter: "tableId"',
+            );
         }
-
         const apiPath = '/console/suggestions/indexes';
         const payload: Payload = {};
         if (typeof databaseId !== 'undefined') {
@@ -837,20 +940,15 @@ export class Console {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
      * Suggest valid Appwrite query JSON objects for a supported list resource from free-text user intent. The endpoint picks a validator based on `resource` — for system resources it uses the static validator and its allowed attributes, and for user-owned table rows it loads the table schema and validates against those attributes at request time. The returned queries are guaranteed to parse and pass the relevant queries validator.
-     * 
+     *
      *
      * @param {QuerySuggestionResource} params.resource - Resource to generate queries for.
      * @param {string} params.input - Natural language query intent used to generate filters/sorting/pagination.
@@ -859,10 +957,15 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    suggestQueries(params: { resource: QuerySuggestionResource, input: string, databaseId?: string, tableId?: string }): Promise<{}>;
+    suggestQueries(params: {
+        resource: QuerySuggestionResource;
+        input: string;
+        databaseId?: string;
+        tableId?: string;
+    }): Promise<{}>;
     /**
      * Suggest valid Appwrite query JSON objects for a supported list resource from free-text user intent. The endpoint picks a validator based on `resource` — for system resources it uses the static validator and its allowed attributes, and for user-owned table rows it loads the table schema and validates against those attributes at request time. The returned queries are guaranteed to parse and pass the relevant queries validator.
-     * 
+     *
      *
      * @param {QuerySuggestionResource} resource - Resource to generate queries for.
      * @param {string} input - Natural language query intent used to generate filters/sorting/pagination.
@@ -872,36 +975,67 @@ export class Console {
      * @returns {Promise<{}>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    suggestQueries(resource: QuerySuggestionResource, input: string, databaseId?: string, tableId?: string): Promise<{}>;
     suggestQueries(
-        paramsOrFirst: { resource: QuerySuggestionResource, input: string, databaseId?: string, tableId?: string } | QuerySuggestionResource,
-        ...rest: [(string)?, (string)?, (string)?]    
+        resource: QuerySuggestionResource,
+        input: string,
+        databaseId?: string,
+        tableId?: string,
+    ): Promise<{}>;
+    suggestQueries(
+        paramsOrFirst:
+            | {
+                  resource: QuerySuggestionResource;
+                  input: string;
+                  databaseId?: string;
+                  tableId?: string;
+              }
+            | QuerySuggestionResource,
+        ...rest: [string?, string?, string?]
     ): Promise<{}> {
-        let params: { resource: QuerySuggestionResource, input: string, databaseId?: string, tableId?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('resource' in paramsOrFirst || 'input' in paramsOrFirst || 'databaseId' in paramsOrFirst || 'tableId' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { resource: QuerySuggestionResource, input: string, databaseId?: string, tableId?: string };
+        let params: {
+            resource: QuerySuggestionResource;
+            input: string;
+            databaseId?: string;
+            tableId?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst) &&
+            ('resource' in paramsOrFirst ||
+                'input' in paramsOrFirst ||
+                'databaseId' in paramsOrFirst ||
+                'tableId' in paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                resource: QuerySuggestionResource;
+                input: string;
+                databaseId?: string;
+                tableId?: string;
+            };
         } else {
             params = {
                 resource: paramsOrFirst as QuerySuggestionResource,
                 input: rest[0] as string,
                 databaseId: rest[1] as string,
-                tableId: rest[2] as string            
+                tableId: rest[2] as string,
             };
         }
-        
+
         const resource = params.resource;
         const input = params.input;
         const databaseId = params.databaseId;
         const tableId = params.tableId;
 
         if (typeof resource === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "resource"');
+            throw new AppwriteException(
+                'Missing required parameter: "resource"',
+            );
         }
         if (typeof input === 'undefined') {
             throw new AppwriteException('Missing required parameter: "input"');
         }
-
         const apiPath = '/console/suggestions/queries';
         const payload: Payload = {};
         if (typeof resource !== 'undefined') {
@@ -920,15 +1054,10 @@ export class Console {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -939,7 +1068,10 @@ export class Console {
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
      */
-    getEmailTemplate(params: { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale }): Promise<Models.EmailTemplate>;
+    getEmailTemplate(params: {
+        templateId: ProjectEmailTemplateId;
+        locale?: ProjectEmailTemplateLocale;
+    }): Promise<Models.EmailTemplate>;
     /**
      * Get the Appwrite built-in default email template for the specified type and locale. Always returns the unmodified default, ignoring any custom project overrides.
      *
@@ -949,30 +1081,53 @@ export class Console {
      * @returns {Promise<Models.EmailTemplate>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getEmailTemplate(templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale): Promise<Models.EmailTemplate>;
     getEmailTemplate(
-        paramsOrFirst: { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale } | ProjectEmailTemplateId,
-        ...rest: [(ProjectEmailTemplateLocale)?]    
+        templateId: ProjectEmailTemplateId,
+        locale?: ProjectEmailTemplateLocale,
+    ): Promise<Models.EmailTemplate>;
+    getEmailTemplate(
+        paramsOrFirst:
+            | {
+                  templateId: ProjectEmailTemplateId;
+                  locale?: ProjectEmailTemplateLocale;
+              }
+            | ProjectEmailTemplateId,
+        ...rest: [ProjectEmailTemplateLocale?]
     ): Promise<Models.EmailTemplate> {
-        let params: { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst) && ('templateId' in paramsOrFirst || 'locale' in paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { templateId: ProjectEmailTemplateId, locale?: ProjectEmailTemplateLocale };
+        let params: {
+            templateId: ProjectEmailTemplateId;
+            locale?: ProjectEmailTemplateLocale;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst) &&
+            ('templateId' in paramsOrFirst || 'locale' in paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                templateId: ProjectEmailTemplateId;
+                locale?: ProjectEmailTemplateLocale;
+            };
         } else {
             params = {
                 templateId: paramsOrFirst as ProjectEmailTemplateId,
-                locale: rest[0] as ProjectEmailTemplateLocale            
+                locale: rest[0] as ProjectEmailTemplateLocale,
             };
         }
-        
+
         const templateId = params.templateId;
         const locale = params.locale;
 
         if (typeof templateId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "templateId"');
+            throw new AppwriteException(
+                'Missing required parameter: "templateId"',
+            );
         }
-
-        const apiPath = '/console/templates/email/{templateId}'.replace('{templateId}', encodeURIComponent(String(templateId)));
+        const apiPath = '/console/templates/email/{templateId}'.replace(
+            '{templateId}',
+            encodeURIComponent(String(templateId)),
+        );
         const payload: Payload = {};
         if (typeof locale !== 'undefined') {
             payload['locale'] = locale;
@@ -981,15 +1136,10 @@ export class Console {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -999,21 +1149,15 @@ export class Console {
      * @returns {Promise<Models.ConsoleVariables>}
      */
     variables(): Promise<Models.ConsoleVariables> {
-
         const apiPath = '/console/variables';
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 }

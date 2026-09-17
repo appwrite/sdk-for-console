@@ -1,5 +1,10 @@
 ```javascript
-import { Client, Functions, Runtime, FunctionTemplateUseCase } from "@appwrite.io/console";
+import {
+    Client,
+    Functions,
+    Runtime,
+    FunctionTemplateUseCase,
+} from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +17,7 @@ const result = await functions.listTemplates({
     useCases: [FunctionTemplateUseCase.Starter], // optional
     limit: 1, // optional
     offset: 0, // optional
-    total: false // optional
+    total: false, // optional
 });
 
 console.log(result);

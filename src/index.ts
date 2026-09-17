@@ -1,9 +1,11 @@
 /**
  * Appwrite Console SDK
  *
- * This SDK is compatible with Appwrite server version 1.9.x. 
- * For older versions, please check
- * [previous releases](https://github.com/appwrite/sdk-for-console/releases).
+ * This SDK targets Appwrite server version 2.0.x as shipped on Appwrite Cloud.
+ * Self-hosted releases can lag behind Cloud — if you run an older self-hosted
+ * build, use a matching older SDK from
+ * [previous releases](https://github.com/appwrite/sdk-for-console/releases)
+ * when APIs differ.
  */
 export { Client, Query, AppwriteException } from './client';
 export { Account } from './services/account';
@@ -48,7 +50,12 @@ export { VectorsDB } from './services/vectors-db';
 export { Waf } from './services/waf';
 export { Webhooks } from './services/webhooks';
 export { Realtime } from './services/realtime';
-export type { Models, Payload, RealtimeResponseEvent, UploadProgress } from './client';
+export type {
+    Models,
+    Payload,
+    RealtimeResponseEvent,
+    UploadProgress,
+} from './client';
 export type { RealtimeSubscription } from './services/realtime';
 export type { QueryTypes, QueryTypesList } from './query';
 export { Permission } from './permission';
@@ -101,7 +108,7 @@ export { FirebaseMigrationResource } from './enums/firebase-migration-resource';
 export { NHostMigrationResource } from './enums/n-host-migration-resource';
 export { SupabaseMigrationResource } from './enums/supabase-migration-resource';
 export { OrganizationKeyScopes } from './enums/organization-key-scopes';
-export { Addon } from './enums/addon';
+export { AddonKey } from './enums/addon-key';
 export { UsageRange } from './enums/usage-range';
 export { ProjectAuthMethodId } from './enums/project-auth-method-id';
 export { ProjectOAuth2GooglePrompt } from './enums/project-o-auth-2-google-prompt';
@@ -124,10 +131,12 @@ export { SiteTemplateUseCase } from './enums/site-template-use-case';
 export { Compression } from './enums/compression';
 export { ImageGravity } from './enums/image-gravity';
 export { TablesDBIndexType } from './enums/tables-db-index-type';
+export { UsageEventMetric } from './enums/usage-event-metric';
 export { UsageInterval } from './enums/usage-interval';
 export { UsageEventDimension } from './enums/usage-event-dimension';
 export { UsageOrderBy } from './enums/usage-order-by';
 export { UsageOrderDirection } from './enums/usage-order-direction';
+export { UsageGaugeMetric } from './enums/usage-gauge-metric';
 export { UsageGaugeDimension } from './enums/usage-gauge-dimension';
 export { PasswordHash } from './enums/password-hash';
 export { MessagingProviderType } from './enums/messaging-provider-type';
@@ -141,6 +150,7 @@ export { IndexStatus } from './enums/index-status';
 export { DetectionFrameworkType } from './enums/detection-framework-type';
 export { DetectionRuntimeType } from './enums/detection-runtime-type';
 export { DeploymentStatus } from './enums/deployment-status';
+export { ExecutionResourceType } from './enums/execution-resource-type';
 export { ExecutionTrigger } from './enums/execution-trigger';
 export { ExecutionStatus } from './enums/execution-status';
 export { OAuth2GooglePrompt } from './enums/o-auth-2-google-prompt';

@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Storage, Permission, Role } from "@appwrite.io/console";
+import { Client, Storage, Permission, Role } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +12,7 @@ const result = await storage.createFile({
     fileId: '<FILE_ID>',
     file: document.getElementById('uploader').files[0],
     permissions: [Permission.read(Role.any())], // optional
-    folder: '' // optional
+    folder: 'photos/2026', // optional
 });
 
 console.log(result);

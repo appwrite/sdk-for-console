@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Mysql } from "@appwrite.io/console";
+import { Client, Mysql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const mysql = new Mysql(client);
 
 const result = await mysql.getPitr({
-    databaseId: '<DATABASE_ID>'
+    databaseId: '<DATABASE_ID>',
 });
 
 console.log(result);

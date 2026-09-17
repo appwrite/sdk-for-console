@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Domains, DomainRegistrationType } from "@appwrite.io/console";
+import { Client, Domains, DomainRegistrationType } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,9 +8,9 @@ const client = new Client()
 const domains = new Domains(client);
 
 const result = await domains.getPrice({
-    domain: '',
+    domain: 'example.com',
     periodYears: null, // optional
-    registrationType: DomainRegistrationType.New // optional
+    registrationType: DomainRegistrationType.New, // optional
 });
 
 console.log(result);

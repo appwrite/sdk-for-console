@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Account } from "@appwrite.io/console";
+import { Client, Account } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const account = new Account(client);
 const result = await account.listConsentTokens({
     consentId: '<CONSENT_ID>',
     queries: [], // optional
-    total: false // optional
+    total: false, // optional
 });
 
 console.log(result);

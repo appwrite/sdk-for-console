@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Mysql } from "@appwrite.io/console";
+import { Client, Mysql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,7 +13,7 @@ const result = await mysql.updateBackupPolicy({
     name: '<NAME>', // optional
     schedule: '', // optional
     retention: 1, // optional
-    enabled: false // optional
+    enabled: false, // optional
 });
 
 console.log(result);

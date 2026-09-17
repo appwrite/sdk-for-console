@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Organizations } from "@appwrite.io/console";
+import { Client, Organizations } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const organizations = new Organizations(client);
 
 const result = await organizations.validatePayment({
     organizationId: '<ORGANIZATION_ID>',
-    invites: [] // optional
+    invites: [], // optional
 });
 
 console.log(result);

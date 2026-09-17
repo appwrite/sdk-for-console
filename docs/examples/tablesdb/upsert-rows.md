@@ -1,5 +1,5 @@
 ```javascript
-import { Client, TablesDB } from "@appwrite.io/console";
+import { Client, TablesDB } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +11,7 @@ const result = await tablesDB.upsertRows({
     databaseId: '<DATABASE_ID>',
     tableId: '<TABLE_ID>',
     rows: [],
-    transactionId: '<TRANSACTION_ID>' // optional
+    transactionId: '<TRANSACTION_ID>', // optional
 });
 
 console.log(result);

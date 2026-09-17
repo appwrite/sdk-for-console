@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Tokens } from "@appwrite.io/console";
+import { Client, Tokens } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const tokens = new Tokens(client);
 
 const result = await tokens.get({
-    tokenId: '<TOKEN_ID>'
+    tokenId: '<TOKEN_ID>',
 });
 
 console.log(result);

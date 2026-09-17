@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Databases } from "@appwrite.io/console";
+import { Client, Databases } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,12 +10,12 @@ const databases = new Databases(client);
 const result = await databases.createStringAttribute({
     databaseId: '<DATABASE_ID>',
     collectionId: '<COLLECTION_ID>',
-    key: '',
+    key: '<KEY>',
     size: 1,
     required: false,
-    xdefault: '<DEFAULT>', // optional
+    xdefault: 'Hello World', // optional
     array: false, // optional
-    encrypt: false // optional
+    encrypt: false, // optional
 });
 
 console.log(result);

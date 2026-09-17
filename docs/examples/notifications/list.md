@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Notifications } from "@appwrite.io/console";
+import { Client, Notifications } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const notifications = new Notifications(client);
 
 const result = await notifications.list({
-    queries: [] // optional
+    queries: [], // optional
 });
 
 console.log(result);

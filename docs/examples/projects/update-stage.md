@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Projects } from "@appwrite.io/console";
+import { Client, Projects } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const projects = new Projects(client);
 const result = await projects.updateStage({
     projectId: '<PROJECT_ID>',
     stageId: '<STAGE_ID>',
-    skip: false // optional
+    skip: false, // optional
 });
 
 console.log(result);

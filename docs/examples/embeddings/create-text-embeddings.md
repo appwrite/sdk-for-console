@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Embeddings, EmbeddingModel } from "@appwrite.io/console";
+import { Client, Embeddings, EmbeddingModel } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const embeddings = new Embeddings(client);
 
 const result = await embeddings.createTextEmbeddings({
     texts: [],
-    model: EmbeddingModel.NomicEmbedText // optional
+    model: EmbeddingModel.NomicEmbedText, // optional
 });
 
 console.log(result);

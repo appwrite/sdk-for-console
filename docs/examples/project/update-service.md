@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Project, ProjectServiceId } from "@appwrite.io/console";
+import { Client, Project, ProjectServiceId } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const project = new Project(client);
 
 const result = await project.updateService({
     serviceId: ProjectServiceId.Account,
-    enabled: false
+    enabled: false,
 });
 
 console.log(result);

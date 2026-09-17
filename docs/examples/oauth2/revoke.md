@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Oauth2 } from "@appwrite.io/console";
+import { Client, Oauth2 } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +11,7 @@ const result = await oauth2.revoke({
     token: '<TOKEN>',
     tokenTypeHint: 'access_token', // optional
     clientId: '<CLIENT_ID>', // optional
-    clientSecret: '<CLIENT_SECRET>' // optional
+    clientSecret: '<CLIENT_SECRET>', // optional
 });
 
 console.log(result);

@@ -1,5 +1,25 @@
 # Change Log
 
+## 16.1.0
+
+* Fixed: `impersonateuserid` is carried again by every client URL builder — the avatar helpers, `functions`/`sites` `getDeploymentDownload()`, `organizations` `getInvoiceDownload()`/`getInvoiceView()`, and `storage` `getFileDownload()`/`getFilePreview()`/`getFileView()`. The browser loads these URLs directly and cannot send the impersonation header, so an impersonating console operator was served their own resources or a 401
+* Breaking: the `Addon` enum is now `AddonKey`
+* Breaking: removed `EmbeddingModel.Bgesmall` and `EmbeddingModel.Embeddinggemma`
+* Breaking: removed `ProjectKeyScopes.DedicatedDatabasesExecute`; dedicated database execution follows `databases.write`
+* Breaking: removed the `DedicatedDatabaseSpecificationPricing` model
+* Added: `avatars.getPhoto()` and `ImageGravity.Auto`
+* Added: `domains.listPrices()` with the `DomainPricesList` model
+* Added: `tablesDB.createCutover()`
+* Added: `users.getMFAChallenge()` with the `MfaChallengeSecret` model
+* Added: `project.updateMFAFactorsPolicy()` with the `PolicyMfaFactors` model, `ProjectPolicyId.Mfafactors` and `AuthenticationFactor.Custom`
+* Added: `project.updateOAuth2Cloudflare()`, `updateOAuth2HuggingFace()`, `updateOAuth2Kakao()`, `updateOAuth2Resend()` and `updateOAuth2TikTok()`, with matching models and `OAuthProvider` / `ProjectOAuthProviderId` members
+* Added: `UsageEventMetric` and `UsageGaugeMetric` enums for `usage.listEvents()` and `usage.listGauges()`
+* Added: `ExecutionResourceType` enum
+* Added: network dimensions to `UsageEventDimension` — `autonomousSystemNumber`, `autonomousSystemOrganization`, `connectionOrganization`, `connectionType`, `connectionUsageType` and `isp`
+* Added: `documentsdb.*` and `vectorsdb.*` scopes plus `embeddings.write` to `ProjectKeyScopes`
+* Added: `bun-1.4`, `dart-3.13` and `flutter-3.47` to the `Runtime` and `BuildRuntime` enums
+* Added: `resourcesdeleted` to the `QuerySuggestionResource` enum
+
 ## 16.0.0
 
 * Breaking: Moved `vectorsDB.createTextEmbeddings()` to the new `Embeddings` service
@@ -460,3 +480,4 @@ Fix bigint and float parsing in SDK.
 ## 1.5.0
 
 * Adds support for `databasesReadsTotal` and `databasesWritesTotal` attributes
+

@@ -1,10 +1,8 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload, UploadProgress } from '../client';
+import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
 
 import { DomainRegistrationType } from '../enums/domain-registration-type';
 import { DomainSuggestionType } from '../enums/domain-suggestion-type';
-
 export class Domains {
     client: Client;
 
@@ -20,7 +18,10 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainsList>}
      */
-    list(params?: { queries?: string[], search?: string }): Promise<Models.DomainsList>;
+    list(params?: {
+        queries?: string[];
+        search?: string;
+    }): Promise<Models.DomainsList>;
     /**
      * List all domains registered for this project. This endpoint supports pagination.
      *
@@ -32,23 +33,30 @@ export class Domains {
      */
     list(queries?: string[], search?: string): Promise<Models.DomainsList>;
     list(
-        paramsOrFirst?: { queries?: string[], search?: string } | string[],
-        ...rest: [(string)?]    
+        paramsOrFirst?: { queries?: string[]; search?: string } | string[],
+        ...rest: [string?]
     ): Promise<Models.DomainsList> {
-        let params: { queries?: string[], search?: string };
-        
-        if (!paramsOrFirst || (paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { queries?: string[], search?: string };
+        let params: { queries?: string[]; search?: string };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                search?: string;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
-                search: rest[0] as string            
+                search: rest[0] as string,
             };
         }
-        
+
         const queries = params.queries;
         const search = params.search;
-
 
         const apiPath = '/domains';
         const payload: Payload = {};
@@ -62,15 +70,10 @@ export class Domains {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -81,7 +84,7 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Domain>}
      */
-    create(params: { teamId: string, domain: string }): Promise<Models.Domain>;
+    create(params: { teamId: string; domain: string }): Promise<Models.Domain>;
     /**
      * Create a new domain. Before creating a domain, you need to ensure that your DNS provider is properly configured. After creating the domain, you can use the verification endpoint to check if the domain is ready to be used.
      *
@@ -93,20 +96,27 @@ export class Domains {
      */
     create(teamId: string, domain: string): Promise<Models.Domain>;
     create(
-        paramsOrFirst: { teamId: string, domain: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { teamId: string; domain: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Domain> {
-        let params: { teamId: string, domain: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { teamId: string, domain: string };
+        let params: { teamId: string; domain: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                teamId: string;
+                domain: string;
+            };
         } else {
             params = {
                 teamId: paramsOrFirst as string,
-                domain: rest[0] as string            
+                domain: rest[0] as string,
             };
         }
-        
+
         const teamId = params.teamId;
         const domain = params.domain;
 
@@ -116,7 +126,6 @@ export class Domains {
         if (typeof domain === 'undefined') {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
-
         const apiPath = '/domains';
         const payload: Payload = {};
         if (typeof teamId !== 'undefined') {
@@ -130,15 +139,10 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -149,8 +153,13 @@ export class Domains {
      * @param {DomainRegistrationType} params.registrationType - Type of registration pricing to fetch. Allowed values: new, transfer, renewal, trade.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPrice>}
+     * @deprecated This API has been deprecated since 2.0.0. Please use `Domains.listPrices` instead.
      */
-    getPrice(params: { domain: string, periodYears?: number, registrationType?: DomainRegistrationType }): Promise<Models.DomainPrice>;
+    getPrice(params: {
+        domain: string;
+        periodYears?: number;
+        registrationType?: DomainRegistrationType;
+    }): Promise<Models.DomainPrice>;
     /**
      * Get the registration price for a domain name.
      *
@@ -161,23 +170,45 @@ export class Domains {
      * @returns {Promise<Models.DomainPrice>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getPrice(domain: string, periodYears?: number, registrationType?: DomainRegistrationType): Promise<Models.DomainPrice>;
     getPrice(
-        paramsOrFirst: { domain: string, periodYears?: number, registrationType?: DomainRegistrationType } | string,
-        ...rest: [(number)?, (DomainRegistrationType)?]    
+        domain: string,
+        periodYears?: number,
+        registrationType?: DomainRegistrationType,
+    ): Promise<Models.DomainPrice>;
+    getPrice(
+        paramsOrFirst:
+            | {
+                  domain: string;
+                  periodYears?: number;
+                  registrationType?: DomainRegistrationType;
+              }
+            | string,
+        ...rest: [number?, DomainRegistrationType?]
     ): Promise<Models.DomainPrice> {
-        let params: { domain: string, periodYears?: number, registrationType?: DomainRegistrationType };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domain: string, periodYears?: number, registrationType?: DomainRegistrationType };
+        let params: {
+            domain: string;
+            periodYears?: number;
+            registrationType?: DomainRegistrationType;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domain: string;
+                periodYears?: number;
+                registrationType?: DomainRegistrationType;
+            };
         } else {
             params = {
                 domain: paramsOrFirst as string,
                 periodYears: rest[0] as number,
-                registrationType: rest[1] as DomainRegistrationType            
+                registrationType: rest[1] as DomainRegistrationType,
             };
         }
-        
+
         const domain = params.domain;
         const periodYears = params.periodYears;
         const registrationType = params.registrationType;
@@ -185,7 +216,6 @@ export class Domains {
         if (typeof domain === 'undefined') {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
-
         const apiPath = '/domains/price';
         const payload: Payload = {};
         if (typeof domain !== 'undefined') {
@@ -201,15 +231,103 @@ export class Domains {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
+            accept: 'application/json',
+        };
+
+        return this.client.call('get', uri, apiHeaders, payload);
+    }
+
+    /**
+     * Check availability and get the requested registration price for one or more domain names. Availability is resolved for all domains in a single registrar lookup. Unavailable domains have a null price for new registrations, but can still be priced for renewal, transfer, or trade. Every priced domain also carries its renewal price for the same period, so a separate renewal lookup is not needed. A domain whose price could not be resolved, for example because its TLD is not supported, is returned with a null price.
+     *
+     * @param {string[]} params.domains - Domain names to check availability and price for. Maximum of 50 domains per request.
+     * @param {number} params.periodYears - Number of years to calculate the domain price for. Must be at least 1.
+     * @param {DomainRegistrationType} params.registrationType - Type of registration pricing to fetch. Allowed values: new, transfer, renewal, trade.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DomainPricesList>}
+     */
+    listPrices(params: {
+        domains: string[];
+        periodYears?: number;
+        registrationType?: DomainRegistrationType;
+    }): Promise<Models.DomainPricesList>;
+    /**
+     * Check availability and get the requested registration price for one or more domain names. Availability is resolved for all domains in a single registrar lookup. Unavailable domains have a null price for new registrations, but can still be priced for renewal, transfer, or trade. Every priced domain also carries its renewal price for the same period, so a separate renewal lookup is not needed. A domain whose price could not be resolved, for example because its TLD is not supported, is returned with a null price.
+     *
+     * @param {string[]} domains - Domain names to check availability and price for. Maximum of 50 domains per request.
+     * @param {number} periodYears - Number of years to calculate the domain price for. Must be at least 1.
+     * @param {DomainRegistrationType} registrationType - Type of registration pricing to fetch. Allowed values: new, transfer, renewal, trade.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DomainPricesList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listPrices(
+        domains: string[],
+        periodYears?: number,
+        registrationType?: DomainRegistrationType,
+    ): Promise<Models.DomainPricesList>;
+    listPrices(
+        paramsOrFirst:
+            | {
+                  domains: string[];
+                  periodYears?: number;
+                  registrationType?: DomainRegistrationType;
+              }
+            | string[],
+        ...rest: [number?, DomainRegistrationType?]
+    ): Promise<Models.DomainPricesList> {
+        let params: {
+            domains: string[];
+            periodYears?: number;
+            registrationType?: DomainRegistrationType;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domains: string[];
+                periodYears?: number;
+                registrationType?: DomainRegistrationType;
+            };
+        } else {
+            params = {
+                domains: paramsOrFirst as string[],
+                periodYears: rest[0] as number,
+                registrationType: rest[1] as DomainRegistrationType,
+            };
         }
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        const domains = params.domains;
+        const periodYears = params.periodYears;
+        const registrationType = params.registrationType;
+
+        if (typeof domains === 'undefined') {
+            throw new AppwriteException(
+                'Missing required parameter: "domains"',
+            );
+        }
+        const apiPath = '/domains/prices';
+        const payload: Payload = {};
+        if (typeof domains !== 'undefined') {
+            payload['domains'] = domains;
+        }
+        if (typeof periodYears !== 'undefined') {
+            payload['periodYears'] = periodYears;
+        }
+        if (typeof registrationType !== 'undefined') {
+            payload['registrationType'] = registrationType;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            accept: 'application/json',
+        };
+
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -230,7 +348,20 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      */
-    createPurchase(params: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number, autoRenewal?: boolean }): Promise<Models.DomainPurchase>;
+    createPurchase(params: {
+        domain: string;
+        organizationId: string;
+        firstName: string;
+        lastName: string;
+        email: string;
+        phone: string;
+        billingAddressId: string;
+        paymentMethodId: string;
+        addressLine3?: string;
+        companyName?: string;
+        periodYears?: number;
+        autoRenewal?: boolean;
+    }): Promise<Models.DomainPurchase>;
     /**
      * Initiate a domain purchase by providing registrant details and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Purchase endpoint to capture the payment and finalize the purchase.
      *
@@ -250,15 +381,85 @@ export class Domains {
      * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPurchase(domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number, autoRenewal?: boolean): Promise<Models.DomainPurchase>;
     createPurchase(
-        paramsOrFirst: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number, autoRenewal?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (string)?, (number)?, (boolean)?]    
+        domain: string,
+        organizationId: string,
+        firstName: string,
+        lastName: string,
+        email: string,
+        phone: string,
+        billingAddressId: string,
+        paymentMethodId: string,
+        addressLine3?: string,
+        companyName?: string,
+        periodYears?: number,
+        autoRenewal?: boolean,
+    ): Promise<Models.DomainPurchase>;
+    createPurchase(
+        paramsOrFirst:
+            | {
+                  domain: string;
+                  organizationId: string;
+                  firstName: string;
+                  lastName: string;
+                  email: string;
+                  phone: string;
+                  billingAddressId: string;
+                  paymentMethodId: string;
+                  addressLine3?: string;
+                  companyName?: string;
+                  periodYears?: number;
+                  autoRenewal?: boolean;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            string?,
+            number?,
+            boolean?,
+        ]
     ): Promise<Models.DomainPurchase> {
-        let params: { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number, autoRenewal?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domain: string, organizationId: string, firstName: string, lastName: string, email: string, phone: string, billingAddressId: string, paymentMethodId: string, addressLine3?: string, companyName?: string, periodYears?: number, autoRenewal?: boolean };
+        let params: {
+            domain: string;
+            organizationId: string;
+            firstName: string;
+            lastName: string;
+            email: string;
+            phone: string;
+            billingAddressId: string;
+            paymentMethodId: string;
+            addressLine3?: string;
+            companyName?: string;
+            periodYears?: number;
+            autoRenewal?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domain: string;
+                organizationId: string;
+                firstName: string;
+                lastName: string;
+                email: string;
+                phone: string;
+                billingAddressId: string;
+                paymentMethodId: string;
+                addressLine3?: string;
+                companyName?: string;
+                periodYears?: number;
+                autoRenewal?: boolean;
+            };
         } else {
             params = {
                 domain: paramsOrFirst as string,
@@ -272,10 +473,10 @@ export class Domains {
                 addressLine3: rest[7] as string,
                 companyName: rest[8] as string,
                 periodYears: rest[9] as number,
-                autoRenewal: rest[10] as boolean            
+                autoRenewal: rest[10] as boolean,
             };
         }
-        
+
         const domain = params.domain;
         const organizationId = params.organizationId;
         const firstName = params.firstName;
@@ -293,13 +494,19 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
         if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof firstName === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "firstName"');
+            throw new AppwriteException(
+                'Missing required parameter: "firstName"',
+            );
         }
         if (typeof lastName === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "lastName"');
+            throw new AppwriteException(
+                'Missing required parameter: "lastName"',
+            );
         }
         if (typeof email === 'undefined') {
             throw new AppwriteException('Missing required parameter: "email"');
@@ -308,12 +515,15 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "phone"');
         }
         if (typeof billingAddressId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "billingAddressId"');
+            throw new AppwriteException(
+                'Missing required parameter: "billingAddressId"',
+            );
         }
         if (typeof paymentMethodId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
+            throw new AppwriteException(
+                'Missing required parameter: "paymentMethodId"',
+            );
         }
-
         const apiPath = '/domains/purchases';
         const payload: Payload = {};
         if (typeof domain !== 'undefined') {
@@ -357,15 +567,10 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -376,7 +581,10 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      */
-    updatePurchase(params: { invoiceId: string, organizationId: string }): Promise<Models.DomainPurchase>;
+    updatePurchase(params: {
+        invoiceId: string;
+        organizationId: string;
+    }): Promise<Models.DomainPurchase>;
     /**
      * Finalize a domain purchase initiated with Create Purchase. Verifies that any required 3D Secure authentication is complete, registers the domain, captures the payment, and provisions default DNS records. Returns a 402 error if authentication is still pending.
      *
@@ -386,33 +594,49 @@ export class Domains {
      * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updatePurchase(invoiceId: string, organizationId: string): Promise<Models.DomainPurchase>;
     updatePurchase(
-        paramsOrFirst: { invoiceId: string, organizationId: string } | string,
-        ...rest: [(string)?]    
+        invoiceId: string,
+        organizationId: string,
+    ): Promise<Models.DomainPurchase>;
+    updatePurchase(
+        paramsOrFirst: { invoiceId: string; organizationId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.DomainPurchase> {
-        let params: { invoiceId: string, organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { invoiceId: string, organizationId: string };
+        let params: { invoiceId: string; organizationId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                invoiceId: string;
+                organizationId: string;
+            };
         } else {
             params = {
                 invoiceId: paramsOrFirst as string,
-                organizationId: rest[0] as string            
+                organizationId: rest[0] as string,
             };
         }
-        
+
         const invoiceId = params.invoiceId;
         const organizationId = params.organizationId;
 
-        if (typeof invoiceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "invoiceId"');
+        if (typeof invoiceId === 'undefined' || invoiceId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "invoiceId"',
+            );
         }
         if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/domains/purchases/{invoiceId}'.replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+        const apiPath = '/domains/purchases/{invoiceId}'.replace(
+            '{invoiceId}',
+            encodeURIComponent(String(invoiceId)),
+        );
         const payload: Payload = {};
         if (typeof organizationId !== 'undefined') {
             payload['organizationId'] = organizationId;
@@ -422,15 +646,10 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -445,7 +664,14 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainSuggestionsList>}
      */
-    listSuggestions(params: { query: string, tlds?: string[], limit?: number, filterType?: DomainSuggestionType, priceMax?: number, priceMin?: number }): Promise<Models.DomainSuggestionsList>;
+    listSuggestions(params: {
+        query: string;
+        tlds?: string[];
+        limit?: number;
+        filterType?: DomainSuggestionType;
+        priceMax?: number;
+        priceMin?: number;
+    }): Promise<Models.DomainSuggestionsList>;
     /**
      * List domain suggestions.
      *
@@ -459,15 +685,49 @@ export class Domains {
      * @returns {Promise<Models.DomainSuggestionsList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listSuggestions(query: string, tlds?: string[], limit?: number, filterType?: DomainSuggestionType, priceMax?: number, priceMin?: number): Promise<Models.DomainSuggestionsList>;
     listSuggestions(
-        paramsOrFirst: { query: string, tlds?: string[], limit?: number, filterType?: DomainSuggestionType, priceMax?: number, priceMin?: number } | string,
-        ...rest: [(string[])?, (number)?, (DomainSuggestionType)?, (number)?, (number)?]    
+        query: string,
+        tlds?: string[],
+        limit?: number,
+        filterType?: DomainSuggestionType,
+        priceMax?: number,
+        priceMin?: number,
+    ): Promise<Models.DomainSuggestionsList>;
+    listSuggestions(
+        paramsOrFirst:
+            | {
+                  query: string;
+                  tlds?: string[];
+                  limit?: number;
+                  filterType?: DomainSuggestionType;
+                  priceMax?: number;
+                  priceMin?: number;
+              }
+            | string,
+        ...rest: [string[]?, number?, DomainSuggestionType?, number?, number?]
     ): Promise<Models.DomainSuggestionsList> {
-        let params: { query: string, tlds?: string[], limit?: number, filterType?: DomainSuggestionType, priceMax?: number, priceMin?: number };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { query: string, tlds?: string[], limit?: number, filterType?: DomainSuggestionType, priceMax?: number, priceMin?: number };
+        let params: {
+            query: string;
+            tlds?: string[];
+            limit?: number;
+            filterType?: DomainSuggestionType;
+            priceMax?: number;
+            priceMin?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                query: string;
+                tlds?: string[];
+                limit?: number;
+                filterType?: DomainSuggestionType;
+                priceMax?: number;
+                priceMin?: number;
+            };
         } else {
             params = {
                 query: paramsOrFirst as string,
@@ -475,10 +735,10 @@ export class Domains {
                 limit: rest[1] as number,
                 filterType: rest[2] as DomainSuggestionType,
                 priceMax: rest[3] as number,
-                priceMin: rest[4] as number            
+                priceMin: rest[4] as number,
             };
         }
-        
+
         const query = params.query;
         const tlds = params.tlds;
         const limit = params.limit;
@@ -489,7 +749,6 @@ export class Domains {
         if (typeof query === 'undefined') {
             throw new AppwriteException('Missing required parameter: "query"');
         }
-
         const apiPath = '/domains/suggestions';
         const payload: Payload = {};
         if (typeof query !== 'undefined') {
@@ -514,15 +773,10 @@ export class Domains {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -536,7 +790,13 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      */
-    createTransferIn(params: { domain: string, organizationId: string, authCode: string, paymentMethodId: string, autoRenewal?: boolean }): Promise<Models.DomainPurchase>;
+    createTransferIn(params: {
+        domain: string;
+        organizationId: string;
+        authCode: string;
+        paymentMethodId: string;
+        autoRenewal?: boolean;
+    }): Promise<Models.DomainPurchase>;
     /**
      * Initiate a domain transfer-in by providing an authorization code, registrant details, and a payment method. Authorizes the payment and returns a `clientSecret`. If 3D Secure is required, use the `clientSecret` on the client to complete the authentication challenge. Once authentication is complete (or if none is needed), call the Update Transfer In endpoint to capture the payment and submit the transfer.
      *
@@ -549,25 +809,55 @@ export class Domains {
      * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createTransferIn(domain: string, organizationId: string, authCode: string, paymentMethodId: string, autoRenewal?: boolean): Promise<Models.DomainPurchase>;
     createTransferIn(
-        paramsOrFirst: { domain: string, organizationId: string, authCode: string, paymentMethodId: string, autoRenewal?: boolean } | string,
-        ...rest: [(string)?, (string)?, (string)?, (boolean)?]    
+        domain: string,
+        organizationId: string,
+        authCode: string,
+        paymentMethodId: string,
+        autoRenewal?: boolean,
+    ): Promise<Models.DomainPurchase>;
+    createTransferIn(
+        paramsOrFirst:
+            | {
+                  domain: string;
+                  organizationId: string;
+                  authCode: string;
+                  paymentMethodId: string;
+                  autoRenewal?: boolean;
+              }
+            | string,
+        ...rest: [string?, string?, string?, boolean?]
     ): Promise<Models.DomainPurchase> {
-        let params: { domain: string, organizationId: string, authCode: string, paymentMethodId: string, autoRenewal?: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domain: string, organizationId: string, authCode: string, paymentMethodId: string, autoRenewal?: boolean };
+        let params: {
+            domain: string;
+            organizationId: string;
+            authCode: string;
+            paymentMethodId: string;
+            autoRenewal?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domain: string;
+                organizationId: string;
+                authCode: string;
+                paymentMethodId: string;
+                autoRenewal?: boolean;
+            };
         } else {
             params = {
                 domain: paramsOrFirst as string,
                 organizationId: rest[0] as string,
                 authCode: rest[1] as string,
                 paymentMethodId: rest[2] as string,
-                autoRenewal: rest[3] as boolean            
+                autoRenewal: rest[3] as boolean,
             };
         }
-        
+
         const domain = params.domain;
         const organizationId = params.organizationId;
         const authCode = params.authCode;
@@ -578,15 +868,20 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
         if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
         if (typeof authCode === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "authCode"');
+            throw new AppwriteException(
+                'Missing required parameter: "authCode"',
+            );
         }
         if (typeof paymentMethodId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "paymentMethodId"');
+            throw new AppwriteException(
+                'Missing required parameter: "paymentMethodId"',
+            );
         }
-
         const apiPath = '/domains/transfers/in';
         const payload: Payload = {};
         if (typeof domain !== 'undefined') {
@@ -609,15 +904,10 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -628,7 +918,10 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainPurchase>}
      */
-    updateTransferIn(params: { invoiceId: string, organizationId: string }): Promise<Models.DomainPurchase>;
+    updateTransferIn(params: {
+        invoiceId: string;
+        organizationId: string;
+    }): Promise<Models.DomainPurchase>;
     /**
      * Finalize a domain transfer-in initiated with Create Transfer In. Verifies that any required 3D Secure authentication is complete, submits the transfer with the authorization code, captures the payment, and sends a confirmation email. Returns a 402 error if authentication is still pending.
      *
@@ -638,33 +931,49 @@ export class Domains {
      * @returns {Promise<Models.DomainPurchase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateTransferIn(invoiceId: string, organizationId: string): Promise<Models.DomainPurchase>;
     updateTransferIn(
-        paramsOrFirst: { invoiceId: string, organizationId: string } | string,
-        ...rest: [(string)?]    
+        invoiceId: string,
+        organizationId: string,
+    ): Promise<Models.DomainPurchase>;
+    updateTransferIn(
+        paramsOrFirst: { invoiceId: string; organizationId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.DomainPurchase> {
-        let params: { invoiceId: string, organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { invoiceId: string, organizationId: string };
+        let params: { invoiceId: string; organizationId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                invoiceId: string;
+                organizationId: string;
+            };
         } else {
             params = {
                 invoiceId: paramsOrFirst as string,
-                organizationId: rest[0] as string            
+                organizationId: rest[0] as string,
             };
         }
-        
+
         const invoiceId = params.invoiceId;
         const organizationId = params.organizationId;
 
-        if (typeof invoiceId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "invoiceId"');
+        if (typeof invoiceId === 'undefined' || invoiceId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "invoiceId"',
+            );
         }
         if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
-        const apiPath = '/domains/transfers/in/{invoiceId}'.replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+        const apiPath = '/domains/transfers/in/{invoiceId}'.replace(
+            '{invoiceId}',
+            encodeURIComponent(String(invoiceId)),
+        );
         const payload: Payload = {};
         if (typeof organizationId !== 'undefined') {
             payload['organizationId'] = organizationId;
@@ -674,15 +983,10 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -693,7 +997,10 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainTransferOut>}
      */
-    createTransferOut(params: { domainId: string, organizationId: string }): Promise<Models.DomainTransferOut>;
+    createTransferOut(params: {
+        domainId: string;
+        organizationId: string;
+    }): Promise<Models.DomainTransferOut>;
     /**
      * Initiate a domain transfer-out by generating an authorization code for the specified domain. The returned `authCode` should be provided to the gaining provider to complete the transfer. If the domain has auto-renewal enabled, it will be automatically disabled as part of this operation.
      *
@@ -703,32 +1010,45 @@ export class Domains {
      * @returns {Promise<Models.DomainTransferOut>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createTransferOut(domainId: string, organizationId: string): Promise<Models.DomainTransferOut>;
     createTransferOut(
-        paramsOrFirst: { domainId: string, organizationId: string } | string,
-        ...rest: [(string)?]    
+        domainId: string,
+        organizationId: string,
+    ): Promise<Models.DomainTransferOut>;
+    createTransferOut(
+        paramsOrFirst: { domainId: string; organizationId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.DomainTransferOut> {
-        let params: { domainId: string, organizationId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, organizationId: string };
+        let params: { domainId: string; organizationId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                organizationId: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
-                organizationId: rest[0] as string            
+                organizationId: rest[0] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const organizationId = params.organizationId;
 
         if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof organizationId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "organizationId"');
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
         }
-
         const apiPath = '/domains/transfers/out';
         const payload: Payload = {};
         if (typeof domainId !== 'undefined') {
@@ -742,15 +1062,10 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -770,40 +1085,41 @@ export class Domains {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     get(domainId: string): Promise<Models.Domain>;
-    get(
-        paramsOrFirst: { domainId: string } | string    
-    ): Promise<Models.Domain> {
+    get(paramsOrFirst: { domainId: string } | string): Promise<Models.Domain> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -825,41 +1141,42 @@ export class Domains {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     delete(domainId: string): Promise<{}>;
-    delete(
-        paramsOrFirst: { domainId: string } | string    
-    ): Promise<{}> {
+    delete(paramsOrFirst: { domainId: string } | string): Promise<{}> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
@@ -870,7 +1187,10 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Domain>}
      */
-    updateAutoRenewal(params: { domainId: string, autoRenewal: boolean }): Promise<Models.Domain>;
+    updateAutoRenewal(params: {
+        domainId: string;
+        autoRenewal: boolean;
+    }): Promise<Models.Domain>;
     /**
      * Enable or disable auto-renewal for a domain.
      *
@@ -880,33 +1200,49 @@ export class Domains {
      * @returns {Promise<Models.Domain>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateAutoRenewal(domainId: string, autoRenewal: boolean): Promise<Models.Domain>;
     updateAutoRenewal(
-        paramsOrFirst: { domainId: string, autoRenewal: boolean } | string,
-        ...rest: [(boolean)?]    
+        domainId: string,
+        autoRenewal: boolean,
+    ): Promise<Models.Domain>;
+    updateAutoRenewal(
+        paramsOrFirst: { domainId: string; autoRenewal: boolean } | string,
+        ...rest: [boolean?]
     ): Promise<Models.Domain> {
-        let params: { domainId: string, autoRenewal: boolean };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, autoRenewal: boolean };
+        let params: { domainId: string; autoRenewal: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                autoRenewal: boolean;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
-                autoRenewal: rest[0] as boolean            
+                autoRenewal: rest[0] as boolean,
             };
         }
-        
+
         const domainId = params.domainId;
         const autoRenewal = params.autoRenewal;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof autoRenewal === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "autoRenewal"');
+            throw new AppwriteException(
+                'Missing required parameter: "autoRenewal"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/auto-renewal'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/auto-renewal'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof autoRenewal !== 'undefined') {
             payload['autoRenewal'] = autoRenewal;
@@ -916,15 +1252,10 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -936,7 +1267,10 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Domain>}
      */
-    updateNameservers(params: { domainId: string, nameservers?: string[] }): Promise<Models.Domain>;
+    updateNameservers(params: {
+        domainId: string;
+        nameservers?: string[];
+    }): Promise<Models.Domain>;
     /**
      * Update the registrar nameservers for the given domain. When nameservers are not provided,
      * the domain will be updated to use Appwrite nameservers.
@@ -947,30 +1281,44 @@ export class Domains {
      * @returns {Promise<Models.Domain>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateNameservers(domainId: string, nameservers?: string[]): Promise<Models.Domain>;
     updateNameservers(
-        paramsOrFirst: { domainId: string, nameservers?: string[] } | string,
-        ...rest: [(string[])?]    
+        domainId: string,
+        nameservers?: string[],
+    ): Promise<Models.Domain>;
+    updateNameservers(
+        paramsOrFirst: { domainId: string; nameservers?: string[] } | string,
+        ...rest: [string[]?]
     ): Promise<Models.Domain> {
-        let params: { domainId: string, nameservers?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, nameservers?: string[] };
+        let params: { domainId: string; nameservers?: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                nameservers?: string[];
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
-                nameservers: rest[0] as string[]            
+                nameservers: rest[0] as string[],
             };
         }
-        
+
         const domainId = params.domainId;
         const nameservers = params.nameservers;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/nameservers'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/nameservers'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof nameservers !== 'undefined') {
             payload['nameservers'] = nameservers;
@@ -980,15 +1328,10 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1013,40 +1356,43 @@ export class Domains {
      */
     verifyNameservers(domainId: string): Promise<Models.Domain>;
     verifyNameservers(
-        paramsOrFirst: { domainId: string } | string    
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.Domain> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/nameservers/verification'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/nameservers/verification'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -1056,7 +1402,9 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    getPresetGoogleWorkspace(params: { domainId: string }): Promise<Models.DnsRecordsList>;
+    getPresetGoogleWorkspace(params: {
+        domainId: string;
+    }): Promise<Models.DnsRecordsList>;
     /**
      * List Google Workspace DNS records.
      *
@@ -1067,52 +1415,57 @@ export class Domains {
      */
     getPresetGoogleWorkspace(domainId: string): Promise<Models.DnsRecordsList>;
     getPresetGoogleWorkspace(
-        paramsOrFirst: { domainId: string } | string    
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.DnsRecordsList> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/presets/google-workspace'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/presets/google-workspace'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
-     * Add Google Workspace DNS records to the domain. This will create the required MX records 
+     * Add Google Workspace DNS records to the domain. This will create the required MX records
      * for Google Workspace email hosting.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    createPresetGoogleWorkspace(params: { domainId: string }): Promise<Models.DnsRecordsList>;
+    createPresetGoogleWorkspace(params: {
+        domainId: string;
+    }): Promise<Models.DnsRecordsList>;
     /**
-     * Add Google Workspace DNS records to the domain. This will create the required MX records 
+     * Add Google Workspace DNS records to the domain. This will create the required MX records
      * for Google Workspace email hosting.
      *
      * @param {string} domainId - Domain unique ID.
@@ -1120,42 +1473,47 @@ export class Domains {
      * @returns {Promise<Models.DnsRecordsList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createPresetGoogleWorkspace(domainId: string): Promise<Models.DnsRecordsList>;
     createPresetGoogleWorkspace(
-        paramsOrFirst: { domainId: string } | string    
+        domainId: string,
+    ): Promise<Models.DnsRecordsList>;
+    createPresetGoogleWorkspace(
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.DnsRecordsList> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/presets/google-workspace'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/presets/google-workspace'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1165,7 +1523,9 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    getPresetICloud(params: { domainId: string }): Promise<Models.DnsRecordsList>;
+    getPresetICloud(params: {
+        domainId: string;
+    }): Promise<Models.DnsRecordsList>;
     /**
      * List iCloud DNS records.
      *
@@ -1176,39 +1536,42 @@ export class Domains {
      */
     getPresetICloud(domainId: string): Promise<Models.DnsRecordsList>;
     getPresetICloud(
-        paramsOrFirst: { domainId: string } | string    
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.DnsRecordsList> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/presets/icloud'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/presets/icloud'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1219,7 +1582,9 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    createPresetICloud(params: { domainId: string }): Promise<Models.DnsRecordsList>;
+    createPresetICloud(params: {
+        domainId: string;
+    }): Promise<Models.DnsRecordsList>;
     /**
      * Add iCloud DNS records to the domain. This will create the required MX and SPF records
      * for using iCloud email services with your domain.
@@ -1231,40 +1596,43 @@ export class Domains {
      */
     createPresetICloud(domainId: string): Promise<Models.DnsRecordsList>;
     createPresetICloud(
-        paramsOrFirst: { domainId: string } | string    
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.DnsRecordsList> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/presets/icloud'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/presets/icloud'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1274,7 +1642,9 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    getPresetMailgun(params: { domainId: string }): Promise<Models.DnsRecordsList>;
+    getPresetMailgun(params: {
+        domainId: string;
+    }): Promise<Models.DnsRecordsList>;
     /**
      * List Mailgun DNS records.
      *
@@ -1285,52 +1655,57 @@ export class Domains {
      */
     getPresetMailgun(domainId: string): Promise<Models.DnsRecordsList>;
     getPresetMailgun(
-        paramsOrFirst: { domainId: string } | string    
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.DnsRecordsList> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/presets/mailgun'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/presets/mailgun'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
-     * Add Mailgun DNS records to the domain. This endpoint will create the required DNS records 
+     * Add Mailgun DNS records to the domain. This endpoint will create the required DNS records
      * for Mailgun in the specified domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    createPresetMailgun(params: { domainId: string }): Promise<Models.DnsRecordsList>;
+    createPresetMailgun(params: {
+        domainId: string;
+    }): Promise<Models.DnsRecordsList>;
     /**
-     * Add Mailgun DNS records to the domain. This endpoint will create the required DNS records 
+     * Add Mailgun DNS records to the domain. This endpoint will create the required DNS records
      * for Mailgun in the specified domain.
      *
      * @param {string} domainId - Domain unique ID.
@@ -1340,40 +1715,43 @@ export class Domains {
      */
     createPresetMailgun(domainId: string): Promise<Models.DnsRecordsList>;
     createPresetMailgun(
-        paramsOrFirst: { domainId: string } | string    
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.DnsRecordsList> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/presets/mailgun'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/presets/mailgun'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1383,7 +1761,9 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    getPresetOutlook(params: { domainId: string }): Promise<Models.DnsRecordsList>;
+    getPresetOutlook(params: {
+        domainId: string;
+    }): Promise<Models.DnsRecordsList>;
     /**
      * List Outlook DNS records.
      *
@@ -1394,39 +1774,42 @@ export class Domains {
      */
     getPresetOutlook(domainId: string): Promise<Models.DnsRecordsList>;
     getPresetOutlook(
-        paramsOrFirst: { domainId: string } | string    
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.DnsRecordsList> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/presets/outlook'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/presets/outlook'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1437,7 +1820,9 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    createPresetOutlook(params: { domainId: string }): Promise<Models.DnsRecordsList>;
+    createPresetOutlook(params: {
+        domainId: string;
+    }): Promise<Models.DnsRecordsList>;
     /**
      * Add Outlook DNS records to the domain. This will create the required MX records
      * for setting up Outlook email hosting for your domain.
@@ -1449,40 +1834,43 @@ export class Domains {
      */
     createPresetOutlook(domainId: string): Promise<Models.DnsRecordsList>;
     createPresetOutlook(
-        paramsOrFirst: { domainId: string } | string    
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.DnsRecordsList> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/presets/outlook'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/presets/outlook'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1492,7 +1880,9 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    getPresetProtonMail(params: { domainId: string }): Promise<Models.DnsRecordsList>;
+    getPresetProtonMail(params: {
+        domainId: string;
+    }): Promise<Models.DnsRecordsList>;
     /**
      * List ProtonMail DNS records.
      *
@@ -1503,39 +1893,42 @@ export class Domains {
      */
     getPresetProtonMail(domainId: string): Promise<Models.DnsRecordsList>;
     getPresetProtonMail(
-        paramsOrFirst: { domainId: string } | string    
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.DnsRecordsList> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/presets/proton-mail'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/presets/proton-mail'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1546,7 +1939,9 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    createPresetProtonMail(params: { domainId: string }): Promise<Models.DnsRecordsList>;
+    createPresetProtonMail(params: {
+        domainId: string;
+    }): Promise<Models.DnsRecordsList>;
     /**
      * Add ProtonMail DNS records to the domain. This will create the required MX records
      * for using ProtonMail with your custom domain.
@@ -1558,40 +1953,43 @@ export class Domains {
      */
     createPresetProtonMail(domainId: string): Promise<Models.DnsRecordsList>;
     createPresetProtonMail(
-        paramsOrFirst: { domainId: string } | string    
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.DnsRecordsList> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/presets/proton-mail'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/presets/proton-mail'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1612,39 +2010,42 @@ export class Domains {
      */
     getPresetZoho(domainId: string): Promise<Models.DnsRecordsList>;
     getPresetZoho(
-        paramsOrFirst: { domainId: string } | string    
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.DnsRecordsList> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/presets/zoho'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/presets/zoho'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -1655,7 +2056,9 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    createPresetZoho(params: { domainId: string }): Promise<Models.DnsRecordsList>;
+    createPresetZoho(params: {
+        domainId: string;
+    }): Promise<Models.DnsRecordsList>;
     /**
      * Add Zoho Mail DNS records to the domain. This will create the required MX records
      * for setting up Zoho Mail on your domain.
@@ -1667,40 +2070,43 @@ export class Domains {
      */
     createPresetZoho(domainId: string): Promise<Models.DnsRecordsList>;
     createPresetZoho(
-        paramsOrFirst: { domainId: string } | string    
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.DnsRecordsList> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/presets/zoho'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/presets/zoho'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -1712,7 +2118,10 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecordsList>}
      */
-    listRecords(params: { domainId: string, queries?: string[] }): Promise<Models.DnsRecordsList>;
+    listRecords(params: {
+        domainId: string;
+        queries?: string[];
+    }): Promise<Models.DnsRecordsList>;
     /**
      * List DNS records for a given domain. You can use this endpoint to list all the DNS records
      * associated with your domain.
@@ -1723,30 +2132,44 @@ export class Domains {
      * @returns {Promise<Models.DnsRecordsList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listRecords(domainId: string, queries?: string[]): Promise<Models.DnsRecordsList>;
     listRecords(
-        paramsOrFirst: { domainId: string, queries?: string[] } | string,
-        ...rest: [(string[])?]    
+        domainId: string,
+        queries?: string[],
+    ): Promise<Models.DnsRecordsList>;
+    listRecords(
+        paramsOrFirst: { domainId: string; queries?: string[] } | string,
+        ...rest: [string[]?]
     ): Promise<Models.DnsRecordsList> {
-        let params: { domainId: string, queries?: string[] };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, queries?: string[] };
+        let params: { domainId: string; queries?: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                queries?: string[];
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
-                queries: rest[0] as string[]            
+                queries: rest[0] as string[],
             };
         }
-        
+
         const domainId = params.domainId;
         const queries = params.queries;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/records'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/records'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof queries !== 'undefined') {
             payload['queries'] = queries;
@@ -1755,70 +2178,103 @@ export class Domains {
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
-     * Create a new A record for the given domain. A records are used to point a domain name 
+     * Create a new A record for the given domain. A records are used to point a domain name
      * to an IPv4 address. The record value should be a valid IPv4 address.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - IPv4 address for this A record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment explaining what this record is for.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordA(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    createRecordA(params: {
+        domainId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
-     * Create a new A record for the given domain. A records are used to point a domain name 
+     * Create a new A record for the given domain. A records are used to point a domain name
      * to an IPv4 address. The record value should be a valid IPv4 address.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - IPv4 address for this A record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment explaining what this record is for.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordA(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     createRecordA(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    createRecordA(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
                 ttl: rest[2] as number,
-                comment: rest[3] as string            
+                comment: rest[3] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const name = params.name;
         const value = params.value;
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -1829,8 +2285,10 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/a'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/records/a'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1849,56 +2307,92 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
-     * Update an existing A record for the given domain. This endpoint allows you to modify 
-     * the properties of an A record including its name (subdomain), IPv4 address, TTL, 
+     * Update an existing A record for the given domain. This endpoint allows you to modify
+     * the properties of an A record including its name (subdomain), IPv4 address, TTL,
      * and optional comment.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - IPv4 address for this A record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment explaining what this record is for.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    updateRecordA(params: {
+        domainId: string;
+        recordId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
-     * Update an existing A record for the given domain. This endpoint allows you to modify 
-     * the properties of an A record including its name (subdomain), IPv4 address, TTL, 
+     * Update an existing A record for the given domain. This endpoint allows you to modify
+     * the properties of an A record including its name (subdomain), IPv4 address, TTL,
      * and optional comment.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - IPv4 address for this A record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment explaining what this record is for.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordA(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     updateRecordA(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        recordId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    updateRecordA(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  recordId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            recordId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                recordId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
@@ -1906,10 +2400,10 @@ export class Domains {
                 name: rest[1] as string,
                 value: rest[2] as string,
                 ttl: rest[3] as number,
-                comment: rest[4] as string            
+                comment: rest[4] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const recordId = params.recordId;
         const name = params.name;
@@ -1917,11 +2411,15 @@ export class Domains {
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-        if (typeof recordId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "recordId"');
+        if (typeof recordId === 'undefined' || recordId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "recordId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -1932,8 +2430,9 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/a/{recordId}'.replace('{domainId}', encodeURIComponent(String(domainId))).replace('{recordId}', encodeURIComponent(String(recordId)));
+        const apiPath = '/domains/{domainId}/records/a/{recordId}'
+            .replace('{domainId}', encodeURIComponent(String(domainId)))
+            .replace('{recordId}', encodeURIComponent(String(recordId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -1952,70 +2451,103 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
-     * Create a new AAAA record for the given domain. This endpoint allows you to add a new IPv6 DNS record 
+     * Create a new AAAA record for the given domain. This endpoint allows you to add a new IPv6 DNS record
      * to your domain. The record will be used to point a hostname to an IPv6 address.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - IPv6 address for this AAAA record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment explaining what this record is for.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordAAAA(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    createRecordAAAA(params: {
+        domainId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
-     * Create a new AAAA record for the given domain. This endpoint allows you to add a new IPv6 DNS record 
+     * Create a new AAAA record for the given domain. This endpoint allows you to add a new IPv6 DNS record
      * to your domain. The record will be used to point a hostname to an IPv6 address.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - IPv6 address for this AAAA record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment explaining what this record is for.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordAAAA(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     createRecordAAAA(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    createRecordAAAA(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
                 ttl: rest[2] as number,
-                comment: rest[3] as string            
+                comment: rest[3] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const name = params.name;
         const value = params.value;
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -2026,8 +2558,10 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/aaaa'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/records/aaaa'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2046,15 +2580,10 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -2066,12 +2595,19 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - IPv6 address for this AAAA record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordAAAA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    updateRecordAAAA(params: {
+        domainId: string;
+        recordId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
      * Update an existing AAAA record for the given domain. This endpoint allows you to modify
      * the properties of an existing AAAA record, including its name (subdomain), IPv6 address,
@@ -2081,21 +2617,55 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - IPv6 address for this AAAA record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordAAAA(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     updateRecordAAAA(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        recordId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    updateRecordAAAA(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  recordId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            recordId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                recordId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
@@ -2103,10 +2673,10 @@ export class Domains {
                 name: rest[1] as string,
                 value: rest[2] as string,
                 ttl: rest[3] as number,
-                comment: rest[4] as string            
+                comment: rest[4] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const recordId = params.recordId;
         const name = params.name;
@@ -2114,11 +2684,15 @@ export class Domains {
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-        if (typeof recordId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "recordId"');
+        if (typeof recordId === 'undefined' || recordId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "recordId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -2129,8 +2703,9 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/aaaa/{recordId}'.replace('{domainId}', encodeURIComponent(String(domainId))).replace('{recordId}', encodeURIComponent(String(recordId)));
+        const apiPath = '/domains/{domainId}/records/aaaa/{recordId}'
+            .replace('{domainId}', encodeURIComponent(String(domainId)))
+            .replace('{recordId}', encodeURIComponent(String(recordId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2149,72 +2724,105 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
-     * Create a new ALIAS record for the given domain. This record type can be used to point your domain 
-     * to another domain name that will serve as an alias. This is particularly useful when you want to 
+     * Create a new ALIAS record for the given domain. This record type can be used to point your domain
+     * to another domain name that will serve as an alias. This is particularly useful when you want to
      * map your domain to a target domain that may change its IP address.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name.
      * @param {string} params.value - Target domain for this ALIAS record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordAlias(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    createRecordAlias(params: {
+        domainId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
-     * Create a new ALIAS record for the given domain. This record type can be used to point your domain 
-     * to another domain name that will serve as an alias. This is particularly useful when you want to 
+     * Create a new ALIAS record for the given domain. This record type can be used to point your domain
+     * to another domain name that will serve as an alias. This is particularly useful when you want to
      * map your domain to a target domain that may change its IP address.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name.
      * @param {string} value - Target domain for this ALIAS record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordAlias(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     createRecordAlias(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    createRecordAlias(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
                 ttl: rest[2] as number,
-                comment: rest[3] as string            
+                comment: rest[3] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const name = params.name;
         const value = params.value;
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -2225,8 +2833,10 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/alias'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/records/alias'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2245,21 +2855,16 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Update an existing ALIAS record for the specified domain. This endpoint allows you to modify
      * the properties of an existing ALIAS record including its name, target domain, TTL, and comment.
-     *     
+     *
      * The ALIAS record type is similar to a CNAME record but can be used at the zone apex (root domain).
      * It provides a way to map one domain name to another.
      *
@@ -2267,16 +2872,23 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name.
      * @param {string} params.value - Target domain for this ALIAS record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordAlias(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    updateRecordAlias(params: {
+        domainId: string;
+        recordId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
      * Update an existing ALIAS record for the specified domain. This endpoint allows you to modify
      * the properties of an existing ALIAS record including its name, target domain, TTL, and comment.
-     *     
+     *
      * The ALIAS record type is similar to a CNAME record but can be used at the zone apex (root domain).
      * It provides a way to map one domain name to another.
      *
@@ -2284,21 +2896,55 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name.
      * @param {string} value - Target domain for this ALIAS record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordAlias(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     updateRecordAlias(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        recordId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    updateRecordAlias(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  recordId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            recordId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                recordId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
@@ -2306,10 +2952,10 @@ export class Domains {
                 name: rest[1] as string,
                 value: rest[2] as string,
                 ttl: rest[3] as number,
-                comment: rest[4] as string            
+                comment: rest[4] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const recordId = params.recordId;
         const name = params.name;
@@ -2317,11 +2963,15 @@ export class Domains {
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-        if (typeof recordId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "recordId"');
+        if (typeof recordId === 'undefined' || recordId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "recordId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -2332,8 +2982,9 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/alias/{recordId}'.replace('{domainId}', encodeURIComponent(String(domainId))).replace('{recordId}', encodeURIComponent(String(recordId)));
+        const apiPath = '/domains/{domainId}/records/alias/{recordId}'
+            .replace('{domainId}', encodeURIComponent(String(domainId)))
+            .replace('{recordId}', encodeURIComponent(String(recordId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2352,70 +3003,103 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
-     * Create a new CAA record for the given domain. CAA records are used to specify which 
+     * Create a new CAA record for the given domain. CAA records are used to specify which
      * Certificate Authorities (CAs) are allowed to issue SSL/TLS certificates for your domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name.
      * @param {string} params.value - CAA value (e.g. issuer domain).
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordCAA(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    createRecordCAA(params: {
+        domainId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
-     * Create a new CAA record for the given domain. CAA records are used to specify which 
+     * Create a new CAA record for the given domain. CAA records are used to specify which
      * Certificate Authorities (CAs) are allowed to issue SSL/TLS certificates for your domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name.
      * @param {string} value - CAA value (e.g. issuer domain).
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordCAA(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     createRecordCAA(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    createRecordCAA(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
                 ttl: rest[2] as number,
-                comment: rest[3] as string            
+                comment: rest[3] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const name = params.name;
         const value = params.value;
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -2426,8 +3110,10 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/caa'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/records/caa'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2446,56 +3132,92 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
-     * Update an existing CAA record for the given domain. A CAA (Certification Authority Authorization) 
-     * record is used to specify which certificate authorities (CAs) are authorized to issue certificates 
+     * Update an existing CAA record for the given domain. A CAA (Certification Authority Authorization)
+     * record is used to specify which certificate authorities (CAs) are authorized to issue certificates
      * for a domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name.
      * @param {string} params.value - CAA value (e.g. issuer domain).
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordCAA(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    updateRecordCAA(params: {
+        domainId: string;
+        recordId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
-     * Update an existing CAA record for the given domain. A CAA (Certification Authority Authorization) 
-     * record is used to specify which certificate authorities (CAs) are authorized to issue certificates 
+     * Update an existing CAA record for the given domain. A CAA (Certification Authority Authorization)
+     * record is used to specify which certificate authorities (CAs) are authorized to issue certificates
      * for a domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name.
      * @param {string} value - CAA value (e.g. issuer domain).
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordCAA(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     updateRecordCAA(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        recordId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    updateRecordCAA(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  recordId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            recordId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                recordId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
@@ -2503,10 +3225,10 @@ export class Domains {
                 name: rest[1] as string,
                 value: rest[2] as string,
                 ttl: rest[3] as number,
-                comment: rest[4] as string            
+                comment: rest[4] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const recordId = params.recordId;
         const name = params.name;
@@ -2514,11 +3236,15 @@ export class Domains {
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-        if (typeof recordId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "recordId"');
+        if (typeof recordId === 'undefined' || recordId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "recordId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -2529,8 +3255,9 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/caa/{recordId}'.replace('{domainId}', encodeURIComponent(String(domainId))).replace('{recordId}', encodeURIComponent(String(recordId)));
+        const apiPath = '/domains/{domainId}/records/caa/{recordId}'
+            .replace('{domainId}', encodeURIComponent(String(domainId)))
+            .replace('{recordId}', encodeURIComponent(String(recordId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2549,76 +3276,109 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
      * Create a new CNAME record for the given domain.
-     *     
-     * A CNAME record maps a subdomain to another domain name, allowing you to create aliases 
-     * for your domain. For example, you can create a CNAME record to point 'blog.example.com' 
+     *
+     * A CNAME record maps a subdomain to another domain name, allowing you to create aliases
+     * for your domain. For example, you can create a CNAME record to point 'blog.example.com'
      * to 'example.wordpress.com'.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Canonical target for this CNAME record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordCNAME(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    createRecordCNAME(params: {
+        domainId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
      * Create a new CNAME record for the given domain.
-     *     
-     * A CNAME record maps a subdomain to another domain name, allowing you to create aliases 
-     * for your domain. For example, you can create a CNAME record to point 'blog.example.com' 
+     *
+     * A CNAME record maps a subdomain to another domain name, allowing you to create aliases
+     * for your domain. For example, you can create a CNAME record to point 'blog.example.com'
      * to 'example.wordpress.com'.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Canonical target for this CNAME record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordCNAME(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     createRecordCNAME(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    createRecordCNAME(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
                 ttl: rest[2] as number,
-                comment: rest[3] as string            
+                comment: rest[3] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const name = params.name;
         const value = params.value;
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -2629,8 +3389,10 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/cname'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/records/cname'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2649,15 +3411,10 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -2667,12 +3424,19 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Canonical target for this CNAME record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordCNAME(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    updateRecordCNAME(params: {
+        domainId: string;
+        recordId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
      * Update an existing CNAME record for the given domain.
      *
@@ -2680,21 +3444,55 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Canonical target for this CNAME record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordCNAME(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     updateRecordCNAME(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        recordId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    updateRecordCNAME(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  recordId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            recordId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                recordId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
@@ -2702,10 +3500,10 @@ export class Domains {
                 name: rest[1] as string,
                 value: rest[2] as string,
                 ttl: rest[3] as number,
-                comment: rest[4] as string            
+                comment: rest[4] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const recordId = params.recordId;
         const name = params.name;
@@ -2713,11 +3511,15 @@ export class Domains {
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-        if (typeof recordId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "recordId"');
+        if (typeof recordId === 'undefined' || recordId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "recordId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -2728,8 +3530,9 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/cname/{recordId}'.replace('{domainId}', encodeURIComponent(String(domainId))).replace('{recordId}', encodeURIComponent(String(recordId)));
+        const apiPath = '/domains/{domainId}/records/cname/{recordId}'
+            .replace('{domainId}', encodeURIComponent(String(domainId)))
+            .replace('{recordId}', encodeURIComponent(String(recordId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2748,70 +3551,103 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
-     * Create a new HTTPS record for the given domain. This record is used to configure HTTPS 
+     * Create a new HTTPS record for the given domain. This record is used to configure HTTPS
      * settings for your domain, enabling secure communication over SSL/TLS.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Target for the HTTPS record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordHTTPS(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    createRecordHTTPS(params: {
+        domainId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
-     * Create a new HTTPS record for the given domain. This record is used to configure HTTPS 
+     * Create a new HTTPS record for the given domain. This record is used to configure HTTPS
      * settings for your domain, enabling secure communication over SSL/TLS.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Target for the HTTPS record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordHTTPS(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     createRecordHTTPS(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    createRecordHTTPS(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
                 ttl: rest[2] as number,
-                comment: rest[3] as string            
+                comment: rest[3] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const name = params.name;
         const value = params.value;
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -2822,8 +3658,10 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/https'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/records/https'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2842,56 +3680,92 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
-     * Update an existing HTTPS record for the given domain. This endpoint allows you to modify 
-     * the properties of an HTTPS record associated with your domain, including the name (subdomain), 
+     * Update an existing HTTPS record for the given domain. This endpoint allows you to modify
+     * the properties of an HTTPS record associated with your domain, including the name (subdomain),
      * target value, TTL, and optional comment.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Target for the HTTPS record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordHTTPS(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    updateRecordHTTPS(params: {
+        domainId: string;
+        recordId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
-     * Update an existing HTTPS record for the given domain. This endpoint allows you to modify 
-     * the properties of an HTTPS record associated with your domain, including the name (subdomain), 
+     * Update an existing HTTPS record for the given domain. This endpoint allows you to modify
+     * the properties of an HTTPS record associated with your domain, including the name (subdomain),
      * target value, TTL, and optional comment.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Target for the HTTPS record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordHTTPS(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     updateRecordHTTPS(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        recordId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    updateRecordHTTPS(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  recordId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            recordId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                recordId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
@@ -2899,10 +3773,10 @@ export class Domains {
                 name: rest[1] as string,
                 value: rest[2] as string,
                 ttl: rest[3] as number,
-                comment: rest[4] as string            
+                comment: rest[4] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const recordId = params.recordId;
         const name = params.name;
@@ -2910,11 +3784,15 @@ export class Domains {
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-        if (typeof recordId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "recordId"');
+        if (typeof recordId === 'undefined' || recordId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "recordId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -2925,8 +3803,9 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/https/{recordId}'.replace('{domainId}', encodeURIComponent(String(domainId))).replace('{recordId}', encodeURIComponent(String(recordId)));
+        const apiPath = '/domains/{domainId}/records/https/{recordId}'
+            .replace('{domainId}', encodeURIComponent(String(domainId)))
+            .replace('{recordId}', encodeURIComponent(String(recordId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -2945,58 +3824,94 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
-     * Create a new MX record for the given domain. MX records are used to define the mail servers responsible 
+     * Create a new MX record for the given domain. MX records are used to define the mail servers responsible
      * for accepting email messages for the domain. Multiple MX records can be created with different priorities.
-     * The priority parameter determines the order in which mail servers are used, with lower values indicating 
+     * The priority parameter determines the order in which mail servers are used, with lower values indicating
      * higher priority.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Mail server domain for this MX record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} params.priority - MX priority.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
+     * @param {number} params.priority - MX priority. Lower values are tried first.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordMX(params: { domainId: string, name: string, value: string, ttl: number, priority: number, comment?: string }): Promise<Models.DnsRecord>;
+    createRecordMX(params: {
+        domainId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        priority: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
-     * Create a new MX record for the given domain. MX records are used to define the mail servers responsible 
+     * Create a new MX record for the given domain. MX records are used to define the mail servers responsible
      * for accepting email messages for the domain. Multiple MX records can be created with different priorities.
-     * The priority parameter determines the order in which mail servers are used, with lower values indicating 
+     * The priority parameter determines the order in which mail servers are used, with lower values indicating
      * higher priority.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Mail server domain for this MX record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} priority - MX priority.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
+     * @param {number} priority - MX priority. Lower values are tried first.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordMX(domainId: string, name: string, value: string, ttl: number, priority: number, comment?: string): Promise<Models.DnsRecord>;
     createRecordMX(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, priority: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (number)?, (string)?]    
+        domainId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        priority: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    createRecordMX(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  priority: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, number?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, priority: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, priority: number, comment?: string };
+        let params: {
+            domainId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            priority: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                priority: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
@@ -3004,10 +3919,10 @@ export class Domains {
                 value: rest[1] as string,
                 ttl: rest[2] as number,
                 priority: rest[3] as number,
-                comment: rest[4] as string            
+                comment: rest[4] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const name = params.name;
         const value = params.value;
@@ -3015,8 +3930,10 @@ export class Domains {
         const priority = params.priority;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -3028,10 +3945,14 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         if (typeof priority === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "priority"');
+            throw new AppwriteException(
+                'Missing required parameter: "priority"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/records/mx'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/records/mx'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -3053,15 +3974,10 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
@@ -3071,13 +3987,21 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Mail server domain for this MX record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} params.priority - MX priority.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
+     * @param {number} params.priority - MX priority. Lower values are tried first.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordMX(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, comment?: string }): Promise<Models.DnsRecord>;
+    updateRecordMX(params: {
+        domainId: string;
+        recordId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        priority: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
      * Update an existing MX record for the given domain.
      *
@@ -3085,22 +4009,60 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Mail server domain for this MX record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} priority - MX priority.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
+     * @param {number} priority - MX priority. Lower values are tried first.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordMX(domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, comment?: string): Promise<Models.DnsRecord>;
     updateRecordMX(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (number)?, (string)?]    
+        domainId: string,
+        recordId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        priority: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    updateRecordMX(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  recordId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  priority: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, number?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, comment?: string };
+        let params: {
+            domainId: string;
+            recordId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            priority: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                recordId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                priority: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
@@ -3109,10 +4071,10 @@ export class Domains {
                 value: rest[2] as string,
                 ttl: rest[3] as number,
                 priority: rest[4] as number,
-                comment: rest[5] as string            
+                comment: rest[5] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const recordId = params.recordId;
         const name = params.name;
@@ -3121,11 +4083,15 @@ export class Domains {
         const priority = params.priority;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-        if (typeof recordId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "recordId"');
+        if (typeof recordId === 'undefined' || recordId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "recordId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -3137,10 +4103,13 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         if (typeof priority === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "priority"');
+            throw new AppwriteException(
+                'Missing required parameter: "priority"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/records/mx/{recordId}'.replace('{domainId}', encodeURIComponent(String(domainId))).replace('{recordId}', encodeURIComponent(String(recordId)));
+        const apiPath = '/domains/{domainId}/records/mx/{recordId}'
+            .replace('{domainId}', encodeURIComponent(String(domainId)))
+            .replace('{recordId}', encodeURIComponent(String(recordId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -3162,70 +4131,103 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
-     * Create a new NS record for the given domain. NS records specify the nameservers that are used 
+     * Create a new NS record for the given domain. NS records specify the nameservers that are used
      * to resolve the domain name to IP addresses. Each domain can have multiple NS records.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Nameserver target for this NS record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordNS(params: { domainId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    createRecordNS(params: {
+        domainId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
-     * Create a new NS record for the given domain. NS records specify the nameservers that are used 
+     * Create a new NS record for the given domain. NS records specify the nameservers that are used
      * to resolve the domain name to IP addresses. Each domain can have multiple NS records.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Nameserver target for this NS record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordNS(domainId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     createRecordNS(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    createRecordNS(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 value: rest[1] as string,
                 ttl: rest[2] as number,
-                comment: rest[3] as string            
+                comment: rest[3] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const name = params.name;
         const value = params.value;
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -3236,8 +4238,10 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/ns'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/records/ns'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -3256,58 +4260,94 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
-     * Update an existing NS record for the given domain. This endpoint allows you to modify 
-     * the properties of an NS (nameserver) record associated with your domain. You can update 
-     * the record name (subdomain), target nameserver value, TTL, and add or modify comments 
+     * Update an existing NS record for the given domain. This endpoint allows you to modify
+     * the properties of an NS (nameserver) record associated with your domain. You can update
+     * the record name (subdomain), target nameserver value, TTL, and add or modify comments
      * for better record management.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain).
      * @param {string} params.value - Nameserver target for this NS record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordNS(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    updateRecordNS(params: {
+        domainId: string;
+        recordId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
-     * Update an existing NS record for the given domain. This endpoint allows you to modify 
-     * the properties of an NS (nameserver) record associated with your domain. You can update 
-     * the record name (subdomain), target nameserver value, TTL, and add or modify comments 
+     * Update an existing NS record for the given domain. This endpoint allows you to modify
+     * the properties of an NS (nameserver) record associated with your domain. You can update
+     * the record name (subdomain), target nameserver value, TTL, and add or modify comments
      * for better record management.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain).
      * @param {string} value - Nameserver target for this NS record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordNS(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     updateRecordNS(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        recordId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    updateRecordNS(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  recordId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            recordId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                recordId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
@@ -3315,10 +4355,10 @@ export class Domains {
                 name: rest[1] as string,
                 value: rest[2] as string,
                 ttl: rest[3] as number,
-                comment: rest[4] as string            
+                comment: rest[4] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const recordId = params.recordId;
         const name = params.name;
@@ -3326,11 +4366,15 @@ export class Domains {
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-        if (typeof recordId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "recordId"');
+        if (typeof recordId === 'undefined' || recordId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "recordId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -3341,8 +4385,9 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/ns/{recordId}'.replace('{domainId}', encodeURIComponent(String(domainId))).replace('{recordId}', encodeURIComponent(String(recordId)));
+        const apiPath = '/domains/{domainId}/records/ns/{recordId}'
+            .replace('{domainId}', encodeURIComponent(String(domainId)))
+            .replace('{recordId}', encodeURIComponent(String(recordId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -3361,60 +4406,106 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
-     * Create a new SRV record for the given domain. SRV records are used to define the location 
-     * of servers for specific services. For example, they can be used to specify which server 
+     * Create a new SRV record for the given domain. SRV records are used to define the location
+     * of servers for specific services. For example, they can be used to specify which server
      * handles a specific service like SIP or XMPP for the domain.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (service name).
      * @param {string} params.value - Target hostname for this SRV record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} params.priority - Record priority.
-     * @param {number} params.weight - Record weight.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
+     * @param {number} params.priority - Record priority. Lower values are tried first.
+     * @param {number} params.weight - Record weight, used to share load between targets of equal priority.
      * @param {number} params.port - Port number for the service.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordSRV(params: { domainId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string }): Promise<Models.DnsRecord>;
+    createRecordSRV(params: {
+        domainId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        priority: number;
+        weight: number;
+        port: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
-     * Create a new SRV record for the given domain. SRV records are used to define the location 
-     * of servers for specific services. For example, they can be used to specify which server 
+     * Create a new SRV record for the given domain. SRV records are used to define the location
+     * of servers for specific services. For example, they can be used to specify which server
      * handles a specific service like SIP or XMPP for the domain.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (service name).
      * @param {string} value - Target hostname for this SRV record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} priority - Record priority.
-     * @param {number} weight - Record weight.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
+     * @param {number} priority - Record priority. Lower values are tried first.
+     * @param {number} weight - Record weight, used to share load between targets of equal priority.
      * @param {number} port - Port number for the service.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordSRV(domainId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string): Promise<Models.DnsRecord>;
     createRecordSRV(
-        paramsOrFirst: { domainId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (number)?, (number)?, (number)?, (number)?, (string)?]    
+        domainId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        priority: number,
+        weight: number,
+        port: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    createRecordSRV(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  priority: number;
+                  weight: number;
+                  port: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, number?, number?, number?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string };
+        let params: {
+            domainId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            priority: number;
+            weight: number;
+            port: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                priority: number;
+                weight: number;
+                port: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
@@ -3424,10 +4515,10 @@ export class Domains {
                 priority: rest[3] as number,
                 weight: rest[4] as number,
                 port: rest[5] as number,
-                comment: rest[6] as string            
+                comment: rest[6] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const name = params.name;
         const value = params.value;
@@ -3437,8 +4528,10 @@ export class Domains {
         const port = params.port;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -3450,7 +4543,9 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         if (typeof priority === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "priority"');
+            throw new AppwriteException(
+                'Missing required parameter: "priority"',
+            );
         }
         if (typeof weight === 'undefined') {
             throw new AppwriteException('Missing required parameter: "weight"');
@@ -3458,8 +4553,10 @@ export class Domains {
         if (typeof port === 'undefined') {
             throw new AppwriteException('Missing required parameter: "port"');
         }
-
-        const apiPath = '/domains/{domainId}/records/srv'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/records/srv'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -3487,20 +4584,15 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Update an existing SRV record for the given domain.
-     *     
+     *
      * Required parameters:
      * - domainId: Domain unique ID
      * - recordId: DNS record unique ID
@@ -3510,7 +4602,7 @@ export class Domains {
      * - priority: Record priority
      * - weight: Record weight
      * - port: Port number for the service
-     *     
+     *
      * Optional parameters:
      * - comment: A comment for this record
      *
@@ -3518,18 +4610,28 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (service name).
      * @param {string} params.value - Target hostname for this SRV record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} params.priority - Record priority.
-     * @param {number} params.weight - Record weight.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
+     * @param {number} params.priority - Record priority. Lower values are tried first.
+     * @param {number} params.weight - Record weight, used to share load between targets of equal priority.
      * @param {number} params.port - Port number for the service.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordSRV(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string }): Promise<Models.DnsRecord>;
+    updateRecordSRV(params: {
+        domainId: string;
+        recordId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        priority: number;
+        weight: number;
+        port: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
      * Update an existing SRV record for the given domain.
-     *     
+     *
      * Required parameters:
      * - domainId: Domain unique ID
      * - recordId: DNS record unique ID
@@ -3539,7 +4641,7 @@ export class Domains {
      * - priority: Record priority
      * - weight: Record weight
      * - port: Port number for the service
-     *     
+     *
      * Optional parameters:
      * - comment: A comment for this record
      *
@@ -3547,24 +4649,79 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (service name).
      * @param {string} value - Target hostname for this SRV record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
-     * @param {number} priority - Record priority.
-     * @param {number} weight - Record weight.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
+     * @param {number} priority - Record priority. Lower values are tried first.
+     * @param {number} weight - Record weight, used to share load between targets of equal priority.
      * @param {number} port - Port number for the service.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordSRV(domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string): Promise<Models.DnsRecord>;
     updateRecordSRV(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (number)?, (number)?, (number)?, (string)?]    
+        domainId: string,
+        recordId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        priority: number,
+        weight: number,
+        port: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    updateRecordSRV(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  recordId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  priority: number;
+                  weight: number;
+                  port: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            number?,
+            number?,
+            number?,
+            number?,
+            string?,
+        ]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, priority: number, weight: number, port: number, comment?: string };
+        let params: {
+            domainId: string;
+            recordId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            priority: number;
+            weight: number;
+            port: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                recordId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                priority: number;
+                weight: number;
+                port: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
@@ -3575,10 +4732,10 @@ export class Domains {
                 priority: rest[4] as number,
                 weight: rest[5] as number,
                 port: rest[6] as number,
-                comment: rest[7] as string            
+                comment: rest[7] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const recordId = params.recordId;
         const name = params.name;
@@ -3589,11 +4746,15 @@ export class Domains {
         const port = params.port;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-        if (typeof recordId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "recordId"');
+        if (typeof recordId === 'undefined' || recordId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "recordId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -3605,7 +4766,9 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         if (typeof priority === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "priority"');
+            throw new AppwriteException(
+                'Missing required parameter: "priority"',
+            );
         }
         if (typeof weight === 'undefined') {
             throw new AppwriteException('Missing required parameter: "weight"');
@@ -3613,8 +4776,9 @@ export class Domains {
         if (typeof port === 'undefined') {
             throw new AppwriteException('Missing required parameter: "port"');
         }
-
-        const apiPath = '/domains/{domainId}/records/srv/{recordId}'.replace('{domainId}', encodeURIComponent(String(domainId))).replace('{recordId}', encodeURIComponent(String(recordId)));
+        const apiPath = '/domains/{domainId}/records/srv/{recordId}'
+            .replace('{domainId}', encodeURIComponent(String(domainId)))
+            .replace('{recordId}', encodeURIComponent(String(recordId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -3642,72 +4806,105 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
-     * Create a new TXT record for the given domain. TXT records can be used 
-     * to provide additional information about your domain, such as domain 
+     * Create a new TXT record for the given domain. TXT records can be used
+     * to provide additional information about your domain, such as domain
      * verification records, SPF records, or DKIM records.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.name - Record name (subdomain) for the TXT record.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.value - TXT record value.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    createRecordTXT(params: { domainId: string, name: string, ttl: number, value?: string, comment?: string }): Promise<Models.DnsRecord>;
+    createRecordTXT(params: {
+        domainId: string;
+        name: string;
+        ttl: number;
+        value?: string;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
-     * Create a new TXT record for the given domain. TXT records can be used 
-     * to provide additional information about your domain, such as domain 
+     * Create a new TXT record for the given domain. TXT records can be used
+     * to provide additional information about your domain, such as domain
      * verification records, SPF records, or DKIM records.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} name - Record name (subdomain) for the TXT record.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} value - TXT record value.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createRecordTXT(domainId: string, name: string, ttl: number, value?: string, comment?: string): Promise<Models.DnsRecord>;
     createRecordTXT(
-        paramsOrFirst: { domainId: string, name: string, ttl: number, value?: string, comment?: string } | string,
-        ...rest: [(string)?, (number)?, (string)?, (string)?]    
+        domainId: string,
+        name: string,
+        ttl: number,
+        value?: string,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    createRecordTXT(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  name: string;
+                  ttl: number;
+                  value?: string;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, number?, string?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, name: string, ttl: number, value?: string, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, name: string, ttl: number, value?: string, comment?: string };
+        let params: {
+            domainId: string;
+            name: string;
+            ttl: number;
+            value?: string;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                name: string;
+                ttl: number;
+                value?: string;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
                 name: rest[0] as string,
                 ttl: rest[1] as number,
                 value: rest[2] as string,
-                comment: rest[3] as string            
+                comment: rest[3] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const name = params.name;
         const ttl = params.ttl;
         const value = params.value;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -3715,8 +4912,10 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/txt'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/records/txt'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -3735,20 +4934,15 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'post',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('post', uri, apiHeaders, payload);
     }
 
     /**
      * Update an existing TXT record for the given domain.
-     *     
+     *
      * Update the TXT record details for a specific domain by providing the domain ID,
      * record ID, and the new record configuration including name, value, TTL, and an optional comment.
      *
@@ -3756,15 +4950,22 @@ export class Domains {
      * @param {string} params.recordId - DNS record unique ID.
      * @param {string} params.name - Record name (subdomain) for the TXT record.
      * @param {string} params.value - TXT record value.
-     * @param {number} params.ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    updateRecordTXT(params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string }): Promise<Models.DnsRecord>;
+    updateRecordTXT(params: {
+        domainId: string;
+        recordId: string;
+        name: string;
+        value: string;
+        ttl: number;
+        comment?: string;
+    }): Promise<Models.DnsRecord>;
     /**
      * Update an existing TXT record for the given domain.
-     *     
+     *
      * Update the TXT record details for a specific domain by providing the domain ID,
      * record ID, and the new record configuration including name, value, TTL, and an optional comment.
      *
@@ -3772,21 +4973,55 @@ export class Domains {
      * @param {string} recordId - DNS record unique ID.
      * @param {string} name - Record name (subdomain) for the TXT record.
      * @param {string} value - TXT record value.
-     * @param {number} ttl - Time to live, in seconds. Must be greater than 0.
+     * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateRecordTXT(domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string): Promise<Models.DnsRecord>;
     updateRecordTXT(
-        paramsOrFirst: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string } | string,
-        ...rest: [(string)?, (string)?, (string)?, (number)?, (string)?]    
+        domainId: string,
+        recordId: string,
+        name: string,
+        value: string,
+        ttl: number,
+        comment?: string,
+    ): Promise<Models.DnsRecord>;
+    updateRecordTXT(
+        paramsOrFirst:
+            | {
+                  domainId: string;
+                  recordId: string;
+                  name: string;
+                  value: string;
+                  ttl: number;
+                  comment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?, number?, string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string, name: string, value: string, ttl: number, comment?: string };
+        let params: {
+            domainId: string;
+            recordId: string;
+            name: string;
+            value: string;
+            ttl: number;
+            comment?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                recordId: string;
+                name: string;
+                value: string;
+                ttl: number;
+                comment?: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
@@ -3794,10 +5029,10 @@ export class Domains {
                 name: rest[1] as string,
                 value: rest[2] as string,
                 ttl: rest[3] as number,
-                comment: rest[4] as string            
+                comment: rest[4] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const recordId = params.recordId;
         const name = params.name;
@@ -3805,11 +5040,15 @@ export class Domains {
         const ttl = params.ttl;
         const comment = params.comment;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-        if (typeof recordId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "recordId"');
+        if (typeof recordId === 'undefined' || recordId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "recordId"',
+            );
         }
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
@@ -3820,8 +5059,9 @@ export class Domains {
         if (typeof ttl === 'undefined') {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
-
-        const apiPath = '/domains/{domainId}/records/txt/{recordId}'.replace('{domainId}', encodeURIComponent(String(domainId))).replace('{recordId}', encodeURIComponent(String(recordId)));
+        const apiPath = '/domains/{domainId}/records/txt/{recordId}'
+            .replace('{domainId}', encodeURIComponent(String(domainId)))
+            .replace('{recordId}', encodeURIComponent(String(recordId)));
         const payload: Payload = {};
         if (typeof name !== 'undefined') {
             payload['name'] = name;
@@ -3840,20 +5080,15 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 
     /**
      * Get a single DNS record for a given domain by record ID.
-     *     
+     *
      * This endpoint allows you to retrieve a specific DNS record associated with a domain
      * using its unique identifier. The record contains information about the DNS configuration
      * such as type, value, and TTL settings.
@@ -3863,10 +5098,13 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DnsRecord>}
      */
-    getRecord(params: { domainId: string, recordId: string }): Promise<Models.DnsRecord>;
+    getRecord(params: {
+        domainId: string;
+        recordId: string;
+    }): Promise<Models.DnsRecord>;
     /**
      * Get a single DNS record for a given domain by record ID.
-     *     
+     *
      * This endpoint allows you to retrieve a specific DNS record associated with a domain
      * using its unique identifier. The record contains information about the DNS configuration
      * such as type, value, and TTL settings.
@@ -3879,49 +5117,56 @@ export class Domains {
      */
     getRecord(domainId: string, recordId: string): Promise<Models.DnsRecord>;
     getRecord(
-        paramsOrFirst: { domainId: string, recordId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { domainId: string; recordId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.DnsRecord> {
-        let params: { domainId: string, recordId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string };
+        let params: { domainId: string; recordId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                recordId: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
-                recordId: rest[0] as string            
+                recordId: rest[0] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const recordId = params.recordId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-        if (typeof recordId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "recordId"');
+        if (typeof recordId === 'undefined' || recordId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "recordId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/records/{recordId}'.replace('{domainId}', encodeURIComponent(String(domainId))).replace('{recordId}', encodeURIComponent(String(recordId)));
+        const apiPath = '/domains/{domainId}/records/{recordId}'
+            .replace('{domainId}', encodeURIComponent(String(domainId)))
+            .replace('{recordId}', encodeURIComponent(String(recordId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
-     * Delete a DNS record for the given domain. This endpoint allows you to delete an existing DNS record 
+     * Delete a DNS record for the given domain. This endpoint allows you to delete an existing DNS record
      * from a specific domain.
      *
      * @param {string} params.domainId - Domain unique ID.
@@ -3929,9 +5174,9 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
-    deleteRecord(params: { domainId: string, recordId: string }): Promise<{}>;
+    deleteRecord(params: { domainId: string; recordId: string }): Promise<{}>;
     /**
-     * Delete a DNS record for the given domain. This endpoint allows you to delete an existing DNS record 
+     * Delete a DNS record for the given domain. This endpoint allows you to delete an existing DNS record
      * from a specific domain.
      *
      * @param {string} domainId - Domain unique ID.
@@ -3942,51 +5187,59 @@ export class Domains {
      */
     deleteRecord(domainId: string, recordId: string): Promise<{}>;
     deleteRecord(
-        paramsOrFirst: { domainId: string, recordId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { domainId: string; recordId: string } | string,
+        ...rest: [string?]
     ): Promise<{}> {
-        let params: { domainId: string, recordId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, recordId: string };
+        let params: { domainId: string; recordId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                recordId: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
-                recordId: rest[0] as string            
+                recordId: rest[0] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const recordId = params.recordId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-        if (typeof recordId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "recordId"');
+        if (typeof recordId === 'undefined' || recordId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "recordId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/records/{recordId}'.replace('{domainId}', encodeURIComponent(String(domainId))).replace('{recordId}', encodeURIComponent(String(recordId)));
+        const apiPath = '/domains/{domainId}/records/{recordId}'
+            .replace('{domainId}', encodeURIComponent(String(domainId)))
+            .replace('{recordId}', encodeURIComponent(String(recordId)));
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'delete',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('delete', uri, apiHeaders, payload);
     }
 
     /**
-     * Update the team ID for a specific domain. This endpoint requires admin access.
-     *     
+     * Update the team ID for a specific domain. The caller must administer the current
+     * team and be an owner of the destination team.
+     *
      * Updating the team ID will transfer ownership and access control of the domain
      * and all its DNS records to the new team.
      *
@@ -3995,10 +5248,14 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Domain>}
      */
-    updateTeam(params: { domainId: string, teamId: string }): Promise<Models.Domain>;
+    updateTeam(params: {
+        domainId: string;
+        teamId: string;
+    }): Promise<Models.Domain>;
     /**
-     * Update the team ID for a specific domain. This endpoint requires admin access.
-     *     
+     * Update the team ID for a specific domain. The caller must administer the current
+     * team and be an owner of the destination team.
+     *
      * Updating the team ID will transfer ownership and access control of the domain
      * and all its DNS records to the new team.
      *
@@ -4010,31 +5267,42 @@ export class Domains {
      */
     updateTeam(domainId: string, teamId: string): Promise<Models.Domain>;
     updateTeam(
-        paramsOrFirst: { domainId: string, teamId: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { domainId: string; teamId: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Domain> {
-        let params: { domainId: string, teamId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, teamId: string };
+        let params: { domainId: string; teamId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                teamId: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
-                teamId: rest[0] as string            
+                teamId: rest[0] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const teamId = params.teamId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof teamId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "teamId"');
         }
-
-        const apiPath = '/domains/{domainId}/team'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/team'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof teamId !== 'undefined') {
             payload['teamId'] = teamId;
@@ -4044,15 +5312,10 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'patch',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**
@@ -4062,7 +5325,9 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.DomainTransferStatus>}
      */
-    getTransferStatus(params: { domainId: string }): Promise<Models.DomainTransferStatus>;
+    getTransferStatus(params: {
+        domainId: string;
+    }): Promise<Models.DomainTransferStatus>;
     /**
      * Retrieve the current transfer status for a domain. Returns the status, an optional reason, and a timestamp of the last status change.
      *
@@ -4073,39 +5338,42 @@ export class Domains {
      */
     getTransferStatus(domainId: string): Promise<Models.DomainTransferStatus>;
     getTransferStatus(
-        paramsOrFirst: { domainId: string } | string    
+        paramsOrFirst: { domainId: string } | string,
     ): Promise<Models.DomainTransferStatus> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/transfers/status'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/transfers/status'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -4127,40 +5395,41 @@ export class Domains {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     getZone(domainId: string): Promise<{}>;
-    getZone(
-        paramsOrFirst: { domainId: string } | string    
-    ): Promise<{}> {
+    getZone(paramsOrFirst: { domainId: string } | string): Promise<{}> {
         let params: { domainId: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
             params = (paramsOrFirst || {}) as { domainId: string };
         } else {
             params = {
-                domainId: paramsOrFirst as string            
+                domainId: paramsOrFirst as string,
             };
         }
-        
+
         const domainId = params.domainId;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/zone'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/zone'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
-            'accept': 'text/plain',
-        }
+            accept: 'text/plain',
+        };
 
-        return this.client.call(
-            'get',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('get', uri, apiHeaders, payload);
     }
 
     /**
@@ -4172,7 +5441,10 @@ export class Domains {
      * @throws {AppwriteException}
      * @returns {Promise<Models.Domain>}
      */
-    updateZone(params: { domainId: string, content: string }): Promise<Models.Domain>;
+    updateZone(params: {
+        domainId: string;
+        content: string;
+    }): Promise<Models.Domain>;
     /**
      * Update the DNS zone for the given domain using the provided zone file content.
      * All parsed records are imported and then the main domain document is returned.
@@ -4185,31 +5457,44 @@ export class Domains {
      */
     updateZone(domainId: string, content: string): Promise<Models.Domain>;
     updateZone(
-        paramsOrFirst: { domainId: string, content: string } | string,
-        ...rest: [(string)?]    
+        paramsOrFirst: { domainId: string; content: string } | string,
+        ...rest: [string?]
     ): Promise<Models.Domain> {
-        let params: { domainId: string, content: string };
-        
-        if ((paramsOrFirst && typeof paramsOrFirst === 'object' && !Array.isArray(paramsOrFirst))) {
-            params = (paramsOrFirst || {}) as { domainId: string, content: string };
+        let params: { domainId: string; content: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domainId: string;
+                content: string;
+            };
         } else {
             params = {
                 domainId: paramsOrFirst as string,
-                content: rest[0] as string            
+                content: rest[0] as string,
             };
         }
-        
+
         const domainId = params.domainId;
         const content = params.content;
 
-        if (typeof domainId === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domainId"');
+        if (typeof domainId === 'undefined' || domainId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "domainId"',
+            );
         }
         if (typeof content === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "content"');
+            throw new AppwriteException(
+                'Missing required parameter: "content"',
+            );
         }
-
-        const apiPath = '/domains/{domainId}/zone'.replace('{domainId}', encodeURIComponent(String(domainId)));
+        const apiPath = '/domains/{domainId}/zone'.replace(
+            '{domainId}',
+            encodeURIComponent(String(domainId)),
+        );
         const payload: Payload = {};
         if (typeof content !== 'undefined') {
             payload['content'] = content;
@@ -4219,14 +5504,9 @@ export class Domains {
         const apiHeaders: { [header: string]: string } = {
             'X-Appwrite-Project': this.client.config.project,
             'content-type': 'application/json',
-            'accept': 'application/json',
-        }
+            accept: 'application/json',
+        };
 
-        return this.client.call(
-            'put',
-            uri,
-            apiHeaders,
-            payload
-        );
+        return this.client.call('put', uri, apiHeaders, payload);
     }
 }

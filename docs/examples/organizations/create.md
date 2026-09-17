@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Organizations, Platform } from "@appwrite.io/console";
+import { Client, Organizations, Platform } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -17,7 +17,7 @@ const result = await organizations.create({
     couponId: '<COUPON_ID>', // optional
     taxId: '<TAX_ID>', // optional
     budget: 0, // optional
-    platform: Platform.Appwrite // optional
+    platform: Platform.Appwrite, // optional
 });
 
 console.log(result);

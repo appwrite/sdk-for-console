@@ -1,5 +1,5 @@
 ```javascript
-import { Client, DocumentsDB } from "@appwrite.io/console";
+import { Client, DocumentsDB } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,7 +13,7 @@ const result = await documentsDB.create({
     enabled: false, // optional
     specification: 'serverless', // optional
     replicas: 0, // optional
-    syncMode: 'async' // optional
+    syncMode: 'async', // optional
 });
 
 console.log(result);

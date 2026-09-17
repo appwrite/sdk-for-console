@@ -1,5 +1,10 @@
 ```javascript
-import { Client, Project, ProjectEmailTemplateId, ProjectEmailTemplateLocale } from "@appwrite.io/console";
+import {
+    Client,
+    Project,
+    ProjectEmailTemplateId,
+    ProjectEmailTemplateLocale,
+} from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -15,7 +20,7 @@ const result = await project.updateEmailTemplate({
     senderName: '<SENDER_NAME>', // optional
     senderEmail: 'email@example.com', // optional
     replyToEmail: 'email@example.com', // optional
-    replyToName: '<REPLY_TO_NAME>' // optional
+    replyToName: '<REPLY_TO_NAME>', // optional
 });
 
 console.log(result);

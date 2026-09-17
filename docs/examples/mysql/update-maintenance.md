@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Mysql } from "@appwrite.io/console";
+import { Client, Mysql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const mysql = new Mysql(client);
 const result = await mysql.updateMaintenance({
     databaseId: '<DATABASE_ID>',
     day: 'sun',
-    hourUtc: 0
+    hourUtc: 0,
 });
 
 console.log(result);

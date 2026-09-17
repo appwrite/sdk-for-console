@@ -1,5 +1,5 @@
 ```javascript
-import { Client, VectorsDB } from "@appwrite.io/console";
+import { Client, VectorsDB } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const vectorsDB = new VectorsDB(client);
 
 const result = await vectorsDB.deleteCollection({
     databaseId: '<DATABASE_ID>',
-    collectionId: '<COLLECTION_ID>'
+    collectionId: '<COLLECTION_ID>',
 });
 
 console.log(result);

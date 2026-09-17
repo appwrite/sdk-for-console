@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Apps } from "@appwrite.io/console";
+import { Client, Apps } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const apps = new Apps(client);
 
 const result = await apps.getKey({
     appId: '<APP_ID>',
-    keyId: '<KEY_ID>'
+    keyId: '<KEY_ID>',
 });
 
 console.log(result);

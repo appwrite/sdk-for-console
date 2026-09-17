@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Projects } from "@appwrite.io/console";
+import { Client, Projects } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const projects = new Projects(client);
 
 const result = await projects.updateTeam({
     projectId: '<PROJECT_ID>',
-    teamId: '<TEAM_ID>'
+    teamId: '<TEAM_ID>',
 });
 
 console.log(result);

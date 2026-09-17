@@ -1,5 +1,5 @@
 ```javascript
-import { Client, DocumentsDB } from "@appwrite.io/console";
+import { Client, DocumentsDB } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,7 +9,7 @@ const documentsDB = new DocumentsDB(client);
 
 const result = await documentsDB.deleteCollection({
     databaseId: '<DATABASE_ID>',
-    collectionId: '<COLLECTION_ID>'
+    collectionId: '<COLLECTION_ID>',
 });
 
 console.log(result);

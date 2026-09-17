@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Messaging } from "@appwrite.io/console";
+import { Client, Messaging } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -11,7 +11,7 @@ const result = await messaging.listSubscribers({
     topicId: '<TOPIC_ID>',
     queries: [], // optional
     search: '<SEARCH>', // optional
-    total: false // optional
+    total: false, // optional
 });
 
 console.log(result);

@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Postgresql } from "@appwrite.io/console";
+import { Client, Postgresql } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,9 +9,9 @@ const postgresql = new Postgresql(client);
 
 const result = await postgresql.listOperations({
     databaseId: '<DATABASE_ID>',
-    status: 'running', // optional
+    status: 'queued', // optional
     limit: 1, // optional
-    offset: 0 // optional
+    offset: 0, // optional
 });
 
 console.log(result);

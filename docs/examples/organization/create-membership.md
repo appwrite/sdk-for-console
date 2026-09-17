@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Organization } from "@appwrite.io/console";
+import { Client, Organization } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,7 +13,7 @@ const result = await organization.createMembership({
     userId: '<USER_ID>', // optional
     phone: '+12065550100', // optional
     url: 'https://example.com', // optional
-    name: '<NAME>' // optional
+    name: '<NAME>', // optional
 });
 
 console.log(result);

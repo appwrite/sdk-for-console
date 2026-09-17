@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Teams } from "@appwrite.io/console";
+import { Client, Teams } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,7 +10,7 @@ const teams = new Teams(client);
 const result = await teams.updateInstallation({
     teamId: '<TEAM_ID>',
     installationId: '<INSTALLATION_ID>',
-    authorizationDetails: '<AUTHORIZATION_DETAILS>' // optional
+    authorizationDetails: '<AUTHORIZATION_DETAILS>', // optional
 });
 
 console.log(result);

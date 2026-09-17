@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Domains } from "@appwrite.io/console";
+import { Client, Domains } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const domains = new Domains(client);
 
 const result = await domains.createPurchase({
-    domain: '',
+    domain: 'example.com',
     organizationId: '<ORGANIZATION_ID>',
     firstName: '<FIRST_NAME>',
     lastName: '<LAST_NAME>',
@@ -19,7 +19,7 @@ const result = await domains.createPurchase({
     addressLine3: '<ADDRESS_LINE3>', // optional
     companyName: '<COMPANY_NAME>', // optional
     periodYears: 1, // optional
-    autoRenewal: false // optional
+    autoRenewal: false, // optional
 });
 
 console.log(result);

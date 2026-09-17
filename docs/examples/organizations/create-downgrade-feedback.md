@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Organizations } from "@appwrite.io/console";
+import { Client, Organizations } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +12,7 @@ const result = await organizations.createDowngradeFeedback({
     reason: '<REASON>',
     message: '<MESSAGE>',
     fromPlanId: '<FROM_PLAN_ID>',
-    toPlanId: '<TO_PLAN_ID>'
+    toPlanId: '<TO_PLAN_ID>',
 });
 
 console.log(result);

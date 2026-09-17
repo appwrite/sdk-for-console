@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Storage } from "@appwrite.io/console";
+import { Client, Storage } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const storage = new Storage(client);
 
 const result = await storage.deleteBucket({
-    bucketId: '<BUCKET_ID>'
+    bucketId: '<BUCKET_ID>',
 });
 
 console.log(result);

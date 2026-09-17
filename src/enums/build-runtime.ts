@@ -50,6 +50,7 @@ export enum BuildRuntime {
     Dart310 = 'dart-3.10',
     Dart311 = 'dart-3.11',
     Dart312 = 'dart-3.12',
+    Dart313 = 'dart-3.13',
     Dotnet60 = 'dotnet-6.0',
     Dotnet70 = 'dotnet-7.0',
     Dotnet80 = 'dotnet-8.0',
@@ -77,6 +78,7 @@ export enum BuildRuntime {
     Bun11 = 'bun-1.1',
     Bun12 = 'bun-1.2',
     Bun13 = 'bun-1.3',
+    Bun14 = 'bun-1.4',
     Go123 = 'go-1.23',
     Go124 = 'go-1.24',
     Go125 = 'go-1.25',
@@ -91,4 +93,5 @@ export enum BuildRuntime {
     Flutter338 = 'flutter-3.38',
     Flutter341 = 'flutter-3.41',
     Flutter344 = 'flutter-3.44',
+    Flutter347 = 'flutter-3.47',
 }

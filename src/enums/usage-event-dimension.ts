@@ -18,4 +18,10 @@ export enum UsageEventDimension {
     SdkVersion = 'sdkVersion',
     TeamId = 'teamId',
     ResourceId = 'resourceId',
+    Isp = 'isp',
+    AutonomousSystemNumber = 'autonomousSystemNumber',
+    AutonomousSystemOrganization = 'autonomousSystemOrganization',
+    ConnectionType = 'connectionType',
+    ConnectionUsageType = 'connectionUsageType',
+    ConnectionOrganization = 'connectionOrganization',
 }

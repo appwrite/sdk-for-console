@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Console } from "@appwrite.io/console";
+import { Client, Console } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -8,7 +8,7 @@ const client = new Client()
 const xconsole = new Console(client);
 
 const result = await xconsole.getPlan({
-    planId: '<PLAN_ID>'
+    planId: '<PLAN_ID>',
 });
 
 console.log(result);

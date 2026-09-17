@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Webhooks } from "@appwrite.io/console";
+import { Client, Webhooks } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -9,14 +9,14 @@ const webhooks = new Webhooks(client);
 
 const result = await webhooks.create({
     webhookId: '<WEBHOOK_ID>',
-    url: '',
+    url: 'https://example.com/webhook',
     name: '<NAME>',
     events: [],
     enabled: false, // optional
     tls: false, // optional
     authUsername: '<AUTH_USERNAME>', // optional
     authPassword: 'password', // optional
-    secret: '<SECRET>' // optional
+    secret: '<SECRET>', // optional
 });
 
 console.log(result);

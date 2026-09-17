@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Backups } from "@appwrite.io/console";
+import { Client, Backups } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -12,7 +12,7 @@ const result = await backups.updatePolicy({
     name: '<NAME>', // optional
     retention: 1, // optional
     schedule: '', // optional
-    enabled: false // optional
+    enabled: false, // optional
 });
 
 console.log(result);

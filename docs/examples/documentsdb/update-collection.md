@@ -1,5 +1,5 @@
 ```javascript
-import { Client, DocumentsDB, Permission, Role } from "@appwrite.io/console";
+import { Client, DocumentsDB, Permission, Role } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -14,7 +14,7 @@ const result = await documentsDB.updateCollection({
     permissions: [Permission.read(Role.any())], // optional
     documentSecurity: false, // optional
     enabled: false, // optional
-    purge: false // optional
+    purge: false, // optional
 });
 
 console.log(result);
