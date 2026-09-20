@@ -7,14 +7,10 @@ const client = new Client()
 
 const project = new Project(client);
 
-const result = await project.updateOAuth2Apple({
-    serviceId: '<SERVICE_ID>', // optional
-    keyId: '<KEY_ID>', // optional
-    teamId: '<TEAM_ID>', // optional
-    p8File: '<P8_FILE>', // optional
-    nativeClientIds: [], // optional
+const result = await project.updatePasswordPwnedPolicy({
     enabled: false, // optional
-    nativeEnabled: false, // optional
+    sessions: false, // optional
+    users: false, // optional
 });
 
 console.log(result);

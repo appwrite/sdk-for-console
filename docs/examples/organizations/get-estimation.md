@@ -1,16 +1,14 @@
 ```javascript
-import { Client, Teams } from '@appwrite.io/console';
+import { Client, Organizations } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const teams = new Teams(client);
+const organizations = new Organizations(client);
 
-const result = await teams.listLogs({
-    teamId: '<TEAM_ID>',
-    queries: [], // optional
-    total: false, // optional
+const result = await organizations.getEstimation({
+    organizationId: '<ORGANIZATION_ID>',
 });
 
 console.log(result);

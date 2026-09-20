@@ -201,20 +201,6 @@ export namespace Models {
     };
 
     /**
-     * Logs List
-     */
-    export type LogList = {
-        /**
-         * Total number of logs that matched your query.
-         */
-        total: number;
-        /**
-         * List of logs.
-         */
-        logs: Log[];
-    };
-
-    /**
      * Files List
      */
     export type FileList = {
@@ -545,20 +531,6 @@ export namespace Models {
     };
 
     /**
-     * Dev Keys List
-     */
-    export type DevKeyList = {
-        /**
-         * Total number of devKeys that matched your query.
-         */
-        total: number;
-        /**
-         * List of devKeys.
-         */
-        devKeys: DevKey[];
-    };
-
-    /**
      * Countries List
      */
     export type CountryList = {
@@ -672,6 +644,7 @@ export namespace Models {
             | Models.PolicyPasswordHistory
             | Models.PolicyPasswordStrength
             | Models.PolicyPasswordPersonalData
+            | Models.PolicyPasswordPwned
             | Models.PolicySessionAlert
             | Models.PolicySessionDuration
             | Models.PolicySessionInvalidation
@@ -3289,100 +3262,6 @@ export namespace Models {
     };
 
     /**
-     * Log
-     */
-    export type Log = {
-        /**
-         * Event name.
-         */
-        event: string;
-        /**
-         * User ID of the actor recorded for this log. During impersonation, this is the original impersonator, not the impersonated target user.
-         */
-        userId: string;
-        /**
-         * User email of the actor recorded for this log. During impersonation, this is the original impersonator.
-         */
-        userEmail: string;
-        /**
-         * User name of the actor recorded for this log. During impersonation, this is the original impersonator.
-         */
-        userName: string;
-        /**
-         * API mode when event triggered.
-         */
-        mode: string;
-        /**
-         * User type who triggered the audit log. Possible values: user, admin, guest, hidden, keyProject, keyAccount, keyOrganization.
-         */
-        userType: string;
-        /**
-         * IP session in use when the session was created.
-         */
-        ip: string;
-        /**
-         * Log creation date in ISO 8601 format.
-         */
-        time: string;
-        /**
-         * Operating system code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/os.json).
-         */
-        osCode: string;
-        /**
-         * Operating system name.
-         */
-        osName: string;
-        /**
-         * Operating system version.
-         */
-        osVersion: string;
-        /**
-         * Client type.
-         */
-        clientType: string;
-        /**
-         * Client code name. View list of [available options](https://github.com/appwrite/appwrite/blob/master/docs/lists/clients.json).
-         */
-        clientCode: string;
-        /**
-         * Client name.
-         */
-        clientName: string;
-        /**
-         * Client version.
-         */
-        clientVersion: string;
-        /**
-         * Client engine name.
-         */
-        clientEngine: string;
-        /**
-         * Client engine name.
-         */
-        clientEngineVersion: string;
-        /**
-         * Device name.
-         */
-        deviceName: string;
-        /**
-         * Device brand name.
-         */
-        deviceBrand: string;
-        /**
-         * Device model name.
-         */
-        deviceModel: string;
-        /**
-         * Country two-character ISO 3166-1 alpha code.
-         */
-        countryCode: string;
-        /**
-         * Country name.
-         */
-        countryName: string;
-    };
-
-    /**
      * User
      */
     export type User<
@@ -3464,6 +3343,10 @@ export namespace Models {
          * Whether the user email is in its canonical form.
          */
         emailIsCanonical?: boolean;
+        /**
+         * Whether the password was found in a known data breach the last time it was checked. Null when the password has never been checked.
+         */
+        passwordPwned?: boolean;
         /**
          * Phone verification status.
          */
@@ -3780,6 +3663,10 @@ export namespace Models {
          * Identity Provider Refresh Token.
          */
         providerRefreshToken: string;
+        /**
+         * Identity Provider ID token (JWT) from the most recent native sign-in. Empty for identities created through the browser OAuth2 flow.
+         */
+        providerIdToken: string;
     };
 
     /**
@@ -5309,7 +5196,7 @@ export namespace Models {
          */
         errors: string;
         /**
-         * Resource(function/site) execution duration in seconds.
+         * Total time the resource(function/site) took to respond, in seconds.
          */
         duration: number;
         /**
@@ -5346,10 +5233,6 @@ export namespace Models {
          * Project region
          */
         region: string;
-        /**
-         * Deprecated since 1.9.5: List of dev keys.
-         */
-        devKeys: DevKey[];
         /**
          * Status for custom SMTP
          */
@@ -5438,6 +5321,14 @@ export namespace Models {
          * Billing limits reached
          */
         billingLimits?: BillingLimits;
+        /**
+         * First time the project received a non-console API request. Empty until the project is used.
+         */
+        firstAccessedAt?: string;
+        /**
+         * Last time the project was accessed through the MCP server. Empty if it was never accessed via MCP.
+         */
+        mcpAccessedAt?: string;
         /**
          * OAuth2 server status
          */
@@ -5678,44 +5569,6 @@ export namespace Models {
          * Allowed permission scopes.
          */
         scopes: string[];
-        /**
-         * Secret key.
-         */
-        secret: string;
-        /**
-         * Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
-         */
-        accessedAt: string;
-        /**
-         * List of SDK user agents that used this key.
-         */
-        sdks: string[];
-    };
-
-    /**
-     * DevKey
-     */
-    export type DevKey = {
-        /**
-         * Key ID.
-         */
-        $id: string;
-        /**
-         * Key creation date in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * Key update date in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * Key name.
-         */
-        name: string;
-        /**
-         * Key expiration date in ISO 8601 format.
-         */
-        expire: string;
         /**
          * Secret key.
          */
@@ -5974,6 +5827,14 @@ export namespace Models {
          * Google OAuth2 prompt values.
          */
         prompt: OAuth2GooglePrompt[];
+        /**
+         * Native Google sign-in is active and can be used to create sessions from an ID token. Independent of enabled, which only controls the browser-based flow.
+         */
+        nativeEnabled: boolean;
+        /**
+         * Additional OAuth2 client IDs accepted as ID token audiences for native sign-in, next to the client ID.
+         */
+        nativeClientIds: string[];
     };
 
     /**
@@ -6742,6 +6603,14 @@ export namespace Models {
          * Apple OAuth2 .p8 private key file contents. The secret key wrapped by the PEM markers is 200 characters long.
          */
         p8File: string;
+        /**
+         * Native Sign in with Apple is active and can be used to create sessions from an ID token. Independent of enabled, which only controls the browser-based flow.
+         */
+        nativeEnabled: boolean;
+        /**
+         * App bundle IDs accepted as ID token audiences for native Sign in with Apple, next to the Services ID.
+         */
+        nativeClientIds: string[];
     };
 
     /**
@@ -6970,6 +6839,28 @@ export namespace Models {
     };
 
     /**
+     * Policy Password Pwned
+     */
+    export type PolicyPasswordPwned = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether password pwned policy is enabled.
+         */
+        enabled: boolean;
+        /**
+         * Whether passwords are checked when a session is created.
+         */
+        sessions: boolean;
+        /**
+         * Whether users signing in with a breached password are blocked until they reset it. Only applies when sessions are checked.
+         */
+        users: boolean;
+    };
+
+    /**
      * Policy Session Alert
      */
     export type PolicySessionAlert = {
@@ -7097,6 +6988,62 @@ export namespace Models {
          * Whether the custom factor can be used to complete an MFA challenge.
          */
         custom: boolean;
+    };
+
+    /**
+     * Policy Deny Aliased Email
+     */
+    export type PolicyDenyAliasedEmail = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether the deny aliased email policy is enabled.
+         */
+        enabled: boolean;
+    };
+
+    /**
+     * Policy Deny Disposable Email
+     */
+    export type PolicyDenyDisposableEmail = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether the deny disposable email policy is enabled.
+         */
+        enabled: boolean;
+    };
+
+    /**
+     * Policy Deny Free Email
+     */
+    export type PolicyDenyFreeEmail = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether the deny free email policy is enabled.
+         */
+        enabled: boolean;
+    };
+
+    /**
+     * Policy Deny Corporate Email
+     */
+    export type PolicyDenyCorporateEmail = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether the deny non-corporate email policy is enabled.
+         */
+        enabled: boolean;
     };
 
     /**
@@ -7420,28 +7367,6 @@ export namespace Models {
     };
 
     /**
-     * Metric Breakdown
-     */
-    export type MetricBreakdown = {
-        /**
-         * Resource ID.
-         */
-        resourceId?: string;
-        /**
-         * Resource name.
-         */
-        name: string;
-        /**
-         * The value of this metric at the timestamp.
-         */
-        value: number;
-        /**
-         * The estimated value of this metric at the end of the period.
-         */
-        estimate?: number;
-    };
-
-    /**
      * UsageUsers
      */
     export type UsageUsers = {
@@ -7483,284 +7408,6 @@ export namespace Models {
          * Aggregated number of online users per period.
          */
         presences: Metric[];
-    };
-
-    /**
-     * Project
-     */
-    export type UsageProject = {
-        /**
-         * Total aggregated number of function executions.
-         */
-        executionsTotal: number;
-        /**
-         * Total aggregated  number of documents in legacy/tablesdb.
-         */
-        documentsTotal: number;
-        /**
-         * Total aggregated  number of documents in documentsdb.
-         */
-        documentsdbDocumentsTotal: number;
-        /**
-         * Total aggregated  number of rows.
-         */
-        rowsTotal: number;
-        /**
-         * Total aggregated number of databases.
-         */
-        databasesTotal: number;
-        /**
-         * Total aggregated number of documentsdb.
-         */
-        documentsdbTotal: number;
-        /**
-         * Total aggregated sum of databases storage size (in bytes).
-         */
-        databasesStorageTotal: number;
-        /**
-         * Total aggregated sum of documentsdb databases storage size (in bytes).
-         */
-        documentsdbDatabasesStorageTotal: number;
-        /**
-         * Total aggregated number of users.
-         */
-        usersTotal: number;
-        /**
-         * Total aggregated sum of files storage size (in bytes).
-         */
-        filesStorageTotal: number;
-        /**
-         * Total aggregated sum of functions storage size (in bytes).
-         */
-        functionsStorageTotal: number;
-        /**
-         * Total aggregated sum of builds storage size (in bytes).
-         */
-        buildsStorageTotal: number;
-        /**
-         * Total aggregated sum of deployments storage size (in bytes).
-         */
-        deploymentsStorageTotal: number;
-        /**
-         * Total aggregated number of buckets.
-         */
-        bucketsTotal: number;
-        /**
-         * Total aggregated number of function executions mbSeconds.
-         */
-        executionsMbSecondsTotal: number;
-        /**
-         * Total aggregated number of function builds mbSeconds.
-         */
-        buildsMbSecondsTotal: number;
-        /**
-         * Aggregated stats for total databases reads.
-         */
-        databasesReadsTotal: number;
-        /**
-         * Aggregated stats for total databases writes.
-         */
-        databasesWritesTotal: number;
-        /**
-         * Total number of documentsdb databases reads.
-         */
-        documentsdbDatabasesReadsTotal: number;
-        /**
-         * Total number of documentsdb databases writes.
-         */
-        documentsdbDatabasesWritesTotal: number;
-        /**
-         * Aggregated  number of requests per period.
-         */
-        requests: Metric[];
-        /**
-         * Aggregated number of consumed bandwidth per period.
-         */
-        network: Metric[];
-        /**
-         * Aggregated number of users per period.
-         */
-        users: Metric[];
-        /**
-         * Aggregated number of executions per period.
-         */
-        executions: Metric[];
-        /**
-         * Aggregated stats for total auth phone.
-         */
-        authPhoneTotal: number;
-        /**
-         * Aggregated stats for total auth phone estimation.
-         */
-        authPhoneEstimate: number;
-        /**
-         * Aggregated breakdown in totals of phone auth by country.
-         */
-        authPhoneCountryBreakdown: MetricBreakdown[];
-        /**
-         * Aggregated stats for database reads.
-         */
-        databasesReads: Metric[];
-        /**
-         * Aggregated stats for database writes.
-         */
-        databasesWrites: Metric[];
-        /**
-         * An array of aggregated number of documentsdb database reads.
-         */
-        documentsdbDatabasesReads: Metric[];
-        /**
-         * An array of aggregated number of documentsdb database writes.
-         */
-        documentsdbDatabasesWrites: Metric[];
-        /**
-         * An array of aggregated sum of documentsdb databases storage size (in bytes) per period.
-         */
-        documentsdbDatabasesStorage: Metric[];
-        /**
-         * An array of aggregated number of image transformations.
-         */
-        imageTransformations: Metric[];
-        /**
-         * Total aggregated number of image transformations.
-         */
-        imageTransformationsTotal: number;
-        /**
-         * Total aggregated number of VectorsDB databases.
-         */
-        vectorsdbDatabasesTotal: number;
-        /**
-         * Total aggregated number of VectorsDB collections.
-         */
-        vectorsdbCollectionsTotal: number;
-        /**
-         * Total aggregated number of VectorsDB documents.
-         */
-        vectorsdbDocumentsTotal: number;
-        /**
-         * Total aggregated VectorsDB storage (bytes).
-         */
-        vectorsdbDatabasesStorageTotal: number;
-        /**
-         * Total aggregated number of VectorsDB reads.
-         */
-        vectorsdbDatabasesReadsTotal: number;
-        /**
-         * Total aggregated number of VectorsDB writes.
-         */
-        vectorsdbDatabasesWritesTotal: number;
-        /**
-         * Aggregated VectorsDB databases per period.
-         */
-        vectorsdbDatabases: Metric[];
-        /**
-         * Aggregated VectorsDB collections per period.
-         */
-        vectorsdbCollections: Metric[];
-        /**
-         * Aggregated VectorsDB documents per period.
-         */
-        vectorsdbDocuments: Metric[];
-        /**
-         * Aggregated VectorsDB storage per period.
-         */
-        vectorsdbDatabasesStorage: Metric[];
-        /**
-         * Aggregated VectorsDB reads per period.
-         */
-        vectorsdbDatabasesReads: Metric[];
-        /**
-         * Aggregated VectorsDB writes per period.
-         */
-        vectorsdbDatabasesWrites: Metric[];
-        /**
-         * Aggregated number of text embedding calls per period.
-         */
-        embeddingsText: Metric[];
-        /**
-         * Aggregated number of tokens processed by text embeddings per period.
-         */
-        embeddingsTextTokens: Metric[];
-        /**
-         * Aggregated duration spent generating text embeddings per period.
-         */
-        embeddingsTextDuration: Metric[];
-        /**
-         * Aggregated number of errors while generating text embeddings per period.
-         */
-        embeddingsTextErrors: Metric[];
-        /**
-         * Total aggregated number of text embedding calls.
-         */
-        embeddingsTextTotal: number;
-        /**
-         * Total aggregated number of tokens processed by text.
-         */
-        embeddingsTextTokensTotal: number;
-        /**
-         * Total aggregated duration spent generating text embeddings.
-         */
-        embeddingsTextDurationTotal: number;
-        /**
-         * Total aggregated number of errors while generating text embeddings.
-         */
-        embeddingsTextErrorsTotal: number;
-        /**
-         * Aggregated number of function executions per period.
-         */
-        functionsExecutions: Metric[];
-        /**
-         * Total aggregated number of function executions.
-         */
-        functionsExecutionsTotal: number;
-        /**
-         * Aggregated number of site executions per period.
-         */
-        sitesExecutions: Metric[];
-        /**
-         * Total aggregated number of site executions.
-         */
-        sitesExecutionsTotal: number;
-        /**
-         * Aggregated stats for total network bandwidth.
-         */
-        networkTotal: number;
-        /**
-         * Aggregated stats for total backups storage.
-         */
-        backupsStorageTotal: number;
-        /**
-         * An array of aggregated number of screenshots generated.
-         */
-        screenshotsGenerated: Metric[];
-        /**
-         * Total aggregated number of screenshots generated.
-         */
-        screenshotsGeneratedTotal: number;
-        /**
-         * Current aggregated number of open Realtime connections.
-         */
-        realtimeConnectionsTotal: number;
-        /**
-         * Total number of Realtime messages sent to clients.
-         */
-        realtimeMessagesTotal: number;
-        /**
-         * Total consumed Realtime bandwidth (in bytes).
-         */
-        realtimeBandwidthTotal: number;
-        /**
-         * Aggregated number of open Realtime connections per period.
-         */
-        realtimeConnections: Metric[];
-        /**
-         * Aggregated number of Realtime messages sent to clients per period.
-         */
-        realtimeMessages: Metric[];
-        /**
-         * Aggregated consumed Realtime bandwidth (in bytes) per period.
-         */
-        realtimeBandwidth: Metric[];
     };
 
     /**
@@ -7807,6 +7454,22 @@ export namespace Models {
          * Value when broken down by `ip`.
          */
         ip?: string;
+        /**
+         * Value when broken down by `protocol`.
+         */
+        protocol?: string;
+        /**
+         * Value when broken down by `accept`.
+         */
+        accept?: string;
+        /**
+         * Value when broken down by `acceptLanguage`.
+         */
+        acceptLanguage?: string;
+        /**
+         * Value when broken down by `queryKeys`.
+         */
+        queryKeys?: string;
         /**
          * Value when broken down by `osName`.
          */
@@ -8589,6 +8252,14 @@ export namespace Models {
          * Subscribe permissions.
          */
         subscribe: string[];
+        /**
+         * MQTT QoS for delivery on this topic. Null lets the subscriber choose their level.
+         */
+        qos?: number;
+        /**
+         * Message retention in seconds for offline delivery.
+         */
+        expiry?: number;
     };
 
     /**
@@ -10056,6 +9727,10 @@ export namespace Models {
          */
         requiresBillingAddress: boolean;
         /**
+         * ISO country codes eligible for this regional plan. Empty means no restriction.
+         */
+        eligibleCountries?: string[];
+        /**
          * Is the billing plan available
          */
         isAvailable: boolean;
@@ -10344,47 +10019,9 @@ export namespace Models {
          */
         mode: string;
         /**
-         * Reason for the block. Can be null if no reason was provided.
-         */
-        reason?: string;
-        /**
          * Block expiration date in ISO 8601 format. Can be null if the block does not expire.
          */
         expiredAt?: string;
-        /**
-         * Name of the project this block applies to.
-         */
-        projectName: string;
-        /**
-         * Region of the project this block applies to.
-         */
-        region: string;
-        /**
-         * Name of the organization that owns the project.
-         */
-        organizationName: string;
-        /**
-         * ID of the organization that owns the project.
-         */
-        organizationId: string;
-        /**
-         * Billing plan of the organization that owns the project.
-         */
-        billingPlan: string;
-    };
-
-    /**
-     * BlockDelete
-     */
-    export type BlockDelete = {
-        /**
-         * Number of blocks deleted
-         */
-        deleted: number;
-        /**
-         * List of deleted blocks
-         */
-        blocks: Block[];
     };
 
     /**
@@ -11762,6 +11399,70 @@ export namespace Models {
     };
 
     /**
+     * ManagerBlock
+     */
+    export type ManagerBlock = {
+        /**
+         * Block creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Resource type that is blocked
+         */
+        resourceType: string;
+        /**
+         * Resource identifier that is blocked
+         */
+        resourceId: string;
+        /**
+         * Block mode. full blocks reads and writes; readOnly blocks writes only.
+         */
+        mode: string;
+        /**
+         * Block expiration date in ISO 8601 format. Can be null if the block does not expire.
+         */
+        expiredAt?: string;
+        /**
+         * Reason for the block. Can be null if no reason was provided.
+         */
+        reason?: string;
+        /**
+         * Name of the project this block applies to.
+         */
+        projectName: string;
+        /**
+         * Region of the project this block applies to.
+         */
+        region: string;
+        /**
+         * Name of the organization that owns the project.
+         */
+        organizationName: string;
+        /**
+         * ID of the organization that owns the project.
+         */
+        organizationId: string;
+        /**
+         * Billing plan of the organization that owns the project.
+         */
+        billingPlan: string;
+    };
+
+    /**
+     * ManagerBlockDelete
+     */
+    export type ManagerBlockDelete = {
+        /**
+         * Number of blocks deleted
+         */
+        deleted: number;
+        /**
+         * List of deleted blocks
+         */
+        blocks: ManagerBlock[];
+    };
+
+    /**
      * Organization
      */
     export type Organization<
@@ -12221,62 +11922,6 @@ export namespace Models {
         type: string;
         /**
          * Is this policy enabled.
-         */
-        enabled: boolean;
-    };
-
-    /**
-     * Policy Deny Aliased Email
-     */
-    export type PolicyDenyAliasedEmail = {
-        /**
-         * Policy ID.
-         */
-        $id: string;
-        /**
-         * Whether the deny aliased email policy is enabled.
-         */
-        enabled: boolean;
-    };
-
-    /**
-     * Policy Deny Disposable Email
-     */
-    export type PolicyDenyDisposableEmail = {
-        /**
-         * Policy ID.
-         */
-        $id: string;
-        /**
-         * Whether the deny disposable email policy is enabled.
-         */
-        enabled: boolean;
-    };
-
-    /**
-     * Policy Deny Free Email
-     */
-    export type PolicyDenyFreeEmail = {
-        /**
-         * Policy ID.
-         */
-        $id: string;
-        /**
-         * Whether the deny free email policy is enabled.
-         */
-        enabled: boolean;
-    };
-
-    /**
-     * Policy Deny Corporate Email
-     */
-    export type PolicyDenyCorporateEmail = {
-        /**
-         * Policy ID.
-         */
-        $id: string;
-        /**
-         * Whether the deny non-corporate email policy is enabled.
          */
         enabled: boolean;
     };
@@ -14162,9 +13807,9 @@ export namespace Models {
     };
 
     /**
-     * Blocks list
+     * Manager blocks list
      */
-    export type BlockList = {
+    export type ManagerBlockList = {
         /**
          * Total number of blocks that matched your query.
          */
@@ -14172,7 +13817,7 @@ export namespace Models {
         /**
          * List of blocks.
          */
-        blocks: Block[];
+        blocks: ManagerBlock[];
     };
 
     /**

@@ -23,7 +23,7 @@ export class Manager {
      * @param {string} params.reason - Optional reason why the resource is blocked
      * @param {string} params.expiredAt - Optional expiration date for the block
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Block>}
+     * @returns {Promise<Models.ManagerBlock>}
      */
     createBlock(params: {
         projectId: string;
@@ -32,7 +32,7 @@ export class Manager {
         mode?: BlockMode;
         reason?: string;
         expiredAt?: string;
-    }): Promise<Models.Block>;
+    }): Promise<Models.ManagerBlock>;
     /**
      * Creates a new resource block.
      *
@@ -43,7 +43,7 @@ export class Manager {
      * @param {string} reason - Optional reason why the resource is blocked
      * @param {string} expiredAt - Optional expiration date for the block
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Block>}
+     * @returns {Promise<Models.ManagerBlock>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     createBlock(
@@ -53,7 +53,7 @@ export class Manager {
         mode?: BlockMode,
         reason?: string,
         expiredAt?: string,
-    ): Promise<Models.Block>;
+    ): Promise<Models.ManagerBlock>;
     createBlock(
         paramsOrFirst:
             | {
@@ -66,7 +66,7 @@ export class Manager {
               }
             | string,
         ...rest: [BlockResourceType?, string?, BlockMode?, string?, string?]
-    ): Promise<Models.Block> {
+    ): Promise<Models.ManagerBlock> {
         let params: {
             projectId: string;
             resourceType: BlockResourceType;
@@ -154,13 +154,13 @@ export class Manager {
      * @param {BlockResourceType} params.resourceType - Resource type to unblock
      * @param {string} params.resourceId - Optional resource ID (if omitted, all blocks of this type will be removed)
      * @throws {AppwriteException}
-     * @returns {Promise<Models.BlockDelete>}
+     * @returns {Promise<Models.ManagerBlockDelete>}
      */
     deleteBlock(params: {
         projectId: string;
         resourceType: BlockResourceType;
         resourceId?: string;
-    }): Promise<Models.BlockDelete>;
+    }): Promise<Models.ManagerBlockDelete>;
     /**
      * Deletes resource blocks for a project.
      *
@@ -168,14 +168,14 @@ export class Manager {
      * @param {BlockResourceType} resourceType - Resource type to unblock
      * @param {string} resourceId - Optional resource ID (if omitted, all blocks of this type will be removed)
      * @throws {AppwriteException}
-     * @returns {Promise<Models.BlockDelete>}
+     * @returns {Promise<Models.ManagerBlockDelete>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     deleteBlock(
         projectId: string,
         resourceType: BlockResourceType,
         resourceId?: string,
-    ): Promise<Models.BlockDelete>;
+    ): Promise<Models.ManagerBlockDelete>;
     deleteBlock(
         paramsOrFirst:
             | {
@@ -185,7 +185,7 @@ export class Manager {
               }
             | string,
         ...rest: [BlockResourceType?, string?]
-    ): Promise<Models.BlockDelete> {
+    ): Promise<Models.ManagerBlockDelete> {
         let params: {
             projectId: string;
             resourceType: BlockResourceType;
@@ -250,21 +250,21 @@ export class Manager {
      *
      * @param {string} params.projectId - Project ID
      * @throws {AppwriteException}
-     * @returns {Promise<Models.BlockList>}
+     * @returns {Promise<Models.ManagerBlockList>}
      */
-    listBlocks(params: { projectId: string }): Promise<Models.BlockList>;
+    listBlocks(params: { projectId: string }): Promise<Models.ManagerBlockList>;
     /**
      * Lists all resource blocks for a project.
      *
      * @param {string} projectId - Project ID
      * @throws {AppwriteException}
-     * @returns {Promise<Models.BlockList>}
+     * @returns {Promise<Models.ManagerBlockList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listBlocks(projectId: string): Promise<Models.BlockList>;
+    listBlocks(projectId: string): Promise<Models.ManagerBlockList>;
     listBlocks(
         paramsOrFirst: { projectId: string } | string,
-    ): Promise<Models.BlockList> {
+    ): Promise<Models.ManagerBlockList> {
         let params: { projectId: string };
 
         if (
@@ -307,7 +307,7 @@ export class Manager {
      * @param {CacheTarget} params.cache - Cache target.
      * @param {boolean} params.all - Clear the entire selected cache target.
      * @param {CacheDatabase} params.database - Database cache scope.
-     * @param {string} params.projectId - Project ID for project or logs database cache.
+     * @param {string} params.projectId - Project ID for project database cache.
      * @param {string} params.collectionId - Collection ID.
      * @param {string} params.documentId - Document ID.
      * @throws {AppwriteException}
@@ -329,7 +329,7 @@ export class Manager {
      * @param {CacheTarget} cache - Cache target.
      * @param {boolean} all - Clear the entire selected cache target.
      * @param {CacheDatabase} database - Database cache scope.
-     * @param {string} projectId - Project ID for project or logs database cache.
+     * @param {string} projectId - Project ID for project database cache.
      * @param {string} collectionId - Collection ID.
      * @param {string} documentId - Document ID.
      * @throws {AppwriteException}

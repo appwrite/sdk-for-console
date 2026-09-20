@@ -1,16 +1,14 @@
 ```javascript
-import { Client, Users } from '@appwrite.io/console';
+import { Client, Account } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const users = new Users(client);
+const account = new Account(client);
 
-const result = await users.listLogs({
-    userId: '<USER_ID>',
-    queries: [], // optional
-    total: false, // optional
+const result = await account.createEmailVerificationOTP({
+    phrase: false, // optional
 });
 
 console.log(result);

@@ -1,5 +1,30 @@
 # Change Log
 
+## 17.0.0
+
+* Breaking: SDK now targets Appwrite 2.2 (`X-Appwrite-Response-Format: 2.2.0`)
+* Breaking: removed `Account.listLogs`, `Teams.listLogs`, `Users.listLogs` and the `Log`, `LogList` models
+* Breaking: removed `Client.setDevKey`, the `Projects` dev key methods, and the `DevKey`, `DevKeyList` models
+* Breaking: removed `Project.getUsage`, the `ProjectUsageRange` enum and `UsageProject`, `MetricBreakdown` models
+* Breaking: removed `Organizations.cancelDowngrade`
+* Breaking: `Manager.listBlocks` returns `ManagerBlockList`; `BlockList`, `BlockDelete` renamed to `ManagerBlockList`, `ManagerBlockDelete` with a new `ManagerBlock` model
+* Breaking: `Block` model dropped `billingPlan`, `organizationId`, `organizationName`, `projectName`, `region`, `reason`
+* Breaking: `Project.devKeys` field removed
+* Breaking: `BillingPlanGroup.Starter` replaced by `Free` and `Start`
+* Breaking: `OrganizationKeyScopes` dev key and `organization.keys.*` scopes replaced by `organization.projects.keys.*`
+* Breaking: `CacheDatabase.Logs` and `QuerySuggestionResource` `DevKeys`, `Executions`, `Stats` values removed
+* Added: `Organization` project key methods `listProjectKeys`, `createProjectKey`, `createEphemeralProjectKey`, `getProjectKey`, `updateProjectKey`, `deleteProjectKey`
+* Added: `Account.createIdTokenSession` for native Apple and Google sign-in with `IdTokenProvider` enum
+* Added: `Account.createEmailVerificationOTP` and `Account.updateEmailVerificationOTP`
+* Added: `Messaging.createAppwriteProvider` and `Messaging.updateAppwriteProvider` for Appwrite push, with `qos` and `expiry` on `Topic`
+* Added: `Organizations.getEstimation` for the current billing cycle charge estimate
+* Added: `Project.updatePasswordPwnedPolicy` with `PolicyPasswordPwned` model and `ProjectPolicyId.Passwordpwned`
+* Added: `nativeEnabled`, `nativeClientIds` parameters on `Project.updateOAuth2Apple` and `Project.updateOAuth2Google` and matching fields on `OAuth2Apple`, `OAuth2Google`
+* Added: `Framework.Jaspr`, `ProjectEmailTemplateId.OtpVerification`, `ProjectKeyScopes.DedicatedDatabasesExecute`, `QuerySuggestionResource.AppwritePushLedger`
+* Added: `passwordPwned` on `User`, `providerIdToken` on `Identity`, `firstAccessedAt` and `mcpAccessedAt` on `Project`, `eligibleCountries` on `BillingPlan`
+* Added: `protocol`, `accept`, `acceptLanguage`, `queryKeys` fields on `UsageDataPoint`
+* Fixed: empty-string required parameters are rejected instead of sent to the API
+
 ## 16.1.0
 
 * Fixed: `impersonateuserid` is carried again by every client URL builder — the avatar helpers, `functions`/`sites` `getDeploymentDownload()`, `organizations` `getInvoiceDownload()`/`getInvoiceView()`, and `storage` `getFileDownload()`/`getFilePreview()`/`getFileView()`. The browser loads these URLs directly and cannot send the impersonation header, so an impersonating console operator was served their own resources or a 401

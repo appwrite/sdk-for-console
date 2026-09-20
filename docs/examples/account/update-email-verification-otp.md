@@ -1,15 +1,15 @@
 ```javascript
-import { Client, Projects } from '@appwrite.io/console';
+import { Client, Account } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const projects = new Projects(client);
+const account = new Account(client);
 
-const result = await projects.getDevKey({
-    projectId: '<PROJECT_ID>',
-    keyId: '<KEY_ID>',
+const result = await account.updateEmailVerificationOTP({
+    userId: '<USER_ID>',
+    secret: '<SECRET>',
 });
 
 console.log(result);

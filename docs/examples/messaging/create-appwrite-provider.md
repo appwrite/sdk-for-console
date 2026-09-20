@@ -7,10 +7,10 @@ const client = new Client()
 
 const messaging = new Messaging(client);
 
-const result = await messaging.createTopic({
-    topicId: '<TOPIC_ID>',
+const result = await messaging.createAppwriteProvider({
+    providerId: '<PROVIDER_ID>',
     name: '<NAME>',
-    subscribe: ['any'], // optional
+    enabled: false, // optional
     qos: 0, // optional
     expiry: 0, // optional
 });

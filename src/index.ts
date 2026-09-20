@@ -1,7 +1,7 @@
 /**
  * Appwrite Console SDK
  *
- * This SDK targets Appwrite server version 2.0.x as shipped on Appwrite Cloud.
+ * This SDK targets Appwrite server version 2.2.x as shipped on Appwrite Cloud.
  * Self-hosted releases can lag behind Cloud — if you run an older self-hosted
  * build, use a matching older SDK from
  * [previous releases](https://github.com/appwrite/sdk-for-console/releases)
@@ -66,6 +66,7 @@ export { Operator, Condition } from './operator';
 export { AccountKeyScopes } from './enums/account-key-scopes';
 export { AuthenticatorType } from './enums/authenticator-type';
 export { AuthenticationFactor } from './enums/authentication-factor';
+export { IdTokenProvider } from './enums/id-token-provider';
 export { OAuthProvider } from './enums/o-auth-provider';
 export { Browser } from './enums/browser';
 export { CreditCard } from './enums/credit-card';
@@ -118,7 +119,6 @@ export { ProjectPolicyId } from './enums/project-policy-id';
 export { ProjectProtocolId } from './enums/project-protocol-id';
 export { ProjectServiceId } from './enums/project-service-id';
 export { ProjectSMTPSecure } from './enums/project-smtp-secure';
-export { ProjectUsageRange } from './enums/project-usage-range';
 export { ScheduleResourceType } from './enums/schedule-resource-type';
 export { Status } from './enums/status';
 export { InvalidationType } from './enums/invalidation-type';
