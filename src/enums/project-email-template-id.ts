@@ -6,4 +6,5 @@ export enum ProjectEmailTemplateId {
     MfaChallenge = 'mfaChallenge',
     SessionAlert = 'sessionAlert',
     OtpSession = 'otpSession',
+    OtpVerification = 'otpVerification',
 }

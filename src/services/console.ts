@@ -1063,7 +1063,7 @@ export class Console {
     /**
      * Get the Appwrite built-in default email template for the specified type and locale. Always returns the unmodified default, ignoring any custom project overrides.
      *
-     * @param {ProjectEmailTemplateId} params.templateId - Email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+     * @param {ProjectEmailTemplateId} params.templateId - Email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession, otpVerification
      * @param {ProjectEmailTemplateLocale} params.locale - Template locale. If left empty, the fallback locale (en) will be used.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
@@ -1075,7 +1075,7 @@ export class Console {
     /**
      * Get the Appwrite built-in default email template for the specified type and locale. Always returns the unmodified default, ignoring any custom project overrides.
      *
-     * @param {ProjectEmailTemplateId} templateId - Email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+     * @param {ProjectEmailTemplateId} templateId - Email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession, otpVerification
      * @param {ProjectEmailTemplateLocale} locale - Template locale. If left empty, the fallback locale (en) will be used.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}

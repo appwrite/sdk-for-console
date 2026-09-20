@@ -377,7 +377,6 @@ class Client {
         mode: string;
         cookie: string;
         session: string;
-        devkey: string;
         impersonateuserid: string;
         impersonateuseremail: string;
         impersonateuserphone: string;
@@ -396,7 +395,6 @@ class Client {
         mode: '',
         cookie: '',
         session: '',
-        devkey: '',
         impersonateuserid: '',
         impersonateuseremail: '',
         impersonateuserphone: '',
@@ -411,8 +409,8 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '16.1.0',
-        'X-Appwrite-Response-Format': '2.0.0',
+        'x-sdk-version': '17.0.0',
+        'X-Appwrite-Response-Format': '2.2.0',
     };
 
     /**
@@ -658,20 +656,6 @@ class Client {
     setSession(value: string): this {
         this.headers['X-Appwrite-Session'] = value;
         this.config.session = value;
-        return this;
-    }
-    /**
-     * Set DevKey
-     *
-     * Your secret dev API key
-     *
-     * @param value string
-     *
-     * @return {this}
-     */
-    setDevKey(value: string): this {
-        this.headers['X-Appwrite-Dev-Key'] = value;
-        this.config.devkey = value;
         return this;
     }
     /**

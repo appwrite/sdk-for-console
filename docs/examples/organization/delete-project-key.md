@@ -1,15 +1,15 @@
 ```javascript
-import { Client, Projects } from '@appwrite.io/console';
+import { Client, Organization } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const projects = new Projects(client);
+const organization = new Organization(client);
 
-const result = await projects.listDevKeys({
+const result = await organization.deleteProjectKey({
     projectId: '<PROJECT_ID>',
-    queries: [], // optional
+    keyId: '<KEY_ID>',
 });
 
 console.log(result);

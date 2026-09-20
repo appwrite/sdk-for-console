@@ -12,7 +12,6 @@ import { ProjectServiceId } from '../enums/project-service-id';
 import { ProjectSMTPSecure } from '../enums/project-smtp-secure';
 import { ProjectEmailTemplateId } from '../enums/project-email-template-id';
 import { ProjectEmailTemplateLocale } from '../enums/project-email-template-locale';
-import { ProjectUsageRange } from '../enums/project-usage-range';
 export class Project {
     client: Client;
 
@@ -1424,7 +1423,9 @@ export class Project {
      * @param {string} params.keyId - 'Key ID' of Apple OAuth2 app. For example: P4000000N8
      * @param {string} params.teamId - 'Team ID' of Apple OAuth2 app. For example: D4000000R6
      * @param {string} params.p8File - Contents of the Apple OAuth2 app .p8 private key file. The secret key wrapped by the PEM markers is 200 characters long. For example: -----BEGIN PRIVATE KEY-----MIGTAg...jy2Xbna-----END PRIVATE KEY-----
-     * @param {boolean} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {string[]} params.nativeClientIds - App bundle IDs accepted as ID token audiences for native Sign in with Apple. For example: com.example.app. Together with the Services ID, these are the only client IDs whose tokens are trusted. Pass an empty array to clear the list.
+     * @param {boolean} params.enabled - Browser-based OAuth2 sign-in status. Set to true to enable new session creation through the redirect flow. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid. Has no effect on native sign-in, which is controlled by nativeEnabled only.
+     * @param {boolean} params.nativeEnabled - Native Sign in with Apple status. This is the only switch for creating sessions from ID tokens obtained on device and is independent of enabled. Needs a Services ID or at least one native client ID to match tokens against, but no key or team ID: this method verifies a signature rather than redeeming an authorization code.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Apple>}
      */
@@ -1433,7 +1434,9 @@ export class Project {
         keyId?: string;
         teamId?: string;
         p8File?: string;
+        nativeClientIds?: string[];
         enabled?: boolean;
+        nativeEnabled?: boolean;
     }): Promise<Models.OAuth2Apple>;
     /**
      * Update the project OAuth2 Apple configuration.
@@ -1442,7 +1445,9 @@ export class Project {
      * @param {string} keyId - 'Key ID' of Apple OAuth2 app. For example: P4000000N8
      * @param {string} teamId - 'Team ID' of Apple OAuth2 app. For example: D4000000R6
      * @param {string} p8File - Contents of the Apple OAuth2 app .p8 private key file. The secret key wrapped by the PEM markers is 200 characters long. For example: -----BEGIN PRIVATE KEY-----MIGTAg...jy2Xbna-----END PRIVATE KEY-----
-     * @param {boolean} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {string[]} nativeClientIds - App bundle IDs accepted as ID token audiences for native Sign in with Apple. For example: com.example.app. Together with the Services ID, these are the only client IDs whose tokens are trusted. Pass an empty array to clear the list.
+     * @param {boolean} enabled - Browser-based OAuth2 sign-in status. Set to true to enable new session creation through the redirect flow. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid. Has no effect on native sign-in, which is controlled by nativeEnabled only.
+     * @param {boolean} nativeEnabled - Native Sign in with Apple status. This is the only switch for creating sessions from ID tokens obtained on device and is independent of enabled. Needs a Services ID or at least one native client ID to match tokens against, but no key or team ID: this method verifies a signature rather than redeeming an authorization code.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Apple>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1452,7 +1457,9 @@ export class Project {
         keyId?: string,
         teamId?: string,
         p8File?: string,
+        nativeClientIds?: string[],
         enabled?: boolean,
+        nativeEnabled?: boolean,
     ): Promise<Models.OAuth2Apple>;
     updateOAuth2Apple(
         paramsOrFirst?:
@@ -1461,17 +1468,21 @@ export class Project {
                   keyId?: string;
                   teamId?: string;
                   p8File?: string;
+                  nativeClientIds?: string[];
                   enabled?: boolean;
+                  nativeEnabled?: boolean;
               }
             | string,
-        ...rest: [string?, string?, string?, boolean?]
+        ...rest: [string?, string?, string?, string[]?, boolean?, boolean?]
     ): Promise<Models.OAuth2Apple> {
         let params: {
             serviceId?: string;
             keyId?: string;
             teamId?: string;
             p8File?: string;
+            nativeClientIds?: string[];
             enabled?: boolean;
+            nativeEnabled?: boolean;
         };
 
         if (
@@ -1485,7 +1496,9 @@ export class Project {
                 keyId?: string;
                 teamId?: string;
                 p8File?: string;
+                nativeClientIds?: string[];
                 enabled?: boolean;
+                nativeEnabled?: boolean;
             };
         } else {
             params = {
@@ -1493,7 +1506,9 @@ export class Project {
                 keyId: rest[0] as string,
                 teamId: rest[1] as string,
                 p8File: rest[2] as string,
-                enabled: rest[3] as boolean,
+                nativeClientIds: rest[3] as string[],
+                enabled: rest[4] as boolean,
+                nativeEnabled: rest[5] as boolean,
             };
         }
 
@@ -1501,7 +1516,9 @@ export class Project {
         const keyId = params.keyId;
         const teamId = params.teamId;
         const p8File = params.p8File;
+        const nativeClientIds = params.nativeClientIds;
         const enabled = params.enabled;
+        const nativeEnabled = params.nativeEnabled;
 
         const apiPath = '/project/oauth2/apple';
         const payload: Payload = {};
@@ -1517,8 +1534,14 @@ export class Project {
         if (typeof p8File !== 'undefined') {
             payload['p8File'] = p8File;
         }
+        if (typeof nativeClientIds !== 'undefined') {
+            payload['nativeClientIds'] = nativeClientIds;
+        }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
+        }
+        if (typeof nativeEnabled !== 'undefined') {
+            payload['nativeEnabled'] = nativeEnabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3129,7 +3152,9 @@ export class Project {
      * @param {string} params.clientId - 'Client ID' of Google OAuth2 app. For example: 120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com
      * @param {string} params.clientSecret - 'Client Secret' of Google OAuth2 app. For example: GOCSPX-2k8gsR0000000000000000VNahJj
      * @param {ProjectOAuth2GooglePrompt[]} params.prompt - Array of Google OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. Must not be specified with other values. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
-     * @param {boolean} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {string[]} params.nativeClientIds - Additional OAuth2 client IDs accepted as ID token audiences for native sign-in (Android and iOS client IDs). Together with the client ID, which is always accepted, these are the only client IDs whose tokens are trusted. Pass an empty array to clear the list.
+     * @param {boolean} params.enabled - Browser-based OAuth2 sign-in status. Set to true to enable new session creation through the redirect flow. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid. Has no effect on native sign-in, which is controlled by nativeEnabled only.
+     * @param {boolean} params.nativeEnabled - Native Google sign-in status. This is the only switch for creating sessions from ID tokens obtained on device and is independent of enabled. Needs a client ID or at least one native client ID to match tokens against, but no client secret: this method verifies a signature rather than redeeming an authorization code.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Google>}
      */
@@ -3137,7 +3162,9 @@ export class Project {
         clientId?: string;
         clientSecret?: string;
         prompt?: ProjectOAuth2GooglePrompt[];
+        nativeClientIds?: string[];
         enabled?: boolean;
+        nativeEnabled?: boolean;
     }): Promise<Models.OAuth2Google>;
     /**
      * Update the project OAuth2 Google configuration.
@@ -3145,7 +3172,9 @@ export class Project {
      * @param {string} clientId - 'Client ID' of Google OAuth2 app. For example: 120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com
      * @param {string} clientSecret - 'Client Secret' of Google OAuth2 app. For example: GOCSPX-2k8gsR0000000000000000VNahJj
      * @param {ProjectOAuth2GooglePrompt[]} prompt - Array of Google OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. Must not be specified with other values. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
-     * @param {boolean} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {string[]} nativeClientIds - Additional OAuth2 client IDs accepted as ID token audiences for native sign-in (Android and iOS client IDs). Together with the client ID, which is always accepted, these are the only client IDs whose tokens are trusted. Pass an empty array to clear the list.
+     * @param {boolean} enabled - Browser-based OAuth2 sign-in status. Set to true to enable new session creation through the redirect flow. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid. Has no effect on native sign-in, which is controlled by nativeEnabled only.
+     * @param {boolean} nativeEnabled - Native Google sign-in status. This is the only switch for creating sessions from ID tokens obtained on device and is independent of enabled. Needs a client ID or at least one native client ID to match tokens against, but no client secret: this method verifies a signature rather than redeeming an authorization code.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Google>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -3154,7 +3183,9 @@ export class Project {
         clientId?: string,
         clientSecret?: string,
         prompt?: ProjectOAuth2GooglePrompt[],
+        nativeClientIds?: string[],
         enabled?: boolean,
+        nativeEnabled?: boolean,
     ): Promise<Models.OAuth2Google>;
     updateOAuth2Google(
         paramsOrFirst?:
@@ -3162,16 +3193,26 @@ export class Project {
                   clientId?: string;
                   clientSecret?: string;
                   prompt?: ProjectOAuth2GooglePrompt[];
+                  nativeClientIds?: string[];
                   enabled?: boolean;
+                  nativeEnabled?: boolean;
               }
             | string,
-        ...rest: [string?, ProjectOAuth2GooglePrompt[]?, boolean?]
+        ...rest: [
+            string?,
+            ProjectOAuth2GooglePrompt[]?,
+            string[]?,
+            boolean?,
+            boolean?,
+        ]
     ): Promise<Models.OAuth2Google> {
         let params: {
             clientId?: string;
             clientSecret?: string;
             prompt?: ProjectOAuth2GooglePrompt[];
+            nativeClientIds?: string[];
             enabled?: boolean;
+            nativeEnabled?: boolean;
         };
 
         if (
@@ -3184,21 +3225,27 @@ export class Project {
                 clientId?: string;
                 clientSecret?: string;
                 prompt?: ProjectOAuth2GooglePrompt[];
+                nativeClientIds?: string[];
                 enabled?: boolean;
+                nativeEnabled?: boolean;
             };
         } else {
             params = {
                 clientId: paramsOrFirst as string,
                 clientSecret: rest[0] as string,
                 prompt: rest[1] as ProjectOAuth2GooglePrompt[],
-                enabled: rest[2] as boolean,
+                nativeClientIds: rest[2] as string[],
+                enabled: rest[3] as boolean,
+                nativeEnabled: rest[4] as boolean,
             };
         }
 
         const clientId = params.clientId;
         const clientSecret = params.clientSecret;
         const prompt = params.prompt;
+        const nativeClientIds = params.nativeClientIds;
         const enabled = params.enabled;
+        const nativeEnabled = params.nativeEnabled;
 
         const apiPath = '/project/oauth2/google';
         const payload: Payload = {};
@@ -3211,8 +3258,14 @@ export class Project {
         if (typeof prompt !== 'undefined') {
             payload['prompt'] = prompt;
         }
+        if (typeof nativeClientIds !== 'undefined') {
+            payload['nativeClientIds'] = nativeClientIds;
+        }
         if (typeof enabled !== 'undefined') {
             payload['enabled'] = enabled;
+        }
+        if (typeof nativeEnabled !== 'undefined') {
+            payload['nativeEnabled'] = nativeEnabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7803,6 +7856,88 @@ export class Project {
     }
 
     /**
+     * Updating this policy allows you to control if passwords are checked against the Have I Been Pwned breach database. When enabled, a password that appears in any known breach cannot be set or changed. Enable `sessions` to check passwords on sign-in too. Only the first five characters of the password hash are ever shared with the service. Options left out keep their current value.
+     *
+     * @param {boolean} params.enabled - Toggle password pwned policy. Set to true to block passwords exposed in known data breaches, or false to allow them. Default is true. When changing this policy, existing passwords remain valid.
+     * @param {boolean} params.sessions - Whether passwords are checked when a session is created. When enabled, signing in records whether the password appears in a known data breach. Default is false.
+     * @param {boolean} params.users - Whether users signing in with a breached password are blocked until they reset it. Only applies when sessions are checked. Default is false, which allows the sign-in.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     */
+    updatePasswordPwnedPolicy(params?: {
+        enabled?: boolean;
+        sessions?: boolean;
+        users?: boolean;
+    }): Promise<Models.Project>;
+    /**
+     * Updating this policy allows you to control if passwords are checked against the Have I Been Pwned breach database. When enabled, a password that appears in any known breach cannot be set or changed. Enable `sessions` to check passwords on sign-in too. Only the first five characters of the password hash are ever shared with the service. Options left out keep their current value.
+     *
+     * @param {boolean} enabled - Toggle password pwned policy. Set to true to block passwords exposed in known data breaches, or false to allow them. Default is true. When changing this policy, existing passwords remain valid.
+     * @param {boolean} sessions - Whether passwords are checked when a session is created. When enabled, signing in records whether the password appears in a known data breach. Default is false.
+     * @param {boolean} users - Whether users signing in with a breached password are blocked until they reset it. Only applies when sessions are checked. Default is false, which allows the sign-in.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updatePasswordPwnedPolicy(
+        enabled?: boolean,
+        sessions?: boolean,
+        users?: boolean,
+    ): Promise<Models.Project>;
+    updatePasswordPwnedPolicy(
+        paramsOrFirst?:
+            | { enabled?: boolean; sessions?: boolean; users?: boolean }
+            | boolean,
+        ...rest: [boolean?, boolean?]
+    ): Promise<Models.Project> {
+        let params: { enabled?: boolean; sessions?: boolean; users?: boolean };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                enabled?: boolean;
+                sessions?: boolean;
+                users?: boolean;
+            };
+        } else {
+            params = {
+                enabled: paramsOrFirst as boolean,
+                sessions: rest[0] as boolean,
+                users: rest[1] as boolean,
+            };
+        }
+
+        const enabled = params.enabled;
+        const sessions = params.sessions;
+        const users = params.users;
+
+        const apiPath = '/project/policies/password-pwned';
+        const payload: Payload = {};
+        if (typeof enabled !== 'undefined') {
+            payload['enabled'] = enabled;
+        }
+        if (typeof sessions !== 'undefined') {
+            payload['sessions'] = sessions;
+        }
+        if (typeof users !== 'undefined') {
+            payload['users'] = users;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        return this.client.call('patch', uri, apiHeaders, payload);
+    }
+
+    /**
      * Update the password strength requirements for users in the project.
      *
      * @param {number} params.min - Minimum password length. Value must be between 8 and 256. Default is 8.
@@ -8208,9 +8343,9 @@ export class Project {
     /**
      * Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
      *
-     * @param {ProjectPolicyId} params.policyId - Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email.
+     * @param {ProjectPolicyId} params.policyId - Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, password-pwned, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyMfaFactors | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail>}
+     * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicyPasswordPwned | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyMfaFactors | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail>}
      */
     getPolicy(params: {
         policyId: ProjectPolicyId;
@@ -8219,6 +8354,7 @@ export class Project {
         | Models.PolicyPasswordHistory
         | Models.PolicyPasswordStrength
         | Models.PolicyPasswordPersonalData
+        | Models.PolicyPasswordPwned
         | Models.PolicySessionAlert
         | Models.PolicySessionDuration
         | Models.PolicySessionInvalidation
@@ -8234,9 +8370,9 @@ export class Project {
     /**
      * Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
      *
-     * @param {ProjectPolicyId} policyId - Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email.
+     * @param {ProjectPolicyId} policyId - Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, password-pwned, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyMfaFactors | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail>}
+     * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicyPasswordPwned | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyMfaFactors | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     getPolicy(
@@ -8246,6 +8382,7 @@ export class Project {
         | Models.PolicyPasswordHistory
         | Models.PolicyPasswordStrength
         | Models.PolicyPasswordPersonalData
+        | Models.PolicyPasswordPwned
         | Models.PolicySessionAlert
         | Models.PolicySessionDuration
         | Models.PolicySessionInvalidation
@@ -8265,6 +8402,7 @@ export class Project {
         | Models.PolicyPasswordHistory
         | Models.PolicyPasswordStrength
         | Models.PolicyPasswordPersonalData
+        | Models.PolicyPasswordPwned
         | Models.PolicySessionAlert
         | Models.PolicySessionDuration
         | Models.PolicySessionInvalidation
@@ -8789,7 +8927,7 @@ export class Project {
     /**
      * Update a custom email template for the specified locale and type. Use this endpoint to modify the content of your email templates.
      *
-     * @param {ProjectEmailTemplateId} params.templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+     * @param {ProjectEmailTemplateId} params.templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession, otpVerification
      * @param {ProjectEmailTemplateLocale} params.locale - Custom email template locale. If left empty, the fallback locale (en) will be used.
      * @param {string} params.subject - Subject of the email template. Can be up to 255 characters.
      * @param {string} params.message - Plain or HTML body of the email template message. Can be up to 10MB of content.
@@ -8813,7 +8951,7 @@ export class Project {
     /**
      * Update a custom email template for the specified locale and type. Use this endpoint to modify the content of your email templates.
      *
-     * @param {ProjectEmailTemplateId} templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+     * @param {ProjectEmailTemplateId} templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession, otpVerification
      * @param {ProjectEmailTemplateLocale} locale - Custom email template locale. If left empty, the fallback locale (en) will be used.
      * @param {string} subject - Subject of the email template. Can be up to 255 characters.
      * @param {string} message - Plain or HTML body of the email template message. Can be up to 10MB of content.
@@ -8959,7 +9097,7 @@ export class Project {
     /**
      * Get a custom email template for the specified locale and type. This endpoint returns the template content, subject, and other configuration details.
      *
-     * @param {ProjectEmailTemplateId} params.templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+     * @param {ProjectEmailTemplateId} params.templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession, otpVerification
      * @param {ProjectEmailTemplateLocale} params.locale - Custom email template locale. If left empty, the fallback locale (en) will be used.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
@@ -8971,7 +9109,7 @@ export class Project {
     /**
      * Get a custom email template for the specified locale and type. This endpoint returns the template content, subject, and other configuration details.
      *
-     * @param {ProjectEmailTemplateId} templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession
+     * @param {ProjectEmailTemplateId} templateId - Custom email template type. Can be one of: verification, magicSession, recovery, invitation, mfaChallenge, sessionAlert, otpSession, otpVerification
      * @param {ProjectEmailTemplateLocale} locale - Custom email template locale. If left empty, the fallback locale (en) will be used.
      * @throws {AppwriteException}
      * @returns {Promise<Models.EmailTemplate>}
@@ -9027,100 +9165,6 @@ export class Project {
         const payload: Payload = {};
         if (typeof locale !== 'undefined') {
             payload['locale'] = locale;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            accept: 'application/json',
-        };
-
-        return this.client.call('get', uri, apiHeaders, payload);
-    }
-
-    /**
-     * Get comprehensive usage statistics for your project. View metrics including network requests, bandwidth, storage, function executions, database usage, and user activity. Specify a time range with startDate and endDate, and optionally set the data granularity with period (1h or 1d). The response includes both total counts and detailed breakdowns by resource, along with historical data over the specified period.
-     *
-     * @param {string} params.startDate - Starting date for the usage
-     * @param {string} params.endDate - End date for the usage
-     * @param {ProjectUsageRange} params.period - Period used
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageProject>}
-     */
-    getUsage(params: {
-        startDate: string;
-        endDate: string;
-        period?: ProjectUsageRange;
-    }): Promise<Models.UsageProject>;
-    /**
-     * Get comprehensive usage statistics for your project. View metrics including network requests, bandwidth, storage, function executions, database usage, and user activity. Specify a time range with startDate and endDate, and optionally set the data granularity with period (1h or 1d). The response includes both total counts and detailed breakdowns by resource, along with historical data over the specified period.
-     *
-     * @param {string} startDate - Starting date for the usage
-     * @param {string} endDate - End date for the usage
-     * @param {ProjectUsageRange} period - Period used
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.UsageProject>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getUsage(
-        startDate: string,
-        endDate: string,
-        period?: ProjectUsageRange,
-    ): Promise<Models.UsageProject>;
-    getUsage(
-        paramsOrFirst:
-            | { startDate: string; endDate: string; period?: ProjectUsageRange }
-            | string,
-        ...rest: [string?, ProjectUsageRange?]
-    ): Promise<Models.UsageProject> {
-        let params: {
-            startDate: string;
-            endDate: string;
-            period?: ProjectUsageRange;
-        };
-
-        if (
-            paramsOrFirst &&
-            typeof paramsOrFirst === 'object' &&
-            !Array.isArray(paramsOrFirst)
-        ) {
-            params = (paramsOrFirst || {}) as {
-                startDate: string;
-                endDate: string;
-                period?: ProjectUsageRange;
-            };
-        } else {
-            params = {
-                startDate: paramsOrFirst as string,
-                endDate: rest[0] as string,
-                period: rest[1] as ProjectUsageRange,
-            };
-        }
-
-        const startDate = params.startDate;
-        const endDate = params.endDate;
-        const period = params.period;
-
-        if (typeof startDate === 'undefined') {
-            throw new AppwriteException(
-                'Missing required parameter: "startDate"',
-            );
-        }
-        if (typeof endDate === 'undefined') {
-            throw new AppwriteException(
-                'Missing required parameter: "endDate"',
-            );
-        }
-        const apiPath = '/project/usage';
-        const payload: Payload = {};
-        if (typeof startDate !== 'undefined') {
-            payload['startDate'] = startDate;
-        }
-        if (typeof endDate !== 'undefined') {
-            payload['endDate'] = endDate;
-        }
-        if (typeof period !== 'undefined') {
-            payload['period'] = period;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
