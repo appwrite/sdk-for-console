@@ -23,7 +23,7 @@
 * Added: `Framework.Jaspr`, `ProjectEmailTemplateId.OtpVerification`, `ProjectKeyScopes.DedicatedDatabasesExecute`, `QuerySuggestionResource.AppwritePushLedger`
 * Added: `passwordPwned` on `User`, `providerIdToken` on `Identity`, `firstAccessedAt` and `mcpAccessedAt` on `Project`, `eligibleCountries` on `BillingPlan`
 * Added: `protocol`, `accept`, `acceptLanguage`, `queryKeys` fields on `UsageDataPoint`
-* Fixed: empty-string required parameters are rejected instead of sent to the API
+* Fixed: empty-string required path parameters are rejected instead of sent to the API
 
 ## 16.1.0
 
