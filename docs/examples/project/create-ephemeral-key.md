@@ -8,7 +8,7 @@ const client = new Client()
 const project = new Project(client);
 
 const result = await project.createEphemeralKey({
-    scopes: [ProjectKeyScopes.ProjectRead],
+    scopes: [ProjectKeyScopes.UsersRead],
     duration: 600,
 });
 

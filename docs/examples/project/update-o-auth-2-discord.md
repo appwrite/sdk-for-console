@@ -1,5 +1,9 @@
 ```javascript
-import { Client, Project } from '@appwrite.io/console';
+import {
+    Client,
+    Project,
+    ProjectOAuth2DiscordPrompt,
+} from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -10,6 +14,7 @@ const project = new Project(client);
 const result = await project.updateOAuth2Discord({
     clientId: '<CLIENT_ID>', // optional
     clientSecret: '<CLIENT_SECRET>', // optional
+    prompt: [ProjectOAuth2DiscordPrompt.None], // optional
     enabled: false, // optional
 });
 

@@ -8,7 +8,7 @@ const client = new Client()
 const project = new Project(client);
 
 const result = await project.createSMTPTest({
-    emails: [],
+    emails: ['recipient@example.com'],
 });
 
 console.log(result);

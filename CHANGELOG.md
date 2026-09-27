@@ -1,5 +1,23 @@
 # Change Log
 
+## 18.0.0
+
+* Breaking: SDK now targets Appwrite 2.3 (`X-Appwrite-Response-Format: 2.3.0`)
+* Breaking: removed `Organizations.getEstimation`
+* Breaking: `QuerySuggestionResource.AppwritePushLedger` renamed to `PushLedger`
+* Added: `Manager.updateOrganizationStatus` to block and unblock an organization
+* Added: `Push` service over MQTT with `Topic`, plus `Client.setPushEndpoint` and `Client.setPushClientId`
+* Added: `Growth` service with `createConversation`, `createInstallation`, `ConversationType` enum and `GrowthConversation` model
+* Added: `Account.createRecoveryOTP` and `Account.updateRecoveryOTP` for code-based password recovery
+* Added: `prompt` parameter on `Project.updateOAuth2*` for Auth0, Discord, GitHub, Kakao, Microsoft, Okta, Salesforce, Zoho
+* Added: matching `prompt` fields and enums on the `OAuth2*` provider models
+* Added: `replyToName` and `replyToEmail` on `Messaging.createEmail` and `Messaging.updateEmail`
+* Added: `organizationUrl` on the `Installation` model
+* Added: `ProjectEmailTemplateId.OtpRecovery` and Deno 1.21, 1.24, 1.35 in `Runtime` and `BuildRuntime`
+* Updated: `Databases.getAttribute` return type now includes bigint, spatial, varchar and text attributes
+* Updated: added `mqtt` and `buffer` dependencies and browser Node polyfills for `Push`
+* Fixed: chunked uploads without a file in the payload now send a regular request
+
 ## 17.0.0
 
 * Breaking: SDK now targets Appwrite 2.2 (`X-Appwrite-Response-Format: 2.2.0`)
@@ -17,7 +35,6 @@
 * Added: `Account.createIdTokenSession` for native Apple and Google sign-in with `IdTokenProvider` enum
 * Added: `Account.createEmailVerificationOTP` and `Account.updateEmailVerificationOTP`
 * Added: `Messaging.createAppwriteProvider` and `Messaging.updateAppwriteProvider` for Appwrite push, with `qos` and `expiry` on `Topic`
-* Added: `Organizations.getEstimation` for the current billing cycle charge estimate
 * Added: `Project.updatePasswordPwnedPolicy` with `PolicyPasswordPwned` model and `ProjectPolicyId.Passwordpwned`
 * Added: `nativeEnabled`, `nativeClientIds` parameters on `Project.updateOAuth2Apple` and `Project.updateOAuth2Google` and matching fields on `OAuth2Apple`, `OAuth2Google`
 * Added: `Framework.Jaspr`, `ProjectEmailTemplateId.OtpVerification`, `ProjectKeyScopes.DedicatedDatabasesExecute`, `QuerySuggestionResource.AppwritePushLedger`

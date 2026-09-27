@@ -6293,6 +6293,129 @@ export class TablesDB {
     }
 
     /**
+     * Update relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
+     *
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.tableId - Table ID.
+     * @param {string} params.key - Column Key.
+     * @param {RelationMutate} params.onDelete - Delete constraint. Possible values are: cascade, restrict, setNull.
+     * @param {string} params.newKey - New Column Key.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ColumnRelationship>}
+     */
+    updateRelationshipColumn(params: {
+        databaseId: string;
+        tableId: string;
+        key: string;
+        onDelete?: RelationMutate;
+        newKey?: string;
+    }): Promise<Models.ColumnRelationship>;
+    /**
+     * Update relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
+     *
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} tableId - Table ID.
+     * @param {string} key - Column Key.
+     * @param {RelationMutate} onDelete - Delete constraint. Possible values are: cascade, restrict, setNull.
+     * @param {string} newKey - New Column Key.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ColumnRelationship>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateRelationshipColumn(
+        databaseId: string,
+        tableId: string,
+        key: string,
+        onDelete?: RelationMutate,
+        newKey?: string,
+    ): Promise<Models.ColumnRelationship>;
+    updateRelationshipColumn(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  tableId: string;
+                  key: string;
+                  onDelete?: RelationMutate;
+                  newKey?: string;
+              }
+            | string,
+        ...rest: [string?, string?, RelationMutate?, string?]
+    ): Promise<Models.ColumnRelationship> {
+        let params: {
+            databaseId: string;
+            tableId: string;
+            key: string;
+            onDelete?: RelationMutate;
+            newKey?: string;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                tableId: string;
+                key: string;
+                onDelete?: RelationMutate;
+                newKey?: string;
+            };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                tableId: rest[0] as string,
+                key: rest[1] as string,
+                onDelete: rest[2] as RelationMutate,
+                newKey: rest[3] as string,
+            };
+        }
+
+        const databaseId = params.databaseId;
+        const tableId = params.tableId;
+        const key = params.key;
+        const onDelete = params.onDelete;
+        const newKey = params.newKey;
+
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
+        }
+        if (typeof tableId === 'undefined' || tableId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "tableId"',
+            );
+        }
+        if (typeof key === 'undefined' || key === '') {
+            throw new AppwriteException('Missing required parameter: "key"');
+        }
+        const apiPath =
+            '/tablesdb/{databaseId}/tables/{tableId}/columns/relationship/{key}'
+                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+                .replace('{tableId}', encodeURIComponent(String(tableId)))
+                .replace('{key}', encodeURIComponent(String(key)));
+        const payload: Payload = {};
+        if (typeof onDelete !== 'undefined') {
+            payload['onDelete'] = onDelete;
+        }
+        if (typeof newKey !== 'undefined') {
+            payload['newKey'] = newKey;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        return this.client.call('patch', uri, apiHeaders, payload);
+    }
+
+    /**
      * Create a string column.
      *
      *
@@ -7552,7 +7675,7 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.ColumnBoolean | Models.ColumnInteger | Models.ColumnFloat | Models.ColumnEmail | Models.ColumnEnum | Models.ColumnUrl | Models.ColumnIp | Models.ColumnDatetime | Models.ColumnRelationship | Models.ColumnString>}
+     * @returns {Promise<Models.ColumnBoolean | Models.ColumnBigint | Models.ColumnInteger | Models.ColumnFloat | Models.ColumnEmail | Models.ColumnEnum | Models.ColumnUrl | Models.ColumnIp | Models.ColumnDatetime | Models.ColumnRelationship | Models.ColumnPoint | Models.ColumnLine | Models.ColumnPolygon | Models.ColumnVarchar | Models.ColumnText | Models.ColumnMediumtext | Models.ColumnLongtext | Models.ColumnString>}
      */
     getColumn(params: {
         databaseId: string;
@@ -7560,6 +7683,7 @@ export class TablesDB {
         key: string;
     }): Promise<
         | Models.ColumnBoolean
+        | Models.ColumnBigint
         | Models.ColumnInteger
         | Models.ColumnFloat
         | Models.ColumnEmail
@@ -7568,6 +7692,13 @@ export class TablesDB {
         | Models.ColumnIp
         | Models.ColumnDatetime
         | Models.ColumnRelationship
+        | Models.ColumnPoint
+        | Models.ColumnLine
+        | Models.ColumnPolygon
+        | Models.ColumnVarchar
+        | Models.ColumnText
+        | Models.ColumnMediumtext
+        | Models.ColumnLongtext
         | Models.ColumnString
     >;
     /**
@@ -7577,7 +7708,7 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.ColumnBoolean | Models.ColumnInteger | Models.ColumnFloat | Models.ColumnEmail | Models.ColumnEnum | Models.ColumnUrl | Models.ColumnIp | Models.ColumnDatetime | Models.ColumnRelationship | Models.ColumnString>}
+     * @returns {Promise<Models.ColumnBoolean | Models.ColumnBigint | Models.ColumnInteger | Models.ColumnFloat | Models.ColumnEmail | Models.ColumnEnum | Models.ColumnUrl | Models.ColumnIp | Models.ColumnDatetime | Models.ColumnRelationship | Models.ColumnPoint | Models.ColumnLine | Models.ColumnPolygon | Models.ColumnVarchar | Models.ColumnText | Models.ColumnMediumtext | Models.ColumnLongtext | Models.ColumnString>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     getColumn(
@@ -7586,6 +7717,7 @@ export class TablesDB {
         key: string,
     ): Promise<
         | Models.ColumnBoolean
+        | Models.ColumnBigint
         | Models.ColumnInteger
         | Models.ColumnFloat
         | Models.ColumnEmail
@@ -7594,6 +7726,13 @@ export class TablesDB {
         | Models.ColumnIp
         | Models.ColumnDatetime
         | Models.ColumnRelationship
+        | Models.ColumnPoint
+        | Models.ColumnLine
+        | Models.ColumnPolygon
+        | Models.ColumnVarchar
+        | Models.ColumnText
+        | Models.ColumnMediumtext
+        | Models.ColumnLongtext
         | Models.ColumnString
     >;
     getColumn(
@@ -7602,6 +7741,7 @@ export class TablesDB {
         ...rest: [string?, string?]
     ): Promise<
         | Models.ColumnBoolean
+        | Models.ColumnBigint
         | Models.ColumnInteger
         | Models.ColumnFloat
         | Models.ColumnEmail
@@ -7610,6 +7750,13 @@ export class TablesDB {
         | Models.ColumnIp
         | Models.ColumnDatetime
         | Models.ColumnRelationship
+        | Models.ColumnPoint
+        | Models.ColumnLine
+        | Models.ColumnPolygon
+        | Models.ColumnVarchar
+        | Models.ColumnText
+        | Models.ColumnMediumtext
+        | Models.ColumnLongtext
         | Models.ColumnString
     > {
         let params: { databaseId: string; tableId: string; key: string };
@@ -7745,129 +7892,6 @@ export class TablesDB {
         };
 
         return this.client.call('delete', uri, apiHeaders, payload);
-    }
-
-    /**
-     * Update relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
-     *
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.tableId - Table ID.
-     * @param {string} params.key - Column Key.
-     * @param {RelationMutate} params.onDelete - Delete constraint. Possible values are: cascade, restrict, setNull.
-     * @param {string} params.newKey - New Column Key.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.ColumnRelationship>}
-     */
-    updateRelationshipColumn(params: {
-        databaseId: string;
-        tableId: string;
-        key: string;
-        onDelete?: RelationMutate;
-        newKey?: string;
-    }): Promise<Models.ColumnRelationship>;
-    /**
-     * Update relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
-     *
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} tableId - Table ID.
-     * @param {string} key - Column Key.
-     * @param {RelationMutate} onDelete - Delete constraint. Possible values are: cascade, restrict, setNull.
-     * @param {string} newKey - New Column Key.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.ColumnRelationship>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    updateRelationshipColumn(
-        databaseId: string,
-        tableId: string,
-        key: string,
-        onDelete?: RelationMutate,
-        newKey?: string,
-    ): Promise<Models.ColumnRelationship>;
-    updateRelationshipColumn(
-        paramsOrFirst:
-            | {
-                  databaseId: string;
-                  tableId: string;
-                  key: string;
-                  onDelete?: RelationMutate;
-                  newKey?: string;
-              }
-            | string,
-        ...rest: [string?, string?, RelationMutate?, string?]
-    ): Promise<Models.ColumnRelationship> {
-        let params: {
-            databaseId: string;
-            tableId: string;
-            key: string;
-            onDelete?: RelationMutate;
-            newKey?: string;
-        };
-
-        if (
-            paramsOrFirst &&
-            typeof paramsOrFirst === 'object' &&
-            !Array.isArray(paramsOrFirst)
-        ) {
-            params = (paramsOrFirst || {}) as {
-                databaseId: string;
-                tableId: string;
-                key: string;
-                onDelete?: RelationMutate;
-                newKey?: string;
-            };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                tableId: rest[0] as string,
-                key: rest[1] as string,
-                onDelete: rest[2] as RelationMutate,
-                newKey: rest[3] as string,
-            };
-        }
-
-        const databaseId = params.databaseId;
-        const tableId = params.tableId;
-        const key = params.key;
-        const onDelete = params.onDelete;
-        const newKey = params.newKey;
-
-        if (typeof databaseId === 'undefined' || databaseId === '') {
-            throw new AppwriteException(
-                'Missing required parameter: "databaseId"',
-            );
-        }
-        if (typeof tableId === 'undefined' || tableId === '') {
-            throw new AppwriteException(
-                'Missing required parameter: "tableId"',
-            );
-        }
-        if (typeof key === 'undefined' || key === '') {
-            throw new AppwriteException('Missing required parameter: "key"');
-        }
-        const apiPath =
-            '/tablesdb/{databaseId}/tables/{tableId}/columns/{key}/relationship'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace('{tableId}', encodeURIComponent(String(tableId)))
-                .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
-        if (typeof onDelete !== 'undefined') {
-            payload['onDelete'] = onDelete;
-        }
-        if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'content-type': 'application/json',
-            accept: 'application/json',
-        };
-
-        return this.client.call('patch', uri, apiHeaders, payload);
     }
 
     /**

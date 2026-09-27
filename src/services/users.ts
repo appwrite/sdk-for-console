@@ -1554,7 +1554,7 @@ export class Users {
     }
 
     /**
-     * Enable or disable whether a user can impersonate other users. When impersonation headers are used, the request runs as the target user for API behavior, while internal audit logs still attribute the action to the original impersonator and store the impersonated target details only in internal audit payload data.
+     * Enable or disable whether a user can impersonate other users. When impersonation headers are used, the request runs as the target user for API behavior, while internal audit logs still attribute the action to the original impersonator and store the impersonated target details only in internal audit payload data. Account endpoints are read-only while impersonating: they report the target's account, and anything that would change it is refused, so an impersonator cannot alter the target's credentials or delete their account.
      *
      *
      * @param {string} params.userId - User ID.
@@ -1569,7 +1569,7 @@ export class Users {
         impersonator: boolean;
     }): Promise<Models.User<Preferences>>;
     /**
-     * Enable or disable whether a user can impersonate other users. When impersonation headers are used, the request runs as the target user for API behavior, while internal audit logs still attribute the action to the original impersonator and store the impersonated target details only in internal audit payload data.
+     * Enable or disable whether a user can impersonate other users. When impersonation headers are used, the request runs as the target user for API behavior, while internal audit logs still attribute the action to the original impersonator and store the impersonated target details only in internal audit payload data. Account endpoints are read-only while impersonating: they report the target's account, and anything that would change it is refused, so an impersonator cannot alter the target's credentials or delete their account.
      *
      *
      * @param {string} userId - User ID.

@@ -1,7 +1,7 @@
 /**
  * Appwrite Console SDK
  *
- * This SDK targets Appwrite server version 2.2.x as shipped on Appwrite Cloud.
+ * This SDK targets Appwrite server version 2.3.x as shipped on Appwrite Cloud.
  * Self-hosted releases can lag behind Cloud — if you run an older self-hosted
  * build, use a matching older SDK from
  * [previous releases](https://github.com/appwrite/sdk-for-console/releases)
@@ -22,6 +22,7 @@ export { Domains } from './services/domains';
 export { Embeddings } from './services/embeddings';
 export { Functions } from './services/functions';
 export { Graphql } from './services/graphql';
+export { Growth } from './services/growth';
 export { Locale } from './services/locale';
 export { Manager } from './services/manager';
 export { Messaging } from './services/messaging';
@@ -50,6 +51,7 @@ export { VectorsDB } from './services/vectors-db';
 export { Waf } from './services/waf';
 export { Webhooks } from './services/webhooks';
 export { Realtime } from './services/realtime';
+export { Push } from './services/push';
 export type {
     Models,
     Payload,
@@ -57,10 +59,17 @@ export type {
     UploadProgress,
 } from './client';
 export type { RealtimeSubscription } from './services/realtime';
+export type {
+    PushMessage,
+    PushSubscription,
+    SubscribeOptions,
+    MessageCallback,
+} from './services/push';
 export type { QueryTypes, QueryTypesList } from './query';
 export { Permission } from './permission';
 export { Role } from './role';
 export { ID } from './id';
+export { Topic, ResolvedTopic } from './topic';
 export { Channel } from './channel';
 export { Operator, Condition } from './operator';
 export { AccountKeyScopes } from './enums/account-key-scopes';
@@ -96,6 +105,7 @@ export { TemplateReferenceType } from './enums/template-reference-type';
 export { VCSReferenceType } from './enums/vcs-reference-type';
 export { DeploymentDownloadType } from './enums/deployment-download-type';
 export { ExecutionMethod } from './enums/execution-method';
+export { ConversationType } from './enums/conversation-type';
 export { BlockResourceType } from './enums/block-resource-type';
 export { BlockMode } from './enums/block-mode';
 export { Region } from './enums/region';
@@ -112,8 +122,16 @@ export { OrganizationKeyScopes } from './enums/organization-key-scopes';
 export { AddonKey } from './enums/addon-key';
 export { UsageRange } from './enums/usage-range';
 export { ProjectAuthMethodId } from './enums/project-auth-method-id';
+export { ProjectOAuth2Auth0Prompt } from './enums/project-o-auth-2-auth-0-prompt';
+export { ProjectOAuth2DiscordPrompt } from './enums/project-o-auth-2-discord-prompt';
+export { ProjectOAuth2GitHubPrompt } from './enums/project-o-auth-2-git-hub-prompt';
 export { ProjectOAuth2GooglePrompt } from './enums/project-o-auth-2-google-prompt';
+export { ProjectOAuth2KakaoPrompt } from './enums/project-o-auth-2-kakao-prompt';
+export { ProjectOAuth2MicrosoftPrompt } from './enums/project-o-auth-2-microsoft-prompt';
 export { ProjectOAuth2OidcPrompt } from './enums/project-o-auth-2-oidc-prompt';
+export { ProjectOAuth2OktaPrompt } from './enums/project-o-auth-2-okta-prompt';
+export { ProjectOAuth2SalesforcePrompt } from './enums/project-o-auth-2-salesforce-prompt';
+export { ProjectOAuth2ZohoPrompt } from './enums/project-o-auth-2-zoho-prompt';
 export { ProjectOAuthProviderId } from './enums/project-o-auth-provider-id';
 export { ProjectPolicyId } from './enums/project-policy-id';
 export { ProjectProtocolId } from './enums/project-protocol-id';
@@ -153,8 +171,16 @@ export { DeploymentStatus } from './enums/deployment-status';
 export { ExecutionResourceType } from './enums/execution-resource-type';
 export { ExecutionTrigger } from './enums/execution-trigger';
 export { ExecutionStatus } from './enums/execution-status';
+export { OAuth2GithubPrompt } from './enums/o-auth-2-github-prompt';
+export { OAuth2DiscordPrompt } from './enums/o-auth-2-discord-prompt';
 export { OAuth2GooglePrompt } from './enums/o-auth-2-google-prompt';
+export { OAuth2ZohoPrompt } from './enums/o-auth-2-zoho-prompt';
+export { OAuth2SalesforcePrompt } from './enums/o-auth-2-salesforce-prompt';
+export { OAuth2Auth0Prompt } from './enums/o-auth-2-auth-0-prompt';
 export { OAuth2OidcPrompt } from './enums/o-auth-2-oidc-prompt';
+export { OAuth2OktaPrompt } from './enums/o-auth-2-okta-prompt';
+export { OAuth2MicrosoftPrompt } from './enums/o-auth-2-microsoft-prompt';
+export { OAuth2KakaoPrompt } from './enums/o-auth-2-kakao-prompt';
 export { PlatformType } from './enums/platform-type';
 export { ProxyRuleDeploymentResourceType } from './enums/proxy-rule-deployment-resource-type';
 export { ProxyRuleStatus } from './enums/proxy-rule-status';

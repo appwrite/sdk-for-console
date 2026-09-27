@@ -11,7 +11,7 @@ const result = await webhooks.update({
     webhookId: '<WEBHOOK_ID>',
     name: '<NAME>',
     url: 'https://example.com/webhook',
-    events: [],
+    events: ['users.*.create'],
     enabled: false, // optional
     tls: false, // optional
     authUsername: '<AUTH_USERNAME>', // optional

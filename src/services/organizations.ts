@@ -1837,64 +1837,6 @@ export class Organizations {
     }
 
     /**
-     * Get an estimate of the charge for the organization current billing cycle.
-     *
-     * @param {string} params.organizationId - Organization ID
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Estimation>}
-     */
-    getEstimation(params: {
-        organizationId: string;
-    }): Promise<Models.Estimation>;
-    /**
-     * Get an estimate of the charge for the organization current billing cycle.
-     *
-     * @param {string} organizationId - Organization ID
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.Estimation>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    getEstimation(organizationId: string): Promise<Models.Estimation>;
-    getEstimation(
-        paramsOrFirst: { organizationId: string } | string,
-    ): Promise<Models.Estimation> {
-        let params: { organizationId: string };
-
-        if (
-            paramsOrFirst &&
-            typeof paramsOrFirst === 'object' &&
-            !Array.isArray(paramsOrFirst)
-        ) {
-            params = (paramsOrFirst || {}) as { organizationId: string };
-        } else {
-            params = {
-                organizationId: paramsOrFirst as string,
-            };
-        }
-
-        const organizationId = params.organizationId;
-
-        if (typeof organizationId === 'undefined' || organizationId === '') {
-            throw new AppwriteException(
-                'Missing required parameter: "organizationId"',
-            );
-        }
-        const apiPath = '/organizations/{organizationId}/estimations'.replace(
-            '{organizationId}',
-            encodeURIComponent(String(organizationId)),
-        );
-        const payload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            accept: 'application/json',
-        };
-
-        return this.client.call('get', uri, apiHeaders, payload);
-    }
-
-    /**
      * Get estimation for deleting an organization.
      *
      * @param {string} params.organizationId - Team ID.

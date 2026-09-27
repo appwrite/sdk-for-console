@@ -1,14 +1,15 @@
 ```javascript
-import { Client, Organizations } from '@appwrite.io/console';
+import { Client, Account } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const organizations = new Organizations(client);
+const account = new Account(client);
 
-const result = await organizations.getEstimation({
-    organizationId: '<ORGANIZATION_ID>',
+const result = await account.createRecoveryOTP({
+    email: 'email@example.com',
+    phrase: false, // optional
 });
 
 console.log(result);

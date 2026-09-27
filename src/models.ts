@@ -11,8 +11,16 @@ import { ExecutionStatus } from './enums/execution-status';
 import { ProjectAuthMethodId } from './enums/project-auth-method-id';
 import { ProjectServiceId } from './enums/project-service-id';
 import { ProjectProtocolId } from './enums/project-protocol-id';
+import { OAuth2GithubPrompt } from './enums/o-auth-2-github-prompt';
+import { OAuth2DiscordPrompt } from './enums/o-auth-2-discord-prompt';
 import { OAuth2GooglePrompt } from './enums/o-auth-2-google-prompt';
+import { OAuth2ZohoPrompt } from './enums/o-auth-2-zoho-prompt';
+import { OAuth2SalesforcePrompt } from './enums/o-auth-2-salesforce-prompt';
+import { OAuth2Auth0Prompt } from './enums/o-auth-2-auth-0-prompt';
 import { OAuth2OidcPrompt } from './enums/o-auth-2-oidc-prompt';
+import { OAuth2OktaPrompt } from './enums/o-auth-2-okta-prompt';
+import { OAuth2MicrosoftPrompt } from './enums/o-auth-2-microsoft-prompt';
+import { OAuth2KakaoPrompt } from './enums/o-auth-2-kakao-prompt';
 import { PlatformType } from './enums/platform-type';
 import { ProxyRuleDeploymentResourceType } from './enums/proxy-rule-deployment-resource-type';
 import { ProxyRuleStatus } from './enums/proxy-rule-status';
@@ -4673,6 +4681,10 @@ export namespace Models {
          * VCS (Version Control System) installation ID.
          */
         providerInstallationId: string;
+        /**
+         * VCS (Version Control System) organization URL. Points at the configured instance, which is not the provider's own host for a self-hosted install.
+         */
+        organizationUrl: string;
     };
 
     /**
@@ -5625,6 +5637,10 @@ export namespace Models {
          * GitHub OAuth2 client secret.
          */
         clientSecret: string;
+        /**
+         * GitHub OAuth2 prompt values.
+         */
+        prompt: OAuth2GithubPrompt[];
     };
 
     /**
@@ -5647,6 +5663,10 @@ export namespace Models {
          * Discord OAuth2 client secret.
          */
         clientSecret: string;
+        /**
+         * Discord OAuth2 prompt values.
+         */
+        prompt: OAuth2DiscordPrompt[];
     };
 
     /**
@@ -5879,6 +5899,10 @@ export namespace Models {
          * Zoho OAuth2 client secret.
          */
         clientSecret: string;
+        /**
+         * Zoho OAuth2 prompt values.
+         */
+        prompt: OAuth2ZohoPrompt[];
     };
 
     /**
@@ -6099,6 +6123,10 @@ export namespace Models {
          * Salesforce OAuth2 consumer secret.
          */
         customerSecret: string;
+        /**
+         * Salesforce OAuth2 prompt values.
+         */
+        prompt: OAuth2SalesforcePrompt[];
     };
 
     /**
@@ -6416,6 +6444,10 @@ export namespace Models {
          */
         clientSecret: string;
         /**
+         * Auth0 OAuth2 prompt values.
+         */
+        prompt: OAuth2Auth0Prompt[];
+        /**
          * Auth0 OAuth2 endpoint domain.
          */
         endpoint: string;
@@ -6498,6 +6530,10 @@ export namespace Models {
          */
         clientSecret: string;
         /**
+         * OpenID Connect prompt values controlling the authentication and consent screens.
+         */
+        prompt: OAuth2OidcPrompt[];
+        /**
          * OpenID Connect well-known configuration URL. When set, authorization, token, and user info endpoints can be discovered automatically.
          */
         wellKnownURL: string;
@@ -6513,10 +6549,6 @@ export namespace Models {
          * OpenID Connect user info endpoint URL.
          */
         userInfoURL: string;
-        /**
-         * OpenID Connect prompt values controlling the authentication and consent screens.
-         */
-        prompt: OAuth2OidcPrompt[];
         /**
          * Maximum authentication age in seconds. When set, the user must have authenticated within this many seconds.
          */
@@ -6543,6 +6575,10 @@ export namespace Models {
          * Okta OAuth2 client secret.
          */
         clientSecret: string;
+        /**
+         * Okta OAuth2 prompt values.
+         */
+        prompt: OAuth2OktaPrompt[];
         /**
          * Okta OAuth2 domain.
          */
@@ -6634,6 +6670,10 @@ export namespace Models {
          */
         applicationSecret: string;
         /**
+         * Microsoft OAuth2 prompt values.
+         */
+        prompt: OAuth2MicrosoftPrompt[];
+        /**
          * Microsoft Entra ID tenant identifier. Use 'common', 'organizations', 'consumers' or a specific tenant ID.
          */
         tenant: string;
@@ -6703,6 +6743,10 @@ export namespace Models {
          * Kakao OAuth2 client secret.
          */
         clientSecret: string;
+        /**
+         * Kakao OAuth2 prompt values.
+         */
+        prompt: OAuth2KakaoPrompt[];
     };
 
     /**
@@ -6847,15 +6891,15 @@ export namespace Models {
          */
         $id: string;
         /**
-         * Whether password pwned policy is enabled.
+         * Whether passwords are checked against known data breaches and the result recorded on the user.
          */
         enabled: boolean;
         /**
-         * Whether passwords are checked when a session is created.
+         * Whether a sign-in with a breached password is refused until the password is reset.
          */
         sessions: boolean;
         /**
-         * Whether users signing in with a breached password are blocked until they reset it. Only applies when sessions are checked.
+         * Whether a breached password is rejected when a user signs up or sets a new password.
          */
         users: boolean;
     };
@@ -11130,6 +11174,24 @@ export namespace Models {
          * Organization's existing credits
          */
         organizationCredits: number;
+    };
+
+    /**
+     * Growth Conversation
+     */
+    export type GrowthConversation = {
+        /**
+         * Conversation type.
+         */
+        type: string;
+        /**
+         * Email address the conversation was filed under. For a signed in console user this is the account email.
+         */
+        email: string;
+        /**
+         * Organization ID the conversation was filed against. Empty when none was given or the user is not a member.
+         */
+        organizationId: string;
     };
 
     /**
