@@ -368,6 +368,8 @@ class Client {
     config: {
         endpoint: string;
         endpointRealtime: string;
+        endpointPush: string;
+        pushClientId: string;
         project: string;
         key: string;
         organization: string;
@@ -386,6 +388,8 @@ class Client {
     } = {
         endpoint: 'https://cloud.appwrite.io/v1',
         endpointRealtime: '',
+        endpointPush: '',
+        pushClientId: '',
         project: '',
         key: '',
         organization: '',
@@ -409,8 +413,8 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '17.0.0',
-        'X-Appwrite-Response-Format': '2.2.0',
+        'x-sdk-version': '18.0.0',
+        'X-Appwrite-Response-Format': '2.3.0',
     };
 
     /**
@@ -476,6 +480,53 @@ class Client {
         }
 
         this.config.endpointRealtime = endpointRealtime;
+        return this;
+    }
+
+    /**
+     * Set Push Endpoint
+     *
+     * The MQTT-over-WebSocket URL the AppwritePush service connects to.
+     *
+     * @param {string} endpointPush
+     *
+     * @returns {this}
+     */
+    setPushEndpoint(endpointPush: string): this {
+        if (!endpointPush || typeof endpointPush !== 'string') {
+            throw new AppwriteException('Endpoint must be a valid string');
+        }
+
+        if (
+            !endpointPush.startsWith('ws://') &&
+            !endpointPush.startsWith('wss://')
+        ) {
+            throw new AppwriteException(
+                'Invalid push endpoint URL: ' + endpointPush,
+            );
+        }
+
+        this.config.endpointPush = endpointPush;
+        return this;
+    }
+
+    /**
+     * Set Push Client Id
+     *
+     * A stable client id for the AppwritePush service. The broker keys its
+     * offline-replay cursor on this id, so pass a stable value to resume replay across
+     * reloads/restarts. Defaults to a per-connection id when unset.
+     *
+     * @param {string} pushClientId
+     *
+     * @returns {this}
+     */
+    setPushClientId(pushClientId: string): this {
+        if (!pushClientId || typeof pushClientId !== 'string') {
+            throw new AppwriteException('Client id must be a valid string');
+        }
+
+        this.config.pushClientId = pushClientId;
         return this;
     }
 
@@ -1097,11 +1148,8 @@ class Client {
         const options: RequestInit = {
             method,
             headers,
+            credentials: this.config.credentials,
         };
-
-        if (headers['X-Appwrite-Dev-Key'] === undefined) {
-            options.credentials = this.config.credentials;
-        }
 
         if (method === 'GET') {
             for (const [key, value] of Object.entries(Client.flatten(params))) {
@@ -1151,7 +1199,7 @@ class Client {
             ) ?? [];
 
         if (!file || !fileParam) {
-            throw new Error('File not found in payload');
+            return await this.call(method, url, headers, originalPayload);
         }
 
         if (file.size <= Client.CHUNK_SIZE) {

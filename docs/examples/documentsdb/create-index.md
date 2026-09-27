@@ -17,7 +17,7 @@ const result = await documentsDB.createIndex({
     collectionId: '<COLLECTION_ID>',
     key: '<KEY>',
     type: DocumentsDBIndexType.Key,
-    attributes: [],
+    attributes: ['username'],
     orders: [OrderBy.Asc], // optional
     lengths: [], // optional
 });

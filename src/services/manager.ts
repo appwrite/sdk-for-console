@@ -452,6 +452,97 @@ export class Manager {
     }
 
     /**
+     * Blocks or unblocks an organization, the same way a billing-limit block does. Blocking makes the organization read-only, disables its backup policies and spins down its dedicated databases.
+     *
+     * @param {string} params.teamId - Organization ID.
+     * @param {boolean} params.status - Organization status. Set to `false` to block and `true` to unblock.
+     * @param {string} params.reason - Optional reason when blocking, kept in the audit trail.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Organization<Preferences>>}
+     */
+    updateOrganizationStatus<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        teamId: string;
+        status: boolean;
+        reason?: string;
+    }): Promise<Models.Organization<Preferences>>;
+    /**
+     * Blocks or unblocks an organization, the same way a billing-limit block does. Blocking makes the organization read-only, disables its backup policies and spins down its dedicated databases.
+     *
+     * @param {string} teamId - Organization ID.
+     * @param {boolean} status - Organization status. Set to `false` to block and `true` to unblock.
+     * @param {string} reason - Optional reason when blocking, kept in the audit trail.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Organization<Preferences>>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateOrganizationStatus<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        teamId: string,
+        status: boolean,
+        reason?: string,
+    ): Promise<Models.Organization<Preferences>>;
+    updateOrganizationStatus<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst:
+            { teamId: string; status: boolean; reason?: string } | string,
+        ...rest: [boolean?, string?]
+    ): Promise<Models.Organization<Preferences>> {
+        let params: { teamId: string; status: boolean; reason?: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                teamId: string;
+                status: boolean;
+                reason?: string;
+            };
+        } else {
+            params = {
+                teamId: paramsOrFirst as string,
+                status: rest[0] as boolean,
+                reason: rest[1] as string,
+            };
+        }
+
+        const teamId = params.teamId;
+        const status = params.status;
+        const reason = params.reason;
+
+        if (typeof teamId === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "teamId"');
+        }
+        if (typeof status === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "status"');
+        }
+        const apiPath = '/manager/organizations/status';
+        const payload: Payload = {};
+        if (typeof teamId !== 'undefined') {
+            payload['teamId'] = teamId;
+        }
+        if (typeof status !== 'undefined') {
+            payload['status'] = status;
+        }
+        if (typeof reason !== 'undefined') {
+            payload['reason'] = reason;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        return this.client.call('patch', uri, apiHeaders, payload);
+    }
+
+    /**
      * Updates a console user status using a user ID or email address.
      *
      * @param {boolean} params.status - User status. Set to `false` to block and `true` to unblock.

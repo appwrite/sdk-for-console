@@ -102,6 +102,8 @@ export class Messaging {
      * @param {string[]} params.cc - Array of target IDs to be added as CC.
      * @param {string[]} params.bcc - Array of target IDs to be added as BCC.
      * @param {string[]} params.attachments - Array of compound ID strings of bucket IDs and file IDs to be attached to the email. They should be formatted as <BUCKET_ID>:<FILE_ID>.
+     * @param {string} params.replyToEmail - Email address to reply to. If not set, defaults to the sender email address.
+     * @param {string} params.replyToName - Name of the reply to recipient. If not set, defaults to the sender name.
      * @param {boolean} params.draft - Is message a draft
      * @param {boolean} params.html - Is content of type HTML
      * @param {string} params.scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
@@ -118,6 +120,8 @@ export class Messaging {
         cc?: string[];
         bcc?: string[];
         attachments?: string[];
+        replyToEmail?: string;
+        replyToName?: string;
         draft?: boolean;
         html?: boolean;
         scheduledAt?: string;
@@ -134,6 +138,8 @@ export class Messaging {
      * @param {string[]} cc - Array of target IDs to be added as CC.
      * @param {string[]} bcc - Array of target IDs to be added as BCC.
      * @param {string[]} attachments - Array of compound ID strings of bucket IDs and file IDs to be attached to the email. They should be formatted as <BUCKET_ID>:<FILE_ID>.
+     * @param {string} replyToEmail - Email address to reply to. If not set, defaults to the sender email address.
+     * @param {string} replyToName - Name of the reply to recipient. If not set, defaults to the sender name.
      * @param {boolean} draft - Is message a draft
      * @param {boolean} html - Is content of type HTML
      * @param {string} scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
@@ -151,6 +157,8 @@ export class Messaging {
         cc?: string[],
         bcc?: string[],
         attachments?: string[],
+        replyToEmail?: string,
+        replyToName?: string,
         draft?: boolean,
         html?: boolean,
         scheduledAt?: string,
@@ -167,6 +175,8 @@ export class Messaging {
                   cc?: string[];
                   bcc?: string[];
                   attachments?: string[];
+                  replyToEmail?: string;
+                  replyToName?: string;
                   draft?: boolean;
                   html?: boolean;
                   scheduledAt?: string;
@@ -181,6 +191,8 @@ export class Messaging {
             string[]?,
             string[]?,
             string[]?,
+            string?,
+            string?,
             boolean?,
             boolean?,
             string?,
@@ -196,6 +208,8 @@ export class Messaging {
             cc?: string[];
             bcc?: string[];
             attachments?: string[];
+            replyToEmail?: string;
+            replyToName?: string;
             draft?: boolean;
             html?: boolean;
             scheduledAt?: string;
@@ -216,6 +230,8 @@ export class Messaging {
                 cc?: string[];
                 bcc?: string[];
                 attachments?: string[];
+                replyToEmail?: string;
+                replyToName?: string;
                 draft?: boolean;
                 html?: boolean;
                 scheduledAt?: string;
@@ -231,9 +247,11 @@ export class Messaging {
                 cc: rest[5] as string[],
                 bcc: rest[6] as string[],
                 attachments: rest[7] as string[],
-                draft: rest[8] as boolean,
-                html: rest[9] as boolean,
-                scheduledAt: rest[10] as string,
+                replyToEmail: rest[8] as string,
+                replyToName: rest[9] as string,
+                draft: rest[10] as boolean,
+                html: rest[11] as boolean,
+                scheduledAt: rest[12] as string,
             };
         }
 
@@ -246,6 +264,8 @@ export class Messaging {
         const cc = params.cc;
         const bcc = params.bcc;
         const attachments = params.attachments;
+        const replyToEmail = params.replyToEmail;
+        const replyToName = params.replyToName;
         const draft = params.draft;
         const html = params.html;
         const scheduledAt = params.scheduledAt;
@@ -294,6 +314,12 @@ export class Messaging {
         if (typeof attachments !== 'undefined') {
             payload['attachments'] = attachments;
         }
+        if (typeof replyToEmail !== 'undefined') {
+            payload['replyToEmail'] = replyToEmail;
+        }
+        if (typeof replyToName !== 'undefined') {
+            payload['replyToName'] = replyToName;
+        }
         if (typeof draft !== 'undefined') {
             payload['draft'] = draft;
         }
@@ -328,6 +354,8 @@ export class Messaging {
      * @param {boolean} params.html - Is content of type HTML
      * @param {string[]} params.cc - Array of target IDs to be added as CC.
      * @param {string[]} params.bcc - Array of target IDs to be added as BCC.
+     * @param {string} params.replyToEmail - Email address to reply to. Pass an empty string to restore the provider or sender default.
+     * @param {string} params.replyToName - Name of the reply to recipient. Pass an empty string to restore the provider or sender default.
      * @param {string} params.scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
      * @param {string[]} params.attachments - Array of compound ID strings of bucket IDs and file IDs to be attached to the email. They should be formatted as <BUCKET_ID>:<FILE_ID>.
      * @throws {AppwriteException}
@@ -344,6 +372,8 @@ export class Messaging {
         html?: boolean;
         cc?: string[];
         bcc?: string[];
+        replyToEmail?: string;
+        replyToName?: string;
         scheduledAt?: string;
         attachments?: string[];
     }): Promise<Models.Message>;
@@ -361,6 +391,8 @@ export class Messaging {
      * @param {boolean} html - Is content of type HTML
      * @param {string[]} cc - Array of target IDs to be added as CC.
      * @param {string[]} bcc - Array of target IDs to be added as BCC.
+     * @param {string} replyToEmail - Email address to reply to. Pass an empty string to restore the provider or sender default.
+     * @param {string} replyToName - Name of the reply to recipient. Pass an empty string to restore the provider or sender default.
      * @param {string} scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
      * @param {string[]} attachments - Array of compound ID strings of bucket IDs and file IDs to be attached to the email. They should be formatted as <BUCKET_ID>:<FILE_ID>.
      * @throws {AppwriteException}
@@ -378,6 +410,8 @@ export class Messaging {
         html?: boolean,
         cc?: string[],
         bcc?: string[],
+        replyToEmail?: string,
+        replyToName?: string,
         scheduledAt?: string,
         attachments?: string[],
     ): Promise<Models.Message>;
@@ -394,6 +428,8 @@ export class Messaging {
                   html?: boolean;
                   cc?: string[];
                   bcc?: string[];
+                  replyToEmail?: string;
+                  replyToName?: string;
                   scheduledAt?: string;
                   attachments?: string[];
               }
@@ -409,6 +445,8 @@ export class Messaging {
             string[]?,
             string[]?,
             string?,
+            string?,
+            string?,
             string[]?,
         ]
     ): Promise<Models.Message> {
@@ -423,6 +461,8 @@ export class Messaging {
             html?: boolean;
             cc?: string[];
             bcc?: string[];
+            replyToEmail?: string;
+            replyToName?: string;
             scheduledAt?: string;
             attachments?: string[];
         };
@@ -443,6 +483,8 @@ export class Messaging {
                 html?: boolean;
                 cc?: string[];
                 bcc?: string[];
+                replyToEmail?: string;
+                replyToName?: string;
                 scheduledAt?: string;
                 attachments?: string[];
             };
@@ -458,8 +500,10 @@ export class Messaging {
                 html: rest[6] as boolean,
                 cc: rest[7] as string[],
                 bcc: rest[8] as string[],
-                scheduledAt: rest[9] as string,
-                attachments: rest[10] as string[],
+                replyToEmail: rest[9] as string,
+                replyToName: rest[10] as string,
+                scheduledAt: rest[11] as string,
+                attachments: rest[12] as string[],
             };
         }
 
@@ -473,6 +517,8 @@ export class Messaging {
         const html = params.html;
         const cc = params.cc;
         const bcc = params.bcc;
+        const replyToEmail = params.replyToEmail;
+        const replyToName = params.replyToName;
         const scheduledAt = params.scheduledAt;
         const attachments = params.attachments;
 
@@ -512,6 +558,12 @@ export class Messaging {
         }
         if (typeof bcc !== 'undefined') {
             payload['bcc'] = bcc;
+        }
+        if (typeof replyToEmail !== 'undefined') {
+            payload['replyToEmail'] = replyToEmail;
+        }
+        if (typeof replyToName !== 'undefined') {
+            payload['replyToName'] = replyToName;
         }
         if (typeof scheduledAt !== 'undefined') {
             payload['scheduledAt'] = scheduledAt;

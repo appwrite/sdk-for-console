@@ -17,7 +17,7 @@ const result = await databases.createIndex({
     collectionId: '<COLLECTION_ID>',
     key: '<KEY>',
     type: DatabasesIndexType.Key,
-    attributes: [],
+    attributes: ['username'],
     orders: [OrderBy.Asc], // optional
     lengths: [], // optional
 });

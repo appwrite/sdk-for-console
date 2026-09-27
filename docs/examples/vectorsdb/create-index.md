@@ -17,7 +17,7 @@ const result = await vectorsDB.createIndex({
     collectionId: '<COLLECTION_ID>',
     key: '<KEY>',
     type: VectorsDBIndexType.HnswEuclidean,
-    attributes: [],
+    attributes: ['embeddings'],
     orders: [OrderBy.Asc], // optional
     lengths: [], // optional
 });

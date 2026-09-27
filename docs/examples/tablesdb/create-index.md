@@ -17,7 +17,7 @@ const result = await tablesDB.createIndex({
     tableId: '<TABLE_ID>',
     key: '<KEY>',
     type: TablesDBIndexType.Key,
-    columns: [],
+    columns: ['username'],
     orders: [OrderBy.Asc], // optional
     lengths: [], // optional
 });

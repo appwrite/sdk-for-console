@@ -9,7 +9,7 @@ const users = new Users(client);
 
 const result = await users.updateLabels({
     userId: '<USER_ID>',
-    labels: [],
+    labels: ['subscriber'],
 });
 
 console.log(result);

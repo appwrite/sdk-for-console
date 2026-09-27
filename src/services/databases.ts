@@ -7080,7 +7080,7 @@ export class Databases {
      * @param {string} params.collectionId - Collection ID.
      * @param {string} params.key - Attribute Key.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributeString>}
+     * @returns {Promise<Models.AttributeBoolean | Models.AttributeBigint | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributePoint | Models.AttributeLine | Models.AttributePolygon | Models.AttributeVarchar | Models.AttributeText | Models.AttributeMediumtext | Models.AttributeLongtext | Models.AttributeString>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.getColumn` instead.
      */
     getAttribute(params: {
@@ -7089,6 +7089,7 @@ export class Databases {
         key: string;
     }): Promise<
         | Models.AttributeBoolean
+        | Models.AttributeBigint
         | Models.AttributeInteger
         | Models.AttributeFloat
         | Models.AttributeEmail
@@ -7097,6 +7098,13 @@ export class Databases {
         | Models.AttributeIp
         | Models.AttributeDatetime
         | Models.AttributeRelationship
+        | Models.AttributePoint
+        | Models.AttributeLine
+        | Models.AttributePolygon
+        | Models.AttributeVarchar
+        | Models.AttributeText
+        | Models.AttributeMediumtext
+        | Models.AttributeLongtext
         | Models.AttributeString
     >;
     /**
@@ -7106,7 +7114,7 @@ export class Databases {
      * @param {string} collectionId - Collection ID.
      * @param {string} key - Attribute Key.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.AttributeBoolean | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributeString>}
+     * @returns {Promise<Models.AttributeBoolean | Models.AttributeBigint | Models.AttributeInteger | Models.AttributeFloat | Models.AttributeEmail | Models.AttributeEnum | Models.AttributeUrl | Models.AttributeIp | Models.AttributeDatetime | Models.AttributeRelationship | Models.AttributePoint | Models.AttributeLine | Models.AttributePolygon | Models.AttributeVarchar | Models.AttributeText | Models.AttributeMediumtext | Models.AttributeLongtext | Models.AttributeString>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     getAttribute(
@@ -7115,6 +7123,7 @@ export class Databases {
         key: string,
     ): Promise<
         | Models.AttributeBoolean
+        | Models.AttributeBigint
         | Models.AttributeInteger
         | Models.AttributeFloat
         | Models.AttributeEmail
@@ -7123,6 +7132,13 @@ export class Databases {
         | Models.AttributeIp
         | Models.AttributeDatetime
         | Models.AttributeRelationship
+        | Models.AttributePoint
+        | Models.AttributeLine
+        | Models.AttributePolygon
+        | Models.AttributeVarchar
+        | Models.AttributeText
+        | Models.AttributeMediumtext
+        | Models.AttributeLongtext
         | Models.AttributeString
     >;
     getAttribute(
@@ -7131,6 +7147,7 @@ export class Databases {
         ...rest: [string?, string?]
     ): Promise<
         | Models.AttributeBoolean
+        | Models.AttributeBigint
         | Models.AttributeInteger
         | Models.AttributeFloat
         | Models.AttributeEmail
@@ -7139,6 +7156,13 @@ export class Databases {
         | Models.AttributeIp
         | Models.AttributeDatetime
         | Models.AttributeRelationship
+        | Models.AttributePoint
+        | Models.AttributeLine
+        | Models.AttributePolygon
+        | Models.AttributeVarchar
+        | Models.AttributeText
+        | Models.AttributeMediumtext
+        | Models.AttributeLongtext
         | Models.AttributeString
     > {
         let params: { databaseId: string; collectionId: string; key: string };

@@ -7,4 +7,5 @@ export enum ProjectEmailTemplateId {
     SessionAlert = 'sessionAlert',
     OtpSession = 'otpSession',
     OtpVerification = 'otpVerification',
+    OtpRecovery = 'otpRecovery',
 }

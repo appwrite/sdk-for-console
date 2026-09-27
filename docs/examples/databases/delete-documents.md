@@ -10,7 +10,9 @@ const databases = new Databases(client);
 const result = await databases.deleteDocuments({
     databaseId: '<DATABASE_ID>',
     collectionId: '<COLLECTION_ID>',
-    queries: [], // optional
+    queries: [
+        '{"method":"equal", "attribute":"$id", "values":["<DOCUMENT_ID>"]}',
+    ], // optional
     transactionId: '<TRANSACTION_ID>', // optional
 });
 

@@ -9,7 +9,7 @@ const organization = new Organization(client);
 
 const result = await organization.createEphemeralProjectKey({
     projectId: '<PROJECT_ID>',
-    scopes: [ProjectKeyScopes.ProjectRead],
+    scopes: [ProjectKeyScopes.UsersRead],
     duration: 600,
 });
 

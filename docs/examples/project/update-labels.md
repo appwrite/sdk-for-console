@@ -8,7 +8,7 @@ const client = new Client()
 const project = new Project(client);
 
 const result = await project.updateLabels({
-    labels: [],
+    labels: ['production'],
 });
 
 console.log(result);

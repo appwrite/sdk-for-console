@@ -40,7 +40,7 @@ export enum QuerySuggestionResource {
     Buckets = 'buckets',
     Providers = 'providers',
     Messages = 'messages',
-    AppwritePushLedger = 'appwritepushledger',
+    PushLedger = 'pushledger',
     Topics = 'topics',
     Subscribers = 'subscribers',
     Targets = 'targets',
