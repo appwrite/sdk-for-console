@@ -65,12 +65,12 @@ export class Embeddings {
             throw new AppwriteException('Missing required parameter: "texts"');
         }
         const apiPath = '/embeddings/text';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof texts !== 'undefined') {
-            payload['texts'] = texts;
+            apiPayload['texts'] = texts;
         }
         if (typeof model !== 'undefined') {
-            payload['model'] = model;
+            apiPayload['model'] = model;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -80,6 +80,6 @@ export class Embeddings {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 }

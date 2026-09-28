@@ -77,15 +77,15 @@ export class Storage {
         const total = params.total;
 
         const apiPath = '/storage/buckets';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -94,7 +94,7 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -256,39 +256,39 @@ export class Storage {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/storage/buckets';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof bucketId !== 'undefined') {
-            payload['bucketId'] = bucketId;
+            apiPayload['bucketId'] = bucketId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof fileSecurity !== 'undefined') {
-            payload['fileSecurity'] = fileSecurity;
+            apiPayload['fileSecurity'] = fileSecurity;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof maximumFileSize !== 'undefined') {
-            payload['maximumFileSize'] = maximumFileSize;
+            apiPayload['maximumFileSize'] = maximumFileSize;
         }
         if (typeof allowedFileExtensions !== 'undefined') {
-            payload['allowedFileExtensions'] = allowedFileExtensions;
+            apiPayload['allowedFileExtensions'] = allowedFileExtensions;
         }
         if (typeof compression !== 'undefined') {
-            payload['compression'] = compression;
+            apiPayload['compression'] = compression;
         }
         if (typeof encryption !== 'undefined') {
-            payload['encryption'] = encryption;
+            apiPayload['encryption'] = encryption;
         }
         if (typeof antivirus !== 'undefined') {
-            payload['antivirus'] = antivirus;
+            apiPayload['antivirus'] = antivirus;
         }
         if (typeof transformations !== 'undefined') {
-            payload['transformations'] = transformations;
+            apiPayload['transformations'] = transformations;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -298,7 +298,7 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -346,7 +346,7 @@ export class Storage {
             '{bucketId}',
             encodeURIComponent(String(bucketId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -354,7 +354,7 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -519,36 +519,36 @@ export class Storage {
             '{bucketId}',
             encodeURIComponent(String(bucketId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof fileSecurity !== 'undefined') {
-            payload['fileSecurity'] = fileSecurity;
+            apiPayload['fileSecurity'] = fileSecurity;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof maximumFileSize !== 'undefined') {
-            payload['maximumFileSize'] = maximumFileSize;
+            apiPayload['maximumFileSize'] = maximumFileSize;
         }
         if (typeof allowedFileExtensions !== 'undefined') {
-            payload['allowedFileExtensions'] = allowedFileExtensions;
+            apiPayload['allowedFileExtensions'] = allowedFileExtensions;
         }
         if (typeof compression !== 'undefined') {
-            payload['compression'] = compression;
+            apiPayload['compression'] = compression;
         }
         if (typeof encryption !== 'undefined') {
-            payload['encryption'] = encryption;
+            apiPayload['encryption'] = encryption;
         }
         if (typeof antivirus !== 'undefined') {
-            payload['antivirus'] = antivirus;
+            apiPayload['antivirus'] = antivirus;
         }
         if (typeof transformations !== 'undefined') {
-            payload['transformations'] = transformations;
+            apiPayload['transformations'] = transformations;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -558,7 +558,7 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -604,7 +604,7 @@ export class Storage {
             '{bucketId}',
             encodeURIComponent(String(bucketId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -613,7 +613,7 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -701,15 +701,15 @@ export class Storage {
             '{bucketId}',
             encodeURIComponent(String(bucketId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -718,7 +718,7 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -849,18 +849,18 @@ export class Storage {
             '{bucketId}',
             encodeURIComponent(String(bucketId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof fileId !== 'undefined') {
-            payload['fileId'] = fileId;
+            apiPayload['fileId'] = fileId;
         }
         if (typeof file !== 'undefined') {
-            payload['file'] = file;
+            apiPayload['file'] = file;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof folder !== 'undefined') {
-            payload['folder'] = folder;
+            apiPayload['folder'] = folder;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -874,7 +874,7 @@ export class Storage {
             'post',
             uri,
             apiHeaders,
-            payload,
+            apiPayload,
             onProgress,
         );
     }
@@ -934,7 +934,7 @@ export class Storage {
         const apiPath = '/storage/buckets/{bucketId}/files/{fileId}'
             .replace('{bucketId}', encodeURIComponent(String(bucketId)))
             .replace('{fileId}', encodeURIComponent(String(fileId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -942,7 +942,7 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1032,12 +1032,12 @@ export class Storage {
         const apiPath = '/storage/buckets/{bucketId}/files/{fileId}'
             .replace('{bucketId}', encodeURIComponent(String(bucketId)))
             .replace('{fileId}', encodeURIComponent(String(fileId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1047,7 +1047,7 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1105,7 +1105,7 @@ export class Storage {
         const apiPath = '/storage/buckets/{bucketId}/files/{fileId}'
             .replace('{bucketId}', encodeURIComponent(String(bucketId)))
             .replace('{fileId}', encodeURIComponent(String(fileId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1114,7 +1114,7 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1182,16 +1182,18 @@ export class Storage {
         const apiPath = '/storage/buckets/{bucketId}/files/{fileId}/download'
             .replace('{bucketId}', encodeURIComponent(String(bucketId)))
             .replace('{fileId}', encodeURIComponent(String(fileId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof token !== 'undefined') {
-            payload['token'] = token;
+            apiPayload['token'] = token;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 
@@ -1389,49 +1391,51 @@ export class Storage {
         const apiPath = '/storage/buckets/{bucketId}/files/{fileId}/preview'
             .replace('{bucketId}', encodeURIComponent(String(bucketId)))
             .replace('{fileId}', encodeURIComponent(String(fileId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof width !== 'undefined') {
-            payload['width'] = width;
+            apiPayload['width'] = width;
         }
         if (typeof height !== 'undefined') {
-            payload['height'] = height;
+            apiPayload['height'] = height;
         }
         if (typeof gravity !== 'undefined') {
-            payload['gravity'] = gravity;
+            apiPayload['gravity'] = gravity;
         }
         if (typeof quality !== 'undefined') {
-            payload['quality'] = quality;
+            apiPayload['quality'] = quality;
         }
         if (typeof borderWidth !== 'undefined') {
-            payload['borderWidth'] = borderWidth;
+            apiPayload['borderWidth'] = borderWidth;
         }
         if (typeof borderColor !== 'undefined') {
-            payload['borderColor'] = borderColor;
+            apiPayload['borderColor'] = borderColor;
         }
         if (typeof borderRadius !== 'undefined') {
-            payload['borderRadius'] = borderRadius;
+            apiPayload['borderRadius'] = borderRadius;
         }
         if (typeof opacity !== 'undefined') {
-            payload['opacity'] = opacity;
+            apiPayload['opacity'] = opacity;
         }
         if (typeof rotation !== 'undefined') {
-            payload['rotation'] = rotation;
+            apiPayload['rotation'] = rotation;
         }
         if (typeof background !== 'undefined') {
-            payload['background'] = background;
+            apiPayload['background'] = background;
         }
         if (typeof output !== 'undefined') {
-            payload['output'] = output;
+            apiPayload['output'] = output;
         }
         if (typeof token !== 'undefined') {
-            payload['token'] = token;
+            apiPayload['token'] = token;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 
@@ -1503,16 +1507,18 @@ export class Storage {
         const apiPath = '/storage/buckets/{bucketId}/files/{fileId}/view'
             .replace('{bucketId}', encodeURIComponent(String(bucketId)))
             .replace('{fileId}', encodeURIComponent(String(fileId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof token !== 'undefined') {
-            payload['token'] = token;
+            apiPayload['token'] = token;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 

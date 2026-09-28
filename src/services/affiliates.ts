@@ -50,9 +50,9 @@ export class Affiliates {
         const queries = params.queries;
 
         const apiPath = '/affiliates/links';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -61,7 +61,7 @@ export class Affiliates {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -114,12 +114,12 @@ export class Affiliates {
             throw new AppwriteException('Missing required parameter: "linkId"');
         }
         const apiPath = '/affiliates/links';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof linkId !== 'undefined') {
-            payload['linkId'] = linkId;
+            apiPayload['linkId'] = linkId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -129,7 +129,7 @@ export class Affiliates {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -177,7 +177,7 @@ export class Affiliates {
             '{linkId}',
             encodeURIComponent(String(linkId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -185,7 +185,7 @@ export class Affiliates {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -231,7 +231,7 @@ export class Affiliates {
             '{linkId}',
             encodeURIComponent(String(linkId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -240,7 +240,7 @@ export class Affiliates {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -285,9 +285,9 @@ export class Affiliates {
         const queries = params.queries;
 
         const apiPath = '/affiliates/referrals';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -296,7 +296,7 @@ export class Affiliates {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -341,9 +341,9 @@ export class Affiliates {
         const queries = params.queries;
 
         const apiPath = '/affiliates/rewards';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -352,7 +352,7 @@ export class Affiliates {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -437,12 +437,12 @@ export class Affiliates {
             '{rewardId}',
             encodeURIComponent(String(rewardId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof status !== 'undefined') {
-            payload['status'] = status;
+            apiPayload['status'] = status;
         }
         if (typeof organizationId !== 'undefined') {
-            payload['organizationId'] = organizationId;
+            apiPayload['organizationId'] = organizationId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -452,6 +452,6 @@ export class Affiliates {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 }

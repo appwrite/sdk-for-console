@@ -58,7 +58,7 @@ export class Console {
             '{campaignId}',
             encodeURIComponent(String(campaignId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -66,7 +66,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -114,7 +114,7 @@ export class Console {
             '{couponId}',
             encodeURIComponent(String(couponId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -122,7 +122,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -187,15 +187,15 @@ export class Console {
         const total = params.total;
 
         const apiPath = '/console/databases';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -204,7 +204,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -215,7 +215,7 @@ export class Console {
      */
     listOAuth2Providers(): Promise<Models.ConsoleOAuth2ProviderList> {
         const apiPath = '/console/oauth2-providers';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -223,7 +223,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -265,9 +265,9 @@ export class Console {
         const platform = params.platform;
 
         const apiPath = '/console/plans';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof platform !== 'undefined') {
-            payload['platform'] = platform;
+            apiPayload['platform'] = platform;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -276,7 +276,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -322,7 +322,7 @@ export class Console {
             '{planId}',
             encodeURIComponent(String(planId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -330,7 +330,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -342,7 +342,7 @@ export class Console {
      */
     listPostgresExtensions(): Promise<Models.PostgresExtensionList> {
         const apiPath = '/console/postgres-extensions';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -350,7 +350,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -398,7 +398,7 @@ export class Console {
             '{programId}',
             encodeURIComponent(String(programId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -406,7 +406,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -460,7 +460,7 @@ export class Console {
             '{programId}',
             encodeURIComponent(String(programId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -469,7 +469,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -480,7 +480,7 @@ export class Console {
      */
     listRegions(): Promise<Models.ConsoleRegionList> {
         const apiPath = '/console/regions';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -488,7 +488,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -545,12 +545,12 @@ export class Console {
             throw new AppwriteException('Missing required parameter: "type"');
         }
         const apiPath = '/console/resources';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -559,7 +559,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -570,7 +570,7 @@ export class Console {
      */
     listOrganizationScopes(): Promise<Models.ConsoleKeyScopeList> {
         const apiPath = '/console/scopes/organization';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -578,7 +578,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -589,7 +589,7 @@ export class Console {
      */
     listProjectScopes(): Promise<Models.ConsoleKeyScopeList> {
         const apiPath = '/console/scopes/project';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -597,7 +597,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -687,21 +687,21 @@ export class Console {
         const utmMedium = params.utmMedium;
 
         const apiPath = '/console/sources';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof ref !== 'undefined') {
-            payload['ref'] = ref;
+            apiPayload['ref'] = ref;
         }
         if (typeof referrer !== 'undefined') {
-            payload['referrer'] = referrer;
+            apiPayload['referrer'] = referrer;
         }
         if (typeof utmSource !== 'undefined') {
-            payload['utmSource'] = utmSource;
+            apiPayload['utmSource'] = utmSource;
         }
         if (typeof utmCampaign !== 'undefined') {
-            payload['utmCampaign'] = utmCampaign;
+            apiPayload['utmCampaign'] = utmCampaign;
         }
         if (typeof utmMedium !== 'undefined') {
-            payload['utmMedium'] = utmMedium;
+            apiPayload['utmMedium'] = utmMedium;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -711,7 +711,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -810,21 +810,21 @@ export class Console {
             );
         }
         const apiPath = '/console/suggestions/columns';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof databaseId !== 'undefined') {
-            payload['databaseId'] = databaseId;
+            apiPayload['databaseId'] = databaseId;
         }
         if (typeof tableId !== 'undefined') {
-            payload['tableId'] = tableId;
+            apiPayload['tableId'] = tableId;
         }
         if (typeof context !== 'undefined') {
-            payload['context'] = context;
+            apiPayload['context'] = context;
         }
         if (typeof min !== 'undefined') {
-            payload['min'] = min;
+            apiPayload['min'] = min;
         }
         if (typeof max !== 'undefined') {
-            payload['max'] = max;
+            apiPayload['max'] = max;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -833,7 +833,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -923,18 +923,18 @@ export class Console {
             );
         }
         const apiPath = '/console/suggestions/indexes';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof databaseId !== 'undefined') {
-            payload['databaseId'] = databaseId;
+            apiPayload['databaseId'] = databaseId;
         }
         if (typeof tableId !== 'undefined') {
-            payload['tableId'] = tableId;
+            apiPayload['tableId'] = tableId;
         }
         if (typeof min !== 'undefined') {
-            payload['min'] = min;
+            apiPayload['min'] = min;
         }
         if (typeof max !== 'undefined') {
-            payload['max'] = max;
+            apiPayload['max'] = max;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -943,7 +943,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1037,18 +1037,18 @@ export class Console {
             throw new AppwriteException('Missing required parameter: "input"');
         }
         const apiPath = '/console/suggestions/queries';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resource !== 'undefined') {
-            payload['resource'] = resource;
+            apiPayload['resource'] = resource;
         }
         if (typeof input !== 'undefined') {
-            payload['input'] = input;
+            apiPayload['input'] = input;
         }
         if (typeof databaseId !== 'undefined') {
-            payload['databaseId'] = databaseId;
+            apiPayload['databaseId'] = databaseId;
         }
         if (typeof tableId !== 'undefined') {
-            payload['tableId'] = tableId;
+            apiPayload['tableId'] = tableId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1057,7 +1057,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1128,9 +1128,9 @@ export class Console {
             '{templateId}',
             encodeURIComponent(String(templateId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof locale !== 'undefined') {
-            payload['locale'] = locale;
+            apiPayload['locale'] = locale;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1139,7 +1139,7 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1150,7 +1150,7 @@ export class Console {
      */
     variables(): Promise<Models.ConsoleVariables> {
         const apiPath = '/console/variables';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1158,6 +1158,6 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 }

@@ -413,7 +413,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '18.0.0',
+        'x-sdk-version': '18.1.0',
         'X-Appwrite-Response-Format': '2.3.0',
     };
 
@@ -1171,6 +1171,11 @@ class Client {
                             for (const nestedValue of value) {
                                 formData.append(`${key}[]`, nestedValue);
                             }
+                        } else if (
+                            value !== null &&
+                            typeof value === 'object'
+                        ) {
+                            formData.append(key, JSONbig.stringify(value));
                         } else {
                             formData.append(key, value);
                         }
@@ -1192,6 +1197,7 @@ class Client {
         headers: Headers = {},
         originalPayload: Payload = {},
         onProgress: (progress: UploadProgress) => void,
+        responseType = 'json',
     ) {
         const [fileParam, file] =
             Object.entries(originalPayload).find(
@@ -1199,11 +1205,23 @@ class Client {
             ) ?? [];
 
         if (!file || !fileParam) {
-            return await this.call(method, url, headers, originalPayload);
+            return await this.call(
+                method,
+                url,
+                headers,
+                originalPayload,
+                responseType,
+            );
         }
 
-        if (file.size <= Client.CHUNK_SIZE) {
-            return await this.call(method, url, headers, originalPayload);
+        if (file.size <= Client.CHUNK_SIZE || responseType === 'text') {
+            return await this.call(
+                method,
+                url,
+                headers,
+                originalPayload,
+                responseType,
+            );
         }
 
         const totalChunks = Math.ceil(file.size / Client.CHUNK_SIZE);
@@ -1223,6 +1241,7 @@ class Client {
             url,
             firstChunkHeaders,
             firstPayload,
+            responseType,
         );
         const uploadId = response?.$id;
 
@@ -1283,6 +1302,7 @@ class Client {
                 url,
                 chunkHeaders,
                 chunkPayload,
+                responseType,
             );
 
             if (rejected) {
@@ -1392,7 +1412,9 @@ class Client {
                 );
         }
 
-        if (
+        if (responseType === 'text' && response.status < 400) {
+            data = await response.text();
+        } else if (
             response.headers.get('content-type')?.includes('application/json')
         ) {
             data = JSONbig.parse(await response.text());

@@ -59,12 +59,12 @@ export class DocumentsDB {
         const total = params.total;
 
         const apiPath = '/documentsdb';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -73,7 +73,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -181,24 +181,24 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/documentsdb';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof databaseId !== 'undefined') {
-            payload['databaseId'] = databaseId;
+            apiPayload['databaseId'] = databaseId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof specification !== 'undefined') {
-            payload['specification'] = specification;
+            apiPayload['specification'] = specification;
         }
         if (typeof replicas !== 'undefined') {
-            payload['replicas'] = replicas;
+            apiPayload['replicas'] = replicas;
         }
         if (typeof syncMode !== 'undefined') {
-            payload['syncMode'] = syncMode;
+            apiPayload['syncMode'] = syncMode;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -208,7 +208,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -219,7 +219,7 @@ export class DocumentsDB {
      */
     listSpecifications(): Promise<Models.DedicatedDatabaseSpecificationList> {
         const apiPath = '/documentsdb/specifications';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -227,7 +227,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -270,9 +270,9 @@ export class DocumentsDB {
         const queries = params.queries;
 
         const apiPath = '/documentsdb/transactions';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -281,7 +281,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -322,9 +322,9 @@ export class DocumentsDB {
         const ttl = params.ttl;
 
         const apiPath = '/documentsdb/transactions';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -334,7 +334,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -384,7 +384,7 @@ export class DocumentsDB {
             '{transactionId}',
             encodeURIComponent(String(transactionId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -392,7 +392,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -467,12 +467,12 @@ export class DocumentsDB {
             '{transactionId}',
             encodeURIComponent(String(transactionId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof commit !== 'undefined') {
-            payload['commit'] = commit;
+            apiPayload['commit'] = commit;
         }
         if (typeof rollback !== 'undefined') {
-            payload['rollback'] = rollback;
+            apiPayload['rollback'] = rollback;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -482,7 +482,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -530,7 +530,7 @@ export class DocumentsDB {
             '{transactionId}',
             encodeURIComponent(String(transactionId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -539,7 +539,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -587,7 +587,7 @@ export class DocumentsDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -595,7 +595,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -704,21 +704,21 @@ export class DocumentsDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof specification !== 'undefined') {
-            payload['specification'] = specification;
+            apiPayload['specification'] = specification;
         }
         if (typeof replicas !== 'undefined') {
-            payload['replicas'] = replicas;
+            apiPayload['replicas'] = replicas;
         }
         if (typeof syncMode !== 'undefined') {
-            payload['syncMode'] = syncMode;
+            apiPayload['syncMode'] = syncMode;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -728,7 +728,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -774,7 +774,7 @@ export class DocumentsDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -783,7 +783,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -871,15 +871,15 @@ export class DocumentsDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -888,7 +888,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1028,27 +1028,27 @@ export class DocumentsDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof collectionId !== 'undefined') {
-            payload['collectionId'] = collectionId;
+            apiPayload['collectionId'] = collectionId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof documentSecurity !== 'undefined') {
-            payload['documentSecurity'] = documentSecurity;
+            apiPayload['documentSecurity'] = documentSecurity;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof attributes !== 'undefined') {
-            payload['attributes'] = attributes;
+            apiPayload['attributes'] = attributes;
         }
         if (typeof indexes !== 'undefined') {
-            payload['indexes'] = indexes;
+            apiPayload['indexes'] = indexes;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1058,7 +1058,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1127,7 +1127,7 @@ export class DocumentsDB {
                 '{collectionId}',
                 encodeURIComponent(String(collectionId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1135,7 +1135,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1260,21 +1260,21 @@ export class DocumentsDB {
                 '{collectionId}',
                 encodeURIComponent(String(collectionId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof documentSecurity !== 'undefined') {
-            payload['documentSecurity'] = documentSecurity;
+            apiPayload['documentSecurity'] = documentSecurity;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof purge !== 'undefined') {
-            payload['purge'] = purge;
+            apiPayload['purge'] = purge;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1284,7 +1284,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1350,7 +1350,7 @@ export class DocumentsDB {
                 '{collectionId}',
                 encodeURIComponent(String(collectionId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1359,7 +1359,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1475,18 +1475,18 @@ export class DocumentsDB {
                     '{collectionId}',
                     encodeURIComponent(String(collectionId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1495,7 +1495,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1644,18 +1644,18 @@ export class DocumentsDB {
                     '{collectionId}',
                     encodeURIComponent(String(collectionId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof documentId !== 'undefined') {
-            payload['documentId'] = documentId;
+            apiPayload['documentId'] = documentId;
         }
         if (typeof data !== 'undefined') {
-            payload['data'] = data;
+            apiPayload['data'] = data;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1665,7 +1665,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1768,12 +1768,12 @@ export class DocumentsDB {
                     '{collectionId}',
                     encodeURIComponent(String(collectionId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof documents !== 'undefined') {
-            payload['documents'] = documents;
+            apiPayload['documents'] = documents;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1783,7 +1783,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1888,12 +1888,12 @@ export class DocumentsDB {
                     '{collectionId}',
                     encodeURIComponent(String(collectionId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof documents !== 'undefined') {
-            payload['documents'] = documents;
+            apiPayload['documents'] = documents;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1903,7 +1903,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2010,15 +2010,15 @@ export class DocumentsDB {
                     '{collectionId}',
                     encodeURIComponent(String(collectionId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof data !== 'undefined') {
-            payload['data'] = data;
+            apiPayload['data'] = data;
         }
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2028,7 +2028,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2126,12 +2126,12 @@ export class DocumentsDB {
                     '{collectionId}',
                     encodeURIComponent(String(collectionId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2141,7 +2141,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2257,12 +2257,12 @@ export class DocumentsDB {
                     '{documentId}',
                     encodeURIComponent(String(documentId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2271,7 +2271,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2423,15 +2423,15 @@ export class DocumentsDB {
                     '{documentId}',
                     encodeURIComponent(String(documentId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof data !== 'undefined') {
-            payload['data'] = data;
+            apiPayload['data'] = data;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2441,7 +2441,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2593,15 +2593,15 @@ export class DocumentsDB {
                     '{documentId}',
                     encodeURIComponent(String(documentId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof data !== 'undefined') {
-            payload['data'] = data;
+            apiPayload['data'] = data;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2611,7 +2611,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2716,9 +2716,9 @@ export class DocumentsDB {
                     '{documentId}',
                     encodeURIComponent(String(documentId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2728,7 +2728,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2869,15 +2869,15 @@ export class DocumentsDB {
                 )
                 .replace('{documentId}', encodeURIComponent(String(documentId)))
                 .replace('{attribute}', encodeURIComponent(String(attribute)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof min !== 'undefined') {
-            payload['min'] = min;
+            apiPayload['min'] = min;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2887,7 +2887,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3028,15 +3028,15 @@ export class DocumentsDB {
                 )
                 .replace('{documentId}', encodeURIComponent(String(documentId)))
                 .replace('{attribute}', encodeURIComponent(String(attribute)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof max !== 'undefined') {
-            payload['max'] = max;
+            apiPayload['max'] = max;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3046,7 +3046,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3142,12 +3142,12 @@ export class DocumentsDB {
                     '{collectionId}',
                     encodeURIComponent(String(collectionId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3156,7 +3156,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3299,21 +3299,21 @@ export class DocumentsDB {
                     '{collectionId}',
                     encodeURIComponent(String(collectionId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         if (typeof attributes !== 'undefined') {
-            payload['attributes'] = attributes;
+            apiPayload['attributes'] = attributes;
         }
         if (typeof orders !== 'undefined') {
-            payload['orders'] = orders;
+            apiPayload['orders'] = orders;
         }
         if (typeof lengths !== 'undefined') {
-            payload['lengths'] = lengths;
+            apiPayload['lengths'] = lengths;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3323,7 +3323,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3405,7 +3405,7 @@ export class DocumentsDB {
                     encodeURIComponent(String(collectionId)),
                 )
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3413,7 +3413,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3495,7 +3495,7 @@ export class DocumentsDB {
                     encodeURIComponent(String(collectionId)),
                 )
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3504,7 +3504,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3567,9 +3567,9 @@ export class DocumentsDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof targetReplicaId !== 'undefined') {
-            payload['targetReplicaId'] = targetReplicaId;
+            apiPayload['targetReplicaId'] = targetReplicaId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3579,7 +3579,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3667,15 +3667,15 @@ export class DocumentsDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof status !== 'undefined') {
-            payload['status'] = status;
+            apiPayload['status'] = status;
         }
         if (typeof limit !== 'undefined') {
-            payload['limit'] = limit;
+            apiPayload['limit'] = limit;
         }
         if (typeof offset !== 'undefined') {
-            payload['offset'] = offset;
+            apiPayload['offset'] = offset;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3684,7 +3684,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3734,7 +3734,7 @@ export class DocumentsDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3742,7 +3742,7 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3790,7 +3790,7 @@ export class DocumentsDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3798,6 +3798,6 @@ export class DocumentsDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 }

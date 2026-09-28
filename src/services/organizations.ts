@@ -65,12 +65,12 @@ export class Organizations {
         const search = params.search;
 
         const apiPath = '/organizations';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -79,7 +79,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -244,36 +244,36 @@ export class Organizations {
             );
         }
         const apiPath = '/organizations';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof organizationId !== 'undefined') {
-            payload['organizationId'] = organizationId;
+            apiPayload['organizationId'] = organizationId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof billingPlan !== 'undefined') {
-            payload['billingPlan'] = billingPlan;
+            apiPayload['billingPlan'] = billingPlan;
         }
         if (typeof paymentMethodId !== 'undefined') {
-            payload['paymentMethodId'] = paymentMethodId;
+            apiPayload['paymentMethodId'] = paymentMethodId;
         }
         if (typeof billingAddressId !== 'undefined') {
-            payload['billingAddressId'] = billingAddressId;
+            apiPayload['billingAddressId'] = billingAddressId;
         }
         if (typeof invites !== 'undefined') {
-            payload['invites'] = invites;
+            apiPayload['invites'] = invites;
         }
         if (typeof couponId !== 'undefined') {
-            payload['couponId'] = couponId;
+            apiPayload['couponId'] = couponId;
         }
         if (typeof taxId !== 'undefined') {
-            payload['taxId'] = taxId;
+            apiPayload['taxId'] = taxId;
         }
         if (typeof budget !== 'undefined') {
-            payload['budget'] = budget;
+            apiPayload['budget'] = budget;
         }
         if (typeof platform !== 'undefined') {
-            payload['platform'] = platform;
+            apiPayload['platform'] = platform;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -283,7 +283,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -377,21 +377,21 @@ export class Organizations {
             );
         }
         const apiPath = '/organizations/estimations/create-organization';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
-            payload['billingPlan'] = billingPlan;
+            apiPayload['billingPlan'] = billingPlan;
         }
         if (typeof paymentMethodId !== 'undefined') {
-            payload['paymentMethodId'] = paymentMethodId;
+            apiPayload['paymentMethodId'] = paymentMethodId;
         }
         if (typeof invites !== 'undefined') {
-            payload['invites'] = invites;
+            apiPayload['invites'] = invites;
         }
         if (typeof couponId !== 'undefined') {
-            payload['couponId'] = couponId;
+            apiPayload['couponId'] = couponId;
         }
         if (typeof platform !== 'undefined') {
-            payload['platform'] = platform;
+            apiPayload['platform'] = platform;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -401,7 +401,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -447,7 +447,7 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -456,7 +456,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -506,7 +506,7 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -514,7 +514,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -564,7 +564,7 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -573,7 +573,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -626,7 +626,7 @@ export class Organizations {
                 '{organizationId}',
                 encodeURIComponent(String(organizationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -635,7 +635,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -703,7 +703,7 @@ export class Organizations {
                 encodeURIComponent(String(organizationId)),
             )
             .replace('{addonId}', encodeURIComponent(String(addonId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -711,7 +711,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -779,7 +779,7 @@ export class Organizations {
                 encodeURIComponent(String(organizationId)),
             )
             .replace('{addonId}', encodeURIComponent(String(addonId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -788,7 +788,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -860,7 +860,7 @@ export class Organizations {
                     encodeURIComponent(String(organizationId)),
                 )
                 .replace('{addonId}', encodeURIComponent(String(addonId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -869,7 +869,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -938,7 +938,7 @@ export class Organizations {
                 encodeURIComponent(String(organizationId)),
             )
             .replace('{addon}', encodeURIComponent(String(addon)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -946,7 +946,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1008,9 +1008,9 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1019,7 +1019,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1118,12 +1118,12 @@ export class Organizations {
                     '{aggregationId}',
                     encodeURIComponent(String(aggregationId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof limit !== 'undefined') {
-            payload['limit'] = limit;
+            apiPayload['limit'] = limit;
         }
         if (typeof offset !== 'undefined') {
-            payload['offset'] = offset;
+            apiPayload['offset'] = offset;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1132,7 +1132,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1207,9 +1207,9 @@ export class Organizations {
                 '{organizationId}',
                 encodeURIComponent(String(organizationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof billingAddressId !== 'undefined') {
-            payload['billingAddressId'] = billingAddressId;
+            apiPayload['billingAddressId'] = billingAddressId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1219,7 +1219,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1268,7 +1268,7 @@ export class Organizations {
                 '{organizationId}',
                 encodeURIComponent(String(organizationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1277,7 +1277,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1354,7 +1354,7 @@ export class Organizations {
                     '{billingAddressId}',
                     encodeURIComponent(String(billingAddressId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1362,7 +1362,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1436,9 +1436,9 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof billingEmail !== 'undefined') {
-            payload['billingEmail'] = billingEmail;
+            apiPayload['billingEmail'] = billingEmail;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1448,7 +1448,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1532,12 +1532,12 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof budget !== 'undefined') {
-            payload['budget'] = budget;
+            apiPayload['budget'] = budget;
         }
         if (typeof alerts !== 'undefined') {
-            payload['alerts'] = alerts;
+            apiPayload['alerts'] = alerts;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1547,7 +1547,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1611,9 +1611,9 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1622,7 +1622,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1686,9 +1686,9 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof couponId !== 'undefined') {
-            payload['couponId'] = couponId;
+            apiPayload['couponId'] = couponId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1698,7 +1698,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1751,7 +1751,7 @@ export class Organizations {
                 '{organizationId}',
                 encodeURIComponent(String(organizationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1759,7 +1759,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1825,7 +1825,7 @@ export class Organizations {
                 encodeURIComponent(String(organizationId)),
             )
             .replace('{creditId}', encodeURIComponent(String(creditId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1833,7 +1833,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1886,7 +1886,7 @@ export class Organizations {
                 '{organizationId}',
                 encodeURIComponent(String(organizationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1895,7 +1895,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1989,15 +1989,15 @@ export class Organizations {
                 '{organizationId}',
                 encodeURIComponent(String(organizationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
-            payload['billingPlan'] = billingPlan;
+            apiPayload['billingPlan'] = billingPlan;
         }
         if (typeof invites !== 'undefined') {
-            payload['invites'] = invites;
+            apiPayload['invites'] = invites;
         }
         if (typeof couponId !== 'undefined') {
-            payload['couponId'] = couponId;
+            apiPayload['couponId'] = couponId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2007,7 +2007,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2125,18 +2125,18 @@ export class Organizations {
                 '{organizationId}',
                 encodeURIComponent(String(organizationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof reason !== 'undefined') {
-            payload['reason'] = reason;
+            apiPayload['reason'] = reason;
         }
         if (typeof message !== 'undefined') {
-            payload['message'] = message;
+            apiPayload['message'] = message;
         }
         if (typeof fromPlanId !== 'undefined') {
-            payload['fromPlanId'] = fromPlanId;
+            apiPayload['fromPlanId'] = fromPlanId;
         }
         if (typeof toPlanId !== 'undefined') {
-            payload['toPlanId'] = toPlanId;
+            apiPayload['toPlanId'] = toPlanId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2146,7 +2146,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2208,9 +2208,9 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2219,7 +2219,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2288,7 +2288,7 @@ export class Organizations {
                 encodeURIComponent(String(organizationId)),
             )
             .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2296,7 +2296,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2363,13 +2363,15 @@ export class Organizations {
                     encodeURIComponent(String(organizationId)),
                 )
                 .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 
@@ -2465,9 +2467,9 @@ export class Organizations {
                     encodeURIComponent(String(organizationId)),
                 )
                 .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof paymentMethodId !== 'undefined') {
-            payload['paymentMethodId'] = paymentMethodId;
+            apiPayload['paymentMethodId'] = paymentMethodId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2477,7 +2479,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2547,7 +2549,7 @@ export class Organizations {
                     encodeURIComponent(String(organizationId)),
                 )
                 .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2556,7 +2558,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2623,13 +2625,15 @@ export class Organizations {
                     encodeURIComponent(String(organizationId)),
                 )
                 .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 
@@ -2708,9 +2712,9 @@ export class Organizations {
                 '{organizationId}',
                 encodeURIComponent(String(organizationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof paymentMethodId !== 'undefined') {
-            payload['paymentMethodId'] = paymentMethodId;
+            apiPayload['paymentMethodId'] = paymentMethodId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2720,7 +2724,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2777,7 +2781,7 @@ export class Organizations {
                 '{organizationId}',
                 encodeURIComponent(String(organizationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2786,7 +2790,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2863,9 +2867,9 @@ export class Organizations {
                 '{organizationId}',
                 encodeURIComponent(String(organizationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof paymentMethodId !== 'undefined') {
-            payload['paymentMethodId'] = paymentMethodId;
+            apiPayload['paymentMethodId'] = paymentMethodId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2875,7 +2879,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2932,7 +2936,7 @@ export class Organizations {
                 '{organizationId}',
                 encodeURIComponent(String(organizationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2941,7 +2945,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3015,7 +3019,7 @@ export class Organizations {
                     '{paymentMethodId}',
                     encodeURIComponent(String(paymentMethodId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3023,7 +3027,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3071,7 +3075,7 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3079,7 +3083,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3222,27 +3226,27 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
-            payload['billingPlan'] = billingPlan;
+            apiPayload['billingPlan'] = billingPlan;
         }
         if (typeof paymentMethodId !== 'undefined') {
-            payload['paymentMethodId'] = paymentMethodId;
+            apiPayload['paymentMethodId'] = paymentMethodId;
         }
         if (typeof billingAddressId !== 'undefined') {
-            payload['billingAddressId'] = billingAddressId;
+            apiPayload['billingAddressId'] = billingAddressId;
         }
         if (typeof invites !== 'undefined') {
-            payload['invites'] = invites;
+            apiPayload['invites'] = invites;
         }
         if (typeof couponId !== 'undefined') {
-            payload['couponId'] = couponId;
+            apiPayload['couponId'] = couponId;
         }
         if (typeof taxId !== 'undefined') {
-            payload['taxId'] = taxId;
+            apiPayload['taxId'] = taxId;
         }
         if (typeof budget !== 'undefined') {
-            payload['budget'] = budget;
+            apiPayload['budget'] = budget;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3252,7 +3256,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3348,15 +3352,15 @@ export class Organizations {
                 '{organizationId}',
                 encodeURIComponent(String(organizationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
-            payload['billingPlan'] = billingPlan;
+            apiPayload['billingPlan'] = billingPlan;
         }
         if (typeof invites !== 'undefined') {
-            payload['invites'] = invites;
+            apiPayload['invites'] = invites;
         }
         if (typeof couponId !== 'undefined') {
-            payload['couponId'] = couponId;
+            apiPayload['couponId'] = couponId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3366,7 +3370,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3416,7 +3420,7 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3424,7 +3428,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3486,9 +3490,9 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof projectId !== 'undefined') {
-            payload['projectId'] = projectId;
+            apiPayload['projectId'] = projectId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3497,7 +3501,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3568,9 +3572,9 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof taxId !== 'undefined') {
-            payload['taxId'] = taxId;
+            apiPayload['taxId'] = taxId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3580,7 +3584,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3655,12 +3659,12 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof startDate !== 'undefined') {
-            payload['startDate'] = startDate;
+            apiPayload['startDate'] = startDate;
         }
         if (typeof endDate !== 'undefined') {
-            payload['endDate'] = endDate;
+            apiPayload['endDate'] = endDate;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3669,7 +3673,7 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3737,9 +3741,9 @@ export class Organizations {
             '{organizationId}',
             encodeURIComponent(String(organizationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof invites !== 'undefined') {
-            payload['invites'] = invites;
+            apiPayload['invites'] = invites;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3749,6 +3753,6 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 }

@@ -59,12 +59,12 @@ export class Domains {
         const search = params.search;
 
         const apiPath = '/domains';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -73,7 +73,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -127,12 +127,12 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
         const apiPath = '/domains';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof teamId !== 'undefined') {
-            payload['teamId'] = teamId;
+            apiPayload['teamId'] = teamId;
         }
         if (typeof domain !== 'undefined') {
-            payload['domain'] = domain;
+            apiPayload['domain'] = domain;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -142,7 +142,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -217,15 +217,15 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
         const apiPath = '/domains/price';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof domain !== 'undefined') {
-            payload['domain'] = domain;
+            apiPayload['domain'] = domain;
         }
         if (typeof periodYears !== 'undefined') {
-            payload['periodYears'] = periodYears;
+            apiPayload['periodYears'] = periodYears;
         }
         if (typeof registrationType !== 'undefined') {
-            payload['registrationType'] = registrationType;
+            apiPayload['registrationType'] = registrationType;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -234,7 +234,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -310,15 +310,15 @@ export class Domains {
             );
         }
         const apiPath = '/domains/prices';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof domains !== 'undefined') {
-            payload['domains'] = domains;
+            apiPayload['domains'] = domains;
         }
         if (typeof periodYears !== 'undefined') {
-            payload['periodYears'] = periodYears;
+            apiPayload['periodYears'] = periodYears;
         }
         if (typeof registrationType !== 'undefined') {
-            payload['registrationType'] = registrationType;
+            apiPayload['registrationType'] = registrationType;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -327,7 +327,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -525,42 +525,42 @@ export class Domains {
             );
         }
         const apiPath = '/domains/purchases';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof domain !== 'undefined') {
-            payload['domain'] = domain;
+            apiPayload['domain'] = domain;
         }
         if (typeof organizationId !== 'undefined') {
-            payload['organizationId'] = organizationId;
+            apiPayload['organizationId'] = organizationId;
         }
         if (typeof firstName !== 'undefined') {
-            payload['firstName'] = firstName;
+            apiPayload['firstName'] = firstName;
         }
         if (typeof lastName !== 'undefined') {
-            payload['lastName'] = lastName;
+            apiPayload['lastName'] = lastName;
         }
         if (typeof email !== 'undefined') {
-            payload['email'] = email;
+            apiPayload['email'] = email;
         }
         if (typeof phone !== 'undefined') {
-            payload['phone'] = phone;
+            apiPayload['phone'] = phone;
         }
         if (typeof billingAddressId !== 'undefined') {
-            payload['billingAddressId'] = billingAddressId;
+            apiPayload['billingAddressId'] = billingAddressId;
         }
         if (typeof addressLine3 !== 'undefined') {
-            payload['addressLine3'] = addressLine3;
+            apiPayload['addressLine3'] = addressLine3;
         }
         if (typeof companyName !== 'undefined') {
-            payload['companyName'] = companyName;
+            apiPayload['companyName'] = companyName;
         }
         if (typeof periodYears !== 'undefined') {
-            payload['periodYears'] = periodYears;
+            apiPayload['periodYears'] = periodYears;
         }
         if (typeof autoRenewal !== 'undefined') {
-            payload['autoRenewal'] = autoRenewal;
+            apiPayload['autoRenewal'] = autoRenewal;
         }
         if (typeof paymentMethodId !== 'undefined') {
-            payload['paymentMethodId'] = paymentMethodId;
+            apiPayload['paymentMethodId'] = paymentMethodId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -570,7 +570,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -637,9 +637,9 @@ export class Domains {
             '{invoiceId}',
             encodeURIComponent(String(invoiceId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof organizationId !== 'undefined') {
-            payload['organizationId'] = organizationId;
+            apiPayload['organizationId'] = organizationId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -649,7 +649,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -750,24 +750,24 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "query"');
         }
         const apiPath = '/domains/suggestions';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof query !== 'undefined') {
-            payload['query'] = query;
+            apiPayload['query'] = query;
         }
         if (typeof tlds !== 'undefined') {
-            payload['tlds'] = tlds;
+            apiPayload['tlds'] = tlds;
         }
         if (typeof limit !== 'undefined') {
-            payload['limit'] = limit;
+            apiPayload['limit'] = limit;
         }
         if (typeof filterType !== 'undefined') {
-            payload['filterType'] = filterType;
+            apiPayload['filterType'] = filterType;
         }
         if (typeof priceMax !== 'undefined') {
-            payload['priceMax'] = priceMax;
+            apiPayload['priceMax'] = priceMax;
         }
         if (typeof priceMin !== 'undefined') {
-            payload['priceMin'] = priceMin;
+            apiPayload['priceMin'] = priceMin;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -776,7 +776,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -883,21 +883,21 @@ export class Domains {
             );
         }
         const apiPath = '/domains/transfers/in';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof domain !== 'undefined') {
-            payload['domain'] = domain;
+            apiPayload['domain'] = domain;
         }
         if (typeof organizationId !== 'undefined') {
-            payload['organizationId'] = organizationId;
+            apiPayload['organizationId'] = organizationId;
         }
         if (typeof authCode !== 'undefined') {
-            payload['authCode'] = authCode;
+            apiPayload['authCode'] = authCode;
         }
         if (typeof autoRenewal !== 'undefined') {
-            payload['autoRenewal'] = autoRenewal;
+            apiPayload['autoRenewal'] = autoRenewal;
         }
         if (typeof paymentMethodId !== 'undefined') {
-            payload['paymentMethodId'] = paymentMethodId;
+            apiPayload['paymentMethodId'] = paymentMethodId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -907,7 +907,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -974,9 +974,9 @@ export class Domains {
             '{invoiceId}',
             encodeURIComponent(String(invoiceId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof organizationId !== 'undefined') {
-            payload['organizationId'] = organizationId;
+            apiPayload['organizationId'] = organizationId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -986,7 +986,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1050,12 +1050,12 @@ export class Domains {
             );
         }
         const apiPath = '/domains/transfers/out';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof domainId !== 'undefined') {
-            payload['domainId'] = domainId;
+            apiPayload['domainId'] = domainId;
         }
         if (typeof organizationId !== 'undefined') {
-            payload['organizationId'] = organizationId;
+            apiPayload['organizationId'] = organizationId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1065,7 +1065,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1111,7 +1111,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1119,7 +1119,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1167,7 +1167,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1176,7 +1176,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1243,9 +1243,9 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof autoRenewal !== 'undefined') {
-            payload['autoRenewal'] = autoRenewal;
+            apiPayload['autoRenewal'] = autoRenewal;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1255,7 +1255,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1319,9 +1319,9 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof nameservers !== 'undefined') {
-            payload['nameservers'] = nameservers;
+            apiPayload['nameservers'] = nameservers;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1331,7 +1331,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1383,7 +1383,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1392,7 +1392,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1442,7 +1442,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1450,7 +1450,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1504,7 +1504,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1513,7 +1513,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1563,7 +1563,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1571,7 +1571,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1623,7 +1623,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1632,7 +1632,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1682,7 +1682,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1690,7 +1690,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1742,7 +1742,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1751,7 +1751,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1801,7 +1801,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1809,7 +1809,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1861,7 +1861,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1870,7 +1870,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1920,7 +1920,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1928,7 +1928,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1980,7 +1980,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1989,7 +1989,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2037,7 +2037,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2045,7 +2045,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2097,7 +2097,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2106,7 +2106,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2170,9 +2170,9 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2181,7 +2181,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2289,18 +2289,18 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2310,7 +2310,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2433,18 +2433,18 @@ export class Domains {
         const apiPath = '/domains/{domainId}/records/a/{recordId}'
             .replace('{domainId}', encodeURIComponent(String(domainId)))
             .replace('{recordId}', encodeURIComponent(String(recordId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2454,7 +2454,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2562,18 +2562,18 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2583,7 +2583,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2706,18 +2706,18 @@ export class Domains {
         const apiPath = '/domains/{domainId}/records/aaaa/{recordId}'
             .replace('{domainId}', encodeURIComponent(String(domainId)))
             .replace('{recordId}', encodeURIComponent(String(recordId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2727,7 +2727,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2837,18 +2837,18 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2858,7 +2858,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2985,18 +2985,18 @@ export class Domains {
         const apiPath = '/domains/{domainId}/records/alias/{recordId}'
             .replace('{domainId}', encodeURIComponent(String(domainId)))
             .replace('{recordId}', encodeURIComponent(String(recordId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3006,7 +3006,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3114,18 +3114,18 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3135,7 +3135,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3258,18 +3258,18 @@ export class Domains {
         const apiPath = '/domains/{domainId}/records/caa/{recordId}'
             .replace('{domainId}', encodeURIComponent(String(domainId)))
             .replace('{recordId}', encodeURIComponent(String(recordId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3279,7 +3279,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3393,18 +3393,18 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3414,7 +3414,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3533,18 +3533,18 @@ export class Domains {
         const apiPath = '/domains/{domainId}/records/cname/{recordId}'
             .replace('{domainId}', encodeURIComponent(String(domainId)))
             .replace('{recordId}', encodeURIComponent(String(recordId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3554,7 +3554,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3662,18 +3662,18 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3683,7 +3683,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3806,18 +3806,18 @@ export class Domains {
         const apiPath = '/domains/{domainId}/records/https/{recordId}'
             .replace('{domainId}', encodeURIComponent(String(domainId)))
             .replace('{recordId}', encodeURIComponent(String(recordId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3827,7 +3827,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3953,21 +3953,21 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3977,7 +3977,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4110,21 +4110,21 @@ export class Domains {
         const apiPath = '/domains/{domainId}/records/mx/{recordId}'
             .replace('{domainId}', encodeURIComponent(String(domainId)))
             .replace('{recordId}', encodeURIComponent(String(recordId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4134,7 +4134,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4242,18 +4242,18 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4263,7 +4263,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4388,18 +4388,18 @@ export class Domains {
         const apiPath = '/domains/{domainId}/records/ns/{recordId}'
             .replace('{domainId}', encodeURIComponent(String(domainId)))
             .replace('{recordId}', encodeURIComponent(String(recordId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4409,7 +4409,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4557,27 +4557,27 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof weight !== 'undefined') {
-            payload['weight'] = weight;
+            apiPayload['weight'] = weight;
         }
         if (typeof port !== 'undefined') {
-            payload['port'] = port;
+            apiPayload['port'] = port;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4587,7 +4587,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4779,27 +4779,27 @@ export class Domains {
         const apiPath = '/domains/{domainId}/records/srv/{recordId}'
             .replace('{domainId}', encodeURIComponent(String(domainId)))
             .replace('{recordId}', encodeURIComponent(String(recordId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof weight !== 'undefined') {
-            payload['weight'] = weight;
+            apiPayload['weight'] = weight;
         }
         if (typeof port !== 'undefined') {
-            payload['port'] = port;
+            apiPayload['port'] = port;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4809,7 +4809,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4916,18 +4916,18 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4937,7 +4937,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5062,18 +5062,18 @@ export class Domains {
         const apiPath = '/domains/{domainId}/records/txt/{recordId}'
             .replace('{domainId}', encodeURIComponent(String(domainId)))
             .replace('{recordId}', encodeURIComponent(String(recordId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         if (typeof comment !== 'undefined') {
-            payload['comment'] = comment;
+            apiPayload['comment'] = comment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5083,7 +5083,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5154,7 +5154,7 @@ export class Domains {
         const apiPath = '/domains/{domainId}/records/{recordId}'
             .replace('{domainId}', encodeURIComponent(String(domainId)))
             .replace('{recordId}', encodeURIComponent(String(recordId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -5162,7 +5162,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5224,7 +5224,7 @@ export class Domains {
         const apiPath = '/domains/{domainId}/records/{recordId}'
             .replace('{domainId}', encodeURIComponent(String(domainId)))
             .replace('{recordId}', encodeURIComponent(String(recordId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -5233,7 +5233,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5303,9 +5303,9 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof teamId !== 'undefined') {
-            payload['teamId'] = teamId;
+            apiPayload['teamId'] = teamId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5315,7 +5315,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5365,7 +5365,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -5373,7 +5373,7 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5382,20 +5382,20 @@ export class Domains {
      *
      * @param {string} params.domainId - Domain unique ID.
      * @throws {AppwriteException}
-     * @returns {Promise<{}>}
+     * @returns {Promise<string>}
      */
-    getZone(params: { domainId: string }): Promise<{}>;
+    getZone(params: { domainId: string }): Promise<string>;
     /**
      * Retrieve the DNS zone file for the given domain. This endpoint will return the DNS
      * zone file in a standardized format that can be used to configure DNS servers.
      *
      * @param {string} domainId - Domain unique ID.
      * @throws {AppwriteException}
-     * @returns {Promise<{}>}
+     * @returns {Promise<string>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getZone(domainId: string): Promise<{}>;
-    getZone(paramsOrFirst: { domainId: string } | string): Promise<{}> {
+    getZone(domainId: string): Promise<string>;
+    getZone(paramsOrFirst: { domainId: string } | string): Promise<string> {
         let params: { domainId: string };
 
         if (
@@ -5421,7 +5421,7 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -5429,7 +5429,7 @@ export class Domains {
             accept: 'text/plain',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload, 'text');
     }
 
     /**
@@ -5495,9 +5495,9 @@ export class Domains {
             '{domainId}',
             encodeURIComponent(String(domainId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof content !== 'undefined') {
-            payload['content'] = content;
+            apiPayload['content'] = content;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5507,6 +5507,6 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 }

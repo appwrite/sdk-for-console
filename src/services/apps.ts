@@ -57,12 +57,12 @@ export class Apps {
         const total = params.total;
 
         const apiPath = '/apps';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -71,7 +71,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -316,63 +316,63 @@ export class Apps {
             );
         }
         const apiPath = '/apps';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof appId !== 'undefined') {
-            payload['appId'] = appId;
+            apiPayload['appId'] = appId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof description !== 'undefined') {
-            payload['description'] = description;
+            apiPayload['description'] = description;
         }
         if (typeof clientUri !== 'undefined') {
-            payload['clientUri'] = clientUri;
+            apiPayload['clientUri'] = clientUri;
         }
         if (typeof logoUri !== 'undefined') {
-            payload['logoUri'] = logoUri;
+            apiPayload['logoUri'] = logoUri;
         }
         if (typeof privacyPolicyUrl !== 'undefined') {
-            payload['privacyPolicyUrl'] = privacyPolicyUrl;
+            apiPayload['privacyPolicyUrl'] = privacyPolicyUrl;
         }
         if (typeof termsUrl !== 'undefined') {
-            payload['termsUrl'] = termsUrl;
+            apiPayload['termsUrl'] = termsUrl;
         }
         if (typeof contacts !== 'undefined') {
-            payload['contacts'] = contacts;
+            apiPayload['contacts'] = contacts;
         }
         if (typeof tagline !== 'undefined') {
-            payload['tagline'] = tagline;
+            apiPayload['tagline'] = tagline;
         }
         if (typeof tags !== 'undefined') {
-            payload['tags'] = tags;
+            apiPayload['tags'] = tags;
         }
         if (typeof images !== 'undefined') {
-            payload['images'] = images;
+            apiPayload['images'] = images;
         }
         if (typeof supportUrl !== 'undefined') {
-            payload['supportUrl'] = supportUrl;
+            apiPayload['supportUrl'] = supportUrl;
         }
         if (typeof dataDeletionUrl !== 'undefined') {
-            payload['dataDeletionUrl'] = dataDeletionUrl;
+            apiPayload['dataDeletionUrl'] = dataDeletionUrl;
         }
         if (typeof redirectUris !== 'undefined') {
-            payload['redirectUris'] = redirectUris;
+            apiPayload['redirectUris'] = redirectUris;
         }
         if (typeof postLogoutRedirectUris !== 'undefined') {
-            payload['postLogoutRedirectUris'] = postLogoutRedirectUris;
+            apiPayload['postLogoutRedirectUris'] = postLogoutRedirectUris;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         if (typeof deviceFlow !== 'undefined') {
-            payload['deviceFlow'] = deviceFlow;
+            apiPayload['deviceFlow'] = deviceFlow;
         }
         if (typeof teamId !== 'undefined') {
-            payload['teamId'] = teamId;
+            apiPayload['teamId'] = teamId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -382,7 +382,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -393,7 +393,7 @@ export class Apps {
      */
     listInstallationScopes(): Promise<Models.AppScopeList> {
         const apiPath = '/apps/scopes/installations';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -401,7 +401,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -412,7 +412,7 @@ export class Apps {
      */
     listOAuth2Scopes(): Promise<Models.AppScopeList> {
         const apiPath = '/apps/scopes/oauth2';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -420,7 +420,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -464,7 +464,7 @@ export class Apps {
             '{appId}',
             encodeURIComponent(String(appId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -472,7 +472,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -725,63 +725,63 @@ export class Apps {
             '{appId}',
             encodeURIComponent(String(appId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof description !== 'undefined') {
-            payload['description'] = description;
+            apiPayload['description'] = description;
         }
         if (typeof clientUri !== 'undefined') {
-            payload['clientUri'] = clientUri;
+            apiPayload['clientUri'] = clientUri;
         }
         if (typeof logoUri !== 'undefined') {
-            payload['logoUri'] = logoUri;
+            apiPayload['logoUri'] = logoUri;
         }
         if (typeof privacyPolicyUrl !== 'undefined') {
-            payload['privacyPolicyUrl'] = privacyPolicyUrl;
+            apiPayload['privacyPolicyUrl'] = privacyPolicyUrl;
         }
         if (typeof termsUrl !== 'undefined') {
-            payload['termsUrl'] = termsUrl;
+            apiPayload['termsUrl'] = termsUrl;
         }
         if (typeof contacts !== 'undefined') {
-            payload['contacts'] = contacts;
+            apiPayload['contacts'] = contacts;
         }
         if (typeof tagline !== 'undefined') {
-            payload['tagline'] = tagline;
+            apiPayload['tagline'] = tagline;
         }
         if (typeof tags !== 'undefined') {
-            payload['tags'] = tags;
+            apiPayload['tags'] = tags;
         }
         if (typeof images !== 'undefined') {
-            payload['images'] = images;
+            apiPayload['images'] = images;
         }
         if (typeof supportUrl !== 'undefined') {
-            payload['supportUrl'] = supportUrl;
+            apiPayload['supportUrl'] = supportUrl;
         }
         if (typeof dataDeletionUrl !== 'undefined') {
-            payload['dataDeletionUrl'] = dataDeletionUrl;
+            apiPayload['dataDeletionUrl'] = dataDeletionUrl;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof redirectUris !== 'undefined') {
-            payload['redirectUris'] = redirectUris;
+            apiPayload['redirectUris'] = redirectUris;
         }
         if (typeof postLogoutRedirectUris !== 'undefined') {
-            payload['postLogoutRedirectUris'] = postLogoutRedirectUris;
+            apiPayload['postLogoutRedirectUris'] = postLogoutRedirectUris;
         }
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         if (typeof deviceFlow !== 'undefined') {
-            payload['deviceFlow'] = deviceFlow;
+            apiPayload['deviceFlow'] = deviceFlow;
         }
         if (typeof installationScopes !== 'undefined') {
-            payload['installationScopes'] = installationScopes;
+            apiPayload['installationScopes'] = installationScopes;
         }
         if (typeof installationRedirectUrl !== 'undefined') {
-            payload['installationRedirectUrl'] = installationRedirectUrl;
+            apiPayload['installationRedirectUrl'] = installationRedirectUrl;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -791,7 +791,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -835,7 +835,7 @@ export class Apps {
             '{appId}',
             encodeURIComponent(String(appId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -844,7 +844,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -912,12 +912,12 @@ export class Apps {
             '{appId}',
             encodeURIComponent(String(appId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -926,7 +926,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -993,7 +993,7 @@ export class Apps {
                 '{installationId}',
                 encodeURIComponent(String(installationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1001,7 +1001,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1065,7 +1065,7 @@ export class Apps {
                 '{installationId}',
                 encodeURIComponent(String(installationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1074,7 +1074,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1141,7 +1141,7 @@ export class Apps {
                 '{installationId}',
                 encodeURIComponent(String(installationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1150,7 +1150,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1218,12 +1218,12 @@ export class Apps {
             '{appId}',
             encodeURIComponent(String(appId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1232,7 +1232,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1278,7 +1278,7 @@ export class Apps {
             '{appId}',
             encodeURIComponent(String(appId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1287,7 +1287,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1340,7 +1340,7 @@ export class Apps {
         const apiPath = '/apps/{appId}/keys/{keyId}'
             .replace('{appId}', encodeURIComponent(String(appId)))
             .replace('{keyId}', encodeURIComponent(String(keyId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1348,7 +1348,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1401,7 +1401,7 @@ export class Apps {
         const apiPath = '/apps/{appId}/keys/{keyId}'
             .replace('{appId}', encodeURIComponent(String(appId)))
             .replace('{keyId}', encodeURIComponent(String(keyId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1410,7 +1410,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1470,9 +1470,9 @@ export class Apps {
             '{appId}',
             encodeURIComponent(String(appId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof labels !== 'undefined') {
-            payload['labels'] = labels;
+            apiPayload['labels'] = labels;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1482,7 +1482,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1550,12 +1550,12 @@ export class Apps {
             '{appId}',
             encodeURIComponent(String(appId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1564,7 +1564,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1610,7 +1610,7 @@ export class Apps {
             '{appId}',
             encodeURIComponent(String(appId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1619,7 +1619,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1680,7 +1680,7 @@ export class Apps {
         const apiPath = '/apps/{appId}/secrets/{secretId}'
             .replace('{appId}', encodeURIComponent(String(appId)))
             .replace('{secretId}', encodeURIComponent(String(secretId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1688,7 +1688,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1746,7 +1746,7 @@ export class Apps {
         const apiPath = '/apps/{appId}/secrets/{secretId}'
             .replace('{appId}', encodeURIComponent(String(appId)))
             .replace('{secretId}', encodeURIComponent(String(secretId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1755,7 +1755,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1809,9 +1809,9 @@ export class Apps {
             '{appId}',
             encodeURIComponent(String(appId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof teamId !== 'undefined') {
-            payload['teamId'] = teamId;
+            apiPayload['teamId'] = teamId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1821,7 +1821,7 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1865,7 +1865,7 @@ export class Apps {
             '{appId}',
             encodeURIComponent(String(appId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1874,6 +1874,6 @@ export class Apps {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 }

@@ -106,22 +106,24 @@ export class Avatars {
             '{code}',
             encodeURIComponent(String(code)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof width !== 'undefined') {
-            payload['width'] = width;
+            apiPayload['width'] = width;
         }
         if (typeof height !== 'undefined') {
-            payload['height'] = height;
+            apiPayload['height'] = height;
         }
         if (typeof quality !== 'undefined') {
-            payload['quality'] = quality;
+            apiPayload['quality'] = quality;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 
@@ -221,22 +223,24 @@ export class Avatars {
             '{code}',
             encodeURIComponent(String(code)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof width !== 'undefined') {
-            payload['width'] = width;
+            apiPayload['width'] = width;
         }
         if (typeof height !== 'undefined') {
-            payload['height'] = height;
+            apiPayload['height'] = height;
         }
         if (typeof quality !== 'undefined') {
-            payload['quality'] = quality;
+            apiPayload['quality'] = quality;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 
@@ -285,16 +289,18 @@ export class Avatars {
             throw new AppwriteException('Missing required parameter: "url"');
         }
         const apiPath = '/avatars/favicon';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof url !== 'undefined') {
-            payload['url'] = url;
+            apiPayload['url'] = url;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 
@@ -389,22 +395,24 @@ export class Avatars {
             '{code}',
             encodeURIComponent(String(code)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof width !== 'undefined') {
-            payload['width'] = width;
+            apiPayload['width'] = width;
         }
         if (typeof height !== 'undefined') {
-            payload['height'] = height;
+            apiPayload['height'] = height;
         }
         if (typeof quality !== 'undefined') {
-            payload['quality'] = quality;
+            apiPayload['quality'] = quality;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 
@@ -473,22 +481,24 @@ export class Avatars {
             throw new AppwriteException('Missing required parameter: "url"');
         }
         const apiPath = '/avatars/image';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof url !== 'undefined') {
-            payload['url'] = url;
+            apiPayload['url'] = url;
         }
         if (typeof width !== 'undefined') {
-            payload['width'] = width;
+            apiPayload['width'] = width;
         }
         if (typeof height !== 'undefined') {
-            payload['height'] = height;
+            apiPayload['height'] = height;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 
@@ -583,25 +593,27 @@ export class Avatars {
         const background = params.background;
 
         const apiPath = '/avatars/initials';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof width !== 'undefined') {
-            payload['width'] = width;
+            apiPayload['width'] = width;
         }
         if (typeof height !== 'undefined') {
-            payload['height'] = height;
+            apiPayload['height'] = height;
         }
         if (typeof background !== 'undefined') {
-            payload['background'] = background;
+            apiPayload['background'] = background;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 
@@ -726,37 +738,39 @@ export class Avatars {
         const name = params.name;
 
         const apiPath = '/avatars/photo';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof width !== 'undefined') {
-            payload['width'] = width;
+            apiPayload['width'] = width;
         }
         if (typeof height !== 'undefined') {
-            payload['height'] = height;
+            apiPayload['height'] = height;
         }
         if (typeof quality !== 'undefined') {
-            payload['quality'] = quality;
+            apiPayload['quality'] = quality;
         }
         if (typeof output !== 'undefined') {
-            payload['output'] = output;
+            apiPayload['output'] = output;
         }
         if (typeof rating !== 'undefined') {
-            payload['rating'] = rating;
+            apiPayload['rating'] = rating;
         }
         if (typeof userId !== 'undefined') {
-            payload['userId'] = userId;
+            apiPayload['userId'] = userId;
         }
         if (typeof emailHash !== 'undefined') {
-            payload['emailHash'] = emailHash;
+            apiPayload['emailHash'] = emailHash;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 
@@ -845,25 +859,27 @@ export class Avatars {
             throw new AppwriteException('Missing required parameter: "text"');
         }
         const apiPath = '/avatars/qr';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof text !== 'undefined') {
-            payload['text'] = text;
+            apiPayload['text'] = text;
         }
         if (typeof size !== 'undefined') {
-            payload['size'] = size;
+            apiPayload['size'] = size;
         }
         if (typeof margin !== 'undefined') {
-            payload['margin'] = margin;
+            apiPayload['margin'] = margin;
         }
         if (typeof download !== 'undefined') {
-            payload['download'] = download;
+            apiPayload['download'] = download;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 
@@ -1122,73 +1138,75 @@ export class Avatars {
             throw new AppwriteException('Missing required parameter: "url"');
         }
         const apiPath = '/avatars/screenshots';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof url !== 'undefined') {
-            payload['url'] = url;
+            apiPayload['url'] = url;
         }
         if (typeof headers !== 'undefined') {
-            payload['headers'] = headers;
+            apiPayload['headers'] = headers;
         }
         if (typeof viewportWidth !== 'undefined') {
-            payload['viewportWidth'] = viewportWidth;
+            apiPayload['viewportWidth'] = viewportWidth;
         }
         if (typeof viewportHeight !== 'undefined') {
-            payload['viewportHeight'] = viewportHeight;
+            apiPayload['viewportHeight'] = viewportHeight;
         }
         if (typeof scale !== 'undefined') {
-            payload['scale'] = scale;
+            apiPayload['scale'] = scale;
         }
         if (typeof theme !== 'undefined') {
-            payload['theme'] = theme;
+            apiPayload['theme'] = theme;
         }
         if (typeof userAgent !== 'undefined') {
-            payload['userAgent'] = userAgent;
+            apiPayload['userAgent'] = userAgent;
         }
         if (typeof fullpage !== 'undefined') {
-            payload['fullpage'] = fullpage;
+            apiPayload['fullpage'] = fullpage;
         }
         if (typeof locale !== 'undefined') {
-            payload['locale'] = locale;
+            apiPayload['locale'] = locale;
         }
         if (typeof timezone !== 'undefined') {
-            payload['timezone'] = timezone;
+            apiPayload['timezone'] = timezone;
         }
         if (typeof latitude !== 'undefined') {
-            payload['latitude'] = latitude;
+            apiPayload['latitude'] = latitude;
         }
         if (typeof longitude !== 'undefined') {
-            payload['longitude'] = longitude;
+            apiPayload['longitude'] = longitude;
         }
         if (typeof accuracy !== 'undefined') {
-            payload['accuracy'] = accuracy;
+            apiPayload['accuracy'] = accuracy;
         }
         if (typeof touch !== 'undefined') {
-            payload['touch'] = touch;
+            apiPayload['touch'] = touch;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof sleep !== 'undefined') {
-            payload['sleep'] = sleep;
+            apiPayload['sleep'] = sleep;
         }
         if (typeof width !== 'undefined') {
-            payload['width'] = width;
+            apiPayload['width'] = width;
         }
         if (typeof height !== 'undefined') {
-            payload['height'] = height;
+            apiPayload['height'] = height;
         }
         if (typeof quality !== 'undefined') {
-            payload['quality'] = quality;
+            apiPayload['quality'] = quality;
         }
         if (typeof output !== 'undefined') {
-            payload['output'] = output;
+            apiPayload['output'] = output;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
-        payload['project'] = this.client.config.project;
-        payload['impersonateuserid'] = this.client.config.impersonateuserid;
+        apiPayload['project'] = this.client.config.project;
+        apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(Service.flatten(payload))) {
+        for (const [key, value] of Object.entries(
+            Service.flatten(apiPayload),
+        )) {
             uri.searchParams.append(key, value);
         }
 

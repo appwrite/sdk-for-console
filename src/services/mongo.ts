@@ -48,9 +48,9 @@ export class Mongo {
         const queries = params.queries;
 
         const apiPath = '/mongo';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -59,7 +59,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -252,49 +252,49 @@ export class Mongo {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/mongo';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof databaseId !== 'undefined') {
-            payload['databaseId'] = databaseId;
+            apiPayload['databaseId'] = databaseId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof version !== 'undefined') {
-            payload['version'] = version;
+            apiPayload['version'] = version;
         }
         if (typeof specification !== 'undefined') {
-            payload['specification'] = specification;
+            apiPayload['specification'] = specification;
         }
         if (typeof replicas !== 'undefined') {
-            payload['replicas'] = replicas;
+            apiPayload['replicas'] = replicas;
         }
         if (typeof syncMode !== 'undefined') {
-            payload['syncMode'] = syncMode;
+            apiPayload['syncMode'] = syncMode;
         }
         if (typeof networkIdleTimeoutSeconds !== 'undefined') {
-            payload['networkIdleTimeoutSeconds'] = networkIdleTimeoutSeconds;
+            apiPayload['networkIdleTimeoutSeconds'] = networkIdleTimeoutSeconds;
         }
         if (typeof networkIPAllowlist !== 'undefined') {
-            payload['networkIPAllowlist'] = networkIPAllowlist;
+            apiPayload['networkIPAllowlist'] = networkIPAllowlist;
         }
         if (typeof idleTimeoutMinutes !== 'undefined') {
-            payload['idleTimeoutMinutes'] = idleTimeoutMinutes;
+            apiPayload['idleTimeoutMinutes'] = idleTimeoutMinutes;
         }
         if (typeof pitr !== 'undefined') {
-            payload['pitr'] = pitr;
+            apiPayload['pitr'] = pitr;
         }
         if (typeof pitrRetentionDays !== 'undefined') {
-            payload['pitrRetentionDays'] = pitrRetentionDays;
+            apiPayload['pitrRetentionDays'] = pitrRetentionDays;
         }
         if (typeof storageAutoscaling !== 'undefined') {
-            payload['storageAutoscaling'] = storageAutoscaling;
+            apiPayload['storageAutoscaling'] = storageAutoscaling;
         }
         if (typeof storageAutoscalingThresholdPercent !== 'undefined') {
-            payload['storageAutoscalingThresholdPercent'] =
+            apiPayload['storageAutoscalingThresholdPercent'] =
                 storageAutoscalingThresholdPercent;
         }
         if (typeof storageAutoscalingMaxGb !== 'undefined') {
-            payload['storageAutoscalingMaxGb'] = storageAutoscalingMaxGb;
+            apiPayload['storageAutoscalingMaxGb'] = storageAutoscalingMaxGb;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -304,7 +304,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -315,7 +315,7 @@ export class Mongo {
      */
     listSpecifications(): Promise<Models.DedicatedDatabaseSpecificationList> {
         const apiPath = '/mongo/specifications';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -323,7 +323,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -371,7 +371,7 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -379,7 +379,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -643,68 +643,68 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof status !== 'undefined') {
-            payload['status'] = status;
+            apiPayload['status'] = status;
         }
         if (typeof specification !== 'undefined') {
-            payload['specification'] = specification;
+            apiPayload['specification'] = specification;
         }
         if (typeof replicas !== 'undefined') {
-            payload['replicas'] = replicas;
+            apiPayload['replicas'] = replicas;
         }
         if (typeof syncMode !== 'undefined') {
-            payload['syncMode'] = syncMode;
+            apiPayload['syncMode'] = syncMode;
         }
         if (typeof networkIdleTimeoutSeconds !== 'undefined') {
-            payload['networkIdleTimeoutSeconds'] = networkIdleTimeoutSeconds;
+            apiPayload['networkIdleTimeoutSeconds'] = networkIdleTimeoutSeconds;
         }
         if (typeof networkIPAllowlist !== 'undefined') {
-            payload['networkIPAllowlist'] = networkIPAllowlist;
+            apiPayload['networkIPAllowlist'] = networkIPAllowlist;
         }
         if (typeof idleTimeoutMinutes !== 'undefined') {
-            payload['idleTimeoutMinutes'] = idleTimeoutMinutes;
+            apiPayload['idleTimeoutMinutes'] = idleTimeoutMinutes;
         }
         if (typeof pitr !== 'undefined') {
-            payload['pitr'] = pitr;
+            apiPayload['pitr'] = pitr;
         }
         if (typeof pitrRetentionDays !== 'undefined') {
-            payload['pitrRetentionDays'] = pitrRetentionDays;
+            apiPayload['pitrRetentionDays'] = pitrRetentionDays;
         }
         if (typeof storageAutoscaling !== 'undefined') {
-            payload['storageAutoscaling'] = storageAutoscaling;
+            apiPayload['storageAutoscaling'] = storageAutoscaling;
         }
         if (typeof storageAutoscalingThresholdPercent !== 'undefined') {
-            payload['storageAutoscalingThresholdPercent'] =
+            apiPayload['storageAutoscalingThresholdPercent'] =
                 storageAutoscalingThresholdPercent;
         }
         if (typeof storageAutoscalingMaxGb !== 'undefined') {
-            payload['storageAutoscalingMaxGb'] = storageAutoscalingMaxGb;
+            apiPayload['storageAutoscalingMaxGb'] = storageAutoscalingMaxGb;
         }
         if (typeof metricsTraceSampleRate !== 'undefined') {
-            payload['metricsTraceSampleRate'] = metricsTraceSampleRate;
+            apiPayload['metricsTraceSampleRate'] = metricsTraceSampleRate;
         }
         if (typeof metricsSlowQueryLogThresholdMs !== 'undefined') {
-            payload['metricsSlowQueryLogThresholdMs'] =
+            apiPayload['metricsSlowQueryLogThresholdMs'] =
                 metricsSlowQueryLogThresholdMs;
         }
         if (typeof sqlApiEnabled !== 'undefined') {
-            payload['sqlApiEnabled'] = sqlApiEnabled;
+            apiPayload['sqlApiEnabled'] = sqlApiEnabled;
         }
         if (typeof sqlApiAllowedStatements !== 'undefined') {
-            payload['sqlApiAllowedStatements'] = sqlApiAllowedStatements;
+            apiPayload['sqlApiAllowedStatements'] = sqlApiAllowedStatements;
         }
         if (typeof sqlApiMaxRows !== 'undefined') {
-            payload['sqlApiMaxRows'] = sqlApiMaxRows;
+            apiPayload['sqlApiMaxRows'] = sqlApiMaxRows;
         }
         if (typeof sqlApiMaxBytes !== 'undefined') {
-            payload['sqlApiMaxBytes'] = sqlApiMaxBytes;
+            apiPayload['sqlApiMaxBytes'] = sqlApiMaxBytes;
         }
         if (typeof sqlApiTimeoutSeconds !== 'undefined') {
-            payload['sqlApiTimeoutSeconds'] = sqlApiTimeoutSeconds;
+            apiPayload['sqlApiTimeoutSeconds'] = sqlApiTimeoutSeconds;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -714,7 +714,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -760,7 +760,7 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -769,7 +769,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -831,9 +831,9 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -842,7 +842,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -904,9 +904,9 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -916,7 +916,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -978,9 +978,9 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -989,7 +989,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1122,24 +1122,24 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof policyId !== 'undefined') {
-            payload['policyId'] = policyId;
+            apiPayload['policyId'] = policyId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof schedule !== 'undefined') {
-            payload['schedule'] = schedule;
+            apiPayload['schedule'] = schedule;
         }
         if (typeof retention !== 'undefined') {
-            payload['retention'] = retention;
+            apiPayload['retention'] = retention;
         }
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1149,7 +1149,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1215,7 +1215,7 @@ export class Mongo {
         const apiPath = '/mongo/{databaseId}/backups/policies/{policyId}'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{policyId}', encodeURIComponent(String(policyId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1223,7 +1223,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1333,18 +1333,18 @@ export class Mongo {
         const apiPath = '/mongo/{databaseId}/backups/policies/{policyId}'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{policyId}', encodeURIComponent(String(policyId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof schedule !== 'undefined') {
-            payload['schedule'] = schedule;
+            apiPayload['schedule'] = schedule;
         }
         if (typeof retention !== 'undefined') {
-            payload['retention'] = retention;
+            apiPayload['retention'] = retention;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1354,7 +1354,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1417,7 +1417,7 @@ export class Mongo {
         const apiPath = '/mongo/{databaseId}/backups/policies/{policyId}'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{policyId}', encodeURIComponent(String(policyId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1426,7 +1426,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1568,27 +1568,27 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof provider !== 'undefined') {
-            payload['provider'] = provider;
+            apiPayload['provider'] = provider;
         }
         if (typeof bucket !== 'undefined') {
-            payload['bucket'] = bucket;
+            apiPayload['bucket'] = bucket;
         }
         if (typeof region !== 'undefined') {
-            payload['region'] = region;
+            apiPayload['region'] = region;
         }
         if (typeof prefix !== 'undefined') {
-            payload['prefix'] = prefix;
+            apiPayload['prefix'] = prefix;
         }
         if (typeof endpoint !== 'undefined') {
-            payload['endpoint'] = endpoint;
+            apiPayload['endpoint'] = endpoint;
         }
         if (typeof accessKey !== 'undefined') {
-            payload['accessKey'] = accessKey;
+            apiPayload['accessKey'] = accessKey;
         }
         if (typeof secretKey !== 'undefined') {
-            payload['secretKey'] = secretKey;
+            apiPayload['secretKey'] = secretKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1598,7 +1598,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1664,7 +1664,7 @@ export class Mongo {
         const apiPath = '/mongo/{databaseId}/backups/{backupId}'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{backupId}', encodeURIComponent(String(backupId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1672,7 +1672,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1732,7 +1732,7 @@ export class Mongo {
         const apiPath = '/mongo/{databaseId}/backups/{backupId}'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{backupId}', encodeURIComponent(String(backupId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1741,7 +1741,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1793,7 +1793,7 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1801,7 +1801,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1871,12 +1871,12 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof branchId !== 'undefined') {
-            payload['branchId'] = branchId;
+            apiPayload['branchId'] = branchId;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1886,7 +1886,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1952,7 +1952,7 @@ export class Mongo {
         const apiPath = '/mongo/{databaseId}/branches/{branchId}'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{branchId}', encodeURIComponent(String(branchId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1961,7 +1961,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2013,7 +2013,7 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2022,7 +2022,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2085,9 +2085,9 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof targetReplicaId !== 'undefined') {
-            payload['targetReplicaId'] = targetReplicaId;
+            apiPayload['targetReplicaId'] = targetReplicaId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2097,7 +2097,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2175,12 +2175,12 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof day !== 'undefined') {
-            payload['day'] = day;
+            apiPayload['day'] = day;
         }
         if (typeof hourUtc !== 'undefined') {
-            payload['hourUtc'] = hourUtc;
+            apiPayload['hourUtc'] = hourUtc;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2190,7 +2190,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2270,12 +2270,12 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof targetType !== 'undefined') {
-            payload['targetType'] = targetType;
+            apiPayload['targetType'] = targetType;
         }
         if (typeof specification !== 'undefined') {
-            payload['specification'] = specification;
+            apiPayload['specification'] = specification;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2285,7 +2285,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2373,15 +2373,15 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof status !== 'undefined') {
-            payload['status'] = status;
+            apiPayload['status'] = status;
         }
         if (typeof limit !== 'undefined') {
-            payload['limit'] = limit;
+            apiPayload['limit'] = limit;
         }
         if (typeof offset !== 'undefined') {
-            payload['offset'] = offset;
+            apiPayload['offset'] = offset;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2390,7 +2390,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2440,7 +2440,7 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2448,7 +2448,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2498,7 +2498,7 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2506,7 +2506,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2603,18 +2603,18 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof status !== 'undefined') {
-            payload['status'] = status;
+            apiPayload['status'] = status;
         }
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         if (typeof limit !== 'undefined') {
-            payload['limit'] = limit;
+            apiPayload['limit'] = limit;
         }
         if (typeof offset !== 'undefined') {
-            payload['offset'] = offset;
+            apiPayload['offset'] = offset;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2623,7 +2623,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2720,18 +2720,18 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         if (typeof backupId !== 'undefined') {
-            payload['backupId'] = backupId;
+            apiPayload['backupId'] = backupId;
         }
         if (typeof targetDatabaseId !== 'undefined') {
-            payload['targetDatabaseId'] = targetDatabaseId;
+            apiPayload['targetDatabaseId'] = targetDatabaseId;
         }
         if (typeof targetTime !== 'undefined') {
-            payload['targetTime'] = targetTime;
+            apiPayload['targetTime'] = targetTime;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2741,7 +2741,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2810,7 +2810,7 @@ export class Mongo {
                 '{restorationId}',
                 encodeURIComponent(String(restorationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2818,7 +2818,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2866,7 +2866,7 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2874,7 +2874,7 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2941,9 +2941,9 @@ export class Mongo {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof targetVersion !== 'undefined') {
-            payload['targetVersion'] = targetVersion;
+            apiPayload['targetVersion'] = targetVersion;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2953,6 +2953,6 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 }

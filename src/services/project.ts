@@ -35,7 +35,7 @@ export class Project {
      */
     get(): Promise<Models.Project> {
         const apiPath = '/project';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -43,7 +43,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -54,7 +54,7 @@ export class Project {
      */
     delete(): Promise<{}> {
         const apiPath = '/project';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -63,7 +63,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -133,9 +133,9 @@ export class Project {
             '{methodId}',
             encodeURIComponent(String(methodId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -145,7 +145,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -197,12 +197,12 @@ export class Project {
         const total = params.total;
 
         const apiPath = '/project/keys';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -211,7 +211,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -304,18 +304,18 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "scopes"');
         }
         const apiPath = '/project/keys';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof keyId !== 'undefined') {
-            payload['keyId'] = keyId;
+            apiPayload['keyId'] = keyId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof scopes !== 'undefined') {
-            payload['scopes'] = scopes;
+            apiPayload['scopes'] = scopes;
         }
         if (typeof expire !== 'undefined') {
-            payload['expire'] = expire;
+            apiPayload['expire'] = expire;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -325,7 +325,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -394,12 +394,12 @@ export class Project {
             );
         }
         const apiPath = '/project/keys/ephemeral';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof scopes !== 'undefined') {
-            payload['scopes'] = scopes;
+            apiPayload['scopes'] = scopes;
         }
         if (typeof duration !== 'undefined') {
-            payload['duration'] = duration;
+            apiPayload['duration'] = duration;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -409,7 +409,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -453,7 +453,7 @@ export class Project {
             '{keyId}',
             encodeURIComponent(String(keyId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -461,7 +461,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -553,15 +553,15 @@ export class Project {
             '{keyId}',
             encodeURIComponent(String(keyId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof scopes !== 'undefined') {
-            payload['scopes'] = scopes;
+            apiPayload['scopes'] = scopes;
         }
         if (typeof expire !== 'undefined') {
-            payload['expire'] = expire;
+            apiPayload['expire'] = expire;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -571,7 +571,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -615,7 +615,7 @@ export class Project {
             '{keyId}',
             encodeURIComponent(String(keyId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -624,7 +624,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -667,9 +667,9 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "labels"');
         }
         const apiPath = '/project/labels';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof labels !== 'undefined') {
-            payload['labels'] = labels;
+            apiPayload['labels'] = labels;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -679,7 +679,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -734,12 +734,12 @@ export class Project {
         const total = params.total;
 
         const apiPath = '/project/mock-phones';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -748,7 +748,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -802,12 +802,12 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "otp"');
         }
         const apiPath = '/project/mock-phones';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof number !== 'undefined') {
-            payload['number'] = number;
+            apiPayload['number'] = number;
         }
         if (typeof otp !== 'undefined') {
-            payload['otp'] = otp;
+            apiPayload['otp'] = otp;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -817,7 +817,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -863,7 +863,7 @@ export class Project {
             '{number}',
             encodeURIComponent(String(number)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -871,7 +871,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -928,9 +928,9 @@ export class Project {
             '{number}',
             encodeURIComponent(String(number)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof otp !== 'undefined') {
-            payload['otp'] = otp;
+            apiPayload['otp'] = otp;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -940,7 +940,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -984,7 +984,7 @@ export class Project {
             '{number}',
             encodeURIComponent(String(number)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -993,7 +993,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1048,12 +1048,12 @@ export class Project {
         const total = params.total;
 
         const apiPath = '/project/oauth2';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1062,7 +1062,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1277,55 +1277,56 @@ export class Project {
             );
         }
         const apiPath = '/project/oauth2-server';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof authorizationUrl !== 'undefined') {
-            payload['authorizationUrl'] = authorizationUrl;
+            apiPayload['authorizationUrl'] = authorizationUrl;
         }
         if (typeof scopes !== 'undefined') {
-            payload['scopes'] = scopes;
+            apiPayload['scopes'] = scopes;
         }
         if (typeof authorizationDetailsTypes !== 'undefined') {
-            payload['authorizationDetailsTypes'] = authorizationDetailsTypes;
+            apiPayload['authorizationDetailsTypes'] = authorizationDetailsTypes;
         }
         if (typeof accessTokenDuration !== 'undefined') {
-            payload['accessTokenDuration'] = accessTokenDuration;
+            apiPayload['accessTokenDuration'] = accessTokenDuration;
         }
         if (typeof refreshTokenDuration !== 'undefined') {
-            payload['refreshTokenDuration'] = refreshTokenDuration;
+            apiPayload['refreshTokenDuration'] = refreshTokenDuration;
         }
         if (typeof publicAccessTokenDuration !== 'undefined') {
-            payload['publicAccessTokenDuration'] = publicAccessTokenDuration;
+            apiPayload['publicAccessTokenDuration'] = publicAccessTokenDuration;
         }
         if (typeof publicRefreshTokenDuration !== 'undefined') {
-            payload['publicRefreshTokenDuration'] = publicRefreshTokenDuration;
+            apiPayload['publicRefreshTokenDuration'] =
+                publicRefreshTokenDuration;
         }
         if (typeof installationAccessTokenDuration !== 'undefined') {
-            payload['installationAccessTokenDuration'] =
+            apiPayload['installationAccessTokenDuration'] =
                 installationAccessTokenDuration;
         }
         if (typeof confidentialPkce !== 'undefined') {
-            payload['confidentialPkce'] = confidentialPkce;
+            apiPayload['confidentialPkce'] = confidentialPkce;
         }
         if (typeof verificationUrl !== 'undefined') {
-            payload['verificationUrl'] = verificationUrl;
+            apiPayload['verificationUrl'] = verificationUrl;
         }
         if (typeof userCodeLength !== 'undefined') {
-            payload['userCodeLength'] = userCodeLength;
+            apiPayload['userCodeLength'] = userCodeLength;
         }
         if (typeof userCodeFormat !== 'undefined') {
-            payload['userCodeFormat'] = userCodeFormat;
+            apiPayload['userCodeFormat'] = userCodeFormat;
         }
         if (typeof deviceCodeDuration !== 'undefined') {
-            payload['deviceCodeDuration'] = deviceCodeDuration;
+            apiPayload['deviceCodeDuration'] = deviceCodeDuration;
         }
         if (typeof defaultScopes !== 'undefined') {
-            payload['defaultScopes'] = defaultScopes;
+            apiPayload['defaultScopes'] = defaultScopes;
         }
         if (typeof installationScopes !== 'undefined') {
-            payload['installationScopes'] = installationScopes;
+            apiPayload['installationScopes'] = installationScopes;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1335,7 +1336,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1403,15 +1404,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/amazon';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1421,7 +1422,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1529,27 +1530,27 @@ export class Project {
         const nativeEnabled = params.nativeEnabled;
 
         const apiPath = '/project/oauth2/apple';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof serviceId !== 'undefined') {
-            payload['serviceId'] = serviceId;
+            apiPayload['serviceId'] = serviceId;
         }
         if (typeof keyId !== 'undefined') {
-            payload['keyId'] = keyId;
+            apiPayload['keyId'] = keyId;
         }
         if (typeof teamId !== 'undefined') {
-            payload['teamId'] = teamId;
+            apiPayload['teamId'] = teamId;
         }
         if (typeof p8File !== 'undefined') {
-            payload['p8File'] = p8File;
+            apiPayload['p8File'] = p8File;
         }
         if (typeof nativeClientIds !== 'undefined') {
-            payload['nativeClientIds'] = nativeClientIds;
+            apiPayload['nativeClientIds'] = nativeClientIds;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof nativeEnabled !== 'undefined') {
-            payload['nativeEnabled'] = nativeEnabled;
+            apiPayload['nativeEnabled'] = nativeEnabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1559,7 +1560,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1627,15 +1628,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/appwrite';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1645,7 +1646,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1735,21 +1736,21 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/auth0';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof endpoint !== 'undefined') {
-            payload['endpoint'] = endpoint;
+            apiPayload['endpoint'] = endpoint;
         }
         if (typeof prompt !== 'undefined') {
-            payload['prompt'] = prompt;
+            apiPayload['prompt'] = prompt;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1759,7 +1760,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1840,18 +1841,18 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/authentik';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof endpoint !== 'undefined') {
-            payload['endpoint'] = endpoint;
+            apiPayload['endpoint'] = endpoint;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1861,7 +1862,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1929,15 +1930,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/autodesk';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1947,7 +1948,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2010,15 +2011,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/bitbucket';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof secret !== 'undefined') {
-            payload['secret'] = secret;
+            apiPayload['secret'] = secret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2028,7 +2029,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2096,15 +2097,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/bitly';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2114,7 +2115,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2182,15 +2183,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/box';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2200,7 +2201,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2268,15 +2269,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/cloudflare';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2286,7 +2287,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2349,15 +2350,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/dailymotion';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof apiSecret !== 'undefined') {
-            payload['apiSecret'] = apiSecret;
+            apiPayload['apiSecret'] = apiSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2367,7 +2368,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2448,18 +2449,18 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/discord';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof prompt !== 'undefined') {
-            payload['prompt'] = prompt;
+            apiPayload['prompt'] = prompt;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2469,7 +2470,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2537,15 +2538,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/disqus';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof publicKey !== 'undefined') {
-            payload['publicKey'] = publicKey;
+            apiPayload['publicKey'] = publicKey;
         }
         if (typeof secretKey !== 'undefined') {
-            payload['secretKey'] = secretKey;
+            apiPayload['secretKey'] = secretKey;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2555,7 +2556,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2618,15 +2619,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/dropbox';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof appKey !== 'undefined') {
-            payload['appKey'] = appKey;
+            apiPayload['appKey'] = appKey;
         }
         if (typeof appSecret !== 'undefined') {
-            payload['appSecret'] = appSecret;
+            apiPayload['appSecret'] = appSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2636,7 +2637,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2704,15 +2705,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/etsy';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof keyString !== 'undefined') {
-            payload['keyString'] = keyString;
+            apiPayload['keyString'] = keyString;
         }
         if (typeof sharedSecret !== 'undefined') {
-            payload['sharedSecret'] = sharedSecret;
+            apiPayload['sharedSecret'] = sharedSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2722,7 +2723,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2785,15 +2786,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/facebook';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof appId !== 'undefined') {
-            payload['appId'] = appId;
+            apiPayload['appId'] = appId;
         }
         if (typeof appSecret !== 'undefined') {
-            payload['appSecret'] = appSecret;
+            apiPayload['appSecret'] = appSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2803,7 +2804,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2871,15 +2872,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/figma';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2889,7 +2890,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2970,18 +2971,18 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/fusionauth';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof endpoint !== 'undefined') {
-            payload['endpoint'] = endpoint;
+            apiPayload['endpoint'] = endpoint;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2991,7 +2992,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3072,18 +3073,18 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/github';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof prompt !== 'undefined') {
-            payload['prompt'] = prompt;
+            apiPayload['prompt'] = prompt;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3093,7 +3094,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3174,18 +3175,18 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/gitlab';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof applicationId !== 'undefined') {
-            payload['applicationId'] = applicationId;
+            apiPayload['applicationId'] = applicationId;
         }
         if (typeof secret !== 'undefined') {
-            payload['secret'] = secret;
+            apiPayload['secret'] = secret;
         }
         if (typeof endpoint !== 'undefined') {
-            payload['endpoint'] = endpoint;
+            apiPayload['endpoint'] = endpoint;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3195,7 +3196,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3300,24 +3301,24 @@ export class Project {
         const nativeEnabled = params.nativeEnabled;
 
         const apiPath = '/project/oauth2/google';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof prompt !== 'undefined') {
-            payload['prompt'] = prompt;
+            apiPayload['prompt'] = prompt;
         }
         if (typeof nativeClientIds !== 'undefined') {
-            payload['nativeClientIds'] = nativeClientIds;
+            apiPayload['nativeClientIds'] = nativeClientIds;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof nativeEnabled !== 'undefined') {
-            payload['nativeEnabled'] = nativeEnabled;
+            apiPayload['nativeEnabled'] = nativeEnabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3327,7 +3328,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3395,15 +3396,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/huggingface';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3413,7 +3414,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3494,18 +3495,18 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/kakao';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof prompt !== 'undefined') {
-            payload['prompt'] = prompt;
+            apiPayload['prompt'] = prompt;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3515,7 +3516,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3605,21 +3606,21 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/keycloak';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof endpoint !== 'undefined') {
-            payload['endpoint'] = endpoint;
+            apiPayload['endpoint'] = endpoint;
         }
         if (typeof realmName !== 'undefined') {
-            payload['realmName'] = realmName;
+            apiPayload['realmName'] = realmName;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3629,7 +3630,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3697,15 +3698,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/kick';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3715,7 +3716,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3787,15 +3788,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/linkedin';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof primaryClientSecret !== 'undefined') {
-            payload['primaryClientSecret'] = primaryClientSecret;
+            apiPayload['primaryClientSecret'] = primaryClientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3805,7 +3806,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3895,21 +3896,21 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/microsoft';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof applicationId !== 'undefined') {
-            payload['applicationId'] = applicationId;
+            apiPayload['applicationId'] = applicationId;
         }
         if (typeof applicationSecret !== 'undefined') {
-            payload['applicationSecret'] = applicationSecret;
+            apiPayload['applicationSecret'] = applicationSecret;
         }
         if (typeof tenant !== 'undefined') {
-            payload['tenant'] = tenant;
+            apiPayload['tenant'] = tenant;
         }
         if (typeof prompt !== 'undefined') {
-            payload['prompt'] = prompt;
+            apiPayload['prompt'] = prompt;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3919,7 +3920,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3991,15 +3992,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/notion';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof oauthClientId !== 'undefined') {
-            payload['oauthClientId'] = oauthClientId;
+            apiPayload['oauthClientId'] = oauthClientId;
         }
         if (typeof oauthClientSecret !== 'undefined') {
-            payload['oauthClientSecret'] = oauthClientSecret;
+            apiPayload['oauthClientSecret'] = oauthClientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4009,7 +4010,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4144,33 +4145,33 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/oidc';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof wellKnownURL !== 'undefined') {
-            payload['wellKnownURL'] = wellKnownURL;
+            apiPayload['wellKnownURL'] = wellKnownURL;
         }
         if (typeof authorizationURL !== 'undefined') {
-            payload['authorizationURL'] = authorizationURL;
+            apiPayload['authorizationURL'] = authorizationURL;
         }
         if (typeof tokenURL !== 'undefined') {
-            payload['tokenURL'] = tokenURL;
+            apiPayload['tokenURL'] = tokenURL;
         }
         if (typeof userInfoURL !== 'undefined') {
-            payload['userInfoURL'] = userInfoURL;
+            apiPayload['userInfoURL'] = userInfoURL;
         }
         if (typeof prompt !== 'undefined') {
-            payload['prompt'] = prompt;
+            apiPayload['prompt'] = prompt;
         }
         if (typeof maxAge !== 'undefined') {
-            payload['maxAge'] = maxAge;
+            apiPayload['maxAge'] = maxAge;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4180,7 +4181,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4285,24 +4286,24 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/okta';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof domain !== 'undefined') {
-            payload['domain'] = domain;
+            apiPayload['domain'] = domain;
         }
         if (typeof authorizationServerId !== 'undefined') {
-            payload['authorizationServerId'] = authorizationServerId;
+            apiPayload['authorizationServerId'] = authorizationServerId;
         }
         if (typeof prompt !== 'undefined') {
-            payload['prompt'] = prompt;
+            apiPayload['prompt'] = prompt;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4312,7 +4313,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4380,15 +4381,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/paypal';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof secretKey !== 'undefined') {
-            payload['secretKey'] = secretKey;
+            apiPayload['secretKey'] = secretKey;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4398,7 +4399,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4466,15 +4467,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/paypalSandbox';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof secretKey !== 'undefined') {
-            payload['secretKey'] = secretKey;
+            apiPayload['secretKey'] = secretKey;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4484,7 +4485,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4552,15 +4553,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/podio';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4570,7 +4571,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4638,15 +4639,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/resend';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4656,7 +4657,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4737,18 +4738,18 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/salesforce';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof customerKey !== 'undefined') {
-            payload['customerKey'] = customerKey;
+            apiPayload['customerKey'] = customerKey;
         }
         if (typeof customerSecret !== 'undefined') {
-            payload['customerSecret'] = customerSecret;
+            apiPayload['customerSecret'] = customerSecret;
         }
         if (typeof prompt !== 'undefined') {
-            payload['prompt'] = prompt;
+            apiPayload['prompt'] = prompt;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4758,7 +4759,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4826,15 +4827,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/slack';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4844,7 +4845,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4912,15 +4913,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/spotify';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4930,7 +4931,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4998,15 +4999,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/stripe';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof apiSecretKey !== 'undefined') {
-            payload['apiSecretKey'] = apiSecretKey;
+            apiPayload['apiSecretKey'] = apiSecretKey;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5016,7 +5017,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5084,15 +5085,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/tiktok';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5102,7 +5103,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5174,15 +5175,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/tradeshift';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof oauth2ClientId !== 'undefined') {
-            payload['oauth2ClientId'] = oauth2ClientId;
+            apiPayload['oauth2ClientId'] = oauth2ClientId;
         }
         if (typeof oauth2ClientSecret !== 'undefined') {
-            payload['oauth2ClientSecret'] = oauth2ClientSecret;
+            apiPayload['oauth2ClientSecret'] = oauth2ClientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5192,7 +5193,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5264,15 +5265,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/tradeshiftBox';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof oauth2ClientId !== 'undefined') {
-            payload['oauth2ClientId'] = oauth2ClientId;
+            apiPayload['oauth2ClientId'] = oauth2ClientId;
         }
         if (typeof oauth2ClientSecret !== 'undefined') {
-            payload['oauth2ClientSecret'] = oauth2ClientSecret;
+            apiPayload['oauth2ClientSecret'] = oauth2ClientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5282,7 +5283,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5350,15 +5351,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/twitch';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5368,7 +5369,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5436,15 +5437,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/wordpress';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5454,7 +5455,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5522,15 +5523,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/x';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof customerKey !== 'undefined') {
-            payload['customerKey'] = customerKey;
+            apiPayload['customerKey'] = customerKey;
         }
         if (typeof secretKey !== 'undefined') {
-            payload['secretKey'] = secretKey;
+            apiPayload['secretKey'] = secretKey;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5540,7 +5541,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5608,15 +5609,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/yahoo';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5626,7 +5627,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5694,15 +5695,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/yandex';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5712,7 +5713,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5793,18 +5794,18 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/zoho';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof prompt !== 'undefined') {
-            payload['prompt'] = prompt;
+            apiPayload['prompt'] = prompt;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5814,7 +5815,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5882,15 +5883,15 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/oauth2/zoom';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof clientId !== 'undefined') {
-            payload['clientId'] = clientId;
+            apiPayload['clientId'] = clientId;
         }
         if (typeof clientSecret !== 'undefined') {
-            payload['clientSecret'] = clientSecret;
+            apiPayload['clientSecret'] = clientSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5900,7 +5901,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6094,7 +6095,7 @@ export class Project {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -6102,7 +6103,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6157,12 +6158,12 @@ export class Project {
         const total = params.total;
 
         const apiPath = '/project/platforms';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6171,7 +6172,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6247,15 +6248,15 @@ export class Project {
             );
         }
         const apiPath = '/project/platforms/android';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof platformId !== 'undefined') {
-            payload['platformId'] = platformId;
+            apiPayload['platformId'] = platformId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof applicationId !== 'undefined') {
-            payload['applicationId'] = applicationId;
+            apiPayload['applicationId'] = applicationId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6265,7 +6266,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6344,12 +6345,12 @@ export class Project {
             '{platformId}',
             encodeURIComponent(String(platformId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof applicationId !== 'undefined') {
-            payload['applicationId'] = applicationId;
+            apiPayload['applicationId'] = applicationId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6359,7 +6360,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6439,15 +6440,15 @@ export class Project {
             );
         }
         const apiPath = '/project/platforms/apple';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof platformId !== 'undefined') {
-            payload['platformId'] = platformId;
+            apiPayload['platformId'] = platformId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof bundleIdentifier !== 'undefined') {
-            payload['bundleIdentifier'] = bundleIdentifier;
+            apiPayload['bundleIdentifier'] = bundleIdentifier;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6457,7 +6458,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6540,12 +6541,12 @@ export class Project {
             '{platformId}',
             encodeURIComponent(String(platformId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof bundleIdentifier !== 'undefined') {
-            payload['bundleIdentifier'] = bundleIdentifier;
+            apiPayload['bundleIdentifier'] = bundleIdentifier;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6555,7 +6556,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6630,15 +6631,15 @@ export class Project {
             );
         }
         const apiPath = '/project/platforms/linux';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof platformId !== 'undefined') {
-            payload['platformId'] = platformId;
+            apiPayload['platformId'] = platformId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof packageName !== 'undefined') {
-            payload['packageName'] = packageName;
+            apiPayload['packageName'] = packageName;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6648,7 +6649,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6726,12 +6727,12 @@ export class Project {
             '{platformId}',
             encodeURIComponent(String(platformId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof packageName !== 'undefined') {
-            payload['packageName'] = packageName;
+            apiPayload['packageName'] = packageName;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6741,7 +6742,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6816,15 +6817,15 @@ export class Project {
             );
         }
         const apiPath = '/project/platforms/web';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof platformId !== 'undefined') {
-            payload['platformId'] = platformId;
+            apiPayload['platformId'] = platformId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof hostname !== 'undefined') {
-            payload['hostname'] = hostname;
+            apiPayload['hostname'] = hostname;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6834,7 +6835,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6912,12 +6913,12 @@ export class Project {
             '{platformId}',
             encodeURIComponent(String(platformId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof hostname !== 'undefined') {
-            payload['hostname'] = hostname;
+            apiPayload['hostname'] = hostname;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6927,7 +6928,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7011,15 +7012,15 @@ export class Project {
             );
         }
         const apiPath = '/project/platforms/windows';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof platformId !== 'undefined') {
-            payload['platformId'] = platformId;
+            apiPayload['platformId'] = platformId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof packageIdentifierName !== 'undefined') {
-            payload['packageIdentifierName'] = packageIdentifierName;
+            apiPayload['packageIdentifierName'] = packageIdentifierName;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7029,7 +7030,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7116,12 +7117,12 @@ export class Project {
             '{platformId}',
             encodeURIComponent(String(platformId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof packageIdentifierName !== 'undefined') {
-            payload['packageIdentifierName'] = packageIdentifierName;
+            apiPayload['packageIdentifierName'] = packageIdentifierName;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7131,7 +7132,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7201,7 +7202,7 @@ export class Project {
             '{platformId}',
             encodeURIComponent(String(platformId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7209,7 +7210,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7257,7 +7258,7 @@ export class Project {
             '{platformId}',
             encodeURIComponent(String(platformId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7266,7 +7267,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7321,12 +7322,12 @@ export class Project {
         const total = params.total;
 
         const apiPath = '/project/policies';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7335,7 +7336,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7382,9 +7383,9 @@ export class Project {
             );
         }
         const apiPath = '/project/policies/deny-aliased-email';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7394,7 +7395,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7441,9 +7442,9 @@ export class Project {
             );
         }
         const apiPath = '/project/policies/deny-corporate-email';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7453,7 +7454,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7500,9 +7501,9 @@ export class Project {
             );
         }
         const apiPath = '/project/policies/deny-disposable-email';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7512,7 +7513,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7559,9 +7560,9 @@ export class Project {
             );
         }
         const apiPath = '/project/policies/deny-free-email';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7571,7 +7572,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7670,24 +7671,24 @@ export class Project {
         const userAccessedAt = params.userAccessedAt;
 
         const apiPath = '/project/policies/membership-privacy';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof userId !== 'undefined') {
-            payload['userId'] = userId;
+            apiPayload['userId'] = userId;
         }
         if (typeof userEmail !== 'undefined') {
-            payload['userEmail'] = userEmail;
+            apiPayload['userEmail'] = userEmail;
         }
         if (typeof userPhone !== 'undefined') {
-            payload['userPhone'] = userPhone;
+            apiPayload['userPhone'] = userPhone;
         }
         if (typeof userName !== 'undefined') {
-            payload['userName'] = userName;
+            apiPayload['userName'] = userName;
         }
         if (typeof userMFA !== 'undefined') {
-            payload['userMFA'] = userMFA;
+            apiPayload['userMFA'] = userMFA;
         }
         if (typeof userAccessedAt !== 'undefined') {
-            payload['userAccessedAt'] = userAccessedAt;
+            apiPayload['userAccessedAt'] = userAccessedAt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7697,7 +7698,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7778,18 +7779,18 @@ export class Project {
         const custom = params.custom;
 
         const apiPath = '/project/policies/mfa-factors';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof totp !== 'undefined') {
-            payload['totp'] = totp;
+            apiPayload['totp'] = totp;
         }
         if (typeof email !== 'undefined') {
-            payload['email'] = email;
+            apiPayload['email'] = email;
         }
         if (typeof phone !== 'undefined') {
-            payload['phone'] = phone;
+            apiPayload['phone'] = phone;
         }
         if (typeof custom !== 'undefined') {
-            payload['custom'] = custom;
+            apiPayload['custom'] = custom;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7799,7 +7800,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7846,9 +7847,9 @@ export class Project {
             );
         }
         const apiPath = '/project/policies/password-dictionary';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7858,7 +7859,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7907,9 +7908,9 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "total"');
         }
         const apiPath = '/project/policies/password-history';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7919,7 +7920,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7966,9 +7967,9 @@ export class Project {
             );
         }
         const apiPath = '/project/policies/password-personal-data';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7978,7 +7979,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8042,15 +8043,15 @@ export class Project {
         const users = params.users;
 
         const apiPath = '/project/policies/password-pwned';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof sessions !== 'undefined') {
-            payload['sessions'] = sessions;
+            apiPayload['sessions'] = sessions;
         }
         if (typeof users !== 'undefined') {
-            payload['users'] = users;
+            apiPayload['users'] = users;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8060,7 +8061,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8150,21 +8151,21 @@ export class Project {
         const symbols = params.symbols;
 
         const apiPath = '/project/policies/password-strength';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof min !== 'undefined') {
-            payload['min'] = min;
+            apiPayload['min'] = min;
         }
         if (typeof uppercase !== 'undefined') {
-            payload['uppercase'] = uppercase;
+            apiPayload['uppercase'] = uppercase;
         }
         if (typeof lowercase !== 'undefined') {
-            payload['lowercase'] = lowercase;
+            apiPayload['lowercase'] = lowercase;
         }
         if (typeof number !== 'undefined') {
-            payload['number'] = number;
+            apiPayload['number'] = number;
         }
         if (typeof symbols !== 'undefined') {
-            payload['symbols'] = symbols;
+            apiPayload['symbols'] = symbols;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8174,7 +8175,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8221,9 +8222,9 @@ export class Project {
             );
         }
         const apiPath = '/project/policies/session-alert';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8233,7 +8234,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8280,9 +8281,9 @@ export class Project {
             );
         }
         const apiPath = '/project/policies/session-duration';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof duration !== 'undefined') {
-            payload['duration'] = duration;
+            apiPayload['duration'] = duration;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8292,7 +8293,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8339,9 +8340,9 @@ export class Project {
             );
         }
         const apiPath = '/project/policies/session-invalidation';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8351,7 +8352,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8396,9 +8397,9 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "total"');
         }
         const apiPath = '/project/policies/session-limit';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8408,7 +8409,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8451,9 +8452,9 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "total"');
         }
         const apiPath = '/project/policies/user-limit';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8463,7 +8464,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8567,7 +8568,7 @@ export class Project {
             '{policyId}',
             encodeURIComponent(String(policyId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -8575,7 +8576,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8645,9 +8646,9 @@ export class Project {
             '{protocolId}',
             encodeURIComponent(String(protocolId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8657,7 +8658,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8727,9 +8728,9 @@ export class Project {
             '{serviceId}',
             encodeURIComponent(String(serviceId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8739,7 +8740,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8884,36 +8885,36 @@ export class Project {
         const enabled = params.enabled;
 
         const apiPath = '/project/smtp';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof host !== 'undefined') {
-            payload['host'] = host;
+            apiPayload['host'] = host;
         }
         if (typeof port !== 'undefined') {
-            payload['port'] = port;
+            apiPayload['port'] = port;
         }
         if (typeof username !== 'undefined') {
-            payload['username'] = username;
+            apiPayload['username'] = username;
         }
         if (typeof password !== 'undefined') {
-            payload['password'] = password;
+            apiPayload['password'] = password;
         }
         if (typeof senderEmail !== 'undefined') {
-            payload['senderEmail'] = senderEmail;
+            apiPayload['senderEmail'] = senderEmail;
         }
         if (typeof senderName !== 'undefined') {
-            payload['senderName'] = senderName;
+            apiPayload['senderName'] = senderName;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof secure !== 'undefined') {
-            payload['secure'] = secure;
+            apiPayload['secure'] = secure;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8923,7 +8924,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8966,9 +8967,9 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "emails"');
         }
         const apiPath = '/project/smtp/tests';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof emails !== 'undefined') {
-            payload['emails'] = emails;
+            apiPayload['emails'] = emails;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8978,7 +8979,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9033,12 +9034,12 @@ export class Project {
         const total = params.total;
 
         const apiPath = '/project/templates/email';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9047,7 +9048,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9184,30 +9185,30 @@ export class Project {
             );
         }
         const apiPath = '/project/templates/email';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof templateId !== 'undefined') {
-            payload['templateId'] = templateId;
+            apiPayload['templateId'] = templateId;
         }
         if (typeof locale !== 'undefined') {
-            payload['locale'] = locale;
+            apiPayload['locale'] = locale;
         }
         if (typeof subject !== 'undefined') {
-            payload['subject'] = subject;
+            apiPayload['subject'] = subject;
         }
         if (typeof message !== 'undefined') {
-            payload['message'] = message;
+            apiPayload['message'] = message;
         }
         if (typeof senderName !== 'undefined') {
-            payload['senderName'] = senderName;
+            apiPayload['senderName'] = senderName;
         }
         if (typeof senderEmail !== 'undefined') {
-            payload['senderEmail'] = senderEmail;
+            apiPayload['senderEmail'] = senderEmail;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9217,7 +9218,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9288,9 +9289,9 @@ export class Project {
             '{templateId}',
             encodeURIComponent(String(templateId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof locale !== 'undefined') {
-            payload['locale'] = locale;
+            apiPayload['locale'] = locale;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9299,7 +9300,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9354,12 +9355,12 @@ export class Project {
         const total = params.total;
 
         const apiPath = '/project/variables';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9368,7 +9369,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9459,18 +9460,18 @@ export class Project {
             throw new AppwriteException('Missing required parameter: "value"');
         }
         const apiPath = '/project/variables';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof variableId !== 'undefined') {
-            payload['variableId'] = variableId;
+            apiPayload['variableId'] = variableId;
         }
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof secret !== 'undefined') {
-            payload['secret'] = secret;
+            apiPayload['secret'] = secret;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9480,7 +9481,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9528,7 +9529,7 @@ export class Project {
             '{variableId}',
             encodeURIComponent(String(variableId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -9536,7 +9537,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9624,15 +9625,15 @@ export class Project {
             '{variableId}',
             encodeURIComponent(String(variableId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof secret !== 'undefined') {
-            payload['secret'] = secret;
+            apiPayload['secret'] = secret;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9642,7 +9643,7 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9690,7 +9691,7 @@ export class Project {
             '{variableId}',
             encodeURIComponent(String(variableId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -9699,6 +9700,6 @@ export class Project {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 }

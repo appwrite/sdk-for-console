@@ -70,15 +70,15 @@ export class Waf {
         const total = params.total;
 
         const apiPath = '/waf/rules';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -87,7 +87,7 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -224,30 +224,30 @@ export class Waf {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/waf/rules/bypass';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof ruleId !== 'undefined') {
-            payload['ruleId'] = ruleId;
+            apiPayload['ruleId'] = ruleId;
         }
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof description !== 'undefined') {
-            payload['description'] = description;
+            apiPayload['description'] = description;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof conditions !== 'undefined') {
-            payload['conditions'] = conditions;
+            apiPayload['conditions'] = conditions;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -257,7 +257,7 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -389,27 +389,27 @@ export class Waf {
             '{ruleId}',
             encodeURIComponent(String(ruleId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof description !== 'undefined') {
-            payload['description'] = description;
+            apiPayload['description'] = description;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof conditions !== 'undefined') {
-            payload['conditions'] = conditions;
+            apiPayload['conditions'] = conditions;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -419,7 +419,7 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -586,39 +586,39 @@ export class Waf {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/waf/rules/challenge';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof ruleId !== 'undefined') {
-            payload['ruleId'] = ruleId;
+            apiPayload['ruleId'] = ruleId;
         }
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof description !== 'undefined') {
-            payload['description'] = description;
+            apiPayload['description'] = description;
         }
         if (typeof challengeType !== 'undefined') {
-            payload['challengeType'] = challengeType;
+            apiPayload['challengeType'] = challengeType;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof conditions !== 'undefined') {
-            payload['conditions'] = conditions;
+            apiPayload['conditions'] = conditions;
         }
         if (typeof difficulty !== 'undefined') {
-            payload['difficulty'] = difficulty;
+            apiPayload['difficulty'] = difficulty;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -628,7 +628,7 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -790,36 +790,36 @@ export class Waf {
             '{ruleId}',
             encodeURIComponent(String(ruleId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof description !== 'undefined') {
-            payload['description'] = description;
+            apiPayload['description'] = description;
         }
         if (typeof challengeType !== 'undefined') {
-            payload['challengeType'] = challengeType;
+            apiPayload['challengeType'] = challengeType;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof conditions !== 'undefined') {
-            payload['conditions'] = conditions;
+            apiPayload['conditions'] = conditions;
         }
         if (typeof difficulty !== 'undefined') {
-            payload['difficulty'] = difficulty;
+            apiPayload['difficulty'] = difficulty;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -829,7 +829,7 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -966,30 +966,30 @@ export class Waf {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/waf/rules/deny';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof ruleId !== 'undefined') {
-            payload['ruleId'] = ruleId;
+            apiPayload['ruleId'] = ruleId;
         }
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof description !== 'undefined') {
-            payload['description'] = description;
+            apiPayload['description'] = description;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof conditions !== 'undefined') {
-            payload['conditions'] = conditions;
+            apiPayload['conditions'] = conditions;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -999,7 +999,7 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1131,27 +1131,27 @@ export class Waf {
             '{ruleId}',
             encodeURIComponent(String(ruleId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof description !== 'undefined') {
-            payload['description'] = description;
+            apiPayload['description'] = description;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof conditions !== 'undefined') {
-            payload['conditions'] = conditions;
+            apiPayload['conditions'] = conditions;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1161,7 +1161,7 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1356,45 +1356,45 @@ export class Waf {
             );
         }
         const apiPath = '/waf/rules/rate-limit';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof ruleId !== 'undefined') {
-            payload['ruleId'] = ruleId;
+            apiPayload['ruleId'] = ruleId;
         }
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof description !== 'undefined') {
-            payload['description'] = description;
+            apiPayload['description'] = description;
         }
         if (typeof limit !== 'undefined') {
-            payload['limit'] = limit;
+            apiPayload['limit'] = limit;
         }
         if (typeof interval !== 'undefined') {
-            payload['interval'] = interval;
+            apiPayload['interval'] = interval;
         }
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof strategy !== 'undefined') {
-            payload['strategy'] = strategy;
+            apiPayload['strategy'] = strategy;
         }
         if (typeof maxBucketSize !== 'undefined') {
-            payload['maxBucketSize'] = maxBucketSize;
+            apiPayload['maxBucketSize'] = maxBucketSize;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof conditions !== 'undefined') {
-            payload['conditions'] = conditions;
+            apiPayload['conditions'] = conditions;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1404,7 +1404,7 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1576,39 +1576,39 @@ export class Waf {
             '{ruleId}',
             encodeURIComponent(String(ruleId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof description !== 'undefined') {
-            payload['description'] = description;
+            apiPayload['description'] = description;
         }
         if (typeof limit !== 'undefined') {
-            payload['limit'] = limit;
+            apiPayload['limit'] = limit;
         }
         if (typeof interval !== 'undefined') {
-            payload['interval'] = interval;
+            apiPayload['interval'] = interval;
         }
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof maxBucketSize !== 'undefined') {
-            payload['maxBucketSize'] = maxBucketSize;
+            apiPayload['maxBucketSize'] = maxBucketSize;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof conditions !== 'undefined') {
-            payload['conditions'] = conditions;
+            apiPayload['conditions'] = conditions;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1618,7 +1618,7 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1785,36 +1785,36 @@ export class Waf {
             );
         }
         const apiPath = '/waf/rules/redirect';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof ruleId !== 'undefined') {
-            payload['ruleId'] = ruleId;
+            apiPayload['ruleId'] = ruleId;
         }
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof description !== 'undefined') {
-            payload['description'] = description;
+            apiPayload['description'] = description;
         }
         if (typeof location !== 'undefined') {
-            payload['location'] = location;
+            apiPayload['location'] = location;
         }
         if (typeof statusCode !== 'undefined') {
-            payload['statusCode'] = statusCode;
+            apiPayload['statusCode'] = statusCode;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof conditions !== 'undefined') {
-            payload['conditions'] = conditions;
+            apiPayload['conditions'] = conditions;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1824,7 +1824,7 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1976,33 +1976,33 @@ export class Waf {
             '{ruleId}',
             encodeURIComponent(String(ruleId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof description !== 'undefined') {
-            payload['description'] = description;
+            apiPayload['description'] = description;
         }
         if (typeof location !== 'undefined') {
-            payload['location'] = location;
+            apiPayload['location'] = location;
         }
         if (typeof statusCode !== 'undefined') {
-            payload['statusCode'] = statusCode;
+            apiPayload['statusCode'] = statusCode;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof conditions !== 'undefined') {
-            payload['conditions'] = conditions;
+            apiPayload['conditions'] = conditions;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2012,7 +2012,7 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2060,7 +2060,7 @@ export class Waf {
             '{ruleId}',
             encodeURIComponent(String(ruleId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2068,7 +2068,7 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2114,7 +2114,7 @@ export class Waf {
             '{ruleId}',
             encodeURIComponent(String(ruleId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2123,6 +2123,6 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 }

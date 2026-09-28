@@ -18,7 +18,7 @@ export class Locale {
      */
     get(): Promise<Models.Locale> {
         const apiPath = '/locale';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -26,7 +26,7 @@ export class Locale {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -37,7 +37,7 @@ export class Locale {
      */
     listCodes(): Promise<Models.LocaleCodeList> {
         const apiPath = '/locale/codes';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -45,7 +45,7 @@ export class Locale {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -56,7 +56,7 @@ export class Locale {
      */
     listContinents(): Promise<Models.ContinentList> {
         const apiPath = '/locale/continents';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -64,7 +64,7 @@ export class Locale {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -75,7 +75,7 @@ export class Locale {
      */
     listCountries(): Promise<Models.CountryList> {
         const apiPath = '/locale/countries';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -83,7 +83,7 @@ export class Locale {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -94,7 +94,7 @@ export class Locale {
      */
     listCountriesEU(): Promise<Models.CountryList> {
         const apiPath = '/locale/countries/eu';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -102,7 +102,7 @@ export class Locale {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -113,7 +113,7 @@ export class Locale {
      */
     listCountriesPhones(): Promise<Models.PhoneList> {
         const apiPath = '/locale/countries/phones';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -121,7 +121,7 @@ export class Locale {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -132,7 +132,7 @@ export class Locale {
      */
     listCurrencies(): Promise<Models.CurrencyList> {
         const apiPath = '/locale/currencies';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -140,7 +140,7 @@ export class Locale {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -151,7 +151,7 @@ export class Locale {
      */
     listLanguages(): Promise<Models.LanguageList> {
         const apiPath = '/locale/languages';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -159,6 +159,6 @@ export class Locale {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 }

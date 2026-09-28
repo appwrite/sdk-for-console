@@ -12,19 +12,19 @@ export class Assistant {
      *
      * @param {string} params.prompt - Prompt. A string containing questions asked to the AI assistant.
      * @throws {AppwriteException}
-     * @returns {Promise<{}>}
+     * @returns {Promise<string>}
      */
-    chat(params: { prompt: string }): Promise<{}>;
+    chat(params: { prompt: string }): Promise<string>;
     /**
      * Send a prompt to the AI assistant and receive a response. This endpoint allows you to interact with Appwrite's AI assistant by sending questions or prompts and receiving helpful responses in real-time through a server-sent events stream.
      *
      * @param {string} prompt - Prompt. A string containing questions asked to the AI assistant.
      * @throws {AppwriteException}
-     * @returns {Promise<{}>}
+     * @returns {Promise<string>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    chat(prompt: string): Promise<{}>;
-    chat(paramsOrFirst: { prompt: string } | string): Promise<{}> {
+    chat(prompt: string): Promise<string>;
+    chat(paramsOrFirst: { prompt: string } | string): Promise<string> {
         let params: { prompt: string };
 
         if (
@@ -45,9 +45,9 @@ export class Assistant {
             throw new AppwriteException('Missing required parameter: "prompt"');
         }
         const apiPath = '/console/assistant';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof prompt !== 'undefined') {
-            payload['prompt'] = prompt;
+            apiPayload['prompt'] = prompt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -57,6 +57,6 @@ export class Assistant {
             accept: 'text/plain',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload, 'text');
     }
 }
