@@ -118,24 +118,24 @@ export class Manager {
             );
         }
         const apiPath = '/manager/blocks';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof projectId !== 'undefined') {
-            payload['projectId'] = projectId;
+            apiPayload['projectId'] = projectId;
         }
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof mode !== 'undefined') {
-            payload['mode'] = mode;
+            apiPayload['mode'] = mode;
         }
         if (typeof reason !== 'undefined') {
-            payload['reason'] = reason;
+            apiPayload['reason'] = reason;
         }
         if (typeof expiredAt !== 'undefined') {
-            payload['expiredAt'] = expiredAt;
+            apiPayload['expiredAt'] = expiredAt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -144,7 +144,7 @@ export class Manager {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -225,15 +225,15 @@ export class Manager {
             );
         }
         const apiPath = '/manager/blocks';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof projectId !== 'undefined') {
-            payload['projectId'] = projectId;
+            apiPayload['projectId'] = projectId;
         }
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -242,7 +242,7 @@ export class Manager {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -290,14 +290,14 @@ export class Manager {
             '{projectId}',
             encodeURIComponent(String(projectId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -419,27 +419,27 @@ export class Manager {
         const documentId = params.documentId;
 
         const apiPath = '/manager/cache';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof region !== 'undefined') {
-            payload['region'] = region;
+            apiPayload['region'] = region;
         }
         if (typeof cache !== 'undefined') {
-            payload['cache'] = cache;
+            apiPayload['cache'] = cache;
         }
         if (typeof all !== 'undefined') {
-            payload['all'] = all;
+            apiPayload['all'] = all;
         }
         if (typeof database !== 'undefined') {
-            payload['database'] = database;
+            apiPayload['database'] = database;
         }
         if (typeof projectId !== 'undefined') {
-            payload['projectId'] = projectId;
+            apiPayload['projectId'] = projectId;
         }
         if (typeof collectionId !== 'undefined') {
-            payload['collectionId'] = collectionId;
+            apiPayload['collectionId'] = collectionId;
         }
         if (typeof documentId !== 'undefined') {
-            payload['documentId'] = documentId;
+            apiPayload['documentId'] = documentId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -448,7 +448,7 @@ export class Manager {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -522,15 +522,15 @@ export class Manager {
             throw new AppwriteException('Missing required parameter: "status"');
         }
         const apiPath = '/manager/organizations/status';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof teamId !== 'undefined') {
-            payload['teamId'] = teamId;
+            apiPayload['teamId'] = teamId;
         }
         if (typeof status !== 'undefined') {
-            payload['status'] = status;
+            apiPayload['status'] = status;
         }
         if (typeof reason !== 'undefined') {
-            payload['reason'] = reason;
+            apiPayload['reason'] = reason;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -539,7 +539,7 @@ export class Manager {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -628,18 +628,18 @@ export class Manager {
             throw new AppwriteException('Missing required parameter: "status"');
         }
         const apiPath = '/manager/users/status';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof userId !== 'undefined') {
-            payload['userId'] = userId;
+            apiPayload['userId'] = userId;
         }
         if (typeof email !== 'undefined') {
-            payload['email'] = email;
+            apiPayload['email'] = email;
         }
         if (typeof status !== 'undefined') {
-            payload['status'] = status;
+            apiPayload['status'] = status;
         }
         if (typeof reason !== 'undefined') {
-            payload['reason'] = reason;
+            apiPayload['reason'] = reason;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -648,6 +648,6 @@ export class Manager {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 }

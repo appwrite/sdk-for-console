@@ -1,5 +1,12 @@
 # Change Log
 
+## 18.1.0
+
+* Breaking: removed `deno-1.21`, `deno-1.24` and `deno-1.35` from `Runtime` and `BuildRuntime` enums
+* Breaking: `Assistant.chat` now returns the response text as a `string` instead of `{ message }`
+* Breaking: `Domains.getZone` now returns the zone file as a `string` instead of `{ message }`
+* Fixed: nested objects in multipart requests are sent as JSON instead of `[object Object]`
+
 ## 18.0.0
 
 * Breaking: SDK now targets Appwrite 2.3 (`X-Appwrite-Response-Format: 2.3.0`)

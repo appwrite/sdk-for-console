@@ -73,15 +73,15 @@ export class Migrations {
         const total = params.total;
 
         const apiPath = '/migrations';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -90,7 +90,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -202,21 +202,21 @@ export class Migrations {
             throw new AppwriteException('Missing required parameter: "apiKey"');
         }
         const apiPath = '/migrations/appwrite';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resources !== 'undefined') {
-            payload['resources'] = resources;
+            apiPayload['resources'] = resources;
         }
         if (typeof endpoint !== 'undefined') {
-            payload['endpoint'] = endpoint;
+            apiPayload['endpoint'] = endpoint;
         }
         if (typeof projectId !== 'undefined') {
-            payload['projectId'] = projectId;
+            apiPayload['projectId'] = projectId;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof onDuplicate !== 'undefined') {
-            payload['onDuplicate'] = onDuplicate;
+            apiPayload['onDuplicate'] = onDuplicate;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -226,7 +226,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -328,18 +328,18 @@ export class Migrations {
             throw new AppwriteException('Missing required parameter: "key"');
         }
         const apiPath = '/migrations/appwrite/report';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resources !== 'undefined') {
-            payload['resources'] = resources;
+            apiPayload['resources'] = resources;
         }
         if (typeof endpoint !== 'undefined') {
-            payload['endpoint'] = endpoint;
+            apiPayload['endpoint'] = endpoint;
         }
         if (typeof projectID !== 'undefined') {
-            payload['projectID'] = projectID;
+            apiPayload['projectID'] = projectID;
         }
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -348,7 +348,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -507,36 +507,36 @@ export class Migrations {
             );
         }
         const apiPath = '/migrations/csv/exports';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof databaseId !== 'undefined') {
-            payload['databaseId'] = databaseId;
+            apiPayload['databaseId'] = databaseId;
         }
         if (typeof collectionId !== 'undefined') {
-            payload['collectionId'] = collectionId;
+            apiPayload['collectionId'] = collectionId;
         }
         if (typeof filename !== 'undefined') {
-            payload['filename'] = filename;
+            apiPayload['filename'] = filename;
         }
         if (typeof columns !== 'undefined') {
-            payload['columns'] = columns;
+            apiPayload['columns'] = columns;
         }
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof delimiter !== 'undefined') {
-            payload['delimiter'] = delimiter;
+            apiPayload['delimiter'] = delimiter;
         }
         if (typeof enclosure !== 'undefined') {
-            payload['enclosure'] = enclosure;
+            apiPayload['enclosure'] = enclosure;
         }
         if (typeof escape !== 'undefined') {
-            payload['escape'] = escape;
+            apiPayload['escape'] = escape;
         }
         if (typeof header !== 'undefined') {
-            payload['header'] = header;
+            apiPayload['header'] = header;
         }
         if (typeof notify !== 'undefined') {
-            payload['notify'] = notify;
+            apiPayload['notify'] = notify;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -546,7 +546,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -662,24 +662,24 @@ export class Migrations {
             );
         }
         const apiPath = '/migrations/csv/imports';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof bucketId !== 'undefined') {
-            payload['bucketId'] = bucketId;
+            apiPayload['bucketId'] = bucketId;
         }
         if (typeof fileId !== 'undefined') {
-            payload['fileId'] = fileId;
+            apiPayload['fileId'] = fileId;
         }
         if (typeof databaseId !== 'undefined') {
-            payload['databaseId'] = databaseId;
+            apiPayload['databaseId'] = databaseId;
         }
         if (typeof collectionId !== 'undefined') {
-            payload['collectionId'] = collectionId;
+            apiPayload['collectionId'] = collectionId;
         }
         if (typeof internalFile !== 'undefined') {
-            payload['internalFile'] = internalFile;
+            apiPayload['internalFile'] = internalFile;
         }
         if (typeof onDuplicate !== 'undefined') {
-            payload['onDuplicate'] = onDuplicate;
+            apiPayload['onDuplicate'] = onDuplicate;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -689,7 +689,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -759,12 +759,12 @@ export class Migrations {
             );
         }
         const apiPath = '/migrations/firebase';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resources !== 'undefined') {
-            payload['resources'] = resources;
+            apiPayload['resources'] = resources;
         }
         if (typeof serviceAccount !== 'undefined') {
-            payload['serviceAccount'] = serviceAccount;
+            apiPayload['serviceAccount'] = serviceAccount;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -774,7 +774,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -844,12 +844,12 @@ export class Migrations {
             );
         }
         const apiPath = '/migrations/firebase/report';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resources !== 'undefined') {
-            payload['resources'] = resources;
+            apiPayload['resources'] = resources;
         }
         if (typeof serviceAccount !== 'undefined') {
-            payload['serviceAccount'] = serviceAccount;
+            apiPayload['serviceAccount'] = serviceAccount;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -858,7 +858,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -973,24 +973,24 @@ export class Migrations {
             );
         }
         const apiPath = '/migrations/json/exports';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof databaseId !== 'undefined') {
-            payload['databaseId'] = databaseId;
+            apiPayload['databaseId'] = databaseId;
         }
         if (typeof collectionId !== 'undefined') {
-            payload['collectionId'] = collectionId;
+            apiPayload['collectionId'] = collectionId;
         }
         if (typeof filename !== 'undefined') {
-            payload['filename'] = filename;
+            apiPayload['filename'] = filename;
         }
         if (typeof columns !== 'undefined') {
-            payload['columns'] = columns;
+            apiPayload['columns'] = columns;
         }
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof notify !== 'undefined') {
-            payload['notify'] = notify;
+            apiPayload['notify'] = notify;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1000,7 +1000,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1118,24 +1118,24 @@ export class Migrations {
             );
         }
         const apiPath = '/migrations/json/imports';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof bucketId !== 'undefined') {
-            payload['bucketId'] = bucketId;
+            apiPayload['bucketId'] = bucketId;
         }
         if (typeof fileId !== 'undefined') {
-            payload['fileId'] = fileId;
+            apiPayload['fileId'] = fileId;
         }
         if (typeof databaseId !== 'undefined') {
-            payload['databaseId'] = databaseId;
+            apiPayload['databaseId'] = databaseId;
         }
         if (typeof collectionId !== 'undefined') {
-            payload['collectionId'] = collectionId;
+            apiPayload['collectionId'] = collectionId;
         }
         if (typeof internalFile !== 'undefined') {
-            payload['internalFile'] = internalFile;
+            apiPayload['internalFile'] = internalFile;
         }
         if (typeof onDuplicate !== 'undefined') {
-            payload['onDuplicate'] = onDuplicate;
+            apiPayload['onDuplicate'] = onDuplicate;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1145,7 +1145,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1302,30 +1302,30 @@ export class Migrations {
             );
         }
         const apiPath = '/migrations/nhost';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resources !== 'undefined') {
-            payload['resources'] = resources;
+            apiPayload['resources'] = resources;
         }
         if (typeof subdomain !== 'undefined') {
-            payload['subdomain'] = subdomain;
+            apiPayload['subdomain'] = subdomain;
         }
         if (typeof region !== 'undefined') {
-            payload['region'] = region;
+            apiPayload['region'] = region;
         }
         if (typeof adminSecret !== 'undefined') {
-            payload['adminSecret'] = adminSecret;
+            apiPayload['adminSecret'] = adminSecret;
         }
         if (typeof database !== 'undefined') {
-            payload['database'] = database;
+            apiPayload['database'] = database;
         }
         if (typeof username !== 'undefined') {
-            payload['username'] = username;
+            apiPayload['username'] = username;
         }
         if (typeof password !== 'undefined') {
-            payload['password'] = password;
+            apiPayload['password'] = password;
         }
         if (typeof port !== 'undefined') {
-            payload['port'] = port;
+            apiPayload['port'] = port;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1335,7 +1335,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1492,30 +1492,30 @@ export class Migrations {
             );
         }
         const apiPath = '/migrations/nhost/report';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resources !== 'undefined') {
-            payload['resources'] = resources;
+            apiPayload['resources'] = resources;
         }
         if (typeof subdomain !== 'undefined') {
-            payload['subdomain'] = subdomain;
+            apiPayload['subdomain'] = subdomain;
         }
         if (typeof region !== 'undefined') {
-            payload['region'] = region;
+            apiPayload['region'] = region;
         }
         if (typeof adminSecret !== 'undefined') {
-            payload['adminSecret'] = adminSecret;
+            apiPayload['adminSecret'] = adminSecret;
         }
         if (typeof database !== 'undefined') {
-            payload['database'] = database;
+            apiPayload['database'] = database;
         }
         if (typeof username !== 'undefined') {
-            payload['username'] = username;
+            apiPayload['username'] = username;
         }
         if (typeof password !== 'undefined') {
-            payload['password'] = password;
+            apiPayload['password'] = password;
         }
         if (typeof port !== 'undefined') {
-            payload['port'] = port;
+            apiPayload['port'] = port;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1524,7 +1524,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1666,27 +1666,27 @@ export class Migrations {
             );
         }
         const apiPath = '/migrations/supabase';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resources !== 'undefined') {
-            payload['resources'] = resources;
+            apiPayload['resources'] = resources;
         }
         if (typeof endpoint !== 'undefined') {
-            payload['endpoint'] = endpoint;
+            apiPayload['endpoint'] = endpoint;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof databaseHost !== 'undefined') {
-            payload['databaseHost'] = databaseHost;
+            apiPayload['databaseHost'] = databaseHost;
         }
         if (typeof username !== 'undefined') {
-            payload['username'] = username;
+            apiPayload['username'] = username;
         }
         if (typeof password !== 'undefined') {
-            payload['password'] = password;
+            apiPayload['password'] = password;
         }
         if (typeof port !== 'undefined') {
-            payload['port'] = port;
+            apiPayload['port'] = port;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1696,7 +1696,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1838,27 +1838,27 @@ export class Migrations {
             );
         }
         const apiPath = '/migrations/supabase/report';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resources !== 'undefined') {
-            payload['resources'] = resources;
+            apiPayload['resources'] = resources;
         }
         if (typeof endpoint !== 'undefined') {
-            payload['endpoint'] = endpoint;
+            apiPayload['endpoint'] = endpoint;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof databaseHost !== 'undefined') {
-            payload['databaseHost'] = databaseHost;
+            apiPayload['databaseHost'] = databaseHost;
         }
         if (typeof username !== 'undefined') {
-            payload['username'] = username;
+            apiPayload['username'] = username;
         }
         if (typeof password !== 'undefined') {
-            payload['password'] = password;
+            apiPayload['password'] = password;
         }
         if (typeof port !== 'undefined') {
-            payload['port'] = port;
+            apiPayload['port'] = port;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1867,7 +1867,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1915,7 +1915,7 @@ export class Migrations {
             '{migrationId}',
             encodeURIComponent(String(migrationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1923,7 +1923,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1971,7 +1971,7 @@ export class Migrations {
             '{migrationId}',
             encodeURIComponent(String(migrationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1980,7 +1980,7 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2026,7 +2026,7 @@ export class Migrations {
             '{migrationId}',
             encodeURIComponent(String(migrationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2035,6 +2035,6 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 }

@@ -70,15 +70,15 @@ export class Messaging {
         const total = params.total;
 
         const apiPath = '/messaging/messages';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -87,7 +87,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -286,48 +286,48 @@ export class Messaging {
             );
         }
         const apiPath = '/messaging/messages/email';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof messageId !== 'undefined') {
-            payload['messageId'] = messageId;
+            apiPayload['messageId'] = messageId;
         }
         if (typeof subject !== 'undefined') {
-            payload['subject'] = subject;
+            apiPayload['subject'] = subject;
         }
         if (typeof content !== 'undefined') {
-            payload['content'] = content;
+            apiPayload['content'] = content;
         }
         if (typeof topics !== 'undefined') {
-            payload['topics'] = topics;
+            apiPayload['topics'] = topics;
         }
         if (typeof users !== 'undefined') {
-            payload['users'] = users;
+            apiPayload['users'] = users;
         }
         if (typeof targets !== 'undefined') {
-            payload['targets'] = targets;
+            apiPayload['targets'] = targets;
         }
         if (typeof cc !== 'undefined') {
-            payload['cc'] = cc;
+            apiPayload['cc'] = cc;
         }
         if (typeof bcc !== 'undefined') {
-            payload['bcc'] = bcc;
+            apiPayload['bcc'] = bcc;
         }
         if (typeof attachments !== 'undefined') {
-            payload['attachments'] = attachments;
+            apiPayload['attachments'] = attachments;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof draft !== 'undefined') {
-            payload['draft'] = draft;
+            apiPayload['draft'] = draft;
         }
         if (typeof html !== 'undefined') {
-            payload['html'] = html;
+            apiPayload['html'] = html;
         }
         if (typeof scheduledAt !== 'undefined') {
-            payload['scheduledAt'] = scheduledAt;
+            apiPayload['scheduledAt'] = scheduledAt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -337,7 +337,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -531,45 +531,45 @@ export class Messaging {
             '{messageId}',
             encodeURIComponent(String(messageId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof topics !== 'undefined') {
-            payload['topics'] = topics;
+            apiPayload['topics'] = topics;
         }
         if (typeof users !== 'undefined') {
-            payload['users'] = users;
+            apiPayload['users'] = users;
         }
         if (typeof targets !== 'undefined') {
-            payload['targets'] = targets;
+            apiPayload['targets'] = targets;
         }
         if (typeof subject !== 'undefined') {
-            payload['subject'] = subject;
+            apiPayload['subject'] = subject;
         }
         if (typeof content !== 'undefined') {
-            payload['content'] = content;
+            apiPayload['content'] = content;
         }
         if (typeof draft !== 'undefined') {
-            payload['draft'] = draft;
+            apiPayload['draft'] = draft;
         }
         if (typeof html !== 'undefined') {
-            payload['html'] = html;
+            apiPayload['html'] = html;
         }
         if (typeof cc !== 'undefined') {
-            payload['cc'] = cc;
+            apiPayload['cc'] = cc;
         }
         if (typeof bcc !== 'undefined') {
-            payload['bcc'] = bcc;
+            apiPayload['bcc'] = bcc;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof scheduledAt !== 'undefined') {
-            payload['scheduledAt'] = scheduledAt;
+            apiPayload['scheduledAt'] = scheduledAt;
         }
         if (typeof attachments !== 'undefined') {
-            payload['attachments'] = attachments;
+            apiPayload['attachments'] = attachments;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -579,7 +579,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -818,63 +818,63 @@ export class Messaging {
             );
         }
         const apiPath = '/messaging/messages/push';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof messageId !== 'undefined') {
-            payload['messageId'] = messageId;
+            apiPayload['messageId'] = messageId;
         }
         if (typeof title !== 'undefined') {
-            payload['title'] = title;
+            apiPayload['title'] = title;
         }
         if (typeof body !== 'undefined') {
-            payload['body'] = body;
+            apiPayload['body'] = body;
         }
         if (typeof topics !== 'undefined') {
-            payload['topics'] = topics;
+            apiPayload['topics'] = topics;
         }
         if (typeof users !== 'undefined') {
-            payload['users'] = users;
+            apiPayload['users'] = users;
         }
         if (typeof targets !== 'undefined') {
-            payload['targets'] = targets;
+            apiPayload['targets'] = targets;
         }
         if (typeof data !== 'undefined') {
-            payload['data'] = data;
+            apiPayload['data'] = data;
         }
         if (typeof action !== 'undefined') {
-            payload['action'] = action;
+            apiPayload['action'] = action;
         }
         if (typeof image !== 'undefined') {
-            payload['image'] = image;
+            apiPayload['image'] = image;
         }
         if (typeof icon !== 'undefined') {
-            payload['icon'] = icon;
+            apiPayload['icon'] = icon;
         }
         if (typeof sound !== 'undefined') {
-            payload['sound'] = sound;
+            apiPayload['sound'] = sound;
         }
         if (typeof color !== 'undefined') {
-            payload['color'] = color;
+            apiPayload['color'] = color;
         }
         if (typeof tag !== 'undefined') {
-            payload['tag'] = tag;
+            apiPayload['tag'] = tag;
         }
         if (typeof badge !== 'undefined') {
-            payload['badge'] = badge;
+            apiPayload['badge'] = badge;
         }
         if (typeof draft !== 'undefined') {
-            payload['draft'] = draft;
+            apiPayload['draft'] = draft;
         }
         if (typeof scheduledAt !== 'undefined') {
-            payload['scheduledAt'] = scheduledAt;
+            apiPayload['scheduledAt'] = scheduledAt;
         }
         if (typeof contentAvailable !== 'undefined') {
-            payload['contentAvailable'] = contentAvailable;
+            apiPayload['contentAvailable'] = contentAvailable;
         }
         if (typeof critical !== 'undefined') {
-            payload['critical'] = critical;
+            apiPayload['critical'] = critical;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -884,7 +884,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1128,60 +1128,60 @@ export class Messaging {
             '{messageId}',
             encodeURIComponent(String(messageId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof topics !== 'undefined') {
-            payload['topics'] = topics;
+            apiPayload['topics'] = topics;
         }
         if (typeof users !== 'undefined') {
-            payload['users'] = users;
+            apiPayload['users'] = users;
         }
         if (typeof targets !== 'undefined') {
-            payload['targets'] = targets;
+            apiPayload['targets'] = targets;
         }
         if (typeof title !== 'undefined') {
-            payload['title'] = title;
+            apiPayload['title'] = title;
         }
         if (typeof body !== 'undefined') {
-            payload['body'] = body;
+            apiPayload['body'] = body;
         }
         if (typeof data !== 'undefined') {
-            payload['data'] = data;
+            apiPayload['data'] = data;
         }
         if (typeof action !== 'undefined') {
-            payload['action'] = action;
+            apiPayload['action'] = action;
         }
         if (typeof image !== 'undefined') {
-            payload['image'] = image;
+            apiPayload['image'] = image;
         }
         if (typeof icon !== 'undefined') {
-            payload['icon'] = icon;
+            apiPayload['icon'] = icon;
         }
         if (typeof sound !== 'undefined') {
-            payload['sound'] = sound;
+            apiPayload['sound'] = sound;
         }
         if (typeof color !== 'undefined') {
-            payload['color'] = color;
+            apiPayload['color'] = color;
         }
         if (typeof tag !== 'undefined') {
-            payload['tag'] = tag;
+            apiPayload['tag'] = tag;
         }
         if (typeof badge !== 'undefined') {
-            payload['badge'] = badge;
+            apiPayload['badge'] = badge;
         }
         if (typeof draft !== 'undefined') {
-            payload['draft'] = draft;
+            apiPayload['draft'] = draft;
         }
         if (typeof scheduledAt !== 'undefined') {
-            payload['scheduledAt'] = scheduledAt;
+            apiPayload['scheduledAt'] = scheduledAt;
         }
         if (typeof contentAvailable !== 'undefined') {
-            payload['contentAvailable'] = contentAvailable;
+            apiPayload['contentAvailable'] = contentAvailable;
         }
         if (typeof critical !== 'undefined') {
-            payload['critical'] = critical;
+            apiPayload['critical'] = critical;
         }
         if (typeof priority !== 'undefined') {
-            payload['priority'] = priority;
+            apiPayload['priority'] = priority;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1191,7 +1191,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1309,27 +1309,27 @@ export class Messaging {
             );
         }
         const apiPath = '/messaging/messages/sms';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof messageId !== 'undefined') {
-            payload['messageId'] = messageId;
+            apiPayload['messageId'] = messageId;
         }
         if (typeof content !== 'undefined') {
-            payload['content'] = content;
+            apiPayload['content'] = content;
         }
         if (typeof topics !== 'undefined') {
-            payload['topics'] = topics;
+            apiPayload['topics'] = topics;
         }
         if (typeof users !== 'undefined') {
-            payload['users'] = users;
+            apiPayload['users'] = users;
         }
         if (typeof targets !== 'undefined') {
-            payload['targets'] = targets;
+            apiPayload['targets'] = targets;
         }
         if (typeof draft !== 'undefined') {
-            payload['draft'] = draft;
+            apiPayload['draft'] = draft;
         }
         if (typeof scheduledAt !== 'undefined') {
-            payload['scheduledAt'] = scheduledAt;
+            apiPayload['scheduledAt'] = scheduledAt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1339,7 +1339,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1456,27 +1456,27 @@ export class Messaging {
             );
         }
         const apiPath = '/messaging/messages/sms';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof messageId !== 'undefined') {
-            payload['messageId'] = messageId;
+            apiPayload['messageId'] = messageId;
         }
         if (typeof content !== 'undefined') {
-            payload['content'] = content;
+            apiPayload['content'] = content;
         }
         if (typeof topics !== 'undefined') {
-            payload['topics'] = topics;
+            apiPayload['topics'] = topics;
         }
         if (typeof users !== 'undefined') {
-            payload['users'] = users;
+            apiPayload['users'] = users;
         }
         if (typeof targets !== 'undefined') {
-            payload['targets'] = targets;
+            apiPayload['targets'] = targets;
         }
         if (typeof draft !== 'undefined') {
-            payload['draft'] = draft;
+            apiPayload['draft'] = draft;
         }
         if (typeof scheduledAt !== 'undefined') {
-            payload['scheduledAt'] = scheduledAt;
+            apiPayload['scheduledAt'] = scheduledAt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1486,7 +1486,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1604,24 +1604,24 @@ export class Messaging {
             '{messageId}',
             encodeURIComponent(String(messageId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof topics !== 'undefined') {
-            payload['topics'] = topics;
+            apiPayload['topics'] = topics;
         }
         if (typeof users !== 'undefined') {
-            payload['users'] = users;
+            apiPayload['users'] = users;
         }
         if (typeof targets !== 'undefined') {
-            payload['targets'] = targets;
+            apiPayload['targets'] = targets;
         }
         if (typeof content !== 'undefined') {
-            payload['content'] = content;
+            apiPayload['content'] = content;
         }
         if (typeof draft !== 'undefined') {
-            payload['draft'] = draft;
+            apiPayload['draft'] = draft;
         }
         if (typeof scheduledAt !== 'undefined') {
-            payload['scheduledAt'] = scheduledAt;
+            apiPayload['scheduledAt'] = scheduledAt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1631,7 +1631,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1748,24 +1748,24 @@ export class Messaging {
             '{messageId}',
             encodeURIComponent(String(messageId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof topics !== 'undefined') {
-            payload['topics'] = topics;
+            apiPayload['topics'] = topics;
         }
         if (typeof users !== 'undefined') {
-            payload['users'] = users;
+            apiPayload['users'] = users;
         }
         if (typeof targets !== 'undefined') {
-            payload['targets'] = targets;
+            apiPayload['targets'] = targets;
         }
         if (typeof content !== 'undefined') {
-            payload['content'] = content;
+            apiPayload['content'] = content;
         }
         if (typeof draft !== 'undefined') {
-            payload['draft'] = draft;
+            apiPayload['draft'] = draft;
         }
         if (typeof scheduledAt !== 'undefined') {
-            payload['scheduledAt'] = scheduledAt;
+            apiPayload['scheduledAt'] = scheduledAt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1775,7 +1775,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1825,7 +1825,7 @@ export class Messaging {
             '{messageId}',
             encodeURIComponent(String(messageId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1833,7 +1833,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1879,7 +1879,7 @@ export class Messaging {
             '{messageId}',
             encodeURIComponent(String(messageId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1888,7 +1888,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1958,12 +1958,12 @@ export class Messaging {
             '{messageId}',
             encodeURIComponent(String(messageId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1972,7 +1972,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2035,15 +2035,15 @@ export class Messaging {
         const total = params.total;
 
         const apiPath = '/messaging/providers';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2052,7 +2052,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2185,30 +2185,30 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/apns';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof authKey !== 'undefined') {
-            payload['authKey'] = authKey;
+            apiPayload['authKey'] = authKey;
         }
         if (typeof authKeyId !== 'undefined') {
-            payload['authKeyId'] = authKeyId;
+            apiPayload['authKeyId'] = authKeyId;
         }
         if (typeof teamId !== 'undefined') {
-            payload['teamId'] = teamId;
+            apiPayload['teamId'] = teamId;
         }
         if (typeof bundleId !== 'undefined') {
-            payload['bundleId'] = bundleId;
+            apiPayload['bundleId'] = bundleId;
         }
         if (typeof sandbox !== 'undefined') {
-            payload['sandbox'] = sandbox;
+            apiPayload['sandbox'] = sandbox;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2218,7 +2218,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2350,30 +2350,30 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/apns';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof authKey !== 'undefined') {
-            payload['authKey'] = authKey;
+            apiPayload['authKey'] = authKey;
         }
         if (typeof authKeyId !== 'undefined') {
-            payload['authKeyId'] = authKeyId;
+            apiPayload['authKeyId'] = authKeyId;
         }
         if (typeof teamId !== 'undefined') {
-            payload['teamId'] = teamId;
+            apiPayload['teamId'] = teamId;
         }
         if (typeof bundleId !== 'undefined') {
-            payload['bundleId'] = bundleId;
+            apiPayload['bundleId'] = bundleId;
         }
         if (typeof sandbox !== 'undefined') {
-            payload['sandbox'] = sandbox;
+            apiPayload['sandbox'] = sandbox;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2383,7 +2383,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2516,27 +2516,27 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof authKey !== 'undefined') {
-            payload['authKey'] = authKey;
+            apiPayload['authKey'] = authKey;
         }
         if (typeof authKeyId !== 'undefined') {
-            payload['authKeyId'] = authKeyId;
+            apiPayload['authKeyId'] = authKeyId;
         }
         if (typeof teamId !== 'undefined') {
-            payload['teamId'] = teamId;
+            apiPayload['teamId'] = teamId;
         }
         if (typeof bundleId !== 'undefined') {
-            payload['bundleId'] = bundleId;
+            apiPayload['bundleId'] = bundleId;
         }
         if (typeof sandbox !== 'undefined') {
-            payload['sandbox'] = sandbox;
+            apiPayload['sandbox'] = sandbox;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2546,7 +2546,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2678,27 +2678,27 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof authKey !== 'undefined') {
-            payload['authKey'] = authKey;
+            apiPayload['authKey'] = authKey;
         }
         if (typeof authKeyId !== 'undefined') {
-            payload['authKeyId'] = authKeyId;
+            apiPayload['authKeyId'] = authKeyId;
         }
         if (typeof teamId !== 'undefined') {
-            payload['teamId'] = teamId;
+            apiPayload['teamId'] = teamId;
         }
         if (typeof bundleId !== 'undefined') {
-            payload['bundleId'] = bundleId;
+            apiPayload['bundleId'] = bundleId;
         }
         if (typeof sandbox !== 'undefined') {
-            payload['sandbox'] = sandbox;
+            apiPayload['sandbox'] = sandbox;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2708,7 +2708,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2805,21 +2805,21 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/appwrite';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof qos !== 'undefined') {
-            payload['qos'] = qos;
+            apiPayload['qos'] = qos;
         }
         if (typeof expiry !== 'undefined') {
-            payload['expiry'] = expiry;
+            apiPayload['expiry'] = expiry;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2829,7 +2829,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2926,18 +2926,18 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof qos !== 'undefined') {
-            payload['qos'] = qos;
+            apiPayload['qos'] = qos;
         }
         if (typeof expiry !== 'undefined') {
-            payload['expiry'] = expiry;
+            apiPayload['expiry'] = expiry;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2947,7 +2947,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3036,18 +3036,18 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/fcm';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof serviceAccountJSON !== 'undefined') {
-            payload['serviceAccountJSON'] = serviceAccountJSON;
+            apiPayload['serviceAccountJSON'] = serviceAccountJSON;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3057,7 +3057,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3145,18 +3145,18 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/fcm';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof serviceAccountJSON !== 'undefined') {
-            payload['serviceAccountJSON'] = serviceAccountJSON;
+            apiPayload['serviceAccountJSON'] = serviceAccountJSON;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3166,7 +3166,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3255,15 +3255,15 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof serviceAccountJSON !== 'undefined') {
-            payload['serviceAccountJSON'] = serviceAccountJSON;
+            apiPayload['serviceAccountJSON'] = serviceAccountJSON;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3273,7 +3273,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3361,15 +3361,15 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof serviceAccountJSON !== 'undefined') {
-            payload['serviceAccountJSON'] = serviceAccountJSON;
+            apiPayload['serviceAccountJSON'] = serviceAccountJSON;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3379,7 +3379,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3531,36 +3531,36 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/mailgun';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof domain !== 'undefined') {
-            payload['domain'] = domain;
+            apiPayload['domain'] = domain;
         }
         if (typeof isEuRegion !== 'undefined') {
-            payload['isEuRegion'] = isEuRegion;
+            apiPayload['isEuRegion'] = isEuRegion;
         }
         if (typeof fromName !== 'undefined') {
-            payload['fromName'] = fromName;
+            apiPayload['fromName'] = fromName;
         }
         if (typeof fromEmail !== 'undefined') {
-            payload['fromEmail'] = fromEmail;
+            apiPayload['fromEmail'] = fromEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3570,7 +3570,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3722,33 +3722,33 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof domain !== 'undefined') {
-            payload['domain'] = domain;
+            apiPayload['domain'] = domain;
         }
         if (typeof isEuRegion !== 'undefined') {
-            payload['isEuRegion'] = isEuRegion;
+            apiPayload['isEuRegion'] = isEuRegion;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof fromName !== 'undefined') {
-            payload['fromName'] = fromName;
+            apiPayload['fromName'] = fromName;
         }
         if (typeof fromEmail !== 'undefined') {
-            payload['fromEmail'] = fromEmail;
+            apiPayload['fromEmail'] = fromEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3758,7 +3758,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3864,24 +3864,24 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/msg91';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof templateId !== 'undefined') {
-            payload['templateId'] = templateId;
+            apiPayload['templateId'] = templateId;
         }
         if (typeof senderId !== 'undefined') {
-            payload['senderId'] = senderId;
+            apiPayload['senderId'] = senderId;
         }
         if (typeof authKey !== 'undefined') {
-            payload['authKey'] = authKey;
+            apiPayload['authKey'] = authKey;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3891,7 +3891,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3997,21 +3997,21 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof templateId !== 'undefined') {
-            payload['templateId'] = templateId;
+            apiPayload['templateId'] = templateId;
         }
         if (typeof senderId !== 'undefined') {
-            payload['senderId'] = senderId;
+            apiPayload['senderId'] = senderId;
         }
         if (typeof authKey !== 'undefined') {
-            payload['authKey'] = authKey;
+            apiPayload['authKey'] = authKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4021,7 +4021,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4153,30 +4153,30 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/resend';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof fromName !== 'undefined') {
-            payload['fromName'] = fromName;
+            apiPayload['fromName'] = fromName;
         }
         if (typeof fromEmail !== 'undefined') {
-            payload['fromEmail'] = fromEmail;
+            apiPayload['fromEmail'] = fromEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4186,7 +4186,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4318,27 +4318,27 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof fromName !== 'undefined') {
-            payload['fromName'] = fromName;
+            apiPayload['fromName'] = fromName;
         }
         if (typeof fromEmail !== 'undefined') {
-            payload['fromEmail'] = fromEmail;
+            apiPayload['fromEmail'] = fromEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4348,7 +4348,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4480,30 +4480,30 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/sendgrid';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof fromName !== 'undefined') {
-            payload['fromName'] = fromName;
+            apiPayload['fromName'] = fromName;
         }
         if (typeof fromEmail !== 'undefined') {
-            payload['fromEmail'] = fromEmail;
+            apiPayload['fromEmail'] = fromEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4513,7 +4513,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4645,27 +4645,27 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof fromName !== 'undefined') {
-            payload['fromName'] = fromName;
+            apiPayload['fromName'] = fromName;
         }
         if (typeof fromEmail !== 'undefined') {
-            payload['fromEmail'] = fromEmail;
+            apiPayload['fromEmail'] = fromEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4675,7 +4675,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4827,36 +4827,36 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/ses';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof accessKey !== 'undefined') {
-            payload['accessKey'] = accessKey;
+            apiPayload['accessKey'] = accessKey;
         }
         if (typeof secretKey !== 'undefined') {
-            payload['secretKey'] = secretKey;
+            apiPayload['secretKey'] = secretKey;
         }
         if (typeof region !== 'undefined') {
-            payload['region'] = region;
+            apiPayload['region'] = region;
         }
         if (typeof fromName !== 'undefined') {
-            payload['fromName'] = fromName;
+            apiPayload['fromName'] = fromName;
         }
         if (typeof fromEmail !== 'undefined') {
-            payload['fromEmail'] = fromEmail;
+            apiPayload['fromEmail'] = fromEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4866,7 +4866,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5018,33 +5018,33 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof accessKey !== 'undefined') {
-            payload['accessKey'] = accessKey;
+            apiPayload['accessKey'] = accessKey;
         }
         if (typeof secretKey !== 'undefined') {
-            payload['secretKey'] = secretKey;
+            apiPayload['secretKey'] = secretKey;
         }
         if (typeof region !== 'undefined') {
-            payload['region'] = region;
+            apiPayload['region'] = region;
         }
         if (typeof fromName !== 'undefined') {
-            payload['fromName'] = fromName;
+            apiPayload['fromName'] = fromName;
         }
         if (typeof fromEmail !== 'undefined') {
-            payload['fromEmail'] = fromEmail;
+            apiPayload['fromEmail'] = fromEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5054,7 +5054,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5250,48 +5250,48 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "host"');
         }
         const apiPath = '/messaging/providers/smtp';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof host !== 'undefined') {
-            payload['host'] = host;
+            apiPayload['host'] = host;
         }
         if (typeof port !== 'undefined') {
-            payload['port'] = port;
+            apiPayload['port'] = port;
         }
         if (typeof username !== 'undefined') {
-            payload['username'] = username;
+            apiPayload['username'] = username;
         }
         if (typeof password !== 'undefined') {
-            payload['password'] = password;
+            apiPayload['password'] = password;
         }
         if (typeof encryption !== 'undefined') {
-            payload['encryption'] = encryption;
+            apiPayload['encryption'] = encryption;
         }
         if (typeof autoTLS !== 'undefined') {
-            payload['autoTLS'] = autoTLS;
+            apiPayload['autoTLS'] = autoTLS;
         }
         if (typeof mailer !== 'undefined') {
-            payload['mailer'] = mailer;
+            apiPayload['mailer'] = mailer;
         }
         if (typeof fromName !== 'undefined') {
-            payload['fromName'] = fromName;
+            apiPayload['fromName'] = fromName;
         }
         if (typeof fromEmail !== 'undefined') {
-            payload['fromEmail'] = fromEmail;
+            apiPayload['fromEmail'] = fromEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5301,7 +5301,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5496,48 +5496,48 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "host"');
         }
         const apiPath = '/messaging/providers/smtp';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof host !== 'undefined') {
-            payload['host'] = host;
+            apiPayload['host'] = host;
         }
         if (typeof port !== 'undefined') {
-            payload['port'] = port;
+            apiPayload['port'] = port;
         }
         if (typeof username !== 'undefined') {
-            payload['username'] = username;
+            apiPayload['username'] = username;
         }
         if (typeof password !== 'undefined') {
-            payload['password'] = password;
+            apiPayload['password'] = password;
         }
         if (typeof encryption !== 'undefined') {
-            payload['encryption'] = encryption;
+            apiPayload['encryption'] = encryption;
         }
         if (typeof autoTLS !== 'undefined') {
-            payload['autoTLS'] = autoTLS;
+            apiPayload['autoTLS'] = autoTLS;
         }
         if (typeof mailer !== 'undefined') {
-            payload['mailer'] = mailer;
+            apiPayload['mailer'] = mailer;
         }
         if (typeof fromName !== 'undefined') {
-            payload['fromName'] = fromName;
+            apiPayload['fromName'] = fromName;
         }
         if (typeof fromEmail !== 'undefined') {
-            payload['fromEmail'] = fromEmail;
+            apiPayload['fromEmail'] = fromEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5547,7 +5547,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5740,45 +5740,45 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof host !== 'undefined') {
-            payload['host'] = host;
+            apiPayload['host'] = host;
         }
         if (typeof port !== 'undefined') {
-            payload['port'] = port;
+            apiPayload['port'] = port;
         }
         if (typeof username !== 'undefined') {
-            payload['username'] = username;
+            apiPayload['username'] = username;
         }
         if (typeof password !== 'undefined') {
-            payload['password'] = password;
+            apiPayload['password'] = password;
         }
         if (typeof encryption !== 'undefined') {
-            payload['encryption'] = encryption;
+            apiPayload['encryption'] = encryption;
         }
         if (typeof autoTLS !== 'undefined') {
-            payload['autoTLS'] = autoTLS;
+            apiPayload['autoTLS'] = autoTLS;
         }
         if (typeof mailer !== 'undefined') {
-            payload['mailer'] = mailer;
+            apiPayload['mailer'] = mailer;
         }
         if (typeof fromName !== 'undefined') {
-            payload['fromName'] = fromName;
+            apiPayload['fromName'] = fromName;
         }
         if (typeof fromEmail !== 'undefined') {
-            payload['fromEmail'] = fromEmail;
+            apiPayload['fromEmail'] = fromEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5788,7 +5788,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5980,45 +5980,45 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof host !== 'undefined') {
-            payload['host'] = host;
+            apiPayload['host'] = host;
         }
         if (typeof port !== 'undefined') {
-            payload['port'] = port;
+            apiPayload['port'] = port;
         }
         if (typeof username !== 'undefined') {
-            payload['username'] = username;
+            apiPayload['username'] = username;
         }
         if (typeof password !== 'undefined') {
-            payload['password'] = password;
+            apiPayload['password'] = password;
         }
         if (typeof encryption !== 'undefined') {
-            payload['encryption'] = encryption;
+            apiPayload['encryption'] = encryption;
         }
         if (typeof autoTLS !== 'undefined') {
-            payload['autoTLS'] = autoTLS;
+            apiPayload['autoTLS'] = autoTLS;
         }
         if (typeof mailer !== 'undefined') {
-            payload['mailer'] = mailer;
+            apiPayload['mailer'] = mailer;
         }
         if (typeof fromName !== 'undefined') {
-            payload['fromName'] = fromName;
+            apiPayload['fromName'] = fromName;
         }
         if (typeof fromEmail !== 'undefined') {
-            payload['fromEmail'] = fromEmail;
+            apiPayload['fromEmail'] = fromEmail;
         }
         if (typeof replyToName !== 'undefined') {
-            payload['replyToName'] = replyToName;
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof replyToEmail !== 'undefined') {
-            payload['replyToEmail'] = replyToEmail;
+            apiPayload['replyToEmail'] = replyToEmail;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6028,7 +6028,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6134,24 +6134,24 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/telesign';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof from !== 'undefined') {
-            payload['from'] = from;
+            apiPayload['from'] = from;
         }
         if (typeof customerId !== 'undefined') {
-            payload['customerId'] = customerId;
+            apiPayload['customerId'] = customerId;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6161,7 +6161,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6267,21 +6267,21 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof customerId !== 'undefined') {
-            payload['customerId'] = customerId;
+            apiPayload['customerId'] = customerId;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof from !== 'undefined') {
-            payload['from'] = from;
+            apiPayload['from'] = from;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6291,7 +6291,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6397,24 +6397,24 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/textmagic';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof from !== 'undefined') {
-            payload['from'] = from;
+            apiPayload['from'] = from;
         }
         if (typeof username !== 'undefined') {
-            payload['username'] = username;
+            apiPayload['username'] = username;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6424,7 +6424,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6530,21 +6530,21 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof username !== 'undefined') {
-            payload['username'] = username;
+            apiPayload['username'] = username;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof from !== 'undefined') {
-            payload['from'] = from;
+            apiPayload['from'] = from;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6554,7 +6554,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6660,24 +6660,24 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/twilio';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof from !== 'undefined') {
-            payload['from'] = from;
+            apiPayload['from'] = from;
         }
         if (typeof accountSid !== 'undefined') {
-            payload['accountSid'] = accountSid;
+            apiPayload['accountSid'] = accountSid;
         }
         if (typeof authToken !== 'undefined') {
-            payload['authToken'] = authToken;
+            apiPayload['authToken'] = authToken;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6687,7 +6687,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6793,21 +6793,21 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof accountSid !== 'undefined') {
-            payload['accountSid'] = accountSid;
+            apiPayload['accountSid'] = accountSid;
         }
         if (typeof authToken !== 'undefined') {
-            payload['authToken'] = authToken;
+            apiPayload['authToken'] = authToken;
         }
         if (typeof from !== 'undefined') {
-            payload['from'] = from;
+            apiPayload['from'] = from;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6817,7 +6817,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6923,24 +6923,24 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/providers/vonage';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerId !== 'undefined') {
-            payload['providerId'] = providerId;
+            apiPayload['providerId'] = providerId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof from !== 'undefined') {
-            payload['from'] = from;
+            apiPayload['from'] = from;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof apiSecret !== 'undefined') {
-            payload['apiSecret'] = apiSecret;
+            apiPayload['apiSecret'] = apiSecret;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6950,7 +6950,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7056,21 +7056,21 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof apiKey !== 'undefined') {
-            payload['apiKey'] = apiKey;
+            apiPayload['apiKey'] = apiKey;
         }
         if (typeof apiSecret !== 'undefined') {
-            payload['apiSecret'] = apiSecret;
+            apiPayload['apiSecret'] = apiSecret;
         }
         if (typeof from !== 'undefined') {
-            payload['from'] = from;
+            apiPayload['from'] = from;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7080,7 +7080,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7130,7 +7130,7 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7138,7 +7138,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7186,7 +7186,7 @@ export class Messaging {
             '{providerId}',
             encodeURIComponent(String(providerId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7195,7 +7195,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7258,15 +7258,15 @@ export class Messaging {
         const total = params.total;
 
         const apiPath = '/messaging/topics';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7275,7 +7275,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7372,21 +7372,21 @@ export class Messaging {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/messaging/topics';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof topicId !== 'undefined') {
-            payload['topicId'] = topicId;
+            apiPayload['topicId'] = topicId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof subscribe !== 'undefined') {
-            payload['subscribe'] = subscribe;
+            apiPayload['subscribe'] = subscribe;
         }
         if (typeof qos !== 'undefined') {
-            payload['qos'] = qos;
+            apiPayload['qos'] = qos;
         }
         if (typeof expiry !== 'undefined') {
-            payload['expiry'] = expiry;
+            apiPayload['expiry'] = expiry;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7396,7 +7396,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7446,7 +7446,7 @@ export class Messaging {
             '{topicId}',
             encodeURIComponent(String(topicId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7454,7 +7454,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7553,18 +7553,18 @@ export class Messaging {
             '{topicId}',
             encodeURIComponent(String(topicId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof subscribe !== 'undefined') {
-            payload['subscribe'] = subscribe;
+            apiPayload['subscribe'] = subscribe;
         }
         if (typeof qos !== 'undefined') {
-            payload['qos'] = qos;
+            apiPayload['qos'] = qos;
         }
         if (typeof expiry !== 'undefined') {
-            payload['expiry'] = expiry;
+            apiPayload['expiry'] = expiry;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7574,7 +7574,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7620,7 +7620,7 @@ export class Messaging {
             '{topicId}',
             encodeURIComponent(String(topicId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7629,7 +7629,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7717,15 +7717,15 @@ export class Messaging {
             '{topicId}',
             encodeURIComponent(String(topicId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7734,7 +7734,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7815,12 +7815,12 @@ export class Messaging {
             '{topicId}',
             encodeURIComponent(String(topicId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof subscriberId !== 'undefined') {
-            payload['subscriberId'] = subscriberId;
+            apiPayload['subscriberId'] = subscriberId;
         }
         if (typeof targetId !== 'undefined') {
-            payload['targetId'] = targetId;
+            apiPayload['targetId'] = targetId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7830,7 +7830,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7901,7 +7901,7 @@ export class Messaging {
                 '{subscriberId}',
                 encodeURIComponent(String(subscriberId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7909,7 +7909,7 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7975,7 +7975,7 @@ export class Messaging {
                 '{subscriberId}',
                 encodeURIComponent(String(subscriberId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7984,6 +7984,6 @@ export class Messaging {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 }

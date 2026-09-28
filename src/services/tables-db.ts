@@ -72,15 +72,15 @@ export class TablesDB {
         const total = params.total;
 
         const apiPath = '/tablesdb';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -89,7 +89,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -197,24 +197,24 @@ export class TablesDB {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/tablesdb';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof databaseId !== 'undefined') {
-            payload['databaseId'] = databaseId;
+            apiPayload['databaseId'] = databaseId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof specification !== 'undefined') {
-            payload['specification'] = specification;
+            apiPayload['specification'] = specification;
         }
         if (typeof replicas !== 'undefined') {
-            payload['replicas'] = replicas;
+            apiPayload['replicas'] = replicas;
         }
         if (typeof syncMode !== 'undefined') {
-            payload['syncMode'] = syncMode;
+            apiPayload['syncMode'] = syncMode;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -224,7 +224,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -235,7 +235,7 @@ export class TablesDB {
      */
     listSpecifications(): Promise<Models.DedicatedDatabaseSpecificationList> {
         const apiPath = '/tablesdb/specifications';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -243,7 +243,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -286,9 +286,9 @@ export class TablesDB {
         const queries = params.queries;
 
         const apiPath = '/tablesdb/transactions';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -297,7 +297,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -338,9 +338,9 @@ export class TablesDB {
         const ttl = params.ttl;
 
         const apiPath = '/tablesdb/transactions';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -350,7 +350,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -400,7 +400,7 @@ export class TablesDB {
             '{transactionId}',
             encodeURIComponent(String(transactionId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -408,7 +408,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -483,12 +483,12 @@ export class TablesDB {
             '{transactionId}',
             encodeURIComponent(String(transactionId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof commit !== 'undefined') {
-            payload['commit'] = commit;
+            apiPayload['commit'] = commit;
         }
         if (typeof rollback !== 'undefined') {
-            payload['rollback'] = rollback;
+            apiPayload['rollback'] = rollback;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -498,7 +498,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -546,7 +546,7 @@ export class TablesDB {
             '{transactionId}',
             encodeURIComponent(String(transactionId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -555,7 +555,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -619,9 +619,9 @@ export class TablesDB {
                 '{transactionId}',
                 encodeURIComponent(String(transactionId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof operations !== 'undefined') {
-            payload['operations'] = operations;
+            apiPayload['operations'] = operations;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -631,7 +631,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -679,7 +679,7 @@ export class TablesDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -687,7 +687,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -793,21 +793,21 @@ export class TablesDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof specification !== 'undefined') {
-            payload['specification'] = specification;
+            apiPayload['specification'] = specification;
         }
         if (typeof replicas !== 'undefined') {
-            payload['replicas'] = replicas;
+            apiPayload['replicas'] = replicas;
         }
         if (typeof syncMode !== 'undefined') {
-            payload['syncMode'] = syncMode;
+            apiPayload['syncMode'] = syncMode;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -817,7 +817,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -863,7 +863,7 @@ export class TablesDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -872,7 +872,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -935,9 +935,9 @@ export class TablesDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof targetReplicaId !== 'undefined') {
-            payload['targetReplicaId'] = targetReplicaId;
+            apiPayload['targetReplicaId'] = targetReplicaId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -947,7 +947,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -997,7 +997,7 @@ export class TablesDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1005,7 +1005,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1089,12 +1089,12 @@ export class TablesDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof specification !== 'undefined') {
-            payload['specification'] = specification;
+            apiPayload['specification'] = specification;
         }
         if (typeof autoCutover !== 'undefined') {
-            payload['autoCutover'] = autoCutover;
+            apiPayload['autoCutover'] = autoCutover;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1104,7 +1104,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1170,7 +1170,7 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/migrations/{migrationId}'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{migrationId}', encodeURIComponent(String(migrationId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1178,7 +1178,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1241,7 +1241,7 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/migrations/{migrationId}'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{migrationId}', encodeURIComponent(String(migrationId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1250,7 +1250,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1320,7 +1320,7 @@ export class TablesDB {
                     '{migrationId}',
                     encodeURIComponent(String(migrationId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1329,7 +1329,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1417,15 +1417,15 @@ export class TablesDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof status !== 'undefined') {
-            payload['status'] = status;
+            apiPayload['status'] = status;
         }
         if (typeof limit !== 'undefined') {
-            payload['limit'] = limit;
+            apiPayload['limit'] = limit;
         }
         if (typeof offset !== 'undefined') {
-            payload['offset'] = offset;
+            apiPayload['offset'] = offset;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1434,7 +1434,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1484,7 +1484,7 @@ export class TablesDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1492,7 +1492,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1540,7 +1540,7 @@ export class TablesDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1548,7 +1548,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1636,15 +1636,15 @@ export class TablesDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1653,7 +1653,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1793,27 +1793,27 @@ export class TablesDB {
             '{databaseId}',
             encodeURIComponent(String(databaseId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof tableId !== 'undefined') {
-            payload['tableId'] = tableId;
+            apiPayload['tableId'] = tableId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof rowSecurity !== 'undefined') {
-            payload['rowSecurity'] = rowSecurity;
+            apiPayload['rowSecurity'] = rowSecurity;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof columns !== 'undefined') {
-            payload['columns'] = columns;
+            apiPayload['columns'] = columns;
         }
         if (typeof indexes !== 'undefined') {
-            payload['indexes'] = indexes;
+            apiPayload['indexes'] = indexes;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1823,7 +1823,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1886,7 +1886,7 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1894,7 +1894,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2013,21 +2013,21 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof rowSecurity !== 'undefined') {
-            payload['rowSecurity'] = rowSecurity;
+            apiPayload['rowSecurity'] = rowSecurity;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof purge !== 'undefined') {
-            payload['purge'] = purge;
+            apiPayload['purge'] = purge;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2037,7 +2037,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2097,7 +2097,7 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2106,7 +2106,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2198,12 +2198,12 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2212,7 +2212,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2358,24 +2358,24 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/bigint'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof min !== 'undefined') {
-            payload['min'] = min;
+            apiPayload['min'] = min;
         }
         if (typeof max !== 'undefined') {
-            payload['max'] = max;
+            apiPayload['max'] = max;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2385,7 +2385,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2538,21 +2538,21 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof min !== 'undefined') {
-            payload['min'] = min;
+            apiPayload['min'] = min;
         }
         if (typeof max !== 'undefined') {
-            payload['max'] = max;
+            apiPayload['max'] = max;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2562,7 +2562,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2683,18 +2683,18 @@ export class TablesDB {
             '/tablesdb/{databaseId}/tables/{tableId}/columns/boolean'
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2704,7 +2704,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2829,15 +2829,15 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2847,7 +2847,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -2966,18 +2966,18 @@ export class TablesDB {
             '/tablesdb/{databaseId}/tables/{tableId}/columns/datetime'
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2987,7 +2987,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3112,15 +3112,15 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3130,7 +3130,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3250,18 +3250,18 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/email'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3271,7 +3271,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3398,15 +3398,15 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3416,7 +3416,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3548,21 +3548,21 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/enum'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof elements !== 'undefined') {
-            payload['elements'] = elements;
+            apiPayload['elements'] = elements;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3572,7 +3572,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3713,18 +3713,18 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof elements !== 'undefined') {
-            payload['elements'] = elements;
+            apiPayload['elements'] = elements;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3734,7 +3734,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -3880,24 +3880,24 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/float'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof min !== 'undefined') {
-            payload['min'] = min;
+            apiPayload['min'] = min;
         }
         if (typeof max !== 'undefined') {
-            payload['max'] = max;
+            apiPayload['max'] = max;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3907,7 +3907,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4060,21 +4060,21 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof min !== 'undefined') {
-            payload['min'] = min;
+            apiPayload['min'] = min;
         }
         if (typeof max !== 'undefined') {
-            payload['max'] = max;
+            apiPayload['max'] = max;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4084,7 +4084,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4231,24 +4231,24 @@ export class TablesDB {
             '/tablesdb/{databaseId}/tables/{tableId}/columns/integer'
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof min !== 'undefined') {
-            payload['min'] = min;
+            apiPayload['min'] = min;
         }
         if (typeof max !== 'undefined') {
-            payload['max'] = max;
+            apiPayload['max'] = max;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4258,7 +4258,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4411,21 +4411,21 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof min !== 'undefined') {
-            payload['min'] = min;
+            apiPayload['min'] = min;
         }
         if (typeof max !== 'undefined') {
-            payload['max'] = max;
+            apiPayload['max'] = max;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4435,7 +4435,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4555,18 +4555,18 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/ip'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4576,7 +4576,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4703,15 +4703,15 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4721,7 +4721,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4830,15 +4830,15 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/line'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4848,7 +4848,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -4968,15 +4968,15 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4986,7 +4986,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5116,21 +5116,21 @@ export class TablesDB {
             '/tablesdb/{databaseId}/tables/{tableId}/columns/longtext'
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         if (typeof encrypt !== 'undefined') {
-            payload['encrypt'] = encrypt;
+            apiPayload['encrypt'] = encrypt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5140,7 +5140,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5267,15 +5267,15 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5285,7 +5285,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5415,21 +5415,21 @@ export class TablesDB {
             '/tablesdb/{databaseId}/tables/{tableId}/columns/mediumtext'
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         if (typeof encrypt !== 'undefined') {
-            payload['encrypt'] = encrypt;
+            apiPayload['encrypt'] = encrypt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5439,7 +5439,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5566,15 +5566,15 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5584,7 +5584,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5693,15 +5693,15 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/point'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5711,7 +5711,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5831,15 +5831,15 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5849,7 +5849,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -5959,15 +5959,15 @@ export class TablesDB {
             '/tablesdb/{databaseId}/tables/{tableId}/columns/polygon'
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5977,7 +5977,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6097,15 +6097,15 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6115,7 +6115,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6262,24 +6262,24 @@ export class TablesDB {
             '/tablesdb/{databaseId}/tables/{tableId}/columns/relationship'
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof relatedTableId !== 'undefined') {
-            payload['relatedTableId'] = relatedTableId;
+            apiPayload['relatedTableId'] = relatedTableId;
         }
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         if (typeof twoWay !== 'undefined') {
-            payload['twoWay'] = twoWay;
+            apiPayload['twoWay'] = twoWay;
         }
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof twoWayKey !== 'undefined') {
-            payload['twoWayKey'] = twoWayKey;
+            apiPayload['twoWayKey'] = twoWayKey;
         }
         if (typeof onDelete !== 'undefined') {
-            payload['onDelete'] = onDelete;
+            apiPayload['onDelete'] = onDelete;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6289,7 +6289,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6397,12 +6397,12 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof onDelete !== 'undefined') {
-            payload['onDelete'] = onDelete;
+            apiPayload['onDelete'] = onDelete;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6412,7 +6412,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6562,24 +6562,24 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/string'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof size !== 'undefined') {
-            payload['size'] = size;
+            apiPayload['size'] = size;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         if (typeof encrypt !== 'undefined') {
-            payload['encrypt'] = encrypt;
+            apiPayload['encrypt'] = encrypt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6589,7 +6589,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6726,18 +6726,18 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof size !== 'undefined') {
-            payload['size'] = size;
+            apiPayload['size'] = size;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6747,7 +6747,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -6876,21 +6876,21 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/text'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         if (typeof encrypt !== 'undefined') {
-            payload['encrypt'] = encrypt;
+            apiPayload['encrypt'] = encrypt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6900,7 +6900,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7027,15 +7027,15 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7045,7 +7045,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7165,18 +7165,18 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/columns/url'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7186,7 +7186,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7313,15 +7313,15 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7331,7 +7331,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7481,24 +7481,24 @@ export class TablesDB {
             '/tablesdb/{databaseId}/tables/{tableId}/columns/varchar'
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof size !== 'undefined') {
-            payload['size'] = size;
+            apiPayload['size'] = size;
         }
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof array !== 'undefined') {
-            payload['array'] = array;
+            apiPayload['array'] = array;
         }
         if (typeof encrypt !== 'undefined') {
-            payload['encrypt'] = encrypt;
+            apiPayload['encrypt'] = encrypt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7508,7 +7508,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7644,18 +7644,18 @@ export class TablesDB {
                 .replace('{databaseId}', encodeURIComponent(String(databaseId)))
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof required !== 'undefined') {
-            payload['required'] = required;
+            apiPayload['required'] = required;
         }
         if (typeof xdefault !== 'undefined') {
-            payload['default'] = xdefault;
+            apiPayload['default'] = xdefault;
         }
         if (typeof size !== 'undefined') {
-            payload['size'] = size;
+            apiPayload['size'] = size;
         }
         if (typeof newKey !== 'undefined') {
-            payload['newKey'] = newKey;
+            apiPayload['newKey'] = newKey;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7665,7 +7665,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7800,7 +7800,7 @@ export class TablesDB {
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)))
             .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7808,7 +7808,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7882,7 +7882,7 @@ export class TablesDB {
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)))
             .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7891,7 +7891,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -7983,12 +7983,12 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/indexes'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7997,7 +7997,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8136,21 +8136,21 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/indexes'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
-            payload['key'] = key;
+            apiPayload['key'] = key;
         }
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         if (typeof columns !== 'undefined') {
-            payload['columns'] = columns;
+            apiPayload['columns'] = columns;
         }
         if (typeof orders !== 'undefined') {
-            payload['orders'] = orders;
+            apiPayload['orders'] = orders;
         }
         if (typeof lengths !== 'undefined') {
-            payload['lengths'] = lengths;
+            apiPayload['lengths'] = lengths;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8160,7 +8160,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8238,7 +8238,7 @@ export class TablesDB {
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)))
             .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -8246,7 +8246,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8320,7 +8320,7 @@ export class TablesDB {
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)))
             .replace('{key}', encodeURIComponent(String(key)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -8329,7 +8329,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8439,18 +8439,18 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         if (typeof ttl !== 'undefined') {
-            payload['ttl'] = ttl;
+            apiPayload['ttl'] = ttl;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8459,7 +8459,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8595,18 +8595,18 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof rowId !== 'undefined') {
-            payload['rowId'] = rowId;
+            apiPayload['rowId'] = rowId;
         }
         if (typeof data !== 'undefined') {
-            payload['data'] = data;
+            apiPayload['data'] = data;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8616,7 +8616,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8711,12 +8711,12 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof rows !== 'undefined') {
-            payload['rows'] = rows;
+            apiPayload['rows'] = rows;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8726,7 +8726,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8823,12 +8823,12 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof rows !== 'undefined') {
-            payload['rows'] = rows;
+            apiPayload['rows'] = rows;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8838,7 +8838,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -8939,15 +8939,15 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof data !== 'undefined') {
-            payload['data'] = data;
+            apiPayload['data'] = data;
         }
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -8957,7 +8957,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9049,12 +9049,12 @@ export class TablesDB {
         const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows'
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9064,7 +9064,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9169,12 +9169,12 @@ export class TablesDB {
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)))
             .replace('{rowId}', encodeURIComponent(String(rowId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9183,7 +9183,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9320,15 +9320,15 @@ export class TablesDB {
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)))
             .replace('{rowId}', encodeURIComponent(String(rowId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof data !== 'undefined') {
-            payload['data'] = data;
+            apiPayload['data'] = data;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9338,7 +9338,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9475,15 +9475,15 @@ export class TablesDB {
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)))
             .replace('{rowId}', encodeURIComponent(String(rowId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof data !== 'undefined') {
-            payload['data'] = data;
+            apiPayload['data'] = data;
         }
         if (typeof permissions !== 'undefined') {
-            payload['permissions'] = permissions;
+            apiPayload['permissions'] = permissions;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9493,7 +9493,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9589,9 +9589,9 @@ export class TablesDB {
             .replace('{databaseId}', encodeURIComponent(String(databaseId)))
             .replace('{tableId}', encodeURIComponent(String(tableId)))
             .replace('{rowId}', encodeURIComponent(String(rowId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9601,7 +9601,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9729,15 +9729,15 @@ export class TablesDB {
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{rowId}', encodeURIComponent(String(rowId)))
                 .replace('{column}', encodeURIComponent(String(column)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof min !== 'undefined') {
-            payload['min'] = min;
+            apiPayload['min'] = min;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9747,7 +9747,7 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -9875,15 +9875,15 @@ export class TablesDB {
                 .replace('{tableId}', encodeURIComponent(String(tableId)))
                 .replace('{rowId}', encodeURIComponent(String(rowId)))
                 .replace('{column}', encodeURIComponent(String(column)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof value !== 'undefined') {
-            payload['value'] = value;
+            apiPayload['value'] = value;
         }
         if (typeof max !== 'undefined') {
-            payload['max'] = max;
+            apiPayload['max'] = max;
         }
         if (typeof transactionId !== 'undefined') {
-            payload['transactionId'] = transactionId;
+            apiPayload['transactionId'] = transactionId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9893,6 +9893,6 @@ export class TablesDB {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 }

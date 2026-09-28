@@ -48,9 +48,9 @@ export class Activities {
         const queries = params.queries;
 
         const apiPath = '/activities/events';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -59,7 +59,7 @@ export class Activities {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -109,7 +109,7 @@ export class Activities {
             '{eventId}',
             encodeURIComponent(String(eventId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -117,6 +117,6 @@ export class Activities {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 }

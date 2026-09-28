@@ -167,33 +167,33 @@ export class Growth {
             throw new AppwriteException('Missing required parameter: "type"');
         }
         const apiPath = '/growth/conversations';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         if (typeof email !== 'undefined') {
-            payload['email'] = email;
+            apiPayload['email'] = email;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof subject !== 'undefined') {
-            payload['subject'] = subject;
+            apiPayload['subject'] = subject;
         }
         if (typeof message !== 'undefined') {
-            payload['message'] = message;
+            apiPayload['message'] = message;
         }
         if (typeof organizationId !== 'undefined') {
-            payload['organizationId'] = organizationId;
+            apiPayload['organizationId'] = organizationId;
         }
         if (typeof projectId !== 'undefined') {
-            payload['projectId'] = projectId;
+            apiPayload['projectId'] = projectId;
         }
         if (typeof attributes !== 'undefined') {
-            payload['attributes'] = attributes;
+            apiPayload['attributes'] = attributes;
         }
         if (typeof attachment !== 'undefined') {
-            payload['attachment'] = attachment;
+            apiPayload['attachment'] = attachment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -207,7 +207,7 @@ export class Growth {
             'post',
             uri,
             apiHeaders,
-            payload,
+            apiPayload,
             onProgress,
         );
     }
@@ -364,39 +364,39 @@ export class Growth {
         const ram = params.ram;
 
         const apiPath = '/growth/installations';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof email !== 'undefined') {
-            payload['email'] = email;
+            apiPayload['email'] = email;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof version !== 'undefined') {
-            payload['version'] = version;
+            apiPayload['version'] = version;
         }
         if (typeof domain !== 'undefined') {
-            payload['domain'] = domain;
+            apiPayload['domain'] = domain;
         }
         if (typeof database !== 'undefined') {
-            payload['database'] = database;
+            apiPayload['database'] = database;
         }
         if (typeof hostIp !== 'undefined') {
-            payload['hostIp'] = hostIp;
+            apiPayload['hostIp'] = hostIp;
         }
         if (typeof userAgent !== 'undefined') {
-            payload['userAgent'] = userAgent;
+            apiPayload['userAgent'] = userAgent;
         }
         if (typeof os !== 'undefined') {
-            payload['os'] = os;
+            apiPayload['os'] = os;
         }
         if (typeof arch !== 'undefined') {
-            payload['arch'] = arch;
+            apiPayload['arch'] = arch;
         }
         if (typeof cpus !== 'undefined') {
-            payload['cpus'] = cpus;
+            apiPayload['cpus'] = cpus;
         }
         if (typeof ram !== 'undefined') {
-            payload['ram'] = ram;
+            apiPayload['ram'] = ram;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -406,6 +406,6 @@ export class Growth {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 }

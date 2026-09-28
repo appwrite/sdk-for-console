@@ -49,9 +49,9 @@ export class Backups {
         const queries = params.queries;
 
         const apiPath = '/backups/archives';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -60,7 +60,7 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -122,12 +122,12 @@ export class Backups {
             );
         }
         const apiPath = '/backups/archives';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof services !== 'undefined') {
-            payload['services'] = services;
+            apiPayload['services'] = services;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -137,7 +137,7 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -185,7 +185,7 @@ export class Backups {
             '{archiveId}',
             encodeURIComponent(String(archiveId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -193,7 +193,7 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -239,7 +239,7 @@ export class Backups {
             '{archiveId}',
             encodeURIComponent(String(archiveId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -248,7 +248,7 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -291,9 +291,9 @@ export class Backups {
         const queries = params.queries;
 
         const apiPath = '/backups/policies';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -302,7 +302,7 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -436,27 +436,27 @@ export class Backups {
             );
         }
         const apiPath = '/backups/policies';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof policyId !== 'undefined') {
-            payload['policyId'] = policyId;
+            apiPayload['policyId'] = policyId;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof services !== 'undefined') {
-            payload['services'] = services;
+            apiPayload['services'] = services;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof retention !== 'undefined') {
-            payload['retention'] = retention;
+            apiPayload['retention'] = retention;
         }
         if (typeof schedule !== 'undefined') {
-            payload['schedule'] = schedule;
+            apiPayload['schedule'] = schedule;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -466,7 +466,7 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -514,7 +514,7 @@ export class Backups {
             '{policyId}',
             encodeURIComponent(String(policyId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -522,7 +522,7 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -619,18 +619,18 @@ export class Backups {
             '{policyId}',
             encodeURIComponent(String(policyId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof retention !== 'undefined') {
-            payload['retention'] = retention;
+            apiPayload['retention'] = retention;
         }
         if (typeof schedule !== 'undefined') {
-            payload['schedule'] = schedule;
+            apiPayload['schedule'] = schedule;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -640,7 +640,7 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -686,7 +686,7 @@ export class Backups {
             '{policyId}',
             encodeURIComponent(String(policyId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -695,7 +695,7 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -803,18 +803,18 @@ export class Backups {
             );
         }
         const apiPath = '/backups/restoration';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof archiveId !== 'undefined') {
-            payload['archiveId'] = archiveId;
+            apiPayload['archiveId'] = archiveId;
         }
         if (typeof services !== 'undefined') {
-            payload['services'] = services;
+            apiPayload['services'] = services;
         }
         if (typeof newResourceId !== 'undefined') {
-            payload['newResourceId'] = newResourceId;
+            apiPayload['newResourceId'] = newResourceId;
         }
         if (typeof newResourceName !== 'undefined') {
-            payload['newResourceName'] = newResourceName;
+            apiPayload['newResourceName'] = newResourceName;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -824,7 +824,7 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -867,9 +867,9 @@ export class Backups {
         const queries = params.queries;
 
         const apiPath = '/backups/restorations';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -878,7 +878,7 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -928,7 +928,7 @@ export class Backups {
             '{restorationId}',
             encodeURIComponent(String(restorationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -936,6 +936,6 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 }

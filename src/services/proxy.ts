@@ -85,15 +85,15 @@ export class Proxy {
             throw new AppwriteException('Missing required parameter: "type"');
         }
         const apiPath = '/proxy/invalidations';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof domain !== 'undefined') {
-            payload['domain'] = domain;
+            apiPayload['domain'] = domain;
         }
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         if (typeof reference !== 'undefined') {
-            payload['reference'] = reference;
+            apiPayload['reference'] = reference;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -103,7 +103,7 @@ export class Proxy {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -158,12 +158,12 @@ export class Proxy {
         const total = params.total;
 
         const apiPath = '/proxy/rules';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -172,7 +172,7 @@ export class Proxy {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -219,9 +219,9 @@ export class Proxy {
             throw new AppwriteException('Missing required parameter: "domain"');
         }
         const apiPath = '/proxy/rules/api';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof domain !== 'undefined') {
-            payload['domain'] = domain;
+            apiPayload['domain'] = domain;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -231,7 +231,7 @@ export class Proxy {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -305,15 +305,15 @@ export class Proxy {
             );
         }
         const apiPath = '/proxy/rules/function';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof domain !== 'undefined') {
-            payload['domain'] = domain;
+            apiPayload['domain'] = domain;
         }
         if (typeof functionId !== 'undefined') {
-            payload['functionId'] = functionId;
+            apiPayload['functionId'] = functionId;
         }
         if (typeof branch !== 'undefined') {
-            payload['branch'] = branch;
+            apiPayload['branch'] = branch;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -323,7 +323,7 @@ export class Proxy {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -437,21 +437,21 @@ export class Proxy {
             );
         }
         const apiPath = '/proxy/rules/redirect';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof domain !== 'undefined') {
-            payload['domain'] = domain;
+            apiPayload['domain'] = domain;
         }
         if (typeof url !== 'undefined') {
-            payload['url'] = url;
+            apiPayload['url'] = url;
         }
         if (typeof statusCode !== 'undefined') {
-            payload['statusCode'] = statusCode;
+            apiPayload['statusCode'] = statusCode;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -461,7 +461,7 @@ export class Proxy {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -533,15 +533,15 @@ export class Proxy {
             throw new AppwriteException('Missing required parameter: "siteId"');
         }
         const apiPath = '/proxy/rules/site';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof domain !== 'undefined') {
-            payload['domain'] = domain;
+            apiPayload['domain'] = domain;
         }
         if (typeof siteId !== 'undefined') {
-            payload['siteId'] = siteId;
+            apiPayload['siteId'] = siteId;
         }
         if (typeof branch !== 'undefined') {
-            payload['branch'] = branch;
+            apiPayload['branch'] = branch;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -551,7 +551,7 @@ export class Proxy {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -597,7 +597,7 @@ export class Proxy {
             '{ruleId}',
             encodeURIComponent(String(ruleId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -605,7 +605,7 @@ export class Proxy {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -649,7 +649,7 @@ export class Proxy {
             '{ruleId}',
             encodeURIComponent(String(ruleId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -658,7 +658,7 @@ export class Proxy {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -704,7 +704,7 @@ export class Proxy {
             '{ruleId}',
             encodeURIComponent(String(ruleId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -713,6 +713,6 @@ export class Proxy {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 }

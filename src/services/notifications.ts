@@ -48,9 +48,9 @@ export class Notifications {
         const queries = params.queries;
 
         const apiPath = '/notifications';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -59,7 +59,7 @@ export class Notifications {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -123,9 +123,9 @@ export class Notifications {
             '{notificationId}',
             encodeURIComponent(String(notificationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof read !== 'undefined') {
-            payload['read'] = read;
+            apiPayload['read'] = read;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -135,6 +135,6 @@ export class Notifications {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 }

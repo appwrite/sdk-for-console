@@ -183,36 +183,36 @@ export class Usage {
             );
         }
         const apiPath = '/usage/events';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof metrics !== 'undefined') {
-            payload['metrics'] = metrics;
+            apiPayload['metrics'] = metrics;
         }
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof interval !== 'undefined') {
-            payload['interval'] = interval;
+            apiPayload['interval'] = interval;
         }
         if (typeof dimensions !== 'undefined') {
-            payload['dimensions'] = dimensions;
+            apiPayload['dimensions'] = dimensions;
         }
         if (typeof startAt !== 'undefined') {
-            payload['startAt'] = startAt;
+            apiPayload['startAt'] = startAt;
         }
         if (typeof endAt !== 'undefined') {
-            payload['endAt'] = endAt;
+            apiPayload['endAt'] = endAt;
         }
         if (typeof orderBy !== 'undefined') {
-            payload['orderBy'] = orderBy;
+            apiPayload['orderBy'] = orderBy;
         }
         if (typeof orderDir !== 'undefined') {
-            payload['orderDir'] = orderDir;
+            apiPayload['orderDir'] = orderDir;
         }
         if (typeof limit !== 'undefined') {
-            payload['limit'] = limit;
+            apiPayload['limit'] = limit;
         }
         if (typeof offset !== 'undefined') {
-            payload['offset'] = offset;
+            apiPayload['offset'] = offset;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -221,7 +221,7 @@ export class Usage {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -411,39 +411,39 @@ export class Usage {
             );
         }
         const apiPath = '/usage/gauges';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof metrics !== 'undefined') {
-            payload['metrics'] = metrics;
+            apiPayload['metrics'] = metrics;
         }
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof interval !== 'undefined') {
-            payload['interval'] = interval;
+            apiPayload['interval'] = interval;
         }
         if (typeof dimensions !== 'undefined') {
-            payload['dimensions'] = dimensions;
+            apiPayload['dimensions'] = dimensions;
         }
         if (typeof startAt !== 'undefined') {
-            payload['startAt'] = startAt;
+            apiPayload['startAt'] = startAt;
         }
         if (typeof endAt !== 'undefined') {
-            payload['endAt'] = endAt;
+            apiPayload['endAt'] = endAt;
         }
         if (typeof orderBy !== 'undefined') {
-            payload['orderBy'] = orderBy;
+            apiPayload['orderBy'] = orderBy;
         }
         if (typeof orderDir !== 'undefined') {
-            payload['orderDir'] = orderDir;
+            apiPayload['orderDir'] = orderDir;
         }
         if (typeof limit !== 'undefined') {
-            payload['limit'] = limit;
+            apiPayload['limit'] = limit;
         }
         if (typeof offset !== 'undefined') {
-            payload['offset'] = offset;
+            apiPayload['offset'] = offset;
         }
         if (typeof aggregate !== 'undefined') {
-            payload['aggregate'] = aggregate;
+            apiPayload['aggregate'] = aggregate;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -452,6 +452,6 @@ export class Usage {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 }

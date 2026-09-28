@@ -95,12 +95,12 @@ export class Tokens {
         const apiPath = '/tokens/buckets/{bucketId}/files/{fileId}'
             .replace('{bucketId}', encodeURIComponent(String(bucketId)))
             .replace('{fileId}', encodeURIComponent(String(fileId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -109,7 +109,7 @@ export class Tokens {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -181,9 +181,9 @@ export class Tokens {
         const apiPath = '/tokens/buckets/{bucketId}/files/{fileId}'
             .replace('{bucketId}', encodeURIComponent(String(bucketId)))
             .replace('{fileId}', encodeURIComponent(String(fileId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof expire !== 'undefined') {
-            payload['expire'] = expire;
+            apiPayload['expire'] = expire;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -193,7 +193,7 @@ export class Tokens {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -241,7 +241,7 @@ export class Tokens {
             '{tokenId}',
             encodeURIComponent(String(tokenId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -249,7 +249,7 @@ export class Tokens {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -308,9 +308,9 @@ export class Tokens {
             '{tokenId}',
             encodeURIComponent(String(tokenId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof expire !== 'undefined') {
-            payload['expire'] = expire;
+            apiPayload['expire'] = expire;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -320,7 +320,7 @@ export class Tokens {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -366,7 +366,7 @@ export class Tokens {
             '{tokenId}',
             encodeURIComponent(String(tokenId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -375,6 +375,6 @@ export class Tokens {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 }

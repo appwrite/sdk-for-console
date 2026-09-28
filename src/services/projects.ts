@@ -57,7 +57,7 @@ export class Projects {
             '{projectId}',
             encodeURIComponent(String(projectId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -65,7 +65,7 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -117,7 +117,7 @@ export class Projects {
             '{projectId}',
             encodeURIComponent(String(projectId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -126,7 +126,7 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -191,7 +191,7 @@ export class Projects {
         const apiPath = '/projects/{projectId}/addons/{addonId}'
             .replace('{projectId}', encodeURIComponent(String(projectId)))
             .replace('{addonId}', encodeURIComponent(String(addonId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -199,7 +199,7 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -261,7 +261,7 @@ export class Projects {
         const apiPath = '/projects/{projectId}/addons/{addonId}'
             .replace('{projectId}', encodeURIComponent(String(projectId)))
             .replace('{addonId}', encodeURIComponent(String(addonId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -270,7 +270,7 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -338,7 +338,7 @@ export class Projects {
         const apiPath = '/projects/{projectId}/addons/{addonId}/confirmations'
             .replace('{projectId}', encodeURIComponent(String(projectId)))
             .replace('{addonId}', encodeURIComponent(String(addonId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -347,7 +347,7 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -410,7 +410,7 @@ export class Projects {
         const apiPath = '/projects/{projectId}/addons/{addon}/price'
             .replace('{projectId}', encodeURIComponent(String(projectId)))
             .replace('{addon}', encodeURIComponent(String(addon)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -418,7 +418,7 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -468,7 +468,7 @@ export class Projects {
             '{projectId}',
             encodeURIComponent(String(projectId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -477,7 +477,7 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -547,12 +547,12 @@ export class Projects {
             '{projectId}',
             encodeURIComponent(String(projectId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -561,7 +561,7 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -682,21 +682,21 @@ export class Projects {
             '{projectId}',
             encodeURIComponent(String(projectId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof resourceType !== 'undefined') {
-            payload['resourceType'] = resourceType;
+            apiPayload['resourceType'] = resourceType;
         }
         if (typeof resourceId !== 'undefined') {
-            payload['resourceId'] = resourceId;
+            apiPayload['resourceId'] = resourceId;
         }
         if (typeof schedule !== 'undefined') {
-            payload['schedule'] = schedule;
+            apiPayload['schedule'] = schedule;
         }
         if (typeof active !== 'undefined') {
-            payload['active'] = active;
+            apiPayload['active'] = active;
         }
         if (typeof data !== 'undefined') {
-            payload['data'] = data;
+            apiPayload['data'] = data;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -706,7 +706,7 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -772,7 +772,7 @@ export class Projects {
         const apiPath = '/projects/{projectId}/schedules/{scheduleId}'
             .replace('{projectId}', encodeURIComponent(String(projectId)))
             .replace('{scheduleId}', encodeURIComponent(String(scheduleId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -780,7 +780,7 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -830,7 +830,7 @@ export class Projects {
             '{projectId}',
             encodeURIComponent(String(projectId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -838,7 +838,7 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -914,9 +914,9 @@ export class Projects {
         const apiPath = '/projects/{projectId}/stages/{stageId}'
             .replace('{projectId}', encodeURIComponent(String(projectId)))
             .replace('{stageId}', encodeURIComponent(String(stageId)));
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof skip !== 'undefined') {
-            payload['skip'] = skip;
+            apiPayload['skip'] = skip;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -926,7 +926,7 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -987,9 +987,9 @@ export class Projects {
             '{projectId}',
             encodeURIComponent(String(projectId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof status !== 'undefined') {
-            payload['status'] = status;
+            apiPayload['status'] = status;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -999,7 +999,7 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1061,9 +1061,9 @@ export class Projects {
             '{projectId}',
             encodeURIComponent(String(projectId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof teamId !== 'undefined') {
-            payload['teamId'] = teamId;
+            apiPayload['teamId'] = teamId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1073,6 +1073,6 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 }

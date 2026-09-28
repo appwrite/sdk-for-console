@@ -57,12 +57,12 @@ export class Webhooks {
         const total = params.total;
 
         const apiPath = '/webhooks';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -71,7 +71,7 @@ export class Webhooks {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -219,33 +219,33 @@ export class Webhooks {
             throw new AppwriteException('Missing required parameter: "events"');
         }
         const apiPath = '/webhooks';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof webhookId !== 'undefined') {
-            payload['webhookId'] = webhookId;
+            apiPayload['webhookId'] = webhookId;
         }
         if (typeof url !== 'undefined') {
-            payload['url'] = url;
+            apiPayload['url'] = url;
         }
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof events !== 'undefined') {
-            payload['events'] = events;
+            apiPayload['events'] = events;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof tls !== 'undefined') {
-            payload['tls'] = tls;
+            apiPayload['tls'] = tls;
         }
         if (typeof authUsername !== 'undefined') {
-            payload['authUsername'] = authUsername;
+            apiPayload['authUsername'] = authUsername;
         }
         if (typeof authPassword !== 'undefined') {
-            payload['authPassword'] = authPassword;
+            apiPayload['authPassword'] = authPassword;
         }
         if (typeof secret !== 'undefined') {
-            payload['secret'] = secret;
+            apiPayload['secret'] = secret;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -255,7 +255,7 @@ export class Webhooks {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -303,7 +303,7 @@ export class Webhooks {
             '{webhookId}',
             encodeURIComponent(String(webhookId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -311,7 +311,7 @@ export class Webhooks {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -452,27 +452,27 @@ export class Webhooks {
             '{webhookId}',
             encodeURIComponent(String(webhookId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof url !== 'undefined') {
-            payload['url'] = url;
+            apiPayload['url'] = url;
         }
         if (typeof events !== 'undefined') {
-            payload['events'] = events;
+            apiPayload['events'] = events;
         }
         if (typeof enabled !== 'undefined') {
-            payload['enabled'] = enabled;
+            apiPayload['enabled'] = enabled;
         }
         if (typeof tls !== 'undefined') {
-            payload['tls'] = tls;
+            apiPayload['tls'] = tls;
         }
         if (typeof authUsername !== 'undefined') {
-            payload['authUsername'] = authUsername;
+            apiPayload['authUsername'] = authUsername;
         }
         if (typeof authPassword !== 'undefined') {
-            payload['authPassword'] = authPassword;
+            apiPayload['authPassword'] = authPassword;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -482,7 +482,7 @@ export class Webhooks {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, payload);
+        return this.client.call('put', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -528,7 +528,7 @@ export class Webhooks {
             '{webhookId}',
             encodeURIComponent(String(webhookId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -537,7 +537,7 @@ export class Webhooks {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -596,9 +596,9 @@ export class Webhooks {
             '{webhookId}',
             encodeURIComponent(String(webhookId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof secret !== 'undefined') {
-            payload['secret'] = secret;
+            apiPayload['secret'] = secret;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -608,6 +608,6 @@ export class Webhooks {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 }

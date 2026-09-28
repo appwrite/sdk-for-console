@@ -103,15 +103,15 @@ export class Vcs {
                 '{installationId}',
                 encodeURIComponent(String(installationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerRepositoryId !== 'undefined') {
-            payload['providerRepositoryId'] = providerRepositoryId;
+            apiPayload['providerRepositoryId'] = providerRepositoryId;
         }
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         if (typeof providerRootDirectory !== 'undefined') {
-            payload['providerRootDirectory'] = providerRootDirectory;
+            apiPayload['providerRootDirectory'] = providerRootDirectory;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -121,7 +121,7 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -222,15 +222,15 @@ export class Vcs {
                 '{installationId}',
                 encodeURIComponent(String(installationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof type !== 'undefined') {
-            payload['type'] = type;
+            apiPayload['type'] = type;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -239,7 +239,7 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -336,15 +336,15 @@ export class Vcs {
                 '{installationId}',
                 encodeURIComponent(String(installationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
-            payload['name'] = name;
+            apiPayload['name'] = name;
         }
         if (typeof xprivate !== 'undefined') {
-            payload['private'] = xprivate;
+            apiPayload['private'] = xprivate;
         }
         if (typeof providerNamespace !== 'undefined') {
-            payload['providerNamespace'] = providerNamespace;
+            apiPayload['providerNamespace'] = providerNamespace;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -354,7 +354,7 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, payload);
+        return this.client.call('post', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -431,7 +431,7 @@ export class Vcs {
                     '{providerRepositoryId}',
                     encodeURIComponent(String(providerRepositoryId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -439,7 +439,7 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -543,12 +543,12 @@ export class Vcs {
                     '{providerRepositoryId}',
                     encodeURIComponent(String(providerRepositoryId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -557,7 +557,7 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -659,12 +659,12 @@ export class Vcs {
                     '{providerRepositoryId}',
                     encodeURIComponent(String(providerRepositoryId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerRootDirectory !== 'undefined') {
-            payload['providerRootDirectory'] = providerRootDirectory;
+            apiPayload['providerRootDirectory'] = providerRootDirectory;
         }
         if (typeof providerReference !== 'undefined') {
-            payload['providerReference'] = providerReference;
+            apiPayload['providerReference'] = providerReference;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -673,7 +673,7 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -768,9 +768,9 @@ export class Vcs {
                     '{repositoryId}',
                     encodeURIComponent(String(repositoryId)),
                 );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof providerPullRequestId !== 'undefined') {
-            payload['providerPullRequestId'] = providerPullRequestId;
+            apiPayload['providerPullRequestId'] = providerPullRequestId;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -780,7 +780,7 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, payload);
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -845,15 +845,15 @@ export class Vcs {
         const total = params.total;
 
         const apiPath = '/vcs/installations';
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof total !== 'undefined') {
-            payload['total'] = total;
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -862,7 +862,7 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -912,7 +912,7 @@ export class Vcs {
             '{installationId}',
             encodeURIComponent(String(installationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -920,7 +920,7 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -968,7 +968,7 @@ export class Vcs {
             '{installationId}',
             encodeURIComponent(String(installationId)),
         );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -977,7 +977,7 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, payload);
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1053,12 +1053,12 @@ export class Vcs {
                 '{installationId}',
                 encodeURIComponent(String(installationId)),
             );
-        const payload: Payload = {};
+        const apiPayload: Payload = {};
         if (typeof search !== 'undefined') {
-            payload['search'] = search;
+            apiPayload['search'] = search;
         }
         if (typeof queries !== 'undefined') {
-            payload['queries'] = queries;
+            apiPayload['queries'] = queries;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1067,6 +1067,6 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, payload);
+        return this.client.call('get', uri, apiHeaders, apiPayload);
     }
 }
