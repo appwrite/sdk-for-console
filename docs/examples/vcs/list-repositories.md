@@ -12,6 +12,7 @@ const result = await vcs.listRepositories({
     type: VCSDetectionType.Runtime,
     search: '<SEARCH>', // optional
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

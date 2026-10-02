@@ -131,6 +131,7 @@ export class Vcs {
      * @param {VCSDetectionType} params.type - Detector type. Must be one of the following: runtime, framework
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit, offset, and equal on namespace.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProviderRepositoryRuntimeList | Models.ProviderRepositoryFrameworkList>}
      */
@@ -139,6 +140,7 @@ export class Vcs {
         type: VCSDetectionType;
         search?: string;
         queries?: string[];
+        total?: boolean;
     }): Promise<
         | Models.ProviderRepositoryRuntimeList
         | Models.ProviderRepositoryFrameworkList
@@ -150,6 +152,7 @@ export class Vcs {
      * @param {VCSDetectionType} type - Detector type. Must be one of the following: runtime, framework
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit, offset, and equal on namespace.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ProviderRepositoryRuntimeList | Models.ProviderRepositoryFrameworkList>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -159,6 +162,7 @@ export class Vcs {
         type: VCSDetectionType,
         search?: string,
         queries?: string[],
+        total?: boolean,
     ): Promise<
         | Models.ProviderRepositoryRuntimeList
         | Models.ProviderRepositoryFrameworkList
@@ -170,9 +174,10 @@ export class Vcs {
                   type: VCSDetectionType;
                   search?: string;
                   queries?: string[];
+                  total?: boolean;
               }
             | string,
-        ...rest: [VCSDetectionType?, string?, string[]?]
+        ...rest: [VCSDetectionType?, string?, string[]?, boolean?]
     ): Promise<
         | Models.ProviderRepositoryRuntimeList
         | Models.ProviderRepositoryFrameworkList
@@ -182,6 +187,7 @@ export class Vcs {
             type: VCSDetectionType;
             search?: string;
             queries?: string[];
+            total?: boolean;
         };
 
         if (
@@ -194,6 +200,7 @@ export class Vcs {
                 type: VCSDetectionType;
                 search?: string;
                 queries?: string[];
+                total?: boolean;
             };
         } else {
             params = {
@@ -201,6 +208,7 @@ export class Vcs {
                 type: rest[0] as VCSDetectionType,
                 search: rest[1] as string,
                 queries: rest[2] as string[],
+                total: rest[3] as boolean,
             };
         }
 
@@ -208,6 +216,7 @@ export class Vcs {
         const type = params.type;
         const search = params.search;
         const queries = params.queries;
+        const total = params.total;
 
         if (typeof installationId === 'undefined' || installationId === '') {
             throw new AppwriteException(
@@ -231,6 +240,9 @@ export class Vcs {
         }
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -450,6 +462,7 @@ export class Vcs {
      * @param {string} params.providerRepositoryId - Repository Id
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit, offset, cursorAfter, and cursorBefore
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BranchList>}
      */
@@ -458,6 +471,7 @@ export class Vcs {
         providerRepositoryId: string;
         search?: string;
         queries?: string[];
+        total?: boolean;
     }): Promise<Models.BranchList>;
     /**
      * Get a list of branches from a GitHub repository in your installation. This endpoint supports filtering by a search term and pagination using query strings such as `Query.limit()`, `Query.offset()`, `Query.cursorAfter()`, and `Query.cursorBefore()`. It returns branch names along with the total number of matches. The GitHub installation must be properly configured and have access to the requested repository for this endpoint to work.
@@ -467,6 +481,7 @@ export class Vcs {
      * @param {string} providerRepositoryId - Repository Id
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit, offset, cursorAfter, and cursorBefore
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BranchList>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -476,6 +491,7 @@ export class Vcs {
         providerRepositoryId: string,
         search?: string,
         queries?: string[],
+        total?: boolean,
     ): Promise<Models.BranchList>;
     listRepositoryBranches(
         paramsOrFirst:
@@ -484,15 +500,17 @@ export class Vcs {
                   providerRepositoryId: string;
                   search?: string;
                   queries?: string[];
+                  total?: boolean;
               }
             | string,
-        ...rest: [string?, string?, string[]?]
+        ...rest: [string?, string?, string[]?, boolean?]
     ): Promise<Models.BranchList> {
         let params: {
             installationId: string;
             providerRepositoryId: string;
             search?: string;
             queries?: string[];
+            total?: boolean;
         };
 
         if (
@@ -505,6 +523,7 @@ export class Vcs {
                 providerRepositoryId: string;
                 search?: string;
                 queries?: string[];
+                total?: boolean;
             };
         } else {
             params = {
@@ -512,6 +531,7 @@ export class Vcs {
                 providerRepositoryId: rest[0] as string,
                 search: rest[1] as string,
                 queries: rest[2] as string[],
+                total: rest[3] as boolean,
             };
         }
 
@@ -519,6 +539,7 @@ export class Vcs {
         const providerRepositoryId = params.providerRepositoryId;
         const search = params.search;
         const queries = params.queries;
+        const total = params.total;
 
         if (typeof installationId === 'undefined' || installationId === '') {
             throw new AppwriteException(
@@ -549,6 +570,9 @@ export class Vcs {
         }
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -986,6 +1010,7 @@ export class Vcs {
      * @param {string} params.installationId - Installation Id
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.VcsNamespaceList>}
      */
@@ -993,6 +1018,7 @@ export class Vcs {
         installationId: string;
         search?: string;
         queries?: string[];
+        total?: boolean;
     }): Promise<Models.VcsNamespaceList>;
     /**
      * List provider namespaces available to a VCS installation. This can include the user personal namespace and any groups or organizations the installation can browse.
@@ -1000,6 +1026,7 @@ export class Vcs {
      * @param {string} installationId - Installation Id
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Only supported methods are limit and offset
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.VcsNamespaceList>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1008,17 +1035,24 @@ export class Vcs {
         installationId: string,
         search?: string,
         queries?: string[],
+        total?: boolean,
     ): Promise<Models.VcsNamespaceList>;
     listNamespaces(
         paramsOrFirst:
-            | { installationId: string; search?: string; queries?: string[] }
+            | {
+                  installationId: string;
+                  search?: string;
+                  queries?: string[];
+                  total?: boolean;
+              }
             | string,
-        ...rest: [string?, string[]?]
+        ...rest: [string?, string[]?, boolean?]
     ): Promise<Models.VcsNamespaceList> {
         let params: {
             installationId: string;
             search?: string;
             queries?: string[];
+            total?: boolean;
         };
 
         if (
@@ -1030,18 +1064,21 @@ export class Vcs {
                 installationId: string;
                 search?: string;
                 queries?: string[];
+                total?: boolean;
             };
         } else {
             params = {
                 installationId: paramsOrFirst as string,
                 search: rest[0] as string,
                 queries: rest[1] as string[],
+                total: rest[2] as boolean,
             };
         }
 
         const installationId = params.installationId;
         const search = params.search;
         const queries = params.queries;
+        const total = params.total;
 
         if (typeof installationId === 'undefined' || installationId === '') {
             throw new AppwriteException(
@@ -1059,6 +1096,9 @@ export class Vcs {
         }
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

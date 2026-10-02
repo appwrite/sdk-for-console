@@ -3496,6 +3496,110 @@ export namespace Models {
     };
 
     /**
+     * Account
+     */
+    export type Account<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    > = {
+        /**
+         * User ID.
+         */
+        $id: string;
+        /**
+         * User creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * User update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * User name.
+         */
+        name: string;
+        /**
+         * User registration date in ISO 8601 format.
+         */
+        registration: string;
+        /**
+         * User status. Pass `true` for enabled and `false` for disabled.
+         */
+        status: boolean;
+        /**
+         * Labels for the user.
+         */
+        labels: string[];
+        /**
+         * Password update time in ISO 8601 format.
+         */
+        passwordUpdate: string;
+        /**
+         * User email address.
+         */
+        email: string;
+        /**
+         * User phone number in E.164 format.
+         */
+        phone: string;
+        /**
+         * Email verification status.
+         */
+        emailVerification: boolean;
+        /**
+         * Canonical form of the user email address.
+         */
+        emailCanonical?: string;
+        /**
+         * Whether the user email is from a free email provider.
+         */
+        emailIsFree?: boolean;
+        /**
+         * Whether the user email is from a disposable email provider.
+         */
+        emailIsDisposable?: boolean;
+        /**
+         * Whether the user email is from a corporate domain.
+         */
+        emailIsCorporate?: boolean;
+        /**
+         * Whether the user email is in its canonical form.
+         */
+        emailIsCanonical?: boolean;
+        /**
+         * Whether the password was found in a known data breach the last time it was checked. Null when the password has never been checked.
+         */
+        passwordPwned?: boolean;
+        /**
+         * Phone verification status.
+         */
+        phoneVerification: boolean;
+        /**
+         * Multi factor authentication status.
+         */
+        mfa: boolean;
+        /**
+         * User preferences as a key-value object
+         */
+        prefs: Preferences;
+        /**
+         * A user-owned message receiver. A single user may have multiple e.g. emails, phones, and a browser. Each target is registered with a single provider.
+         */
+        targets: Target[];
+        /**
+         * Most recent access date in ISO 8601 format. This attribute is only updated again after 24 hours.
+         */
+        accessedAt: string;
+        /**
+         * Whether the user can impersonate other users.
+         */
+        impersonator?: boolean;
+        /**
+         * ID of the original actor performing the impersonation. Present only when the current request is impersonating another user. Internal audit logs attribute the action to this user, while the impersonated target is recorded only in internal audit payload data.
+         */
+        impersonatorUserId?: string;
+    };
+
+    /**
      * Preferences
      */
     export type Preferences = {};
@@ -5490,7 +5594,7 @@ export namespace Models {
          */
         authUsername: string;
         /**
-         * HTTP basic authentication password.
+         * HTTP basic authentication password. Write-only: always returned empty.
          */
         authPassword: string;
         /**
@@ -5967,6 +6071,28 @@ export namespace Models {
         clientId: string;
         /**
          * WordPress OAuth2 client secret.
+         */
+        clientSecret: string;
+    };
+
+    /**
+     * OAuth2Webflow
+     */
+    export type OAuth2Webflow = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Webflow OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Webflow OAuth2 client secret.
          */
         clientSecret: string;
     };
@@ -6776,6 +6902,7 @@ export namespace Models {
             | Models.OAuth2Yandex
             | Models.OAuth2X
             | Models.OAuth2WordPress
+            | Models.OAuth2Webflow
             | Models.OAuth2Twitch
             | Models.OAuth2Stripe
             | Models.OAuth2Spotify
@@ -7562,6 +7689,26 @@ export namespace Models {
          * Region/state chain when broken down by `subdivisions`.
          */
         subdivisions?: string;
+        /**
+         * Postal code when broken down by `postalCode`.
+         */
+        postalCode?: string;
+        /**
+         * Latitude when broken down by `latitude`.
+         */
+        latitude?: string;
+        /**
+         * Longitude when broken down by `longitude`.
+         */
+        longitude?: string;
+        /**
+         * Time zone when broken down by `timeZone`.
+         */
+        timeZone?: string;
+        /**
+         * Weather station code when broken down by `weatherCode`.
+         */
+        weatherCode?: string;
         /**
          * Internet service provider when broken down by `isp`.
          */

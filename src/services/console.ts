@@ -210,12 +210,49 @@ export class Console {
     /**
      * List all OAuth2 providers supported by the Appwrite server, along with the parameters required to configure each provider. The response excludes mock providers but includes sandbox providers.
      *
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ConsoleOAuth2ProviderList>}
      */
-    listOAuth2Providers(): Promise<Models.ConsoleOAuth2ProviderList> {
+    listOAuth2Providers(params?: {
+        total?: boolean;
+    }): Promise<Models.ConsoleOAuth2ProviderList>;
+    /**
+     * List all OAuth2 providers supported by the Appwrite server, along with the parameters required to configure each provider. The response excludes mock providers but includes sandbox providers.
+     *
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ConsoleOAuth2ProviderList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listOAuth2Providers(
+        total?: boolean,
+    ): Promise<Models.ConsoleOAuth2ProviderList>;
+    listOAuth2Providers(
+        paramsOrFirst?: { total?: boolean } | boolean,
+    ): Promise<Models.ConsoleOAuth2ProviderList> {
+        let params: { total?: boolean };
+
+        if (
+            typeof paramsOrFirst === 'undefined' ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as { total?: boolean };
+        } else {
+            params = {
+                total: paramsOrFirst as boolean,
+            };
+        }
+
+        const total = params.total;
+
         const apiPath = '/console/oauth2-providers';
         const apiPayload: Payload = {};
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -565,12 +602,49 @@ export class Console {
     /**
      * List all scopes available for organization API keys, along with a description for each scope.
      *
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ConsoleKeyScopeList>}
      */
-    listOrganizationScopes(): Promise<Models.ConsoleKeyScopeList> {
+    listOrganizationScopes(params?: {
+        total?: boolean;
+    }): Promise<Models.ConsoleKeyScopeList>;
+    /**
+     * List all scopes available for organization API keys, along with a description for each scope.
+     *
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ConsoleKeyScopeList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listOrganizationScopes(
+        total?: boolean,
+    ): Promise<Models.ConsoleKeyScopeList>;
+    listOrganizationScopes(
+        paramsOrFirst?: { total?: boolean } | boolean,
+    ): Promise<Models.ConsoleKeyScopeList> {
+        let params: { total?: boolean };
+
+        if (
+            typeof paramsOrFirst === 'undefined' ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as { total?: boolean };
+        } else {
+            params = {
+                total: paramsOrFirst as boolean,
+            };
+        }
+
+        const total = params.total;
+
         const apiPath = '/console/scopes/organization';
         const apiPayload: Payload = {};
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -584,12 +658,47 @@ export class Console {
     /**
      * List all scopes available for project API keys, along with a description for each scope.
      *
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ConsoleKeyScopeList>}
      */
-    listProjectScopes(): Promise<Models.ConsoleKeyScopeList> {
+    listProjectScopes(params?: {
+        total?: boolean;
+    }): Promise<Models.ConsoleKeyScopeList>;
+    /**
+     * List all scopes available for project API keys, along with a description for each scope.
+     *
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ConsoleKeyScopeList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listProjectScopes(total?: boolean): Promise<Models.ConsoleKeyScopeList>;
+    listProjectScopes(
+        paramsOrFirst?: { total?: boolean } | boolean,
+    ): Promise<Models.ConsoleKeyScopeList> {
+        let params: { total?: boolean };
+
+        if (
+            typeof paramsOrFirst === 'undefined' ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as { total?: boolean };
+        } else {
+            params = {
+                total: paramsOrFirst as boolean,
+            };
+        }
+
+        const total = params.total;
+
         const apiPath = '/console/scopes/project';
         const apiPayload: Payload = {};
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {

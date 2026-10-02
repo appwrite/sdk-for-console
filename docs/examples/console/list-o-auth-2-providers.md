@@ -7,7 +7,9 @@ const client = new Client()
 
 const xconsole = new Console(client);
 
-const result = await xconsole.listOAuth2Providers();
+const result = await xconsole.listOAuth2Providers({
+    total: false, // optional
+});
 
 console.log(result);
 ```

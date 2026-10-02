@@ -5373,6 +5373,92 @@ export class Project {
     }
 
     /**
+     * Update the project OAuth2 Webflow configuration.
+     *
+     * @param {string} params.clientId - 'Client ID' of Webflow OAuth2 app. For example: 8bb20000000000000000000000000000000000000000000000000000000040dd
+     * @param {string} params.clientSecret - 'Client Secret' of Webflow OAuth2 app. For example: 59bf00000000000000000000000000000000000000000000000000000000fe59
+     * @param {boolean} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.OAuth2Webflow>}
+     */
+    updateOAuth2Webflow(params?: {
+        clientId?: string;
+        clientSecret?: string;
+        enabled?: boolean;
+    }): Promise<Models.OAuth2Webflow>;
+    /**
+     * Update the project OAuth2 Webflow configuration.
+     *
+     * @param {string} clientId - 'Client ID' of Webflow OAuth2 app. For example: 8bb20000000000000000000000000000000000000000000000000000000040dd
+     * @param {string} clientSecret - 'Client Secret' of Webflow OAuth2 app. For example: 59bf00000000000000000000000000000000000000000000000000000000fe59
+     * @param {boolean} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.OAuth2Webflow>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateOAuth2Webflow(
+        clientId?: string,
+        clientSecret?: string,
+        enabled?: boolean,
+    ): Promise<Models.OAuth2Webflow>;
+    updateOAuth2Webflow(
+        paramsOrFirst?:
+            | { clientId?: string; clientSecret?: string; enabled?: boolean }
+            | string,
+        ...rest: [string?, boolean?]
+    ): Promise<Models.OAuth2Webflow> {
+        let params: {
+            clientId?: string;
+            clientSecret?: string;
+            enabled?: boolean;
+        };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                clientId?: string;
+                clientSecret?: string;
+                enabled?: boolean;
+            };
+        } else {
+            params = {
+                clientId: paramsOrFirst as string,
+                clientSecret: rest[0] as string,
+                enabled: rest[1] as boolean,
+            };
+        }
+
+        const clientId = params.clientId;
+        const clientSecret = params.clientSecret;
+        const enabled = params.enabled;
+
+        const apiPath = '/project/oauth2/webflow';
+        const apiPayload: Payload = {};
+        if (typeof clientId !== 'undefined') {
+            apiPayload['clientId'] = clientId;
+        }
+        if (typeof clientSecret !== 'undefined') {
+            apiPayload['clientSecret'] = clientSecret;
+        }
+        if (typeof enabled !== 'undefined') {
+            apiPayload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
+    }
+
+    /**
      * Update the project OAuth2 WordPress configuration.
      *
      * @param {string} params.clientId - 'Client ID' of WordPress OAuth2 app. For example: 130005
@@ -5909,7 +5995,7 @@ export class Project {
      *
      * @param {ProjectOAuthProviderId} params.providerId - OAuth2 provider key. For example: github, google, apple.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2HuggingFace | Models.OAuth2Resend | Models.OAuth2Cloudflare | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft | Models.OAuth2TikTok | Models.OAuth2Kakao>}
+     * @returns {Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Webflow | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2HuggingFace | Models.OAuth2Resend | Models.OAuth2Cloudflare | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft | Models.OAuth2TikTok | Models.OAuth2Kakao>}
      */
     getOAuth2Provider(params: {
         providerId: ProjectOAuthProviderId;
@@ -5929,6 +6015,7 @@ export class Project {
         | Models.OAuth2Yandex
         | Models.OAuth2X
         | Models.OAuth2WordPress
+        | Models.OAuth2Webflow
         | Models.OAuth2Twitch
         | Models.OAuth2Stripe
         | Models.OAuth2Spotify
@@ -5965,7 +6052,7 @@ export class Project {
      *
      * @param {ProjectOAuthProviderId} providerId - OAuth2 provider key. For example: github, google, apple.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2HuggingFace | Models.OAuth2Resend | Models.OAuth2Cloudflare | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft | Models.OAuth2TikTok | Models.OAuth2Kakao>}
+     * @returns {Promise<Models.OAuth2Github | Models.OAuth2Discord | Models.OAuth2Figma | Models.OAuth2Dropbox | Models.OAuth2Dailymotion | Models.OAuth2Bitbucket | Models.OAuth2Bitly | Models.OAuth2Box | Models.OAuth2Autodesk | Models.OAuth2Google | Models.OAuth2Zoom | Models.OAuth2Zoho | Models.OAuth2Yandex | Models.OAuth2X | Models.OAuth2WordPress | Models.OAuth2Webflow | Models.OAuth2Twitch | Models.OAuth2Stripe | Models.OAuth2Spotify | Models.OAuth2Slack | Models.OAuth2Podio | Models.OAuth2Notion | Models.OAuth2Salesforce | Models.OAuth2Yahoo | Models.OAuth2HuggingFace | Models.OAuth2Resend | Models.OAuth2Cloudflare | Models.OAuth2Linkedin | Models.OAuth2Disqus | Models.OAuth2Amazon | Models.OAuth2Etsy | Models.OAuth2Facebook | Models.OAuth2Tradeshift | Models.OAuth2Paypal | Models.OAuth2Gitlab | Models.OAuth2Authentik | Models.OAuth2Auth0 | Models.OAuth2FusionAuth | Models.OAuth2Keycloak | Models.OAuth2Oidc | Models.OAuth2Apple | Models.OAuth2Okta | Models.OAuth2Kick | Models.OAuth2Microsoft | Models.OAuth2TikTok | Models.OAuth2Kakao>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     getOAuth2Provider(
@@ -5986,6 +6073,7 @@ export class Project {
         | Models.OAuth2Yandex
         | Models.OAuth2X
         | Models.OAuth2WordPress
+        | Models.OAuth2Webflow
         | Models.OAuth2Twitch
         | Models.OAuth2Stripe
         | Models.OAuth2Spotify
@@ -6036,6 +6124,7 @@ export class Project {
         | Models.OAuth2Yandex
         | Models.OAuth2X
         | Models.OAuth2WordPress
+        | Models.OAuth2Webflow
         | Models.OAuth2Twitch
         | Models.OAuth2Stripe
         | Models.OAuth2Spotify

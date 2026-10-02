@@ -27,6 +27,7 @@ const result = await messaging.createPush({
     contentAvailable: false, // optional
     critical: false, // optional
     priority: MessagePriority.Normal, // optional
+    channelId: '<CHANNEL_ID>', // optional
 });
 
 console.log(result);

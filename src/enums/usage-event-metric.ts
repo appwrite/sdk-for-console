@@ -6,6 +6,7 @@ export enum UsageEventMetric {
     WebhooksEventsFailed = 'webhooks.events.failed',
     AuthMethodPhone = 'auth.method.phone',
     MessagesSent = 'messages.sent',
+    MessagesFailed = 'messages.failed',
     MessagesSmsSent = 'messages.sms.sent',
     Executions = 'executions',
     ExecutionsCompute = 'executions.compute',

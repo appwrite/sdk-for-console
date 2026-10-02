@@ -486,12 +486,45 @@ export class Sites {
     /**
      * Get a list of all frameworks that are currently available on the server instance.
      *
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.FrameworkList>}
      */
-    listFrameworks(): Promise<Models.FrameworkList> {
+    listFrameworks(params?: { total?: boolean }): Promise<Models.FrameworkList>;
+    /**
+     * Get a list of all frameworks that are currently available on the server instance.
+     *
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.FrameworkList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listFrameworks(total?: boolean): Promise<Models.FrameworkList>;
+    listFrameworks(
+        paramsOrFirst?: { total?: boolean } | boolean,
+    ): Promise<Models.FrameworkList> {
+        let params: { total?: boolean };
+
+        if (
+            typeof paramsOrFirst === 'undefined' ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as { total?: boolean };
+        } else {
+            params = {
+                total: paramsOrFirst as boolean,
+            };
+        }
+
+        const total = params.total;
+
         const apiPath = '/sites/frameworks';
         const apiPayload: Payload = {};
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -506,45 +539,60 @@ export class Sites {
      * List allowed site specifications for this instance.
      *
      * @param {string} params.type - Specification type to list. Can be one of: runtimes, builds. Defaults to runtimes.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.SpecificationList>}
      */
     listSpecifications(params?: {
         type?: string;
+        total?: boolean;
     }): Promise<Models.SpecificationList>;
     /**
      * List allowed site specifications for this instance.
      *
      * @param {string} type - Specification type to list. Can be one of: runtimes, builds. Defaults to runtimes.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.SpecificationList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listSpecifications(type?: string): Promise<Models.SpecificationList>;
     listSpecifications(
-        paramsOrFirst?: { type?: string } | string,
+        type?: string,
+        total?: boolean,
+    ): Promise<Models.SpecificationList>;
+    listSpecifications(
+        paramsOrFirst?: { type?: string; total?: boolean } | string,
+        ...rest: [boolean?]
     ): Promise<Models.SpecificationList> {
-        let params: { type?: string };
+        let params: { type?: string; total?: boolean };
 
         if (
-            typeof paramsOrFirst === 'undefined' ||
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
             (paramsOrFirst &&
                 typeof paramsOrFirst === 'object' &&
                 !Array.isArray(paramsOrFirst))
         ) {
-            params = (paramsOrFirst || {}) as { type?: string };
+            params = (paramsOrFirst || {}) as {
+                type?: string;
+                total?: boolean;
+            };
         } else {
             params = {
                 type: paramsOrFirst as string,
+                total: rest[0] as boolean,
             };
         }
 
         const type = params.type;
+        const total = params.total;
 
         const apiPath = '/sites/specifications';
         const apiPayload: Payload = {};
         if (typeof type !== 'undefined') {
             apiPayload['type'] = type;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -563,6 +611,7 @@ export class Sites {
      * @param {SiteTemplateUseCase[]} params.useCases - List of use cases allowed for filtering site templates. Maximum of 100 use cases are allowed.
      * @param {number} params.limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
      * @param {number} params.offset - Offset the list of returned templates. Maximum offset is 5000.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateSiteList>}
      */
@@ -571,6 +620,7 @@ export class Sites {
         useCases?: SiteTemplateUseCase[];
         limit?: number;
         offset?: number;
+        total?: boolean;
     }): Promise<Models.TemplateSiteList>;
     /**
      * List available site templates. You can use template details in [createSite](/docs/references/cloud/server-nodejs/sites#create) method.
@@ -579,6 +629,7 @@ export class Sites {
      * @param {SiteTemplateUseCase[]} useCases - List of use cases allowed for filtering site templates. Maximum of 100 use cases are allowed.
      * @param {number} limit - Limit the number of templates returned in the response. Default limit is 25, and maximum limit is 5000.
      * @param {number} offset - Offset the list of returned templates. Maximum offset is 5000.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.TemplateSiteList>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -588,6 +639,7 @@ export class Sites {
         useCases?: SiteTemplateUseCase[],
         limit?: number,
         offset?: number,
+        total?: boolean,
     ): Promise<Models.TemplateSiteList>;
     listTemplates(
         paramsOrFirst?:
@@ -596,15 +648,17 @@ export class Sites {
                   useCases?: SiteTemplateUseCase[];
                   limit?: number;
                   offset?: number;
+                  total?: boolean;
               }
             | Framework[],
-        ...rest: [SiteTemplateUseCase[]?, number?, number?]
+        ...rest: [SiteTemplateUseCase[]?, number?, number?, boolean?]
     ): Promise<Models.TemplateSiteList> {
         let params: {
             frameworks?: Framework[];
             useCases?: SiteTemplateUseCase[];
             limit?: number;
             offset?: number;
+            total?: boolean;
         };
 
         if (
@@ -615,13 +669,15 @@ export class Sites {
                 ('frameworks' in paramsOrFirst ||
                     'useCases' in paramsOrFirst ||
                     'limit' in paramsOrFirst ||
-                    'offset' in paramsOrFirst))
+                    'offset' in paramsOrFirst ||
+                    'total' in paramsOrFirst))
         ) {
             params = (paramsOrFirst || {}) as {
                 frameworks?: Framework[];
                 useCases?: SiteTemplateUseCase[];
                 limit?: number;
                 offset?: number;
+                total?: boolean;
             };
         } else {
             params = {
@@ -629,6 +685,7 @@ export class Sites {
                 useCases: rest[0] as SiteTemplateUseCase[],
                 limit: rest[1] as number,
                 offset: rest[2] as number,
+                total: rest[3] as boolean,
             };
         }
 
@@ -636,6 +693,7 @@ export class Sites {
         const useCases = params.useCases;
         const limit = params.limit;
         const offset = params.offset;
+        const total = params.total;
 
         const apiPath = '/sites/templates';
         const apiPayload: Payload = {};
@@ -650,6 +708,9 @@ export class Sites {
         }
         if (typeof offset !== 'undefined') {
             apiPayload['offset'] = offset;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
