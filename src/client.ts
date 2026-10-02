@@ -413,7 +413,7 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '18.1.0',
+        'x-sdk-version': '18.2.0',
         'X-Appwrite-Response-Format': '2.3.0',
     };
 
@@ -515,7 +515,10 @@ class Client {
      *
      * A stable client id for the AppwritePush service. The broker keys its
      * offline-replay cursor on this id, so pass a stable value to resume replay across
-     * reloads/restarts. Defaults to a per-connection id when unset.
+     * reloads/restarts. Defaults, when unset, to one per user and tab: stable across reloads of
+     * the tab, different in every other tab, and distinct for each connection open at the same
+     * time, so no two connections take over each other's session. An explicit id shared by
+     * several tabs or connections makes them do that.
      *
      * @param {string} pushClientId
      *

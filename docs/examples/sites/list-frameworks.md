@@ -7,7 +7,9 @@ const client = new Client()
 
 const sites = new Sites(client);
 
-const result = await sites.listFrameworks();
+const result = await sites.listFrameworks({
+    total: false, // optional
+});
 
 console.log(result);
 ```

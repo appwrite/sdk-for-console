@@ -9,6 +9,7 @@ const notifications = new Notifications(client);
 
 const result = await notifications.list({
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

@@ -1,15 +1,13 @@
 ```javascript
-import { Client, Console } from '@appwrite.io/console';
+import { Client, Avatars } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const xconsole = new Console(client);
+const avatars = new Avatars(client);
 
-const result = await xconsole.listProjectScopes({
-    total: false, // optional
-});
+const result = await avatars.deletePhoto();
 
 console.log(result);
 ```

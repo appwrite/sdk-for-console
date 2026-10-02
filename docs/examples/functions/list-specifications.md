@@ -9,6 +9,7 @@ const functions = new Functions(client);
 
 const result = await functions.listSpecifications({
     type: 'runtimes', // optional
+    total: false, // optional
 });
 
 console.log(result);

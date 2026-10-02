@@ -17,6 +17,7 @@ const result = await sites.listTemplates({
     useCases: [SiteTemplateUseCase.Portfolio], // optional
     limit: 1, // optional
     offset: 0, // optional
+    total: false, // optional
 });
 
 console.log(result);

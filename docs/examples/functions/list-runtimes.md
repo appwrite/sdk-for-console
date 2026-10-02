@@ -7,7 +7,9 @@ const client = new Client()
 
 const functions = new Functions(client);
 
-const result = await functions.listRuntimes();
+const result = await functions.listRuntimes({
+    total: false, // optional
+});
 
 console.log(result);
 ```

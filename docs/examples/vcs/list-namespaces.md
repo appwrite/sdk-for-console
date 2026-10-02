@@ -11,6 +11,7 @@ const result = await vcs.listNamespaces({
     installationId: '<INSTALLATION_ID>',
     search: '<SEARCH>', // optional
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

@@ -1,5 +1,18 @@
 # Change Log
 
+## 18.2.0
+
+* Added: `Avatars.updatePhoto` and `Avatars.deletePhoto` to upload and remove the current user's profile photo; `updatePhoto` returns the new `Account` model
+* Added: `Account` model, the `User` model without `password`, `hash` and `hashOptions`
+* Added: `Project.updateOAuth2Webflow`, `OAuthProvider.Webflow`, `ProjectOAuthProviderId.Webflow` and the `OAuth2Webflow` model
+* Added: `ProjectKeyScopes.AvatarsWrite` (`avatars.write`)
+* Added: optional `total` parameter on `Account.listSessions`, `Console.listOAuth2Providers`, `Console.listOrganizationScopes`, `Console.listProjectScopes`, `Databases.listTransactions`, `DocumentsDB.listTransactions`, `TablesDB.listTransactions`, `VectorsDB.listTransactions`, `Functions.listRuntimes`, `Functions.listSpecifications`, `Locale.listCodes`, `Locale.listContinents`, `Locale.listCountries`, `Locale.listCountriesEU`, `Locale.listCountriesPhones`, `Locale.listCurrencies`, `Locale.listLanguages`, `Notifications.list`, `Sites.listFrameworks`, `Sites.listSpecifications`, `Sites.listTemplates`, `VCS.listNamespaces`, `VCS.listRepositories` and `VCS.listRepositoryBranches`
+* Added: optional `current` parameter on `Account.deleteSessions` to choose whether the current session is deleted too
+* Added: `channelId` on `Messaging.createPush` and `Messaging.updatePush`
+* Added: `UsageEventDimension` values `accept`, `acceptLanguage`, `latitude`, `longitude`, `postalCode`, `protocol`, `queryKeys`, `timeZone` and `weatherCode`, `UsageEventMetric.MessagesFailed`, and `latitude`, `longitude`, `postalCode`, `timeZone` and `weatherCode` on `UsageDataPoint`
+* Added: `deno-1.21`, `deno-1.24` and `deno-1.35` are back in the `Runtime` and `BuildRuntime` enums
+* Changed: `Push` picks a default client id per user and tab that survives reloads, so tabs no longer take over each other's connection
+
 ## 18.1.0
 
 * Breaking: removed `deno-1.21`, `deno-1.24` and `deno-1.35` from `Runtime` and `BuildRuntime` enums

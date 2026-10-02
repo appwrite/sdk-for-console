@@ -7,7 +7,9 @@ const client = new Client()
 
 const xconsole = new Console(client);
 
-const result = await xconsole.listOrganizationScopes();
+const result = await xconsole.listOrganizationScopes({
+    total: false, // optional
+});
 
 console.log(result);
 ```
