@@ -11,6 +11,7 @@ export { Client, Query, AppwriteException } from './client';
 export { Account } from './services/account';
 export { Activities } from './services/activities';
 export { Affiliates } from './services/affiliates';
+export { Analytics } from './services/analytics';
 export { Apps } from './services/apps';
 export { Avatars } from './services/avatars';
 export { Backups } from './services/backups';
@@ -52,6 +53,7 @@ export { Waf } from './services/waf';
 export { Webhooks } from './services/webhooks';
 export { Realtime } from './services/realtime';
 export { Push } from './services/push';
+export { AnalyticsTracking } from './services/analytics-tracking';
 export type {
     Models,
     Payload,
@@ -65,6 +67,13 @@ export type {
     SubscribeOptions,
     MessageCallback,
 } from './services/push';
+export type {
+    AnalyticsEventEmitter,
+    AnalyticsEventOptions,
+    AnalyticsTrackingOptions,
+    DownloadTrackingOptions,
+    OutboundTrackingOptions,
+} from './services/analytics-tracking';
 export type { QueryTypes, QueryTypesList } from './query';
 export { Permission } from './permission';
 export { Role } from './role';
@@ -77,6 +86,8 @@ export { AuthenticatorType } from './enums/authenticator-type';
 export { AuthenticationFactor } from './enums/authentication-factor';
 export { IdTokenProvider } from './enums/id-token-provider';
 export { OAuthProvider } from './enums/o-auth-provider';
+export { AnalyticsInterval } from './enums/analytics-interval';
+export { AnalyticsDimension } from './enums/analytics-dimension';
 export { Browser } from './enums/browser';
 export { CreditCard } from './enums/credit-card';
 export { Flag } from './enums/flag';

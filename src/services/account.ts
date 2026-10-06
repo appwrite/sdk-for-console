@@ -1,4 +1,3 @@
-import { Service } from '../service';
 import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
 
@@ -4353,9 +4352,7 @@ export class Account {
 
         apiPayload['project'] = this.client.config.project;
 
-        for (const [key, value] of Object.entries(
-            Service.flatten(apiPayload),
-        )) {
+        for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
             uri.searchParams.append(key, value);
         }
 
@@ -5248,9 +5245,7 @@ export class Account {
 
         apiPayload['project'] = this.client.config.project;
 
-        for (const [key, value] of Object.entries(
-            Service.flatten(apiPayload),
-        )) {
+        for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
             uri.searchParams.append(key, value);
         }
 

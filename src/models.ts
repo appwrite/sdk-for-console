@@ -7858,7 +7858,7 @@ export namespace Models {
          */
         deploymentId: string;
         /**
-         * Type of deployment. Possible values are "function", "site". Used if rule's type is "deployment".
+         * Type of deployment resource: function, site, or dedicatedDatabase.
          */
         deploymentResourceType?: ProxyRuleDeploymentResourceType;
         /**
@@ -9352,6 +9352,120 @@ export namespace Models {
     };
 
     /**
+     * AnalyticsMetric
+     */
+    export type AnalyticsMetric = {
+        /**
+         * Dimension value this row covers. Null when no dimension was requested, empty when the dimension could not be derived for those events.
+         */
+        value?: string;
+        /**
+         * Start of the time bucket this row covers, in ISO 8601. Null when no interval was requested.
+         */
+        date?: string;
+        /**
+         * Unique visitors in the requested range.
+         */
+        visitors: number;
+        /**
+         * Unique sessions in the requested range.
+         */
+        sessions: number;
+        /**
+         * Total pageview events (events with name="pageview") in the requested range. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        pageviews?: number;
+        /**
+         * Total events in the requested range.
+         */
+        events: number;
+        /**
+         * Total sessions with activity in the requested range. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        visits?: number;
+        /**
+         * Share of single-event sessions, as a percentage. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        bounceRate?: number;
+        /**
+         * Average session length in seconds, measured first event to last event. Single-event sessions count as 0. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        visitDuration?: number;
+        /**
+         * Average pageviews per session (pageviews divided by visits). Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        viewsPerVisit?: number;
+        /**
+         * Average scroll depth across events, as a percentage. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        scrollDepth?: number;
+        /**
+         * Average engaged time per session in seconds, counting only foreground time. Sessions that reported no engagement are excluded. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        engagementTime?: number;
+    };
+
+    /**
+     * AnalyticsMetricList
+     */
+    export type AnalyticsMetricList = {
+        /**
+         * Total number of metric rows returned.
+         */
+        total: number;
+        /**
+         * Metric rows: one per time bucket, one per dimension value, or a single row for the flat aggregate.
+         */
+        metrics: AnalyticsMetric[];
+    };
+
+    /**
+     * AnalyticsProperty
+     */
+    export type AnalyticsProperty = {
+        /**
+         * Analytics property ID.
+         */
+        $id: string;
+        /**
+         * Property creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Property update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human-readable name of the tracked website or application.
+         */
+        name: string;
+        /**
+         * Primary domain being tracked (e.g. example.com). May be empty for native apps.
+         */
+        domain: string;
+        /**
+         * IANA timezone used to define the daily boundary for stats.
+         */
+        timezone: string;
+        /**
+         * Whether tracking is currently active.
+         */
+        enabled: boolean;
+        /**
+         * Whether stats for this property are publicly viewable.
+         */
+        public: boolean;
+        /**
+         * List of origins allowed to send tracking events. Use ["*"] to allow all.
+         */
+        allowedOrigins: string[];
+        /**
+         * Unique identifier for the tracking script snippet.
+         */
+        snippetId: string;
+    };
+
+    /**
      * Team
      */
     export type AggregationTeam = {
@@ -9502,17 +9616,17 @@ export namespace Models {
          */
         policyId: string;
         /**
-         * Archive size in bytes.
+         * Archive size in bytes. Null until the size is known.
          */
-        size: number;
+        size?: number;
         /**
          * The status of the archive creation. Possible values: pending, processing, uploading, completed, failed, skipped.
          */
         status: string;
         /**
-         * The backup start time.
+         * The backup start time. Null until the backup starts.
          */
-        startedAt: string;
+        startedAt?: string;
         /**
          * Migration ID.
          */
@@ -9890,9 +10004,9 @@ export namespace Models {
          */
         alertLimit: number;
         /**
-         * Additional resources
+         * Additional resources. Null when the plan does not support usage billing.
          */
-        usage: UsageBillingPlan;
+        usage?: UsageBillingPlan;
         /**
          * Addons
          */
@@ -10864,9 +10978,9 @@ export namespace Models {
          */
         uptime: number;
         /**
-         * Connection statistics.
+         * Connection statistics. Null when the database has not been probed.
          */
-        connections: DatabaseStatusConnections;
+        connections?: DatabaseStatusConnections;
         /**
          * Requested replication sync mode. Possible values: async, sync, quorum. Compare with effectiveSyncMode for what the primary is enforcing.
          */
@@ -12304,9 +12418,9 @@ export namespace Models {
          */
         status: string;
         /**
-         * The backup start time.
+         * The restoration start time. Null until the restoration starts.
          */
-        startedAt: string;
+        startedAt?: string;
         /**
          * Migration ID.
          */
@@ -12320,9 +12434,9 @@ export namespace Models {
          */
         resources: string[];
         /**
-         * Optional data in key-value object.
+         * Restoration options as a key-value object.
          */
-        options: string;
+        options: object;
     };
 
     /**
@@ -12643,6 +12757,10 @@ export namespace Models {
          * Aggregated stats for total backups storage.
          */
         backupsStorageTotal: number;
+        /**
+         * Aggregated stats for total custom user photos storage.
+         */
+        avatarsStorageTotal: number;
         /**
          * Aggregated stats for total storage.
          */
@@ -13915,6 +14033,20 @@ export namespace Models {
          * List of addons.
          */
         addons: Addon[];
+    };
+
+    /**
+     * Analytics properties list
+     */
+    export type AnalyticsPropertyList = {
+        /**
+         * Total number of properties that matched your query.
+         */
+        total: number;
+        /**
+         * List of properties.
+         */
+        properties: AnalyticsProperty[];
     };
 
     /**

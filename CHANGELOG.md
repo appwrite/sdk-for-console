@@ -1,5 +1,16 @@
 # Change Log
 
+## 18.3.0-rc.1
+
+* Added: `Analytics` service with `listProperties`, `createProperty`, `getProperty`, `updateProperty`, `deleteProperty`, `createEvent` and `listMetrics`
+* Added: `AnalyticsTracking` helper for automatic pageview, outbound-link, download, scroll-depth and engagement tracking
+* Added: `AnalyticsInterval` and `AnalyticsDimension` enums, and the `AnalyticsMetric`, `AnalyticsMetricList`, `AnalyticsProperty` and `AnalyticsPropertyList` models
+* Added: `ProjectKeyScopes.AnalyticsRead` and `ProjectKeyScopes.AnalyticsWrite`
+* Added: `UsageEventMetric.AnalyticsEvents`, `AnalyticsPageviews` and `AnalyticsBotsEvents`, `UsageGaugeMetric.AnalyticsProperties` and `QuerySuggestionResource.AnalyticsProperties`
+* Added: `ProxyRuleDeploymentResourceType.DedicatedDatabase` and `avatarsStorageTotal` on `UsageOrganization`
+* Fixed: `BackupArchive.size` and `startedAt`, `BackupRestoration.startedAt` and `DatabaseStatus.connections` are now optional
+* Fixed: `BackupRestoration.options` is now typed `object` instead of `string`
+
 ## 18.2.0
 
 * Added: `Avatars.updatePhoto` and `Avatars.deletePhoto` to upload and remove the current user's profile photo; `updatePhoto` returns the new `Account` model
