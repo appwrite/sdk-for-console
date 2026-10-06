@@ -1,5 +1,15 @@
 # Change Log
 
+## 18.3.0-rc.2
+
+* Added: `Videos` service to upload, transcode and stream videos: `list`, `create`, `get`, `update`, `delete`, `createSource`, renditions, profiles, subtitles, previews, timelines, segments and HLS, DASH and CMAF manifests
+* Added: `Video`, `VideoList`, `VideoProfile`, `VideoProfileList`, `VideoRendition`, `VideoRenditionList`, `VideoSubtitle` and `VideoSubtitleList` models, and the `VideoOutput` and `VideoRenditionStatus` enums
+* Added: `ProjectKeyScopes.VideosRead` and `ProjectKeyScopes.VideosWrite`, and `QuerySuggestionResource` values for videos, previews, renditions, profiles, subtitles and segments
+* Added: passkeys with `Account.listPasskeys`, `createPasskey`, `getPasskey`, `updatePasskey`, `deletePasskey`, `updatePasskeyVerification`, `createPasskeyToken` and `updatePasskeyToken`, plus `Users.listPasskeys`, `getPasskey` and `deletePasskey`
+* Added: `Project.updatePasskeyPolicy`, `ProjectAuthMethodId.Passkey`, `ProjectPolicyId.Passkey`, and the `Passkey`, `PasskeyList`, `PasskeyChallenge` and `PolicyPasskey` models
+* Added: `Admin` service with `deletePlatformCache`, `deletePlatformResourceCache`, `deleteProjectCache` and `deleteProjectResourceCache`, and the `PlatformResourceType` and `ProjectResourceType` enums
+* Fixed: nullable fields on `BillingAddress`, `DedicatedDatabase`, `DedicatedDatabaseBranch`, `DedicatedDatabaseRestoration`, `Estimation`, `EstimationUpdatePlan`, `Invoice`, `Organization`, `PaymentMethod` and `UsageBillingPlan` are now optional
+
 ## 18.3.0-rc.1
 
 * Added: `Analytics` service with `listProperties`, `createProperty`, `getProperty`, `updateProperty`, `deleteProperty`, `createEvent` and `listMetrics`
@@ -553,4 +563,5 @@ Fix bigint and float parsing in SDK.
 ## 1.5.0
 
 * Adds support for `databasesReadsTotal` and `databasesWritesTotal` attributes
+
 
