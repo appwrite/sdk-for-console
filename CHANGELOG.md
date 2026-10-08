@@ -1,5 +1,13 @@
 # Change Log
 
+
+## 18.3.0-rc.3
+
+* Added: `Tracking` helper (was `AnalyticsTracking`) — construct it with the `Analytics` service and call `start()` to turn on the built-in events
+* Changed: `Tracking` takes `new Analytics(client)` and a property id instead of an emitter callback; the adapter to `createEvent` now lives inside the SDK
+* Changed: `enableAllAutoTracking()` is now `start()`
+* Removed: `AnalyticsEventEmitter`; the option types are now `TrackingEventOptions` and `TrackingOptions`
+
 ## 18.2.0
 
 * Added: `Avatars.updatePhoto` and `Avatars.deletePhoto` to upload and remove the current user's profile photo; `updatePhoto` returns the new `Account` model
@@ -542,4 +550,5 @@ Fix bigint and float parsing in SDK.
 ## 1.5.0
 
 * Adds support for `databasesReadsTotal` and `databasesWritesTotal` attributes
+
 

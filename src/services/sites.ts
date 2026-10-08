@@ -1,4 +1,3 @@
-import { Service } from '../service';
 import {
     AppwriteException,
     Client,
@@ -2206,9 +2205,7 @@ export class Sites {
         apiPayload['project'] = this.client.config.project;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(
-            Service.flatten(apiPayload),
-        )) {
+        for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
             uri.searchParams.append(key, value);
         }
 

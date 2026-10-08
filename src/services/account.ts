@@ -1,4 +1,3 @@
-import { Service } from '../service';
 import { AppwriteException, Client, type Payload } from '../client';
 import type { Models } from '../models';
 
@@ -4252,6 +4251,7 @@ export class Account {
      * @param {string} params.success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} params.failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} params.scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
+     * @param {string} params.state - An opaque value your app generates and keeps, for example in a cookie. It is returned unchanged as the `state` query parameter on the success and failure URLs, so your app can check that the sign-in it receives is one it started. Printable ASCII only (RFC 6749 Appendix A.5). Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {void | string}
      */
@@ -4260,6 +4260,7 @@ export class Account {
         success?: string;
         failure?: string;
         scopes?: string[];
+        state?: string;
     }): void | string;
     /**
      * Allow the user to login to their account using the OAuth2 provider of their choice. Each OAuth2 provider should be enabled from the Appwrite console first. Use the success and failure arguments to provide a redirect URL's back to your app when login is completed.
@@ -4273,6 +4274,7 @@ export class Account {
      * @param {string} success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
+     * @param {string} state - An opaque value your app generates and keeps, for example in a cookie. It is returned unchanged as the `state` query parameter on the success and failure URLs, so your app can check that the sign-in it receives is one it started. Printable ASCII only (RFC 6749 Appendix A.5). Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {void | string}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4282,6 +4284,7 @@ export class Account {
         success?: string,
         failure?: string,
         scopes?: string[],
+        state?: string,
     ): void | string;
     createOAuth2Session(
         paramsOrFirst:
@@ -4290,15 +4293,17 @@ export class Account {
                   success?: string;
                   failure?: string;
                   scopes?: string[];
+                  state?: string;
               }
             | OAuthProvider,
-        ...rest: [string?, string?, string[]?]
+        ...rest: [string?, string?, string[]?, string?]
     ): void | string {
         let params: {
             provider: OAuthProvider;
             success?: string;
             failure?: string;
             scopes?: string[];
+            state?: string;
         };
 
         if (
@@ -4308,13 +4313,15 @@ export class Account {
             ('provider' in paramsOrFirst ||
                 'success' in paramsOrFirst ||
                 'failure' in paramsOrFirst ||
-                'scopes' in paramsOrFirst)
+                'scopes' in paramsOrFirst ||
+                'state' in paramsOrFirst)
         ) {
             params = (paramsOrFirst || {}) as {
                 provider: OAuthProvider;
                 success?: string;
                 failure?: string;
                 scopes?: string[];
+                state?: string;
             };
         } else {
             params = {
@@ -4322,6 +4329,7 @@ export class Account {
                 success: rest[0] as string,
                 failure: rest[1] as string,
                 scopes: rest[2] as string[],
+                state: rest[3] as string,
             };
         }
 
@@ -4329,6 +4337,7 @@ export class Account {
         const success = params.success;
         const failure = params.failure;
         const scopes = params.scopes;
+        const state = params.state;
 
         if (typeof provider === 'undefined') {
             throw new AppwriteException(
@@ -4349,13 +4358,14 @@ export class Account {
         if (typeof scopes !== 'undefined') {
             apiPayload['scopes'] = scopes;
         }
+        if (typeof state !== 'undefined') {
+            apiPayload['state'] = state;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
 
-        for (const [key, value] of Object.entries(
-            Service.flatten(apiPayload),
-        )) {
+        for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
             uri.searchParams.append(key, value);
         }
 
@@ -5146,6 +5156,7 @@ export class Account {
      * @param {string} params.success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} params.failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} params.scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
+     * @param {string} params.state - An opaque value your app generates and keeps, for example in a cookie. It is returned unchanged as the `state` query parameter on the success and failure URLs, so your app can check that the sign-in it receives is one it started. Printable ASCII only (RFC 6749 Appendix A.5). Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {void | string}
      */
@@ -5154,6 +5165,7 @@ export class Account {
         success?: string;
         failure?: string;
         scopes?: string[];
+        state?: string;
     }): void | string;
     /**
      * Allow the user to login to their account using the OAuth2 provider of their choice. Each OAuth2 provider should be enabled from the Appwrite console first. Use the success and failure arguments to provide a redirect URL's back to your app when login is completed.
@@ -5168,6 +5180,7 @@ export class Account {
      * @param {string} success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
+     * @param {string} state - An opaque value your app generates and keeps, for example in a cookie. It is returned unchanged as the `state` query parameter on the success and failure URLs, so your app can check that the sign-in it receives is one it started. Printable ASCII only (RFC 6749 Appendix A.5). Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {void | string}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -5177,6 +5190,7 @@ export class Account {
         success?: string,
         failure?: string,
         scopes?: string[],
+        state?: string,
     ): void | string;
     createOAuth2Token(
         paramsOrFirst:
@@ -5185,15 +5199,17 @@ export class Account {
                   success?: string;
                   failure?: string;
                   scopes?: string[];
+                  state?: string;
               }
             | OAuthProvider,
-        ...rest: [string?, string?, string[]?]
+        ...rest: [string?, string?, string[]?, string?]
     ): void | string {
         let params: {
             provider: OAuthProvider;
             success?: string;
             failure?: string;
             scopes?: string[];
+            state?: string;
         };
 
         if (
@@ -5203,13 +5219,15 @@ export class Account {
             ('provider' in paramsOrFirst ||
                 'success' in paramsOrFirst ||
                 'failure' in paramsOrFirst ||
-                'scopes' in paramsOrFirst)
+                'scopes' in paramsOrFirst ||
+                'state' in paramsOrFirst)
         ) {
             params = (paramsOrFirst || {}) as {
                 provider: OAuthProvider;
                 success?: string;
                 failure?: string;
                 scopes?: string[];
+                state?: string;
             };
         } else {
             params = {
@@ -5217,6 +5235,7 @@ export class Account {
                 success: rest[0] as string,
                 failure: rest[1] as string,
                 scopes: rest[2] as string[],
+                state: rest[3] as string,
             };
         }
 
@@ -5224,6 +5243,7 @@ export class Account {
         const success = params.success;
         const failure = params.failure;
         const scopes = params.scopes;
+        const state = params.state;
 
         if (typeof provider === 'undefined') {
             throw new AppwriteException(
@@ -5244,13 +5264,14 @@ export class Account {
         if (typeof scopes !== 'undefined') {
             apiPayload['scopes'] = scopes;
         }
+        if (typeof state !== 'undefined') {
+            apiPayload['state'] = state;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
 
-        for (const [key, value] of Object.entries(
-            Service.flatten(apiPayload),
-        )) {
+        for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
             uri.searchParams.append(key, value);
         }
 

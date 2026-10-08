@@ -1,14 +1,14 @@
 ```javascript
-import { Client, Assistant } from '@appwrite.io/console';
+import { Client, Analytics } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const assistant = new Assistant(client);
+const analytics = new Analytics(client);
 
-const result = await assistant.chat({
-    prompt: '<PROMPT>',
+const result = await analytics.deleteProperty({
+    propertyId: '<PROPERTY_ID>',
 });
 
 console.log(result);
