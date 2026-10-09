@@ -1,5 +1,11 @@
 # Change Log
 
+## 18.3.0
+
+* Added: optional `interval` parameter on `Functions.create`, `Functions.update` and `Projects.createSchedule`
+* Updated: `schedule` is optional on `Projects.createSchedule`; pass either `schedule` or `interval`
+* Added: `interval` on the `Function` and `Schedule` models, `functionsIntervalMinimum` on `BillingPlan`
+
 ## 18.2.0
 
 * Added: `Avatars.updatePhoto` and `Avatars.deletePhoto` to upload and remove the current user's profile photo; `updatePhoto` returns the new `Account` model

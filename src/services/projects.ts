@@ -570,9 +570,10 @@ export class Projects {
      * @param {string} params.projectId - Project unique ID.
      * @param {ScheduleResourceType} params.resourceType - The resource type for the schedule. Possible values: function, execution, message, backup.
      * @param {string} params.resourceId - The resource ID to associate with this schedule.
-     * @param {string} params.schedule - Schedule CRON expression.
+     * @param {string} params.schedule - Schedule CRON expression. Cannot be combined with interval.
      * @param {boolean} params.active - Whether the schedule is active.
      * @param {object} params.data - Schedule data as a JSON string. Used to store resource-specific context needed for execution.
+     * @param {number} params.interval - Minutes between runs, for function schedules only. Use 0 to disable. Cannot be combined with schedule.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Schedule>}
      */
@@ -580,9 +581,10 @@ export class Projects {
         projectId: string;
         resourceType: ScheduleResourceType;
         resourceId: string;
-        schedule: string;
+        schedule?: string;
         active?: boolean;
         data?: object;
+        interval?: number;
     }): Promise<Models.Schedule>;
     /**
      * Create a new schedule for a resource.
@@ -590,9 +592,10 @@ export class Projects {
      * @param {string} projectId - Project unique ID.
      * @param {ScheduleResourceType} resourceType - The resource type for the schedule. Possible values: function, execution, message, backup.
      * @param {string} resourceId - The resource ID to associate with this schedule.
-     * @param {string} schedule - Schedule CRON expression.
+     * @param {string} schedule - Schedule CRON expression. Cannot be combined with interval.
      * @param {boolean} active - Whether the schedule is active.
      * @param {object} data - Schedule data as a JSON string. Used to store resource-specific context needed for execution.
+     * @param {number} interval - Minutes between runs, for function schedules only. Use 0 to disable. Cannot be combined with schedule.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Schedule>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -601,9 +604,10 @@ export class Projects {
         projectId: string,
         resourceType: ScheduleResourceType,
         resourceId: string,
-        schedule: string,
+        schedule?: string,
         active?: boolean,
         data?: object,
+        interval?: number,
     ): Promise<Models.Schedule>;
     createSchedule(
         paramsOrFirst:
@@ -611,20 +615,29 @@ export class Projects {
                   projectId: string;
                   resourceType: ScheduleResourceType;
                   resourceId: string;
-                  schedule: string;
+                  schedule?: string;
                   active?: boolean;
                   data?: object;
+                  interval?: number;
               }
             | string,
-        ...rest: [ScheduleResourceType?, string?, string?, boolean?, object?]
+        ...rest: [
+            ScheduleResourceType?,
+            string?,
+            string?,
+            boolean?,
+            object?,
+            number?,
+        ]
     ): Promise<Models.Schedule> {
         let params: {
             projectId: string;
             resourceType: ScheduleResourceType;
             resourceId: string;
-            schedule: string;
+            schedule?: string;
             active?: boolean;
             data?: object;
+            interval?: number;
         };
 
         if (
@@ -636,9 +649,10 @@ export class Projects {
                 projectId: string;
                 resourceType: ScheduleResourceType;
                 resourceId: string;
-                schedule: string;
+                schedule?: string;
                 active?: boolean;
                 data?: object;
+                interval?: number;
             };
         } else {
             params = {
@@ -648,6 +662,7 @@ export class Projects {
                 schedule: rest[2] as string,
                 active: rest[3] as boolean,
                 data: rest[4] as object,
+                interval: rest[5] as number,
             };
         }
 
@@ -657,6 +672,7 @@ export class Projects {
         const schedule = params.schedule;
         const active = params.active;
         const data = params.data;
+        const interval = params.interval;
 
         if (typeof projectId === 'undefined' || projectId === '') {
             throw new AppwriteException(
@@ -671,11 +687,6 @@ export class Projects {
         if (typeof resourceId === 'undefined') {
             throw new AppwriteException(
                 'Missing required parameter: "resourceId"',
-            );
-        }
-        if (typeof schedule === 'undefined') {
-            throw new AppwriteException(
-                'Missing required parameter: "schedule"',
             );
         }
         const apiPath = '/projects/{projectId}/schedules'.replace(
@@ -697,6 +708,9 @@ export class Projects {
         }
         if (typeof data !== 'undefined') {
             apiPayload['data'] = data;
+        }
+        if (typeof interval !== 'undefined') {
+            apiPayload['interval'] = interval;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

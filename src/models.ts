@@ -4574,6 +4574,10 @@ export namespace Models {
          */
         schedule: string;
         /**
+         * Minutes between scheduled executions. 0 when the function has no interval.
+         */
+        interval?: number;
+        /**
          * Function execution timeout in seconds.
          */
         timeout: number;
@@ -7920,6 +7924,10 @@ export namespace Models {
          */
         schedule: string;
         /**
+         * Minutes between runs. 0 when the schedule has no interval.
+         */
+        interval?: number;
+        /**
          * Schedule data used to store resource-specific context needed for execution.
          */
         data: object;
@@ -9997,6 +10005,10 @@ export namespace Models {
          * Maximum function and site deployment size in MB
          */
         buildSize: number;
+        /**
+         * Shortest function schedule interval allowed, in minutes. 0 allows every interval.
+         */
+        functionsIntervalMinimum: number;
         /**
          * Does the plan support encrypted string attributes or not.
          */
