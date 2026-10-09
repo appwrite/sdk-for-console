@@ -11,9 +11,10 @@ const result = await projects.createSchedule({
     projectId: '<PROJECT_ID>',
     resourceType: ScheduleResourceType.Function,
     resourceId: '<RESOURCE_ID>',
-    schedule: '0 0 * * *',
+    schedule: '0 0 * * *', // optional
     active: false, // optional
     data: {}, // optional
+    interval: 0, // optional
 });
 
 console.log(result);
