@@ -1,5 +1,11 @@
 # Change Log
 
+## 18.4.0-rc.1
+
+* Added: optional `interval` parameter on `Functions.create`, `Functions.update` and `Projects.createSchedule`
+* Updated: `schedule` is optional on `Projects.createSchedule`; pass either `schedule` or `interval`
+* Added: `interval` on the `Function` and `Schedule` models, `functionsIntervalMinimum` on `BillingPlan`
+
 ## 18.3.0-rc.2
 
 * Added: `Videos` service to upload, transcode and stream videos: `list`, `create`, `get`, `update`, `delete`, `createSource`, renditions, profiles, subtitles, previews, timelines, segments and HLS, DASH and CMAF manifests

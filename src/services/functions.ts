@@ -108,7 +108,7 @@ export class Functions {
      * @param {Runtime} params.runtime - Execution runtime.
      * @param {string[]} params.execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} params.events - Events list. Maximum of 100 events are allowed.
-     * @param {string} params.schedule - Schedule CRON syntax.
+     * @param {string} params.schedule - Schedule CRON syntax. Cannot be combined with interval.
      * @param {number} params.timeout - Function maximum execution time in seconds.
      * @param {boolean} params.enabled - Is function enabled? When set to 'disabled', users cannot access the function but Server SDKs with and API key can still access the function. No data is lost when this is toggled.
      * @param {boolean} params.logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
@@ -125,6 +125,7 @@ export class Functions {
      * @param {string} params.buildSpecification - Build specification for the function deployments.
      * @param {string} params.runtimeSpecification - Runtime specification for the function executions.
      * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
+     * @param {number} params.interval - Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
@@ -151,6 +152,7 @@ export class Functions {
         buildSpecification?: string;
         runtimeSpecification?: string;
         deploymentRetention?: number;
+        interval?: number;
     }): Promise<Models.Function>;
     /**
      * Create a new function. You can pass a list of [permissions](https://appwrite.io/docs/permissions) to allow different project users or team with access to execute the function using the client API.
@@ -160,7 +162,7 @@ export class Functions {
      * @param {Runtime} runtime - Execution runtime.
      * @param {string[]} execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} events - Events list. Maximum of 100 events are allowed.
-     * @param {string} schedule - Schedule CRON syntax.
+     * @param {string} schedule - Schedule CRON syntax. Cannot be combined with interval.
      * @param {number} timeout - Function maximum execution time in seconds.
      * @param {boolean} enabled - Is function enabled? When set to 'disabled', users cannot access the function but Server SDKs with and API key can still access the function. No data is lost when this is toggled.
      * @param {boolean} logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
@@ -177,6 +179,7 @@ export class Functions {
      * @param {string} buildSpecification - Build specification for the function deployments.
      * @param {string} runtimeSpecification - Runtime specification for the function executions.
      * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
+     * @param {number} interval - Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -204,6 +207,7 @@ export class Functions {
         buildSpecification?: string,
         runtimeSpecification?: string,
         deploymentRetention?: number,
+        interval?: number,
     ): Promise<Models.Function>;
     create(
         paramsOrFirst:
@@ -230,6 +234,7 @@ export class Functions {
                   buildSpecification?: string;
                   runtimeSpecification?: string;
                   deploymentRetention?: number;
+                  interval?: number;
               }
             | string,
         ...rest: [
@@ -253,6 +258,7 @@ export class Functions {
             string[]?,
             string?,
             string?,
+            number?,
             number?,
         ]
     ): Promise<Models.Function> {
@@ -279,6 +285,7 @@ export class Functions {
             buildSpecification?: string;
             runtimeSpecification?: string;
             deploymentRetention?: number;
+            interval?: number;
         };
 
         if (
@@ -309,6 +316,7 @@ export class Functions {
                 buildSpecification?: string;
                 runtimeSpecification?: string;
                 deploymentRetention?: number;
+                interval?: number;
             };
         } else {
             params = {
@@ -334,6 +342,7 @@ export class Functions {
                 buildSpecification: rest[18] as string,
                 runtimeSpecification: rest[19] as string,
                 deploymentRetention: rest[20] as number,
+                interval: rest[21] as number,
             };
         }
 
@@ -359,6 +368,7 @@ export class Functions {
         const buildSpecification = params.buildSpecification;
         const runtimeSpecification = params.runtimeSpecification;
         const deploymentRetention = params.deploymentRetention;
+        const interval = params.interval;
 
         if (typeof functionId === 'undefined') {
             throw new AppwriteException(
@@ -440,6 +450,9 @@ export class Functions {
         }
         if (typeof deploymentRetention !== 'undefined') {
             apiPayload['deploymentRetention'] = deploymentRetention;
+        }
+        if (typeof interval !== 'undefined') {
+            apiPayload['interval'] = interval;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -813,7 +826,7 @@ export class Functions {
      * @param {Runtime} params.runtime - Execution runtime.
      * @param {string[]} params.execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} params.events - Events list. Maximum of 100 events are allowed.
-     * @param {string} params.schedule - Schedule CRON syntax.
+     * @param {string} params.schedule - Schedule CRON syntax. Cannot be combined with interval.
      * @param {number} params.timeout - Maximum execution time in seconds.
      * @param {boolean} params.enabled - Is function enabled? When set to 'disabled', users cannot access the function but Server SDKs with and API key can still access the function. No data is lost when this is toggled.
      * @param {boolean} params.logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
@@ -830,6 +843,7 @@ export class Functions {
      * @param {string} params.buildSpecification - Build specification for the function deployments.
      * @param {string} params.runtimeSpecification - Runtime specification for the function executions.
      * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
+     * @param {number} params.interval - Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule. When omitted, the current interval is kept unless schedule is set.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      */
@@ -856,6 +870,7 @@ export class Functions {
         buildSpecification?: string;
         runtimeSpecification?: string;
         deploymentRetention?: number;
+        interval?: number;
     }): Promise<Models.Function>;
     /**
      * Update function by its unique ID.
@@ -865,7 +880,7 @@ export class Functions {
      * @param {Runtime} runtime - Execution runtime.
      * @param {string[]} execute - An array of role strings with execution permissions. By default no user is granted with any execute permissions. [learn more about roles](https://appwrite.io/docs/permissions#permission-roles). Maximum of 100 roles are allowed, each 64 characters long.
      * @param {string[]} events - Events list. Maximum of 100 events are allowed.
-     * @param {string} schedule - Schedule CRON syntax.
+     * @param {string} schedule - Schedule CRON syntax. Cannot be combined with interval.
      * @param {number} timeout - Maximum execution time in seconds.
      * @param {boolean} enabled - Is function enabled? When set to 'disabled', users cannot access the function but Server SDKs with and API key can still access the function. No data is lost when this is toggled.
      * @param {boolean} logging - When disabled, executions will exclude logs and errors, and will be slightly faster.
@@ -882,6 +897,7 @@ export class Functions {
      * @param {string} buildSpecification - Build specification for the function deployments.
      * @param {string} runtimeSpecification - Runtime specification for the function executions.
      * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
+     * @param {number} interval - Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule. When omitted, the current interval is kept unless schedule is set.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Function>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -909,6 +925,7 @@ export class Functions {
         buildSpecification?: string,
         runtimeSpecification?: string,
         deploymentRetention?: number,
+        interval?: number,
     ): Promise<Models.Function>;
     update(
         paramsOrFirst:
@@ -935,6 +952,7 @@ export class Functions {
                   buildSpecification?: string;
                   runtimeSpecification?: string;
                   deploymentRetention?: number;
+                  interval?: number;
               }
             | string,
         ...rest: [
@@ -958,6 +976,7 @@ export class Functions {
             string[]?,
             string?,
             string?,
+            number?,
             number?,
         ]
     ): Promise<Models.Function> {
@@ -984,6 +1003,7 @@ export class Functions {
             buildSpecification?: string;
             runtimeSpecification?: string;
             deploymentRetention?: number;
+            interval?: number;
         };
 
         if (
@@ -1014,6 +1034,7 @@ export class Functions {
                 buildSpecification?: string;
                 runtimeSpecification?: string;
                 deploymentRetention?: number;
+                interval?: number;
             };
         } else {
             params = {
@@ -1039,6 +1060,7 @@ export class Functions {
                 buildSpecification: rest[18] as string,
                 runtimeSpecification: rest[19] as string,
                 deploymentRetention: rest[20] as number,
+                interval: rest[21] as number,
             };
         }
 
@@ -1064,6 +1086,7 @@ export class Functions {
         const buildSpecification = params.buildSpecification;
         const runtimeSpecification = params.runtimeSpecification;
         const deploymentRetention = params.deploymentRetention;
+        const interval = params.interval;
 
         if (typeof functionId === 'undefined' || functionId === '') {
             throw new AppwriteException(
@@ -1140,6 +1163,9 @@ export class Functions {
         }
         if (typeof deploymentRetention !== 'undefined') {
             apiPayload['deploymentRetention'] = deploymentRetention;
+        }
+        if (typeof interval !== 'undefined') {
+            apiPayload['interval'] = interval;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
