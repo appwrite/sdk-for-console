@@ -7388,6 +7388,10 @@ export namespace Models {
          * Android application ID.
          */
         applicationId: string;
+        /**
+         * SHA-256 fingerprints of the certificates the app is signed with. Passkeys created in the app are accepted when its signature matches one.
+         */
+        fingerprints: string[];
     };
 
     /**

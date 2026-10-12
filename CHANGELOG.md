@@ -1,5 +1,12 @@
 # Change Log
 
+## 18.4.0-rc.2
+
+* Added: optional `fingerprints` parameter on `Project.createAndroidPlatform` and `Project.updateAndroidPlatform`
+* Added: `fingerprints` on the `PlatformAndroid` model
+* Added: optional `membershipId` parameter on `Teams.createMembership`
+* Breaking: positional `Teams.createMembership` now takes `membershipId` third, before `email`; the object form is unchanged
+
 ## 18.4.0-rc.1
 
 * Added: optional `interval` parameter on `Functions.create`, `Functions.update` and `Projects.createSchedule`

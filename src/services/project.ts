@@ -6270,6 +6270,7 @@ export class Project {
      * @param {string} params.platformId - Platform ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Platform name. Max length: 128 chars.
      * @param {string} params.applicationId - Android application ID. Max length: 256 chars.
+     * @param {string[]} params.fingerprints - SHA-256 fingerprints of the certificates your app is signed with, such as "14:6D:E9:...:2B:6A". Passkeys created in the app are accepted when its signature matches one. Find them under App signing in Play Console, or with `./gradlew signingReport`.
      * @throws {AppwriteException}
      * @returns {Promise<Models.PlatformAndroid>}
      */
@@ -6277,6 +6278,7 @@ export class Project {
         platformId: string;
         name: string;
         applicationId: string;
+        fingerprints?: string[];
     }): Promise<Models.PlatformAndroid>;
     /**
      * Create a new Android platform for your project. Use this endpoint to register a new Android platform where your users will run your application which will interact with the Appwrite API.
@@ -6284,6 +6286,7 @@ export class Project {
      * @param {string} platformId - Platform ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Platform name. Max length: 128 chars.
      * @param {string} applicationId - Android application ID. Max length: 256 chars.
+     * @param {string[]} fingerprints - SHA-256 fingerprints of the certificates your app is signed with, such as "14:6D:E9:...:2B:6A". Passkeys created in the app are accepted when its signature matches one. Find them under App signing in Play Console, or with `./gradlew signingReport`.
      * @throws {AppwriteException}
      * @returns {Promise<Models.PlatformAndroid>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -6292,14 +6295,25 @@ export class Project {
         platformId: string,
         name: string,
         applicationId: string,
+        fingerprints?: string[],
     ): Promise<Models.PlatformAndroid>;
     createAndroidPlatform(
         paramsOrFirst:
-            | { platformId: string; name: string; applicationId: string }
+            | {
+                  platformId: string;
+                  name: string;
+                  applicationId: string;
+                  fingerprints?: string[];
+              }
             | string,
-        ...rest: [string?, string?]
+        ...rest: [string?, string?, string[]?]
     ): Promise<Models.PlatformAndroid> {
-        let params: { platformId: string; name: string; applicationId: string };
+        let params: {
+            platformId: string;
+            name: string;
+            applicationId: string;
+            fingerprints?: string[];
+        };
 
         if (
             paramsOrFirst &&
@@ -6310,18 +6324,21 @@ export class Project {
                 platformId: string;
                 name: string;
                 applicationId: string;
+                fingerprints?: string[];
             };
         } else {
             params = {
                 platformId: paramsOrFirst as string,
                 name: rest[0] as string,
                 applicationId: rest[1] as string,
+                fingerprints: rest[2] as string[],
             };
         }
 
         const platformId = params.platformId;
         const name = params.name;
         const applicationId = params.applicationId;
+        const fingerprints = params.fingerprints;
 
         if (typeof platformId === 'undefined') {
             throw new AppwriteException(
@@ -6347,6 +6364,9 @@ export class Project {
         if (typeof applicationId !== 'undefined') {
             apiPayload['applicationId'] = applicationId;
         }
+        if (typeof fingerprints !== 'undefined') {
+            apiPayload['fingerprints'] = fingerprints;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -6359,11 +6379,12 @@ export class Project {
     }
 
     /**
-     * Update an Android platform by its unique ID. Use this endpoint to update the platform's name or application ID.
+     * Update an Android platform by its unique ID. Use this endpoint to update the platform's name, application ID or signing certificate fingerprints.
      *
      * @param {string} params.platformId - Platform ID.
      * @param {string} params.name - Platform name. Max length: 128 chars.
      * @param {string} params.applicationId - Android application ID. Max length: 256 chars.
+     * @param {string[]} params.fingerprints - SHA-256 fingerprints of the certificates your app is signed with, such as "14:6D:E9:...:2B:6A". Passkeys created in the app are accepted when its signature matches one. Find them under App signing in Play Console, or with `./gradlew signingReport`. Omit to keep the current list, or pass an empty array to clear it.
      * @throws {AppwriteException}
      * @returns {Promise<Models.PlatformAndroid>}
      */
@@ -6371,13 +6392,15 @@ export class Project {
         platformId: string;
         name: string;
         applicationId: string;
+        fingerprints?: string[];
     }): Promise<Models.PlatformAndroid>;
     /**
-     * Update an Android platform by its unique ID. Use this endpoint to update the platform's name or application ID.
+     * Update an Android platform by its unique ID. Use this endpoint to update the platform's name, application ID or signing certificate fingerprints.
      *
      * @param {string} platformId - Platform ID.
      * @param {string} name - Platform name. Max length: 128 chars.
      * @param {string} applicationId - Android application ID. Max length: 256 chars.
+     * @param {string[]} fingerprints - SHA-256 fingerprints of the certificates your app is signed with, such as "14:6D:E9:...:2B:6A". Passkeys created in the app are accepted when its signature matches one. Find them under App signing in Play Console, or with `./gradlew signingReport`. Omit to keep the current list, or pass an empty array to clear it.
      * @throws {AppwriteException}
      * @returns {Promise<Models.PlatformAndroid>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -6386,14 +6409,25 @@ export class Project {
         platformId: string,
         name: string,
         applicationId: string,
+        fingerprints?: string[],
     ): Promise<Models.PlatformAndroid>;
     updateAndroidPlatform(
         paramsOrFirst:
-            | { platformId: string; name: string; applicationId: string }
+            | {
+                  platformId: string;
+                  name: string;
+                  applicationId: string;
+                  fingerprints?: string[];
+              }
             | string,
-        ...rest: [string?, string?]
+        ...rest: [string?, string?, string[]?]
     ): Promise<Models.PlatformAndroid> {
-        let params: { platformId: string; name: string; applicationId: string };
+        let params: {
+            platformId: string;
+            name: string;
+            applicationId: string;
+            fingerprints?: string[];
+        };
 
         if (
             paramsOrFirst &&
@@ -6404,18 +6438,21 @@ export class Project {
                 platformId: string;
                 name: string;
                 applicationId: string;
+                fingerprints?: string[];
             };
         } else {
             params = {
                 platformId: paramsOrFirst as string,
                 name: rest[0] as string,
                 applicationId: rest[1] as string,
+                fingerprints: rest[2] as string[],
             };
         }
 
         const platformId = params.platformId;
         const name = params.name;
         const applicationId = params.applicationId;
+        const fingerprints = params.fingerprints;
 
         if (typeof platformId === 'undefined' || platformId === '') {
             throw new AppwriteException(
@@ -6440,6 +6477,9 @@ export class Project {
         }
         if (typeof applicationId !== 'undefined') {
             apiPayload['applicationId'] = applicationId;
+        }
+        if (typeof fingerprints !== 'undefined') {
+            apiPayload['fingerprints'] = fingerprints;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
