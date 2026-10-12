@@ -16,7 +16,7 @@ const client = new Client()
 const usage = new Usage(client);
 
 const result = await usage.listEvents({
-    metrics: [UsageEventMetric.NetworkRequests],
+    metrics: [UsageEventMetric.AnalyticsEvents],
     queries: [], // optional
     interval: UsageInterval.OneMinute, // optional
     dimensions: [UsageEventDimension.Path], // optional

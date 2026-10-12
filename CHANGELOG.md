@@ -1,5 +1,40 @@
 # Change Log
 
+## 19.0.0
+
+* Breaking: SDK now targets Appwrite 2.4 (`X-Appwrite-Response-Format: 2.4.0`)
+* Breaking: removed `Assistant` service and `_APP_ASSISTANT_ENABLED` from `ConsoleVariables`
+* Breaking: positional `Teams.createMembership` takes `membershipId` third, before `email`
+* Breaking: `resource` is `string[]` on `OAuth2.authorize`, `authorizePost`, `createDeviceAuthorization`, `createPAR`, `createToken`
+* Breaking: `conditions` is `string[]` on every `WAF.create*Rule` and `WAF.update*Rule` method
+* Breaking: removed `WafRule` model; `WafRuleList.rules` is a union of the typed rule models
+* Breaking: `BackupRestoration.options` is now an `object` instead of a `string`
+* Breaking: removed `deno-1.21`, `deno-1.24` and `deno-1.35` from `Runtime` and `BuildRuntime` enums
+* Breaking: billing, backup and dedicated database model fields that may be absent are now optional
+* Added: `Account` passkey methods: `createPasskey`, `updatePasskeyVerification`, `listPasskeys`, `getPasskey`, `updatePasskey`, `deletePasskey`
+* Added: `Account.createPasskeyToken` and `Account.updatePasskeyToken` for passkey sign-in
+* Added: `Users.listPasskeys`, `getPasskey`, `updatePasskey` and `deletePasskey`
+* Added: `Project.updatePasskeyPolicy`, `ProjectPolicyId.Passkey` and `ProjectAuthMethodId.Passkey`
+* Added: `Passkey`, `PasskeyList`, `PasskeyChallenge`, `PolicyPasskey` and `TokenSecret` models
+* Added: optional `fingerprints` on `Project.createAndroidPlatform`/`updateAndroidPlatform` and `PlatformAndroid.fingerprints`
+* Added: optional `membershipId` on `Teams.createMembership`
+* Added: optional `state` on `Account.createOAuth2Session` and `Account.createOAuth2Token`
+* Added: `Admin` service with threat methods (`listThreats`, `createThreat`, `getThreat`, `updateThreatStatus`, `deleteThreat`)
+* Added: `Admin` cache methods `deletePlatformCache`, `deletePlatformResourceCache`, `deleteProjectCache`, `deleteProjectResourceCache`
+* Added: `Threat`, `ThreatList` models and `ThreatStatus`, `ThreatResourceType`, `PlatformResourceType`, `ProjectResourceType` enums
+* Added: `Analytics` service with property CRUD, `createEvent` and `listMetrics`
+* Added: `Tracking` helper for auto pageviews, outbound links, downloads, scroll depth and engagement
+* Added: `AnalyticsProperty`, `AnalyticsPropertyList`, `AnalyticsMetric`, `AnalyticsMetricList` models; `AnalyticsInterval`, `AnalyticsDimension` enums
+* Added: `ProjectKeyScopes.AnalyticsRead` and `ProjectKeyScopes.AnalyticsWrite`
+* Added: analytics values on `UsageEventMetric`, `UsageGaugeMetric` and `QuerySuggestionResource`
+* Added: `ProxyRuleDeploymentResourceType.DedicatedDatabase`
+* Added: `avatarsStorageTotal` on `UsageOrganization`
+* Added: `Push.onNotificationOpened` and `Push.getInitialNotification` with `PushNotificationOpened` type
+* Added: `Project.updatePasswordRotationPolicy` and the `PolicyPasswordRotation` model
+* Fixed: response models fill missing fields from spec defaults instead of throwing
+* Fixed: `Push` falls back to the signed-in `cookieFallback` session when none is set
+* Fixed: `Push` posts one background notification per title, preferring the server-sent title
+
 ## 18.3.0
 
 * Added: optional `interval` parameter on `Functions.create`, `Functions.update` and `Projects.createSchedule`

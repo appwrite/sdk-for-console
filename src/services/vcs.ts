@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 import { VCSDetectionType } from '../enums/vcs-detection-type';
@@ -366,7 +371,26 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'providerRepository',
+            models: {
+                providerRepository: {
+                    defaults: {
+                        id: '',
+                        name: '',
+                        provider: '',
+                        private: false,
+                        defaultBranch: '',
+                        providerInstallationId: '',
+                        authorized: false,
+                        variables: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -451,7 +475,26 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'providerRepository',
+            models: {
+                providerRepository: {
+                    defaults: {
+                        id: '',
+                        name: '',
+                        provider: '',
+                        private: false,
+                        defaultBranch: '',
+                        providerInstallationId: '',
+                        authorized: false,
+                        variables: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -581,7 +624,29 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'branchList',
+            models: {
+                branchList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        branches: {
+                            items: 'branch',
+                        },
+                    },
+                },
+                branch: {
+                    defaults: {
+                        name: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -697,7 +762,29 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'vcsContentList',
+            models: {
+                vcsContentList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        contents: {
+                            items: 'vcsContent',
+                        },
+                    },
+                },
+                vcsContent: {
+                    defaults: {
+                        name: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -886,7 +973,33 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'installationList',
+            models: {
+                installationList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        installations: {
+                            items: 'installation',
+                        },
+                    },
+                },
+                installation: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        providerInstallationId: '',
+                        organizationUrl: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -944,7 +1057,23 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'installation',
+            models: {
+                installation: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        providerInstallationId: '',
+                        organizationUrl: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1107,6 +1236,32 @@ export class Vcs {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'vcsNamespaceList',
+            models: {
+                vcsNamespaceList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        namespaces: {
+                            items: 'vcsNamespace',
+                        },
+                    },
+                },
+                vcsNamespace: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        path: '',
+                        type: '',
+                        avatarUrl: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }

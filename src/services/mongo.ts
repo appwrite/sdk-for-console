@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 export class Mongo {
@@ -59,7 +64,73 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseList',
+            models: {
+                dedicatedDatabaseList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        databases: {
+                            items: 'dedicatedDatabase',
+                        },
+                    },
+                },
+                dedicatedDatabase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        projectId: '',
+                        name: '',
+                        version: '',
+                        specification: '',
+                        backend: '',
+                        hostname: '',
+                        connectionUser: '',
+                        connectionPassword: '',
+                        connectionString: '',
+                        ssl: false,
+                        status: 'provisioning',
+                        containerStatus: '',
+                        lifecycleState: '',
+                        idleTimeoutMinutes: 15,
+                        cpu: 500,
+                        memory: 512,
+                        storage: 10,
+                        storageStatus: 'idle',
+                        storageTargetGb: 0,
+                        storageClass: 'ssd',
+                        storageMaxGb: 0,
+                        nodePool: '',
+                        replicas: 0,
+                        syncMode: '',
+                        networkMaxConnections: 100,
+                        networkIdleTimeoutSeconds: 900,
+                        networkIPAllowlist: [],
+                        backupEnabled: true,
+                        pitr: true,
+                        pitrRetentionDays: 7,
+                        storageAutoscaling: true,
+                        storageAutoscalingThresholdPercent: 85,
+                        storageAutoscalingMaxGb: 0,
+                        maintenanceWindowDay: 'sun',
+                        maintenanceWindowHourUtc: 3,
+                        metricsEnabled: false,
+                        sqlApiEnabled: true,
+                        sqlApiAllowedStatements: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+                        sqlApiMaxRows: 10000,
+                        sqlApiMaxBytes: 10485760,
+                        sqlApiTimeoutSeconds: 30,
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -304,7 +375,63 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabase',
+            models: {
+                dedicatedDatabase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        projectId: '',
+                        name: '',
+                        version: '',
+                        specification: '',
+                        backend: '',
+                        hostname: '',
+                        connectionUser: '',
+                        connectionPassword: '',
+                        connectionString: '',
+                        ssl: false,
+                        status: 'provisioning',
+                        containerStatus: '',
+                        lifecycleState: '',
+                        idleTimeoutMinutes: 15,
+                        cpu: 500,
+                        memory: 512,
+                        storage: 10,
+                        storageStatus: 'idle',
+                        storageTargetGb: 0,
+                        storageClass: 'ssd',
+                        storageMaxGb: 0,
+                        nodePool: '',
+                        replicas: 0,
+                        syncMode: '',
+                        networkMaxConnections: 100,
+                        networkIdleTimeoutSeconds: 900,
+                        networkIPAllowlist: [],
+                        backupEnabled: true,
+                        pitr: true,
+                        pitrRetentionDays: 7,
+                        storageAutoscaling: true,
+                        storageAutoscalingThresholdPercent: 85,
+                        storageAutoscalingMaxGb: 0,
+                        maintenanceWindowDay: 'sun',
+                        maintenanceWindowHourUtc: 3,
+                        metricsEnabled: false,
+                        sqlApiEnabled: true,
+                        sqlApiAllowedStatements: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+                        sqlApiMaxRows: 10000,
+                        sqlApiMaxBytes: 10485760,
+                        sqlApiTimeoutSeconds: 30,
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -323,7 +450,41 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseSpecificationList',
+            models: {
+                dedicatedDatabaseSpecificationList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        specifications: {
+                            items: 'dedicatedDatabaseSpecification',
+                        },
+                    },
+                },
+                dedicatedDatabaseSpecification: {
+                    defaults: {
+                        slug: '',
+                        name: '',
+                        price: 0,
+                        storageOverageRate: 0,
+                        bandwidthOverageRate: 0,
+                        replicaRate: 0,
+                        pitrRate: 0,
+                        cpu: 0,
+                        memory: 0,
+                        maxConnections: 0,
+                        includedStorage: 0,
+                        includedBandwidth: 0,
+                        enabled: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -379,7 +540,63 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabase',
+            models: {
+                dedicatedDatabase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        projectId: '',
+                        name: '',
+                        version: '',
+                        specification: '',
+                        backend: '',
+                        hostname: '',
+                        connectionUser: '',
+                        connectionPassword: '',
+                        connectionString: '',
+                        ssl: false,
+                        status: 'provisioning',
+                        containerStatus: '',
+                        lifecycleState: '',
+                        idleTimeoutMinutes: 15,
+                        cpu: 500,
+                        memory: 512,
+                        storage: 10,
+                        storageStatus: 'idle',
+                        storageTargetGb: 0,
+                        storageClass: 'ssd',
+                        storageMaxGb: 0,
+                        nodePool: '',
+                        replicas: 0,
+                        syncMode: '',
+                        networkMaxConnections: 100,
+                        networkIdleTimeoutSeconds: 900,
+                        networkIPAllowlist: [],
+                        backupEnabled: true,
+                        pitr: true,
+                        pitrRetentionDays: 7,
+                        storageAutoscaling: true,
+                        storageAutoscalingThresholdPercent: 85,
+                        storageAutoscalingMaxGb: 0,
+                        maintenanceWindowDay: 'sun',
+                        maintenanceWindowHourUtc: 3,
+                        metricsEnabled: false,
+                        sqlApiEnabled: true,
+                        sqlApiAllowedStatements: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+                        sqlApiMaxRows: 10000,
+                        sqlApiMaxBytes: 10485760,
+                        sqlApiTimeoutSeconds: 30,
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -714,7 +931,63 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabase',
+            models: {
+                dedicatedDatabase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        projectId: '',
+                        name: '',
+                        version: '',
+                        specification: '',
+                        backend: '',
+                        hostname: '',
+                        connectionUser: '',
+                        connectionPassword: '',
+                        connectionString: '',
+                        ssl: false,
+                        status: 'provisioning',
+                        containerStatus: '',
+                        lifecycleState: '',
+                        idleTimeoutMinutes: 15,
+                        cpu: 500,
+                        memory: 512,
+                        storage: 10,
+                        storageStatus: 'idle',
+                        storageTargetGb: 0,
+                        storageClass: 'ssd',
+                        storageMaxGb: 0,
+                        nodePool: '',
+                        replicas: 0,
+                        syncMode: '',
+                        networkMaxConnections: 100,
+                        networkIdleTimeoutSeconds: 900,
+                        networkIPAllowlist: [],
+                        backupEnabled: true,
+                        pitr: true,
+                        pitrRetentionDays: 7,
+                        storageAutoscaling: true,
+                        storageAutoscalingThresholdPercent: 85,
+                        storageAutoscalingMaxGb: 0,
+                        maintenanceWindowDay: 'sun',
+                        maintenanceWindowHourUtc: 3,
+                        metricsEnabled: false,
+                        sqlApiEnabled: true,
+                        sqlApiAllowedStatements: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+                        sqlApiMaxRows: 10000,
+                        sqlApiMaxBytes: 10485760,
+                        sqlApiTimeoutSeconds: 30,
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -842,7 +1115,40 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseBackupList',
+            models: {
+                dedicatedDatabaseBackupList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        backups: {
+                            items: 'dedicatedDatabaseBackup',
+                        },
+                    },
+                },
+                dedicatedDatabaseBackup: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        databaseId: '',
+                        projectId: '',
+                        policyId: '',
+                        trigger: 'manual',
+                        type: 'full',
+                        requestedType: '',
+                        fallbackReason: '',
+                        status: 'pending',
+                        sizeBytes: 0,
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -916,7 +1222,30 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseBackup',
+            models: {
+                dedicatedDatabaseBackup: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        databaseId: '',
+                        projectId: '',
+                        policyId: '',
+                        trigger: 'manual',
+                        type: 'full',
+                        requestedType: '',
+                        fallbackReason: '',
+                        status: 'pending',
+                        sizeBytes: 0,
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -989,7 +1318,36 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupPolicyList',
+            models: {
+                backupPolicyList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        policies: {
+                            items: 'backupPolicy',
+                        },
+                    },
+                },
+                backupPolicy: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        retention: 1,
+                        schedule: '0 * * * *',
+                        type: 'full',
+                        enabled: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1149,7 +1507,26 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupPolicy',
+            models: {
+                backupPolicy: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        retention: 1,
+                        schedule: '0 * * * *',
+                        type: 'full',
+                        enabled: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1223,7 +1600,26 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupPolicy',
+            models: {
+                backupPolicy: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        retention: 1,
+                        schedule: '0 * * * *',
+                        type: 'full',
+                        enabled: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1354,7 +1750,26 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupPolicy',
+            models: {
+                backupPolicy: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        retention: 1,
+                        schedule: '0 * * * *',
+                        type: 'full',
+                        enabled: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1598,7 +2013,23 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseBackupStorage',
+            models: {
+                dedicatedDatabaseBackupStorage: {
+                    defaults: {
+                        provider: '',
+                        bucket: '',
+                        region: '',
+                        prefix: 'backups/',
+                        endpoint: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1672,7 +2103,30 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseBackup',
+            models: {
+                dedicatedDatabaseBackup: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        databaseId: '',
+                        projectId: '',
+                        policyId: '',
+                        trigger: 'manual',
+                        type: 'full',
+                        requestedType: '',
+                        fallbackReason: '',
+                        status: 'pending',
+                        sizeBytes: 0,
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1801,7 +2255,39 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseBranchList',
+            models: {
+                dedicatedDatabaseBranchList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        branches: {
+                            items: 'dedicatedDatabaseBranch',
+                        },
+                    },
+                },
+                dedicatedDatabaseBranch: {
+                    defaults: {
+                        branchId: '',
+                        branchName: '',
+                        namespace: '',
+                        expiresAt: 0,
+                        host: '',
+                        database: '',
+                        username: '',
+                        password: '',
+                        ssl: false,
+                        engine: '',
+                        connectionString: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1886,7 +2372,63 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabase',
+            models: {
+                dedicatedDatabase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        projectId: '',
+                        name: '',
+                        version: '',
+                        specification: '',
+                        backend: '',
+                        hostname: '',
+                        connectionUser: '',
+                        connectionPassword: '',
+                        connectionString: '',
+                        ssl: false,
+                        status: 'provisioning',
+                        containerStatus: '',
+                        lifecycleState: '',
+                        idleTimeoutMinutes: 15,
+                        cpu: 500,
+                        memory: 512,
+                        storage: 10,
+                        storageStatus: 'idle',
+                        storageTargetGb: 0,
+                        storageClass: 'ssd',
+                        storageMaxGb: 0,
+                        nodePool: '',
+                        replicas: 0,
+                        syncMode: '',
+                        networkMaxConnections: 100,
+                        networkIdleTimeoutSeconds: 900,
+                        networkIPAllowlist: [],
+                        backupEnabled: true,
+                        pitr: true,
+                        pitrRetentionDays: 7,
+                        storageAutoscaling: true,
+                        storageAutoscalingThresholdPercent: 85,
+                        storageAutoscalingMaxGb: 0,
+                        maintenanceWindowDay: 'sun',
+                        maintenanceWindowHourUtc: 3,
+                        metricsEnabled: false,
+                        sqlApiEnabled: true,
+                        sqlApiAllowedStatements: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+                        sqlApiMaxRows: 10000,
+                        sqlApiMaxBytes: 10485760,
+                        sqlApiTimeoutSeconds: 30,
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1961,7 +2503,63 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, apiPayload);
+        const request = this.client.call('delete', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabase',
+            models: {
+                dedicatedDatabase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        projectId: '',
+                        name: '',
+                        version: '',
+                        specification: '',
+                        backend: '',
+                        hostname: '',
+                        connectionUser: '',
+                        connectionPassword: '',
+                        connectionString: '',
+                        ssl: false,
+                        status: 'provisioning',
+                        containerStatus: '',
+                        lifecycleState: '',
+                        idleTimeoutMinutes: 15,
+                        cpu: 500,
+                        memory: 512,
+                        storage: 10,
+                        storageStatus: 'idle',
+                        storageTargetGb: 0,
+                        storageClass: 'ssd',
+                        storageMaxGb: 0,
+                        nodePool: '',
+                        replicas: 0,
+                        syncMode: '',
+                        networkMaxConnections: 100,
+                        networkIdleTimeoutSeconds: 900,
+                        networkIPAllowlist: [],
+                        backupEnabled: true,
+                        pitr: true,
+                        pitrRetentionDays: 7,
+                        storageAutoscaling: true,
+                        storageAutoscalingThresholdPercent: 85,
+                        storageAutoscalingMaxGb: 0,
+                        maintenanceWindowDay: 'sun',
+                        maintenanceWindowHourUtc: 3,
+                        metricsEnabled: false,
+                        sqlApiEnabled: true,
+                        sqlApiAllowedStatements: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+                        sqlApiMaxRows: 10000,
+                        sqlApiMaxBytes: 10485760,
+                        sqlApiTimeoutSeconds: 30,
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2022,7 +2620,26 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseOperation',
+            models: {
+                dedicatedDatabaseOperation: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        databaseId: '',
+                        type: '',
+                        status: '',
+                        attempts: 0,
+                        errorCode: '',
+                        errorMessage: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2097,7 +2714,63 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabase',
+            models: {
+                dedicatedDatabase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        projectId: '',
+                        name: '',
+                        version: '',
+                        specification: '',
+                        backend: '',
+                        hostname: '',
+                        connectionUser: '',
+                        connectionPassword: '',
+                        connectionString: '',
+                        ssl: false,
+                        status: 'provisioning',
+                        containerStatus: '',
+                        lifecycleState: '',
+                        idleTimeoutMinutes: 15,
+                        cpu: 500,
+                        memory: 512,
+                        storage: 10,
+                        storageStatus: 'idle',
+                        storageTargetGb: 0,
+                        storageClass: 'ssd',
+                        storageMaxGb: 0,
+                        nodePool: '',
+                        replicas: 0,
+                        syncMode: '',
+                        networkMaxConnections: 100,
+                        networkIdleTimeoutSeconds: 900,
+                        networkIPAllowlist: [],
+                        backupEnabled: true,
+                        pitr: true,
+                        pitrRetentionDays: 7,
+                        storageAutoscaling: true,
+                        storageAutoscalingThresholdPercent: 85,
+                        storageAutoscalingMaxGb: 0,
+                        maintenanceWindowDay: 'sun',
+                        maintenanceWindowHourUtc: 3,
+                        metricsEnabled: false,
+                        sqlApiEnabled: true,
+                        sqlApiAllowedStatements: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+                        sqlApiMaxRows: 10000,
+                        sqlApiMaxBytes: 10485760,
+                        sqlApiTimeoutSeconds: 30,
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2190,7 +2863,63 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabase',
+            models: {
+                dedicatedDatabase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        projectId: '',
+                        name: '',
+                        version: '',
+                        specification: '',
+                        backend: '',
+                        hostname: '',
+                        connectionUser: '',
+                        connectionPassword: '',
+                        connectionString: '',
+                        ssl: false,
+                        status: 'provisioning',
+                        containerStatus: '',
+                        lifecycleState: '',
+                        idleTimeoutMinutes: 15,
+                        cpu: 500,
+                        memory: 512,
+                        storage: 10,
+                        storageStatus: 'idle',
+                        storageTargetGb: 0,
+                        storageClass: 'ssd',
+                        storageMaxGb: 0,
+                        nodePool: '',
+                        replicas: 0,
+                        syncMode: '',
+                        networkMaxConnections: 100,
+                        networkIdleTimeoutSeconds: 900,
+                        networkIPAllowlist: [],
+                        backupEnabled: true,
+                        pitr: true,
+                        pitrRetentionDays: 7,
+                        storageAutoscaling: true,
+                        storageAutoscalingThresholdPercent: 85,
+                        storageAutoscalingMaxGb: 0,
+                        maintenanceWindowDay: 'sun',
+                        maintenanceWindowHourUtc: 3,
+                        metricsEnabled: false,
+                        sqlApiEnabled: true,
+                        sqlApiAllowedStatements: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+                        sqlApiMaxRows: 10000,
+                        sqlApiMaxBytes: 10485760,
+                        sqlApiTimeoutSeconds: 30,
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2285,7 +3014,63 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabase',
+            models: {
+                dedicatedDatabase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        projectId: '',
+                        name: '',
+                        version: '',
+                        specification: '',
+                        backend: '',
+                        hostname: '',
+                        connectionUser: '',
+                        connectionPassword: '',
+                        connectionString: '',
+                        ssl: false,
+                        status: 'provisioning',
+                        containerStatus: '',
+                        lifecycleState: '',
+                        idleTimeoutMinutes: 15,
+                        cpu: 500,
+                        memory: 512,
+                        storage: 10,
+                        storageStatus: 'idle',
+                        storageTargetGb: 0,
+                        storageClass: 'ssd',
+                        storageMaxGb: 0,
+                        nodePool: '',
+                        replicas: 0,
+                        syncMode: '',
+                        networkMaxConnections: 100,
+                        networkIdleTimeoutSeconds: 900,
+                        networkIPAllowlist: [],
+                        backupEnabled: true,
+                        pitr: true,
+                        pitrRetentionDays: 7,
+                        storageAutoscaling: true,
+                        storageAutoscalingThresholdPercent: 85,
+                        storageAutoscalingMaxGb: 0,
+                        maintenanceWindowDay: 'sun',
+                        maintenanceWindowHourUtc: 3,
+                        metricsEnabled: false,
+                        sqlApiEnabled: true,
+                        sqlApiAllowedStatements: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+                        sqlApiMaxRows: 10000,
+                        sqlApiMaxBytes: 10485760,
+                        sqlApiTimeoutSeconds: 30,
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2390,7 +3175,36 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseOperationList',
+            models: {
+                dedicatedDatabaseOperationList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        operations: {
+                            items: 'dedicatedDatabaseOperation',
+                        },
+                    },
+                },
+                dedicatedDatabaseOperation: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        databaseId: '',
+                        type: '',
+                        status: '',
+                        attempts: 0,
+                        errorCode: '',
+                        errorMessage: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2448,7 +3262,20 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabasePITRWindows',
+            models: {
+                dedicatedDatabasePITRWindows: {
+                    defaults: {
+                        earliest: '',
+                        latest: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2506,7 +3333,35 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseReplicas',
+            models: {
+                dedicatedDatabaseReplicas: {
+                    defaults: {
+                        replicas: 0,
+                        syncMode: 'async',
+                        syncDegraded: false,
+                        syncAcknowledgements: 0,
+                        syncStandbyCount: 0,
+                    },
+                    properties: {
+                        members: {
+                            items: 'dedicatedDatabaseMember',
+                        },
+                    },
+                },
+                dedicatedDatabaseMember: {
+                    defaults: {
+                        $id: '',
+                        role: 'unknown',
+                        status: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2623,7 +3478,35 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseRestorationList',
+            models: {
+                dedicatedDatabaseRestorationList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        restorations: {
+                            items: 'dedicatedDatabaseRestoration',
+                        },
+                    },
+                },
+                dedicatedDatabaseRestoration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        databaseId: '',
+                        projectId: '',
+                        type: 'backup',
+                        status: 'pending',
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2741,7 +3624,25 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseRestoration',
+            models: {
+                dedicatedDatabaseRestoration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        databaseId: '',
+                        projectId: '',
+                        type: 'backup',
+                        status: 'pending',
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2818,7 +3719,25 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseRestoration',
+            models: {
+                dedicatedDatabaseRestoration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        databaseId: '',
+                        projectId: '',
+                        type: 'backup',
+                        status: 'pending',
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2874,7 +3793,50 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'databaseStatus',
+            models: {
+                databaseStatus: {
+                    defaults: {
+                        health: 'unknown',
+                        ready: false,
+                        engine: 'postgresql',
+                        version: '',
+                        uptime: 0,
+                        syncMode: 'async',
+                        syncDegraded: false,
+                        syncAcknowledgements: 0,
+                        syncStandbyCount: 0,
+                    },
+                    properties: {
+                        replicas: {
+                            items: 'databaseStatusReplica',
+                        },
+                        volumes: {
+                            items: 'databaseStatusVolume',
+                        },
+                    },
+                },
+                databaseStatusReplica: {
+                    defaults: {
+                        index: 0,
+                        role: 'unknown',
+                        healthy: false,
+                    },
+                },
+                databaseStatusVolume: {
+                    defaults: {
+                        path: '',
+                        usedPercent: '0%',
+                        available: '0GB',
+                        mounted: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2953,6 +3915,62 @@ export class Mongo {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabase',
+            models: {
+                dedicatedDatabase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        projectId: '',
+                        name: '',
+                        version: '',
+                        specification: '',
+                        backend: '',
+                        hostname: '',
+                        connectionUser: '',
+                        connectionPassword: '',
+                        connectionString: '',
+                        ssl: false,
+                        status: 'provisioning',
+                        containerStatus: '',
+                        lifecycleState: '',
+                        idleTimeoutMinutes: 15,
+                        cpu: 500,
+                        memory: 512,
+                        storage: 10,
+                        storageStatus: 'idle',
+                        storageTargetGb: 0,
+                        storageClass: 'ssd',
+                        storageMaxGb: 0,
+                        nodePool: '',
+                        replicas: 0,
+                        syncMode: '',
+                        networkMaxConnections: 100,
+                        networkIdleTimeoutSeconds: 900,
+                        networkIPAllowlist: [],
+                        backupEnabled: true,
+                        pitr: true,
+                        pitrRetentionDays: 7,
+                        storageAutoscaling: true,
+                        storageAutoscalingThresholdPercent: 85,
+                        storageAutoscalingMaxGb: 0,
+                        maintenanceWindowDay: 'sun',
+                        maintenanceWindowHourUtc: 3,
+                        metricsEnabled: false,
+                        sqlApiEnabled: true,
+                        sqlApiAllowedStatements: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+                        sqlApiMaxRows: 10000,
+                        sqlApiMaxBytes: 10485760,
+                        sqlApiTimeoutSeconds: 30,
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }

@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 import { BackupServices } from '../enums/backup-services';
@@ -60,7 +65,34 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupArchiveList',
+            models: {
+                backupArchiveList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        archives: {
+                            items: 'backupArchive',
+                        },
+                    },
+                },
+                backupArchive: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        policyId: '',
+                        status: '',
+                        migrationId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -137,7 +169,24 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupArchive',
+            models: {
+                backupArchive: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        policyId: '',
+                        status: '',
+                        migrationId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -193,7 +242,24 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupArchive',
+            models: {
+                backupArchive: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        policyId: '',
+                        status: '',
+                        migrationId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -302,7 +368,36 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupPolicyList',
+            models: {
+                backupPolicyList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        policies: {
+                            items: 'backupPolicy',
+                        },
+                    },
+                },
+                backupPolicy: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        retention: 1,
+                        schedule: '0 * * * *',
+                        type: 'full',
+                        enabled: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -466,7 +561,26 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupPolicy',
+            models: {
+                backupPolicy: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        retention: 1,
+                        schedule: '0 * * * *',
+                        type: 'full',
+                        enabled: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -522,7 +636,26 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupPolicy',
+            models: {
+                backupPolicy: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        retention: 1,
+                        schedule: '0 * * * *',
+                        type: 'full',
+                        enabled: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -640,7 +773,26 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupPolicy',
+            models: {
+                backupPolicy: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        retention: 1,
+                        schedule: '0 * * * *',
+                        type: 'full',
+                        enabled: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -824,7 +976,26 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupRestoration',
+            models: {
+                backupRestoration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        archiveId: '',
+                        policyId: '',
+                        status: '',
+                        migrationId: '',
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -878,7 +1049,36 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupRestorationList',
+            models: {
+                backupRestorationList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        restorations: {
+                            items: 'backupRestoration',
+                        },
+                    },
+                },
+                backupRestoration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        archiveId: '',
+                        policyId: '',
+                        status: '',
+                        migrationId: '',
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -936,6 +1136,25 @@ export class Backups {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'backupRestoration',
+            models: {
+                backupRestoration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        archiveId: '',
+                        policyId: '',
+                        status: '',
+                        migrationId: '',
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }

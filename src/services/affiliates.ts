@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 export class Affiliates {
@@ -61,7 +66,34 @@ export class Affiliates {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'affiliateLinkList',
+            models: {
+                affiliateLinkList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        links: {
+                            items: 'affiliateLink',
+                        },
+                    },
+                },
+                affiliateLink: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        name: '',
+                        status: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -129,7 +161,24 @@ export class Affiliates {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'affiliateLink',
+            models: {
+                affiliateLink: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        name: '',
+                        status: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -185,7 +234,24 @@ export class Affiliates {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'affiliateLink',
+            models: {
+                affiliateLink: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        name: '',
+                        status: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -296,7 +362,37 @@ export class Affiliates {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'affiliateReferralList',
+            models: {
+                affiliateReferralList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        referrals: {
+                            items: 'affiliateReferral',
+                        },
+                    },
+                },
+                affiliateReferral: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        linkId: '',
+                        referredUserMaskedId: '',
+                        referredUserCountry: '',
+                        status: '',
+                        attributedAt: '',
+                        expiresAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -352,7 +448,36 @@ export class Affiliates {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'affiliateRewardList',
+            models: {
+                affiliateRewardList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        rewards: {
+                            items: 'affiliateReward',
+                        },
+                    },
+                },
+                affiliateReward: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        linkId: '',
+                        referralId: '',
+                        amount: 0,
+                        status: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -452,6 +577,25 @@ export class Affiliates {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'affiliateReward',
+            models: {
+                affiliateReward: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        linkId: '',
+                        referralId: '',
+                        amount: 0,
+                        status: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }
