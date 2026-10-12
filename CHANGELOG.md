@@ -1,5 +1,10 @@
 # Change Log
 
+## 18.4.1
+
+* Fixed: added `ProjectAuthMethodId.Passkey`, so `project.updateAuthMethod` can enable passkeys
+* Fixed: added `ProjectPolicyId.Passkey` and the `Models.PolicyPasskey` model, so `getPolicy` and `listPolicies` return the passkey policy
+
 ## 18.4.0
 
 * Added: `account` passkey methods `listPasskeys`, `createPasskey`, `getPasskey`, `updatePasskey`, `deletePasskey` and `updatePasskeyVerification`
