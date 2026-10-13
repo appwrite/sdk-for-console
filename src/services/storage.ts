@@ -1,9 +1,9 @@
-import { Service } from '../service';
 import {
     AppwriteException,
     Client,
     type Payload,
     UploadProgress,
+    applyDefaults,
 } from '../client';
 import type { Models } from '../models';
 
@@ -94,7 +94,43 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'bucketList',
+            models: {
+                bucketList: {
+                    defaults: {
+                        total: 0,
+                        buckets: [],
+                    },
+                    properties: {
+                        buckets: {
+                            items: 'bucket',
+                        },
+                    },
+                },
+                bucket: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        fileSecurity: false,
+                        name: '',
+                        enabled: true,
+                        maximumFileSize: 0,
+                        allowedFileExtensions: [],
+                        compression: '',
+                        encryption: true,
+                        antivirus: true,
+                        transformations: true,
+                        totalSize: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -298,7 +334,32 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'bucket',
+            models: {
+                bucket: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        fileSecurity: false,
+                        name: '',
+                        enabled: true,
+                        maximumFileSize: 0,
+                        allowedFileExtensions: [],
+                        compression: '',
+                        encryption: true,
+                        antivirus: true,
+                        transformations: true,
+                        totalSize: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -354,7 +415,32 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'bucket',
+            models: {
+                bucket: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        fileSecurity: false,
+                        name: '',
+                        enabled: true,
+                        maximumFileSize: 0,
+                        allowedFileExtensions: [],
+                        compression: '',
+                        encryption: true,
+                        antivirus: true,
+                        transformations: true,
+                        totalSize: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -558,7 +644,32 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'bucket',
+            models: {
+                bucket: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        fileSecurity: false,
+                        name: '',
+                        enabled: true,
+                        maximumFileSize: 0,
+                        allowedFileExtensions: [],
+                        compression: '',
+                        encryption: true,
+                        antivirus: true,
+                        transformations: true,
+                        totalSize: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -718,7 +829,45 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'fileList',
+            models: {
+                fileList: {
+                    defaults: {
+                        total: 0,
+                        files: [],
+                    },
+                    properties: {
+                        files: {
+                            items: 'file',
+                        },
+                    },
+                },
+                file: {
+                    defaults: {
+                        $id: '',
+                        bucketId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        name: '',
+                        folder: '',
+                        key: '',
+                        signature: '',
+                        mimeType: '',
+                        sizeOriginal: 0,
+                        sizeActual: 0,
+                        chunksTotal: 0,
+                        chunksUploaded: 0,
+                        encryption: false,
+                        compression: 'none',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -942,7 +1091,34 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'file',
+            models: {
+                file: {
+                    defaults: {
+                        $id: '',
+                        bucketId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        name: '',
+                        folder: '',
+                        key: '',
+                        signature: '',
+                        mimeType: '',
+                        sizeOriginal: 0,
+                        sizeActual: 0,
+                        chunksTotal: 0,
+                        chunksUploaded: 0,
+                        encryption: false,
+                        compression: 'none',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1047,7 +1223,34 @@ export class Storage {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'file',
+            models: {
+                file: {
+                    defaults: {
+                        $id: '',
+                        bucketId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        name: '',
+                        folder: '',
+                        key: '',
+                        signature: '',
+                        mimeType: '',
+                        sizeOriginal: 0,
+                        sizeActual: 0,
+                        chunksTotal: 0,
+                        chunksUploaded: 0,
+                        encryption: false,
+                        compression: 'none',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1191,9 +1394,7 @@ export class Storage {
         apiPayload['project'] = this.client.config.project;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(
-            Service.flatten(apiPayload),
-        )) {
+        for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
             uri.searchParams.append(key, value);
         }
 
@@ -1433,9 +1634,7 @@ export class Storage {
         apiPayload['project'] = this.client.config.project;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(
-            Service.flatten(apiPayload),
-        )) {
+        for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
             uri.searchParams.append(key, value);
         }
 
@@ -1516,9 +1715,7 @@ export class Storage {
         apiPayload['project'] = this.client.config.project;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(
-            Service.flatten(apiPayload),
-        )) {
+        for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
             uri.searchParams.append(key, value);
         }
 

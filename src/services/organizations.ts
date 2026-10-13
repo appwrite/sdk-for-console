@@ -1,5 +1,9 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 import { Platform } from '../enums/platform';
@@ -79,7 +83,42 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'organizationList',
+            models: {
+                organizationList: {
+                    defaults: {
+                        total: 0,
+                        teams: [],
+                    },
+                    properties: {
+                        teams: {
+                            items: 'organization',
+                        },
+                    },
+                },
+                organization: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        total: 0,
+                        budgetAlerts: [75],
+                        billingPlan: 'tier-0',
+                        billingPlanId: 'tier-0',
+                        billingEmail: '',
+                        status: 'draft',
+                        markedForDeletion: false,
+                        platform: 'appwrite',
+                        projects: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -401,7 +440,38 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'estimation',
+            models: {
+                estimation: {
+                    defaults: {
+                        amount: 0,
+                        grossAmount: 0,
+                        credits: 0,
+                        items: [],
+                        discounts: [],
+                        trialDays: 0,
+                    },
+                    properties: {
+                        items: {
+                            items: 'estimation_item',
+                        },
+                        discounts: {
+                            items: 'estimation_item',
+                        },
+                    },
+                },
+                estimation_item: {
+                    defaults: {
+                        label: '',
+                        value: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -514,7 +584,38 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'addonList',
+            models: {
+                addonList: {
+                    defaults: {
+                        total: 0,
+                        addons: [],
+                    },
+                    properties: {
+                        addons: {
+                            items: 'addon',
+                        },
+                    },
+                },
+                addon: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        key: '',
+                        resourceType: '',
+                        resourceId: '',
+                        status: 'active',
+                        currentValue: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -573,7 +674,27 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'addon',
+            models: {
+                addon: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        key: '',
+                        resourceType: '',
+                        resourceId: '',
+                        status: 'active',
+                        currentValue: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -635,7 +756,27 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'addon',
+            models: {
+                addon: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        key: '',
+                        resourceType: '',
+                        resourceId: '',
+                        status: 'active',
+                        currentValue: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -711,7 +852,27 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'addon',
+            models: {
+                addon: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        key: '',
+                        resourceType: '',
+                        resourceId: '',
+                        status: 'active',
+                        currentValue: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -869,7 +1030,27 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'addon',
+            models: {
+                addon: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        key: '',
+                        resourceType: '',
+                        resourceId: '',
+                        status: 'active',
+                        currentValue: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -946,7 +1127,26 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'addonPrice',
+            models: {
+                addonPrice: {
+                    defaults: {
+                        addonKey: '',
+                        name: '',
+                        monthlyPrice: 0,
+                        proratedAmount: 0,
+                        remainingDays: 0,
+                        totalCycleDays: 0,
+                        currency: 'USD',
+                        billingCycleEnd: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1019,7 +1219,94 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'aggregationTeamList',
+            models: {
+                aggregationTeamList: {
+                    defaults: {
+                        total: 0,
+                        aggregations: [],
+                    },
+                    properties: {
+                        aggregations: {
+                            items: 'aggregationTeam',
+                        },
+                    },
+                },
+                aggregationTeam: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        from: '',
+                        to: '',
+                        usageStorage: 0,
+                        usageTotalStorage: 0,
+                        usageFilesStorage: 0,
+                        usageDeploymentsStorage: 0,
+                        usageBuildsStorage: 0,
+                        usageDatabasesStorage: 0,
+                        usageFunctionsStorage: 0,
+                        usageSitesStorage: 0,
+                        usageUsers: 0,
+                        usageExecutions: 0,
+                        usageBandwidth: 0,
+                        usageRealtime: 0,
+                        usageRealtimeMessages: 0,
+                        usageRealtimeBandwidth: 0,
+                        additionalMembers: 0,
+                        additionalMemberAmount: 0,
+                        additionalStorageAmount: 0,
+                        additionalUsersAmount: 0,
+                        additionalExecutionsAmount: 0,
+                        additionalBandwidthAmount: 0,
+                        additionalRealtimeAmount: 0,
+                        plan: '',
+                        amount: 0,
+                        breakdown: [],
+                        resources: [],
+                    },
+                    properties: {
+                        breakdown: {
+                            items: 'aggregationBreakdown',
+                        },
+                        resources: {
+                            items: 'usageResources',
+                        },
+                    },
+                },
+                aggregationBreakdown: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        region: 'fra',
+                        amount: 0,
+                        resources: [],
+                    },
+                    properties: {
+                        resources: {
+                            items: 'usageResources',
+                        },
+                    },
+                },
+                usageResources: {
+                    defaults: {
+                        name: '',
+                        value: 0,
+                        amount: 0,
+                        rate: 0,
+                        desc: '',
+                        resourceId: '',
+                        type: '',
+                        specification: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1132,7 +1419,83 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'aggregationTeam',
+            models: {
+                aggregationTeam: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        from: '',
+                        to: '',
+                        usageStorage: 0,
+                        usageTotalStorage: 0,
+                        usageFilesStorage: 0,
+                        usageDeploymentsStorage: 0,
+                        usageBuildsStorage: 0,
+                        usageDatabasesStorage: 0,
+                        usageFunctionsStorage: 0,
+                        usageSitesStorage: 0,
+                        usageUsers: 0,
+                        usageExecutions: 0,
+                        usageBandwidth: 0,
+                        usageRealtime: 0,
+                        usageRealtimeMessages: 0,
+                        usageRealtimeBandwidth: 0,
+                        additionalMembers: 0,
+                        additionalMemberAmount: 0,
+                        additionalStorageAmount: 0,
+                        additionalUsersAmount: 0,
+                        additionalExecutionsAmount: 0,
+                        additionalBandwidthAmount: 0,
+                        additionalRealtimeAmount: 0,
+                        plan: '',
+                        amount: 0,
+                        breakdown: [],
+                        resources: [],
+                    },
+                    properties: {
+                        breakdown: {
+                            items: 'aggregationBreakdown',
+                        },
+                        resources: {
+                            items: 'usageResources',
+                        },
+                    },
+                },
+                aggregationBreakdown: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        region: 'fra',
+                        amount: 0,
+                        resources: [],
+                    },
+                    properties: {
+                        resources: {
+                            items: 'usageResources',
+                        },
+                    },
+                },
+                usageResources: {
+                    defaults: {
+                        name: '',
+                        value: 0,
+                        amount: 0,
+                        rate: 0,
+                        desc: '',
+                        resourceId: '',
+                        type: '',
+                        specification: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1219,7 +1582,31 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'organization',
+            models: {
+                organization: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        total: 0,
+                        budgetAlerts: [75],
+                        billingPlan: 'tier-0',
+                        billingPlanId: 'tier-0',
+                        billingEmail: '',
+                        status: 'draft',
+                        markedForDeletion: false,
+                        platform: 'appwrite',
+                        projects: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1362,7 +1749,23 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'billingAddress',
+            models: {
+                billingAddress: {
+                    defaults: {
+                        $id: '',
+                        userId: '',
+                        streetAddress: '',
+                        country: '',
+                        city: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1448,7 +1851,31 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'organization',
+            models: {
+                organization: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        total: 0,
+                        budgetAlerts: [75],
+                        billingPlan: 'tier-0',
+                        billingPlanId: 'tier-0',
+                        billingEmail: '',
+                        status: 'draft',
+                        markedForDeletion: false,
+                        platform: 'appwrite',
+                        projects: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1547,7 +1974,31 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'organization',
+            models: {
+                organization: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        total: 0,
+                        budgetAlerts: [75],
+                        billingPlan: 'tier-0',
+                        billingPlanId: 'tier-0',
+                        billingEmail: '',
+                        status: 'draft',
+                        markedForDeletion: false,
+                        platform: 'appwrite',
+                        projects: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1622,7 +2073,41 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'creditList',
+            models: {
+                creditList: {
+                    defaults: {
+                        credits: [],
+                        total: 0,
+                        available: 0,
+                    },
+                    properties: {
+                        credits: {
+                            items: 'credit',
+                        },
+                    },
+                },
+                credit: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        couponId: '',
+                        userId: '',
+                        teamId: '',
+                        credits: 0,
+                        total: 0,
+                        expiration: '',
+                        status: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1698,7 +2183,29 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'credit',
+            models: {
+                credit: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        couponId: '',
+                        userId: '',
+                        teamId: '',
+                        credits: 0,
+                        total: 0,
+                        expiration: '',
+                        status: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1759,7 +2266,19 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'creditAvailable',
+            models: {
+                creditAvailable: {
+                    defaults: {
+                        available: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1833,7 +2352,29 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'credit',
+            models: {
+                credit: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        couponId: '',
+                        userId: '',
+                        teamId: '',
+                        credits: 0,
+                        total: 0,
+                        expiration: '',
+                        status: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1895,7 +2436,65 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'estimationDeleteOrganization',
+            models: {
+                estimationDeleteOrganization: {
+                    defaults: {
+                        unpaidInvoices: [],
+                    },
+                    properties: {
+                        unpaidInvoices: {
+                            items: 'invoice',
+                        },
+                    },
+                },
+                invoice: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        teamId: '',
+                        aggregationId: '',
+                        plan: 'tier-0',
+                        usage: [],
+                        amount: 0,
+                        tax: 0,
+                        taxAmount: 0,
+                        vat: 0,
+                        vatAmount: 0,
+                        grossAmount: 0,
+                        creditsUsed: 0,
+                        currency: 'USD',
+                        status: '',
+                        type: 'subscription',
+                        from: '',
+                        to: '',
+                    },
+                    properties: {
+                        usage: {
+                            items: 'usageResources',
+                        },
+                    },
+                },
+                usageResources: {
+                    defaults: {
+                        name: '',
+                        value: 0,
+                        amount: 0,
+                        rate: 0,
+                        desc: '',
+                        resourceId: '',
+                        type: '',
+                        specification: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2007,7 +2606,39 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'estimationUpdatePlan',
+            models: {
+                estimationUpdatePlan: {
+                    defaults: {
+                        amount: 0,
+                        grossAmount: 0,
+                        credits: 0,
+                        items: [],
+                        discounts: [],
+                        trialDays: 0,
+                        organizationCredits: 0,
+                    },
+                    properties: {
+                        items: {
+                            items: 'estimation_item',
+                        },
+                        discounts: {
+                            items: 'estimation_item',
+                        },
+                    },
+                },
+                estimation_item: {
+                    defaults: {
+                        label: '',
+                        value: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2146,7 +2777,28 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'downgradeFeedback',
+            models: {
+                downgradeFeedback: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        title: '',
+                        message: '',
+                        fromPlanId: '',
+                        toPlanId: '',
+                        teamId: '',
+                        userId: '',
+                        version: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2219,7 +2871,66 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'invoiceList',
+            models: {
+                invoiceList: {
+                    defaults: {
+                        total: 0,
+                        invoices: [],
+                    },
+                    properties: {
+                        invoices: {
+                            items: 'invoice',
+                        },
+                    },
+                },
+                invoice: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        teamId: '',
+                        aggregationId: '',
+                        plan: 'tier-0',
+                        usage: [],
+                        amount: 0,
+                        tax: 0,
+                        taxAmount: 0,
+                        vat: 0,
+                        vatAmount: 0,
+                        grossAmount: 0,
+                        creditsUsed: 0,
+                        currency: 'USD',
+                        status: '',
+                        type: 'subscription',
+                        from: '',
+                        to: '',
+                    },
+                    properties: {
+                        usage: {
+                            items: 'usageResources',
+                        },
+                    },
+                },
+                usageResources: {
+                    defaults: {
+                        name: '',
+                        value: 0,
+                        amount: 0,
+                        rate: 0,
+                        desc: '',
+                        resourceId: '',
+                        type: '',
+                        specification: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2296,7 +3007,55 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'invoice',
+            models: {
+                invoice: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        teamId: '',
+                        aggregationId: '',
+                        plan: 'tier-0',
+                        usage: [],
+                        amount: 0,
+                        tax: 0,
+                        taxAmount: 0,
+                        vat: 0,
+                        vatAmount: 0,
+                        grossAmount: 0,
+                        creditsUsed: 0,
+                        currency: 'USD',
+                        status: '',
+                        type: 'subscription',
+                        from: '',
+                        to: '',
+                    },
+                    properties: {
+                        usage: {
+                            items: 'usageResources',
+                        },
+                    },
+                },
+                usageResources: {
+                    defaults: {
+                        name: '',
+                        value: 0,
+                        amount: 0,
+                        rate: 0,
+                        desc: '',
+                        resourceId: '',
+                        type: '',
+                        specification: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2369,9 +3128,7 @@ export class Organizations {
         apiPayload['project'] = this.client.config.project;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(
-            Service.flatten(apiPayload),
-        )) {
+        for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
             uri.searchParams.append(key, value);
         }
 
@@ -2479,7 +3236,55 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'invoice',
+            models: {
+                invoice: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        teamId: '',
+                        aggregationId: '',
+                        plan: 'tier-0',
+                        usage: [],
+                        amount: 0,
+                        tax: 0,
+                        taxAmount: 0,
+                        vat: 0,
+                        vatAmount: 0,
+                        grossAmount: 0,
+                        creditsUsed: 0,
+                        currency: 'USD',
+                        status: '',
+                        type: 'subscription',
+                        from: '',
+                        to: '',
+                    },
+                    properties: {
+                        usage: {
+                            items: 'usageResources',
+                        },
+                    },
+                },
+                usageResources: {
+                    defaults: {
+                        name: '',
+                        value: 0,
+                        amount: 0,
+                        rate: 0,
+                        desc: '',
+                        resourceId: '',
+                        type: '',
+                        specification: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2558,7 +3363,55 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'invoice',
+            models: {
+                invoice: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        teamId: '',
+                        aggregationId: '',
+                        plan: 'tier-0',
+                        usage: [],
+                        amount: 0,
+                        tax: 0,
+                        taxAmount: 0,
+                        vat: 0,
+                        vatAmount: 0,
+                        grossAmount: 0,
+                        creditsUsed: 0,
+                        currency: 'USD',
+                        status: '',
+                        type: 'subscription',
+                        from: '',
+                        to: '',
+                    },
+                    properties: {
+                        usage: {
+                            items: 'usageResources',
+                        },
+                    },
+                },
+                usageResources: {
+                    defaults: {
+                        name: '',
+                        value: 0,
+                        amount: 0,
+                        rate: 0,
+                        desc: '',
+                        resourceId: '',
+                        type: '',
+                        specification: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2631,9 +3484,7 @@ export class Organizations {
         apiPayload['project'] = this.client.config.project;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(
-            Service.flatten(apiPayload),
-        )) {
+        for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
             uri.searchParams.append(key, value);
         }
 
@@ -2724,7 +3575,31 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'organization',
+            models: {
+                organization: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        total: 0,
+                        budgetAlerts: [75],
+                        billingPlan: 'tier-0',
+                        billingPlanId: 'tier-0',
+                        billingEmail: '',
+                        status: 'draft',
+                        markedForDeletion: false,
+                        platform: 'appwrite',
+                        projects: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2790,7 +3665,31 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, apiPayload);
+        const request = this.client.call('delete', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'organization',
+            models: {
+                organization: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        total: 0,
+                        budgetAlerts: [75],
+                        billingPlan: 'tier-0',
+                        billingPlanId: 'tier-0',
+                        billingEmail: '',
+                        status: 'draft',
+                        markedForDeletion: false,
+                        platform: 'appwrite',
+                        projects: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2879,7 +3778,31 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'organization',
+            models: {
+                organization: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        total: 0,
+                        budgetAlerts: [75],
+                        billingPlan: 'tier-0',
+                        billingPlanId: 'tier-0',
+                        billingEmail: '',
+                        status: 'draft',
+                        markedForDeletion: false,
+                        platform: 'appwrite',
+                        projects: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2945,7 +3868,31 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, apiPayload);
+        const request = this.client.call('delete', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'organization',
+            models: {
+                organization: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        total: 0,
+                        budgetAlerts: [75],
+                        billingPlan: 'tier-0',
+                        billingPlanId: 'tier-0',
+                        billingEmail: '',
+                        status: 'draft',
+                        markedForDeletion: false,
+                        platform: 'appwrite',
+                        projects: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3027,7 +3974,27 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'paymentMethod',
+            models: {
+                paymentMethod: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        providerMethodId: '',
+                        clientSecret: '',
+                        providerUserId: '',
+                        userId: '',
+                        default: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3083,7 +4050,79 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'billingPlan',
+            models: {
+                billingPlan: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        desc: '',
+                        order: 0,
+                        price: 0,
+                        trial: 0,
+                        bandwidth: 0,
+                        storage: 0,
+                        imageTransformations: 0,
+                        screenshotsGenerated: 0,
+                        webhooks: 0,
+                        wafRules: 0,
+                        environments: 0,
+                        projects: 0,
+                        platforms: 0,
+                        users: 0,
+                        teams: 0,
+                        databases: 0,
+                        databasesReads: 0,
+                        databasesWrites: 0,
+                        databasesBatchSize: 0,
+                        buckets: 0,
+                        fileSize: 0,
+                        functions: 0,
+                        sites: 0,
+                        executions: 0,
+                        executionsRetentionCount: 1000,
+                        GBHours: 0,
+                        realtime: 0,
+                        realtimeMessages: 0,
+                        messages: 0,
+                        topics: 0,
+                        authPhone: 0,
+                        domains: 0,
+                        usageLogs: 0,
+                        projectInactivityDays: 0,
+                        alertLimit: 80,
+                        budgetCapEnabled: false,
+                        customSmtp: false,
+                        emailBranding: false,
+                        requiresPaymentMethod: true,
+                        requiresBillingAddress: false,
+                        isAvailable: true,
+                        selfService: true,
+                        premiumSupport: true,
+                        budgeting: true,
+                        supportsMockNumbers: true,
+                        supportsOrganizationRoles: true,
+                        supportsCredits: false,
+                        supportsDedicatedDatabases: false,
+                        supportsDisposableEmailValidation: false,
+                        supportsCanonicalEmailValidation: false,
+                        supportsFreeEmailValidation: false,
+                        supportsCorporateEmailValidation: false,
+                        supportsProjectSpecificRoles: false,
+                        usagePerProject: true,
+                        deploymentSize: 0,
+                        buildSize: 0,
+                        functionsIntervalMinimum: 0,
+                        databasesAllowEncrypt: false,
+                        databaseComputeCredit: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3256,7 +4295,31 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'organization',
+            models: {
+                organization: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        total: 0,
+                        budgetAlerts: [75],
+                        billingPlan: 'tier-0',
+                        billingPlanId: 'tier-0',
+                        billingEmail: '',
+                        status: 'draft',
+                        markedForDeletion: false,
+                        platform: 'appwrite',
+                        projects: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3370,7 +4433,21 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'estimationPlanChange',
+            models: {
+                estimationPlanChange: {
+                    defaults: {
+                        currentBillingPlanId: '',
+                        targetBillingPlanId: '',
+                        direction: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3428,7 +4505,34 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'consoleRegionList',
+            models: {
+                consoleRegionList: {
+                    defaults: {
+                        total: 0,
+                        regions: [],
+                    },
+                    properties: {
+                        regions: {
+                            items: 'consoleRegion',
+                        },
+                    },
+                },
+                consoleRegion: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        disabled: false,
+                        default: false,
+                        flag: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3501,7 +4605,20 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'roles',
+            models: {
+                roles: {
+                    defaults: {
+                        scopes: [],
+                        roles: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3584,7 +4701,31 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'organization',
+            models: {
+                organization: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        total: 0,
+                        budgetAlerts: [75],
+                        billingPlan: 'tier-0',
+                        billingPlanId: 'tier-0',
+                        billingEmail: '',
+                        status: 'draft',
+                        markedForDeletion: false,
+                        platform: 'appwrite',
+                        projects: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3673,7 +4814,110 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'usageOrganization',
+            models: {
+                usageOrganization: {
+                    defaults: {
+                        bandwidth: [],
+                        users: [],
+                        executions: [],
+                        databasesReads: [],
+                        databasesWrites: [],
+                        imageTransformations: [],
+                        imageTransformationsTotal: 0,
+                        screenshotsGenerated: [],
+                        screenshotsGeneratedTotal: 0,
+                        usersTotal: 0,
+                        executionsTotal: 0,
+                        executionsMBSecondsTotal: 0,
+                        buildsMBSecondsTotal: 0,
+                        filesStorageTotal: 0,
+                        buildsStorageTotal: 0,
+                        deploymentsStorageTotal: 0,
+                        databasesStorageTotal: 0,
+                        databasesReadsTotal: 0,
+                        databasesWritesTotal: 0,
+                        backupsStorageTotal: 0,
+                        avatarsStorageTotal: 0,
+                        storageTotal: 0,
+                        authPhoneTotal: 0,
+                        authPhoneEstimate: 0,
+                        projects: [],
+                        realtimeConnections: [],
+                        realtimeConnectionsTotal: 0,
+                        realtimeMessages: [],
+                        realtimeMessagesTotal: 0,
+                        realtimeBandwidth: [],
+                        realtimeBandwidthTotal: 0,
+                    },
+                    properties: {
+                        bandwidth: {
+                            items: 'metric',
+                        },
+                        users: {
+                            items: 'metric',
+                        },
+                        executions: {
+                            items: 'metric',
+                        },
+                        databasesReads: {
+                            items: 'metric',
+                        },
+                        databasesWrites: {
+                            items: 'metric',
+                        },
+                        imageTransformations: {
+                            items: 'metric',
+                        },
+                        screenshotsGenerated: {
+                            items: 'metric',
+                        },
+                        projects: {
+                            items: 'usageOrganizationProject',
+                        },
+                        realtimeConnections: {
+                            items: 'metric',
+                        },
+                        realtimeMessages: {
+                            items: 'metric',
+                        },
+                        realtimeBandwidth: {
+                            items: 'metric',
+                        },
+                    },
+                },
+                metric: {
+                    defaults: {
+                        value: -1,
+                        date: '',
+                    },
+                },
+                usageOrganizationProject: {
+                    defaults: {
+                        projectId: '',
+                        bandwidth: 0,
+                        users: 0,
+                        databasesReads: 0,
+                        databasesWrites: 0,
+                        executionsMBSeconds: 0,
+                        buildsMBSeconds: 0,
+                        databasesReadsTotal: 0,
+                        databasesWritesTotal: 0,
+                        imageTransformations: 0,
+                        imageTransformationsTotal: 0,
+                        screenshotsGenerated: 0,
+                        screenshotsGeneratedTotal: 0,
+                        realtimeConnections: 0,
+                        realtimeMessages: 0,
+                        realtimeBandwidth: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3753,6 +4997,30 @@ export class Organizations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'organization',
+            models: {
+                organization: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        total: 0,
+                        budgetAlerts: [75],
+                        billingPlan: 'tier-0',
+                        billingPlanId: 'tier-0',
+                        billingEmail: '',
+                        status: 'draft',
+                        markedForDeletion: false,
+                        platform: 'appwrite',
+                        projects: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }

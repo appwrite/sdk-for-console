@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 import { AppwriteMigrationResource } from '../enums/appwrite-migration-resource';
@@ -90,7 +95,50 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migrationList',
+            models: {
+                migrationList: {
+                    defaults: {
+                        total: 0,
+                        migrations: [],
+                    },
+                    properties: {
+                        migrations: {
+                            items: 'migration',
+                        },
+                    },
+                },
+                migration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: '',
+                        stage: '',
+                        source: '',
+                        destination: 'Appwrite',
+                        resources: [],
+                        resourceId: '',
+                        resourceInternalId: '',
+                        resourceType: '',
+                        parentResourceId: '',
+                        parentResourceInternalId: '',
+                        parentResourceType: '',
+                        destinationResourceId: '',
+                        destinationResourceInternalId: '',
+                        destinationResourceType: '',
+                        statusCounters: [],
+                        resourceData: [],
+                        errors: [],
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -226,7 +274,39 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migration',
+            models: {
+                migration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: '',
+                        stage: '',
+                        source: '',
+                        destination: 'Appwrite',
+                        resources: [],
+                        resourceId: '',
+                        resourceInternalId: '',
+                        resourceType: '',
+                        parentResourceId: '',
+                        parentResourceInternalId: '',
+                        parentResourceType: '',
+                        destinationResourceId: '',
+                        destinationResourceInternalId: '',
+                        destinationResourceType: '',
+                        statusCounters: [],
+                        resourceData: [],
+                        errors: [],
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -348,7 +428,46 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migrationReport',
+            models: {
+                migrationReport: {
+                    defaults: {
+                        user: 0,
+                        team: 0,
+                        database: 0,
+                        row: 0,
+                        file: 0,
+                        bucket: 0,
+                        function: 0,
+                        platform: 0,
+                        'api-key': 0,
+                        'project-variable': 0,
+                        webhook: 0,
+                        'auth-methods': 0,
+                        'project-protocols': 0,
+                        'project-labels': 0,
+                        'project-services': 0,
+                        policies: 0,
+                        smtp: 0,
+                        rule: 0,
+                        'project-email-template': 0,
+                        site: 0,
+                        provider: 0,
+                        topic: 0,
+                        subscriber: 0,
+                        message: 0,
+                        size: 0,
+                        version: '',
+                        'oauth2-provider': 0,
+                        'backup-policy': 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -546,7 +665,39 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migration',
+            models: {
+                migration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: '',
+                        stage: '',
+                        source: '',
+                        destination: 'Appwrite',
+                        resources: [],
+                        resourceId: '',
+                        resourceInternalId: '',
+                        resourceType: '',
+                        parentResourceId: '',
+                        parentResourceInternalId: '',
+                        parentResourceType: '',
+                        destinationResourceId: '',
+                        destinationResourceInternalId: '',
+                        destinationResourceType: '',
+                        statusCounters: [],
+                        resourceData: [],
+                        errors: [],
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -689,7 +840,39 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migration',
+            models: {
+                migration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: '',
+                        stage: '',
+                        source: '',
+                        destination: 'Appwrite',
+                        resources: [],
+                        resourceId: '',
+                        resourceInternalId: '',
+                        resourceType: '',
+                        parentResourceId: '',
+                        parentResourceInternalId: '',
+                        parentResourceType: '',
+                        destinationResourceId: '',
+                        destinationResourceInternalId: '',
+                        destinationResourceType: '',
+                        statusCounters: [],
+                        resourceData: [],
+                        errors: [],
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -774,7 +957,39 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migration',
+            models: {
+                migration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: '',
+                        stage: '',
+                        source: '',
+                        destination: 'Appwrite',
+                        resources: [],
+                        resourceId: '',
+                        resourceInternalId: '',
+                        resourceType: '',
+                        parentResourceId: '',
+                        parentResourceInternalId: '',
+                        parentResourceType: '',
+                        destinationResourceId: '',
+                        destinationResourceInternalId: '',
+                        destinationResourceType: '',
+                        statusCounters: [],
+                        resourceData: [],
+                        errors: [],
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -858,7 +1073,46 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migrationReport',
+            models: {
+                migrationReport: {
+                    defaults: {
+                        user: 0,
+                        team: 0,
+                        database: 0,
+                        row: 0,
+                        file: 0,
+                        bucket: 0,
+                        function: 0,
+                        platform: 0,
+                        'api-key': 0,
+                        'project-variable': 0,
+                        webhook: 0,
+                        'auth-methods': 0,
+                        'project-protocols': 0,
+                        'project-labels': 0,
+                        'project-services': 0,
+                        policies: 0,
+                        smtp: 0,
+                        rule: 0,
+                        'project-email-template': 0,
+                        site: 0,
+                        provider: 0,
+                        topic: 0,
+                        subscriber: 0,
+                        message: 0,
+                        size: 0,
+                        version: '',
+                        'oauth2-provider': 0,
+                        'backup-policy': 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1000,7 +1254,39 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migration',
+            models: {
+                migration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: '',
+                        stage: '',
+                        source: '',
+                        destination: 'Appwrite',
+                        resources: [],
+                        resourceId: '',
+                        resourceInternalId: '',
+                        resourceType: '',
+                        parentResourceId: '',
+                        parentResourceInternalId: '',
+                        parentResourceType: '',
+                        destinationResourceId: '',
+                        destinationResourceInternalId: '',
+                        destinationResourceType: '',
+                        statusCounters: [],
+                        resourceData: [],
+                        errors: [],
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1145,7 +1431,39 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migration',
+            models: {
+                migration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: '',
+                        stage: '',
+                        source: '',
+                        destination: 'Appwrite',
+                        resources: [],
+                        resourceId: '',
+                        resourceInternalId: '',
+                        resourceType: '',
+                        parentResourceId: '',
+                        parentResourceInternalId: '',
+                        parentResourceType: '',
+                        destinationResourceId: '',
+                        destinationResourceInternalId: '',
+                        destinationResourceType: '',
+                        statusCounters: [],
+                        resourceData: [],
+                        errors: [],
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1335,7 +1653,39 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migration',
+            models: {
+                migration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: '',
+                        stage: '',
+                        source: '',
+                        destination: 'Appwrite',
+                        resources: [],
+                        resourceId: '',
+                        resourceInternalId: '',
+                        resourceType: '',
+                        parentResourceId: '',
+                        parentResourceInternalId: '',
+                        parentResourceType: '',
+                        destinationResourceId: '',
+                        destinationResourceInternalId: '',
+                        destinationResourceType: '',
+                        statusCounters: [],
+                        resourceData: [],
+                        errors: [],
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1524,7 +1874,46 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migrationReport',
+            models: {
+                migrationReport: {
+                    defaults: {
+                        user: 0,
+                        team: 0,
+                        database: 0,
+                        row: 0,
+                        file: 0,
+                        bucket: 0,
+                        function: 0,
+                        platform: 0,
+                        'api-key': 0,
+                        'project-variable': 0,
+                        webhook: 0,
+                        'auth-methods': 0,
+                        'project-protocols': 0,
+                        'project-labels': 0,
+                        'project-services': 0,
+                        policies: 0,
+                        smtp: 0,
+                        rule: 0,
+                        'project-email-template': 0,
+                        site: 0,
+                        provider: 0,
+                        topic: 0,
+                        subscriber: 0,
+                        message: 0,
+                        size: 0,
+                        version: '',
+                        'oauth2-provider': 0,
+                        'backup-policy': 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1696,7 +2085,39 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migration',
+            models: {
+                migration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: '',
+                        stage: '',
+                        source: '',
+                        destination: 'Appwrite',
+                        resources: [],
+                        resourceId: '',
+                        resourceInternalId: '',
+                        resourceType: '',
+                        parentResourceId: '',
+                        parentResourceInternalId: '',
+                        parentResourceType: '',
+                        destinationResourceId: '',
+                        destinationResourceInternalId: '',
+                        destinationResourceType: '',
+                        statusCounters: [],
+                        resourceData: [],
+                        errors: [],
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1867,7 +2288,46 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migrationReport',
+            models: {
+                migrationReport: {
+                    defaults: {
+                        user: 0,
+                        team: 0,
+                        database: 0,
+                        row: 0,
+                        file: 0,
+                        bucket: 0,
+                        function: 0,
+                        platform: 0,
+                        'api-key': 0,
+                        'project-variable': 0,
+                        webhook: 0,
+                        'auth-methods': 0,
+                        'project-protocols': 0,
+                        'project-labels': 0,
+                        'project-services': 0,
+                        policies: 0,
+                        smtp: 0,
+                        rule: 0,
+                        'project-email-template': 0,
+                        site: 0,
+                        provider: 0,
+                        topic: 0,
+                        subscriber: 0,
+                        message: 0,
+                        size: 0,
+                        version: '',
+                        'oauth2-provider': 0,
+                        'backup-policy': 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1923,7 +2383,39 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migration',
+            models: {
+                migration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: '',
+                        stage: '',
+                        source: '',
+                        destination: 'Appwrite',
+                        resources: [],
+                        resourceId: '',
+                        resourceInternalId: '',
+                        resourceType: '',
+                        parentResourceId: '',
+                        parentResourceInternalId: '',
+                        parentResourceType: '',
+                        destinationResourceId: '',
+                        destinationResourceInternalId: '',
+                        destinationResourceType: '',
+                        statusCounters: [],
+                        resourceData: [],
+                        errors: [],
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1980,7 +2472,39 @@ export class Migrations {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'migration',
+            models: {
+                migration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: '',
+                        stage: '',
+                        source: '',
+                        destination: 'Appwrite',
+                        resources: [],
+                        resourceId: '',
+                        resourceInternalId: '',
+                        resourceType: '',
+                        parentResourceId: '',
+                        parentResourceInternalId: '',
+                        parentResourceType: '',
+                        destinationResourceId: '',
+                        destinationResourceInternalId: '',
+                        destinationResourceType: '',
+                        statusCounters: [],
+                        resourceData: [],
+                        errors: [],
+                        options: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
