@@ -1,4 +1,7 @@
 export enum UsageEventMetric {
+    AnalyticsEvents = 'analytics.events',
+    AnalyticsPageviews = 'analytics.pageviews',
+    AnalyticsBotsEvents = 'analytics.bots.events',
     NetworkRequests = 'network.requests',
     NetworkInbound = 'network.inbound',
     NetworkOutbound = 'network.outbound',

@@ -88,6 +88,7 @@ export enum QuerySuggestionResource {
     ResourceTokens = 'resourcetokens',
     Transactions = 'transactions',
     TransactionLogs = 'transactionlogs',
+    AnalyticsProperties = 'analyticsproperties',
     DedicatedDatabases = 'dedicateddatabases',
     DedicatedDatabaseConfigs = 'dedicateddatabaseconfigs',
     DedicatedDatabaseRuntimes = 'dedicateddatabaseruntimes',

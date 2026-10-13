@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 import { UsageEventMetric } from '../enums/usage-event-metric';
@@ -221,7 +226,39 @@ export class Usage {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'usageEventList',
+            models: {
+                usageEventList: {
+                    defaults: {
+                        interval: '',
+                    },
+                    properties: {
+                        metrics: {
+                            items: 'usageMetric',
+                        },
+                    },
+                },
+                usageMetric: {
+                    defaults: {
+                        metric: '',
+                    },
+                    properties: {
+                        points: {
+                            items: 'usageDataPoint',
+                        },
+                    },
+                },
+                usageDataPoint: {
+                    defaults: {
+                        value: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -452,6 +489,38 @@ export class Usage {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'usageGaugeList',
+            models: {
+                usageGaugeList: {
+                    defaults: {
+                        interval: '',
+                    },
+                    properties: {
+                        metrics: {
+                            items: 'usageMetric',
+                        },
+                    },
+                },
+                usageMetric: {
+                    defaults: {
+                        metric: '',
+                    },
+                    properties: {
+                        points: {
+                            items: 'usageDataPoint',
+                        },
+                    },
+                },
+                usageDataPoint: {
+                    defaults: {
+                        value: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }

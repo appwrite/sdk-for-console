@@ -1,4 +1,5 @@
 export enum UsageGaugeMetric {
+    AnalyticsProperties = 'analytics.properties',
     Teams = 'teams',
     Users = 'users',
     Messages = 'messages',

@@ -653,6 +653,7 @@ export namespace Models {
             | Models.PolicyPasswordStrength
             | Models.PolicyPasswordPersonalData
             | Models.PolicyPasswordPwned
+            | Models.PolicyPasswordRotation
             | Models.PolicySessionAlert
             | Models.PolicySessionDuration
             | Models.PolicySessionInvalidation
@@ -7037,6 +7038,24 @@ export namespace Models {
     };
 
     /**
+     * Policy Password Rotation
+     */
+    export type PolicyPasswordRotation = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether expired passwords require a reset before email/password sign-in.
+         */
+        enabled: boolean;
+        /**
+         * Maximum password age in seconds.
+         */
+        maxAge: number;
+    };
+
+    /**
      * Policy Session Alert
      */
     export type PolicySessionAlert = {
@@ -7328,6 +7347,10 @@ export namespace Models {
          * Android application ID.
          */
         applicationId: string;
+        /**
+         * SHA-256 fingerprints of the certificates the app is signed with. Passkeys created in the app are accepted when its signature matches one.
+         */
+        fingerprints: string[];
     };
 
     /**
@@ -7881,7 +7904,7 @@ export namespace Models {
          */
         deploymentId: string;
         /**
-         * Type of deployment. Possible values are "function", "site". Used if rule's type is "deployment".
+         * Type of deployment resource: function, site, or dedicatedDatabase.
          */
         deploymentResourceType?: ProxyRuleDeploymentResourceType;
         /**
@@ -8080,10 +8103,6 @@ export namespace Models {
          * Defines if main domain is configured. If so, custom domains can be created.
          */
         _APP_DOMAIN_ENABLED: boolean;
-        /**
-         * Defines if AI assistant is enabled.
-         */
-        _APP_ASSISTANT_ENABLED: boolean;
         /**
          * A comma separated list of domains to use for site URLs.
          */
@@ -9475,6 +9494,116 @@ export namespace Models {
     };
 
     /**
+     * AnalyticsMetric
+     */
+    export type AnalyticsMetric = {
+        /**
+         * Dimension value this row covers. Null when no dimension was requested, empty when the dimension could not be derived for those events.
+         */
+        value?: string;
+        /**
+         * Start of the time bucket this row covers, in ISO 8601. Null when no interval was requested.
+         */
+        date?: string;
+        /**
+         * Unique visitors in the requested range.
+         */
+        visitors: number;
+        /**
+         * Unique sessions in the requested range.
+         */
+        sessions: number;
+        /**
+         * Total pageview events (events with name="pageview") in the requested range. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        pageviews?: number;
+        /**
+         * Total events in the requested range.
+         */
+        events: number;
+        /**
+         * Total sessions with activity in the requested range. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        visits?: number;
+        /**
+         * Share of single-event sessions, as a percentage. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        bounceRate?: number;
+        /**
+         * Average session length in seconds, measured first event to last event. Single-event sessions count as 0. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        visitDuration?: number;
+        /**
+         * Average pageviews per session (pageviews divided by visits). Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        viewsPerVisit?: number;
+        /**
+         * Average scroll depth across events, as a percentage. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        scrollDepth?: number;
+        /**
+         * Average engaged time per session in seconds, counting only foreground time. Sessions that reported no engagement are excluded. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         */
+        engagementTime?: number;
+    };
+
+    /**
+     * AnalyticsMetricList
+     */
+    export type AnalyticsMetricList = {
+        /**
+         * Total number of metric rows returned.
+         */
+        total: number;
+        /**
+         * Metric rows: one per time bucket, one per dimension value, or a single row for the flat aggregate.
+         */
+        metrics: AnalyticsMetric[];
+    };
+
+    /**
+     * AnalyticsProperty
+     */
+    export type AnalyticsProperty = {
+        /**
+         * Analytics property ID.
+         */
+        $id: string;
+        /**
+         * Property creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Property update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Human-readable name of the tracked website or application.
+         */
+        name: string;
+        /**
+         * Primary domain being tracked (e.g. example.com). May be empty for native apps.
+         */
+        domain: string;
+        /**
+         * Whether tracking is currently active.
+         */
+        enabled: boolean;
+        /**
+         * List of origins allowed to send tracking events. Use ["*"] to allow all.
+         */
+        allowedOrigins: string[];
+        /**
+         * Most recent event date in ISO 8601 format. This attribute is only updated again after 24 hours.
+         */
+        accessedAt: string;
+        /**
+         * First event date in ISO 8601 format. Empty until the property receives its first event.
+         */
+        firstAccessedAt: string;
+    };
+
+    /**
      * Team
      */
     export type AggregationTeam = {
@@ -9625,17 +9754,17 @@ export namespace Models {
          */
         policyId: string;
         /**
-         * Archive size in bytes.
+         * Archive size in bytes. Null until the size is known.
          */
-        size: number;
+        size?: number;
         /**
          * The status of the archive creation. Possible values: pending, processing, uploading, completed, failed, skipped.
          */
         status: string;
         /**
-         * The backup start time.
+         * The backup start time. Null until the backup starts.
          */
-        startedAt: string;
+        startedAt?: string;
         /**
          * Migration ID.
          */
@@ -9791,7 +9920,7 @@ export namespace Models {
         /**
          * Address line 2
          */
-        addressLine2: string;
+        addressLine2?: string;
         /**
          * Address country
          */
@@ -9803,11 +9932,11 @@ export namespace Models {
         /**
          * state
          */
-        state: string;
+        state?: string;
         /**
          * postal code
          */
-        postalCode: string;
+        postalCode?: string;
     };
 
     /**
@@ -10013,9 +10142,9 @@ export namespace Models {
          */
         alertLimit: number;
         /**
-         * Additional resources
+         * Additional resources. Null when the plan does not support usage billing.
          */
-        usage: UsageBillingPlan;
+        usage?: UsageBillingPlan;
         /**
          * Addons
          */
@@ -10369,7 +10498,7 @@ export namespace Models {
         /**
          * Branch port. Null until the backing reports one.
          */
-        port: number;
+        port?: number;
         /**
          * Advertised catalog the client connects to. MySQL/MariaDB use default; Postgres uses the routing label.
          */
@@ -10681,11 +10810,11 @@ export namespace Models {
         /**
          * Product API that owns this database: tablesdb, documentsdb, vectorsdb, mysql, postgresql, or mongodb.
          */
-        api: string;
+        api?: string;
         /**
          * Database engine: postgresql, mysql, or mongodb. Null until the backing reports one.
          */
-        engine: string;
+        engine?: string;
         /**
          * Database engine version.
          */
@@ -10705,7 +10834,7 @@ export namespace Models {
         /**
          * Database port for connections. Derived from the engine when the backing has not reported one yet.
          */
-        connectionPort: number;
+        connectionPort?: number;
         /**
          * Database username for connections.
          */
@@ -10717,7 +10846,7 @@ export namespace Models {
         /**
          * Committed generation of the primary connection credentials. Null until the rotation contract has been initialized.
          */
-        credentialGeneration: number;
+        credentialGeneration?: number;
         /**
          * Full database connection string (URI format).
          */
@@ -10931,7 +11060,7 @@ export namespace Models {
         /**
          * Source database ID when restoring a backup into another database.
          */
-        sourceDatabaseId: string;
+        sourceDatabaseId?: string;
         /**
          * Project ID.
          */
@@ -10939,7 +11068,7 @@ export namespace Models {
         /**
          * Backup ID used for restoration (null for PITR).
          */
-        backupId: string;
+        backupId?: string;
         /**
          * Restoration type. Possible values: backup (restore from a specific backup snapshot), pitr (point-in-time recovery to a specific timestamp).
          */
@@ -10951,15 +11080,15 @@ export namespace Models {
         /**
          * Target time for PITR restoration in ISO 8601 format.
          */
-        targetTime: string;
+        targetTime?: string;
         /**
          * Restoration start time in ISO 8601 format.
          */
-        startedAt: string;
+        startedAt?: string;
         /**
          * Restoration completion time in ISO 8601 format.
          */
-        completedAt: string;
+        completedAt?: string;
         /**
          * Error message if restoration failed.
          */
@@ -10991,9 +11120,9 @@ export namespace Models {
          */
         uptime: number;
         /**
-         * Connection statistics.
+         * Connection statistics. Null when the database has not been probed.
          */
-        connections: DatabaseStatusConnections;
+        connections?: DatabaseStatusConnections;
         /**
          * Requested replication sync mode. Possible values: async, sync, quorum. Compare with effectiveSyncMode for what the primary is enforcing.
          */
@@ -11335,7 +11464,7 @@ export namespace Models {
         /**
          * Discount amount
          */
-        discount: number;
+        discount?: number;
         /**
          * Credits amount
          */
@@ -11423,7 +11552,7 @@ export namespace Models {
         /**
          * Discount amount
          */
-        discount: number;
+        discount?: number;
         /**
          * Credits amount
          */
@@ -11707,7 +11836,7 @@ export namespace Models {
         /**
          * Client secret for processing failed payments in front-end
          */
-        clientSecret: string;
+        clientSecret?: string;
         /**
          * Invoice status
          */
@@ -11719,7 +11848,7 @@ export namespace Models {
         /**
          * Last payment error associated with the invoice
          */
-        lastError: string;
+        lastError?: string;
         /**
          * Invoice due date.
          */
@@ -11799,6 +11928,96 @@ export namespace Models {
     };
 
     /**
+     * Threat
+     */
+    export type Threat = {
+        /**
+         * Threat ID.
+         */
+        $id: string;
+        /**
+         * Threat creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Threat update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the project the resource belongs to.
+         */
+        projectId: string;
+        /**
+         * ID of the organization that owns the project.
+         */
+        teamId: string;
+        /**
+         * ID of the user the threat is attributed to. Not set yet.
+         */
+        userId: string;
+        /**
+         * Region of the project.
+         */
+        region: string;
+        /**
+         * Type of the flagged resource.
+         */
+        resourceType: string;
+        /**
+         * ID of the flagged resource.
+         */
+        resourceId: string;
+        /**
+         * Creation date of the flagged resource in ISO 8601 format. Empty for a manual threat, which names the resource without looking it up.
+         */
+        resourceCreatedAt: string;
+        /**
+         * How the threat was found. Possible values are `hash` (a file matched a known-bad signature), `analysis` (source analysis flagged a deployment), `scan` (the URL scanner flagged a hostname) or `manual` (recorded by an operator through the admin API).
+         */
+        type: string;
+        /**
+         * Triage status. Possible values are `open`, `resolved` or `dismissed`.
+         */
+        status: string;
+        /**
+         * What was found: the detector's summary, or the operator's words for a manual threat.
+         */
+        description: string;
+        /**
+         * ID of the console user who recorded the threat. Empty when a detector did.
+         */
+        createdBy: string;
+        /**
+         * The signature that matched. Used if type is `hash`.
+         */
+        hashSignature: string;
+        /**
+         * The analyser's classification of the finding, in snake case. Used if type is `analysis`.
+         */
+        analysisVerdict: string;
+        /**
+         * Paths of the files the finding is in. Used if type is `analysis`.
+         */
+        analysisFiles: string[];
+        /**
+         * Hostname the URL scanner flagged. Used if type is `scan`.
+         */
+        scanDomain: string;
+        /**
+         * The URL scanner's verdict. Possible values are `malicious` or `phishing`. Used if type is `scan`.
+         */
+        scanVerdict: string;
+        /**
+         * The URL scanner's severity. Possible values are `high` or `medium`. Used if type is `scan`.
+         */
+        scanSeverity: string;
+        /**
+         * ID of the URL scanner's report. Used if type is `scan`.
+         */
+        scanReportId: string;
+    };
+
+    /**
      * Organization
      */
     export type Organization<
@@ -11855,15 +12074,15 @@ export namespace Models {
         /**
          * Billing cycle start date.
          */
-        billingStartDate: string;
+        billingStartDate?: string;
         /**
          * Current invoice cycle start date.
          */
-        billingCurrentInvoiceDate: string;
+        billingCurrentInvoiceDate?: string;
         /**
          * Next invoice cycle start date.
          */
-        billingNextInvoiceDate: string;
+        billingNextInvoiceDate?: string;
         /**
          * Start date of trial.
          */
@@ -11871,19 +12090,19 @@ export namespace Models {
         /**
          * Number of trial days.
          */
-        billingTrialDays: number;
+        billingTrialDays?: number;
         /**
          * Current active aggregation id.
          */
-        billingAggregationId: string;
+        billingAggregationId?: string;
         /**
          * Current active aggregation id.
          */
-        billingInvoiceId: string;
+        billingInvoiceId?: string;
         /**
          * Default payment method.
          */
-        paymentMethodId: string;
+        paymentMethodId?: string;
         /**
          * Default payment method.
          */
@@ -12015,39 +12234,39 @@ export namespace Models {
         /**
          * Expiry month of the payment method.
          */
-        expiryMonth: number;
+        expiryMonth?: number;
         /**
          * Expiry year of the payment method.
          */
-        expiryYear: number;
+        expiryYear?: number;
         /**
          * Last 4 digit of the payment method
          */
-        last4: string;
+        last4?: string;
         /**
          * Payment method brand
          */
-        brand: string;
+        brand?: string;
         /**
          * Name of the owner
          */
-        name: string;
+        name?: string;
         /**
          * Mandate ID of the payment method
          */
-        mandateId: string;
+        mandateId?: string;
         /**
          * Country of the payment method
          */
-        country: string;
+        country?: string;
         /**
          * State of the payment method
          */
-        state: string;
+        state?: string;
         /**
          * Last payment error associated with the payment method.
          */
-        lastError: string;
+        lastError?: string;
         /**
          * True when it's the default payment method.
          */
@@ -12431,9 +12650,9 @@ export namespace Models {
          */
         status: string;
         /**
-         * The backup start time.
+         * The restoration start time. Null until the restoration starts.
          */
-        startedAt: string;
+        startedAt?: string;
         /**
          * Migration ID.
          */
@@ -12447,9 +12666,9 @@ export namespace Models {
          */
         resources: string[];
         /**
-         * Optional data in key-value object.
+         * Restoration options as a key-value object.
          */
-        options: string;
+        options: object;
     };
 
     /**
@@ -12643,11 +12862,11 @@ export namespace Models {
         /**
          * Bandwidth additional resources
          */
-        bandwidth: AdditionalResource;
+        bandwidth?: AdditionalResource;
         /**
          * Executions additional resources
          */
-        executions: AdditionalResource;
+        executions?: AdditionalResource;
         /**
          * Member additional resources
          */
@@ -12655,11 +12874,11 @@ export namespace Models {
         /**
          * Realtime additional resources
          */
-        realtime: AdditionalResource;
+        realtime?: AdditionalResource;
         /**
          * Realtime messages additional resources
          */
-        realtimeMessages: AdditionalResource;
+        realtimeMessages?: AdditionalResource;
         /**
          * Realtime bandwidth additional resources
          */
@@ -12667,19 +12886,19 @@ export namespace Models {
         /**
          * Storage additional resources
          */
-        storage: AdditionalResource;
+        storage?: AdditionalResource;
         /**
          * User additional resources
          */
-        users: AdditionalResource;
+        users?: AdditionalResource;
         /**
          * GBHour additional resources
          */
-        GBHours: AdditionalResource;
+        GBHours?: AdditionalResource;
         /**
          * Image transformation additional resources
          */
-        imageTransformations: AdditionalResource;
+        imageTransformations?: AdditionalResource;
         /**
          * Credits additional resources
          */
@@ -12770,6 +12989,10 @@ export namespace Models {
          * Aggregated stats for total backups storage.
          */
         backupsStorageTotal: number;
+        /**
+         * Aggregated stats for total custom user photos storage.
+         */
+        avatarsStorageTotal: number;
         /**
          * Aggregated stats for total storage.
          */
@@ -13507,68 +13730,6 @@ export namespace Models {
     };
 
     /**
-     * WafRule
-     */
-    export type WafRule = {
-        /**
-         * Rule ID.
-         */
-        $id: string;
-        /**
-         * WAF rule creation time in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * WAF rule last update time in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * Human friendly rule name.
-         */
-        name: string;
-        /**
-         * Optional description for the rule.
-         */
-        description: string;
-        /**
-         * Team ID.
-         */
-        teamId: string;
-        /**
-         * Project ID.
-         */
-        projectId: string;
-        /**
-         * Resource type the rule is scoped to.
-         */
-        resourceType: string;
-        /**
-         * Resource identifier. Empty for API-wide rules.
-         */
-        resourceId: string;
-        /**
-         * Action performed when the rule matches.
-         */
-        action: WafRuleAction;
-        /**
-         * Evaluation priority. Lower values execute earlier.
-         */
-        priority: number;
-        /**
-         * Whether the rule is active.
-         */
-        enabled: boolean;
-        /**
-         * List of conditions evaluated for this rule.
-         */
-        conditions: Record<string, any>[];
-        /**
-         * Action specific configuration.
-         */
-        config: object;
-    };
-
-    /**
      * WafRuleBypass
      */
     export type WafRuleBypass = {
@@ -13929,7 +14090,13 @@ export namespace Models {
         /**
          * List of rules.
          */
-        rules: WafRule[];
+        rules: (
+            | Models.WafRuleBypass
+            | Models.WafRuleDeny
+            | Models.WafRuleChallenge
+            | Models.WafRuleRateLimit
+            | Models.WafRuleRedirect
+        )[];
     };
 
     /**
@@ -14045,6 +14212,20 @@ export namespace Models {
     };
 
     /**
+     * Analytics properties list
+     */
+    export type AnalyticsPropertyList = {
+        /**
+         * Total number of properties that matched your query.
+         */
+        total: number;
+        /**
+         * List of properties.
+         */
+        properties: AnalyticsProperty[];
+    };
+
+    /**
      * Aggregation team list
      */
     export type AggregationTeamList = {
@@ -14154,6 +14335,20 @@ export namespace Models {
          * List of blocks.
          */
         blocks: ManagerBlock[];
+    };
+
+    /**
+     * Threats list
+     */
+    export type ThreatList = {
+        /**
+         * Total number of threats that matched your query.
+         */
+        total: number;
+        /**
+         * List of threats.
+         */
+        threats: Threat[];
     };
 
     /**

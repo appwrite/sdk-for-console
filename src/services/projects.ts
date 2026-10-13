@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 import { ScheduleResourceType } from '../enums/schedule-resource-type';
@@ -65,7 +70,37 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'addonList',
+            models: {
+                addonList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        addons: {
+                            items: 'addon',
+                        },
+                    },
+                },
+                addon: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        key: '',
+                        resourceType: '',
+                        resourceId: '',
+                        status: 'active',
+                        currentValue: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -126,7 +161,27 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'addon',
+            models: {
+                addon: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        key: '',
+                        resourceType: '',
+                        resourceId: '',
+                        status: 'active',
+                        currentValue: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -199,7 +254,27 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'addon',
+            models: {
+                addon: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        key: '',
+                        resourceType: '',
+                        resourceId: '',
+                        status: 'active',
+                        currentValue: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -347,7 +422,27 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'addon',
+            models: {
+                addon: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        key: '',
+                        resourceType: '',
+                        resourceId: '',
+                        status: 'active',
+                        currentValue: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -418,7 +513,26 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'addonPrice',
+            models: {
+                addonPrice: {
+                    defaults: {
+                        addonKey: '',
+                        name: '',
+                        monthlyPrice: 0,
+                        proratedAmount: 0,
+                        remainingDays: 0,
+                        totalCycleDays: 0,
+                        currency: 'USD',
+                        billingCycleEnd: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -561,7 +675,39 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'scheduleList',
+            models: {
+                scheduleList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        schedules: {
+                            items: 'schedule',
+                        },
+                    },
+                },
+                schedule: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        resourceType: '',
+                        resourceId: '',
+                        resourceUpdatedAt: '',
+                        projectId: '',
+                        schedule: '',
+                        data: [],
+                        active: false,
+                        region: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -720,7 +866,29 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'schedule',
+            models: {
+                schedule: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        resourceType: '',
+                        resourceId: '',
+                        resourceUpdatedAt: '',
+                        projectId: '',
+                        schedule: '',
+                        data: [],
+                        active: false,
+                        region: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -794,7 +962,29 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'schedule',
+            models: {
+                schedule: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        resourceType: '',
+                        resourceId: '',
+                        resourceUpdatedAt: '',
+                        projectId: '',
+                        schedule: '',
+                        data: [],
+                        active: false,
+                        region: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -852,7 +1042,30 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'stageList',
+            models: {
+                stageList: {
+                    properties: {
+                        stages: {
+                            items: 'stage',
+                        },
+                    },
+                },
+                stage: {
+                    defaults: {
+                        id: '',
+                        sdk: '',
+                        status: 'pending',
+                        at: '',
+                        actorType: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -940,7 +1153,23 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'stage',
+            models: {
+                stage: {
+                    defaults: {
+                        id: '',
+                        sdk: '',
+                        status: 'pending',
+                        at: '',
+                        actorType: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1087,6 +1316,76 @@ export class Projects {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'project',
+            models: {
+                project: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        teamId: '',
+                        region: 'fra',
+                        smtpEnabled: false,
+                        smtpSenderName: '',
+                        smtpSenderEmail: '',
+                        smtpReplyToName: '',
+                        smtpReplyToEmail: '',
+                        smtpHost: '',
+                        smtpPort: 0,
+                        smtpUsername: '',
+                        smtpPassword: '',
+                        smtpSecure: '',
+                        pingCount: 0,
+                        pingedAt: '',
+                        labels: [],
+                        status: 'active',
+                        onboarding: [],
+                        consoleAccessedAt: '',
+                    },
+                    properties: {
+                        authMethods: {
+                            items: 'projectAuthMethod',
+                        },
+                        services: {
+                            items: 'projectService',
+                        },
+                        protocols: {
+                            items: 'projectProtocol',
+                        },
+                        blocks: {
+                            items: 'block',
+                        },
+                    },
+                },
+                projectAuthMethod: {
+                    defaults: {
+                        enabled: true,
+                    },
+                },
+                projectService: {
+                    defaults: {
+                        enabled: true,
+                    },
+                },
+                projectProtocol: {
+                    defaults: {
+                        enabled: true,
+                    },
+                },
+                block: {
+                    defaults: {
+                        $createdAt: '',
+                        resourceType: '',
+                        resourceId: '',
+                        mode: 'full',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }

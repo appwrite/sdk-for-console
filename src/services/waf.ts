@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 export class Waf {
@@ -87,7 +92,19 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'wafRuleList',
+            models: {
+                wafRuleList: {
+                    defaults: {
+                        total: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -101,7 +118,7 @@ export class Waf {
      * @param {string} params.description - Optional description for the rule.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to create the rule in a disabled state.
-     * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleBypass>}
      */
@@ -113,7 +130,7 @@ export class Waf {
         description?: string;
         priority?: number;
         enabled?: boolean;
-        conditions?: string;
+        conditions?: string[];
     }): Promise<Models.WafRuleBypass>;
     /**
      * Create a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -126,7 +143,7 @@ export class Waf {
      * @param {string} description - Optional description for the rule.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to create the rule in a disabled state.
-     * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleBypass>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -139,7 +156,7 @@ export class Waf {
         description?: string,
         priority?: number,
         enabled?: boolean,
-        conditions?: string,
+        conditions?: string[],
     ): Promise<Models.WafRuleBypass>;
     createBypassRule(
         paramsOrFirst:
@@ -151,7 +168,7 @@ export class Waf {
                   description?: string;
                   priority?: number;
                   enabled?: boolean;
-                  conditions?: string;
+                  conditions?: string[];
               }
             | string,
         ...rest: [
@@ -161,7 +178,7 @@ export class Waf {
             string?,
             number?,
             boolean?,
-            string?,
+            string[]?,
         ]
     ): Promise<Models.WafRuleBypass> {
         let params: {
@@ -172,7 +189,7 @@ export class Waf {
             description?: string;
             priority?: number;
             enabled?: boolean;
-            conditions?: string;
+            conditions?: string[];
         };
 
         if (
@@ -188,7 +205,7 @@ export class Waf {
                 description?: string;
                 priority?: number;
                 enabled?: boolean;
-                conditions?: string;
+                conditions?: string[];
             };
         } else {
             params = {
@@ -199,7 +216,7 @@ export class Waf {
                 description: rest[3] as string,
                 priority: rest[4] as number,
                 enabled: rest[5] as boolean,
-                conditions: rest[6] as string,
+                conditions: rest[6] as string[],
             };
         }
 
@@ -257,7 +274,31 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'wafRuleBypass',
+            models: {
+                wafRuleBypass: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        description: '',
+                        teamId: '',
+                        projectId: '',
+                        resourceType: 'api',
+                        resourceId: '',
+                        priority: 0,
+                        enabled: true,
+                        conditions: [],
+                        config: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -271,7 +312,7 @@ export class Waf {
      * @param {string} params.description - Optional description for the rule.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to disable the rule.
-     * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleBypass>}
      */
@@ -283,7 +324,7 @@ export class Waf {
         description?: string;
         priority?: number;
         enabled?: boolean;
-        conditions?: string;
+        conditions?: string[];
     }): Promise<Models.WafRuleBypass>;
     /**
      * Update a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -296,7 +337,7 @@ export class Waf {
      * @param {string} description - Optional description for the rule.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to disable the rule.
-     * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleBypass>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -309,7 +350,7 @@ export class Waf {
         description?: string,
         priority?: number,
         enabled?: boolean,
-        conditions?: string,
+        conditions?: string[],
     ): Promise<Models.WafRuleBypass>;
     updateBypassRule(
         paramsOrFirst:
@@ -321,7 +362,7 @@ export class Waf {
                   description?: string;
                   priority?: number;
                   enabled?: boolean;
-                  conditions?: string;
+                  conditions?: string[];
               }
             | string,
         ...rest: [
@@ -331,7 +372,7 @@ export class Waf {
             string?,
             number?,
             boolean?,
-            string?,
+            string[]?,
         ]
     ): Promise<Models.WafRuleBypass> {
         let params: {
@@ -342,7 +383,7 @@ export class Waf {
             description?: string;
             priority?: number;
             enabled?: boolean;
-            conditions?: string;
+            conditions?: string[];
         };
 
         if (
@@ -358,7 +399,7 @@ export class Waf {
                 description?: string;
                 priority?: number;
                 enabled?: boolean;
-                conditions?: string;
+                conditions?: string[];
             };
         } else {
             params = {
@@ -369,7 +410,7 @@ export class Waf {
                 description: rest[3] as string,
                 priority: rest[4] as number,
                 enabled: rest[5] as boolean,
-                conditions: rest[6] as string,
+                conditions: rest[6] as string[],
             };
         }
 
@@ -419,7 +460,31 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'wafRuleBypass',
+            models: {
+                wafRuleBypass: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        description: '',
+                        teamId: '',
+                        projectId: '',
+                        resourceType: 'api',
+                        resourceId: '',
+                        priority: 0,
+                        enabled: true,
+                        conditions: [],
+                        config: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -434,7 +499,7 @@ export class Waf {
      * @param {string} params.challengeType - Challenge type enforced by the rule.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to create the rule in a disabled state.
-     * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @param {number} params.difficulty - Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
      * @param {number} params.ttl - How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
      * @throws {AppwriteException}
@@ -449,7 +514,7 @@ export class Waf {
         challengeType?: string;
         priority?: number;
         enabled?: boolean;
-        conditions?: string;
+        conditions?: string[];
         difficulty?: number;
         ttl?: number;
     }): Promise<Models.WafRuleChallenge>;
@@ -465,7 +530,7 @@ export class Waf {
      * @param {string} challengeType - Challenge type enforced by the rule.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to create the rule in a disabled state.
-     * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @param {number} difficulty - Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
      * @param {number} ttl - How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
      * @throws {AppwriteException}
@@ -481,7 +546,7 @@ export class Waf {
         challengeType?: string,
         priority?: number,
         enabled?: boolean,
-        conditions?: string,
+        conditions?: string[],
         difficulty?: number,
         ttl?: number,
     ): Promise<Models.WafRuleChallenge>;
@@ -496,7 +561,7 @@ export class Waf {
                   challengeType?: string;
                   priority?: number;
                   enabled?: boolean;
-                  conditions?: string;
+                  conditions?: string[];
                   difficulty?: number;
                   ttl?: number;
               }
@@ -509,7 +574,7 @@ export class Waf {
             string?,
             number?,
             boolean?,
-            string?,
+            string[]?,
             number?,
             number?,
         ]
@@ -523,7 +588,7 @@ export class Waf {
             challengeType?: string;
             priority?: number;
             enabled?: boolean;
-            conditions?: string;
+            conditions?: string[];
             difficulty?: number;
             ttl?: number;
         };
@@ -542,7 +607,7 @@ export class Waf {
                 challengeType?: string;
                 priority?: number;
                 enabled?: boolean;
-                conditions?: string;
+                conditions?: string[];
                 difficulty?: number;
                 ttl?: number;
             };
@@ -556,7 +621,7 @@ export class Waf {
                 challengeType: rest[4] as string,
                 priority: rest[5] as number,
                 enabled: rest[6] as boolean,
-                conditions: rest[7] as string,
+                conditions: rest[7] as string[],
                 difficulty: rest[8] as number,
                 ttl: rest[9] as number,
             };
@@ -628,7 +693,34 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'wafRuleChallenge',
+            models: {
+                wafRuleChallenge: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        description: '',
+                        teamId: '',
+                        projectId: '',
+                        resourceType: 'api',
+                        resourceId: '',
+                        priority: 0,
+                        enabled: true,
+                        conditions: [],
+                        config: [],
+                        challengeType: 'compute',
+                        difficulty: 3,
+                        ttl: 1800,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -643,7 +735,7 @@ export class Waf {
      * @param {string} params.challengeType - Challenge type enforced by the rule.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to disable the rule.
-     * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @param {number} params.difficulty - Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
      * @param {number} params.ttl - How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
      * @throws {AppwriteException}
@@ -658,7 +750,7 @@ export class Waf {
         challengeType?: string;
         priority?: number;
         enabled?: boolean;
-        conditions?: string;
+        conditions?: string[];
         difficulty?: number;
         ttl?: number;
     }): Promise<Models.WafRuleChallenge>;
@@ -674,7 +766,7 @@ export class Waf {
      * @param {string} challengeType - Challenge type enforced by the rule.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to disable the rule.
-     * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @param {number} difficulty - Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
      * @param {number} ttl - How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
      * @throws {AppwriteException}
@@ -690,7 +782,7 @@ export class Waf {
         challengeType?: string,
         priority?: number,
         enabled?: boolean,
-        conditions?: string,
+        conditions?: string[],
         difficulty?: number,
         ttl?: number,
     ): Promise<Models.WafRuleChallenge>;
@@ -705,7 +797,7 @@ export class Waf {
                   challengeType?: string;
                   priority?: number;
                   enabled?: boolean;
-                  conditions?: string;
+                  conditions?: string[];
                   difficulty?: number;
                   ttl?: number;
               }
@@ -718,7 +810,7 @@ export class Waf {
             string?,
             number?,
             boolean?,
-            string?,
+            string[]?,
             number?,
             number?,
         ]
@@ -732,7 +824,7 @@ export class Waf {
             challengeType?: string;
             priority?: number;
             enabled?: boolean;
-            conditions?: string;
+            conditions?: string[];
             difficulty?: number;
             ttl?: number;
         };
@@ -751,7 +843,7 @@ export class Waf {
                 challengeType?: string;
                 priority?: number;
                 enabled?: boolean;
-                conditions?: string;
+                conditions?: string[];
                 difficulty?: number;
                 ttl?: number;
             };
@@ -765,7 +857,7 @@ export class Waf {
                 challengeType: rest[4] as string,
                 priority: rest[5] as number,
                 enabled: rest[6] as boolean,
-                conditions: rest[7] as string,
+                conditions: rest[7] as string[],
                 difficulty: rest[8] as number,
                 ttl: rest[9] as number,
             };
@@ -829,7 +921,34 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'wafRuleChallenge',
+            models: {
+                wafRuleChallenge: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        description: '',
+                        teamId: '',
+                        projectId: '',
+                        resourceType: 'api',
+                        resourceId: '',
+                        priority: 0,
+                        enabled: true,
+                        conditions: [],
+                        config: [],
+                        challengeType: 'compute',
+                        difficulty: 3,
+                        ttl: 1800,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -843,7 +962,7 @@ export class Waf {
      * @param {string} params.description - Optional description for the rule.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to create the rule in a disabled state.
-     * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleDeny>}
      */
@@ -855,7 +974,7 @@ export class Waf {
         description?: string;
         priority?: number;
         enabled?: boolean;
-        conditions?: string;
+        conditions?: string[];
     }): Promise<Models.WafRuleDeny>;
     /**
      * Create a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -868,7 +987,7 @@ export class Waf {
      * @param {string} description - Optional description for the rule.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to create the rule in a disabled state.
-     * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleDeny>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -881,7 +1000,7 @@ export class Waf {
         description?: string,
         priority?: number,
         enabled?: boolean,
-        conditions?: string,
+        conditions?: string[],
     ): Promise<Models.WafRuleDeny>;
     createDenyRule(
         paramsOrFirst:
@@ -893,7 +1012,7 @@ export class Waf {
                   description?: string;
                   priority?: number;
                   enabled?: boolean;
-                  conditions?: string;
+                  conditions?: string[];
               }
             | string,
         ...rest: [
@@ -903,7 +1022,7 @@ export class Waf {
             string?,
             number?,
             boolean?,
-            string?,
+            string[]?,
         ]
     ): Promise<Models.WafRuleDeny> {
         let params: {
@@ -914,7 +1033,7 @@ export class Waf {
             description?: string;
             priority?: number;
             enabled?: boolean;
-            conditions?: string;
+            conditions?: string[];
         };
 
         if (
@@ -930,7 +1049,7 @@ export class Waf {
                 description?: string;
                 priority?: number;
                 enabled?: boolean;
-                conditions?: string;
+                conditions?: string[];
             };
         } else {
             params = {
@@ -941,7 +1060,7 @@ export class Waf {
                 description: rest[3] as string,
                 priority: rest[4] as number,
                 enabled: rest[5] as boolean,
-                conditions: rest[6] as string,
+                conditions: rest[6] as string[],
             };
         }
 
@@ -999,7 +1118,31 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'wafRuleDeny',
+            models: {
+                wafRuleDeny: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        description: '',
+                        teamId: '',
+                        projectId: '',
+                        resourceType: 'api',
+                        resourceId: '',
+                        priority: 0,
+                        enabled: true,
+                        conditions: [],
+                        config: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1013,7 +1156,7 @@ export class Waf {
      * @param {string} params.description - Optional description for the rule.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to disable the rule.
-     * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleDeny>}
      */
@@ -1025,7 +1168,7 @@ export class Waf {
         description?: string;
         priority?: number;
         enabled?: boolean;
-        conditions?: string;
+        conditions?: string[];
     }): Promise<Models.WafRuleDeny>;
     /**
      * Update a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -1038,7 +1181,7 @@ export class Waf {
      * @param {string} description - Optional description for the rule.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to disable the rule.
-     * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleDeny>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1051,7 +1194,7 @@ export class Waf {
         description?: string,
         priority?: number,
         enabled?: boolean,
-        conditions?: string,
+        conditions?: string[],
     ): Promise<Models.WafRuleDeny>;
     updateDenyRule(
         paramsOrFirst:
@@ -1063,7 +1206,7 @@ export class Waf {
                   description?: string;
                   priority?: number;
                   enabled?: boolean;
-                  conditions?: string;
+                  conditions?: string[];
               }
             | string,
         ...rest: [
@@ -1073,7 +1216,7 @@ export class Waf {
             string?,
             number?,
             boolean?,
-            string?,
+            string[]?,
         ]
     ): Promise<Models.WafRuleDeny> {
         let params: {
@@ -1084,7 +1227,7 @@ export class Waf {
             description?: string;
             priority?: number;
             enabled?: boolean;
-            conditions?: string;
+            conditions?: string[];
         };
 
         if (
@@ -1100,7 +1243,7 @@ export class Waf {
                 description?: string;
                 priority?: number;
                 enabled?: boolean;
-                conditions?: string;
+                conditions?: string[];
             };
         } else {
             params = {
@@ -1111,7 +1254,7 @@ export class Waf {
                 description: rest[3] as string,
                 priority: rest[4] as number,
                 enabled: rest[5] as boolean,
-                conditions: rest[6] as string,
+                conditions: rest[6] as string[],
             };
         }
 
@@ -1161,7 +1304,31 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'wafRuleDeny',
+            models: {
+                wafRuleDeny: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        description: '',
+                        teamId: '',
+                        projectId: '',
+                        resourceType: 'api',
+                        resourceId: '',
+                        priority: 0,
+                        enabled: true,
+                        conditions: [],
+                        config: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1180,7 +1347,7 @@ export class Waf {
      * @param {number} params.maxBucketSize - Maximum number of tokens the bucket can hold for the `tokenBucket` strategy, controlling how large a burst is allowed. The sustained refill rate is `limit / interval`. Defaults to `limit` when omitted. Ignored by other strategies.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to create the rule in a disabled state.
-     * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRateLimit>}
      */
@@ -1197,7 +1364,7 @@ export class Waf {
         maxBucketSize?: number;
         priority?: number;
         enabled?: boolean;
-        conditions?: string;
+        conditions?: string[];
     }): Promise<Models.WafRuleRateLimit>;
     /**
      * Create a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -1215,7 +1382,7 @@ export class Waf {
      * @param {number} maxBucketSize - Maximum number of tokens the bucket can hold for the `tokenBucket` strategy, controlling how large a burst is allowed. The sustained refill rate is `limit / interval`. Defaults to `limit` when omitted. Ignored by other strategies.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to create the rule in a disabled state.
-     * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRateLimit>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1233,7 +1400,7 @@ export class Waf {
         maxBucketSize?: number,
         priority?: number,
         enabled?: boolean,
-        conditions?: string,
+        conditions?: string[],
     ): Promise<Models.WafRuleRateLimit>;
     createRateLimitRule(
         paramsOrFirst:
@@ -1250,7 +1417,7 @@ export class Waf {
                   maxBucketSize?: number;
                   priority?: number;
                   enabled?: boolean;
-                  conditions?: string;
+                  conditions?: string[];
               }
             | string,
         ...rest: [
@@ -1265,7 +1432,7 @@ export class Waf {
             number?,
             number?,
             boolean?,
-            string?,
+            string[]?,
         ]
     ): Promise<Models.WafRuleRateLimit> {
         let params: {
@@ -1281,7 +1448,7 @@ export class Waf {
             maxBucketSize?: number;
             priority?: number;
             enabled?: boolean;
-            conditions?: string;
+            conditions?: string[];
         };
 
         if (
@@ -1302,7 +1469,7 @@ export class Waf {
                 maxBucketSize?: number;
                 priority?: number;
                 enabled?: boolean;
-                conditions?: string;
+                conditions?: string[];
             };
         } else {
             params = {
@@ -1318,7 +1485,7 @@ export class Waf {
                 maxBucketSize: rest[8] as number,
                 priority: rest[9] as number,
                 enabled: rest[10] as boolean,
-                conditions: rest[11] as string,
+                conditions: rest[11] as string[],
             };
         }
 
@@ -1404,7 +1571,36 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'wafRuleRateLimit',
+            models: {
+                wafRuleRateLimit: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        description: '',
+                        teamId: '',
+                        projectId: '',
+                        resourceType: 'api',
+                        resourceId: '',
+                        priority: 0,
+                        enabled: true,
+                        conditions: [],
+                        config: [],
+                        limit: 100,
+                        interval: 3600,
+                        key: 'ip',
+                        strategy: 'fixedWindow',
+                        maxBucketSize: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1422,7 +1618,7 @@ export class Waf {
      * @param {number} params.maxBucketSize - Maximum number of tokens the bucket can hold for the `tokenBucket` strategy, controlling how large a burst is allowed. The sustained refill rate is `limit / interval`. Ignored by other strategies. The strategy itself cannot be changed after creation.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to disable the rule.
-     * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRateLimit>}
      */
@@ -1438,7 +1634,7 @@ export class Waf {
         maxBucketSize?: number;
         priority?: number;
         enabled?: boolean;
-        conditions?: string;
+        conditions?: string[];
     }): Promise<Models.WafRuleRateLimit>;
     /**
      * Update a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -1455,7 +1651,7 @@ export class Waf {
      * @param {number} maxBucketSize - Maximum number of tokens the bucket can hold for the `tokenBucket` strategy, controlling how large a burst is allowed. The sustained refill rate is `limit / interval`. Ignored by other strategies. The strategy itself cannot be changed after creation.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to disable the rule.
-     * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRateLimit>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1472,7 +1668,7 @@ export class Waf {
         maxBucketSize?: number,
         priority?: number,
         enabled?: boolean,
-        conditions?: string,
+        conditions?: string[],
     ): Promise<Models.WafRuleRateLimit>;
     updateRateLimitRule(
         paramsOrFirst:
@@ -1488,7 +1684,7 @@ export class Waf {
                   maxBucketSize?: number;
                   priority?: number;
                   enabled?: boolean;
-                  conditions?: string;
+                  conditions?: string[];
               }
             | string,
         ...rest: [
@@ -1502,7 +1698,7 @@ export class Waf {
             number?,
             number?,
             boolean?,
-            string?,
+            string[]?,
         ]
     ): Promise<Models.WafRuleRateLimit> {
         let params: {
@@ -1517,7 +1713,7 @@ export class Waf {
             maxBucketSize?: number;
             priority?: number;
             enabled?: boolean;
-            conditions?: string;
+            conditions?: string[];
         };
 
         if (
@@ -1537,7 +1733,7 @@ export class Waf {
                 maxBucketSize?: number;
                 priority?: number;
                 enabled?: boolean;
-                conditions?: string;
+                conditions?: string[];
             };
         } else {
             params = {
@@ -1552,7 +1748,7 @@ export class Waf {
                 maxBucketSize: rest[7] as number,
                 priority: rest[8] as number,
                 enabled: rest[9] as boolean,
-                conditions: rest[10] as string,
+                conditions: rest[10] as string[],
             };
         }
 
@@ -1618,7 +1814,36 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'wafRuleRateLimit',
+            models: {
+                wafRuleRateLimit: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        description: '',
+                        teamId: '',
+                        projectId: '',
+                        resourceType: 'api',
+                        resourceId: '',
+                        priority: 0,
+                        enabled: true,
+                        conditions: [],
+                        config: [],
+                        limit: 100,
+                        interval: 3600,
+                        key: 'ip',
+                        strategy: 'fixedWindow',
+                        maxBucketSize: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1634,7 +1859,7 @@ export class Waf {
      * @param {string} params.description - Optional description for the rule.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to create the rule in a disabled state.
-     * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRedirect>}
      */
@@ -1648,7 +1873,7 @@ export class Waf {
         description?: string;
         priority?: number;
         enabled?: boolean;
-        conditions?: string;
+        conditions?: string[];
     }): Promise<Models.WafRuleRedirect>;
     /**
      * Create a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -1663,7 +1888,7 @@ export class Waf {
      * @param {string} description - Optional description for the rule.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to create the rule in a disabled state.
-     * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRedirect>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1678,7 +1903,7 @@ export class Waf {
         description?: string,
         priority?: number,
         enabled?: boolean,
-        conditions?: string,
+        conditions?: string[],
     ): Promise<Models.WafRuleRedirect>;
     createRedirectRule(
         paramsOrFirst:
@@ -1692,7 +1917,7 @@ export class Waf {
                   description?: string;
                   priority?: number;
                   enabled?: boolean;
-                  conditions?: string;
+                  conditions?: string[];
               }
             | string,
         ...rest: [
@@ -1704,7 +1929,7 @@ export class Waf {
             string?,
             number?,
             boolean?,
-            string?,
+            string[]?,
         ]
     ): Promise<Models.WafRuleRedirect> {
         let params: {
@@ -1717,7 +1942,7 @@ export class Waf {
             description?: string;
             priority?: number;
             enabled?: boolean;
-            conditions?: string;
+            conditions?: string[];
         };
 
         if (
@@ -1735,7 +1960,7 @@ export class Waf {
                 description?: string;
                 priority?: number;
                 enabled?: boolean;
-                conditions?: string;
+                conditions?: string[];
             };
         } else {
             params = {
@@ -1748,7 +1973,7 @@ export class Waf {
                 description: rest[5] as string,
                 priority: rest[6] as number,
                 enabled: rest[7] as boolean,
-                conditions: rest[8] as string,
+                conditions: rest[8] as string[],
             };
         }
 
@@ -1824,7 +2049,33 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'wafRuleRedirect',
+            models: {
+                wafRuleRedirect: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        description: '',
+                        teamId: '',
+                        projectId: '',
+                        resourceType: 'api',
+                        resourceId: '',
+                        priority: 0,
+                        enabled: true,
+                        conditions: [],
+                        config: [],
+                        location: '/',
+                        statusCode: 302,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1840,7 +2091,7 @@ export class Waf {
      * @param {number} params.statusCode - Integer status code used for redirect responses.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to disable the rule.
-     * @param {string} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRedirect>}
      */
@@ -1854,7 +2105,7 @@ export class Waf {
         statusCode?: number;
         priority?: number;
         enabled?: boolean;
-        conditions?: string;
+        conditions?: string[];
     }): Promise<Models.WafRuleRedirect>;
     /**
      * Update a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
@@ -1869,7 +2120,7 @@ export class Waf {
      * @param {number} statusCode - Integer status code used for redirect responses.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to disable the rule.
-     * @param {string} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRedirect>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1884,7 +2135,7 @@ export class Waf {
         statusCode?: number,
         priority?: number,
         enabled?: boolean,
-        conditions?: string,
+        conditions?: string[],
     ): Promise<Models.WafRuleRedirect>;
     updateRedirectRule(
         paramsOrFirst:
@@ -1898,7 +2149,7 @@ export class Waf {
                   statusCode?: number;
                   priority?: number;
                   enabled?: boolean;
-                  conditions?: string;
+                  conditions?: string[];
               }
             | string,
         ...rest: [
@@ -1910,7 +2161,7 @@ export class Waf {
             number?,
             number?,
             boolean?,
-            string?,
+            string[]?,
         ]
     ): Promise<Models.WafRuleRedirect> {
         let params: {
@@ -1923,7 +2174,7 @@ export class Waf {
             statusCode?: number;
             priority?: number;
             enabled?: boolean;
-            conditions?: string;
+            conditions?: string[];
         };
 
         if (
@@ -1941,7 +2192,7 @@ export class Waf {
                 statusCode?: number;
                 priority?: number;
                 enabled?: boolean;
-                conditions?: string;
+                conditions?: string[];
             };
         } else {
             params = {
@@ -1954,7 +2205,7 @@ export class Waf {
                 statusCode: rest[5] as number,
                 priority: rest[6] as number,
                 enabled: rest[7] as boolean,
-                conditions: rest[8] as string,
+                conditions: rest[8] as string[],
             };
         }
 
@@ -2012,7 +2263,33 @@ export class Waf {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'wafRuleRedirect',
+            models: {
+                wafRuleRedirect: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        description: '',
+                        teamId: '',
+                        projectId: '',
+                        resourceType: 'api',
+                        resourceId: '',
+                        priority: 0,
+                        enabled: true,
+                        conditions: [],
+                        config: [],
+                        location: '/',
+                        statusCode: 302,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2021,22 +2298,44 @@ export class Waf {
      *
      * @param {string} params.ruleId - Rule ID.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.WafRule>}
+     * @returns {Promise<Models.WafRuleBypass | Models.WafRuleDeny | Models.WafRuleChallenge | Models.WafRuleRateLimit | Models.WafRuleRedirect>}
      */
-    getRule(params: { ruleId: string }): Promise<Models.WafRule>;
+    getRule(params: {
+        ruleId: string;
+    }): Promise<
+        | Models.WafRuleBypass
+        | Models.WafRuleDeny
+        | Models.WafRuleChallenge
+        | Models.WafRuleRateLimit
+        | Models.WafRuleRedirect
+    >;
     /**
      * Get a WAF rule by its ID.
      *
      *
      * @param {string} ruleId - Rule ID.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.WafRule>}
+     * @returns {Promise<Models.WafRuleBypass | Models.WafRuleDeny | Models.WafRuleChallenge | Models.WafRuleRateLimit | Models.WafRuleRedirect>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getRule(ruleId: string): Promise<Models.WafRule>;
+    getRule(
+        ruleId: string,
+    ): Promise<
+        | Models.WafRuleBypass
+        | Models.WafRuleDeny
+        | Models.WafRuleChallenge
+        | Models.WafRuleRateLimit
+        | Models.WafRuleRedirect
+    >;
     getRule(
         paramsOrFirst: { ruleId: string } | string,
-    ): Promise<Models.WafRule> {
+    ): Promise<
+        | Models.WafRuleBypass
+        | Models.WafRuleDeny
+        | Models.WafRuleChallenge
+        | Models.WafRuleRateLimit
+        | Models.WafRuleRedirect
+    > {
         let params: { ruleId: string };
 
         if (

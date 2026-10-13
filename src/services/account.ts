@@ -1,5 +1,9 @@
-import { Service } from '../service';
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 import { AccountKeyScopes } from '../enums/account-key-scopes';
@@ -32,7 +36,49 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -141,7 +187,49 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -217,7 +305,33 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'billingAddressList',
+            models: {
+                billingAddressList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        billingAddresses: {
+                            items: 'billingAddress',
+                        },
+                    },
+                },
+                billingAddress: {
+                    defaults: {
+                        $id: '',
+                        userId: '',
+                        streetAddress: '',
+                        country: '',
+                        city: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -355,7 +469,23 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'billingAddress',
+            models: {
+                billingAddress: {
+                    defaults: {
+                        $id: '',
+                        userId: '',
+                        streetAddress: '',
+                        country: '',
+                        city: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -416,7 +546,23 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'billingAddress',
+            models: {
+                billingAddress: {
+                    defaults: {
+                        $id: '',
+                        userId: '',
+                        streetAddress: '',
+                        country: '',
+                        city: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -574,7 +720,23 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'billingAddress',
+            models: {
+                billingAddress: {
+                    defaults: {
+                        $id: '',
+                        userId: '',
+                        streetAddress: '',
+                        country: '',
+                        city: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -703,7 +865,38 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'oauth2ConsentList',
+            models: {
+                oauth2ConsentList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        consents: {
+                            items: 'oauth2Consent',
+                        },
+                    },
+                },
+                oauth2Consent: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        appId: '',
+                        cimdUrl: '',
+                        scopes: [],
+                        resources: [],
+                        authorizationDetails: '[]',
+                        expire: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -759,7 +952,28 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'oauth2Consent',
+            models: {
+                oauth2Consent: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        appId: '',
+                        cimdUrl: '',
+                        scopes: [],
+                        resources: [],
+                        authorizationDetails: '[]',
+                        expire: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -898,7 +1112,39 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'oauth2ConsentTokenList',
+            models: {
+                oauth2ConsentTokenList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        tokens: {
+                            items: 'oauth2ConsentToken',
+                        },
+                    },
+                },
+                oauth2ConsentToken: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        consentId: '',
+                        userId: '',
+                        appId: '',
+                        cimdUrl: '',
+                        scopes: [],
+                        resources: [],
+                        authorizationDetails: '[]',
+                        expire: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -972,7 +1218,29 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'oauth2ConsentToken',
+            models: {
+                oauth2ConsentToken: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        consentId: '',
+                        userId: '',
+                        appId: '',
+                        cimdUrl: '',
+                        scopes: [],
+                        resources: [],
+                        authorizationDetails: '[]',
+                        expire: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1100,7 +1368,25 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'coupon',
+            models: {
+                coupon: {
+                    defaults: {
+                        $id: '',
+                        code: '',
+                        credits: 0,
+                        expiration: '',
+                        campaign: '',
+                        status: '',
+                        onlyNewOrgs: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1184,7 +1470,49 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1253,7 +1581,39 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'identityList',
+            models: {
+                identityList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        identities: {
+                            items: 'identity',
+                        },
+                    },
+                },
+                identity: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        provider: '',
+                        providerUid: '',
+                        providerEmail: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        providerIdToken: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1362,7 +1722,64 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'invoiceList',
+            models: {
+                invoiceList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        invoices: {
+                            items: 'invoice',
+                        },
+                    },
+                },
+                invoice: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        teamId: '',
+                        aggregationId: '',
+                        plan: 'tier-0',
+                        amount: 0,
+                        tax: 0,
+                        taxAmount: 0,
+                        vat: 0,
+                        vatAmount: 0,
+                        grossAmount: 0,
+                        creditsUsed: 0,
+                        currency: 'USD',
+                        status: '',
+                        type: 'subscription',
+                        from: '',
+                        to: '',
+                    },
+                    properties: {
+                        usage: {
+                            items: 'usageResources',
+                        },
+                    },
+                },
+                usageResources: {
+                    defaults: {
+                        name: '',
+                        value: 0,
+                        amount: 0,
+                        rate: 0,
+                        desc: '',
+                        resourceId: '',
+                        type: '',
+                        specification: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1415,7 +1832,19 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'jwt',
+            models: {
+                jwt: {
+                    defaults: {
+                        jwt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1467,7 +1896,36 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'keyList',
+            models: {
+                keyList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        keys: {
+                            items: 'key',
+                        },
+                    },
+                },
+                key: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        expire: '',
+                        scopes: [],
+                        secret: '',
+                        accessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1558,7 +2016,26 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'key',
+            models: {
+                key: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        expire: '',
+                        scopes: [],
+                        secret: '',
+                        accessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1610,7 +2087,26 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'key',
+            models: {
+                key: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        expire: '',
+                        scopes: [],
+                        secret: '',
+                        accessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1720,7 +2216,26 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'key',
+            models: {
+                key: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        expire: '',
+                        scopes: [],
+                        secret: '',
+                        accessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1834,7 +2349,49 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1893,7 +2450,20 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaType',
+            models: {
+                mfaType: {
+                    defaults: {
+                        secret: '',
+                        uri: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1951,7 +2521,20 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaType',
+            models: {
+                mfaType: {
+                    defaults: {
+                        secret: '',
+                        uri: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2032,7 +2615,49 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2112,7 +2737,49 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2286,7 +2953,22 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaChallenge',
+            models: {
+                mfaChallenge: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        expire: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2346,7 +3028,22 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaChallenge',
+            models: {
+                mfaChallenge: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        expire: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2424,7 +3121,47 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'session',
+            models: {
+                session: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        expire: '',
+                        provider: '',
+                        providerUid: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        ip: '',
+                        osCode: '',
+                        osName: '',
+                        osVersion: '',
+                        clientType: '',
+                        clientCode: '',
+                        clientName: '',
+                        clientVersion: '',
+                        clientEngine: '',
+                        clientEngineVersion: '',
+                        deviceName: '',
+                        deviceBrand: '',
+                        deviceModel: '',
+                        countryCode: '',
+                        countryName: '',
+                        current: false,
+                        factors: [],
+                        secret: '',
+                        mfaUpdatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2501,7 +3238,47 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'session',
+            models: {
+                session: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        expire: '',
+                        provider: '',
+                        providerUid: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        ip: '',
+                        osCode: '',
+                        osName: '',
+                        osVersion: '',
+                        clientType: '',
+                        clientCode: '',
+                        clientName: '',
+                        clientVersion: '',
+                        clientEngine: '',
+                        clientEngineVersion: '',
+                        deviceName: '',
+                        deviceBrand: '',
+                        deviceModel: '',
+                        countryCode: '',
+                        countryName: '',
+                        current: false,
+                        factors: [],
+                        secret: '',
+                        mfaUpdatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2521,7 +3298,23 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaFactors',
+            models: {
+                mfaFactors: {
+                    defaults: {
+                        totp: false,
+                        phone: false,
+                        email: false,
+                        recoveryCode: false,
+                        custom: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2540,7 +3333,23 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaFactors',
+            models: {
+                mfaFactors: {
+                    defaults: {
+                        totp: false,
+                        phone: false,
+                        email: false,
+                        recoveryCode: false,
+                        custom: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2560,7 +3369,19 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaRecoveryCodes',
+            models: {
+                mfaRecoveryCodes: {
+                    defaults: {
+                        recoveryCodes: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2579,7 +3400,19 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaRecoveryCodes',
+            models: {
+                mfaRecoveryCodes: {
+                    defaults: {
+                        recoveryCodes: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2600,7 +3433,19 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaRecoveryCodes',
+            models: {
+                mfaRecoveryCodes: {
+                    defaults: {
+                        recoveryCodes: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2620,7 +3465,19 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaRecoveryCodes',
+            models: {
+                mfaRecoveryCodes: {
+                    defaults: {
+                        recoveryCodes: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2641,7 +3498,19 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaRecoveryCodes',
+            models: {
+                mfaRecoveryCodes: {
+                    defaults: {
+                        recoveryCodes: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2661,7 +3530,19 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaRecoveryCodes',
+            models: {
+                mfaRecoveryCodes: {
+                    defaults: {
+                        recoveryCodes: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2722,7 +3603,49 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2791,7 +3714,33 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'passkeyList',
+            models: {
+                passkeyList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        passkeys: {
+                            items: 'passkey',
+                        },
+                    },
+                },
+                passkey: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        accessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2861,7 +3810,23 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'passkeyChallenge',
+            models: {
+                passkeyChallenge: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        passkeyId: '',
+                        expire: '',
+                        publicKey: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2917,7 +3882,23 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'passkey',
+            models: {
+                passkey: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        accessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2991,7 +3972,23 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'passkey',
+            models: {
+                passkey: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        accessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3125,7 +4122,23 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'passkey',
+            models: {
+                passkey: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        accessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3205,7 +4218,49 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3259,7 +4314,37 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'paymentMethodList',
+            models: {
+                paymentMethodList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        paymentMethods: {
+                            items: 'paymentMethod',
+                        },
+                    },
+                },
+                paymentMethod: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        providerMethodId: '',
+                        clientSecret: '',
+                        providerUserId: '',
+                        userId: '',
+                        default: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3279,7 +4364,27 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'paymentMethod',
+            models: {
+                paymentMethod: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        providerMethodId: '',
+                        clientSecret: '',
+                        providerUserId: '',
+                        userId: '',
+                        default: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3337,7 +4442,27 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'paymentMethod',
+            models: {
+                paymentMethod: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        providerMethodId: '',
+                        clientSecret: '',
+                        providerUserId: '',
+                        userId: '',
+                        default: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3453,7 +4578,27 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'paymentMethod',
+            models: {
+                paymentMethod: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        providerMethodId: '',
+                        clientSecret: '',
+                        providerUserId: '',
+                        userId: '',
+                        default: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3625,7 +4770,27 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'paymentMethod',
+            models: {
+                paymentMethod: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        providerMethodId: '',
+                        clientSecret: '',
+                        providerUserId: '',
+                        userId: '',
+                        default: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3687,7 +4852,27 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'paymentMethod',
+            models: {
+                paymentMethod: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        providerMethodId: '',
+                        clientSecret: '',
+                        providerUserId: '',
+                        userId: '',
+                        default: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3767,7 +4952,49 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3852,7 +5079,49 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3921,7 +5190,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4016,7 +5302,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4091,7 +5394,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4184,7 +5504,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4236,7 +5573,57 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'sessionList',
+            models: {
+                sessionList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        sessions: {
+                            items: 'session',
+                        },
+                    },
+                },
+                session: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        expire: '',
+                        provider: '',
+                        providerUid: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        ip: '',
+                        osCode: '',
+                        osName: '',
+                        osVersion: '',
+                        clientType: '',
+                        clientCode: '',
+                        clientName: '',
+                        clientVersion: '',
+                        clientEngine: '',
+                        clientEngineVersion: '',
+                        deviceName: '',
+                        deviceBrand: '',
+                        deviceModel: '',
+                        countryCode: '',
+                        countryName: '',
+                        current: false,
+                        factors: [],
+                        secret: '',
+                        mfaUpdatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4309,7 +5696,47 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'session',
+            models: {
+                session: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        expire: '',
+                        provider: '',
+                        providerUid: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        ip: '',
+                        osCode: '',
+                        osName: '',
+                        osVersion: '',
+                        clientType: '',
+                        clientCode: '',
+                        clientName: '',
+                        clientVersion: '',
+                        clientEngine: '',
+                        clientEngineVersion: '',
+                        deviceName: '',
+                        deviceBrand: '',
+                        deviceModel: '',
+                        countryCode: '',
+                        countryName: '',
+                        current: false,
+                        factors: [],
+                        secret: '',
+                        mfaUpdatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4401,7 +5828,47 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'session',
+            models: {
+                session: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        expire: '',
+                        provider: '',
+                        providerUid: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        ip: '',
+                        osCode: '',
+                        osName: '',
+                        osVersion: '',
+                        clientType: '',
+                        clientCode: '',
+                        clientName: '',
+                        clientVersion: '',
+                        clientEngine: '',
+                        clientEngineVersion: '',
+                        deviceName: '',
+                        deviceBrand: '',
+                        deviceModel: '',
+                        countryCode: '',
+                        countryName: '',
+                        current: false,
+                        factors: [],
+                        secret: '',
+                        mfaUpdatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4564,7 +6031,47 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'session',
+            models: {
+                session: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        expire: '',
+                        provider: '',
+                        providerUid: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        ip: '',
+                        osCode: '',
+                        osName: '',
+                        osVersion: '',
+                        clientType: '',
+                        clientCode: '',
+                        clientName: '',
+                        clientVersion: '',
+                        clientEngine: '',
+                        clientEngineVersion: '',
+                        deviceName: '',
+                        deviceBrand: '',
+                        deviceModel: '',
+                        countryCode: '',
+                        countryName: '',
+                        current: false,
+                        factors: [],
+                        secret: '',
+                        mfaUpdatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4640,7 +6147,47 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'session',
+            models: {
+                session: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        expire: '',
+                        provider: '',
+                        providerUid: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        ip: '',
+                        osCode: '',
+                        osName: '',
+                        osVersion: '',
+                        clientType: '',
+                        clientCode: '',
+                        clientName: '',
+                        clientVersion: '',
+                        clientEngine: '',
+                        clientEngineVersion: '',
+                        deviceName: '',
+                        deviceBrand: '',
+                        deviceModel: '',
+                        countryCode: '',
+                        countryName: '',
+                        current: false,
+                        factors: [],
+                        secret: '',
+                        mfaUpdatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4655,6 +6202,7 @@ export class Account {
      * @param {string} params.success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} params.failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} params.scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
+     * @param {string} params.state - An opaque value your app generates and keeps, for example in a cookie. It is returned unchanged as the `state` query parameter on the success and failure URLs, so your app can check that the sign-in it receives is one it started. Printable ASCII only (RFC 6749 Appendix A.5). Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {void | string}
      */
@@ -4663,6 +6211,7 @@ export class Account {
         success?: string;
         failure?: string;
         scopes?: string[];
+        state?: string;
     }): void | string;
     /**
      * Allow the user to login to their account using the OAuth2 provider of their choice. Each OAuth2 provider should be enabled from the Appwrite console first. Use the success and failure arguments to provide a redirect URL's back to your app when login is completed.
@@ -4676,6 +6225,7 @@ export class Account {
      * @param {string} success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
+     * @param {string} state - An opaque value your app generates and keeps, for example in a cookie. It is returned unchanged as the `state` query parameter on the success and failure URLs, so your app can check that the sign-in it receives is one it started. Printable ASCII only (RFC 6749 Appendix A.5). Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {void | string}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4685,6 +6235,7 @@ export class Account {
         success?: string,
         failure?: string,
         scopes?: string[],
+        state?: string,
     ): void | string;
     createOAuth2Session(
         paramsOrFirst:
@@ -4693,15 +6244,17 @@ export class Account {
                   success?: string;
                   failure?: string;
                   scopes?: string[];
+                  state?: string;
               }
             | OAuthProvider,
-        ...rest: [string?, string?, string[]?]
+        ...rest: [string?, string?, string[]?, string?]
     ): void | string {
         let params: {
             provider: OAuthProvider;
             success?: string;
             failure?: string;
             scopes?: string[];
+            state?: string;
         };
 
         if (
@@ -4711,13 +6264,15 @@ export class Account {
             ('provider' in paramsOrFirst ||
                 'success' in paramsOrFirst ||
                 'failure' in paramsOrFirst ||
-                'scopes' in paramsOrFirst)
+                'scopes' in paramsOrFirst ||
+                'state' in paramsOrFirst)
         ) {
             params = (paramsOrFirst || {}) as {
                 provider: OAuthProvider;
                 success?: string;
                 failure?: string;
                 scopes?: string[];
+                state?: string;
             };
         } else {
             params = {
@@ -4725,6 +6280,7 @@ export class Account {
                 success: rest[0] as string,
                 failure: rest[1] as string,
                 scopes: rest[2] as string[],
+                state: rest[3] as string,
             };
         }
 
@@ -4732,6 +6288,7 @@ export class Account {
         const success = params.success;
         const failure = params.failure;
         const scopes = params.scopes;
+        const state = params.state;
 
         if (typeof provider === 'undefined') {
             throw new AppwriteException(
@@ -4752,13 +6309,14 @@ export class Account {
         if (typeof scopes !== 'undefined') {
             apiPayload['scopes'] = scopes;
         }
+        if (typeof state !== 'undefined') {
+            apiPayload['state'] = state;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
 
-        for (const [key, value] of Object.entries(
-            Service.flatten(apiPayload),
-        )) {
+        for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
             uri.searchParams.append(key, value);
         }
 
@@ -4840,7 +6398,47 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'session',
+            models: {
+                session: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        expire: '',
+                        provider: '',
+                        providerUid: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        ip: '',
+                        osCode: '',
+                        osName: '',
+                        osVersion: '',
+                        clientType: '',
+                        clientCode: '',
+                        clientName: '',
+                        clientVersion: '',
+                        clientEngine: '',
+                        clientEngineVersion: '',
+                        deviceName: '',
+                        deviceBrand: '',
+                        deviceModel: '',
+                        countryCode: '',
+                        countryName: '',
+                        current: false,
+                        factors: [],
+                        secret: '',
+                        mfaUpdatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4912,7 +6510,47 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'session',
+            models: {
+                session: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        expire: '',
+                        provider: '',
+                        providerUid: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        ip: '',
+                        osCode: '',
+                        osName: '',
+                        osVersion: '',
+                        clientType: '',
+                        clientCode: '',
+                        clientName: '',
+                        clientVersion: '',
+                        clientEngine: '',
+                        clientEngineVersion: '',
+                        deviceName: '',
+                        deviceBrand: '',
+                        deviceModel: '',
+                        countryCode: '',
+                        countryName: '',
+                        current: false,
+                        factors: [],
+                        secret: '',
+                        mfaUpdatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4968,7 +6606,47 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'session',
+            models: {
+                session: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        expire: '',
+                        provider: '',
+                        providerUid: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        ip: '',
+                        osCode: '',
+                        osName: '',
+                        osVersion: '',
+                        clientType: '',
+                        clientCode: '',
+                        clientName: '',
+                        clientVersion: '',
+                        clientEngine: '',
+                        clientEngineVersion: '',
+                        deviceName: '',
+                        deviceBrand: '',
+                        deviceModel: '',
+                        countryCode: '',
+                        countryName: '',
+                        current: false,
+                        factors: [],
+                        secret: '',
+                        mfaUpdatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5025,7 +6703,47 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'session',
+            models: {
+                session: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        expire: '',
+                        provider: '',
+                        providerUid: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        ip: '',
+                        osCode: '',
+                        osName: '',
+                        osVersion: '',
+                        clientType: '',
+                        clientCode: '',
+                        clientName: '',
+                        clientVersion: '',
+                        clientEngine: '',
+                        clientEngineVersion: '',
+                        deviceName: '',
+                        deviceBrand: '',
+                        deviceModel: '',
+                        countryCode: '',
+                        countryName: '',
+                        current: false,
+                        factors: [],
+                        secret: '',
+                        mfaUpdatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5102,7 +6820,49 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5197,7 +6957,26 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'target',
+            models: {
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5276,7 +7055,26 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'target',
+            models: {
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5425,7 +7223,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5533,7 +7348,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5549,6 +7381,7 @@ export class Account {
      * @param {string} params.success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} params.failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} params.scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
+     * @param {string} params.state - An opaque value your app generates and keeps, for example in a cookie. It is returned unchanged as the `state` query parameter on the success and failure URLs, so your app can check that the sign-in it receives is one it started. Printable ASCII only (RFC 6749 Appendix A.5). Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {void | string}
      */
@@ -5557,6 +7390,7 @@ export class Account {
         success?: string;
         failure?: string;
         scopes?: string[];
+        state?: string;
     }): void | string;
     /**
      * Allow the user to login to their account using the OAuth2 provider of their choice. Each OAuth2 provider should be enabled from the Appwrite console first. Use the success and failure arguments to provide a redirect URL's back to your app when login is completed.
@@ -5571,6 +7405,7 @@ export class Account {
      * @param {string} success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
+     * @param {string} state - An opaque value your app generates and keeps, for example in a cookie. It is returned unchanged as the `state` query parameter on the success and failure URLs, so your app can check that the sign-in it receives is one it started. Printable ASCII only (RFC 6749 Appendix A.5). Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {void | string}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -5580,6 +7415,7 @@ export class Account {
         success?: string,
         failure?: string,
         scopes?: string[],
+        state?: string,
     ): void | string;
     createOAuth2Token(
         paramsOrFirst:
@@ -5588,15 +7424,17 @@ export class Account {
                   success?: string;
                   failure?: string;
                   scopes?: string[];
+                  state?: string;
               }
             | OAuthProvider,
-        ...rest: [string?, string?, string[]?]
+        ...rest: [string?, string?, string[]?, string?]
     ): void | string {
         let params: {
             provider: OAuthProvider;
             success?: string;
             failure?: string;
             scopes?: string[];
+            state?: string;
         };
 
         if (
@@ -5606,13 +7444,15 @@ export class Account {
             ('provider' in paramsOrFirst ||
                 'success' in paramsOrFirst ||
                 'failure' in paramsOrFirst ||
-                'scopes' in paramsOrFirst)
+                'scopes' in paramsOrFirst ||
+                'state' in paramsOrFirst)
         ) {
             params = (paramsOrFirst || {}) as {
                 provider: OAuthProvider;
                 success?: string;
                 failure?: string;
                 scopes?: string[];
+                state?: string;
             };
         } else {
             params = {
@@ -5620,6 +7460,7 @@ export class Account {
                 success: rest[0] as string,
                 failure: rest[1] as string,
                 scopes: rest[2] as string[],
+                state: rest[3] as string,
             };
         }
 
@@ -5627,6 +7468,7 @@ export class Account {
         const success = params.success;
         const failure = params.failure;
         const scopes = params.scopes;
+        const state = params.state;
 
         if (typeof provider === 'undefined') {
             throw new AppwriteException(
@@ -5647,13 +7489,14 @@ export class Account {
         if (typeof scopes !== 'undefined') {
             apiPayload['scopes'] = scopes;
         }
+        if (typeof state !== 'undefined') {
+            apiPayload['state'] = state;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
 
-        for (const [key, value] of Object.entries(
-            Service.flatten(apiPayload),
-        )) {
+        for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
             uri.searchParams.append(key, value);
         }
 
@@ -5682,7 +7525,23 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'passkeyChallenge',
+            models: {
+                passkeyChallenge: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        passkeyId: '',
+                        expire: '',
+                        publicKey: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5761,7 +7620,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'tokenSecret',
+            models: {
+                tokenSecret: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5834,7 +7710,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5895,7 +7788,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5957,7 +7867,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -6032,7 +7959,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -6105,7 +8049,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -6166,7 +8127,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -6243,7 +8221,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -6263,7 +8258,24 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -6338,6 +8350,23 @@ export class Account {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }
