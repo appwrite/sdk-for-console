@@ -251,62 +251,6 @@ export namespace Models {
     };
 
     /**
-     * Videos List
-     */
-    export type VideoList = {
-        /**
-         * Total number of videos that matched your query.
-         */
-        total: number;
-        /**
-         * List of videos.
-         */
-        videos: Video[];
-    };
-
-    /**
-     * Video Profiles List
-     */
-    export type VideoProfileList = {
-        /**
-         * Total number of profiles that matched your query.
-         */
-        total: number;
-        /**
-         * List of profiles.
-         */
-        profiles: VideoProfile[];
-    };
-
-    /**
-     * Video Renditions List
-     */
-    export type VideoRenditionList = {
-        /**
-         * Total number of renditions that matched your query.
-         */
-        total: number;
-        /**
-         * List of renditions.
-         */
-        renditions: VideoRendition[];
-    };
-
-    /**
-     * Video Subtitles List
-     */
-    export type VideoSubtitleList = {
-        /**
-         * Total number of subtitles that matched your query.
-         */
-        total: number;
-        /**
-         * List of subtitles.
-         */
-        subtitles: VideoSubtitle[];
-    };
-
-    /**
      * Teams List
      */
     export type TeamList<
@@ -709,6 +653,7 @@ export namespace Models {
             | Models.PolicyPasswordStrength
             | Models.PolicyPasswordPersonalData
             | Models.PolicyPasswordPwned
+            | Models.PolicyPasswordRotation
             | Models.PolicySessionAlert
             | Models.PolicySessionDuration
             | Models.PolicySessionInvalidation
@@ -5495,6 +5440,10 @@ export namespace Models {
          */
         wafEnabled?: boolean;
         /**
+         * ID of the project this environment belongs to. Null when the project is not an environment.
+         */
+        parentId?: string;
+        /**
          * Billing limits reached
          */
         billingLimits?: BillingLimits;
@@ -7093,6 +7042,24 @@ export namespace Models {
     };
 
     /**
+     * Policy Password Rotation
+     */
+    export type PolicyPasswordRotation = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether expired passwords require a reset before email/password sign-in.
+         */
+        enabled: boolean;
+        /**
+         * Maximum password age in seconds.
+         */
+        maxAge: number;
+    };
+
+    /**
      * Policy Session Alert
      */
     export type PolicySessionAlert = {
@@ -7231,15 +7198,11 @@ export namespace Models {
          */
         $id: string;
         /**
-         * Whether the passkey auth method is enabled. Toggle it with the update auth method endpoint.
-         */
-        enabled: boolean;
-        /**
          * Relying party ID passkeys are bound to. Empty until configured.
          */
         rpId: string;
         /**
-         * Web origins allowed to register and sign in with passkeys.
+         * Web origins passkeys work on, from the project's platforms on the relying party ID and a localhost web platform. Read-only.
          */
         origins: string[];
     };
@@ -8145,10 +8108,6 @@ export namespace Models {
          */
         _APP_DOMAIN_ENABLED: boolean;
         /**
-         * Defines if AI assistant is enabled.
-         */
-        _APP_ASSISTANT_ENABLED: boolean;
-        /**
          * A comma separated list of domains to use for site URLs.
          */
         _APP_DOMAIN_SITES: string;
@@ -8192,6 +8151,10 @@ export namespace Models {
          * Whether the database adapter supports multiple fulltext indexes per collection.
          */
         supportForMultipleFulltextIndexes: boolean;
+        /**
+         * Whether the database adapter supports trigram indexes.
+         */
+        supportForTrigramIndex: boolean;
         /**
          * Whether the database adapter supports resizing attributes.
          */
@@ -8349,6 +8312,36 @@ export namespace Models {
     };
 
     /**
+     * Token Secret
+     */
+    export type TokenSecret = {
+        /**
+         * Token ID.
+         */
+        $id: string;
+        /**
+         * Token creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * User ID.
+         */
+        userId: string;
+        /**
+         * Token secret key. Exchange it for a session with the create session endpoint.
+         */
+        secret: string;
+        /**
+         * Token expiration date in ISO 8601 format.
+         */
+        expire: string;
+        /**
+         * Security phrase of a token. Empty if security phrase was not requested when creating a token. It includes randomly generated phrase which is also sent in the external resource such as email.
+         */
+        phrase: string;
+    };
+
+    /**
      * Passkey
      */
     export type Passkey = {
@@ -8372,10 +8365,6 @@ export namespace Models {
          * Most recent sign-in with this passkey in ISO 8601 format. Empty until the passkey is used to sign in.
          */
         accessedAt: string;
-        /**
-         * Whether the passkey is synced to a cloud account, such as iCloud Keychain or Google Password Manager, rather than bound to one device.
-         */
-        backedUp: boolean;
     };
 
     /**
@@ -8383,7 +8372,7 @@ export namespace Models {
      */
     export type PasskeyChallenge = {
         /**
-         * Challenge ID. Pass it back with the credential to complete the ceremony.
+         * Challenge ID. When signing in, pass it back with the credential to receive a token.
          */
         $id: string;
         /**
@@ -9087,278 +9076,6 @@ export namespace Models {
     };
 
     /**
-     * Video
-     */
-    export type Video = {
-        /**
-         * Video ID.
-         */
-        $id: string;
-        /**
-         * Video creation time in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * Video update date in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * Storage bucket ID holding the source file.
-         */
-        bucketId: string;
-        /**
-         * Source file ID.
-         */
-        fileId: string;
-        /**
-         * Video name.
-         */
-        name: string;
-        /**
-         * Preview image ID, taken from the sprite timeline.
-         */
-        previewId: string;
-        /**
-         * Source file size in bytes.
-         */
-        size: number;
-        /**
-         * Source status: one of `pending`, `downloading`, `ready`, `removed`, `error` or `aborted`.
-         */
-        status: string;
-        /**
-         * Total number of chunks in the source download.
-         */
-        chunksTotal: number;
-        /**
-         * Number of source chunks downloaded so far.
-         */
-        chunksUploaded: number;
-        /**
-         * Container format.
-         */
-        format: string;
-        /**
-         * Video duration in milliseconds.
-         */
-        duration: number;
-        /**
-         * Video width in pixels.
-         */
-        width: number;
-        /**
-         * Video height in pixels.
-         */
-        height: number;
-        /**
-         * Video aspect ratio.
-         */
-        aspectRatio: string;
-        /**
-         * Video codec.
-         */
-        videoCodec: string;
-        /**
-         * Video format.
-         */
-        videoFormat: string;
-        /**
-         * Video format profile.
-         */
-        videoFormatProfile: string;
-        /**
-         * Video bitrate in bits per second.
-         */
-        videoBitRate: number;
-        /**
-         * Video frame rate.
-         */
-        videoFrameRate: string;
-        /**
-         * Video frame rate mode.
-         */
-        videoFrameRateMode: string;
-        /**
-         * Audio codec.
-         */
-        audioCodec: string;
-        /**
-         * Audio format.
-         */
-        audioFormat: string;
-        /**
-         * Audio bitrate in bits per second.
-         */
-        audioBitRate: number;
-        /**
-         * Audio sample rate.
-         */
-        audioSampleRate: string;
-    };
-
-    /**
-     * Video profile
-     */
-    export type VideoProfile = {
-        /**
-         * Video profile ID.
-         */
-        $id: string;
-        /**
-         * Video profile creation time in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * Video profile update date in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * Video profile name.
-         */
-        name: string;
-        /**
-         * Target video bitrate in kilobits per second.
-         */
-        videoBitRate: number;
-        /**
-         * Target audio bitrate in kilobits per second.
-         */
-        audioBitRate: number;
-        /**
-         * Target video width in pixels.
-         */
-        width: number;
-        /**
-         * Target video height in pixels.
-         */
-        height: number;
-    };
-
-    /**
-     * Video rendition
-     */
-    export type VideoRendition = {
-        /**
-         * Rendition ID.
-         */
-        $id: string;
-        /**
-         * Rendition creation time in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * Rendition update date in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * Video ID.
-         */
-        videoId: string;
-        /**
-         * Video profile ID this rendition was encoded against.
-         */
-        profileId: string;
-        /**
-         * Rendition name, derived from its dimensions and bitrate.
-         */
-        name: string;
-        /**
-         * Transcoding start time in ISO 8601 format.
-         */
-        startedAt: string;
-        /**
-         * Transcoding end time in ISO 8601 format.
-         */
-        endedAt: string;
-        /**
-         * Rendition width in pixels.
-         */
-        width: number;
-        /**
-         * Rendition height in pixels.
-         */
-        height: number;
-        /**
-         * Video bitrate in kilobits per second.
-         */
-        videoBitRate: number;
-        /**
-         * Audio bitrate in kilobits per second.
-         */
-        audioBitRate: number;
-        /**
-         * Longest segment duration in seconds.
-         */
-        targetDuration: string;
-        /**
-         * Transcoding status: one of `pending`, `started`, `ended`, `uploading`, `ready`, `error` or `aborted`.
-         */
-        status: string;
-        /**
-         * Transcoding progress as a percentage.
-         */
-        progress: string;
-        /**
-         * Streaming output format: `hls`, `dash`, or `cmaf`.
-         */
-        output: string;
-    };
-
-    /**
-     * Video subtitle
-     */
-    export type VideoSubtitle = {
-        /**
-         * Subtitle ID.
-         */
-        $id: string;
-        /**
-         * Subtitle creation time in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * Subtitle update date in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * Video ID.
-         */
-        videoId: string;
-        /**
-         * Storage bucket ID holding the subtitle file.
-         */
-        bucketId: string;
-        /**
-         * Subtitle file ID.
-         */
-        fileId: string;
-        /**
-         * Subtitle display name.
-         */
-        name: string;
-        /**
-         * Subtitle ISO 639-2 language code.
-         */
-        code: string;
-        /**
-         * Is this the default subtitle track?
-         */
-        default: boolean;
-        /**
-         * Was this track auto-extracted from the source container? Extracted tracks have no backing file; extraction runs once per video, so a deleted extracted track is not re-created.
-         */
-        embedded: boolean;
-        /**
-         * Longest segment duration in seconds.
-         */
-        targetDuration: string;
-        /**
-         * Packaging status: one of `pending`, `started`, `ready` or `error`.
-         */
-        status: string;
-    };
-
-    /**
      * ActivityEvent
      */
     export type ActivityEvent = {
@@ -9877,25 +9594,21 @@ export namespace Models {
          */
         domain: string;
         /**
-         * IANA timezone used to define the daily boundary for stats.
-         */
-        timezone: string;
-        /**
          * Whether tracking is currently active.
          */
         enabled: boolean;
-        /**
-         * Whether stats for this property are publicly viewable.
-         */
-        public: boolean;
         /**
          * List of origins allowed to send tracking events. Use ["*"] to allow all.
          */
         allowedOrigins: string[];
         /**
-         * Unique identifier for the tracking script snippet.
+         * Most recent event date in ISO 8601 format. This attribute is only updated again after 24 hours.
          */
-        snippetId: string;
+        accessedAt: string;
+        /**
+         * First event date in ISO 8601 format. Empty until the property receives its first event.
+         */
+        firstAccessedAt: string;
     };
 
     /**
@@ -10328,6 +10041,10 @@ export namespace Models {
          * Maximum WAF rules per project
          */
         wafRules: number;
+        /**
+         * Maximum environments per project. 0 when the plan does not offer environments.
+         */
+        environments: number;
         /**
          * Projects
          */
@@ -12223,6 +11940,96 @@ export namespace Models {
     };
 
     /**
+     * Threat
+     */
+    export type Threat = {
+        /**
+         * Threat ID.
+         */
+        $id: string;
+        /**
+         * Threat creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Threat update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the project the resource belongs to.
+         */
+        projectId: string;
+        /**
+         * ID of the organization that owns the project.
+         */
+        teamId: string;
+        /**
+         * ID of the user the threat is attributed to. Not set yet.
+         */
+        userId: string;
+        /**
+         * Region of the project.
+         */
+        region: string;
+        /**
+         * Type of the flagged resource.
+         */
+        resourceType: string;
+        /**
+         * ID of the flagged resource.
+         */
+        resourceId: string;
+        /**
+         * Creation date of the flagged resource in ISO 8601 format. Empty for a manual threat, which names the resource without looking it up.
+         */
+        resourceCreatedAt: string;
+        /**
+         * How the threat was found. Possible values are `hash` (a file matched a known-bad signature), `analysis` (source analysis flagged a deployment), `scan` (the URL scanner flagged a hostname) or `manual` (recorded by an operator through the admin API).
+         */
+        type: string;
+        /**
+         * Triage status. Possible values are `open`, `resolved` or `dismissed`.
+         */
+        status: string;
+        /**
+         * What was found: the detector's summary, or the operator's words for a manual threat.
+         */
+        description: string;
+        /**
+         * ID of the console user who recorded the threat. Empty when a detector did.
+         */
+        createdBy: string;
+        /**
+         * The signature that matched. Used if type is `hash`.
+         */
+        hashSignature: string;
+        /**
+         * The analyser's classification of the finding, in snake case. Used if type is `analysis`.
+         */
+        analysisVerdict: string;
+        /**
+         * Paths of the files the finding is in. Used if type is `analysis`.
+         */
+        analysisFiles: string[];
+        /**
+         * Hostname the URL scanner flagged. Used if type is `scan`.
+         */
+        scanDomain: string;
+        /**
+         * The URL scanner's verdict. Possible values are `malicious` or `phishing`. Used if type is `scan`.
+         */
+        scanVerdict: string;
+        /**
+         * The URL scanner's severity. Possible values are `high` or `medium`. Used if type is `scan`.
+         */
+        scanSeverity: string;
+        /**
+         * ID of the URL scanner's report. Used if type is `scan`.
+         */
+        scanReportId: string;
+    };
+
+    /**
      * Organization
      */
     export type Organization<
@@ -13935,68 +13742,6 @@ export namespace Models {
     };
 
     /**
-     * WafRule
-     */
-    export type WafRule = {
-        /**
-         * Rule ID.
-         */
-        $id: string;
-        /**
-         * WAF rule creation time in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * WAF rule last update time in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * Human friendly rule name.
-         */
-        name: string;
-        /**
-         * Optional description for the rule.
-         */
-        description: string;
-        /**
-         * Team ID.
-         */
-        teamId: string;
-        /**
-         * Project ID.
-         */
-        projectId: string;
-        /**
-         * Resource type the rule is scoped to.
-         */
-        resourceType: string;
-        /**
-         * Resource identifier. Empty for API-wide rules.
-         */
-        resourceId: string;
-        /**
-         * Action performed when the rule matches.
-         */
-        action: WafRuleAction;
-        /**
-         * Evaluation priority. Lower values execute earlier.
-         */
-        priority: number;
-        /**
-         * Whether the rule is active.
-         */
-        enabled: boolean;
-        /**
-         * List of conditions evaluated for this rule.
-         */
-        conditions: Record<string, any>[];
-        /**
-         * Action specific configuration.
-         */
-        config: object;
-    };
-
-    /**
      * WafRuleBypass
      */
     export type WafRuleBypass = {
@@ -14357,7 +14102,13 @@ export namespace Models {
         /**
          * List of rules.
          */
-        rules: WafRule[];
+        rules: (
+            | Models.WafRuleBypass
+            | Models.WafRuleDeny
+            | Models.WafRuleChallenge
+            | Models.WafRuleRateLimit
+            | Models.WafRuleRedirect
+        )[];
     };
 
     /**
@@ -14599,6 +14350,20 @@ export namespace Models {
     };
 
     /**
+     * Threats list
+     */
+    export type ThreatList = {
+        /**
+         * Total number of threats that matched your query.
+         */
+        total: number;
+        /**
+         * List of threats.
+         */
+        threats: Threat[];
+    };
+
+    /**
      * Database Migrations List
      */
     export type DatabaseMigrationList = {
@@ -14808,5 +14573,333 @@ export namespace Models {
          * List of keys.
          */
         keys: AppKey[];
+    };
+
+    /**
+     * Videos List
+     */
+    export type VideoList = {
+        /**
+         * Total number of videos that matched your query.
+         */
+        total: number;
+        /**
+         * List of videos.
+         */
+        videos: Video[];
+    };
+
+    /**
+     * Video Profiles List
+     */
+    export type VideoProfileList = {
+        /**
+         * Total number of profiles that matched your query.
+         */
+        total: number;
+        /**
+         * List of profiles.
+         */
+        profiles: VideoProfile[];
+    };
+
+    /**
+     * Video Renditions List
+     */
+    export type VideoRenditionList = {
+        /**
+         * Total number of renditions that matched your query.
+         */
+        total: number;
+        /**
+         * List of renditions.
+         */
+        renditions: VideoRendition[];
+    };
+
+    /**
+     * Video Subtitles List
+     */
+    export type VideoSubtitleList = {
+        /**
+         * Total number of subtitles that matched your query.
+         */
+        total: number;
+        /**
+         * List of subtitles.
+         */
+        subtitles: VideoSubtitle[];
+    };
+
+    /**
+     * Video
+     */
+    export type Video = {
+        /**
+         * Video ID.
+         */
+        $id: string;
+        /**
+         * Video creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Video update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Storage bucket ID holding the source file.
+         */
+        bucketId: string;
+        /**
+         * Source file ID.
+         */
+        fileId: string;
+        /**
+         * Video name.
+         */
+        name: string;
+        /**
+         * Preview image ID, taken from the sprite timeline.
+         */
+        previewId: string;
+        /**
+         * Source file size in bytes.
+         */
+        size: number;
+        /**
+         * Source status: one of `pending`, `downloading`, `ready`, `removed`, `error` or `aborted`.
+         */
+        status: string;
+        /**
+         * Total number of chunks in the source download.
+         */
+        chunksTotal: number;
+        /**
+         * Number of source chunks downloaded so far.
+         */
+        chunksUploaded: number;
+        /**
+         * Container format.
+         */
+        format: string;
+        /**
+         * Video duration in milliseconds.
+         */
+        duration: number;
+        /**
+         * Video width in pixels.
+         */
+        width: number;
+        /**
+         * Video height in pixels.
+         */
+        height: number;
+        /**
+         * Video aspect ratio.
+         */
+        aspectRatio: string;
+        /**
+         * Video codec.
+         */
+        videoCodec: string;
+        /**
+         * Video format.
+         */
+        videoFormat: string;
+        /**
+         * Video format profile.
+         */
+        videoFormatProfile: string;
+        /**
+         * Video bitrate in bits per second.
+         */
+        videoBitRate: number;
+        /**
+         * Video frame rate.
+         */
+        videoFrameRate: string;
+        /**
+         * Video frame rate mode.
+         */
+        videoFrameRateMode: string;
+        /**
+         * Audio codec.
+         */
+        audioCodec: string;
+        /**
+         * Audio format.
+         */
+        audioFormat: string;
+        /**
+         * Audio bitrate in bits per second.
+         */
+        audioBitRate: number;
+        /**
+         * Audio sample rate.
+         */
+        audioSampleRate: string;
+    };
+
+    /**
+     * Video profile
+     */
+    export type VideoProfile = {
+        /**
+         * Video profile ID.
+         */
+        $id: string;
+        /**
+         * Video profile creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Video profile update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Video profile name.
+         */
+        name: string;
+        /**
+         * Target video bitrate in kilobits per second.
+         */
+        videoBitRate: number;
+        /**
+         * Target audio bitrate in kilobits per second.
+         */
+        audioBitRate: number;
+        /**
+         * Target video width in pixels.
+         */
+        width: number;
+        /**
+         * Target video height in pixels.
+         */
+        height: number;
+    };
+
+    /**
+     * Video rendition
+     */
+    export type VideoRendition = {
+        /**
+         * Rendition ID.
+         */
+        $id: string;
+        /**
+         * Rendition creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Rendition update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Video ID.
+         */
+        videoId: string;
+        /**
+         * Video profile ID this rendition was encoded against.
+         */
+        profileId: string;
+        /**
+         * Rendition name, derived from its dimensions and bitrate.
+         */
+        name: string;
+        /**
+         * Transcoding start time in ISO 8601 format.
+         */
+        startedAt: string;
+        /**
+         * Transcoding end time in ISO 8601 format.
+         */
+        endedAt: string;
+        /**
+         * Rendition width in pixels.
+         */
+        width: number;
+        /**
+         * Rendition height in pixels.
+         */
+        height: number;
+        /**
+         * Video bitrate in kilobits per second.
+         */
+        videoBitRate: number;
+        /**
+         * Audio bitrate in kilobits per second.
+         */
+        audioBitRate: number;
+        /**
+         * Longest segment duration in seconds.
+         */
+        targetDuration: string;
+        /**
+         * Transcoding status: one of `pending`, `started`, `ended`, `uploading`, `ready`, `error` or `aborted`.
+         */
+        status: string;
+        /**
+         * Transcoding progress as a percentage.
+         */
+        progress: string;
+        /**
+         * Streaming output format: `hls`, `dash`, or `cmaf`.
+         */
+        output: string;
+    };
+
+    /**
+     * Video subtitle
+     */
+    export type VideoSubtitle = {
+        /**
+         * Subtitle ID.
+         */
+        $id: string;
+        /**
+         * Subtitle creation time in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Subtitle update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Video ID.
+         */
+        videoId: string;
+        /**
+         * Storage bucket ID holding the subtitle file.
+         */
+        bucketId: string;
+        /**
+         * Subtitle file ID.
+         */
+        fileId: string;
+        /**
+         * Subtitle display name.
+         */
+        name: string;
+        /**
+         * Subtitle ISO 639-2 language code.
+         */
+        code: string;
+        /**
+         * Is this the default subtitle track?
+         */
+        default: boolean;
+        /**
+         * Was this track auto-extracted from the source container? Extracted tracks have no backing file; extraction runs once per video, so a deleted extracted track is not re-created.
+         */
+        embedded: boolean;
+        /**
+         * Longest segment duration in seconds.
+         */
+        targetDuration: string;
+        /**
+         * Packaging status: one of `pending`, `started`, `ready` or `error`.
+         */
+        status: string;
     };
 }

@@ -11,9 +11,7 @@ const result = await analytics.updateProperty({
     propertyId: '<PROPERTY_ID>',
     name: '<NAME>', // optional
     domain: '<DOMAIN>', // optional
-    timezone: '<TIMEZONE>', // optional
     enabled: false, // optional
-    xpublic: false, // optional
     allowedOrigins: [], // optional
 });
 

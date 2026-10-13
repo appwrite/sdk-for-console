@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 export class Notifications {
@@ -73,7 +78,40 @@ export class Notifications {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'notificationList',
+            models: {
+                notificationList: {
+                    defaults: {
+                        total: 0,
+                        notifications: [],
+                    },
+                    properties: {
+                        notifications: {
+                            items: 'notification',
+                        },
+                    },
+                },
+                notification: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: 'info',
+                        channel: '',
+                        resourceType: '',
+                        resourceId: '',
+                        parentResourceType: '',
+                        parentResourceId: '',
+                        title: '',
+                        body: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -149,6 +187,28 @@ export class Notifications {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'notification',
+            models: {
+                notification: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: 'info',
+                        channel: '',
+                        resourceType: '',
+                        resourceId: '',
+                        parentResourceType: '',
+                        parentResourceId: '',
+                        title: '',
+                        body: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }

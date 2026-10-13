@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 import { AnalyticsInterval } from '../enums/analytics-interval';
@@ -13,7 +18,7 @@ export class Analytics {
     /**
      * List analytics properties for the current project.
      *
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, domain, timezone, enabled, public, snippetId
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, domain, enabled
      * @param {string} params.search - Search term to filter your list results. Matches the property ID, name and domain. Max length: 256 chars.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -27,7 +32,7 @@ export class Analytics {
     /**
      * List analytics properties for the current project.
      *
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, domain, timezone, enabled, public, snippetId
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, domain, enabled
      * @param {string} search - Search term to filter your list results. Matches the property ID, name and domain. Max length: 256 chars.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -87,7 +92,38 @@ export class Analytics {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'analyticsPropertyList',
+            models: {
+                analyticsPropertyList: {
+                    defaults: {
+                        total: 0,
+                        properties: [],
+                    },
+                    properties: {
+                        properties: {
+                            items: 'analyticsProperty',
+                        },
+                    },
+                },
+                analyticsProperty: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        domain: '',
+                        enabled: true,
+                        allowedOrigins: ['*'],
+                        accessedAt: '',
+                        firstAccessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -96,9 +132,7 @@ export class Analytics {
      * @param {string} params.propertyId - Unique ID. Choose a custom ID or generate a random ID with `ID.unique()`. Max length is 36 chars.
      * @param {string} params.name - Human-readable name for this property.
      * @param {string} params.domain - Primary domain to track (e.g. example.com). Optional for native apps.
-     * @param {string} params.timezone - IANA timezone used for daily boundaries.
-     * @param {boolean} params.enabled - Whether tracking is enabled.
-     * @param {boolean} params.xpublic - Whether stats are publicly viewable.
+     * @param {boolean} params.enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
      * @param {string[]} params.allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AnalyticsProperty>}
@@ -107,9 +141,7 @@ export class Analytics {
         propertyId: string;
         name: string;
         domain?: string;
-        timezone?: string;
         enabled?: boolean;
-        xpublic?: boolean;
         allowedOrigins?: string[];
     }): Promise<Models.AnalyticsProperty>;
     /**
@@ -118,9 +150,7 @@ export class Analytics {
      * @param {string} propertyId - Unique ID. Choose a custom ID or generate a random ID with `ID.unique()`. Max length is 36 chars.
      * @param {string} name - Human-readable name for this property.
      * @param {string} domain - Primary domain to track (e.g. example.com). Optional for native apps.
-     * @param {string} timezone - IANA timezone used for daily boundaries.
-     * @param {boolean} enabled - Whether tracking is enabled.
-     * @param {boolean} xpublic - Whether stats are publicly viewable.
+     * @param {boolean} enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
      * @param {string[]} allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AnalyticsProperty>}
@@ -130,9 +160,7 @@ export class Analytics {
         propertyId: string,
         name: string,
         domain?: string,
-        timezone?: string,
         enabled?: boolean,
-        xpublic?: boolean,
         allowedOrigins?: string[],
     ): Promise<Models.AnalyticsProperty>;
     createProperty(
@@ -141,21 +169,17 @@ export class Analytics {
                   propertyId: string;
                   name: string;
                   domain?: string;
-                  timezone?: string;
                   enabled?: boolean;
-                  xpublic?: boolean;
                   allowedOrigins?: string[];
               }
             | string,
-        ...rest: [string?, string?, string?, boolean?, boolean?, string[]?]
+        ...rest: [string?, string?, boolean?, string[]?]
     ): Promise<Models.AnalyticsProperty> {
         let params: {
             propertyId: string;
             name: string;
             domain?: string;
-            timezone?: string;
             enabled?: boolean;
-            xpublic?: boolean;
             allowedOrigins?: string[];
         };
 
@@ -168,9 +192,7 @@ export class Analytics {
                 propertyId: string;
                 name: string;
                 domain?: string;
-                timezone?: string;
                 enabled?: boolean;
-                xpublic?: boolean;
                 allowedOrigins?: string[];
             };
         } else {
@@ -178,19 +200,15 @@ export class Analytics {
                 propertyId: paramsOrFirst as string,
                 name: rest[0] as string,
                 domain: rest[1] as string,
-                timezone: rest[2] as string,
-                enabled: rest[3] as boolean,
-                xpublic: rest[4] as boolean,
-                allowedOrigins: rest[5] as string[],
+                enabled: rest[2] as boolean,
+                allowedOrigins: rest[3] as string[],
             };
         }
 
         const propertyId = params.propertyId;
         const name = params.name;
         const domain = params.domain;
-        const timezone = params.timezone;
         const enabled = params.enabled;
-        const xpublic = params.xpublic;
         const allowedOrigins = params.allowedOrigins;
 
         if (typeof propertyId === 'undefined') {
@@ -212,14 +230,8 @@ export class Analytics {
         if (typeof domain !== 'undefined') {
             apiPayload['domain'] = domain;
         }
-        if (typeof timezone !== 'undefined') {
-            apiPayload['timezone'] = timezone;
-        }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
-        }
-        if (typeof xpublic !== 'undefined') {
-            apiPayload['public'] = xpublic;
         }
         if (typeof allowedOrigins !== 'undefined') {
             apiPayload['allowedOrigins'] = allowedOrigins;
@@ -232,7 +244,27 @@ export class Analytics {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'analyticsProperty',
+            models: {
+                analyticsProperty: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        domain: '',
+                        enabled: true,
+                        allowedOrigins: ['*'],
+                        accessedAt: '',
+                        firstAccessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -290,7 +322,27 @@ export class Analytics {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'analyticsProperty',
+            models: {
+                analyticsProperty: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        domain: '',
+                        enabled: true,
+                        allowedOrigins: ['*'],
+                        accessedAt: '',
+                        firstAccessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -299,9 +351,7 @@ export class Analytics {
      * @param {string} params.propertyId - Analytics property unique ID.
      * @param {string} params.name - Human-readable name for this property.
      * @param {string} params.domain - Primary domain to track (e.g. example.com). Pass an empty string to clear it.
-     * @param {string} params.timezone - IANA timezone used for daily boundaries.
-     * @param {boolean} params.enabled - Whether tracking is enabled.
-     * @param {boolean} params.xpublic - Whether stats are publicly viewable.
+     * @param {boolean} params.enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
      * @param {string[]} params.allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AnalyticsProperty>}
@@ -310,9 +360,7 @@ export class Analytics {
         propertyId: string;
         name?: string;
         domain?: string;
-        timezone?: string;
         enabled?: boolean;
-        xpublic?: boolean;
         allowedOrigins?: string[];
     }): Promise<Models.AnalyticsProperty>;
     /**
@@ -321,9 +369,7 @@ export class Analytics {
      * @param {string} propertyId - Analytics property unique ID.
      * @param {string} name - Human-readable name for this property.
      * @param {string} domain - Primary domain to track (e.g. example.com). Pass an empty string to clear it.
-     * @param {string} timezone - IANA timezone used for daily boundaries.
-     * @param {boolean} enabled - Whether tracking is enabled.
-     * @param {boolean} xpublic - Whether stats are publicly viewable.
+     * @param {boolean} enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
      * @param {string[]} allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AnalyticsProperty>}
@@ -333,9 +379,7 @@ export class Analytics {
         propertyId: string,
         name?: string,
         domain?: string,
-        timezone?: string,
         enabled?: boolean,
-        xpublic?: boolean,
         allowedOrigins?: string[],
     ): Promise<Models.AnalyticsProperty>;
     updateProperty(
@@ -344,21 +388,17 @@ export class Analytics {
                   propertyId: string;
                   name?: string;
                   domain?: string;
-                  timezone?: string;
                   enabled?: boolean;
-                  xpublic?: boolean;
                   allowedOrigins?: string[];
               }
             | string,
-        ...rest: [string?, string?, string?, boolean?, boolean?, string[]?]
+        ...rest: [string?, string?, boolean?, string[]?]
     ): Promise<Models.AnalyticsProperty> {
         let params: {
             propertyId: string;
             name?: string;
             domain?: string;
-            timezone?: string;
             enabled?: boolean;
-            xpublic?: boolean;
             allowedOrigins?: string[];
         };
 
@@ -371,9 +411,7 @@ export class Analytics {
                 propertyId: string;
                 name?: string;
                 domain?: string;
-                timezone?: string;
                 enabled?: boolean;
-                xpublic?: boolean;
                 allowedOrigins?: string[];
             };
         } else {
@@ -381,19 +419,15 @@ export class Analytics {
                 propertyId: paramsOrFirst as string,
                 name: rest[0] as string,
                 domain: rest[1] as string,
-                timezone: rest[2] as string,
-                enabled: rest[3] as boolean,
-                xpublic: rest[4] as boolean,
-                allowedOrigins: rest[5] as string[],
+                enabled: rest[2] as boolean,
+                allowedOrigins: rest[3] as string[],
             };
         }
 
         const propertyId = params.propertyId;
         const name = params.name;
         const domain = params.domain;
-        const timezone = params.timezone;
         const enabled = params.enabled;
-        const xpublic = params.xpublic;
         const allowedOrigins = params.allowedOrigins;
 
         if (typeof propertyId === 'undefined' || propertyId === '') {
@@ -412,14 +446,8 @@ export class Analytics {
         if (typeof domain !== 'undefined') {
             apiPayload['domain'] = domain;
         }
-        if (typeof timezone !== 'undefined') {
-            apiPayload['timezone'] = timezone;
-        }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
-        }
-        if (typeof xpublic !== 'undefined') {
-            apiPayload['public'] = xpublic;
         }
         if (typeof allowedOrigins !== 'undefined') {
             apiPayload['allowedOrigins'] = allowedOrigins;
@@ -432,7 +460,27 @@ export class Analytics {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'analyticsProperty',
+            models: {
+                analyticsProperty: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        domain: '',
+                        enabled: true,
+                        allowedOrigins: ['*'],
+                        accessedAt: '',
+                        firstAccessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -495,7 +543,7 @@ export class Analytics {
     /**
      * Send a tracking event from a browser, native app, or server-side SDK.
      *
-     * @param {string} params.propertyId - Analytics property ID or snippet ID identifying the property.
+     * @param {string} params.propertyId - Analytics property ID.
      * @param {string} params.name - Event name. "pageview" is just a conventional event name; events are not modeled specially.
      * @param {string} params.url - Full page URL or screen identifier.
      * @param {string} params.domain - Hostname (e.g. example.com).
@@ -529,7 +577,7 @@ export class Analytics {
     /**
      * Send a tracking event from a browser, native app, or server-side SDK.
      *
-     * @param {string} propertyId - Analytics property ID or snippet ID identifying the property.
+     * @param {string} propertyId - Analytics property ID.
      * @param {string} name - Event name. "pageview" is just a conventional event name; events are not modeled specially.
      * @param {string} url - Full page URL or screen identifier.
      * @param {string} domain - Hostname (e.g. example.com).
@@ -897,6 +945,31 @@ export class Analytics {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'analyticsMetricList',
+            models: {
+                analyticsMetricList: {
+                    defaults: {
+                        total: 0,
+                        metrics: [],
+                    },
+                    properties: {
+                        metrics: {
+                            items: 'analyticsMetric',
+                        },
+                    },
+                },
+                analyticsMetric: {
+                    defaults: {
+                        visitors: 0,
+                        sessions: 0,
+                        events: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }

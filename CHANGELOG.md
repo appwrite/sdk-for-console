@@ -1,38 +1,48 @@
 # Change Log
 
-## 18.4.0-rc.2
+## 19.1.0-rc.1
 
-* Added: optional `fingerprints` parameter on `Project.createAndroidPlatform` and `Project.updateAndroidPlatform`
-* Added: `fingerprints` on the `PlatformAndroid` model
-* Added: optional `membershipId` parameter on `Teams.createMembership`
-* Breaking: positional `Teams.createMembership` now takes `membershipId` third, before `email`; the object form is unchanged
+* Includes everything in 19.0.0
+* Added: `Videos` service with the `Video`, `VideoProfile`, `VideoRendition` and `VideoSubtitle` models, which 19.0.0 does not include
 
-## 18.4.0-rc.1
+## 19.0.0
+
+* Breaking: removed the `Assistant` service (`assistant.chat`) and `_APP_ASSISTANT_ENABLED` from `ConsoleVariables`
+* Breaking: `waf.getRule` and `waf.listRules` return the action-specific rule models (`WafRuleBypass`, `WafRuleChallenge`, `WafRuleDeny`, `WafRuleRateLimit`, `WafRuleRedirect`); `WafRule` is removed
+* Breaking: removed the `deno-1.21`, `deno-1.24` and `deno-1.35` runtimes from `Runtime` and `BuildRuntime`
+* Updated: `X-Appwrite-Response-Format` is now `2.4.0`
+* Updated: missing fields in API responses are filled with their documented defaults
+* Added: `Analytics` service: `listProperties`, `createProperty`, `getProperty`, `updateProperty`, `deleteProperty`, `createEvent` and `listMetrics`, with `AnalyticsDimension` and `AnalyticsInterval` enums
+* Added: `Tracking` helper that auto-tracks pageviews, outbound links, downloads, scroll depth and engagement time
+* Added: `admin` threat methods `listThreats`, `createThreat`, `getThreat`, `deleteThreat` and `updateThreatStatus`
+* Added: `admin` cache methods `deletePlatformCache`, `deletePlatformResourceCache`, `deleteProjectCache` and `deleteProjectResourceCache`
+* Added: `project.updatePasswordRotationPolicy` and the `PolicyPasswordRotation` model
+* Added: optional `state` on `account.createOAuth2Session` and `account.createOAuth2Token`
+* Added: optional `fingerprints` on `project.createAndroidPlatform` and `project.updateAndroidPlatform`, and on `PlatformAndroid`
+* Added: optional `membershipId` on `teams.createMembership`
+* Added: `project.listEnvironments`, `createEnvironment`, `getEnvironment`, `updateEnvironment` and `deleteEnvironment`, with `parentId` on `Project` and `environments` on `BillingPlan`
+* Added: `trigram` in `DatabasesIndexType` and `TablesDBIndexType`, and `supportForTrigramIndex` on `ConsoleVariables`
+* Added: the package ships the spec it was generated from as `spec.json`, exported as `@appwrite.io/console/spec.json`
+* Added: `analytics.read` and `analytics.write` key scopes, analytics usage metrics, and `avatarsStorageTotal` on `UsageOrganization`
+
+## 18.4.1
+
+* Fixed: added `ProjectAuthMethodId.Passkey`, so `project.updateAuthMethod` can enable passkeys
+* Fixed: added `ProjectPolicyId.Passkey` and the `Models.PolicyPasskey` model, so `getPolicy` and `listPolicies` return the passkey policy
+
+## 18.4.0
+
+* Added: `account` passkey methods `listPasskeys`, `createPasskey`, `getPasskey`, `updatePasskey`, `deletePasskey` and `updatePasskeyVerification`
+* Added: `account.createPasskeyToken` and `account.updatePasskeyToken` for passkey sign-in
+* Added: `users.listPasskeys`, `users.getPasskey`, `users.updatePasskey` and `users.deletePasskey`
+* Added: `project.updatePasskeyPolicy` to configure passkey sign-in
+* Added: `Passkey`, `PasskeyList`, `PasskeyChallenge` and `TokenSecret` models
+
+## 18.3.0
 
 * Added: optional `interval` parameter on `Functions.create`, `Functions.update` and `Projects.createSchedule`
 * Updated: `schedule` is optional on `Projects.createSchedule`; pass either `schedule` or `interval`
 * Added: `interval` on the `Function` and `Schedule` models, `functionsIntervalMinimum` on `BillingPlan`
-
-## 18.3.0-rc.2
-
-* Added: `Videos` service to upload, transcode and stream videos: `list`, `create`, `get`, `update`, `delete`, `createSource`, renditions, profiles, subtitles, previews, timelines, segments and HLS, DASH and CMAF manifests
-* Added: `Video`, `VideoList`, `VideoProfile`, `VideoProfileList`, `VideoRendition`, `VideoRenditionList`, `VideoSubtitle` and `VideoSubtitleList` models, and the `VideoOutput` and `VideoRenditionStatus` enums
-* Added: `ProjectKeyScopes.VideosRead` and `ProjectKeyScopes.VideosWrite`, and `QuerySuggestionResource` values for videos, previews, renditions, profiles, subtitles and segments
-* Added: passkeys with `Account.listPasskeys`, `createPasskey`, `getPasskey`, `updatePasskey`, `deletePasskey`, `updatePasskeyVerification`, `createPasskeyToken` and `updatePasskeyToken`, plus `Users.listPasskeys`, `getPasskey` and `deletePasskey`
-* Added: `Project.updatePasskeyPolicy`, `ProjectAuthMethodId.Passkey`, `ProjectPolicyId.Passkey`, and the `Passkey`, `PasskeyList`, `PasskeyChallenge` and `PolicyPasskey` models
-* Added: `Admin` service with `deletePlatformCache`, `deletePlatformResourceCache`, `deleteProjectCache` and `deleteProjectResourceCache`, and the `PlatformResourceType` and `ProjectResourceType` enums
-* Fixed: nullable fields on `BillingAddress`, `DedicatedDatabase`, `DedicatedDatabaseBranch`, `DedicatedDatabaseRestoration`, `Estimation`, `EstimationUpdatePlan`, `Invoice`, `Organization`, `PaymentMethod` and `UsageBillingPlan` are now optional
-
-## 18.3.0-rc.1
-
-* Added: `Analytics` service with `listProperties`, `createProperty`, `getProperty`, `updateProperty`, `deleteProperty`, `createEvent` and `listMetrics`
-* Added: `AnalyticsTracking` helper for automatic pageview, outbound-link, download, scroll-depth and engagement tracking
-* Added: `AnalyticsInterval` and `AnalyticsDimension` enums, and the `AnalyticsMetric`, `AnalyticsMetricList`, `AnalyticsProperty` and `AnalyticsPropertyList` models
-* Added: `ProjectKeyScopes.AnalyticsRead` and `ProjectKeyScopes.AnalyticsWrite`
-* Added: `UsageEventMetric.AnalyticsEvents`, `AnalyticsPageviews` and `AnalyticsBotsEvents`, `UsageGaugeMetric.AnalyticsProperties` and `QuerySuggestionResource.AnalyticsProperties`
-* Added: `ProxyRuleDeploymentResourceType.DedicatedDatabase` and `avatarsStorageTotal` on `UsageOrganization`
-* Fixed: `BackupArchive.size` and `startedAt`, `BackupRestoration.startedAt` and `DatabaseStatus.connections` are now optional
-* Fixed: `BackupRestoration.options` is now typed `object` instead of `string`
 
 ## 18.2.0
 
@@ -576,5 +586,4 @@ Fix bigint and float parsing in SDK.
 ## 1.5.0
 
 * Adds support for `databasesReadsTotal` and `databasesWritesTotal` attributes
-
 

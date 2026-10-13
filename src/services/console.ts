@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 import { Platform } from '../enums/platform';
@@ -66,7 +71,35 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'campaign',
+            models: {
+                campaign: {
+                    defaults: {
+                        $id: '',
+                        template: '',
+                        title: '',
+                        description: '',
+                    },
+                    properties: {
+                        reviews: {
+                            items: 'review',
+                        },
+                    },
+                },
+                review: {
+                    defaults: {
+                        name: '',
+                        image: '',
+                        description: '',
+                        review: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -122,7 +155,25 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'coupon',
+            models: {
+                coupon: {
+                    defaults: {
+                        $id: '',
+                        code: '',
+                        credits: 0,
+                        expiration: '',
+                        campaign: '',
+                        status: '',
+                        onlyNewOrgs: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -204,7 +255,69 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'databaseList',
+            models: {
+                databaseList: {
+                    defaults: {
+                        total: 0,
+                        databases: [],
+                    },
+                    properties: {
+                        databases: {
+                            items: 'database',
+                        },
+                    },
+                },
+                database: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        enabled: true,
+                        type: 'legacy',
+                    },
+                    properties: {
+                        policies: {
+                            items: 'backupPolicy',
+                        },
+                        archives: {
+                            items: 'backupArchive',
+                        },
+                    },
+                },
+                backupPolicy: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        services: [],
+                        resources: [],
+                        retention: 1,
+                        schedule: '0 * * * *',
+                        type: 'full',
+                        enabled: false,
+                    },
+                },
+                backupArchive: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        policyId: '',
+                        status: '',
+                        migrationId: '',
+                        services: [],
+                        resources: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -260,7 +373,44 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'consoleOAuth2ProviderList',
+            models: {
+                consoleOAuth2ProviderList: {
+                    defaults: {
+                        total: 0,
+                        oAuth2Providers: [],
+                    },
+                    properties: {
+                        oAuth2Providers: {
+                            items: 'consoleOAuth2Provider',
+                        },
+                    },
+                },
+                consoleOAuth2Provider: {
+                    defaults: {
+                        $id: '',
+                        parameters: [],
+                    },
+                    properties: {
+                        parameters: {
+                            items: 'consoleOAuth2ProviderParameter',
+                        },
+                    },
+                },
+                consoleOAuth2ProviderParameter: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        example: '',
+                        hint: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -313,7 +463,90 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'billingPlanList',
+            models: {
+                billingPlanList: {
+                    defaults: {
+                        total: 0,
+                        plans: [],
+                    },
+                    properties: {
+                        plans: {
+                            items: 'billingPlan',
+                        },
+                    },
+                },
+                billingPlan: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        desc: '',
+                        order: 0,
+                        price: 0,
+                        trial: 0,
+                        bandwidth: 0,
+                        storage: 0,
+                        imageTransformations: 0,
+                        screenshotsGenerated: 0,
+                        webhooks: 0,
+                        wafRules: 0,
+                        environments: 0,
+                        projects: 0,
+                        platforms: 0,
+                        users: 0,
+                        teams: 0,
+                        databases: 0,
+                        databasesReads: 0,
+                        databasesWrites: 0,
+                        databasesBatchSize: 0,
+                        buckets: 0,
+                        fileSize: 0,
+                        functions: 0,
+                        sites: 0,
+                        executions: 0,
+                        executionsRetentionCount: 1000,
+                        GBHours: 0,
+                        realtime: 0,
+                        realtimeMessages: 0,
+                        messages: 0,
+                        topics: 0,
+                        authPhone: 0,
+                        domains: 0,
+                        usageLogs: 0,
+                        projectInactivityDays: 0,
+                        alertLimit: 80,
+                        budgetCapEnabled: false,
+                        customSmtp: false,
+                        emailBranding: false,
+                        requiresPaymentMethod: true,
+                        requiresBillingAddress: false,
+                        isAvailable: true,
+                        selfService: true,
+                        premiumSupport: true,
+                        budgeting: true,
+                        supportsMockNumbers: true,
+                        supportsOrganizationRoles: true,
+                        supportsCredits: false,
+                        supportsDedicatedDatabases: false,
+                        supportsDisposableEmailValidation: false,
+                        supportsCanonicalEmailValidation: false,
+                        supportsFreeEmailValidation: false,
+                        supportsCorporateEmailValidation: false,
+                        supportsProjectSpecificRoles: false,
+                        usagePerProject: true,
+                        deploymentSize: 0,
+                        buildSize: 0,
+                        functionsIntervalMinimum: 0,
+                        databasesAllowEncrypt: false,
+                        databaseComputeCredit: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -367,7 +600,79 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'billingPlan',
+            models: {
+                billingPlan: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        desc: '',
+                        order: 0,
+                        price: 0,
+                        trial: 0,
+                        bandwidth: 0,
+                        storage: 0,
+                        imageTransformations: 0,
+                        screenshotsGenerated: 0,
+                        webhooks: 0,
+                        wafRules: 0,
+                        environments: 0,
+                        projects: 0,
+                        platforms: 0,
+                        users: 0,
+                        teams: 0,
+                        databases: 0,
+                        databasesReads: 0,
+                        databasesWrites: 0,
+                        databasesBatchSize: 0,
+                        buckets: 0,
+                        fileSize: 0,
+                        functions: 0,
+                        sites: 0,
+                        executions: 0,
+                        executionsRetentionCount: 1000,
+                        GBHours: 0,
+                        realtime: 0,
+                        realtimeMessages: 0,
+                        messages: 0,
+                        topics: 0,
+                        authPhone: 0,
+                        domains: 0,
+                        usageLogs: 0,
+                        projectInactivityDays: 0,
+                        alertLimit: 80,
+                        budgetCapEnabled: false,
+                        customSmtp: false,
+                        emailBranding: false,
+                        requiresPaymentMethod: true,
+                        requiresBillingAddress: false,
+                        isAvailable: true,
+                        selfService: true,
+                        premiumSupport: true,
+                        budgeting: true,
+                        supportsMockNumbers: true,
+                        supportsOrganizationRoles: true,
+                        supportsCredits: false,
+                        supportsDedicatedDatabases: false,
+                        supportsDisposableEmailValidation: false,
+                        supportsCanonicalEmailValidation: false,
+                        supportsFreeEmailValidation: false,
+                        supportsCorporateEmailValidation: false,
+                        supportsProjectSpecificRoles: false,
+                        usagePerProject: true,
+                        deploymentSize: 0,
+                        buildSize: 0,
+                        functionsIntervalMinimum: 0,
+                        databasesAllowEncrypt: false,
+                        databaseComputeCredit: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -387,7 +692,33 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'postgresExtensionList',
+            models: {
+                postgresExtensionList: {
+                    defaults: {
+                        total: 0,
+                        extensions: [],
+                    },
+                    properties: {
+                        extensions: {
+                            items: 'postgresExtension',
+                        },
+                    },
+                },
+                postgresExtension: {
+                    defaults: {
+                        key: '',
+                        name: '',
+                        description: '',
+                        category: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -443,7 +774,27 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'program',
+            models: {
+                program: {
+                    defaults: {
+                        $id: '',
+                        title: '',
+                        description: '',
+                        tag: '',
+                        icon: '',
+                        url: '',
+                        active: true,
+                        external: true,
+                        billingPlanId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -506,7 +857,31 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'organization',
+            models: {
+                organization: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        total: 0,
+                        budgetAlerts: [75],
+                        billingPlan: 'tier-0',
+                        billingPlanId: 'tier-0',
+                        billingEmail: '',
+                        status: 'draft',
+                        markedForDeletion: false,
+                        platform: 'appwrite',
+                        projects: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -525,7 +900,34 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'consoleRegionList',
+            models: {
+                consoleRegionList: {
+                    defaults: {
+                        total: 0,
+                        regions: [],
+                    },
+                    properties: {
+                        regions: {
+                            items: 'consoleRegion',
+                        },
+                    },
+                },
+                consoleRegion: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        disabled: false,
+                        default: false,
+                        flag: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -652,7 +1054,33 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'consoleKeyScopeList',
+            models: {
+                consoleKeyScopeList: {
+                    defaults: {
+                        total: 0,
+                        scopes: [],
+                    },
+                    properties: {
+                        scopes: {
+                            items: 'consoleKeyScope',
+                        },
+                    },
+                },
+                consoleKeyScope: {
+                    defaults: {
+                        $id: '',
+                        description: '',
+                        category: '',
+                        deprecated: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -706,7 +1134,33 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'consoleKeyScopeList',
+            models: {
+                consoleKeyScopeList: {
+                    defaults: {
+                        total: 0,
+                        scopes: [],
+                    },
+                    properties: {
+                        scopes: {
+                            items: 'consoleKeyScope',
+                        },
+                    },
+                },
+                consoleKeyScope: {
+                    defaults: {
+                        $id: '',
+                        description: '',
+                        category: '',
+                        deprecated: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -942,7 +1396,20 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'columnList',
+            models: {
+                columnList: {
+                    defaults: {
+                        total: 0,
+                        columns: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1052,7 +1519,38 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'columnIndexList',
+            models: {
+                columnIndexList: {
+                    defaults: {
+                        total: 0,
+                        indexes: [],
+                    },
+                    properties: {
+                        indexes: {
+                            items: 'columnIndex',
+                        },
+                    },
+                },
+                columnIndex: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        type: '',
+                        status: '',
+                        error: '',
+                        columns: [],
+                        lengths: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1248,7 +1746,26 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'emailTemplate',
+            models: {
+                emailTemplate: {
+                    defaults: {
+                        templateId: '',
+                        locale: '',
+                        message: '',
+                        senderName: '',
+                        senderEmail: '',
+                        replyToEmail: '',
+                        replyToName: '',
+                        subject: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1267,6 +1784,44 @@ export class Console {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'consoleVariables',
+            models: {
+                consoleVariables: {
+                    defaults: {
+                        _APP_DOMAIN_TARGET_CNAME: '',
+                        _APP_DOMAIN_TARGET_A: '',
+                        _APP_DOMAIN_TARGET_AAAA: '',
+                        _APP_DOMAIN_TARGET_CAA: '',
+                        _APP_USAGE_STATS: '',
+                        _APP_VCS_ENABLED: false,
+                        _APP_VCS_PROVIDERS: [],
+                        _APP_VCS_PROVIDERS_WITH_REPOSITORY_CREATION: [],
+                        _APP_VCS_PROVIDERS_WITH_PUBLIC_REPOSITORIES: [],
+                        _APP_DOMAIN_ENABLED: false,
+                        _APP_DOMAIN_SITES: '',
+                        _APP_DOMAIN_FUNCTIONS: '',
+                        _APP_OPTIONS_FORCE_HTTPS: '',
+                        _APP_DOMAINS_NAMESERVERS: '',
+                        _APP_DB_ADAPTER: 'mariadb',
+                        supportForRelationships: true,
+                        supportForOperators: true,
+                        supportForSpatials: true,
+                        supportForSpatialIndexNull: false,
+                        supportForFulltextWildcard: true,
+                        supportForMultipleFulltextIndexes: true,
+                        supportForTrigramIndex: false,
+                        supportForAttributeResizing: true,
+                        supportForSchemas: true,
+                        maxIndexLength: 768,
+                        supportForIntegerIds: true,
+                        _APP_CONSOLE_EMAIL_VERIFICATION: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }

@@ -1,7 +1,7 @@
 /**
  * Appwrite Console SDK
  *
- * This SDK targets Appwrite server version 2.3.x as shipped on Appwrite Cloud.
+ * This SDK targets Appwrite server version 2.4.x as shipped on Appwrite Cloud.
  * Self-hosted releases can lag behind Cloud — if you run an older self-hosted
  * build, use a matching older SDK from
  * [previous releases](https://github.com/appwrite/sdk-for-console/releases)
@@ -16,7 +16,6 @@ export { Analytics } from './services/analytics';
 export { Apps } from './services/apps';
 export { Avatars } from './services/avatars';
 export { Backups } from './services/backups';
-export { Assistant } from './services/assistant';
 export { Console } from './services/console';
 export { Databases } from './services/databases';
 export { DocumentsDB } from './services/documents-db';
@@ -50,12 +49,12 @@ export { Usage } from './services/usage';
 export { Users } from './services/users';
 export { Vcs } from './services/vcs';
 export { VectorsDB } from './services/vectors-db';
-export { Videos } from './services/videos';
 export { Waf } from './services/waf';
 export { Webhooks } from './services/webhooks';
+export { Videos } from './services/videos';
 export { Realtime } from './services/realtime';
 export { Push } from './services/push';
-export { AnalyticsTracking } from './services/analytics-tracking';
+export { Tracking } from './services/analytics-tracking';
 export type {
     Models,
     Payload,
@@ -65,16 +64,16 @@ export type {
 export type { RealtimeSubscription } from './services/realtime';
 export type {
     PushMessage,
+    PushNotificationOpened,
     PushSubscription,
     SubscribeOptions,
     MessageCallback,
 } from './services/push';
 export type {
-    AnalyticsEventEmitter,
-    AnalyticsEventOptions,
-    AnalyticsTrackingOptions,
     DownloadTrackingOptions,
     OutboundTrackingOptions,
+    TrackingEventOptions,
+    TrackingOptions,
 } from './services/analytics-tracking';
 export type { QueryTypes, QueryTypesList } from './query';
 export { Permission } from './permission';
@@ -90,6 +89,8 @@ export { IdTokenProvider } from './enums/id-token-provider';
 export { OAuthProvider } from './enums/o-auth-provider';
 export { PlatformResourceType } from './enums/platform-resource-type';
 export { ProjectResourceType } from './enums/project-resource-type';
+export { ThreatResourceType } from './enums/threat-resource-type';
+export { ThreatStatus } from './enums/threat-status';
 export { AnalyticsInterval } from './enums/analytics-interval';
 export { AnalyticsDimension } from './enums/analytics-dimension';
 export { Browser } from './enums/browser';

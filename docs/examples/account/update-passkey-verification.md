@@ -9,7 +9,6 @@ const account = new Account(client);
 
 const result = await account.updatePasskeyVerification({
     passkeyId: '<PASSKEY_ID>',
-    challengeId: '<CHALLENGE_ID>',
     credential: {},
 });
 

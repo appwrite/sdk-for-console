@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 import { BlockResourceType } from '../enums/block-resource-type';
@@ -144,7 +149,27 @@ export class Manager {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'managerBlock',
+            models: {
+                managerBlock: {
+                    defaults: {
+                        $createdAt: '',
+                        resourceType: '',
+                        resourceId: '',
+                        mode: 'full',
+                        projectName: '',
+                        region: '',
+                        organizationName: '',
+                        organizationId: '',
+                        billingPlan: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -242,7 +267,38 @@ export class Manager {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, apiPayload);
+        const request = this.client.call('delete', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'managerBlockDelete',
+            models: {
+                managerBlockDelete: {
+                    defaults: {
+                        deleted: 0,
+                        blocks: [],
+                    },
+                    properties: {
+                        blocks: {
+                            items: 'managerBlock',
+                        },
+                    },
+                },
+                managerBlock: {
+                    defaults: {
+                        $createdAt: '',
+                        resourceType: '',
+                        resourceId: '',
+                        mode: 'full',
+                        projectName: '',
+                        region: '',
+                        organizationName: '',
+                        organizationId: '',
+                        billingPlan: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -297,7 +353,38 @@ export class Manager {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'managerBlockList',
+            models: {
+                managerBlockList: {
+                    defaults: {
+                        total: 0,
+                        blocks: [],
+                    },
+                    properties: {
+                        blocks: {
+                            items: 'managerBlock',
+                        },
+                    },
+                },
+                managerBlock: {
+                    defaults: {
+                        $createdAt: '',
+                        resourceType: '',
+                        resourceId: '',
+                        mode: 'full',
+                        projectName: '',
+                        region: '',
+                        organizationName: '',
+                        organizationId: '',
+                        billingPlan: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -539,7 +626,31 @@ export class Manager {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'organization',
+            models: {
+                organization: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        total: 0,
+                        budgetAlerts: [75],
+                        billingPlan: 'tier-0',
+                        billingPlanId: 'tier-0',
+                        billingEmail: '',
+                        status: 'draft',
+                        markedForDeletion: false,
+                        platform: 'appwrite',
+                        projects: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -648,6 +759,49 @@ export class Manager {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        targets: [],
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }

@@ -8,8 +8,7 @@ const client = new Client()
 const project = new Project(client);
 
 const result = await project.updatePasskeyPolicy({
-    rpId: '<RP_ID>', // optional
-    origins: [], // optional
+    rpId: '<RP_ID>',
 });
 
 console.log(result);

@@ -104,8 +104,6 @@ export enum ProjectKeyScopes {
     ReportsWrite = 'reports.write',
     PresencesRead = 'presences.read',
     PresencesWrite = 'presences.write',
-    VideosRead = 'videos.read',
-    VideosWrite = 'videos.write',
     DedicatedDatabasesExecute = 'dedicatedDatabases.execute',
     BackupsPoliciesRead = 'backups.policies.read',
     BackupsPoliciesWrite = 'backups.policies.write',

@@ -11,9 +11,7 @@ const result = await analytics.createProperty({
     propertyId: '<PROPERTY_ID>',
     name: '<NAME>',
     domain: '<DOMAIN>', // optional
-    timezone: '<TIMEZONE>', // optional
     enabled: false, // optional
-    xpublic: false, // optional
     allowedOrigins: [], // optional
 });
 

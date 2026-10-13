@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 import { DomainRegistrationType } from '../enums/domain-registration-type';
@@ -73,7 +78,62 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domainsList',
+            models: {
+                domainsList: {
+                    defaults: {
+                        total: 0,
+                        domains: [],
+                    },
+                    properties: {
+                        domains: {
+                            items: 'domain',
+                        },
+                    },
+                },
+                domain: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        domain: '',
+                        registrar: '',
+                        nameservers: '',
+                        expire: '',
+                        renewal: '',
+                        autoRenewal: false,
+                        renewalPrice: 0,
+                        teamId: '',
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -142,7 +202,51 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domain',
+            models: {
+                domain: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        domain: '',
+                        registrar: '',
+                        nameservers: '',
+                        expire: '',
+                        renewal: '',
+                        autoRenewal: false,
+                        renewalPrice: 0,
+                        teamId: '',
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -234,7 +338,24 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domainPrice',
+            models: {
+                domainPrice: {
+                    defaults: {
+                        domain: '',
+                        tld: '',
+                        available: false,
+                        periodYears: 1,
+                        premium: false,
+                        renewalPeriodYears: 1,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -327,7 +448,35 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domainPricesList',
+            models: {
+                domainPricesList: {
+                    defaults: {
+                        total: 0,
+                        prices: [],
+                    },
+                    properties: {
+                        prices: {
+                            items: 'domainPrice',
+                        },
+                    },
+                },
+                domainPrice: {
+                    defaults: {
+                        domain: '',
+                        tld: '',
+                        available: false,
+                        periodYears: 1,
+                        premium: false,
+                        renewalPeriodYears: 1,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -570,7 +719,28 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domainPurchase',
+            models: {
+                domainPurchase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        domainId: '',
+                        domain: '',
+                        organizationId: '',
+                        status: 'pending',
+                        clientSecret: '',
+                        amount: 0,
+                        currency: 'USD',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -649,7 +819,28 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domainPurchase',
+            models: {
+                domainPurchase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        domainId: '',
+                        domain: '',
+                        organizationId: '',
+                        status: 'pending',
+                        clientSecret: '',
+                        amount: 0,
+                        currency: 'USD',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -776,7 +967,32 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domainSuggestionsList',
+            models: {
+                domainSuggestionsList: {
+                    defaults: {
+                        total: 0,
+                        suggestions: [],
+                    },
+                    properties: {
+                        suggestions: {
+                            items: 'domainSuggestion',
+                        },
+                    },
+                },
+                domainSuggestion: {
+                    defaults: {
+                        domain: '',
+                        premium: false,
+                        available: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -907,7 +1123,28 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domainPurchase',
+            models: {
+                domainPurchase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        domainId: '',
+                        domain: '',
+                        organizationId: '',
+                        status: 'pending',
+                        clientSecret: '',
+                        amount: 0,
+                        currency: 'USD',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -986,7 +1223,28 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domainPurchase',
+            models: {
+                domainPurchase: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        domainId: '',
+                        domain: '',
+                        organizationId: '',
+                        status: 'pending',
+                        clientSecret: '',
+                        amount: 0,
+                        currency: 'USD',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1065,7 +1323,19 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domainTransferOut',
+            models: {
+                domainTransferOut: {
+                    defaults: {
+                        authCode: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1119,7 +1389,51 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domain',
+            models: {
+                domain: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        domain: '',
+                        registrar: '',
+                        nameservers: '',
+                        expire: '',
+                        renewal: '',
+                        autoRenewal: false,
+                        renewalPrice: 0,
+                        teamId: '',
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1255,7 +1569,51 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domain',
+            models: {
+                domain: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        domain: '',
+                        registrar: '',
+                        nameservers: '',
+                        expire: '',
+                        renewal: '',
+                        autoRenewal: false,
+                        renewalPrice: 0,
+                        teamId: '',
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1331,7 +1689,51 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domain',
+            models: {
+                domain: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        domain: '',
+                        registrar: '',
+                        nameservers: '',
+                        expire: '',
+                        renewal: '',
+                        autoRenewal: false,
+                        renewalPrice: 0,
+                        teamId: '',
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1392,7 +1794,51 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domain',
+            models: {
+                domain: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        domain: '',
+                        registrar: '',
+                        nameservers: '',
+                        expire: '',
+                        renewal: '',
+                        autoRenewal: false,
+                        renewalPrice: 0,
+                        teamId: '',
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1450,7 +1896,41 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecordsList',
+            models: {
+                dnsRecordsList: {
+                    defaults: {
+                        total: 0,
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1513,7 +1993,41 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecordsList',
+            models: {
+                dnsRecordsList: {
+                    defaults: {
+                        total: 0,
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1571,7 +2085,41 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecordsList',
+            models: {
+                dnsRecordsList: {
+                    defaults: {
+                        total: 0,
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1632,7 +2180,41 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecordsList',
+            models: {
+                dnsRecordsList: {
+                    defaults: {
+                        total: 0,
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1690,7 +2272,41 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecordsList',
+            models: {
+                dnsRecordsList: {
+                    defaults: {
+                        total: 0,
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1751,7 +2367,41 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecordsList',
+            models: {
+                dnsRecordsList: {
+                    defaults: {
+                        total: 0,
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1809,7 +2459,41 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecordsList',
+            models: {
+                dnsRecordsList: {
+                    defaults: {
+                        total: 0,
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1870,7 +2554,41 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecordsList',
+            models: {
+                dnsRecordsList: {
+                    defaults: {
+                        total: 0,
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1928,7 +2646,41 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecordsList',
+            models: {
+                dnsRecordsList: {
+                    defaults: {
+                        total: 0,
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1989,7 +2741,41 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecordsList',
+            models: {
+                dnsRecordsList: {
+                    defaults: {
+                        total: 0,
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2045,7 +2831,41 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecordsList',
+            models: {
+                dnsRecordsList: {
+                    defaults: {
+                        total: 0,
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2106,7 +2926,41 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecordsList',
+            models: {
+                dnsRecordsList: {
+                    defaults: {
+                        total: 0,
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2181,7 +3035,41 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecordsList',
+            models: {
+                dnsRecordsList: {
+                    defaults: {
+                        total: 0,
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2310,7 +3198,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2454,7 +3365,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2583,7 +3517,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2727,7 +3684,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2858,7 +3838,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3006,7 +4009,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3135,7 +4161,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3279,7 +4328,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3414,7 +4486,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3554,7 +4649,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3683,7 +4801,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3827,7 +4968,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3977,7 +5141,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4134,7 +5321,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4263,7 +5473,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4409,7 +5642,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4587,7 +5843,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4809,7 +6088,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4937,7 +6239,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5083,7 +6408,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5162,7 +6510,30 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dnsRecord',
+            models: {
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5315,7 +6686,51 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domain',
+            models: {
+                domain: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        domain: '',
+                        registrar: '',
+                        nameservers: '',
+                        expire: '',
+                        renewal: '',
+                        autoRenewal: false,
+                        renewalPrice: 0,
+                        teamId: '',
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5373,7 +6788,21 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domainTransferStatus',
+            models: {
+                domainTransferStatus: {
+                    defaults: {
+                        status: 'pending_registry',
+                        reason: '',
+                        timestamp: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5507,6 +6936,50 @@ export class Domains {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'domain',
+            models: {
+                domain: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        domain: '',
+                        registrar: '',
+                        nameservers: '',
+                        expire: '',
+                        renewal: '',
+                        autoRenewal: false,
+                        renewalPrice: 0,
+                        teamId: '',
+                        dnsRecords: [],
+                    },
+                    properties: {
+                        dnsRecords: {
+                            items: 'dnsRecord',
+                        },
+                    },
+                },
+                dnsRecord: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        name: '',
+                        value: '',
+                        ttl: 3600,
+                        priority: 0,
+                        lock: false,
+                        weight: 0,
+                        port: 0,
+                        comment: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }
