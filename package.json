@@ -2,7 +2,7 @@
     "name": "@appwrite.io/console",
     "homepage": "https://appwrite.io/support",
     "description": "Appwrite is an open-source self-hosted backend server that abstracts and simplifies complex and repetitive development tasks behind a very simple REST API",
-    "version": "18.4.1",
+    "version": "19.0.0",
     "license": "BSD-3-Clause",
     "main": "dist/cjs/sdk.js",
     "exports": {
@@ -11,13 +11,15 @@
             "require": "./dist/cjs/sdk.js",
             "types": "./types/index.d.ts"
         },
-        "./package.json": "./package.json"
+        "./package.json": "./package.json",
+        "./spec.json": "./spec.json"
     },
     "module": "dist/esm/sdk.js",
     "types": "types/index.d.ts",
     "files": [
         "dist",
-        "types"
+        "types",
+        "spec.json"
     ],
     "repository": {
         "type": "git",

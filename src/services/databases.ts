@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 import { RelationshipType } from '../enums/relationship-type';
@@ -90,7 +95,64 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'databaseList',
+            models: {
+                databaseList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        databases: {
+                            items: 'database',
+                        },
+                    },
+                },
+                database: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        enabled: true,
+                        type: 'legacy',
+                    },
+                    properties: {
+                        policies: {
+                            items: 'backupPolicy',
+                        },
+                        archives: {
+                            items: 'backupArchive',
+                        },
+                    },
+                },
+                backupPolicy: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        retention: 1,
+                        schedule: '0 * * * *',
+                        type: 'full',
+                        enabled: false,
+                    },
+                },
+                backupArchive: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        policyId: '',
+                        status: '',
+                        migrationId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -181,7 +243,54 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'database',
+            models: {
+                database: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        enabled: true,
+                        type: 'legacy',
+                    },
+                    properties: {
+                        policies: {
+                            items: 'backupPolicy',
+                        },
+                        archives: {
+                            items: 'backupArchive',
+                        },
+                    },
+                },
+                backupPolicy: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        retention: 1,
+                        schedule: '0 * * * *',
+                        type: 'full',
+                        enabled: false,
+                    },
+                },
+                backupArchive: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        policyId: '',
+                        status: '',
+                        migrationId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -251,7 +360,34 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'transactionList',
+            models: {
+                transactionList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        transactions: {
+                            items: 'transaction',
+                        },
+                    },
+                },
+                transaction: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: 'pending',
+                        operations: 0,
+                        expiresAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -305,7 +441,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'transaction',
+            models: {
+                transaction: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: 'pending',
+                        operations: 0,
+                        expiresAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -364,7 +517,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'transaction',
+            models: {
+                transaction: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: 'pending',
+                        operations: 0,
+                        expiresAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -455,7 +625,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'transaction',
+            models: {
+                transaction: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: 'pending',
+                        operations: 0,
+                        expiresAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -590,7 +777,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'transaction',
+            models: {
+                transaction: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        status: 'pending',
+                        operations: 0,
+                        expiresAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -647,7 +851,54 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'database',
+            models: {
+                database: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        enabled: true,
+                        type: 'legacy',
+                    },
+                    properties: {
+                        policies: {
+                            items: 'backupPolicy',
+                        },
+                        archives: {
+                            items: 'backupArchive',
+                        },
+                    },
+                },
+                backupPolicy: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        retention: 1,
+                        schedule: '0 * * * *',
+                        type: 'full',
+                        enabled: false,
+                    },
+                },
+                backupArchive: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        policyId: '',
+                        status: '',
+                        migrationId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -733,7 +984,54 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'database',
+            models: {
+                database: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        enabled: true,
+                        type: 'legacy',
+                    },
+                    properties: {
+                        policies: {
+                            items: 'backupPolicy',
+                        },
+                        archives: {
+                            items: 'backupArchive',
+                        },
+                    },
+                },
+                backupPolicy: {
+                    defaults: {
+                        $id: '',
+                        name: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        retention: 1,
+                        schedule: '0 * * * *',
+                        type: 'full',
+                        enabled: false,
+                    },
+                },
+                backupArchive: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        policyId: '',
+                        status: '',
+                        migrationId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -895,7 +1193,54 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'collectionList',
+            models: {
+                collectionList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        collections: {
+                            items: 'collection',
+                        },
+                    },
+                },
+                collection: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        databaseId: '',
+                        name: '',
+                        enabled: true,
+                        documentSecurity: false,
+                        bytesMax: 0,
+                        bytesUsed: 0,
+                    },
+                    properties: {
+                        indexes: {
+                            items: 'index',
+                        },
+                    },
+                },
+                index: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        type: '',
+                        error: '',
+                        attributes: [],
+                        lengths: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -908,7 +1253,7 @@ export class Databases {
      * @param {boolean} params.documentSecurity - Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.enabled - Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
      * @param {object[]} params.attributes - Array of attribute definitions to create. Each attribute should contain: key (string), type (string: string, varchar, text, mediumtext, longtext, integer, bigint, double, boolean, datetime, point, linestring, polygon, email, url, ip, enum), size (integer, required for string and varchar types), required (boolean, optional), default (mixed, optional), array (boolean, optional), and type-specific options.
-     * @param {object[]} params.indexes - Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial), attributes (array of attribute keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).
+     * @param {object[]} params.indexes - Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial, trigram), attributes (array of attribute keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).
      * @throws {AppwriteException}
      * @returns {Promise<Models.Collection>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createTable` instead.
@@ -933,7 +1278,7 @@ export class Databases {
      * @param {boolean} documentSecurity - Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} enabled - Is collection enabled? When set to 'disabled', users cannot access the collection but Server SDKs with and API key can still read and write to the collection. No data is lost when this is toggled.
      * @param {object[]} attributes - Array of attribute definitions to create. Each attribute should contain: key (string), type (string: string, varchar, text, mediumtext, longtext, integer, bigint, double, boolean, datetime, point, linestring, polygon, email, url, ip, enum), size (integer, required for string and varchar types), required (boolean, optional), default (mixed, optional), array (boolean, optional), and type-specific options.
-     * @param {object[]} indexes - Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial), attributes (array of attribute keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).
+     * @param {object[]} indexes - Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial, trigram), attributes (array of attribute keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).
      * @throws {AppwriteException}
      * @returns {Promise<Models.Collection>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1066,7 +1411,44 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'collection',
+            models: {
+                collection: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        databaseId: '',
+                        name: '',
+                        enabled: true,
+                        documentSecurity: false,
+                        bytesMax: 0,
+                        bytesUsed: 0,
+                    },
+                    properties: {
+                        indexes: {
+                            items: 'index',
+                        },
+                    },
+                },
+                index: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        type: '',
+                        error: '',
+                        attributes: [],
+                        lengths: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1144,7 +1526,44 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'collection',
+            models: {
+                collection: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        databaseId: '',
+                        name: '',
+                        enabled: true,
+                        documentSecurity: false,
+                        bytesMax: 0,
+                        bytesUsed: 0,
+                    },
+                    properties: {
+                        indexes: {
+                            items: 'index',
+                        },
+                    },
+                },
+                index: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        type: '',
+                        error: '',
+                        attributes: [],
+                        lengths: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1291,7 +1710,44 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'collection',
+            models: {
+                collection: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        databaseId: '',
+                        name: '',
+                        enabled: true,
+                        documentSecurity: false,
+                        bytesMax: 0,
+                        bytesUsed: 0,
+                    },
+                    properties: {
+                        indexes: {
+                            items: 'index',
+                        },
+                    },
+                },
+                index: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        type: '',
+                        error: '',
+                        attributes: [],
+                        lengths: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1478,7 +1934,19 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeList',
+            models: {
+                attributeList: {
+                    defaults: {
+                        total: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1656,7 +2124,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeBigint',
+            models: {
+                attributeBigint: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1837,7 +2322,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeBigint',
+            models: {
+                attributeBigint: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1983,7 +2485,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeBoolean',
+            models: {
+                attributeBoolean: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2130,7 +2649,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeBoolean',
+            models: {
+                attributeBoolean: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2274,7 +2810,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeDatetime',
+            models: {
+                attributeDatetime: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2421,7 +2974,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeDatetime',
+            models: {
+                attributeDatetime: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2567,7 +3137,25 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeEmail',
+            models: {
+                attributeEmail: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        format: 'email',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2716,7 +3304,25 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeEmail',
+            models: {
+                attributeEmail: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        format: 'email',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2879,7 +3485,25 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeEnum',
+            models: {
+                attributeEnum: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        format: 'enum',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3045,7 +3669,25 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeEnum',
+            models: {
+                attributeEnum: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        format: 'enum',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3223,7 +3865,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeFloat',
+            models: {
+                attributeFloat: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3404,7 +4063,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeFloat',
+            models: {
+                attributeFloat: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3582,7 +4258,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeInteger',
+            models: {
+                attributeInteger: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3763,7 +4456,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeInteger',
+            models: {
+                attributeInteger: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3909,7 +4619,25 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeIp',
+            models: {
+                attributeIp: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        format: 'ip',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4058,7 +4786,25 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeIp',
+            models: {
+                attributeIp: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        format: 'ip',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4190,7 +4936,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeLine',
+            models: {
+                attributeLine: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4332,7 +5095,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeLine',
+            models: {
+                attributeLine: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4490,7 +5270,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeLongtext',
+            models: {
+                attributeLongtext: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4639,7 +5436,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeLongtext',
+            models: {
+                attributeLongtext: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4797,7 +5611,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeMediumtext',
+            models: {
+                attributeMediumtext: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4946,7 +5777,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeMediumtext',
+            models: {
+                attributeMediumtext: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5078,7 +5926,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributePoint',
+            models: {
+                attributePoint: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5220,7 +6085,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributePoint',
+            models: {
+                attributePoint: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5352,7 +6234,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributePolygon',
+            models: {
+                attributePolygon: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5494,7 +6393,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributePolygon',
+            models: {
+                attributePolygon: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5672,7 +6588,29 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeRelationship',
+            models: {
+                attributeRelationship: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        relationType: '',
+                        twoWay: false,
+                        twoWayKey: '',
+                        onDelete: 'restrict',
+                        side: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5799,7 +6737,29 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeRelationship',
+            models: {
+                attributeRelationship: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        relationType: '',
+                        twoWay: false,
+                        twoWayKey: '',
+                        onDelete: 'restrict',
+                        side: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -5980,7 +6940,25 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeString',
+            models: {
+                attributeString: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        size: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -6141,7 +7119,25 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeString',
+            models: {
+                attributeString: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        size: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -6299,7 +7295,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeText',
+            models: {
+                attributeText: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -6448,7 +7461,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeText',
+            models: {
+                attributeText: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -6594,7 +7624,25 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeUrl',
+            models: {
+                attributeUrl: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        format: 'url',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -6743,7 +7791,25 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeUrl',
+            models: {
+                attributeUrl: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        format: 'url',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -6924,7 +7990,25 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeVarchar',
+            models: {
+                attributeVarchar: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        size: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -7085,7 +8169,25 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'attributeVarchar',
+            models: {
+                attributeVarchar: {
+                    defaults: {
+                        key: '',
+                        type: '',
+                        error: '',
+                        required: false,
+                        $createdAt: '',
+                        $updatedAt: '',
+                        size: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -7462,7 +8564,34 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'documentList',
+            models: {
+                documentList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        documents: {
+                            items: 'document',
+                        },
+                    },
+                },
+                document: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $collectionId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -7633,7 +8762,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'document',
+            models: {
+                document: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $collectionId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -7752,7 +8898,34 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'documentList',
+            models: {
+                documentList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        documents: {
+                            items: 'document',
+                        },
+                    },
+                },
+                document: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $collectionId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -7873,7 +9046,34 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'documentList',
+            models: {
+                documentList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        documents: {
+                            items: 'document',
+                        },
+                    },
+                },
+                document: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $collectionId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -7999,7 +9199,34 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'documentList',
+            models: {
+                documentList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        documents: {
+                            items: 'document',
+                        },
+                    },
+                },
+                document: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $collectionId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -8113,7 +9340,34 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('delete', uri, apiHeaders, apiPayload);
+        const request = this.client.call('delete', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'documentList',
+            models: {
+                documentList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        documents: {
+                            items: 'document',
+                        },
+                    },
+                },
+                document: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $collectionId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -8244,7 +9498,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'document',
+            models: {
+                document: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $collectionId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -8415,7 +9686,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'document',
+            models: {
+                document: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $collectionId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -8586,7 +9874,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'document',
+            models: {
+                document: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $collectionId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -8864,7 +10169,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'document',
+            models: {
+                document: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $collectionId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -9024,7 +10346,24 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'document',
+            models: {
+                document: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $collectionId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -9135,12 +10474,41 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'indexList',
+            models: {
+                indexList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        indexes: {
+                            items: 'index',
+                        },
+                    },
+                },
+                index: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        type: '',
+                        error: '',
+                        attributes: [],
+                        lengths: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
      * Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
-     * Attributes can be `key`, `fulltext`, and `unique`.
+     * Attributes can be `key`, `fulltext`, `unique`, `spatial`, and `trigram`. `trigram` is only available on PostgreSQL and lets `contains`, `startsWith`, and `endsWith` queries on string attributes use an index.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -9164,7 +10532,7 @@ export class Databases {
     }): Promise<Models.Index>;
     /**
      * Creates an index on the attributes listed. Your index should include all the attributes you will query in a single request.
-     * Attributes can be `key`, `fulltext`, and `unique`.
+     * Attributes can be `key`, `fulltext`, `unique`, `spatial`, and `trigram`. `trigram` is only available on PostgreSQL and lets `contains`, `startsWith`, and `endsWith` queries on string attributes use an index.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -9303,7 +10671,26 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'index',
+            models: {
+                index: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        type: '',
+                        error: '',
+                        attributes: [],
+                        lengths: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -9394,7 +10781,26 @@ export class Databases {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'index',
+            models: {
+                index: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        type: '',
+                        error: '',
+                        attributes: [],
+                        lengths: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**

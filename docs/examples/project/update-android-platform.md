@@ -11,6 +11,7 @@ const result = await project.updateAndroidPlatform({
     platformId: '<PLATFORM_ID>',
     name: '<NAME>',
     applicationId: '<APPLICATION_ID>',
+    fingerprints: [], // optional
 });
 
 console.log(result);

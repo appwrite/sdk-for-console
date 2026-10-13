@@ -1,14 +1,15 @@
 ```javascript
-import { Client, Assistant } from '@appwrite.io/console';
+import { Client, Project } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
     .setProject('<YOUR_PROJECT_ID>'); // Your project ID
 
-const assistant = new Assistant(client);
+const project = new Project(client);
 
-const result = await assistant.chat({
-    prompt: '<PROMPT>',
+const result = await project.listEnvironments({
+    queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

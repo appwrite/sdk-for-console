@@ -1,4 +1,9 @@
-import { AppwriteException, Client, type Payload } from '../client';
+import {
+    AppwriteException,
+    Client,
+    type Payload,
+    applyDefaults,
+} from '../client';
 import type { Models } from '../models';
 
 import { PasswordHash } from '../enums/password-hash';
@@ -91,7 +96,59 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'userList',
+            models: {
+                userList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        users: {
+                            items: 'user',
+                        },
+                    },
+                },
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -209,7 +266,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -322,7 +421,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -435,7 +576,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -515,7 +698,39 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'identityList',
+            models: {
+                identityList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        identities: {
+                            items: 'identity',
+                        },
+                    },
+                },
+                identity: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        provider: '',
+                        providerUid: '',
+                        providerEmail: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        providerIdToken: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -685,7 +900,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -798,7 +1055,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1010,7 +1309,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1179,7 +1520,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1309,7 +1692,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1364,7 +1789,35 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'usageUsers',
+            models: {
+                usageUsers: {
+                    defaults: {
+                        range: '',
+                        usersTotal: 0,
+                        sessionsTotal: 0,
+                    },
+                    properties: {
+                        users: {
+                            items: 'metric',
+                        },
+                        sessions: {
+                            items: 'metric',
+                        },
+                    },
+                },
+                metric: {
+                    defaults: {
+                        value: -1,
+                        date: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1422,7 +1875,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1550,7 +2045,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1632,7 +2169,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1715,7 +2294,19 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'jwt',
+            models: {
+                jwt: {
+                    defaults: {
+                        jwt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1797,7 +2388,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1900,7 +2533,43 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'membershipList',
+            models: {
+                membershipList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        memberships: {
+                            items: 'membership',
+                        },
+                    },
+                },
+                membership: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        userName: '',
+                        userEmail: '',
+                        userPhone: '',
+                        teamId: '',
+                        teamName: '',
+                        invited: '',
+                        joined: '',
+                        confirm: false,
+                        mfa: false,
+                        userAccessedAt: '',
+                        roles: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1976,7 +2645,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2051,7 +2762,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2266,7 +3019,23 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaChallengeSecret',
+            models: {
+                mfaChallengeSecret: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        expire: '',
+                        code: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2321,7 +3090,23 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaFactors',
+            models: {
+                mfaFactors: {
+                    defaults: {
+                        totp: false,
+                        phone: false,
+                        email: false,
+                        recoveryCode: false,
+                        custom: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2375,7 +3160,23 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaFactors',
+            models: {
+                mfaFactors: {
+                    defaults: {
+                        totp: false,
+                        phone: false,
+                        email: false,
+                        recoveryCode: false,
+                        custom: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2432,7 +3233,19 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaRecoveryCodes',
+            models: {
+                mfaRecoveryCodes: {
+                    defaults: {
+                        recoveryCodes: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2488,7 +3301,19 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaRecoveryCodes',
+            models: {
+                mfaRecoveryCodes: {
+                    defaults: {
+                        recoveryCodes: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2546,7 +3371,19 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaRecoveryCodes',
+            models: {
+                mfaRecoveryCodes: {
+                    defaults: {
+                        recoveryCodes: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2603,7 +3440,19 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaRecoveryCodes',
+            models: {
+                mfaRecoveryCodes: {
+                    defaults: {
+                        recoveryCodes: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2661,7 +3510,19 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaRecoveryCodes',
+            models: {
+                mfaRecoveryCodes: {
+                    defaults: {
+                        recoveryCodes: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2718,7 +3579,19 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'mfaRecoveryCodes',
+            models: {
+                mfaRecoveryCodes: {
+                    defaults: {
+                        recoveryCodes: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2793,7 +3666,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2875,7 +3790,33 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'passkeyList',
+            models: {
+                passkeyList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        passkeys: {
+                            items: 'passkey',
+                        },
+                    },
+                },
+                passkey: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        accessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2944,7 +3885,23 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'passkey',
+            models: {
+                passkey: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        accessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3031,7 +3988,23 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'passkey',
+            models: {
+                passkey: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        accessedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3178,7 +4151,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3256,7 +4271,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3454,7 +4511,57 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'sessionList',
+            models: {
+                sessionList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        sessions: {
+                            items: 'session',
+                        },
+                    },
+                },
+                session: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        expire: '',
+                        provider: '',
+                        providerUid: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        ip: '',
+                        osCode: '',
+                        osName: '',
+                        osVersion: '',
+                        clientType: '',
+                        clientCode: '',
+                        clientName: '',
+                        clientVersion: '',
+                        clientEngine: '',
+                        clientEngineVersion: '',
+                        deviceName: '',
+                        deviceBrand: '',
+                        deviceModel: '',
+                        countryCode: '',
+                        countryName: '',
+                        current: false,
+                        factors: [],
+                        secret: '',
+                        mfaUpdatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3513,7 +4620,47 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'session',
+            models: {
+                session: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        userId: '',
+                        expire: '',
+                        provider: '',
+                        providerUid: '',
+                        providerAccessToken: '',
+                        providerAccessTokenExpiry: '',
+                        providerRefreshToken: '',
+                        ip: '',
+                        osCode: '',
+                        osName: '',
+                        osVersion: '',
+                        clientType: '',
+                        clientCode: '',
+                        clientName: '',
+                        clientVersion: '',
+                        clientEngine: '',
+                        clientEngineVersion: '',
+                        deviceName: '',
+                        deviceBrand: '',
+                        deviceModel: '',
+                        countryCode: '',
+                        countryName: '',
+                        current: false,
+                        factors: [],
+                        secret: '',
+                        mfaUpdatedAt: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3711,7 +4858,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3793,7 +4982,36 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'targetList',
+            models: {
+                targetList: {
+                    defaults: {
+                        total: 0,
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -3936,7 +5154,26 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'target',
+            models: {
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4005,7 +5242,26 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'target',
+            models: {
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4122,7 +5378,26 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'target',
+            models: {
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4274,7 +5549,24 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'token',
+            models: {
+                token: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        userId: '',
+                        secret: '',
+                        expire: '',
+                        phrase: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4357,7 +5649,49 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -4440,6 +5774,48 @@ export class Users {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }
