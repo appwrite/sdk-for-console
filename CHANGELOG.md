@@ -1,5 +1,25 @@
 # Change Log
 
+## 19.0.0
+
+* Breaking: removed the `Assistant` service (`assistant.chat`) and `_APP_ASSISTANT_ENABLED` from `ConsoleVariables`
+* Breaking: `waf.getRule` and `waf.listRules` return the action-specific rule models (`WafRuleBypass`, `WafRuleChallenge`, `WafRuleDeny`, `WafRuleRateLimit`, `WafRuleRedirect`); `WafRule` is removed
+* Breaking: removed the `deno-1.21`, `deno-1.24` and `deno-1.35` runtimes from `Runtime` and `BuildRuntime`
+* Updated: `X-Appwrite-Response-Format` is now `2.4.0`
+* Updated: missing fields in API responses are filled with their documented defaults
+* Added: `Analytics` service: `listProperties`, `createProperty`, `getProperty`, `updateProperty`, `deleteProperty`, `createEvent` and `listMetrics`, with `AnalyticsDimension` and `AnalyticsInterval` enums
+* Added: `Tracking` helper that auto-tracks pageviews, outbound links, downloads, scroll depth and engagement time
+* Added: `admin` threat methods `listThreats`, `createThreat`, `getThreat`, `deleteThreat` and `updateThreatStatus`
+* Added: `admin` cache methods `deletePlatformCache`, `deletePlatformResourceCache`, `deleteProjectCache` and `deleteProjectResourceCache`
+* Added: `project.updatePasswordRotationPolicy` and the `PolicyPasswordRotation` model
+* Added: optional `state` on `account.createOAuth2Session` and `account.createOAuth2Token`
+* Added: optional `fingerprints` on `project.createAndroidPlatform` and `project.updateAndroidPlatform`, and on `PlatformAndroid`
+* Added: optional `membershipId` on `teams.createMembership`
+* Added: `project.listEnvironments`, `createEnvironment`, `getEnvironment`, `updateEnvironment` and `deleteEnvironment`, with `parentId` on `Project` and `environments` on `BillingPlan`
+* Added: `trigram` in `DatabasesIndexType` and `TablesDBIndexType`, and `supportForTrigramIndex` on `ConsoleVariables`
+* Added: the package ships the spec it was generated from as `spec.json`, exported as `@appwrite.io/console/spec.json`
+* Added: `analytics.read` and `analytics.write` key scopes, analytics usage metrics, and `avatarsStorageTotal` on `UsageOrganization`
+
 ## 18.4.1
 
 * Fixed: added `ProjectAuthMethodId.Passkey`, so `project.updateAuthMethod` can enable passkeys

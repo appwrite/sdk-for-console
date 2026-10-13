@@ -20,7 +20,7 @@ const result = await waf.createRateLimitRule({
     maxBucketSize: 1, // optional
     priority: -100000, // optional
     enabled: false, // optional
-    conditions: '', // optional
+    conditions: [], // optional
 });
 
 console.log(result);

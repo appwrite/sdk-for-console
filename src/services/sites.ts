@@ -1,9 +1,9 @@
-import { Service } from '../service';
 import {
     AppwriteException,
     Client,
     type Payload,
     UploadProgress,
+    applyDefaults,
 } from '../client';
 import type { Models } from '../models';
 
@@ -99,7 +99,79 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'siteList',
+            models: {
+                siteList: {
+                    defaults: {
+                        total: 0,
+                        sites: [],
+                    },
+                    properties: {
+                        sites: {
+                            items: 'site',
+                        },
+                    },
+                },
+                site: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        enabled: true,
+                        live: true,
+                        logging: true,
+                        framework: '',
+                        deploymentRetention: 0,
+                        deploymentId: '',
+                        deploymentCreatedAt: '',
+                        deploymentScreenshotLight: '',
+                        deploymentScreenshotDark: '',
+                        latestDeploymentId: '',
+                        latestDeploymentCreatedAt: '',
+                        latestDeploymentStatus: '',
+                        scopes: [],
+                        vars: [],
+                        timeout: 15,
+                        installCommand: '',
+                        buildCommand: '',
+                        startCommand: '',
+                        outputDirectory: '',
+                        installationId: '',
+                        providerRepositoryId: '',
+                        providerBranch: '',
+                        providerRootDirectory: '',
+                        providerSilentMode: false,
+                        providerBranches: [],
+                        providerPaths: [],
+                        buildSpecification: 's-1vcpu-512mb',
+                        runtimeSpecification: 's-1vcpu-512mb',
+                        buildRuntime: '',
+                    },
+                    properties: {
+                        vars: {
+                            items: 'variable',
+                        },
+                    },
+                },
+                variable: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        value: '',
+                        secret: false,
+                        resourceType: '',
+                        resourceId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -480,7 +552,68 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'site',
+            models: {
+                site: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        enabled: true,
+                        live: true,
+                        logging: true,
+                        framework: '',
+                        deploymentRetention: 0,
+                        deploymentId: '',
+                        deploymentCreatedAt: '',
+                        deploymentScreenshotLight: '',
+                        deploymentScreenshotDark: '',
+                        latestDeploymentId: '',
+                        latestDeploymentCreatedAt: '',
+                        latestDeploymentStatus: '',
+                        scopes: [],
+                        vars: [],
+                        timeout: 15,
+                        installCommand: '',
+                        buildCommand: '',
+                        startCommand: '',
+                        outputDirectory: '',
+                        installationId: '',
+                        providerRepositoryId: '',
+                        providerBranch: '',
+                        providerRootDirectory: '',
+                        providerSilentMode: false,
+                        providerBranches: [],
+                        providerPaths: [],
+                        buildSpecification: 's-1vcpu-512mb',
+                        runtimeSpecification: 's-1vcpu-512mb',
+                        buildRuntime: '',
+                    },
+                    properties: {
+                        vars: {
+                            items: 'variable',
+                        },
+                    },
+                },
+                variable: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        value: '',
+                        secret: false,
+                        resourceType: '',
+                        resourceId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -532,7 +665,47 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'frameworkList',
+            models: {
+                frameworkList: {
+                    defaults: {
+                        total: 0,
+                        frameworks: [],
+                    },
+                    properties: {
+                        frameworks: {
+                            items: 'framework',
+                        },
+                    },
+                },
+                framework: {
+                    defaults: {
+                        key: '',
+                        name: '',
+                        buildRuntime: '',
+                        runtimes: [],
+                        adapters: [],
+                    },
+                    properties: {
+                        adapters: {
+                            items: 'frameworkAdapter',
+                        },
+                    },
+                },
+                frameworkAdapter: {
+                    defaults: {
+                        key: '',
+                        installCommand: '',
+                        buildCommand: '',
+                        outputDirectory: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -601,7 +774,33 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'specificationList',
+            models: {
+                specificationList: {
+                    defaults: {
+                        total: 0,
+                        specifications: [],
+                    },
+                    properties: {
+                        specifications: {
+                            items: 'specification',
+                        },
+                    },
+                },
+                specification: {
+                    defaults: {
+                        memory: 0,
+                        cpus: 0,
+                        enabled: false,
+                        slug: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -719,7 +918,72 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'templateSiteList',
+            models: {
+                templateSiteList: {
+                    defaults: {
+                        total: 0,
+                        templates: [],
+                    },
+                    properties: {
+                        templates: {
+                            items: 'templateSite',
+                        },
+                    },
+                },
+                templateSite: {
+                    defaults: {
+                        key: '',
+                        name: '',
+                        tagline: '',
+                        screenshotDark: '',
+                        screenshotLight: '',
+                        useCases: [],
+                        frameworks: [],
+                        vcsProvider: '',
+                        providerRepositoryId: '',
+                        providerOwner: '',
+                        providerVersion: '',
+                        variables: [],
+                    },
+                    properties: {
+                        frameworks: {
+                            items: 'templateFramework',
+                        },
+                        variables: {
+                            items: 'templateVariable',
+                        },
+                    },
+                },
+                templateFramework: {
+                    defaults: {
+                        key: '',
+                        name: '',
+                        installCommand: '',
+                        buildCommand: '',
+                        outputDirectory: '',
+                        providerRootDirectory: '',
+                        buildRuntime: '',
+                        adapter: '',
+                    },
+                },
+                templateVariable: {
+                    defaults: {
+                        name: '',
+                        description: '',
+                        value: '',
+                        secret: false,
+                        placeholder: '',
+                        required: false,
+                        type: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -775,7 +1039,61 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'templateSite',
+            models: {
+                templateSite: {
+                    defaults: {
+                        key: '',
+                        name: '',
+                        tagline: '',
+                        screenshotDark: '',
+                        screenshotLight: '',
+                        useCases: [],
+                        frameworks: [],
+                        vcsProvider: '',
+                        providerRepositoryId: '',
+                        providerOwner: '',
+                        providerVersion: '',
+                        variables: [],
+                    },
+                    properties: {
+                        frameworks: {
+                            items: 'templateFramework',
+                        },
+                        variables: {
+                            items: 'templateVariable',
+                        },
+                    },
+                },
+                templateFramework: {
+                    defaults: {
+                        key: '',
+                        name: '',
+                        installCommand: '',
+                        buildCommand: '',
+                        outputDirectory: '',
+                        providerRootDirectory: '',
+                        buildRuntime: '',
+                        adapter: '',
+                    },
+                },
+                templateVariable: {
+                    defaults: {
+                        name: '',
+                        description: '',
+                        value: '',
+                        secret: false,
+                        placeholder: '',
+                        required: false,
+                        type: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -827,7 +1145,68 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'site',
+            models: {
+                site: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        enabled: true,
+                        live: true,
+                        logging: true,
+                        framework: '',
+                        deploymentRetention: 0,
+                        deploymentId: '',
+                        deploymentCreatedAt: '',
+                        deploymentScreenshotLight: '',
+                        deploymentScreenshotDark: '',
+                        latestDeploymentId: '',
+                        latestDeploymentCreatedAt: '',
+                        latestDeploymentStatus: '',
+                        scopes: [],
+                        vars: [],
+                        timeout: 15,
+                        installCommand: '',
+                        buildCommand: '',
+                        startCommand: '',
+                        outputDirectory: '',
+                        installationId: '',
+                        providerRepositoryId: '',
+                        providerBranch: '',
+                        providerRootDirectory: '',
+                        providerSilentMode: false,
+                        providerBranches: [],
+                        providerPaths: [],
+                        buildSpecification: 's-1vcpu-512mb',
+                        runtimeSpecification: 's-1vcpu-512mb',
+                        buildRuntime: '',
+                    },
+                    properties: {
+                        vars: {
+                            items: 'variable',
+                        },
+                    },
+                },
+                variable: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        value: '',
+                        secret: false,
+                        resourceType: '',
+                        resourceId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1203,7 +1582,68 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'site',
+            models: {
+                site: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        enabled: true,
+                        live: true,
+                        logging: true,
+                        framework: '',
+                        deploymentRetention: 0,
+                        deploymentId: '',
+                        deploymentCreatedAt: '',
+                        deploymentScreenshotLight: '',
+                        deploymentScreenshotDark: '',
+                        latestDeploymentId: '',
+                        latestDeploymentCreatedAt: '',
+                        latestDeploymentStatus: '',
+                        scopes: [],
+                        vars: [],
+                        timeout: 15,
+                        installCommand: '',
+                        buildCommand: '',
+                        startCommand: '',
+                        outputDirectory: '',
+                        installationId: '',
+                        providerRepositoryId: '',
+                        providerBranch: '',
+                        providerRootDirectory: '',
+                        providerSilentMode: false,
+                        providerBranches: [],
+                        providerPaths: [],
+                        buildSpecification: 's-1vcpu-512mb',
+                        runtimeSpecification: 's-1vcpu-512mb',
+                        buildRuntime: '',
+                    },
+                    properties: {
+                        vars: {
+                            items: 'variable',
+                        },
+                    },
+                },
+                variable: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        value: '',
+                        secret: false,
+                        resourceType: '',
+                        resourceId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1333,7 +1773,68 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'site',
+            models: {
+                site: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        enabled: true,
+                        live: true,
+                        logging: true,
+                        framework: '',
+                        deploymentRetention: 0,
+                        deploymentId: '',
+                        deploymentCreatedAt: '',
+                        deploymentScreenshotLight: '',
+                        deploymentScreenshotDark: '',
+                        latestDeploymentId: '',
+                        latestDeploymentCreatedAt: '',
+                        latestDeploymentStatus: '',
+                        scopes: [],
+                        vars: [],
+                        timeout: 15,
+                        installCommand: '',
+                        buildCommand: '',
+                        startCommand: '',
+                        outputDirectory: '',
+                        installationId: '',
+                        providerRepositoryId: '',
+                        providerBranch: '',
+                        providerRootDirectory: '',
+                        providerSilentMode: false,
+                        providerBranches: [],
+                        providerPaths: [],
+                        buildSpecification: 's-1vcpu-512mb',
+                        runtimeSpecification: 's-1vcpu-512mb',
+                        buildRuntime: '',
+                    },
+                    properties: {
+                        vars: {
+                            items: 'variable',
+                        },
+                    },
+                },
+                variable: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        value: '',
+                        secret: false,
+                        resourceType: '',
+                        resourceId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1436,7 +1937,55 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'deploymentList',
+            models: {
+                deploymentList: {
+                    defaults: {
+                        total: 0,
+                        deployments: [],
+                    },
+                    properties: {
+                        deployments: {
+                            items: 'deployment',
+                        },
+                    },
+                },
+                deployment: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        resourceId: '',
+                        resourceType: '',
+                        entrypoint: '',
+                        sourceSize: 0,
+                        buildSize: 0,
+                        totalSize: 0,
+                        buildId: '',
+                        activate: false,
+                        screenshotLight: '',
+                        screenshotDark: '',
+                        buildLogs: '',
+                        buildDuration: 0,
+                        providerRepositoryName: '',
+                        providerRepositoryOwner: '',
+                        providerRepositoryUrl: '',
+                        providerCommitHash: '',
+                        providerCommitAuthorUrl: '',
+                        providerCommitAuthor: '',
+                        providerCommitMessage: '',
+                        providerCommitUrl: '',
+                        providerBranch: '',
+                        providerBranchUrl: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1665,7 +2214,44 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'deployment',
+            models: {
+                deployment: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        resourceId: '',
+                        resourceType: '',
+                        entrypoint: '',
+                        sourceSize: 0,
+                        buildSize: 0,
+                        totalSize: 0,
+                        buildId: '',
+                        activate: false,
+                        screenshotLight: '',
+                        screenshotDark: '',
+                        buildLogs: '',
+                        buildDuration: 0,
+                        providerRepositoryName: '',
+                        providerRepositoryOwner: '',
+                        providerRepositoryUrl: '',
+                        providerCommitHash: '',
+                        providerCommitAuthorUrl: '',
+                        providerCommitAuthor: '',
+                        providerCommitMessage: '',
+                        providerCommitUrl: '',
+                        providerBranch: '',
+                        providerBranchUrl: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1837,7 +2423,44 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'deployment',
+            models: {
+                deployment: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        resourceId: '',
+                        resourceType: '',
+                        entrypoint: '',
+                        sourceSize: 0,
+                        buildSize: 0,
+                        totalSize: 0,
+                        buildId: '',
+                        activate: false,
+                        screenshotLight: '',
+                        screenshotDark: '',
+                        buildLogs: '',
+                        buildDuration: 0,
+                        providerRepositoryName: '',
+                        providerRepositoryOwner: '',
+                        providerRepositoryUrl: '',
+                        providerCommitHash: '',
+                        providerCommitAuthorUrl: '',
+                        providerCommitAuthor: '',
+                        providerCommitMessage: '',
+                        providerCommitUrl: '',
+                        providerBranch: '',
+                        providerBranchUrl: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -1953,7 +2576,44 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'deployment',
+            models: {
+                deployment: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        resourceId: '',
+                        resourceType: '',
+                        entrypoint: '',
+                        sourceSize: 0,
+                        buildSize: 0,
+                        totalSize: 0,
+                        buildId: '',
+                        activate: false,
+                        screenshotLight: '',
+                        screenshotDark: '',
+                        buildLogs: '',
+                        buildDuration: 0,
+                        providerRepositoryName: '',
+                        providerRepositoryOwner: '',
+                        providerRepositoryUrl: '',
+                        providerCommitHash: '',
+                        providerCommitAuthorUrl: '',
+                        providerCommitAuthor: '',
+                        providerCommitMessage: '',
+                        providerCommitUrl: '',
+                        providerBranch: '',
+                        providerBranchUrl: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2028,7 +2688,44 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'deployment',
+            models: {
+                deployment: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        resourceId: '',
+                        resourceType: '',
+                        entrypoint: '',
+                        sourceSize: 0,
+                        buildSize: 0,
+                        totalSize: 0,
+                        buildId: '',
+                        activate: false,
+                        screenshotLight: '',
+                        screenshotDark: '',
+                        buildLogs: '',
+                        buildDuration: 0,
+                        providerRepositoryName: '',
+                        providerRepositoryOwner: '',
+                        providerRepositoryUrl: '',
+                        providerCommitHash: '',
+                        providerCommitAuthorUrl: '',
+                        providerCommitAuthor: '',
+                        providerCommitMessage: '',
+                        providerCommitUrl: '',
+                        providerBranch: '',
+                        providerBranchUrl: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2206,9 +2903,7 @@ export class Sites {
         apiPayload['project'] = this.client.config.project;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
-        for (const [key, value] of Object.entries(
-            Service.flatten(apiPayload),
-        )) {
+        for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
             uri.searchParams.append(key, value);
         }
 
@@ -2288,7 +2983,44 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('patch', uri, apiHeaders, apiPayload);
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'deployment',
+            models: {
+                deployment: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        type: '',
+                        resourceId: '',
+                        resourceType: '',
+                        entrypoint: '',
+                        sourceSize: 0,
+                        buildSize: 0,
+                        totalSize: 0,
+                        buildId: '',
+                        activate: false,
+                        screenshotLight: '',
+                        screenshotDark: '',
+                        buildLogs: '',
+                        buildDuration: 0,
+                        providerRepositoryName: '',
+                        providerRepositoryOwner: '',
+                        providerRepositoryUrl: '',
+                        providerCommitHash: '',
+                        providerCommitAuthorUrl: '',
+                        providerCommitAuthor: '',
+                        providerCommitMessage: '',
+                        providerCommitUrl: '',
+                        providerBranch: '',
+                        providerBranchUrl: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2370,7 +3102,59 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'executionList',
+            models: {
+                executionList: {
+                    defaults: {
+                        total: 0,
+                        executions: [],
+                    },
+                    properties: {
+                        executions: {
+                            items: 'execution',
+                        },
+                    },
+                },
+                execution: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        resourceId: '',
+                        resourceType: 'functions',
+                        deploymentId: '',
+                        requestMethod: '',
+                        requestPath: '',
+                        requestHeaders: [],
+                        responseStatusCode: 0,
+                        responseBody: '',
+                        responseHeaders: [],
+                        logs: '',
+                        errors: '',
+                        duration: 0,
+                    },
+                    properties: {
+                        requestHeaders: {
+                            items: 'headers',
+                        },
+                        responseHeaders: {
+                            items: 'headers',
+                        },
+                    },
+                },
+                headers: {
+                    defaults: {
+                        name: '',
+                        value: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2434,7 +3218,48 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'execution',
+            models: {
+                execution: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                        resourceId: '',
+                        resourceType: 'functions',
+                        deploymentId: '',
+                        requestMethod: '',
+                        requestPath: '',
+                        requestHeaders: [],
+                        responseStatusCode: 0,
+                        responseBody: '',
+                        responseHeaders: [],
+                        logs: '',
+                        errors: '',
+                        duration: 0,
+                    },
+                    properties: {
+                        requestHeaders: {
+                            items: 'headers',
+                        },
+                        responseHeaders: {
+                            items: 'headers',
+                        },
+                    },
+                },
+                headers: {
+                    defaults: {
+                        name: '',
+                        value: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2578,7 +3403,37 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'variableList',
+            models: {
+                variableList: {
+                    defaults: {
+                        total: 0,
+                        variables: [],
+                    },
+                    properties: {
+                        variables: {
+                            items: 'variable',
+                        },
+                    },
+                },
+                variable: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        value: '',
+                        secret: false,
+                        resourceType: '',
+                        resourceId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2705,7 +3560,26 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('post', uri, apiHeaders, apiPayload);
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'variable',
+            models: {
+                variable: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        value: '',
+                        secret: false,
+                        resourceType: '',
+                        resourceId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2774,7 +3648,26 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('get', uri, apiHeaders, apiPayload);
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'variable',
+            models: {
+                variable: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        value: '',
+                        secret: false,
+                        resourceType: '',
+                        resourceId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
@@ -2891,7 +3784,26 @@ export class Sites {
             accept: 'application/json',
         };
 
-        return this.client.call('put', uri, apiHeaders, apiPayload);
+        const request = this.client.call('put', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'variable',
+            models: {
+                variable: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        key: '',
+                        value: '',
+                        secret: false,
+                        resourceType: '',
+                        resourceId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**

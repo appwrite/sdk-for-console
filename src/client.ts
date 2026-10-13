@@ -45,6 +45,59 @@ export const JSONbig = {
     stringify: JSONbigSerializer.stringify,
 };
 
+type DefaultsShape = string | { items: DefaultsShape };
+
+type DefaultsModel = {
+    defaults?: Record<string, unknown>;
+    properties?: Record<string, DefaultsShape>;
+};
+
+type Defaults = {
+    root: DefaultsShape;
+    models: Record<string, DefaultsModel>;
+};
+
+export function applyDefaults<T>(value: T, tree: Defaults): T {
+    return fillDefaults(value, tree.root, tree.models) as T;
+}
+
+function fillDefaults(
+    value: unknown,
+    shape: DefaultsShape,
+    models: Record<string, DefaultsModel>,
+): unknown {
+    if (typeof shape !== 'string') {
+        if (!Array.isArray(value)) {
+            return value;
+        }
+        const items = shape.items;
+        return value.map((item) => fillDefaults(item, items, models));
+    }
+    const model = models[shape];
+    if (!model || typeof value !== 'object' || value === null) {
+        return value;
+    }
+    if (Array.isArray(value)) {
+        return value;
+    }
+    const result: Record<string, unknown> = { ...model.defaults, ...value };
+    for (const [key, child] of Object.entries(model.properties ?? {})) {
+        if (key in result) {
+            result[key] = fillDefaults(result[key], child, models);
+        }
+    }
+    // The spread drops the non-enumerable JSON toString that Client.call attaches.
+    if (Object.prototype.hasOwnProperty.call(value, 'toString')) {
+        Object.defineProperty(result, 'toString', {
+            value: () => JSONbig.stringify(result),
+            writable: true,
+            enumerable: false,
+            configurable: true,
+        });
+    }
+    return result;
+}
+
 /**
  * Payload type representing a key-value pair with string keys and any values.
  */
@@ -413,8 +466,8 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '18.4.1',
-        'X-Appwrite-Response-Format': '2.3.0',
+        'x-sdk-version': '19.0.0',
+        'X-Appwrite-Response-Format': '2.4.0',
     };
 
     /**

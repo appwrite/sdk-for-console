@@ -15,7 +15,7 @@ const result = await waf.updateDenyRule({
     description: '<DESCRIPTION>', // optional
     priority: -100000, // optional
     enabled: false, // optional
-    conditions: '', // optional
+    conditions: [], // optional
 });
 
 console.log(result);
