@@ -47,7 +47,7 @@ In the Appwrite Console, open your project and under **Add a platform** choose *
 Copy your endpoint and project ID from your project's **Settings** page.
 
 ```js
-import { Client } from 'appwrite';
+import { Client } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1')
@@ -61,7 +61,7 @@ For a self-hosted Appwrite, use `https://<HOSTNAME>/v1` as the endpoint.
 Create a service from the client and call any of its methods. Every method takes a single object of named parameters and returns a promise. See the [API reference](https://appwrite.io/docs/references) for every service and method.
 
 ```js
-import { Account, ID } from 'appwrite';
+import { Account, ID } from '@appwrite.io/console';
 
 const account = new Account(client);
 
@@ -80,7 +80,7 @@ console.log(user);
 Enable the provider in the Console under **Auth > Settings**, then redirect the user to it. The `success` and `failure` URLs must be on a hostname you registered as a platform.
 
 ```js
-import { Account, OAuthProvider } from 'appwrite';
+import { Account, OAuthProvider } from '@appwrite.io/console';
 
 const account = new Account(client);
 
@@ -96,7 +96,7 @@ account.createOAuth2Session({
 Methods that return rows, such as `listRows` and `getRow`, accept a type parameter for your own row shape:
 
 ```ts
-import { TablesDB, type Models } from 'appwrite';
+import { TablesDB, type Models } from '@appwrite.io/console';
 
 interface Book extends Models.Row {
     name: string;
@@ -121,15 +121,19 @@ for (const book of result.rows) {
 In JavaScript, the same types are available through JSDoc:
 
 ```js
+import { TablesDB } from '@appwrite.io/console';
+
+const tablesDB = new TablesDB(client);
+
 /**
- * @typedef {import('appwrite').Models.Row & {
+ * @typedef {import('@appwrite.io/console').Models.Row & {
  *     name: string,
  *     author: string,
  *     isCheckedOut: boolean,
  * }} Book
  */
 
-/** @type {import('appwrite').Models.RowList<Book>} */
+/** @type {import('@appwrite.io/console').Models.RowList<Book>} */
 const result = await tablesDB.listRows({
     databaseId: '<DATABASE_ID>',
     tableId: '<TABLE_ID>',
@@ -143,7 +147,7 @@ The [Appwrite CLI](https://github.com/appwrite/sdk-for-cli) can generate these i
 Failed requests throw an `AppwriteException` with `message`, `code`, `type` and `response` properties.
 
 ```js
-import { AppwriteException } from 'appwrite';
+import { AppwriteException } from '@appwrite.io/console';
 
 try {
     const user = await account.get();
@@ -162,7 +166,6 @@ The [response codes](https://appwrite.io/docs/apis/response-codes) page lists ev
 - [Web quick start](https://appwrite.io/docs/quick-starts/web)
 - [Appwrite docs](https://appwrite.io/docs)
 - [Discord community](https://appwrite.io/discord)
-- [Web playground](https://github.com/appwrite/playground-for-web)
 
 ## Contribution
 
