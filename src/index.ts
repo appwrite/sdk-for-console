@@ -1,13 +1,19 @@
 /**
  * Appwrite Console SDK
  *
- * This SDK targets Appwrite server version 2.4.x as shipped on Appwrite Cloud.
+ * This SDK targets Appwrite server version 2.5.x as shipped on Appwrite Cloud.
  * Self-hosted releases can lag behind Cloud — if you run an older self-hosted
  * build, use a matching older SDK from
  * [previous releases](https://github.com/appwrite/sdk-for-console/releases)
  * when APIs differ.
  */
-export { Client, Query, AppwriteException } from './client';
+export {
+    Client,
+    Query,
+    QueryBuilder,
+    flattenParam,
+    AppwriteException,
+} from './client';
 export { Account } from './services/account';
 export { Activities } from './services/activities';
 export { Admin } from './services/admin';
@@ -74,11 +80,11 @@ export type {
     TrackingEventOptions,
     TrackingOptions,
 } from './services/analytics-tracking';
-export type { QueryTypes, QueryTypesList } from './query';
+export type { QueryTypes, QueryTypesList, QueryInput } from './query';
 export { Permission } from './permission';
 export { Role } from './role';
 export { ID } from './id';
-export { Topic, ResolvedTopic } from './topic';
+export { Topic } from './topic';
 export { Channel } from './channel';
 export { Operator, Condition } from './operator';
 export { AccountKeyScopes } from './enums/account-key-scopes';
@@ -199,6 +205,7 @@ export { OAuth2KakaoPrompt } from './enums/o-auth-2-kakao-prompt';
 export { PlatformType } from './enums/platform-type';
 export { ProxyRuleDeploymentResourceType } from './enums/proxy-rule-deployment-resource-type';
 export { ProxyRuleStatus } from './enums/proxy-rule-status';
+export { ProxyRuleProtocol } from './enums/proxy-rule-protocol';
 export { MessageStatus } from './enums/message-status';
 export { BillingPlanGroup } from './enums/billing-plan-group';
 export { DomainTransferStatusEnum } from './enums/domain-transfer-status-enum';

@@ -9,6 +9,7 @@ const project = new Project(client);
 
 const result = await project.updatePasswordDictionaryPolicy({
     enabled: false,
+    denyList: [], // optional
 });
 
 console.log(result);

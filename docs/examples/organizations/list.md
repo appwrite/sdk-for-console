@@ -10,6 +10,7 @@ const organizations = new Organizations(client);
 const result = await organizations.list({
     queries: [], // optional
     search: '<SEARCH>', // optional
+    total: false, // optional
 });
 
 console.log(result);

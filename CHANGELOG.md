@@ -1,5 +1,21 @@
 # Change Log
 
+## 20.0.0
+
+* Breaking: requests send `X-Appwrite-Response-Format: 2.5.0`; responses follow the 2.5 shapes
+* Breaking: nullable model fields are typed `T | null`, such as `Account.emailCanonical` and `Execution.scheduledAt`
+* Breaking: removed `Topic.any()`, `Topic.all()` and `ResolvedTopic`; topic levels reject `+` and `#`
+* Breaking: requires Node.js 20 or later to build
+* Added: `proxy.createSMTPRule` and the `ProxyRuleProtocol` enum, with `ProxyRule.protocol`
+* Added: `promoteRestoration` on `mysql`, `postgresql` and `mongo`
+* Added: optional `description` on databases, collections, tables, columns, indexes, buckets, functions, sites, keys, topics, variables and webhooks
+* Added: `Query` aggregates, `groupBy`, `having`, `distinct`, joins, `relationship`, `covers`, `spatialEquals` and `page`
+* Added: `Query.builder()`; list methods and realtime subscriptions accept a builder for `queries`
+* Added: `ExecutionTrigger.Email`, `Function.emailEnabled` and `ConsoleVariables._APP_DOMAIN_EMAIL`
+* Added: per-service ES modules and a minified script on `sdk.appwrite.io/console/<version>/`
+* Updated: nullable request params accept `null`
+* Fixed: list and object defaults filled into a response are copied per model
+
 ## 19.0.0
 
 * Breaking: removed the `Assistant` service (`assistant.chat`) and `_APP_ASSISTANT_ENABLED` from `ConsoleVariables`

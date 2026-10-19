@@ -15,6 +15,7 @@ const result = await databases.updateVarcharAttribute({
     xdefault: 'Hello World',
     size: 1, // optional
     newKey: '<NEW_KEY>', // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

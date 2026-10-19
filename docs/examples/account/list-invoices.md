@@ -9,6 +9,7 @@ const account = new Account(client);
 
 const result = await account.listInvoices({
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

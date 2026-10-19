@@ -17,6 +17,7 @@ const result = await tablesDB.createLineColumn({
         [3, 4],
         [5, 6],
     ], // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

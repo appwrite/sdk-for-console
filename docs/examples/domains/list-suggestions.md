@@ -10,10 +10,10 @@ const domains = new Domains(client);
 const result = await domains.listSuggestions({
     query: '<QUERY>',
     tlds: [], // optional
-    limit: null, // optional
+    limit: 0, // optional
     filterType: DomainSuggestionType.Premium, // optional
-    priceMax: null, // optional
-    priceMin: null, // optional
+    priceMax: 0, // optional
+    priceMin: 0, // optional
 });
 
 console.log(result);

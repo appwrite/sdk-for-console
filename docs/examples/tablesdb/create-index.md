@@ -20,6 +20,7 @@ const result = await tablesDB.createIndex({
     columns: ['username'],
     orders: [OrderBy.Asc], // optional
     lengths: [], // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

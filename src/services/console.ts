@@ -274,6 +274,7 @@ export class Console {
                     defaults: {
                         $id: '',
                         name: '',
+                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
@@ -539,6 +540,7 @@ export class Console {
                         deploymentSize: 0,
                         buildSize: 0,
                         functionsIntervalMinimum: 0,
+                        functionsAllowCron: true,
                         databasesAllowEncrypt: false,
                         databaseComputeCredit: 0,
                     },
@@ -665,6 +667,7 @@ export class Console {
                         deploymentSize: 0,
                         buildSize: 0,
                         functionsIntervalMinimum: 0,
+                        functionsAllowCron: true,
                         databasesAllowEncrypt: false,
                         databaseComputeCredit: 0,
                     },
@@ -1166,58 +1169,64 @@ export class Console {
     /**
      * Create a new source.
      *
-     * @param {string} params.ref - Ref param
-     * @param {string} params.referrer - Referrer
-     * @param {string} params.utmSource - Utm source
-     * @param {string} params.utmCampaign - Utm campaign
-     * @param {string} params.utmMedium - Utm medium
+     * @param {string | null} params.ref - Ref param
+     * @param {string | null} params.referrer - Referrer
+     * @param {string | null} params.utmSource - Utm source
+     * @param {string | null} params.utmCampaign - Utm campaign
+     * @param {string | null} params.utmMedium - Utm medium
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
     createSource(params?: {
-        ref?: string;
-        referrer?: string;
-        utmSource?: string;
-        utmCampaign?: string;
-        utmMedium?: string;
+        ref?: string | null;
+        referrer?: string | null;
+        utmSource?: string | null;
+        utmCampaign?: string | null;
+        utmMedium?: string | null;
     }): Promise<{}>;
     /**
      * Create a new source.
      *
-     * @param {string} ref - Ref param
-     * @param {string} referrer - Referrer
-     * @param {string} utmSource - Utm source
-     * @param {string} utmCampaign - Utm campaign
-     * @param {string} utmMedium - Utm medium
+     * @param {string | null} ref - Ref param
+     * @param {string | null} referrer - Referrer
+     * @param {string | null} utmSource - Utm source
+     * @param {string | null} utmCampaign - Utm campaign
+     * @param {string | null} utmMedium - Utm medium
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     createSource(
-        ref?: string,
-        referrer?: string,
-        utmSource?: string,
-        utmCampaign?: string,
-        utmMedium?: string,
+        ref?: string | null,
+        referrer?: string | null,
+        utmSource?: string | null,
+        utmCampaign?: string | null,
+        utmMedium?: string | null,
     ): Promise<{}>;
     createSource(
         paramsOrFirst?:
             | {
-                  ref?: string;
-                  referrer?: string;
-                  utmSource?: string;
-                  utmCampaign?: string;
-                  utmMedium?: string;
+                  ref?: string | null;
+                  referrer?: string | null;
+                  utmSource?: string | null;
+                  utmCampaign?: string | null;
+                  utmMedium?: string | null;
               }
-            | string,
-        ...rest: [string?, string?, string?, string?]
+            | string
+            | null,
+        ...rest: [
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<{}> {
         let params: {
-            ref?: string;
-            referrer?: string;
-            utmSource?: string;
-            utmCampaign?: string;
-            utmMedium?: string;
+            ref?: string | null;
+            referrer?: string | null;
+            utmSource?: string | null;
+            utmCampaign?: string | null;
+            utmMedium?: string | null;
         };
 
         if (
@@ -1227,19 +1236,19 @@ export class Console {
                 !Array.isArray(paramsOrFirst))
         ) {
             params = (paramsOrFirst || {}) as {
-                ref?: string;
-                referrer?: string;
-                utmSource?: string;
-                utmCampaign?: string;
-                utmMedium?: string;
+                ref?: string | null;
+                referrer?: string | null;
+                utmSource?: string | null;
+                utmCampaign?: string | null;
+                utmMedium?: string | null;
             };
         } else {
             params = {
-                ref: paramsOrFirst as string,
-                referrer: rest[0] as string,
-                utmSource: rest[1] as string,
-                utmCampaign: rest[2] as string,
-                utmMedium: rest[3] as string,
+                ref: paramsOrFirst as string | null,
+                referrer: rest[0] as string | null,
+                utmSource: rest[1] as string | null,
+                utmCampaign: rest[2] as string | null,
+                utmMedium: rest[3] as string | null,
             };
         }
 
@@ -1540,6 +1549,7 @@ export class Console {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         status: '',
                         error: '',
@@ -1805,9 +1815,12 @@ export class Console {
                         _APP_OPTIONS_FORCE_HTTPS: '',
                         _APP_DOMAINS_NAMESERVERS: '',
                         _APP_DB_ADAPTER: 'mariadb',
+                        supportForAttributes: true,
                         supportForRelationships: true,
                         supportForOperators: true,
                         supportForSpatials: true,
+                        supportForAggregations: true,
+                        supportForJoins: true,
                         supportForSpatialIndexNull: false,
                         supportForFulltextWildcard: true,
                         supportForMultipleFulltextIndexes: true,
@@ -1817,6 +1830,7 @@ export class Console {
                         maxIndexLength: 768,
                         supportForIntegerIds: true,
                         _APP_CONSOLE_EMAIL_VERIFICATION: '',
+                        _APP_DOMAIN_EMAIL: '',
                     },
                 },
             },

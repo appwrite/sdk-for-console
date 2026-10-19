@@ -14,6 +14,7 @@ const result = await databases.createUrlAttribute({
     required: false,
     xdefault: 'https://example.com', // optional
     array: false, // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

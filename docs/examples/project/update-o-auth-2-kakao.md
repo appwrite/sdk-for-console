@@ -14,8 +14,8 @@ const project = new Project(client);
 const result = await project.updateOAuth2Kakao({
     clientId: '<CLIENT_ID>', // optional
     clientSecret: '<CLIENT_SECRET>', // optional
-    prompt: [ProjectOAuth2KakaoPrompt.None], // optional
     enabled: false, // optional
+    prompt: [ProjectOAuth2KakaoPrompt.None], // optional
 });
 
 console.log(result);

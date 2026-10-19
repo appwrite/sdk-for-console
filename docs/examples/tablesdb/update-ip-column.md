@@ -14,6 +14,7 @@ const result = await tablesDB.updateIpColumn({
     required: false,
     xdefault: '192.0.2.0',
     newKey: '<NEW_KEY>', // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

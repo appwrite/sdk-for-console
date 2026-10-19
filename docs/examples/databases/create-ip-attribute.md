@@ -14,6 +14,7 @@ const result = await databases.createIpAttribute({
     required: false,
     xdefault: '192.0.2.0', // optional
     array: false, // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

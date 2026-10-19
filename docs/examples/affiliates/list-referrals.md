@@ -9,6 +9,7 @@ const affiliates = new Affiliates(client);
 
 const result = await affiliates.listReferrals({
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

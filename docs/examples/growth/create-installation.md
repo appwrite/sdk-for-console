@@ -17,8 +17,8 @@ const result = await growth.createInstallation({
     userAgent: '<USER_AGENT>', // optional
     os: '<OS>', // optional
     arch: '<ARCH>', // optional
-    cpus: null, // optional
-    ram: null, // optional
+    cpus: 0, // optional
+    ram: 0, // optional
 });
 
 console.log(result);

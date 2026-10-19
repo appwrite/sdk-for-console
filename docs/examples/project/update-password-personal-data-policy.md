@@ -9,6 +9,7 @@ const project = new Project(client);
 
 const result = await project.updatePasswordPersonalDataPolicy({
     enabled: false,
+    denyList: [], // optional
 });
 
 console.log(result);

@@ -9,6 +9,7 @@ const mongo = new Mongo(client);
 
 const result = await mongo.list({
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);
