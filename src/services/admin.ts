@@ -18,7 +18,7 @@ export class Admin {
     }
 
     /**
-     * Delete everything cached from the platform database in the region serving the request.
+     * Delete everything cached from the platform database, in every region.
      *
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
@@ -38,7 +38,7 @@ export class Admin {
     }
 
     /**
-     * Delete the cache of one platform resource, or of every resource of a type, in the region serving the request.
+     * Delete the cache of one platform resource, or of every resource of a type, in every region.
      *
      * @param {PlatformResourceType} params.resourceType - Resource type.
      * @param {string} params.resourceId - Resource ID. Leave empty to delete the cache of every resource of this type.
@@ -50,7 +50,7 @@ export class Admin {
         resourceId?: string;
     }): Promise<{}>;
     /**
-     * Delete the cache of one platform resource, or of every resource of a type, in the region serving the request.
+     * Delete the cache of one platform resource, or of every resource of a type, in every region.
      *
      * @param {PlatformResourceType} resourceType - Resource type.
      * @param {string} resourceId - Resource ID. Leave empty to delete the cache of every resource of this type.
@@ -115,7 +115,7 @@ export class Admin {
     }
 
     /**
-     * Delete everything cached for a project. Send the request to the project's region.
+     * Delete everything cached for a project, in the project's region.
      *
      * @param {string} params.projectId - Project ID.
      * @throws {AppwriteException}
@@ -123,7 +123,7 @@ export class Admin {
      */
     deleteProjectCache(params: { projectId: string }): Promise<{}>;
     /**
-     * Delete everything cached for a project. Send the request to the project's region.
+     * Delete everything cached for a project, in the project's region.
      *
      * @param {string} projectId - Project ID.
      * @throws {AppwriteException}
@@ -172,7 +172,7 @@ export class Admin {
     }
 
     /**
-     * Delete the cache of one project resource, or of every resource of a type. Send the request to the project's region.
+     * Delete the cache of one project resource, or of every resource of a type, in the project's region.
      *
      * @param {string} params.projectId - Project ID.
      * @param {ProjectResourceType} params.resourceType - Resource type.
@@ -186,7 +186,7 @@ export class Admin {
         resourceId?: string;
     }): Promise<{}>;
     /**
-     * Delete the cache of one project resource, or of every resource of a type. Send the request to the project's region.
+     * Delete the cache of one project resource, or of every resource of a type, in the project's region.
      *
      * @param {string} projectId - Project ID.
      * @param {ProjectResourceType} resourceType - Resource type.
@@ -786,6 +786,127 @@ export class Admin {
                         scanVerdict: '',
                         scanSeverity: '',
                         scanReportId: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
+     * Mark a console user as a platform admin, giving them access to the admin API, or unmark them to remove it.
+     *
+     * @param {string} params.userId - Console user ID.
+     * @param {boolean} params.admin - Whether the user is a platform admin. When true, the user can call the admin API.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.User<Preferences>>}
+     */
+    updateUserAdmin<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        userId: string;
+        admin: boolean;
+    }): Promise<Models.User<Preferences>>;
+    /**
+     * Mark a console user as a platform admin, giving them access to the admin API, or unmark them to remove it.
+     *
+     * @param {string} userId - Console user ID.
+     * @param {boolean} admin - Whether the user is a platform admin. When true, the user can call the admin API.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.User<Preferences>>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateUserAdmin<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(userId: string, admin: boolean): Promise<Models.User<Preferences>>;
+    updateUserAdmin<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { userId: string; admin: boolean } | string,
+        ...rest: [boolean?]
+    ): Promise<Models.User<Preferences>> {
+        let params: { userId: string; admin: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                userId: string;
+                admin: boolean;
+            };
+        } else {
+            params = {
+                userId: paramsOrFirst as string,
+                admin: rest[0] as boolean,
+            };
+        }
+
+        const userId = params.userId;
+        const admin = params.admin;
+
+        if (typeof userId === 'undefined' || userId === '') {
+            throw new AppwriteException('Missing required parameter: "userId"');
+        }
+        if (typeof admin === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "admin"');
+        }
+        const apiPath = '/admin/users/{userId}/admin'.replace(
+            '{userId}',
+            encodeURIComponent(String(userId)),
+        );
+        const apiPayload: Payload = {};
+        if (typeof admin !== 'undefined') {
+            apiPayload['admin'] = admin;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'user',
+            models: {
+                user: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        registration: '',
+                        status: true,
+                        labels: [],
+                        passwordUpdate: '',
+                        email: '',
+                        phone: '',
+                        emailVerification: false,
+                        phoneVerification: false,
+                        mfa: false,
+                        targets: [],
+                        accessedAt: '',
+                    },
+                    properties: {
+                        targets: {
+                            items: 'target',
+                        },
+                    },
+                },
+                target: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        userId: '',
+                        providerType: '',
+                        identifier: '',
+                        expired: false,
                     },
                 },
             },

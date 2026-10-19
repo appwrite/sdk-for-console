@@ -14,6 +14,7 @@ const result = await tablesDB.createBooleanColumn({
     required: false,
     xdefault: false, // optional
     array: false, // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

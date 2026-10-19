@@ -15,6 +15,7 @@ const result = await tablesDB.updateTable({
     rowSecurity: false, // optional
     enabled: false, // optional
     purge: false, // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

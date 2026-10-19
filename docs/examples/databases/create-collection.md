@@ -16,6 +16,7 @@ const result = await databases.createCollection({
     enabled: false, // optional
     attributes: [], // optional
     indexes: [], // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

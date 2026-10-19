@@ -9,6 +9,7 @@ const postgresql = new Postgresql(client);
 
 const result = await postgresql.list({
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

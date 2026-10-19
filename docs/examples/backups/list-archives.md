@@ -9,6 +9,7 @@ const backups = new Backups(client);
 
 const result = await backups.listArchives({
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

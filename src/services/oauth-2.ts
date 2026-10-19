@@ -379,7 +379,7 @@ export class Oauth2 {
      * @param {string} params.codeChallenge - PKCE code challenge. Required when OAuth2 app is public.
      * @param {string} params.codeChallengeMethod - PKCE code challenge method. Required when OAuth2 app is public.
      * @param {string} params.prompt - OIDC prompt parameter for customization of consent screen. Space-separated list of: none, login, consent, select_account.
-     * @param {number} params.maxAge - OIDC max_age paraleter for customization of consent screen. Maximum allowable elapsed time in seconds since the user last authenticated. If exceeded, re-authentication is required.
+     * @param {number | null} params.maxAge - OIDC max_age paraleter for customization of consent screen. Maximum allowable elapsed time in seconds since the user last authenticated. If exceeded, re-authentication is required.
      * @param {string} params.authorizationDetails - Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
      * @param {string[]} params.resource - RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
      * @param {string} params.audience - Compatibility alias for a single OAuth2 resource indicator URI.
@@ -397,7 +397,7 @@ export class Oauth2 {
         codeChallenge?: string;
         codeChallengeMethod?: string;
         prompt?: string;
-        maxAge?: number;
+        maxAge?: number | null;
         authorizationDetails?: string;
         resource?: string[];
         audience?: string;
@@ -415,7 +415,7 @@ export class Oauth2 {
      * @param {string} codeChallenge - PKCE code challenge. Required when OAuth2 app is public.
      * @param {string} codeChallengeMethod - PKCE code challenge method. Required when OAuth2 app is public.
      * @param {string} prompt - OIDC prompt parameter for customization of consent screen. Space-separated list of: none, login, consent, select_account.
-     * @param {number} maxAge - OIDC max_age paraleter for customization of consent screen. Maximum allowable elapsed time in seconds since the user last authenticated. If exceeded, re-authentication is required.
+     * @param {number | null} maxAge - OIDC max_age paraleter for customization of consent screen. Maximum allowable elapsed time in seconds since the user last authenticated. If exceeded, re-authentication is required.
      * @param {string} authorizationDetails - Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
      * @param {string[]} resource - RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
      * @param {string} audience - Compatibility alias for a single OAuth2 resource indicator URI.
@@ -434,7 +434,7 @@ export class Oauth2 {
         codeChallenge?: string,
         codeChallengeMethod?: string,
         prompt?: string,
-        maxAge?: number,
+        maxAge?: number | null,
         authorizationDetails?: string,
         resource?: string[],
         audience?: string,
@@ -452,7 +452,7 @@ export class Oauth2 {
                   codeChallenge?: string;
                   codeChallengeMethod?: string;
                   prompt?: string;
-                  maxAge?: number;
+                  maxAge?: number | null;
                   authorizationDetails?: string;
                   resource?: string[];
                   audience?: string;
@@ -468,7 +468,7 @@ export class Oauth2 {
             string?,
             string?,
             string?,
-            number?,
+            (number | null)?,
             string?,
             string[]?,
             string?,
@@ -485,7 +485,7 @@ export class Oauth2 {
             codeChallenge?: string;
             codeChallengeMethod?: string;
             prompt?: string;
-            maxAge?: number;
+            maxAge?: number | null;
             authorizationDetails?: string;
             resource?: string[];
             audience?: string;
@@ -508,7 +508,7 @@ export class Oauth2 {
                 codeChallenge?: string;
                 codeChallengeMethod?: string;
                 prompt?: string;
-                maxAge?: number;
+                maxAge?: number | null;
                 authorizationDetails?: string;
                 resource?: string[];
                 audience?: string;
@@ -525,7 +525,7 @@ export class Oauth2 {
                 codeChallenge: rest[5] as string,
                 codeChallengeMethod: rest[6] as string,
                 prompt: rest[7] as string,
-                maxAge: rest[8] as number,
+                maxAge: rest[8] as number | null,
                 authorizationDetails: rest[9] as string,
                 resource: rest[10] as string[],
                 audience: rest[11] as string,
@@ -1285,7 +1285,7 @@ export class Oauth2 {
      * @param {string} params.codeChallenge - PKCE code challenge. Required when OAuth2 app is public.
      * @param {string} params.codeChallengeMethod - PKCE code challenge method. Required when OAuth2 app is public.
      * @param {string} params.prompt - OIDC prompt parameter for customization of consent screen. Space-separated list of: none, login, consent, select_account.
-     * @param {number} params.maxAge - OIDC max_age parameter for customization of consent screen.
+     * @param {number | null} params.maxAge - OIDC max_age parameter for customization of consent screen.
      * @param {string} params.authorizationDetails - Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
      * @param {string[]} params.resource - RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
      * @param {string} params.audience - Compatibility alias for a single OAuth2 resource indicator URI.
@@ -1302,7 +1302,7 @@ export class Oauth2 {
         codeChallenge?: string;
         codeChallengeMethod?: string;
         prompt?: string;
-        maxAge?: number;
+        maxAge?: number | null;
         authorizationDetails?: string;
         resource?: string[];
         audience?: string;
@@ -1319,7 +1319,7 @@ export class Oauth2 {
      * @param {string} codeChallenge - PKCE code challenge. Required when OAuth2 app is public.
      * @param {string} codeChallengeMethod - PKCE code challenge method. Required when OAuth2 app is public.
      * @param {string} prompt - OIDC prompt parameter for customization of consent screen. Space-separated list of: none, login, consent, select_account.
-     * @param {number} maxAge - OIDC max_age parameter for customization of consent screen.
+     * @param {number | null} maxAge - OIDC max_age parameter for customization of consent screen.
      * @param {string} authorizationDetails - Rich authorization request. JSON array of objects, each with a `type` and project-defined fields
      * @param {string[]} resource - RFC 8707 resource indicator URI or URI list. Each value must be an absolute URI without a fragment.
      * @param {string} audience - Compatibility alias for a single OAuth2 resource indicator URI.
@@ -1337,7 +1337,7 @@ export class Oauth2 {
         codeChallenge?: string,
         codeChallengeMethod?: string,
         prompt?: string,
-        maxAge?: number,
+        maxAge?: number | null,
         authorizationDetails?: string,
         resource?: string[],
         audience?: string,
@@ -1354,7 +1354,7 @@ export class Oauth2 {
                   codeChallenge?: string;
                   codeChallengeMethod?: string;
                   prompt?: string;
-                  maxAge?: number;
+                  maxAge?: number | null;
                   authorizationDetails?: string;
                   resource?: string[];
                   audience?: string;
@@ -1369,7 +1369,7 @@ export class Oauth2 {
             string?,
             string?,
             string?,
-            number?,
+            (number | null)?,
             string?,
             string[]?,
             string?,
@@ -1385,7 +1385,7 @@ export class Oauth2 {
             codeChallenge?: string;
             codeChallengeMethod?: string;
             prompt?: string;
-            maxAge?: number;
+            maxAge?: number | null;
             authorizationDetails?: string;
             resource?: string[];
             audience?: string;
@@ -1406,7 +1406,7 @@ export class Oauth2 {
                 codeChallenge?: string;
                 codeChallengeMethod?: string;
                 prompt?: string;
-                maxAge?: number;
+                maxAge?: number | null;
                 authorizationDetails?: string;
                 resource?: string[];
                 audience?: string;
@@ -1422,7 +1422,7 @@ export class Oauth2 {
                 codeChallenge: rest[5] as string,
                 codeChallengeMethod: rest[6] as string,
                 prompt: rest[7] as string,
-                maxAge: rest[8] as number,
+                maxAge: rest[8] as number | null,
                 authorizationDetails: rest[9] as string,
                 resource: rest[10] as string[],
                 audience: rest[11] as string,

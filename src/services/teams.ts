@@ -768,21 +768,21 @@ export class Teams {
      *
      * @param {string} params.teamId - Team ID.
      * @param {string} params.installationId - Installation unique ID.
-     * @param {string} params.authorizationDetails - Authorization details granted to the installation as a JSON array of objects, each with a `type` and app-defined fields. Omit to keep the current value.
+     * @param {string | null} params.authorizationDetails - Authorization details granted to the installation as a JSON array of objects, each with a `type` and app-defined fields. Omit to keep the current value.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AppInstallation>}
      */
     updateInstallation(params: {
         teamId: string;
         installationId: string;
-        authorizationDetails?: string;
+        authorizationDetails?: string | null;
     }): Promise<Models.AppInstallation>;
     /**
      * Update an app installation on a team. Only team members with the owner role can update installations. The installation's granted scopes are refreshed to the scopes the app currently requests; previously issued installation access tokens are revoked.
      *
      * @param {string} teamId - Team ID.
      * @param {string} installationId - Installation unique ID.
-     * @param {string} authorizationDetails - Authorization details granted to the installation as a JSON array of objects, each with a `type` and app-defined fields. Omit to keep the current value.
+     * @param {string | null} authorizationDetails - Authorization details granted to the installation as a JSON array of objects, each with a `type` and app-defined fields. Omit to keep the current value.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AppInstallation>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -790,22 +790,22 @@ export class Teams {
     updateInstallation(
         teamId: string,
         installationId: string,
-        authorizationDetails?: string,
+        authorizationDetails?: string | null,
     ): Promise<Models.AppInstallation>;
     updateInstallation(
         paramsOrFirst:
             | {
                   teamId: string;
                   installationId: string;
-                  authorizationDetails?: string;
+                  authorizationDetails?: string | null;
               }
             | string,
-        ...rest: [string?, string?]
+        ...rest: [string?, (string | null)?]
     ): Promise<Models.AppInstallation> {
         let params: {
             teamId: string;
             installationId: string;
-            authorizationDetails?: string;
+            authorizationDetails?: string | null;
         };
 
         if (
@@ -816,13 +816,13 @@ export class Teams {
             params = (paramsOrFirst || {}) as {
                 teamId: string;
                 installationId: string;
-                authorizationDetails?: string;
+                authorizationDetails?: string | null;
             };
         } else {
             params = {
                 teamId: paramsOrFirst as string,
                 installationId: rest[0] as string,
-                authorizationDetails: rest[1] as string,
+                authorizationDetails: rest[1] as string | null,
             };
         }
 

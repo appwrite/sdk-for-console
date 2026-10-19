@@ -10,6 +10,7 @@ const domains = new Domains(client);
 const result = await domains.listRecords({
     domainId: '<DOMAIN_ID>',
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

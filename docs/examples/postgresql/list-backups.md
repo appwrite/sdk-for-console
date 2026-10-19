@@ -10,6 +10,7 @@ const postgresql = new Postgresql(client);
 const result = await postgresql.listBackups({
     databaseId: '<DATABASE_ID>',
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

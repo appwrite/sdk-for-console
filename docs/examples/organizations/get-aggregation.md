@@ -11,7 +11,7 @@ const result = await organizations.getAggregation({
     organizationId: '<ORGANIZATION_ID>',
     aggregationId: '<AGGREGATION_ID>',
     limit: 0, // optional
-    offset: null, // optional
+    offset: 0, // optional
 });
 
 console.log(result);

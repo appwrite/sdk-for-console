@@ -120,6 +120,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         enabled: true,
                         live: true,
                         logging: true,
@@ -162,6 +163,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         value: '',
                         secret: false,
                         resourceType: '',
@@ -201,6 +203,7 @@ export class Sites {
      * @param {string} params.runtimeSpecification - Runtime specification for the SSR executions.
      * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
      * @param {ProjectKeyScopes[]} params.scopes - List of scopes allowed for API key auto-generated for every site build and SSR execution. Maximum of 200 scopes are allowed.
+     * @param {string} params.description - Optional description for the site.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      */
@@ -229,6 +232,7 @@ export class Sites {
         runtimeSpecification?: string;
         deploymentRetention?: number;
         scopes?: ProjectKeyScopes[];
+        description?: string;
     }): Promise<Models.Site>;
     /**
      * Create a new site.
@@ -257,6 +261,7 @@ export class Sites {
      * @param {string} runtimeSpecification - Runtime specification for the SSR executions.
      * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
      * @param {ProjectKeyScopes[]} scopes - List of scopes allowed for API key auto-generated for every site build and SSR execution. Maximum of 200 scopes are allowed.
+     * @param {string} description - Optional description for the site.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -286,6 +291,7 @@ export class Sites {
         runtimeSpecification?: string,
         deploymentRetention?: number,
         scopes?: ProjectKeyScopes[],
+        description?: string,
     ): Promise<Models.Site>;
     create(
         paramsOrFirst:
@@ -314,6 +320,7 @@ export class Sites {
                   runtimeSpecification?: string;
                   deploymentRetention?: number;
                   scopes?: ProjectKeyScopes[];
+                  description?: string;
               }
             | string,
         ...rest: [
@@ -340,6 +347,7 @@ export class Sites {
             string?,
             number?,
             ProjectKeyScopes[]?,
+            string?,
         ]
     ): Promise<Models.Site> {
         let params: {
@@ -367,6 +375,7 @@ export class Sites {
             runtimeSpecification?: string;
             deploymentRetention?: number;
             scopes?: ProjectKeyScopes[];
+            description?: string;
         };
 
         if (
@@ -399,6 +408,7 @@ export class Sites {
                 runtimeSpecification?: string;
                 deploymentRetention?: number;
                 scopes?: ProjectKeyScopes[];
+                description?: string;
             };
         } else {
             params = {
@@ -426,6 +436,7 @@ export class Sites {
                 runtimeSpecification: rest[20] as string,
                 deploymentRetention: rest[21] as number,
                 scopes: rest[22] as ProjectKeyScopes[],
+                description: rest[23] as string,
             };
         }
 
@@ -453,6 +464,7 @@ export class Sites {
         const runtimeSpecification = params.runtimeSpecification;
         const deploymentRetention = params.deploymentRetention;
         const scopes = params.scopes;
+        const description = params.description;
 
         if (typeof siteId === 'undefined') {
             throw new AppwriteException('Missing required parameter: "siteId"');
@@ -544,6 +556,9 @@ export class Sites {
         if (typeof scopes !== 'undefined') {
             apiPayload['scopes'] = scopes;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -562,6 +577,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         enabled: true,
                         live: true,
                         logging: true,
@@ -604,6 +620,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         value: '',
                         secret: false,
                         resourceType: '',
@@ -1155,6 +1172,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         enabled: true,
                         live: true,
                         logging: true,
@@ -1197,6 +1215,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         value: '',
                         secret: false,
                         resourceType: '',
@@ -1226,16 +1245,17 @@ export class Sites {
      * @param {Adapter} params.adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
      * @param {string} params.fallbackFile - Fallback file for single page application sites.
      * @param {string} params.installationId - Appwrite Installation ID for VCS (Version Control System) deployment.
-     * @param {string} params.providerRepositoryId - Repository ID of the repo linked to the site.
+     * @param {string | null} params.providerRepositoryId - Repository ID of the repo linked to the site.
      * @param {string} params.providerBranch - Production branch for the repo linked to the site.
      * @param {boolean} params.providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} params.providerRootDirectory - Path to site code in the linked repo.
-     * @param {string[]} params.providerBranches - List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
-     * @param {string[]} params.providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
-     * @param {string} params.buildSpecification - Build specification for the site deployments.
+     * @param {string[] | null} params.providerBranches - List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+     * @param {string[] | null} params.providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
+     * @param {string | null} params.buildSpecification - Build specification for the site deployments.
      * @param {string} params.runtimeSpecification - Runtime specification for the SSR executions.
      * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
-     * @param {ProjectKeyScopes[]} params.scopes - List of scopes allowed for API key auto-generated for every site build and SSR execution. Maximum of 200 scopes are allowed.
+     * @param {ProjectKeyScopes[] | null} params.scopes - List of scopes allowed for API key auto-generated for every site build and SSR execution. Maximum of 200 scopes are allowed.
+     * @param {string | null} params.description - Optional description for the site.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      */
@@ -1254,16 +1274,17 @@ export class Sites {
         adapter?: Adapter;
         fallbackFile?: string;
         installationId?: string;
-        providerRepositoryId?: string;
+        providerRepositoryId?: string | null;
         providerBranch?: string;
         providerSilentMode?: boolean;
         providerRootDirectory?: string;
-        providerBranches?: string[];
-        providerPaths?: string[];
-        buildSpecification?: string;
+        providerBranches?: string[] | null;
+        providerPaths?: string[] | null;
+        buildSpecification?: string | null;
         runtimeSpecification?: string;
         deploymentRetention?: number;
-        scopes?: ProjectKeyScopes[];
+        scopes?: ProjectKeyScopes[] | null;
+        description?: string | null;
     }): Promise<Models.Site>;
     /**
      * Update site by its unique ID.
@@ -1282,16 +1303,17 @@ export class Sites {
      * @param {Adapter} adapter - Framework adapter defining rendering strategy. Allowed values are: static, ssr
      * @param {string} fallbackFile - Fallback file for single page application sites.
      * @param {string} installationId - Appwrite Installation ID for VCS (Version Control System) deployment.
-     * @param {string} providerRepositoryId - Repository ID of the repo linked to the site.
+     * @param {string | null} providerRepositoryId - Repository ID of the repo linked to the site.
      * @param {string} providerBranch - Production branch for the repo linked to the site.
      * @param {boolean} providerSilentMode - Is the VCS (Version Control System) connection in silent mode for the repo linked to the site? In silent mode, comments will not be made on commits and pull requests.
      * @param {string} providerRootDirectory - Path to site code in the linked repo.
-     * @param {string[]} providerBranches - List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
-     * @param {string[]} providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
-     * @param {string} buildSpecification - Build specification for the site deployments.
+     * @param {string[] | null} providerBranches - List of branch name patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all branches.
+     * @param {string[] | null} providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
+     * @param {string | null} buildSpecification - Build specification for the site deployments.
      * @param {string} runtimeSpecification - Runtime specification for the SSR executions.
      * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
-     * @param {ProjectKeyScopes[]} scopes - List of scopes allowed for API key auto-generated for every site build and SSR execution. Maximum of 200 scopes are allowed.
+     * @param {ProjectKeyScopes[] | null} scopes - List of scopes allowed for API key auto-generated for every site build and SSR execution. Maximum of 200 scopes are allowed.
+     * @param {string | null} description - Optional description for the site.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Site>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1311,16 +1333,17 @@ export class Sites {
         adapter?: Adapter,
         fallbackFile?: string,
         installationId?: string,
-        providerRepositoryId?: string,
+        providerRepositoryId?: string | null,
         providerBranch?: string,
         providerSilentMode?: boolean,
         providerRootDirectory?: string,
-        providerBranches?: string[],
-        providerPaths?: string[],
-        buildSpecification?: string,
+        providerBranches?: string[] | null,
+        providerPaths?: string[] | null,
+        buildSpecification?: string | null,
         runtimeSpecification?: string,
         deploymentRetention?: number,
-        scopes?: ProjectKeyScopes[],
+        scopes?: ProjectKeyScopes[] | null,
+        description?: string | null,
     ): Promise<Models.Site>;
     update(
         paramsOrFirst:
@@ -1339,16 +1362,17 @@ export class Sites {
                   adapter?: Adapter;
                   fallbackFile?: string;
                   installationId?: string;
-                  providerRepositoryId?: string;
+                  providerRepositoryId?: string | null;
                   providerBranch?: string;
                   providerSilentMode?: boolean;
                   providerRootDirectory?: string;
-                  providerBranches?: string[];
-                  providerPaths?: string[];
-                  buildSpecification?: string;
+                  providerBranches?: string[] | null;
+                  providerPaths?: string[] | null;
+                  buildSpecification?: string | null;
                   runtimeSpecification?: string;
                   deploymentRetention?: number;
-                  scopes?: ProjectKeyScopes[];
+                  scopes?: ProjectKeyScopes[] | null;
+                  description?: string | null;
               }
             | string,
         ...rest: [
@@ -1365,16 +1389,17 @@ export class Sites {
             Adapter?,
             string?,
             string?,
-            string?,
+            (string | null)?,
             string?,
             boolean?,
             string?,
-            string[]?,
-            string[]?,
-            string?,
+            (string[] | null)?,
+            (string[] | null)?,
+            (string | null)?,
             string?,
             number?,
-            ProjectKeyScopes[]?,
+            (ProjectKeyScopes[] | null)?,
+            (string | null)?,
         ]
     ): Promise<Models.Site> {
         let params: {
@@ -1392,16 +1417,17 @@ export class Sites {
             adapter?: Adapter;
             fallbackFile?: string;
             installationId?: string;
-            providerRepositoryId?: string;
+            providerRepositoryId?: string | null;
             providerBranch?: string;
             providerSilentMode?: boolean;
             providerRootDirectory?: string;
-            providerBranches?: string[];
-            providerPaths?: string[];
-            buildSpecification?: string;
+            providerBranches?: string[] | null;
+            providerPaths?: string[] | null;
+            buildSpecification?: string | null;
             runtimeSpecification?: string;
             deploymentRetention?: number;
-            scopes?: ProjectKeyScopes[];
+            scopes?: ProjectKeyScopes[] | null;
+            description?: string | null;
         };
 
         if (
@@ -1424,16 +1450,17 @@ export class Sites {
                 adapter?: Adapter;
                 fallbackFile?: string;
                 installationId?: string;
-                providerRepositoryId?: string;
+                providerRepositoryId?: string | null;
                 providerBranch?: string;
                 providerSilentMode?: boolean;
                 providerRootDirectory?: string;
-                providerBranches?: string[];
-                providerPaths?: string[];
-                buildSpecification?: string;
+                providerBranches?: string[] | null;
+                providerPaths?: string[] | null;
+                buildSpecification?: string | null;
                 runtimeSpecification?: string;
                 deploymentRetention?: number;
-                scopes?: ProjectKeyScopes[];
+                scopes?: ProjectKeyScopes[] | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -1451,16 +1478,17 @@ export class Sites {
                 adapter: rest[10] as Adapter,
                 fallbackFile: rest[11] as string,
                 installationId: rest[12] as string,
-                providerRepositoryId: rest[13] as string,
+                providerRepositoryId: rest[13] as string | null,
                 providerBranch: rest[14] as string,
                 providerSilentMode: rest[15] as boolean,
                 providerRootDirectory: rest[16] as string,
-                providerBranches: rest[17] as string[],
-                providerPaths: rest[18] as string[],
-                buildSpecification: rest[19] as string,
+                providerBranches: rest[17] as string[] | null,
+                providerPaths: rest[18] as string[] | null,
+                buildSpecification: rest[19] as string | null,
                 runtimeSpecification: rest[20] as string,
                 deploymentRetention: rest[21] as number,
-                scopes: rest[22] as ProjectKeyScopes[],
+                scopes: rest[22] as ProjectKeyScopes[] | null,
+                description: rest[23] as string | null,
             };
         }
 
@@ -1488,6 +1516,7 @@ export class Sites {
         const runtimeSpecification = params.runtimeSpecification;
         const deploymentRetention = params.deploymentRetention;
         const scopes = params.scopes;
+        const description = params.description;
 
         if (typeof siteId === 'undefined' || siteId === '') {
             throw new AppwriteException('Missing required parameter: "siteId"');
@@ -1574,6 +1603,9 @@ export class Sites {
         if (typeof scopes !== 'undefined') {
             apiPayload['scopes'] = scopes;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -1592,6 +1624,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         enabled: true,
                         live: true,
                         logging: true,
@@ -1634,6 +1667,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         value: '',
                         secret: false,
                         resourceType: '',
@@ -1783,6 +1817,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         enabled: true,
                         live: true,
                         logging: true,
@@ -1825,6 +1860,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         value: '',
                         secret: false,
                         resourceType: '',
@@ -3424,6 +3460,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         value: '',
                         secret: false,
                         resourceType: '',
@@ -3444,6 +3481,7 @@ export class Sites {
      * @param {string} params.key - Variable key. Letters, digits and underscores only, must not start with a digit. Max length: 255 chars.
      * @param {string} params.value - Variable value. Max length: 8192 chars.
      * @param {boolean} params.secret - Secret variables can be updated or deleted, but only sites can read them during build and runtime.
+     * @param {string} params.description - Optional description for the variable.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
@@ -3453,6 +3491,7 @@ export class Sites {
         key: string;
         value: string;
         secret?: boolean;
+        description?: string;
     }): Promise<Models.Variable>;
     /**
      * Create a new site variable. These variables can be accessed during build and runtime (server-side rendering) as environment variables.
@@ -3462,6 +3501,7 @@ export class Sites {
      * @param {string} key - Variable key. Letters, digits and underscores only, must not start with a digit. Max length: 255 chars.
      * @param {string} value - Variable value. Max length: 8192 chars.
      * @param {boolean} secret - Secret variables can be updated or deleted, but only sites can read them during build and runtime.
+     * @param {string} description - Optional description for the variable.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -3472,6 +3512,7 @@ export class Sites {
         key: string,
         value: string,
         secret?: boolean,
+        description?: string,
     ): Promise<Models.Variable>;
     createVariable(
         paramsOrFirst:
@@ -3481,9 +3522,10 @@ export class Sites {
                   key: string;
                   value: string;
                   secret?: boolean;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, string?, boolean?]
+        ...rest: [string?, string?, string?, boolean?, string?]
     ): Promise<Models.Variable> {
         let params: {
             siteId: string;
@@ -3491,6 +3533,7 @@ export class Sites {
             key: string;
             value: string;
             secret?: boolean;
+            description?: string;
         };
 
         if (
@@ -3504,6 +3547,7 @@ export class Sites {
                 key: string;
                 value: string;
                 secret?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -3512,6 +3556,7 @@ export class Sites {
                 key: rest[1] as string,
                 value: rest[2] as string,
                 secret: rest[3] as boolean,
+                description: rest[4] as string,
             };
         }
 
@@ -3520,6 +3565,7 @@ export class Sites {
         const key = params.key;
         const value = params.value;
         const secret = params.secret;
+        const description = params.description;
 
         if (typeof siteId === 'undefined' || siteId === '') {
             throw new AppwriteException('Missing required parameter: "siteId"');
@@ -3552,6 +3598,9 @@ export class Sites {
         if (typeof secret !== 'undefined') {
             apiPayload['secret'] = secret;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3570,6 +3619,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         value: '',
                         secret: false,
                         resourceType: '',
@@ -3658,6 +3708,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         value: '',
                         secret: false,
                         resourceType: '',
@@ -3675,27 +3726,30 @@ export class Sites {
      *
      * @param {string} params.siteId - Site unique ID.
      * @param {string} params.variableId - Variable unique ID.
-     * @param {string} params.key - Variable key. Letters, digits and underscores only, must not start with a digit. Max length: 255 chars.
-     * @param {string} params.value - Variable value. Max length: 8192 chars.
-     * @param {boolean} params.secret - Secret variables can be updated or deleted, but only sites can read them during build and runtime.
+     * @param {string | null} params.key - Variable key. Letters, digits and underscores only, must not start with a digit. Max length: 255 chars.
+     * @param {string | null} params.value - Variable value. Max length: 8192 chars.
+     * @param {boolean | null} params.secret - Secret variables can be updated or deleted, but only sites can read them during build and runtime.
+     * @param {string | null} params.description - Optional description for the variable.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      */
     updateVariable(params: {
         siteId: string;
         variableId: string;
-        key?: string;
-        value?: string;
-        secret?: boolean;
+        key?: string | null;
+        value?: string | null;
+        secret?: boolean | null;
+        description?: string | null;
     }): Promise<Models.Variable>;
     /**
      * Update variable by its unique ID.
      *
      * @param {string} siteId - Site unique ID.
      * @param {string} variableId - Variable unique ID.
-     * @param {string} key - Variable key. Letters, digits and underscores only, must not start with a digit. Max length: 255 chars.
-     * @param {string} value - Variable value. Max length: 8192 chars.
-     * @param {boolean} secret - Secret variables can be updated or deleted, but only sites can read them during build and runtime.
+     * @param {string | null} key - Variable key. Letters, digits and underscores only, must not start with a digit. Max length: 255 chars.
+     * @param {string | null} value - Variable value. Max length: 8192 chars.
+     * @param {boolean | null} secret - Secret variables can be updated or deleted, but only sites can read them during build and runtime.
+     * @param {string | null} description - Optional description for the variable.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Variable>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -3703,28 +3757,37 @@ export class Sites {
     updateVariable(
         siteId: string,
         variableId: string,
-        key?: string,
-        value?: string,
-        secret?: boolean,
+        key?: string | null,
+        value?: string | null,
+        secret?: boolean | null,
+        description?: string | null,
     ): Promise<Models.Variable>;
     updateVariable(
         paramsOrFirst:
             | {
                   siteId: string;
                   variableId: string;
-                  key?: string;
-                  value?: string;
-                  secret?: boolean;
+                  key?: string | null;
+                  value?: string | null;
+                  secret?: boolean | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, string?, boolean?]
+        ...rest: [
+            string?,
+            (string | null)?,
+            (string | null)?,
+            (boolean | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.Variable> {
         let params: {
             siteId: string;
             variableId: string;
-            key?: string;
-            value?: string;
-            secret?: boolean;
+            key?: string | null;
+            value?: string | null;
+            secret?: boolean | null;
+            description?: string | null;
         };
 
         if (
@@ -3735,17 +3798,19 @@ export class Sites {
             params = (paramsOrFirst || {}) as {
                 siteId: string;
                 variableId: string;
-                key?: string;
-                value?: string;
-                secret?: boolean;
+                key?: string | null;
+                value?: string | null;
+                secret?: boolean | null;
+                description?: string | null;
             };
         } else {
             params = {
                 siteId: paramsOrFirst as string,
                 variableId: rest[0] as string,
-                key: rest[1] as string,
-                value: rest[2] as string,
-                secret: rest[3] as boolean,
+                key: rest[1] as string | null,
+                value: rest[2] as string | null,
+                secret: rest[3] as boolean | null,
+                description: rest[4] as string | null,
             };
         }
 
@@ -3754,6 +3819,7 @@ export class Sites {
         const key = params.key;
         const value = params.value;
         const secret = params.secret;
+        const description = params.description;
 
         if (typeof siteId === 'undefined' || siteId === '') {
             throw new AppwriteException('Missing required parameter: "siteId"');
@@ -3776,6 +3842,9 @@ export class Sites {
         if (typeof secret !== 'undefined') {
             apiPayload['secret'] = secret;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3794,6 +3863,7 @@ export class Sites {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         value: '',
                         secret: false,
                         resourceType: '',

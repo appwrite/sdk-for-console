@@ -14,6 +14,7 @@ const result = await databases.updateMediumtextAttribute({
     required: false,
     xdefault: 'Hello World',
     newKey: '<NEW_KEY>', // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

@@ -258,47 +258,60 @@ export class Account {
      * List all billing addresses for a user.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, expired, failed
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddressList>}
      */
     listBillingAddresses(params?: {
         queries?: string[];
+        total?: boolean;
     }): Promise<Models.BillingAddressList>;
     /**
      * List all billing addresses for a user.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, expired, failed
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddressList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     listBillingAddresses(
         queries?: string[],
+        total?: boolean,
     ): Promise<Models.BillingAddressList>;
     listBillingAddresses(
-        paramsOrFirst?: { queries?: string[] } | string[],
+        paramsOrFirst?: { queries?: string[]; total?: boolean } | string[],
+        ...rest: [boolean?]
     ): Promise<Models.BillingAddressList> {
-        let params: { queries?: string[] };
+        let params: { queries?: string[]; total?: boolean };
 
         if (
-            typeof paramsOrFirst === 'undefined' ||
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
             (paramsOrFirst &&
                 typeof paramsOrFirst === 'object' &&
                 !Array.isArray(paramsOrFirst))
         ) {
-            params = (paramsOrFirst || {}) as { queries?: string[] };
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
+                total: rest[0] as boolean,
             };
         }
 
         const queries = params.queries;
+        const total = params.total;
 
         const apiPath = '/account/billing-addresses';
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -343,9 +356,9 @@ export class Account {
      * @param {string} params.country - Country
      * @param {string} params.city - City
      * @param {string} params.streetAddress - Street address
-     * @param {string} params.addressLine2 - Address line 2
-     * @param {string} params.state - State or province
-     * @param {string} params.postalCode - Postal code
+     * @param {string | null} params.addressLine2 - Address line 2
+     * @param {string | null} params.state - State or province
+     * @param {string | null} params.postalCode - Postal code
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      */
@@ -353,9 +366,9 @@ export class Account {
         country: string;
         city: string;
         streetAddress: string;
-        addressLine2?: string;
-        state?: string;
-        postalCode?: string;
+        addressLine2?: string | null;
+        state?: string | null;
+        postalCode?: string | null;
     }): Promise<Models.BillingAddress>;
     /**
      * Add a new billing address to a user's account.
@@ -363,9 +376,9 @@ export class Account {
      * @param {string} country - Country
      * @param {string} city - City
      * @param {string} streetAddress - Street address
-     * @param {string} addressLine2 - Address line 2
-     * @param {string} state - State or province
-     * @param {string} postalCode - Postal code
+     * @param {string | null} addressLine2 - Address line 2
+     * @param {string | null} state - State or province
+     * @param {string | null} postalCode - Postal code
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -374,9 +387,9 @@ export class Account {
         country: string,
         city: string,
         streetAddress: string,
-        addressLine2?: string,
-        state?: string,
-        postalCode?: string,
+        addressLine2?: string | null,
+        state?: string | null,
+        postalCode?: string | null,
     ): Promise<Models.BillingAddress>;
     createBillingAddress(
         paramsOrFirst:
@@ -384,20 +397,26 @@ export class Account {
                   country: string;
                   city: string;
                   streetAddress: string;
-                  addressLine2?: string;
-                  state?: string;
-                  postalCode?: string;
+                  addressLine2?: string | null;
+                  state?: string | null;
+                  postalCode?: string | null;
               }
             | string,
-        ...rest: [string?, string?, string?, string?, string?]
+        ...rest: [
+            string?,
+            string?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.BillingAddress> {
         let params: {
             country: string;
             city: string;
             streetAddress: string;
-            addressLine2?: string;
-            state?: string;
-            postalCode?: string;
+            addressLine2?: string | null;
+            state?: string | null;
+            postalCode?: string | null;
         };
 
         if (
@@ -409,18 +428,18 @@ export class Account {
                 country: string;
                 city: string;
                 streetAddress: string;
-                addressLine2?: string;
-                state?: string;
-                postalCode?: string;
+                addressLine2?: string | null;
+                state?: string | null;
+                postalCode?: string | null;
             };
         } else {
             params = {
                 country: paramsOrFirst as string,
                 city: rest[0] as string,
                 streetAddress: rest[1] as string,
-                addressLine2: rest[2] as string,
-                state: rest[3] as string,
-                postalCode: rest[4] as string,
+                addressLine2: rest[2] as string | null,
+                state: rest[3] as string | null,
+                postalCode: rest[4] as string | null,
             };
         }
 
@@ -575,9 +594,9 @@ export class Account {
      * @param {string} params.country - Country
      * @param {string} params.city - City
      * @param {string} params.streetAddress - Street address
-     * @param {string} params.addressLine2 - Address line 2
-     * @param {string} params.state - State or province
-     * @param {string} params.postalCode - Postal code
+     * @param {string | null} params.addressLine2 - Address line 2
+     * @param {string | null} params.state - State or province
+     * @param {string | null} params.postalCode - Postal code
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      */
@@ -586,9 +605,9 @@ export class Account {
         country: string;
         city: string;
         streetAddress: string;
-        addressLine2?: string;
-        state?: string;
-        postalCode?: string;
+        addressLine2?: string | null;
+        state?: string | null;
+        postalCode?: string | null;
     }): Promise<Models.BillingAddress>;
     /**
      * Update a specific billing address using it's ID.
@@ -597,9 +616,9 @@ export class Account {
      * @param {string} country - Country
      * @param {string} city - City
      * @param {string} streetAddress - Street address
-     * @param {string} addressLine2 - Address line 2
-     * @param {string} state - State or province
-     * @param {string} postalCode - Postal code
+     * @param {string | null} addressLine2 - Address line 2
+     * @param {string | null} state - State or province
+     * @param {string | null} postalCode - Postal code
      * @throws {AppwriteException}
      * @returns {Promise<Models.BillingAddress>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -609,9 +628,9 @@ export class Account {
         country: string,
         city: string,
         streetAddress: string,
-        addressLine2?: string,
-        state?: string,
-        postalCode?: string,
+        addressLine2?: string | null,
+        state?: string | null,
+        postalCode?: string | null,
     ): Promise<Models.BillingAddress>;
     updateBillingAddress(
         paramsOrFirst:
@@ -620,21 +639,28 @@ export class Account {
                   country: string;
                   city: string;
                   streetAddress: string;
-                  addressLine2?: string;
-                  state?: string;
-                  postalCode?: string;
+                  addressLine2?: string | null;
+                  state?: string | null;
+                  postalCode?: string | null;
               }
             | string,
-        ...rest: [string?, string?, string?, string?, string?, string?]
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.BillingAddress> {
         let params: {
             billingAddressId: string;
             country: string;
             city: string;
             streetAddress: string;
-            addressLine2?: string;
-            state?: string;
-            postalCode?: string;
+            addressLine2?: string | null;
+            state?: string | null;
+            postalCode?: string | null;
         };
 
         if (
@@ -647,9 +673,9 @@ export class Account {
                 country: string;
                 city: string;
                 streetAddress: string;
-                addressLine2?: string;
-                state?: string;
-                postalCode?: string;
+                addressLine2?: string | null;
+                state?: string | null;
+                postalCode?: string | null;
             };
         } else {
             params = {
@@ -657,9 +683,9 @@ export class Account {
                 country: rest[0] as string,
                 city: rest[1] as string,
                 streetAddress: rest[2] as string,
-                addressLine2: rest[3] as string,
-                state: rest[4] as string,
-                postalCode: rest[5] as string,
+                addressLine2: rest[3] as string | null,
+                state: rest[4] as string | null,
+                postalCode: rest[5] as string | null,
             };
         }
 
@@ -1684,43 +1710,60 @@ export class Account {
      * List all invoices tied to an account.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, aggregationId, type, amount, currency, from, to, dueAt, attempts, status, grossAmount
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.InvoiceList>}
      */
-    listInvoices(params?: { queries?: string[] }): Promise<Models.InvoiceList>;
+    listInvoices(params?: {
+        queries?: string[];
+        total?: boolean;
+    }): Promise<Models.InvoiceList>;
     /**
      * List all invoices tied to an account.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, aggregationId, type, amount, currency, from, to, dueAt, attempts, status, grossAmount
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.InvoiceList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listInvoices(queries?: string[]): Promise<Models.InvoiceList>;
     listInvoices(
-        paramsOrFirst?: { queries?: string[] } | string[],
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.InvoiceList>;
+    listInvoices(
+        paramsOrFirst?: { queries?: string[]; total?: boolean } | string[],
+        ...rest: [boolean?]
     ): Promise<Models.InvoiceList> {
-        let params: { queries?: string[] };
+        let params: { queries?: string[]; total?: boolean };
 
         if (
-            typeof paramsOrFirst === 'undefined' ||
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
             (paramsOrFirst &&
                 typeof paramsOrFirst === 'object' &&
                 !Array.isArray(paramsOrFirst))
         ) {
-            params = (paramsOrFirst || {}) as { queries?: string[] };
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
+                total: rest[0] as boolean,
             };
         }
 
         const queries = params.queries;
+        const total = params.total;
 
         const apiPath = '/account/invoices';
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1926,6 +1969,7 @@ export class Account {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
@@ -1944,21 +1988,21 @@ export class Account {
      *
      * @param {string} params.name - Key name. Max length: 128 chars.
      * @param {AccountKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
-     * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
     createKey(params: {
         name: string;
         scopes: AccountKeyScopes[];
-        expire?: string;
+        expire?: string | null;
     }): Promise<Models.Key>;
     /**
      * Create a new account API key.
      *
      * @param {string} name - Key name. Max length: 128 chars.
      * @param {AccountKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
-     * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1966,18 +2010,22 @@ export class Account {
     createKey(
         name: string,
         scopes: AccountKeyScopes[],
-        expire?: string,
+        expire?: string | null,
     ): Promise<Models.Key>;
     createKey(
         paramsOrFirst:
-            | { name: string; scopes: AccountKeyScopes[]; expire?: string }
+            | {
+                  name: string;
+                  scopes: AccountKeyScopes[];
+                  expire?: string | null;
+              }
             | string,
-        ...rest: [AccountKeyScopes[]?, string?]
+        ...rest: [AccountKeyScopes[]?, (string | null)?]
     ): Promise<Models.Key> {
         let params: {
             name: string;
             scopes: AccountKeyScopes[];
-            expire?: string;
+            expire?: string | null;
         };
 
         if (
@@ -1988,13 +2036,13 @@ export class Account {
             params = (paramsOrFirst || {}) as {
                 name: string;
                 scopes: AccountKeyScopes[];
-                expire?: string;
+                expire?: string | null;
             };
         } else {
             params = {
                 name: paramsOrFirst as string,
                 scopes: rest[0] as AccountKeyScopes[],
-                expire: rest[1] as string,
+                expire: rest[1] as string | null,
             };
         }
 
@@ -2037,6 +2085,7 @@ export class Account {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
@@ -2109,6 +2158,7 @@ export class Account {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
@@ -2128,7 +2178,7 @@ export class Account {
      * @param {string} params.keyId - Key unique ID.
      * @param {string} params.name - Key name. Max length: 128 chars.
      * @param {AccountKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
-     * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
@@ -2136,7 +2186,7 @@ export class Account {
         keyId: string;
         name: string;
         scopes: AccountKeyScopes[];
-        expire?: string;
+        expire?: string | null;
     }): Promise<Models.Key>;
     /**
      * Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
@@ -2144,7 +2194,7 @@ export class Account {
      * @param {string} keyId - Key unique ID.
      * @param {string} name - Key name. Max length: 128 chars.
      * @param {AccountKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
-     * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -2153,7 +2203,7 @@ export class Account {
         keyId: string,
         name: string,
         scopes: AccountKeyScopes[],
-        expire?: string,
+        expire?: string | null,
     ): Promise<Models.Key>;
     updateKey(
         paramsOrFirst:
@@ -2161,16 +2211,16 @@ export class Account {
                   keyId: string;
                   name: string;
                   scopes: AccountKeyScopes[];
-                  expire?: string;
+                  expire?: string | null;
               }
             | string,
-        ...rest: [string?, AccountKeyScopes[]?, string?]
+        ...rest: [string?, AccountKeyScopes[]?, (string | null)?]
     ): Promise<Models.Key> {
         let params: {
             keyId: string;
             name: string;
             scopes: AccountKeyScopes[];
-            expire?: string;
+            expire?: string | null;
         };
 
         if (
@@ -2182,14 +2232,14 @@ export class Account {
                 keyId: string;
                 name: string;
                 scopes: AccountKeyScopes[];
-                expire?: string;
+                expire?: string | null;
             };
         } else {
             params = {
                 keyId: paramsOrFirst as string,
                 name: rest[0] as string,
                 scopes: rest[1] as AccountKeyScopes[],
-                expire: rest[2] as string,
+                expire: rest[2] as string | null,
             };
         }
 
@@ -2239,6 +2289,7 @@ export class Account {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
@@ -3839,7 +3890,7 @@ export class Account {
                         $createdAt: '',
                         passkeyId: '',
                         expire: '',
-                        publicKey: [],
+                        publicKey: {},
                     },
                 },
             },
@@ -4287,45 +4338,60 @@ export class Account {
      * List payment methods for this account.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, expired, failed
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethodList>}
      */
     listPaymentMethods(params?: {
         queries?: string[];
+        total?: boolean;
     }): Promise<Models.PaymentMethodList>;
     /**
      * List payment methods for this account.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, expired, failed
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethodList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listPaymentMethods(queries?: string[]): Promise<Models.PaymentMethodList>;
     listPaymentMethods(
-        paramsOrFirst?: { queries?: string[] } | string[],
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.PaymentMethodList>;
+    listPaymentMethods(
+        paramsOrFirst?: { queries?: string[]; total?: boolean } | string[],
+        ...rest: [boolean?]
     ): Promise<Models.PaymentMethodList> {
-        let params: { queries?: string[] };
+        let params: { queries?: string[]; total?: boolean };
 
         if (
-            typeof paramsOrFirst === 'undefined' ||
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
             (paramsOrFirst &&
                 typeof paramsOrFirst === 'object' &&
                 !Array.isArray(paramsOrFirst))
         ) {
-            params = (paramsOrFirst || {}) as { queries?: string[] };
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
+                total: rest[0] as boolean,
             };
         }
 
         const queries = params.queries;
+        const total = params.total;
 
         const apiPath = '/account/payment-methods';
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4685,7 +4751,7 @@ export class Account {
      * @param {string} params.paymentMethodId - Unique ID of payment method
      * @param {string} params.providerMethodId - Payment method ID from the payment provider
      * @param {string} params.name - Name in the payment method
-     * @param {string} params.state - State of the payment method country
+     * @param {string | null} params.state - State of the payment method country
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      */
@@ -4693,7 +4759,7 @@ export class Account {
         paymentMethodId: string;
         providerMethodId: string;
         name: string;
-        state?: string;
+        state?: string | null;
     }): Promise<Models.PaymentMethod>;
     /**
      * Update payment method provider.
@@ -4701,7 +4767,7 @@ export class Account {
      * @param {string} paymentMethodId - Unique ID of payment method
      * @param {string} providerMethodId - Payment method ID from the payment provider
      * @param {string} name - Name in the payment method
-     * @param {string} state - State of the payment method country
+     * @param {string | null} state - State of the payment method country
      * @throws {AppwriteException}
      * @returns {Promise<Models.PaymentMethod>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4710,7 +4776,7 @@ export class Account {
         paymentMethodId: string,
         providerMethodId: string,
         name: string,
-        state?: string,
+        state?: string | null,
     ): Promise<Models.PaymentMethod>;
     updatePaymentMethodProvider(
         paramsOrFirst:
@@ -4718,16 +4784,16 @@ export class Account {
                   paymentMethodId: string;
                   providerMethodId: string;
                   name: string;
-                  state?: string;
+                  state?: string | null;
               }
             | string,
-        ...rest: [string?, string?, string?]
+        ...rest: [string?, string?, (string | null)?]
     ): Promise<Models.PaymentMethod> {
         let params: {
             paymentMethodId: string;
             providerMethodId: string;
             name: string;
-            state?: string;
+            state?: string | null;
         };
 
         if (
@@ -4739,14 +4805,14 @@ export class Account {
                 paymentMethodId: string;
                 providerMethodId: string;
                 name: string;
-                state?: string;
+                state?: string | null;
             };
         } else {
             params = {
                 paymentMethodId: paramsOrFirst as string,
                 providerMethodId: rest[0] as string,
                 name: rest[1] as string,
-                state: rest[2] as string,
+                state: rest[2] as string | null,
             };
         }
 
@@ -5238,6 +5304,9 @@ export class Account {
      *
      * Please note that in order to avoid a [Redirect Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md) the only valid redirect URLs are the ones from domains you have set when adding your platforms in the console interface.
      *
+     * The new password must satisfy the project's enabled password policies, including custom deny lists. Dictionary entries match the entire password case-sensitively; personal-data terms match substrings case-insensitively. Personal-data validation runs after token verification against the recovered user's ID, name, email, and phone, closing the previous recovery gap for profile-based checks. A rejected password leaves the existing credentials unchanged and the recovery token usable.
+     *
+     *
      * @param {string} params.userId - User ID.
      * @param {string} params.secret - Valid reset token.
      * @param {string} params.password - New user password. Must be between 8 and 256 chars.
@@ -5253,6 +5322,9 @@ export class Account {
      * Use this endpoint to complete the user account password reset. Both the **userId** and **secret** arguments will be passed as query parameters to the redirect URL you have provided when sending your request to the [POST /account/recovery](https://appwrite.io/docs/references/cloud/client-web/account#createRecovery) endpoint.
      *
      * Please note that in order to avoid a [Redirect Attack](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md) the only valid redirect URLs are the ones from domains you have set when adding your platforms in the console interface.
+     *
+     * The new password must satisfy the project's enabled password policies, including custom deny lists. Dictionary entries match the entire password case-sensitively; personal-data terms match substrings case-insensitively. Personal-data validation runs after token verification against the recovered user's ID, name, email, and phone, closing the previous recovery gap for profile-based checks. A rejected password leaves the existing credentials unchanged and the recovery token usable.
+     *
      *
      * @param {string} userId - User ID.
      * @param {string} secret - Valid reset token.
@@ -5440,6 +5512,8 @@ export class Account {
     /**
      * Use this endpoint to complete the user password recovery process using the 6-digit code that was emailed by [createRecoveryOTP](https://appwrite.io/docs/references/cloud/client-web/account#createRecoveryOTP). Pass the **userId** of the user along with the **secret** code from the email and the new **password** to set. If confirmed, this route will return a 200 status code, the code is consumed and the user's password is updated.
      *
+     * The new password must satisfy the project's enabled password policies, including custom deny lists. Dictionary entries match the entire password case-sensitively; personal-data terms match substrings case-insensitively. Personal-data validation runs after token verification against the recovered user's ID, name, email, and phone, closing the previous recovery gap for profile-based checks. A rejected password leaves the existing credentials unchanged and the recovery token usable.
+     *
      *
      * @param {string} params.userId - User ID.
      * @param {string} params.secret - Valid recovery OTP code.
@@ -5454,6 +5528,8 @@ export class Account {
     }): Promise<Models.Token>;
     /**
      * Use this endpoint to complete the user password recovery process using the 6-digit code that was emailed by [createRecoveryOTP](https://appwrite.io/docs/references/cloud/client-web/account#createRecoveryOTP). Pass the **userId** of the user along with the **secret** code from the email and the new **password** to set. If confirmed, this route will return a 200 status code, the code is consumed and the user's password is updated.
+     *
+     * The new password must satisfy the project's enabled password policies, including custom deny lists. Dictionary entries match the entire password case-sensitively; personal-data terms match substrings case-insensitively. Personal-data validation runs after token verification against the recovered user's ID, name, email, and phone, closing the previous recovery gap for profile-based checks. A rejected password leaves the existing credentials unchanged and the recovery token usable.
      *
      *
      * @param {string} userId - User ID.
@@ -5770,14 +5846,14 @@ export class Account {
      *
      * @param {string} params.email - User email.
      * @param {string} params.password - User password. Must be at least 8 chars.
-     * @param {number} params.duration - Session length in seconds. Minimum is 60 seconds, and it cannot exceed the project maximum session length. Defaults to the project maximum session length.
+     * @param {number | null} params.duration - Session length in seconds. Minimum is 60 seconds, and it cannot exceed the project maximum session length. Defaults to the project maximum session length.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Session>}
      */
     createEmailPasswordSession(params: {
         email: string;
         password: string;
-        duration?: number;
+        duration?: number | null;
     }): Promise<Models.Session>;
     /**
      * Allow the user to login into their account by providing a valid email and password combination. This route will create a new session for the user. Use the optional `duration` parameter to create a shorter session, for example when the user doesn't choose "remember me". It must be at least 60 seconds and cannot exceed the project maximum session length.
@@ -5786,7 +5862,7 @@ export class Account {
      *
      * @param {string} email - User email.
      * @param {string} password - User password. Must be at least 8 chars.
-     * @param {number} duration - Session length in seconds. Minimum is 60 seconds, and it cannot exceed the project maximum session length. Defaults to the project maximum session length.
+     * @param {number | null} duration - Session length in seconds. Minimum is 60 seconds, and it cannot exceed the project maximum session length. Defaults to the project maximum session length.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Session>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -5794,14 +5870,19 @@ export class Account {
     createEmailPasswordSession(
         email: string,
         password: string,
-        duration?: number,
+        duration?: number | null,
     ): Promise<Models.Session>;
     createEmailPasswordSession(
         paramsOrFirst:
-            { email: string; password: string; duration?: number } | string,
-        ...rest: [string?, number?]
+            | { email: string; password: string; duration?: number | null }
+            | string,
+        ...rest: [string?, (number | null)?]
     ): Promise<Models.Session> {
-        let params: { email: string; password: string; duration?: number };
+        let params: {
+            email: string;
+            password: string;
+            duration?: number | null;
+        };
 
         if (
             paramsOrFirst &&
@@ -5811,13 +5892,13 @@ export class Account {
             params = (paramsOrFirst || {}) as {
                 email: string;
                 password: string;
-                duration?: number;
+                duration?: number | null;
             };
         } else {
             params = {
                 email: paramsOrFirst as string,
                 password: rest[0] as string,
-                duration: rest[1] as number,
+                duration: rest[1] as number | null,
             };
         }
 
@@ -6896,6 +6977,8 @@ export class Account {
      * @param {string} params.targetId - Target ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.identifier - The target identifier (token, email, phone etc.)
      * @param {string} params.providerId - Provider ID. Message will be sent to this target from the specified provider ID. If no provider ID is set the first setup provider will be used.
+     * @param {string} params.bundleId - App bundle ID of the device registering an APNs token. Without `providerId`, routes the target to the enabled APNs provider for this bundle ID and `environment`.
+     * @param {string} params.environment - APNs environment the token belongs to, `sandbox` or `production`. Used with `bundleId`.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      */
@@ -6903,6 +6986,8 @@ export class Account {
         targetId: string;
         identifier: string;
         providerId?: string;
+        bundleId?: string;
+        environment?: string;
     }): Promise<Models.Target>;
     /**
      * Use this endpoint to register a device for push notifications. Provide a target ID (custom or generated using ID.unique()), a device identifier (usually a device token), and optionally specify which provider should send notifications to this target. The target is automatically linked to the current session and includes device information like brand and model. A session holds one push target per provider, so if one already exists this endpoint updates and returns that target instead of creating a second one, and a device that rotates its token is never notified twice.
@@ -6910,6 +6995,8 @@ export class Account {
      * @param {string} targetId - Target ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} identifier - The target identifier (token, email, phone etc.)
      * @param {string} providerId - Provider ID. Message will be sent to this target from the specified provider ID. If no provider ID is set the first setup provider will be used.
+     * @param {string} bundleId - App bundle ID of the device registering an APNs token. Without `providerId`, routes the target to the enabled APNs provider for this bundle ID and `environment`.
+     * @param {string} environment - APNs environment the token belongs to, `sandbox` or `production`. Used with `bundleId`.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -6918,17 +7005,27 @@ export class Account {
         targetId: string,
         identifier: string,
         providerId?: string,
+        bundleId?: string,
+        environment?: string,
     ): Promise<Models.Target>;
     createPushTarget(
         paramsOrFirst:
-            | { targetId: string; identifier: string; providerId?: string }
+            | {
+                  targetId: string;
+                  identifier: string;
+                  providerId?: string;
+                  bundleId?: string;
+                  environment?: string;
+              }
             | string,
-        ...rest: [string?, string?]
+        ...rest: [string?, string?, string?, string?]
     ): Promise<Models.Target> {
         let params: {
             targetId: string;
             identifier: string;
             providerId?: string;
+            bundleId?: string;
+            environment?: string;
         };
 
         if (
@@ -6940,18 +7037,24 @@ export class Account {
                 targetId: string;
                 identifier: string;
                 providerId?: string;
+                bundleId?: string;
+                environment?: string;
             };
         } else {
             params = {
                 targetId: paramsOrFirst as string,
                 identifier: rest[0] as string,
                 providerId: rest[1] as string,
+                bundleId: rest[2] as string,
+                environment: rest[3] as string,
             };
         }
 
         const targetId = params.targetId;
         const identifier = params.identifier;
         const providerId = params.providerId;
+        const bundleId = params.bundleId;
+        const environment = params.environment;
 
         if (typeof targetId === 'undefined') {
             throw new AppwriteException(
@@ -6973,6 +7076,12 @@ export class Account {
         }
         if (typeof providerId !== 'undefined') {
             apiPayload['providerId'] = providerId;
+        }
+        if (typeof bundleId !== 'undefined') {
+            apiPayload['bundleId'] = bundleId;
+        }
+        if (typeof environment !== 'undefined') {
+            apiPayload['environment'] = environment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7009,18 +7118,24 @@ export class Account {
      *
      * @param {string} params.targetId - Target ID.
      * @param {string} params.identifier - The target identifier (token, email, phone etc.)
+     * @param {string} params.bundleId - App bundle ID of the device registering an APNs token. Routes an APNs target to the enabled APNs provider for this bundle ID and `environment`.
+     * @param {string} params.environment - APNs environment the token belongs to, `sandbox` or `production`. Used with `bundleId`.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      */
     updatePushTarget(params: {
         targetId: string;
         identifier: string;
+        bundleId?: string;
+        environment?: string;
     }): Promise<Models.Target>;
     /**
      * Update the currently logged in user's push notification target. You can modify the target's identifier (device token) and provider ID (token, email, phone etc.). The target must exist and belong to the current user. If you change the provider ID, notifications will be sent through the new messaging provider instead.
      *
      * @param {string} targetId - Target ID.
      * @param {string} identifier - The target identifier (token, email, phone etc.)
+     * @param {string} bundleId - App bundle ID of the device registering an APNs token. Routes an APNs target to the enabled APNs provider for this bundle ID and `environment`.
+     * @param {string} environment - APNs environment the token belongs to, `sandbox` or `production`. Used with `bundleId`.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Target>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -7028,12 +7143,26 @@ export class Account {
     updatePushTarget(
         targetId: string,
         identifier: string,
+        bundleId?: string,
+        environment?: string,
     ): Promise<Models.Target>;
     updatePushTarget(
-        paramsOrFirst: { targetId: string; identifier: string } | string,
-        ...rest: [string?]
+        paramsOrFirst:
+            | {
+                  targetId: string;
+                  identifier: string;
+                  bundleId?: string;
+                  environment?: string;
+              }
+            | string,
+        ...rest: [string?, string?, string?]
     ): Promise<Models.Target> {
-        let params: { targetId: string; identifier: string };
+        let params: {
+            targetId: string;
+            identifier: string;
+            bundleId?: string;
+            environment?: string;
+        };
 
         if (
             paramsOrFirst &&
@@ -7043,16 +7172,22 @@ export class Account {
             params = (paramsOrFirst || {}) as {
                 targetId: string;
                 identifier: string;
+                bundleId?: string;
+                environment?: string;
             };
         } else {
             params = {
                 targetId: paramsOrFirst as string,
                 identifier: rest[0] as string,
+                bundleId: rest[1] as string,
+                environment: rest[2] as string,
             };
         }
 
         const targetId = params.targetId;
         const identifier = params.identifier;
+        const bundleId = params.bundleId;
+        const environment = params.environment;
 
         if (typeof targetId === 'undefined' || targetId === '') {
             throw new AppwriteException(
@@ -7071,6 +7206,12 @@ export class Account {
         const apiPayload: Payload = {};
         if (typeof identifier !== 'undefined') {
             apiPayload['identifier'] = identifier;
+        }
+        if (typeof bundleId !== 'undefined') {
+            apiPayload['bundleId'] = bundleId;
+        }
+        if (typeof environment !== 'undefined') {
+            apiPayload['environment'] = environment;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7560,7 +7701,7 @@ export class Account {
                         $createdAt: '',
                         passkeyId: '',
                         expire: '',
-                        publicKey: [],
+                        publicKey: {},
                     },
                 },
             },

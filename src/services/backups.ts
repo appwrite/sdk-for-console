@@ -18,45 +18,60 @@ export class Backups {
      * List all archives for a project.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupArchiveList>}
      */
     listArchives(params?: {
         queries?: string[];
+        total?: boolean;
     }): Promise<Models.BackupArchiveList>;
     /**
      * List all archives for a project.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupArchiveList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listArchives(queries?: string[]): Promise<Models.BackupArchiveList>;
     listArchives(
-        paramsOrFirst?: { queries?: string[] } | string[],
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.BackupArchiveList>;
+    listArchives(
+        paramsOrFirst?: { queries?: string[]; total?: boolean } | string[],
+        ...rest: [boolean?]
     ): Promise<Models.BackupArchiveList> {
-        let params: { queries?: string[] };
+        let params: { queries?: string[]; total?: boolean };
 
         if (
-            typeof paramsOrFirst === 'undefined' ||
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
             (paramsOrFirst &&
                 typeof paramsOrFirst === 'object' &&
                 !Array.isArray(paramsOrFirst))
         ) {
-            params = (paramsOrFirst || {}) as { queries?: string[] };
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
+                total: rest[0] as boolean,
             };
         }
 
         const queries = params.queries;
+        const total = params.total;
 
         const apiPath = '/backups/archives';
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -102,34 +117,34 @@ export class Backups {
      * Create a new archive asynchronously for a project.
      *
      * @param {BackupServices[]} params.services - Array of services to backup
-     * @param {string} params.resourceId - Resource ID. When set, only this single resource will be backed up.
+     * @param {string | null} params.resourceId - Resource ID. When set, only this single resource will be backed up.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupArchive>}
      */
     createArchive(params: {
         services: BackupServices[];
-        resourceId?: string;
+        resourceId?: string | null;
     }): Promise<Models.BackupArchive>;
     /**
      * Create a new archive asynchronously for a project.
      *
      * @param {BackupServices[]} services - Array of services to backup
-     * @param {string} resourceId - Resource ID. When set, only this single resource will be backed up.
+     * @param {string | null} resourceId - Resource ID. When set, only this single resource will be backed up.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupArchive>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     createArchive(
         services: BackupServices[],
-        resourceId?: string,
+        resourceId?: string | null,
     ): Promise<Models.BackupArchive>;
     createArchive(
         paramsOrFirst:
-            | { services: BackupServices[]; resourceId?: string }
+            | { services: BackupServices[]; resourceId?: string | null }
             | BackupServices[],
-        ...rest: [string?]
+        ...rest: [(string | null)?]
     ): Promise<Models.BackupArchive> {
-        let params: { services: BackupServices[]; resourceId?: string };
+        let params: { services: BackupServices[]; resourceId?: string | null };
 
         if (
             paramsOrFirst &&
@@ -139,12 +154,12 @@ export class Backups {
         ) {
             params = (paramsOrFirst || {}) as {
                 services: BackupServices[];
-                resourceId?: string;
+                resourceId?: string | null;
             };
         } else {
             params = {
                 services: paramsOrFirst as BackupServices[],
-                resourceId: rest[0] as string,
+                resourceId: rest[0] as string | null,
             };
         }
 
@@ -328,45 +343,60 @@ export class Backups {
      * List all policies for a project.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicyList>}
      */
     listPolicies(params?: {
         queries?: string[];
+        total?: boolean;
     }): Promise<Models.BackupPolicyList>;
     /**
      * List all policies for a project.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicyList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listPolicies(queries?: string[]): Promise<Models.BackupPolicyList>;
     listPolicies(
-        paramsOrFirst?: { queries?: string[] } | string[],
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.BackupPolicyList>;
+    listPolicies(
+        paramsOrFirst?: { queries?: string[]; total?: boolean } | string[],
+        ...rest: [boolean?]
     ): Promise<Models.BackupPolicyList> {
-        let params: { queries?: string[] };
+        let params: { queries?: string[]; total?: boolean };
 
         if (
-            typeof paramsOrFirst === 'undefined' ||
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
             (paramsOrFirst &&
                 typeof paramsOrFirst === 'object' &&
                 !Array.isArray(paramsOrFirst))
         ) {
-            params = (paramsOrFirst || {}) as { queries?: string[] };
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
+                total: rest[0] as boolean,
             };
         }
 
         const queries = params.queries;
+        const total = params.total;
 
         const apiPath = '/backups/policies';
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -418,7 +448,7 @@ export class Backups {
      * @param {number} params.retention - Days to keep backups before deletion
      * @param {string} params.schedule - Schedule CRON syntax.
      * @param {string} params.name - Policy name. Max length: 128 chars.
-     * @param {string} params.resourceId - Resource ID. When set, only this single resource will be backed up.
+     * @param {string | null} params.resourceId - Resource ID. When set, only this single resource will be backed up.
      * @param {boolean} params.enabled - Is policy enabled? When set to 'disabled', no backups will be taken
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
@@ -429,7 +459,7 @@ export class Backups {
         retention: number;
         schedule: string;
         name?: string;
-        resourceId?: string;
+        resourceId?: string | null;
         enabled?: boolean;
     }): Promise<Models.BackupPolicy>;
     /**
@@ -440,7 +470,7 @@ export class Backups {
      * @param {number} retention - Days to keep backups before deletion
      * @param {string} schedule - Schedule CRON syntax.
      * @param {string} name - Policy name. Max length: 128 chars.
-     * @param {string} resourceId - Resource ID. When set, only this single resource will be backed up.
+     * @param {string | null} resourceId - Resource ID. When set, only this single resource will be backed up.
      * @param {boolean} enabled - Is policy enabled? When set to 'disabled', no backups will be taken
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
@@ -452,7 +482,7 @@ export class Backups {
         retention: number,
         schedule: string,
         name?: string,
-        resourceId?: string,
+        resourceId?: string | null,
         enabled?: boolean,
     ): Promise<Models.BackupPolicy>;
     createPolicy(
@@ -463,7 +493,7 @@ export class Backups {
                   retention: number;
                   schedule: string;
                   name?: string;
-                  resourceId?: string;
+                  resourceId?: string | null;
                   enabled?: boolean;
               }
             | string,
@@ -472,7 +502,7 @@ export class Backups {
             number?,
             string?,
             string?,
-            string?,
+            (string | null)?,
             boolean?,
         ]
     ): Promise<Models.BackupPolicy> {
@@ -482,7 +512,7 @@ export class Backups {
             retention: number;
             schedule: string;
             name?: string;
-            resourceId?: string;
+            resourceId?: string | null;
             enabled?: boolean;
         };
 
@@ -497,7 +527,7 @@ export class Backups {
                 retention: number;
                 schedule: string;
                 name?: string;
-                resourceId?: string;
+                resourceId?: string | null;
                 enabled?: boolean;
             };
         } else {
@@ -507,7 +537,7 @@ export class Backups {
                 retention: rest[1] as number,
                 schedule: rest[2] as string,
                 name: rest[3] as string,
-                resourceId: rest[4] as string,
+                resourceId: rest[4] as string | null,
                 enabled: rest[5] as boolean,
             };
         }
@@ -676,57 +706,62 @@ export class Backups {
      * Update an existing policy using it's ID.
      *
      * @param {string} params.policyId - Policy ID. Choose a custom ID`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-     * @param {string} params.name - Policy name. Max length: 128 chars.
-     * @param {number} params.retention - Days to keep backups before deletion
+     * @param {string | null} params.name - Policy name. Max length: 128 chars.
+     * @param {number | null} params.retention - Days to keep backups before deletion
      * @param {string} params.schedule - Cron expression
-     * @param {boolean} params.enabled - Is Backup enabled? When set to 'disabled', No backup will be taken
+     * @param {boolean | null} params.enabled - Is Backup enabled? When set to 'disabled', No backup will be taken
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
      */
     updatePolicy(params: {
         policyId: string;
-        name?: string;
-        retention?: number;
+        name?: string | null;
+        retention?: number | null;
         schedule?: string;
-        enabled?: boolean;
+        enabled?: boolean | null;
     }): Promise<Models.BackupPolicy>;
     /**
      * Update an existing policy using it's ID.
      *
      * @param {string} policyId - Policy ID. Choose a custom ID`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-     * @param {string} name - Policy name. Max length: 128 chars.
-     * @param {number} retention - Days to keep backups before deletion
+     * @param {string | null} name - Policy name. Max length: 128 chars.
+     * @param {number | null} retention - Days to keep backups before deletion
      * @param {string} schedule - Cron expression
-     * @param {boolean} enabled - Is Backup enabled? When set to 'disabled', No backup will be taken
+     * @param {boolean | null} enabled - Is Backup enabled? When set to 'disabled', No backup will be taken
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     updatePolicy(
         policyId: string,
-        name?: string,
-        retention?: number,
+        name?: string | null,
+        retention?: number | null,
         schedule?: string,
-        enabled?: boolean,
+        enabled?: boolean | null,
     ): Promise<Models.BackupPolicy>;
     updatePolicy(
         paramsOrFirst:
             | {
                   policyId: string;
-                  name?: string;
-                  retention?: number;
+                  name?: string | null;
+                  retention?: number | null;
                   schedule?: string;
-                  enabled?: boolean;
+                  enabled?: boolean | null;
               }
             | string,
-        ...rest: [string?, number?, string?, boolean?]
+        ...rest: [
+            (string | null)?,
+            (number | null)?,
+            string?,
+            (boolean | null)?,
+        ]
     ): Promise<Models.BackupPolicy> {
         let params: {
             policyId: string;
-            name?: string;
-            retention?: number;
+            name?: string | null;
+            retention?: number | null;
             schedule?: string;
-            enabled?: boolean;
+            enabled?: boolean | null;
         };
 
         if (
@@ -736,18 +771,18 @@ export class Backups {
         ) {
             params = (paramsOrFirst || {}) as {
                 policyId: string;
-                name?: string;
-                retention?: number;
+                name?: string | null;
+                retention?: number | null;
                 schedule?: string;
-                enabled?: boolean;
+                enabled?: boolean | null;
             };
         } else {
             params = {
                 policyId: paramsOrFirst as string,
-                name: rest[0] as string,
-                retention: rest[1] as number,
+                name: rest[0] as string | null,
+                retention: rest[1] as number | null,
                 schedule: rest[2] as string,
-                enabled: rest[3] as boolean,
+                enabled: rest[3] as boolean | null,
             };
         }
 
@@ -1007,7 +1042,7 @@ export class Backups {
                         migrationId: '',
                         services: [],
                         resources: [],
-                        options: [],
+                        options: {},
                     },
                 },
             },
@@ -1020,45 +1055,60 @@ export class Backups {
      * List all backup restorations for a project.
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupRestorationList>}
      */
     listRestorations(params?: {
         queries?: string[];
+        total?: boolean;
     }): Promise<Models.BackupRestorationList>;
     /**
      * List all backup restorations for a project.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupRestorationList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listRestorations(queries?: string[]): Promise<Models.BackupRestorationList>;
     listRestorations(
-        paramsOrFirst?: { queries?: string[] } | string[],
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.BackupRestorationList>;
+    listRestorations(
+        paramsOrFirst?: { queries?: string[]; total?: boolean } | string[],
+        ...rest: [boolean?]
     ): Promise<Models.BackupRestorationList> {
-        let params: { queries?: string[] };
+        let params: { queries?: string[]; total?: boolean };
 
         if (
-            typeof paramsOrFirst === 'undefined' ||
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
             (paramsOrFirst &&
                 typeof paramsOrFirst === 'object' &&
                 !Array.isArray(paramsOrFirst))
         ) {
-            params = (paramsOrFirst || {}) as { queries?: string[] };
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
+                total: rest[0] as boolean,
             };
         }
 
         const queries = params.queries;
+        const total = params.total;
 
         const apiPath = '/backups/restorations';
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1093,7 +1143,7 @@ export class Backups {
                         migrationId: '',
                         services: [],
                         resources: [],
-                        options: [],
+                        options: {},
                     },
                 },
             },
@@ -1172,7 +1222,7 @@ export class Backups {
                         migrationId: '',
                         services: [],
                         resources: [],
-                        options: [],
+                        options: {},
                     },
                 },
             },

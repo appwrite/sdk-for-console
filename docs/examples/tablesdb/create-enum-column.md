@@ -15,6 +15,7 @@ const result = await tablesDB.createEnumColumn({
     required: false,
     xdefault: 'active', // optional
     array: false, // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

@@ -157,9 +157,9 @@ export class Users {
      * Create a new user.
      *
      * @param {string} params.userId - User ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-     * @param {string} params.email - User email.
-     * @param {string} params.phone - Phone number. Format this number with a leading '+' and a country code, e.g., +16175551212.
-     * @param {string} params.password - Plain text user password. Must be at least 8 chars.
+     * @param {string | null} params.email - User email.
+     * @param {string | null} params.phone - Phone number. Format this number with a leading '+' and a country code, e.g., +16175551212.
+     * @param {string | null} params.password - Plain text user password. Must be at least 8 chars.
      * @param {string} params.name - User name. Max length: 128 chars.
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
@@ -168,18 +168,18 @@ export class Users {
         Preferences extends Models.Preferences = Models.DefaultPreferences,
     >(params: {
         userId: string;
-        email?: string;
-        phone?: string;
-        password?: string;
+        email?: string | null;
+        phone?: string | null;
+        password?: string | null;
         name?: string;
     }): Promise<Models.User<Preferences>>;
     /**
      * Create a new user.
      *
      * @param {string} userId - User ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
-     * @param {string} email - User email.
-     * @param {string} phone - Phone number. Format this number with a leading '+' and a country code, e.g., +16175551212.
-     * @param {string} password - Plain text user password. Must be at least 8 chars.
+     * @param {string | null} email - User email.
+     * @param {string | null} phone - Phone number. Format this number with a leading '+' and a country code, e.g., +16175551212.
+     * @param {string | null} password - Plain text user password. Must be at least 8 chars.
      * @param {string} name - User name. Max length: 128 chars.
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
@@ -187,28 +187,28 @@ export class Users {
      */
     create<Preferences extends Models.Preferences = Models.DefaultPreferences>(
         userId: string,
-        email?: string,
-        phone?: string,
-        password?: string,
+        email?: string | null,
+        phone?: string | null,
+        password?: string | null,
         name?: string,
     ): Promise<Models.User<Preferences>>;
     create<Preferences extends Models.Preferences = Models.DefaultPreferences>(
         paramsOrFirst:
             | {
                   userId: string;
-                  email?: string;
-                  phone?: string;
-                  password?: string;
+                  email?: string | null;
+                  phone?: string | null;
+                  password?: string | null;
                   name?: string;
               }
             | string,
-        ...rest: [string?, string?, string?, string?]
+        ...rest: [(string | null)?, (string | null)?, (string | null)?, string?]
     ): Promise<Models.User<Preferences>> {
         let params: {
             userId: string;
-            email?: string;
-            phone?: string;
-            password?: string;
+            email?: string | null;
+            phone?: string | null;
+            password?: string | null;
             name?: string;
         };
 
@@ -219,17 +219,17 @@ export class Users {
         ) {
             params = (paramsOrFirst || {}) as {
                 userId: string;
-                email?: string;
-                phone?: string;
-                password?: string;
+                email?: string | null;
+                phone?: string | null;
+                password?: string | null;
                 name?: string;
             };
         } else {
             params = {
                 userId: paramsOrFirst as string,
-                email: rest[0] as string,
-                phone: rest[1] as string,
-                password: rest[2] as string,
+                email: rest[0] as string | null,
+                phone: rest[1] as string | null,
+                password: rest[2] as string | null,
                 name: rest[3] as string,
             };
         }

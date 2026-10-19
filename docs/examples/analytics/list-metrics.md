@@ -21,6 +21,7 @@ const result = await analytics.listMetrics({
     startAt: '2020-10-15T06:38:00.000+00:00', // optional
     endAt: '2020-10-15T06:38:00.000+00:00', // optional
     limit: 1, // optional
+    total: false, // optional
 });
 
 console.log(result);

@@ -14,6 +14,7 @@ const result = await databases.updateUrlAttribute({
     required: false,
     xdefault: 'https://example.com',
     newKey: '<NEW_KEY>', // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

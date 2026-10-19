@@ -10,6 +10,7 @@ const domains = new Domains(client);
 const result = await domains.list({
     queries: [], // optional
     search: '<SEARCH>', // optional
+    total: false, // optional
 });
 
 console.log(result);

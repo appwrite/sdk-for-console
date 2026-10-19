@@ -13,6 +13,7 @@ const result = await databases.createPointAttribute({
     key: '<KEY>',
     required: false,
     xdefault: [1, 2], // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

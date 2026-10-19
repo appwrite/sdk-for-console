@@ -11,6 +11,7 @@ const result = await databases.update({
     databaseId: '<DATABASE_ID>',
     name: '<NAME>', // optional
     enabled: false, // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

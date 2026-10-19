@@ -14,6 +14,7 @@ const result = await databases.updateBooleanAttribute({
     required: false,
     xdefault: false,
     newKey: '<NEW_KEY>', // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

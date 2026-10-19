@@ -439,33 +439,37 @@ export class Organization {
      * Update an app installation on the organization. Only organization members with the owner role can update installations. The installation's granted scopes are refreshed to the scopes the app currently requests; previously issued installation access tokens are revoked.
      *
      * @param {string} params.installationId - Installation unique ID.
-     * @param {string} params.authorizationDetails - Authorization details granted to the installation as a JSON array of objects, each with a `type` and app-defined fields. Omit to keep the current value.
+     * @param {string | null} params.authorizationDetails - Authorization details granted to the installation as a JSON array of objects, each with a `type` and app-defined fields. Omit to keep the current value.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AppInstallation>}
      */
     updateInstallation(params: {
         installationId: string;
-        authorizationDetails?: string;
+        authorizationDetails?: string | null;
     }): Promise<Models.AppInstallation>;
     /**
      * Update an app installation on the organization. Only organization members with the owner role can update installations. The installation's granted scopes are refreshed to the scopes the app currently requests; previously issued installation access tokens are revoked.
      *
      * @param {string} installationId - Installation unique ID.
-     * @param {string} authorizationDetails - Authorization details granted to the installation as a JSON array of objects, each with a `type` and app-defined fields. Omit to keep the current value.
+     * @param {string | null} authorizationDetails - Authorization details granted to the installation as a JSON array of objects, each with a `type` and app-defined fields. Omit to keep the current value.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AppInstallation>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     updateInstallation(
         installationId: string,
-        authorizationDetails?: string,
+        authorizationDetails?: string | null,
     ): Promise<Models.AppInstallation>;
     updateInstallation(
         paramsOrFirst:
-            { installationId: string; authorizationDetails?: string } | string,
-        ...rest: [string?]
+            | { installationId: string; authorizationDetails?: string | null }
+            | string,
+        ...rest: [(string | null)?]
     ): Promise<Models.AppInstallation> {
-        let params: { installationId: string; authorizationDetails?: string };
+        let params: {
+            installationId: string;
+            authorizationDetails?: string | null;
+        };
 
         if (
             paramsOrFirst &&
@@ -474,12 +478,12 @@ export class Organization {
         ) {
             params = (paramsOrFirst || {}) as {
                 installationId: string;
-                authorizationDetails?: string;
+                authorizationDetails?: string | null;
             };
         } else {
             params = {
                 installationId: paramsOrFirst as string,
-                authorizationDetails: rest[0] as string,
+                authorizationDetails: rest[0] as string | null,
             };
         }
 
@@ -671,6 +675,7 @@ export class Organization {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
@@ -690,7 +695,7 @@ export class Organization {
      * @param {string} params.keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Key name. Max length: 128 chars.
      * @param {OrganizationKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
-     * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
@@ -698,7 +703,7 @@ export class Organization {
         keyId: string;
         name: string;
         scopes: OrganizationKeyScopes[];
-        expire?: string;
+        expire?: string | null;
     }): Promise<Models.Key>;
     /**
      * Create a new organization API key.
@@ -706,7 +711,7 @@ export class Organization {
      * @param {string} keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Key name. Max length: 128 chars.
      * @param {OrganizationKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
-     * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -715,7 +720,7 @@ export class Organization {
         keyId: string,
         name: string,
         scopes: OrganizationKeyScopes[],
-        expire?: string,
+        expire?: string | null,
     ): Promise<Models.Key>;
     createKey(
         paramsOrFirst:
@@ -723,16 +728,16 @@ export class Organization {
                   keyId: string;
                   name: string;
                   scopes: OrganizationKeyScopes[];
-                  expire?: string;
+                  expire?: string | null;
               }
             | string,
-        ...rest: [string?, OrganizationKeyScopes[]?, string?]
+        ...rest: [string?, OrganizationKeyScopes[]?, (string | null)?]
     ): Promise<Models.Key> {
         let params: {
             keyId: string;
             name: string;
             scopes: OrganizationKeyScopes[];
-            expire?: string;
+            expire?: string | null;
         };
 
         if (
@@ -744,14 +749,14 @@ export class Organization {
                 keyId: string;
                 name: string;
                 scopes: OrganizationKeyScopes[];
-                expire?: string;
+                expire?: string | null;
             };
         } else {
             params = {
                 keyId: paramsOrFirst as string,
                 name: rest[0] as string,
                 scopes: rest[1] as OrganizationKeyScopes[],
-                expire: rest[2] as string,
+                expire: rest[2] as string | null,
             };
         }
 
@@ -801,6 +806,7 @@ export class Organization {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
@@ -873,6 +879,7 @@ export class Organization {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
@@ -892,7 +899,7 @@ export class Organization {
      * @param {string} params.keyId - Key unique ID.
      * @param {string} params.name - Key name. Max length: 128 chars.
      * @param {OrganizationKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
-     * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
@@ -900,7 +907,7 @@ export class Organization {
         keyId: string;
         name: string;
         scopes: OrganizationKeyScopes[];
-        expire?: string;
+        expire?: string | null;
     }): Promise<Models.Key>;
     /**
      * Update a key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
@@ -908,7 +915,7 @@ export class Organization {
      * @param {string} keyId - Key unique ID.
      * @param {string} name - Key name. Max length: 128 chars.
      * @param {OrganizationKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
-     * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -917,7 +924,7 @@ export class Organization {
         keyId: string,
         name: string,
         scopes: OrganizationKeyScopes[],
-        expire?: string,
+        expire?: string | null,
     ): Promise<Models.Key>;
     updateKey(
         paramsOrFirst:
@@ -925,16 +932,16 @@ export class Organization {
                   keyId: string;
                   name: string;
                   scopes: OrganizationKeyScopes[];
-                  expire?: string;
+                  expire?: string | null;
               }
             | string,
-        ...rest: [string?, OrganizationKeyScopes[]?, string?]
+        ...rest: [string?, OrganizationKeyScopes[]?, (string | null)?]
     ): Promise<Models.Key> {
         let params: {
             keyId: string;
             name: string;
             scopes: OrganizationKeyScopes[];
-            expire?: string;
+            expire?: string | null;
         };
 
         if (
@@ -946,14 +953,14 @@ export class Organization {
                 keyId: string;
                 name: string;
                 scopes: OrganizationKeyScopes[];
-                expire?: string;
+                expire?: string | null;
             };
         } else {
             params = {
                 keyId: paramsOrFirst as string,
                 name: rest[0] as string,
                 scopes: rest[1] as OrganizationKeyScopes[],
-                expire: rest[2] as string,
+                expire: rest[2] as string | null,
             };
         }
 
@@ -1003,6 +1010,7 @@ export class Organization {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
@@ -1696,7 +1704,7 @@ export class Organization {
                         pingedAt: '',
                         labels: [],
                         status: 'active',
-                        onboarding: [],
+                        onboarding: {},
                         authMethods: [],
                         services: [],
                         protocols: [],
@@ -1858,7 +1866,7 @@ export class Organization {
                         pingedAt: '',
                         labels: [],
                         status: 'active',
-                        onboarding: [],
+                        onboarding: {},
                         authMethods: [],
                         services: [],
                         protocols: [],
@@ -1988,7 +1996,7 @@ export class Organization {
                         pingedAt: '',
                         labels: [],
                         status: 'active',
-                        onboarding: [],
+                        onboarding: {},
                         authMethods: [],
                         services: [],
                         protocols: [],
@@ -2136,7 +2144,7 @@ export class Organization {
                         pingedAt: '',
                         labels: [],
                         status: 'active',
-                        onboarding: [],
+                        onboarding: {},
                         authMethods: [],
                         services: [],
                         protocols: [],
@@ -2344,6 +2352,7 @@ export class Organization {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
@@ -2366,7 +2375,8 @@ export class Organization {
      * @param {string} params.keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Key name. Max length: 128 chars.
      * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
-     * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string} params.description - Optional description for the key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
@@ -2375,7 +2385,8 @@ export class Organization {
         keyId: string;
         name: string;
         scopes: ProjectKeyScopes[];
-        expire?: string;
+        expire?: string | null;
+        description?: string;
     }): Promise<Models.Key>;
     /**
      * Create a new API key for a project in your organization. It's recommended to have multiple API keys with strict scopes for separate functions within your project.
@@ -2386,7 +2397,8 @@ export class Organization {
      * @param {string} keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Key name. Max length: 128 chars.
      * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
-     * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string} description - Optional description for the key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -2396,7 +2408,8 @@ export class Organization {
         keyId: string,
         name: string,
         scopes: ProjectKeyScopes[],
-        expire?: string,
+        expire?: string | null,
+        description?: string,
     ): Promise<Models.Key>;
     createProjectKey(
         paramsOrFirst:
@@ -2405,17 +2418,25 @@ export class Organization {
                   keyId: string;
                   name: string;
                   scopes: ProjectKeyScopes[];
-                  expire?: string;
+                  expire?: string | null;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, ProjectKeyScopes[]?, string?]
+        ...rest: [
+            string?,
+            string?,
+            ProjectKeyScopes[]?,
+            (string | null)?,
+            string?,
+        ]
     ): Promise<Models.Key> {
         let params: {
             projectId: string;
             keyId: string;
             name: string;
             scopes: ProjectKeyScopes[];
-            expire?: string;
+            expire?: string | null;
+            description?: string;
         };
 
         if (
@@ -2428,7 +2449,8 @@ export class Organization {
                 keyId: string;
                 name: string;
                 scopes: ProjectKeyScopes[];
-                expire?: string;
+                expire?: string | null;
+                description?: string;
             };
         } else {
             params = {
@@ -2436,7 +2458,8 @@ export class Organization {
                 keyId: rest[0] as string,
                 name: rest[1] as string,
                 scopes: rest[2] as ProjectKeyScopes[],
-                expire: rest[3] as string,
+                expire: rest[3] as string | null,
+                description: rest[4] as string,
             };
         }
 
@@ -2445,6 +2468,7 @@ export class Organization {
         const name = params.name;
         const scopes = params.scopes;
         const expire = params.expire;
+        const description = params.description;
 
         if (typeof projectId === 'undefined' || projectId === '') {
             throw new AppwriteException(
@@ -2477,6 +2501,9 @@ export class Organization {
         if (typeof expire !== 'undefined') {
             apiPayload['expire'] = expire;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2495,6 +2522,7 @@ export class Organization {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
@@ -2622,6 +2650,7 @@ export class Organization {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
@@ -2711,6 +2740,7 @@ export class Organization {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
@@ -2731,7 +2761,8 @@ export class Organization {
      * @param {string} params.keyId - Key ID.
      * @param {string} params.name - Key name. Max length: 128 chars.
      * @param {ProjectKeyScopes[]} params.scopes - Key scopes list. Maximum of 200 scopes are allowed.
-     * @param {string} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} params.description - Optional description for the key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      */
@@ -2740,7 +2771,8 @@ export class Organization {
         keyId: string;
         name: string;
         scopes: ProjectKeyScopes[];
-        expire?: string;
+        expire?: string | null;
+        description?: string | null;
     }): Promise<Models.Key>;
     /**
      * Update a project key by its unique ID. Use this endpoint to update the name, scopes, or expiration time of an API key.
@@ -2749,7 +2781,8 @@ export class Organization {
      * @param {string} keyId - Key ID.
      * @param {string} name - Key name. Max length: 128 chars.
      * @param {ProjectKeyScopes[]} scopes - Key scopes list. Maximum of 200 scopes are allowed.
-     * @param {string} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Use null for unlimited expiration.
+     * @param {string | null} description - Optional description for the key.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Key>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -2759,7 +2792,8 @@ export class Organization {
         keyId: string,
         name: string,
         scopes: ProjectKeyScopes[],
-        expire?: string,
+        expire?: string | null,
+        description?: string | null,
     ): Promise<Models.Key>;
     updateProjectKey(
         paramsOrFirst:
@@ -2768,17 +2802,25 @@ export class Organization {
                   keyId: string;
                   name: string;
                   scopes: ProjectKeyScopes[];
-                  expire?: string;
+                  expire?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, ProjectKeyScopes[]?, string?]
+        ...rest: [
+            string?,
+            string?,
+            ProjectKeyScopes[]?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.Key> {
         let params: {
             projectId: string;
             keyId: string;
             name: string;
             scopes: ProjectKeyScopes[];
-            expire?: string;
+            expire?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -2791,7 +2833,8 @@ export class Organization {
                 keyId: string;
                 name: string;
                 scopes: ProjectKeyScopes[];
-                expire?: string;
+                expire?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -2799,7 +2842,8 @@ export class Organization {
                 keyId: rest[0] as string,
                 name: rest[1] as string,
                 scopes: rest[2] as ProjectKeyScopes[],
-                expire: rest[3] as string,
+                expire: rest[3] as string | null,
+                description: rest[4] as string | null,
             };
         }
 
@@ -2808,6 +2852,7 @@ export class Organization {
         const name = params.name;
         const scopes = params.scopes;
         const expire = params.expire;
+        const description = params.description;
 
         if (typeof projectId === 'undefined' || projectId === '') {
             throw new AppwriteException(
@@ -2836,6 +2881,9 @@ export class Organization {
         if (typeof expire !== 'undefined') {
             apiPayload['expire'] = expire;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2854,6 +2902,7 @@ export class Organization {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',

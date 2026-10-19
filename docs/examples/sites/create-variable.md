@@ -13,6 +13,7 @@ const result = await sites.createVariable({
     key: '<KEY>',
     value: '<VALUE>',
     secret: false, // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

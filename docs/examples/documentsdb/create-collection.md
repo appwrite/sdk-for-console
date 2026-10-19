@@ -16,6 +16,7 @@ const result = await documentsDB.createCollection({
     enabled: false, // optional
     attributes: [], // optional
     indexes: [], // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);
