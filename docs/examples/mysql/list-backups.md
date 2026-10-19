@@ -10,6 +10,7 @@ const mysql = new Mysql(client);
 const result = await mysql.listBackups({
     databaseId: '<DATABASE_ID>',
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

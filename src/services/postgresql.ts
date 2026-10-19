@@ -17,45 +17,60 @@ export class Postgresql {
      * List all dedicated databases. Results support pagination.
      *
      * @param {string[]} params.queries - Array of query strings.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseList>}
      */
     list(params?: {
         queries?: string[];
+        total?: boolean;
     }): Promise<Models.DedicatedDatabaseList>;
     /**
      * List all dedicated databases. Results support pagination.
      *
      * @param {string[]} queries - Array of query strings.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    list(queries?: string[]): Promise<Models.DedicatedDatabaseList>;
     list(
-        paramsOrFirst?: { queries?: string[] } | string[],
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.DedicatedDatabaseList>;
+    list(
+        paramsOrFirst?: { queries?: string[]; total?: boolean } | string[],
+        ...rest: [boolean?]
     ): Promise<Models.DedicatedDatabaseList> {
-        let params: { queries?: string[] };
+        let params: { queries?: string[]; total?: boolean };
 
         if (
-            typeof paramsOrFirst === 'undefined' ||
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
             (paramsOrFirst &&
                 typeof paramsOrFirst === 'object' &&
                 !Array.isArray(paramsOrFirst))
         ) {
-            params = (paramsOrFirst || {}) as { queries?: string[] };
+            params = (paramsOrFirst || {}) as {
+                queries?: string[];
+                total?: boolean;
+            };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
+                total: rest[0] as boolean,
             };
         }
 
         const queries = params.queries;
+        const total = params.total;
 
         const apiPath = '/postgresql';
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -139,54 +154,54 @@ export class Postgresql {
      *
      * @param {string} params.databaseId - Database ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Database display name. Max length: 128 chars.
-     * @param {string} params.version - Database engine version. Defaults to latest for selected engine.
+     * @param {string | null} params.version - Database engine version. Defaults to latest for selected engine.
      * @param {string} params.specification - Specification identifier. Drives the allocated CPU, memory, storage, storage class, and connection ceiling.
      * @param {number} params.replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
-     * @param {string} params.syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
+     * @param {string | null} params.syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
      * @param {number} params.networkIdleTimeoutSeconds - Connection idle timeout in seconds.
-     * @param {string[]} params.networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
+     * @param {string[] | null} params.networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
      * @param {number} params.idleTimeoutMinutes - Minutes of inactivity before container scales to zero.
      * @param {boolean} params.pitr - Enable point-in-time recovery (PITR). Continuously archives changes so the database can be restored to any moment within the retention window.
      * @param {number} params.pitrRetentionDays - Number of days to retain PITR data.
      * @param {boolean} params.storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
      * @param {number} params.storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
-     * @param {number} params.storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. Defaults to 3 times the specification's storage. 0 means no limit.
+     * @param {number | null} params.storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. Defaults to 3 times the specification's storage. 0 means no limit.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
     create(params: {
         databaseId: string;
         name: string;
-        version?: string;
+        version?: string | null;
         specification?: string;
         replicas?: number;
-        syncMode?: string;
+        syncMode?: string | null;
         networkIdleTimeoutSeconds?: number;
-        networkIPAllowlist?: string[];
+        networkIPAllowlist?: string[] | null;
         idleTimeoutMinutes?: number;
         pitr?: boolean;
         pitrRetentionDays?: number;
         storageAutoscaling?: boolean;
         storageAutoscalingThresholdPercent?: number;
-        storageAutoscalingMaxGb?: number;
+        storageAutoscalingMaxGb?: number | null;
     }): Promise<Models.DedicatedDatabase>;
     /**
      * Create a new dedicated database with the chosen engine and configuration. Status will be 'provisioning' until the database is ready.
      *
      * @param {string} databaseId - Database ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Database display name. Max length: 128 chars.
-     * @param {string} version - Database engine version. Defaults to latest for selected engine.
+     * @param {string | null} version - Database engine version. Defaults to latest for selected engine.
      * @param {string} specification - Specification identifier. Drives the allocated CPU, memory, storage, storage class, and connection ceiling.
      * @param {number} replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
-     * @param {string} syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
+     * @param {string | null} syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
      * @param {number} networkIdleTimeoutSeconds - Connection idle timeout in seconds.
-     * @param {string[]} networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
+     * @param {string[] | null} networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
      * @param {number} idleTimeoutMinutes - Minutes of inactivity before container scales to zero.
      * @param {boolean} pitr - Enable point-in-time recovery (PITR). Continuously archives changes so the database can be restored to any moment within the retention window.
      * @param {number} pitrRetentionDays - Number of days to retain PITR data.
      * @param {boolean} storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
      * @param {number} storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
-     * @param {number} storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. Defaults to 3 times the specification's storage. 0 means no limit.
+     * @param {number | null} storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. Defaults to 3 times the specification's storage. 0 means no limit.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -194,69 +209,69 @@ export class Postgresql {
     create(
         databaseId: string,
         name: string,
-        version?: string,
+        version?: string | null,
         specification?: string,
         replicas?: number,
-        syncMode?: string,
+        syncMode?: string | null,
         networkIdleTimeoutSeconds?: number,
-        networkIPAllowlist?: string[],
+        networkIPAllowlist?: string[] | null,
         idleTimeoutMinutes?: number,
         pitr?: boolean,
         pitrRetentionDays?: number,
         storageAutoscaling?: boolean,
         storageAutoscalingThresholdPercent?: number,
-        storageAutoscalingMaxGb?: number,
+        storageAutoscalingMaxGb?: number | null,
     ): Promise<Models.DedicatedDatabase>;
     create(
         paramsOrFirst:
             | {
                   databaseId: string;
                   name: string;
-                  version?: string;
+                  version?: string | null;
                   specification?: string;
                   replicas?: number;
-                  syncMode?: string;
+                  syncMode?: string | null;
                   networkIdleTimeoutSeconds?: number;
-                  networkIPAllowlist?: string[];
+                  networkIPAllowlist?: string[] | null;
                   idleTimeoutMinutes?: number;
                   pitr?: boolean;
                   pitrRetentionDays?: number;
                   storageAutoscaling?: boolean;
                   storageAutoscalingThresholdPercent?: number;
-                  storageAutoscalingMaxGb?: number;
+                  storageAutoscalingMaxGb?: number | null;
               }
             | string,
         ...rest: [
             string?,
-            string?,
-            string?,
-            number?,
+            (string | null)?,
             string?,
             number?,
-            string[]?,
+            (string | null)?,
+            number?,
+            (string[] | null)?,
             number?,
             boolean?,
             number?,
             boolean?,
             number?,
-            number?,
+            (number | null)?,
         ]
     ): Promise<Models.DedicatedDatabase> {
         let params: {
             databaseId: string;
             name: string;
-            version?: string;
+            version?: string | null;
             specification?: string;
             replicas?: number;
-            syncMode?: string;
+            syncMode?: string | null;
             networkIdleTimeoutSeconds?: number;
-            networkIPAllowlist?: string[];
+            networkIPAllowlist?: string[] | null;
             idleTimeoutMinutes?: number;
             pitr?: boolean;
             pitrRetentionDays?: number;
             storageAutoscaling?: boolean;
             storageAutoscalingThresholdPercent?: number;
-            storageAutoscalingMaxGb?: number;
+            storageAutoscalingMaxGb?: number | null;
         };
 
         if (
@@ -267,35 +282,35 @@ export class Postgresql {
             params = (paramsOrFirst || {}) as {
                 databaseId: string;
                 name: string;
-                version?: string;
+                version?: string | null;
                 specification?: string;
                 replicas?: number;
-                syncMode?: string;
+                syncMode?: string | null;
                 networkIdleTimeoutSeconds?: number;
-                networkIPAllowlist?: string[];
+                networkIPAllowlist?: string[] | null;
                 idleTimeoutMinutes?: number;
                 pitr?: boolean;
                 pitrRetentionDays?: number;
                 storageAutoscaling?: boolean;
                 storageAutoscalingThresholdPercent?: number;
-                storageAutoscalingMaxGb?: number;
+                storageAutoscalingMaxGb?: number | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
-                version: rest[1] as string,
+                version: rest[1] as string | null,
                 specification: rest[2] as string,
                 replicas: rest[3] as number,
-                syncMode: rest[4] as string,
+                syncMode: rest[4] as string | null,
                 networkIdleTimeoutSeconds: rest[5] as number,
-                networkIPAllowlist: rest[6] as string[],
+                networkIPAllowlist: rest[6] as string[] | null,
                 idleTimeoutMinutes: rest[7] as number,
                 pitr: rest[8] as boolean,
                 pitrRetentionDays: rest[9] as number,
                 storageAutoscaling: rest[10] as boolean,
                 storageAutoscalingThresholdPercent: rest[11] as number,
-                storageAutoscalingMaxGb: rest[12] as number,
+                storageAutoscalingMaxGb: rest[12] as number | null,
             };
         }
 
@@ -605,174 +620,174 @@ export class Postgresql {
      * Update a dedicated database configuration. All changes are applied with zero downtime. Specification changes (cpu, memory, storage) are handled via rolling cutover. Storage expansion is done online. All other settings are applied in-place.
      *
      * @param {string} params.databaseId - Database ID.
-     * @param {string} params.name - Database display name.
-     * @param {string} params.status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume (also recovers a failed database whose infrastructure is healthy), or "inactive" to spin down a shared-pool database.
-     * @param {string} params.specification - Specification. Changes cpu, memory, storage, connection ceiling, and node pool based on specification config. Resource changes are applied via rolling cutover with zero downtime.
-     * @param {number} params.replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
-     * @param {string} params.syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
-     * @param {number} params.networkIdleTimeoutSeconds - Connection idle timeout in seconds (60-86400).
-     * @param {string[]} params.networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
-     * @param {number} params.idleTimeoutMinutes - Minutes before container scales to zero.
-     * @param {boolean} params.pitr - Enable or disable point-in-time recovery (PITR).
-     * @param {number} params.pitrRetentionDays - Days to retain PITR data.
-     * @param {boolean} params.storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
-     * @param {number} params.storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
-     * @param {number} params.storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
-     * @param {number} params.metricsTraceSampleRate - Fraction of queries to trace (0.0–1.0). Forwarded to the sidecar.
-     * @param {number} params.metricsSlowQueryLogThresholdMs - Threshold in ms above which queries are logged as slow. Forwarded to the sidecar.
-     * @param {boolean} params.sqlApiEnabled - Enable the SQL API sidecar for this database.
-     * @param {string[]} params.sqlApiAllowedStatements - Statement types the SQL API accepts. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.
-     * @param {number} params.sqlApiMaxRows - Maximum rows returned per SQL API execution (1-1000000).
-     * @param {number} params.sqlApiMaxBytes - Maximum serialised SQL API result payload in bytes (1024-104857600).
-     * @param {number} params.sqlApiTimeoutSeconds - Per-call SQL API execution timeout in seconds (1-300).
+     * @param {string | null} params.name - Database display name.
+     * @param {string | null} params.status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume (also recovers a failed database whose infrastructure is healthy), or "inactive" to spin down a shared-pool database.
+     * @param {string | null} params.specification - Specification. Changes cpu, memory, storage, connection ceiling, and node pool based on specification config. Resource changes are applied via rolling cutover with zero downtime.
+     * @param {number | null} params.replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
+     * @param {string | null} params.syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
+     * @param {number | null} params.networkIdleTimeoutSeconds - Connection idle timeout in seconds (60-86400).
+     * @param {string[] | null} params.networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
+     * @param {number | null} params.idleTimeoutMinutes - Minutes before container scales to zero.
+     * @param {boolean | null} params.pitr - Enable or disable point-in-time recovery (PITR).
+     * @param {number | null} params.pitrRetentionDays - Days to retain PITR data.
+     * @param {boolean | null} params.storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
+     * @param {number | null} params.storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
+     * @param {number | null} params.storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
+     * @param {number | null} params.metricsTraceSampleRate - Fraction of queries to trace (0.0–1.0). Forwarded to the sidecar.
+     * @param {number | null} params.metricsSlowQueryLogThresholdMs - Threshold in ms above which queries are logged as slow. Forwarded to the sidecar.
+     * @param {boolean | null} params.sqlApiEnabled - Enable the SQL API sidecar for this database.
+     * @param {string[] | null} params.sqlApiAllowedStatements - Statement types the SQL API accepts. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.
+     * @param {number | null} params.sqlApiMaxRows - Maximum rows returned per SQL API execution (1-1000000).
+     * @param {number | null} params.sqlApiMaxBytes - Maximum serialised SQL API result payload in bytes (1024-104857600).
+     * @param {number | null} params.sqlApiTimeoutSeconds - Per-call SQL API execution timeout in seconds (1-300).
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
     update(params: {
         databaseId: string;
-        name?: string;
-        status?: string;
-        specification?: string;
-        replicas?: number;
-        syncMode?: string;
-        networkIdleTimeoutSeconds?: number;
-        networkIPAllowlist?: string[];
-        idleTimeoutMinutes?: number;
-        pitr?: boolean;
-        pitrRetentionDays?: number;
-        storageAutoscaling?: boolean;
-        storageAutoscalingThresholdPercent?: number;
-        storageAutoscalingMaxGb?: number;
-        metricsTraceSampleRate?: number;
-        metricsSlowQueryLogThresholdMs?: number;
-        sqlApiEnabled?: boolean;
-        sqlApiAllowedStatements?: string[];
-        sqlApiMaxRows?: number;
-        sqlApiMaxBytes?: number;
-        sqlApiTimeoutSeconds?: number;
+        name?: string | null;
+        status?: string | null;
+        specification?: string | null;
+        replicas?: number | null;
+        syncMode?: string | null;
+        networkIdleTimeoutSeconds?: number | null;
+        networkIPAllowlist?: string[] | null;
+        idleTimeoutMinutes?: number | null;
+        pitr?: boolean | null;
+        pitrRetentionDays?: number | null;
+        storageAutoscaling?: boolean | null;
+        storageAutoscalingThresholdPercent?: number | null;
+        storageAutoscalingMaxGb?: number | null;
+        metricsTraceSampleRate?: number | null;
+        metricsSlowQueryLogThresholdMs?: number | null;
+        sqlApiEnabled?: boolean | null;
+        sqlApiAllowedStatements?: string[] | null;
+        sqlApiMaxRows?: number | null;
+        sqlApiMaxBytes?: number | null;
+        sqlApiTimeoutSeconds?: number | null;
     }): Promise<Models.DedicatedDatabase>;
     /**
      * Update a dedicated database configuration. All changes are applied with zero downtime. Specification changes (cpu, memory, storage) are handled via rolling cutover. Storage expansion is done online. All other settings are applied in-place.
      *
      * @param {string} databaseId - Database ID.
-     * @param {string} name - Database display name.
-     * @param {string} status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume (also recovers a failed database whose infrastructure is healthy), or "inactive" to spin down a shared-pool database.
-     * @param {string} specification - Specification. Changes cpu, memory, storage, connection ceiling, and node pool based on specification config. Resource changes are applied via rolling cutover with zero downtime.
-     * @param {number} replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
-     * @param {string} syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
-     * @param {number} networkIdleTimeoutSeconds - Connection idle timeout in seconds (60-86400).
-     * @param {string[]} networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
-     * @param {number} idleTimeoutMinutes - Minutes before container scales to zero.
-     * @param {boolean} pitr - Enable or disable point-in-time recovery (PITR).
-     * @param {number} pitrRetentionDays - Days to retain PITR data.
-     * @param {boolean} storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
-     * @param {number} storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
-     * @param {number} storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
-     * @param {number} metricsTraceSampleRate - Fraction of queries to trace (0.0–1.0). Forwarded to the sidecar.
-     * @param {number} metricsSlowQueryLogThresholdMs - Threshold in ms above which queries are logged as slow. Forwarded to the sidecar.
-     * @param {boolean} sqlApiEnabled - Enable the SQL API sidecar for this database.
-     * @param {string[]} sqlApiAllowedStatements - Statement types the SQL API accepts. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.
-     * @param {number} sqlApiMaxRows - Maximum rows returned per SQL API execution (1-1000000).
-     * @param {number} sqlApiMaxBytes - Maximum serialised SQL API result payload in bytes (1024-104857600).
-     * @param {number} sqlApiTimeoutSeconds - Per-call SQL API execution timeout in seconds (1-300).
+     * @param {string | null} name - Database display name.
+     * @param {string | null} status - Database status. Allowed values: ready, paused, inactive. Set to "paused" to pause, "ready" to resume (also recovers a failed database whose infrastructure is healthy), or "inactive" to spin down a shared-pool database.
+     * @param {string | null} specification - Specification. Changes cpu, memory, storage, connection ceiling, and node pool based on specification config. Resource changes are applied via rolling cutover with zero downtime.
+     * @param {number | null} replicas - Number of high availability replicas (0-5). High availability is enabled when greater than 0.
+     * @param {string | null} syncMode - Replication sync mode preference. Allowed values: async, sync, quorum.
+     * @param {number | null} networkIdleTimeoutSeconds - Connection idle timeout in seconds (60-86400).
+     * @param {string[] | null} networkIPAllowlist - IP addresses/CIDR ranges allowed to connect.
+     * @param {number | null} idleTimeoutMinutes - Minutes before container scales to zero.
+     * @param {boolean | null} pitr - Enable or disable point-in-time recovery (PITR).
+     * @param {number | null} pitrRetentionDays - Days to retain PITR data.
+     * @param {boolean | null} storageAutoscaling - Enable automatic storage expansion when usage exceeds threshold.
+     * @param {number | null} storageAutoscalingThresholdPercent - Storage usage percentage (50-95) that triggers automatic expansion.
+     * @param {number | null} storageAutoscalingMaxGb - Maximum storage size in GB for autoscaling. 0 means no limit.
+     * @param {number | null} metricsTraceSampleRate - Fraction of queries to trace (0.0–1.0). Forwarded to the sidecar.
+     * @param {number | null} metricsSlowQueryLogThresholdMs - Threshold in ms above which queries are logged as slow. Forwarded to the sidecar.
+     * @param {boolean | null} sqlApiEnabled - Enable the SQL API sidecar for this database.
+     * @param {string[] | null} sqlApiAllowedStatements - Statement types the SQL API accepts. Allowed values: SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, TRUNCATE, GRANT, REVOKE.
+     * @param {number | null} sqlApiMaxRows - Maximum rows returned per SQL API execution (1-1000000).
+     * @param {number | null} sqlApiMaxBytes - Maximum serialised SQL API result payload in bytes (1024-104857600).
+     * @param {number | null} sqlApiTimeoutSeconds - Per-call SQL API execution timeout in seconds (1-300).
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     update(
         databaseId: string,
-        name?: string,
-        status?: string,
-        specification?: string,
-        replicas?: number,
-        syncMode?: string,
-        networkIdleTimeoutSeconds?: number,
-        networkIPAllowlist?: string[],
-        idleTimeoutMinutes?: number,
-        pitr?: boolean,
-        pitrRetentionDays?: number,
-        storageAutoscaling?: boolean,
-        storageAutoscalingThresholdPercent?: number,
-        storageAutoscalingMaxGb?: number,
-        metricsTraceSampleRate?: number,
-        metricsSlowQueryLogThresholdMs?: number,
-        sqlApiEnabled?: boolean,
-        sqlApiAllowedStatements?: string[],
-        sqlApiMaxRows?: number,
-        sqlApiMaxBytes?: number,
-        sqlApiTimeoutSeconds?: number,
+        name?: string | null,
+        status?: string | null,
+        specification?: string | null,
+        replicas?: number | null,
+        syncMode?: string | null,
+        networkIdleTimeoutSeconds?: number | null,
+        networkIPAllowlist?: string[] | null,
+        idleTimeoutMinutes?: number | null,
+        pitr?: boolean | null,
+        pitrRetentionDays?: number | null,
+        storageAutoscaling?: boolean | null,
+        storageAutoscalingThresholdPercent?: number | null,
+        storageAutoscalingMaxGb?: number | null,
+        metricsTraceSampleRate?: number | null,
+        metricsSlowQueryLogThresholdMs?: number | null,
+        sqlApiEnabled?: boolean | null,
+        sqlApiAllowedStatements?: string[] | null,
+        sqlApiMaxRows?: number | null,
+        sqlApiMaxBytes?: number | null,
+        sqlApiTimeoutSeconds?: number | null,
     ): Promise<Models.DedicatedDatabase>;
     update(
         paramsOrFirst:
             | {
                   databaseId: string;
-                  name?: string;
-                  status?: string;
-                  specification?: string;
-                  replicas?: number;
-                  syncMode?: string;
-                  networkIdleTimeoutSeconds?: number;
-                  networkIPAllowlist?: string[];
-                  idleTimeoutMinutes?: number;
-                  pitr?: boolean;
-                  pitrRetentionDays?: number;
-                  storageAutoscaling?: boolean;
-                  storageAutoscalingThresholdPercent?: number;
-                  storageAutoscalingMaxGb?: number;
-                  metricsTraceSampleRate?: number;
-                  metricsSlowQueryLogThresholdMs?: number;
-                  sqlApiEnabled?: boolean;
-                  sqlApiAllowedStatements?: string[];
-                  sqlApiMaxRows?: number;
-                  sqlApiMaxBytes?: number;
-                  sqlApiTimeoutSeconds?: number;
+                  name?: string | null;
+                  status?: string | null;
+                  specification?: string | null;
+                  replicas?: number | null;
+                  syncMode?: string | null;
+                  networkIdleTimeoutSeconds?: number | null;
+                  networkIPAllowlist?: string[] | null;
+                  idleTimeoutMinutes?: number | null;
+                  pitr?: boolean | null;
+                  pitrRetentionDays?: number | null;
+                  storageAutoscaling?: boolean | null;
+                  storageAutoscalingThresholdPercent?: number | null;
+                  storageAutoscalingMaxGb?: number | null;
+                  metricsTraceSampleRate?: number | null;
+                  metricsSlowQueryLogThresholdMs?: number | null;
+                  sqlApiEnabled?: boolean | null;
+                  sqlApiAllowedStatements?: string[] | null;
+                  sqlApiMaxRows?: number | null;
+                  sqlApiMaxBytes?: number | null;
+                  sqlApiTimeoutSeconds?: number | null;
               }
             | string,
         ...rest: [
-            string?,
-            string?,
-            string?,
-            number?,
-            string?,
-            number?,
-            string[]?,
-            number?,
-            boolean?,
-            number?,
-            boolean?,
-            number?,
-            number?,
-            number?,
-            number?,
-            boolean?,
-            string[]?,
-            number?,
-            number?,
-            number?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (number | null)?,
+            (string | null)?,
+            (number | null)?,
+            (string[] | null)?,
+            (number | null)?,
+            (boolean | null)?,
+            (number | null)?,
+            (boolean | null)?,
+            (number | null)?,
+            (number | null)?,
+            (number | null)?,
+            (number | null)?,
+            (boolean | null)?,
+            (string[] | null)?,
+            (number | null)?,
+            (number | null)?,
+            (number | null)?,
         ]
     ): Promise<Models.DedicatedDatabase> {
         let params: {
             databaseId: string;
-            name?: string;
-            status?: string;
-            specification?: string;
-            replicas?: number;
-            syncMode?: string;
-            networkIdleTimeoutSeconds?: number;
-            networkIPAllowlist?: string[];
-            idleTimeoutMinutes?: number;
-            pitr?: boolean;
-            pitrRetentionDays?: number;
-            storageAutoscaling?: boolean;
-            storageAutoscalingThresholdPercent?: number;
-            storageAutoscalingMaxGb?: number;
-            metricsTraceSampleRate?: number;
-            metricsSlowQueryLogThresholdMs?: number;
-            sqlApiEnabled?: boolean;
-            sqlApiAllowedStatements?: string[];
-            sqlApiMaxRows?: number;
-            sqlApiMaxBytes?: number;
-            sqlApiTimeoutSeconds?: number;
+            name?: string | null;
+            status?: string | null;
+            specification?: string | null;
+            replicas?: number | null;
+            syncMode?: string | null;
+            networkIdleTimeoutSeconds?: number | null;
+            networkIPAllowlist?: string[] | null;
+            idleTimeoutMinutes?: number | null;
+            pitr?: boolean | null;
+            pitrRetentionDays?: number | null;
+            storageAutoscaling?: boolean | null;
+            storageAutoscalingThresholdPercent?: number | null;
+            storageAutoscalingMaxGb?: number | null;
+            metricsTraceSampleRate?: number | null;
+            metricsSlowQueryLogThresholdMs?: number | null;
+            sqlApiEnabled?: boolean | null;
+            sqlApiAllowedStatements?: string[] | null;
+            sqlApiMaxRows?: number | null;
+            sqlApiMaxBytes?: number | null;
+            sqlApiTimeoutSeconds?: number | null;
         };
 
         if (
@@ -782,50 +797,50 @@ export class Postgresql {
         ) {
             params = (paramsOrFirst || {}) as {
                 databaseId: string;
-                name?: string;
-                status?: string;
-                specification?: string;
-                replicas?: number;
-                syncMode?: string;
-                networkIdleTimeoutSeconds?: number;
-                networkIPAllowlist?: string[];
-                idleTimeoutMinutes?: number;
-                pitr?: boolean;
-                pitrRetentionDays?: number;
-                storageAutoscaling?: boolean;
-                storageAutoscalingThresholdPercent?: number;
-                storageAutoscalingMaxGb?: number;
-                metricsTraceSampleRate?: number;
-                metricsSlowQueryLogThresholdMs?: number;
-                sqlApiEnabled?: boolean;
-                sqlApiAllowedStatements?: string[];
-                sqlApiMaxRows?: number;
-                sqlApiMaxBytes?: number;
-                sqlApiTimeoutSeconds?: number;
+                name?: string | null;
+                status?: string | null;
+                specification?: string | null;
+                replicas?: number | null;
+                syncMode?: string | null;
+                networkIdleTimeoutSeconds?: number | null;
+                networkIPAllowlist?: string[] | null;
+                idleTimeoutMinutes?: number | null;
+                pitr?: boolean | null;
+                pitrRetentionDays?: number | null;
+                storageAutoscaling?: boolean | null;
+                storageAutoscalingThresholdPercent?: number | null;
+                storageAutoscalingMaxGb?: number | null;
+                metricsTraceSampleRate?: number | null;
+                metricsSlowQueryLogThresholdMs?: number | null;
+                sqlApiEnabled?: boolean | null;
+                sqlApiAllowedStatements?: string[] | null;
+                sqlApiMaxRows?: number | null;
+                sqlApiMaxBytes?: number | null;
+                sqlApiTimeoutSeconds?: number | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                name: rest[0] as string,
-                status: rest[1] as string,
-                specification: rest[2] as string,
-                replicas: rest[3] as number,
-                syncMode: rest[4] as string,
-                networkIdleTimeoutSeconds: rest[5] as number,
-                networkIPAllowlist: rest[6] as string[],
-                idleTimeoutMinutes: rest[7] as number,
-                pitr: rest[8] as boolean,
-                pitrRetentionDays: rest[9] as number,
-                storageAutoscaling: rest[10] as boolean,
-                storageAutoscalingThresholdPercent: rest[11] as number,
-                storageAutoscalingMaxGb: rest[12] as number,
-                metricsTraceSampleRate: rest[13] as number,
-                metricsSlowQueryLogThresholdMs: rest[14] as number,
-                sqlApiEnabled: rest[15] as boolean,
-                sqlApiAllowedStatements: rest[16] as string[],
-                sqlApiMaxRows: rest[17] as number,
-                sqlApiMaxBytes: rest[18] as number,
-                sqlApiTimeoutSeconds: rest[19] as number,
+                name: rest[0] as string | null,
+                status: rest[1] as string | null,
+                specification: rest[2] as string | null,
+                replicas: rest[3] as number | null,
+                syncMode: rest[4] as string | null,
+                networkIdleTimeoutSeconds: rest[5] as number | null,
+                networkIPAllowlist: rest[6] as string[] | null,
+                idleTimeoutMinutes: rest[7] as number | null,
+                pitr: rest[8] as boolean | null,
+                pitrRetentionDays: rest[9] as number | null,
+                storageAutoscaling: rest[10] as boolean | null,
+                storageAutoscalingThresholdPercent: rest[11] as number | null,
+                storageAutoscalingMaxGb: rest[12] as number | null,
+                metricsTraceSampleRate: rest[13] as number | null,
+                metricsSlowQueryLogThresholdMs: rest[14] as number | null,
+                sqlApiEnabled: rest[15] as boolean | null,
+                sqlApiAllowedStatements: rest[16] as string[] | null,
+                sqlApiMaxRows: rest[17] as number | null,
+                sqlApiMaxBytes: rest[18] as number | null,
+                sqlApiTimeoutSeconds: rest[19] as number | null,
             };
         }
 
@@ -1052,18 +1067,21 @@ export class Postgresql {
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: status, type, databaseId
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseBackupList>}
      */
     listBackups(params: {
         databaseId: string;
         queries?: string[];
+        total?: boolean;
     }): Promise<Models.DedicatedDatabaseBackupList>;
     /**
      * List all backups for a dedicated database. Results can be filtered by status and type.
      *
      * @param {string} databaseId - Database ID.
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: status, type, databaseId
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseBackupList>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1071,12 +1089,15 @@ export class Postgresql {
     listBackups(
         databaseId: string,
         queries?: string[],
+        total?: boolean,
     ): Promise<Models.DedicatedDatabaseBackupList>;
     listBackups(
-        paramsOrFirst: { databaseId: string; queries?: string[] } | string,
-        ...rest: [string[]?]
+        paramsOrFirst:
+            | { databaseId: string; queries?: string[]; total?: boolean }
+            | string,
+        ...rest: [string[]?, boolean?]
     ): Promise<Models.DedicatedDatabaseBackupList> {
-        let params: { databaseId: string; queries?: string[] };
+        let params: { databaseId: string; queries?: string[]; total?: boolean };
 
         if (
             paramsOrFirst &&
@@ -1086,16 +1107,19 @@ export class Postgresql {
             params = (paramsOrFirst || {}) as {
                 databaseId: string;
                 queries?: string[];
+                total?: boolean;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 queries: rest[0] as string[],
+                total: rest[1] as boolean,
             };
         }
 
         const databaseId = params.databaseId;
         const queries = params.queries;
+        const total = params.total;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -1109,6 +1133,9 @@ export class Postgresql {
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1256,18 +1283,21 @@ export class Postgresql {
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicyList>}
      */
     listBackupPolicies(params: {
         databaseId: string;
         queries?: string[];
+        total?: boolean;
     }): Promise<Models.BackupPolicyList>;
     /**
      * List scheduled backup policies for a dedicated database.
      *
      * @param {string} databaseId - Database ID.
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicyList>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1275,12 +1305,15 @@ export class Postgresql {
     listBackupPolicies(
         databaseId: string,
         queries?: string[],
+        total?: boolean,
     ): Promise<Models.BackupPolicyList>;
     listBackupPolicies(
-        paramsOrFirst: { databaseId: string; queries?: string[] } | string,
-        ...rest: [string[]?]
+        paramsOrFirst:
+            | { databaseId: string; queries?: string[]; total?: boolean }
+            | string,
+        ...rest: [string[]?, boolean?]
     ): Promise<Models.BackupPolicyList> {
-        let params: { databaseId: string; queries?: string[] };
+        let params: { databaseId: string; queries?: string[]; total?: boolean };
 
         if (
             paramsOrFirst &&
@@ -1290,16 +1323,19 @@ export class Postgresql {
             params = (paramsOrFirst || {}) as {
                 databaseId: string;
                 queries?: string[];
+                total?: boolean;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 queries: rest[0] as string[],
+                total: rest[1] as boolean,
             };
         }
 
         const databaseId = params.databaseId;
         const queries = params.queries;
+        const total = params.total;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -1313,6 +1349,9 @@ export class Postgresql {
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1637,30 +1676,30 @@ export class Postgresql {
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.policyId - Policy ID.
-     * @param {string} params.name - Policy name. Max length: 128 chars.
+     * @param {string | null} params.name - Policy name. Max length: 128 chars.
      * @param {string} params.schedule - Schedule CRON syntax.
-     * @param {number} params.retention - Days to keep backups before deletion.
-     * @param {boolean} params.enabled - Is policy enabled? When disabled, no backups will be taken.
+     * @param {number | null} params.retention - Days to keep backups before deletion.
+     * @param {boolean | null} params.enabled - Is policy enabled? When disabled, no backups will be taken.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
      */
     updateBackupPolicy(params: {
         databaseId: string;
         policyId: string;
-        name?: string;
+        name?: string | null;
         schedule?: string;
-        retention?: number;
-        enabled?: boolean;
+        retention?: number | null;
+        enabled?: boolean | null;
     }): Promise<Models.BackupPolicy>;
     /**
      * Update a scheduled backup policy for a dedicated database.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} policyId - Policy ID.
-     * @param {string} name - Policy name. Max length: 128 chars.
+     * @param {string | null} name - Policy name. Max length: 128 chars.
      * @param {string} schedule - Schedule CRON syntax.
-     * @param {number} retention - Days to keep backups before deletion.
-     * @param {boolean} enabled - Is policy enabled? When disabled, no backups will be taken.
+     * @param {number | null} retention - Days to keep backups before deletion.
+     * @param {boolean | null} enabled - Is policy enabled? When disabled, no backups will be taken.
      * @throws {AppwriteException}
      * @returns {Promise<Models.BackupPolicy>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1668,31 +1707,37 @@ export class Postgresql {
     updateBackupPolicy(
         databaseId: string,
         policyId: string,
-        name?: string,
+        name?: string | null,
         schedule?: string,
-        retention?: number,
-        enabled?: boolean,
+        retention?: number | null,
+        enabled?: boolean | null,
     ): Promise<Models.BackupPolicy>;
     updateBackupPolicy(
         paramsOrFirst:
             | {
                   databaseId: string;
                   policyId: string;
-                  name?: string;
+                  name?: string | null;
                   schedule?: string;
-                  retention?: number;
-                  enabled?: boolean;
+                  retention?: number | null;
+                  enabled?: boolean | null;
               }
             | string,
-        ...rest: [string?, string?, string?, number?, boolean?]
+        ...rest: [
+            string?,
+            (string | null)?,
+            string?,
+            (number | null)?,
+            (boolean | null)?,
+        ]
     ): Promise<Models.BackupPolicy> {
         let params: {
             databaseId: string;
             policyId: string;
-            name?: string;
+            name?: string | null;
             schedule?: string;
-            retention?: number;
-            enabled?: boolean;
+            retention?: number | null;
+            enabled?: boolean | null;
         };
 
         if (
@@ -1703,19 +1748,19 @@ export class Postgresql {
             params = (paramsOrFirst || {}) as {
                 databaseId: string;
                 policyId: string;
-                name?: string;
+                name?: string | null;
                 schedule?: string;
-                retention?: number;
-                enabled?: boolean;
+                retention?: number | null;
+                enabled?: boolean | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 policyId: rest[0] as string,
-                name: rest[1] as string,
+                name: rest[1] as string | null,
                 schedule: rest[2] as string,
-                retention: rest[3] as number,
-                enabled: rest[4] as boolean,
+                retention: rest[3] as number | null,
+                enabled: rest[4] as boolean | null,
             };
         }
 
@@ -2656,28 +2701,28 @@ export class Postgresql {
     }
 
     /**
-     * Execute SQL through the console-facing Cloud endpoint. Cloud proxies through the edge platform to the per-database SQL API sidecar. Application traffic should bypass cloud entirely and POST directly to the per-database hostname: `https://db-{project}-{db}.{region}.appwrite.center/v1/sql/executions` with an `X-Appwrite-Key` header — that path scales to the whole DB fleet without a per-query cloud round-trip. The statement type must be on the database's configured allow-list. Use bound parameters for any user-supplied values — the API does not interpolate raw strings.
+     * Execute SQL through the console-facing Cloud endpoint. Cloud proxies through the edge platform to the per-database SQL API sidecar. Application traffic should bypass cloud entirely and POST directly to the per-database hostname: `https://db-{project}-{db}.{region}.appwrite.center/v1/sql/executions` with an `X-Appwrite-Key` header — that path scales to the whole DB fleet without a per-query cloud round-trip. The statement type must be on the database's configured allow-list. Use bound parameters for any user-supplied values — the API does not interpolate raw strings. Long-running statements (for example CREATE INDEX) can outlive the HTTP request: if the request ends before a result is returned, check the database before retrying, and prefer a direct connection for work that may take minutes.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.sql - SQL statement to execute. Exactly one statement per request.
-     * @param {object} params.bindings - Optional bound parameters. Pass either a positional list or a name => value map matching the placeholder style used in the SQL.
-     * @param {number} params.timeoutSeconds - Per-call execution timeout override. Must be less than or equal to the database's configured sqlApiTimeoutSeconds.
+     * @param {object | null} params.bindings - Optional bound parameters. Pass either a positional list or a name => value map matching the placeholder style used in the SQL.
+     * @param {number | null} params.timeoutSeconds - Per-call execution timeout override. Must be less than or equal to the database's configured sqlApiTimeoutSeconds. Statements that may exceed this — or the HTTP request timeout in front of Cloud — should use a direct connection instead.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseExecution>}
      */
     createExecution(params: {
         databaseId: string;
         sql: string;
-        bindings?: object;
-        timeoutSeconds?: number;
+        bindings?: object | null;
+        timeoutSeconds?: number | null;
     }): Promise<Models.DedicatedDatabaseExecution>;
     /**
-     * Execute SQL through the console-facing Cloud endpoint. Cloud proxies through the edge platform to the per-database SQL API sidecar. Application traffic should bypass cloud entirely and POST directly to the per-database hostname: `https://db-{project}-{db}.{region}.appwrite.center/v1/sql/executions` with an `X-Appwrite-Key` header — that path scales to the whole DB fleet without a per-query cloud round-trip. The statement type must be on the database's configured allow-list. Use bound parameters for any user-supplied values — the API does not interpolate raw strings.
+     * Execute SQL through the console-facing Cloud endpoint. Cloud proxies through the edge platform to the per-database SQL API sidecar. Application traffic should bypass cloud entirely and POST directly to the per-database hostname: `https://db-{project}-{db}.{region}.appwrite.center/v1/sql/executions` with an `X-Appwrite-Key` header — that path scales to the whole DB fleet without a per-query cloud round-trip. The statement type must be on the database's configured allow-list. Use bound parameters for any user-supplied values — the API does not interpolate raw strings. Long-running statements (for example CREATE INDEX) can outlive the HTTP request: if the request ends before a result is returned, check the database before retrying, and prefer a direct connection for work that may take minutes.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} sql - SQL statement to execute. Exactly one statement per request.
-     * @param {object} bindings - Optional bound parameters. Pass either a positional list or a name => value map matching the placeholder style used in the SQL.
-     * @param {number} timeoutSeconds - Per-call execution timeout override. Must be less than or equal to the database's configured sqlApiTimeoutSeconds.
+     * @param {object | null} bindings - Optional bound parameters. Pass either a positional list or a name => value map matching the placeholder style used in the SQL.
+     * @param {number | null} timeoutSeconds - Per-call execution timeout override. Must be less than or equal to the database's configured sqlApiTimeoutSeconds. Statements that may exceed this — or the HTTP request timeout in front of Cloud — should use a direct connection instead.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseExecution>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -2685,25 +2730,25 @@ export class Postgresql {
     createExecution(
         databaseId: string,
         sql: string,
-        bindings?: object,
-        timeoutSeconds?: number,
+        bindings?: object | null,
+        timeoutSeconds?: number | null,
     ): Promise<Models.DedicatedDatabaseExecution>;
     createExecution(
         paramsOrFirst:
             | {
                   databaseId: string;
                   sql: string;
-                  bindings?: object;
-                  timeoutSeconds?: number;
+                  bindings?: object | null;
+                  timeoutSeconds?: number | null;
               }
             | string,
-        ...rest: [string?, object?, number?]
+        ...rest: [string?, (object | null)?, (number | null)?]
     ): Promise<Models.DedicatedDatabaseExecution> {
         let params: {
             databaseId: string;
             sql: string;
-            bindings?: object;
-            timeoutSeconds?: number;
+            bindings?: object | null;
+            timeoutSeconds?: number | null;
         };
 
         if (
@@ -2714,15 +2759,15 @@ export class Postgresql {
             params = (paramsOrFirst || {}) as {
                 databaseId: string;
                 sql: string;
-                bindings?: object;
-                timeoutSeconds?: number;
+                bindings?: object | null;
+                timeoutSeconds?: number | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 sql: rest[0] as string,
-                bindings: rest[1] as object,
-                timeoutSeconds: rest[2] as number,
+                bindings: rest[1] as object | null,
+                timeoutSeconds: rest[2] as number | null,
             };
         }
 
@@ -3150,33 +3195,33 @@ export class Postgresql {
      * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation also accepts this call as a repair once nothing is driving the operation it is stuck in. Repairing a failover that did not finish, a `failed` database, a stranded upgrade or migrate, or a stranded compute resize additionally requires `targetReplicaId` to name the member to promote, because the default target may be the member that operation already promoted.
      *
      * @param {string} params.databaseId - Database ID.
-     * @param {string} params.targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
+     * @param {string | null} params.targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
     createFailover(params: {
         databaseId: string;
-        targetReplicaId?: string;
+        targetReplicaId?: string | null;
     }): Promise<Models.DedicatedDatabase>;
     /**
      * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation also accepts this call as a repair once nothing is driving the operation it is stuck in. Repairing a failover that did not finish, a `failed` database, a stranded upgrade or migrate, or a stranded compute resize additionally requires `targetReplicaId` to name the member to promote, because the default target may be the member that operation already promoted.
      *
      * @param {string} databaseId - Database ID.
-     * @param {string} targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
+     * @param {string | null} targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     createFailover(
         databaseId: string,
-        targetReplicaId?: string,
+        targetReplicaId?: string | null,
     ): Promise<Models.DedicatedDatabase>;
     createFailover(
         paramsOrFirst:
-            { databaseId: string; targetReplicaId?: string } | string,
-        ...rest: [string?]
+            { databaseId: string; targetReplicaId?: string | null } | string,
+        ...rest: [(string | null)?]
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string; targetReplicaId?: string };
+        let params: { databaseId: string; targetReplicaId?: string | null };
 
         if (
             paramsOrFirst &&
@@ -3185,12 +3230,12 @@ export class Postgresql {
         ) {
             params = (paramsOrFirst || {}) as {
                 databaseId: string;
-                targetReplicaId?: string;
+                targetReplicaId?: string | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                targetReplicaId: rest[0] as string,
+                targetReplicaId: rest[0] as string | null,
             };
         }
 
@@ -3431,21 +3476,21 @@ export class Postgresql {
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.targetType - Target database type to migrate to. Allowed values: shared (serverless, scales to zero when idle), dedicated (always-on with persistent resources).
-     * @param {string} params.specification - Target specification to provision when migrating to dedicated. Ignored for shared. Defaults to the database's current specification.
+     * @param {string | null} params.specification - Target specification to provision when migrating to dedicated. Ignored for shared. Defaults to the database's current specification.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
     createMigration(params: {
         databaseId: string;
         targetType: string;
-        specification?: string;
+        specification?: string | null;
     }): Promise<Models.DedicatedDatabase>;
     /**
      * Migrate a database between shared and dedicated types. Shared to dedicated provisions an always-on dedicated instance; dedicated to shared converts to a serverless instance that scales to zero when idle. Data is copied to the target with a brief read-only window during cutover.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} targetType - Target database type to migrate to. Allowed values: shared (serverless, scales to zero when idle), dedicated (always-on with persistent resources).
-     * @param {string} specification - Target specification to provision when migrating to dedicated. Ignored for shared. Defaults to the database's current specification.
+     * @param {string | null} specification - Target specification to provision when migrating to dedicated. Ignored for shared. Defaults to the database's current specification.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -3453,18 +3498,22 @@ export class Postgresql {
     createMigration(
         databaseId: string,
         targetType: string,
-        specification?: string,
+        specification?: string | null,
     ): Promise<Models.DedicatedDatabase>;
     createMigration(
         paramsOrFirst:
-            | { databaseId: string; targetType: string; specification?: string }
+            | {
+                  databaseId: string;
+                  targetType: string;
+                  specification?: string | null;
+              }
             | string,
-        ...rest: [string?, string?]
+        ...rest: [string?, (string | null)?]
     ): Promise<Models.DedicatedDatabase> {
         let params: {
             databaseId: string;
             targetType: string;
-            specification?: string;
+            specification?: string | null;
         };
 
         if (
@@ -3475,13 +3524,13 @@ export class Postgresql {
             params = (paramsOrFirst || {}) as {
                 databaseId: string;
                 targetType: string;
-                specification?: string;
+                specification?: string | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 targetType: rest[0] as string,
-                specification: rest[1] as string,
+                specification: rest[1] as string | null,
             };
         }
 
@@ -3866,90 +3915,90 @@ export class Postgresql {
      * Update the connection pooler configuration for a dedicated database. Configure pool mode, max connections, and pool sizes.
      *
      * @param {string} params.databaseId - Database ID.
-     * @param {string} params.mode - Connection pool mode. Allowed values: transaction, session. Transaction mode returns connections to the pool after each transaction; session mode holds connections for the entire session lifetime.
-     * @param {number} params.maxConnections - Client-connection ceiling the pooler accepts. Supported on MySQL and MariaDB only; the PostgreSQL pooler has no client cap, so set networkMaxConnections on the database instead.
-     * @param {number} params.defaultPoolSize - Default pool size per user.
-     * @param {boolean} params.readWriteSplitting - Route SELECTs to HA replicas, writes and locked reads to the primary. Defaults to true when HA is enabled.
-     * @param {string} params.poolerCpuRequest - Pooler sidecar CPU request override (Kubernetes quantity, e.g. "250m" or "1"). Leave null for the proportional default (5% of DB CPU, floor 100m).
-     * @param {string} params.poolerCpuLimit - Pooler sidecar CPU limit override (Kubernetes quantity, e.g. "500m" or "1"). Leave null for the proportional default (10% of DB CPU, floor 200m). Changing this field rolls the database pod.
-     * @param {string} params.poolerMemoryRequest - Pooler sidecar memory request override (Kubernetes quantity, e.g. "128Mi" or "1Gi"). Leave null for the proportional default (7.5% of DB memory, floor 64Mi).
-     * @param {string} params.poolerMemoryLimit - Pooler sidecar memory limit override (Kubernetes quantity, e.g. "256Mi" or "1Gi"). Leave null for the proportional default (15% of DB memory, floor 128Mi). Changing this field rolls the database pod.
+     * @param {string | null} params.mode - Connection pool mode. Allowed values: transaction, session. Transaction mode returns connections to the pool after each transaction; session mode holds connections for the entire session lifetime.
+     * @param {number | null} params.maxConnections - Client-connection ceiling the pooler accepts. Supported on MySQL and MariaDB only; the PostgreSQL pooler has no client cap, so set networkMaxConnections on the database instead.
+     * @param {number | null} params.defaultPoolSize - Default pool size per user.
+     * @param {boolean | null} params.readWriteSplitting - Route SELECTs to HA replicas, writes and locked reads to the primary. Off by default, and only takes effect while HA is enabled. Replication is asynchronous, so a read issued immediately after a write may not observe it.
+     * @param {string | null} params.poolerCpuRequest - Pooler sidecar CPU request override (Kubernetes quantity, e.g. "250m" or "1"). Leave null for the proportional default (5% of DB CPU, floor 100m).
+     * @param {string | null} params.poolerCpuLimit - Pooler sidecar CPU limit override (Kubernetes quantity, e.g. "500m" or "1"). Leave null for the proportional default (10% of DB CPU, floor 200m). Changing this field rolls the database pod.
+     * @param {string | null} params.poolerMemoryRequest - Pooler sidecar memory request override (Kubernetes quantity, e.g. "128Mi" or "1Gi"). Leave null for the proportional default (7.5% of DB memory, floor 64Mi).
+     * @param {string | null} params.poolerMemoryLimit - Pooler sidecar memory limit override (Kubernetes quantity, e.g. "256Mi" or "1Gi"). Leave null for the proportional default (15% of DB memory, floor 128Mi). Changing this field rolls the database pod.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabasePooler>}
      */
     updatePooler(params: {
         databaseId: string;
-        mode?: string;
-        maxConnections?: number;
-        defaultPoolSize?: number;
-        readWriteSplitting?: boolean;
-        poolerCpuRequest?: string;
-        poolerCpuLimit?: string;
-        poolerMemoryRequest?: string;
-        poolerMemoryLimit?: string;
+        mode?: string | null;
+        maxConnections?: number | null;
+        defaultPoolSize?: number | null;
+        readWriteSplitting?: boolean | null;
+        poolerCpuRequest?: string | null;
+        poolerCpuLimit?: string | null;
+        poolerMemoryRequest?: string | null;
+        poolerMemoryLimit?: string | null;
     }): Promise<Models.DedicatedDatabasePooler>;
     /**
      * Update the connection pooler configuration for a dedicated database. Configure pool mode, max connections, and pool sizes.
      *
      * @param {string} databaseId - Database ID.
-     * @param {string} mode - Connection pool mode. Allowed values: transaction, session. Transaction mode returns connections to the pool after each transaction; session mode holds connections for the entire session lifetime.
-     * @param {number} maxConnections - Client-connection ceiling the pooler accepts. Supported on MySQL and MariaDB only; the PostgreSQL pooler has no client cap, so set networkMaxConnections on the database instead.
-     * @param {number} defaultPoolSize - Default pool size per user.
-     * @param {boolean} readWriteSplitting - Route SELECTs to HA replicas, writes and locked reads to the primary. Defaults to true when HA is enabled.
-     * @param {string} poolerCpuRequest - Pooler sidecar CPU request override (Kubernetes quantity, e.g. "250m" or "1"). Leave null for the proportional default (5% of DB CPU, floor 100m).
-     * @param {string} poolerCpuLimit - Pooler sidecar CPU limit override (Kubernetes quantity, e.g. "500m" or "1"). Leave null for the proportional default (10% of DB CPU, floor 200m). Changing this field rolls the database pod.
-     * @param {string} poolerMemoryRequest - Pooler sidecar memory request override (Kubernetes quantity, e.g. "128Mi" or "1Gi"). Leave null for the proportional default (7.5% of DB memory, floor 64Mi).
-     * @param {string} poolerMemoryLimit - Pooler sidecar memory limit override (Kubernetes quantity, e.g. "256Mi" or "1Gi"). Leave null for the proportional default (15% of DB memory, floor 128Mi). Changing this field rolls the database pod.
+     * @param {string | null} mode - Connection pool mode. Allowed values: transaction, session. Transaction mode returns connections to the pool after each transaction; session mode holds connections for the entire session lifetime.
+     * @param {number | null} maxConnections - Client-connection ceiling the pooler accepts. Supported on MySQL and MariaDB only; the PostgreSQL pooler has no client cap, so set networkMaxConnections on the database instead.
+     * @param {number | null} defaultPoolSize - Default pool size per user.
+     * @param {boolean | null} readWriteSplitting - Route SELECTs to HA replicas, writes and locked reads to the primary. Off by default, and only takes effect while HA is enabled. Replication is asynchronous, so a read issued immediately after a write may not observe it.
+     * @param {string | null} poolerCpuRequest - Pooler sidecar CPU request override (Kubernetes quantity, e.g. "250m" or "1"). Leave null for the proportional default (5% of DB CPU, floor 100m).
+     * @param {string | null} poolerCpuLimit - Pooler sidecar CPU limit override (Kubernetes quantity, e.g. "500m" or "1"). Leave null for the proportional default (10% of DB CPU, floor 200m). Changing this field rolls the database pod.
+     * @param {string | null} poolerMemoryRequest - Pooler sidecar memory request override (Kubernetes quantity, e.g. "128Mi" or "1Gi"). Leave null for the proportional default (7.5% of DB memory, floor 64Mi).
+     * @param {string | null} poolerMemoryLimit - Pooler sidecar memory limit override (Kubernetes quantity, e.g. "256Mi" or "1Gi"). Leave null for the proportional default (15% of DB memory, floor 128Mi). Changing this field rolls the database pod.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabasePooler>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     updatePooler(
         databaseId: string,
-        mode?: string,
-        maxConnections?: number,
-        defaultPoolSize?: number,
-        readWriteSplitting?: boolean,
-        poolerCpuRequest?: string,
-        poolerCpuLimit?: string,
-        poolerMemoryRequest?: string,
-        poolerMemoryLimit?: string,
+        mode?: string | null,
+        maxConnections?: number | null,
+        defaultPoolSize?: number | null,
+        readWriteSplitting?: boolean | null,
+        poolerCpuRequest?: string | null,
+        poolerCpuLimit?: string | null,
+        poolerMemoryRequest?: string | null,
+        poolerMemoryLimit?: string | null,
     ): Promise<Models.DedicatedDatabasePooler>;
     updatePooler(
         paramsOrFirst:
             | {
                   databaseId: string;
-                  mode?: string;
-                  maxConnections?: number;
-                  defaultPoolSize?: number;
-                  readWriteSplitting?: boolean;
-                  poolerCpuRequest?: string;
-                  poolerCpuLimit?: string;
-                  poolerMemoryRequest?: string;
-                  poolerMemoryLimit?: string;
+                  mode?: string | null;
+                  maxConnections?: number | null;
+                  defaultPoolSize?: number | null;
+                  readWriteSplitting?: boolean | null;
+                  poolerCpuRequest?: string | null;
+                  poolerCpuLimit?: string | null;
+                  poolerMemoryRequest?: string | null;
+                  poolerMemoryLimit?: string | null;
               }
             | string,
         ...rest: [
-            string?,
-            number?,
-            number?,
-            boolean?,
-            string?,
-            string?,
-            string?,
-            string?,
+            (string | null)?,
+            (number | null)?,
+            (number | null)?,
+            (boolean | null)?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
         ]
     ): Promise<Models.DedicatedDatabasePooler> {
         let params: {
             databaseId: string;
-            mode?: string;
-            maxConnections?: number;
-            defaultPoolSize?: number;
-            readWriteSplitting?: boolean;
-            poolerCpuRequest?: string;
-            poolerCpuLimit?: string;
-            poolerMemoryRequest?: string;
-            poolerMemoryLimit?: string;
+            mode?: string | null;
+            maxConnections?: number | null;
+            defaultPoolSize?: number | null;
+            readWriteSplitting?: boolean | null;
+            poolerCpuRequest?: string | null;
+            poolerCpuLimit?: string | null;
+            poolerMemoryRequest?: string | null;
+            poolerMemoryLimit?: string | null;
         };
 
         if (
@@ -3959,26 +4008,26 @@ export class Postgresql {
         ) {
             params = (paramsOrFirst || {}) as {
                 databaseId: string;
-                mode?: string;
-                maxConnections?: number;
-                defaultPoolSize?: number;
-                readWriteSplitting?: boolean;
-                poolerCpuRequest?: string;
-                poolerCpuLimit?: string;
-                poolerMemoryRequest?: string;
-                poolerMemoryLimit?: string;
+                mode?: string | null;
+                maxConnections?: number | null;
+                defaultPoolSize?: number | null;
+                readWriteSplitting?: boolean | null;
+                poolerCpuRequest?: string | null;
+                poolerCpuLimit?: string | null;
+                poolerMemoryRequest?: string | null;
+                poolerMemoryLimit?: string | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                mode: rest[0] as string,
-                maxConnections: rest[1] as number,
-                defaultPoolSize: rest[2] as number,
-                readWriteSplitting: rest[3] as boolean,
-                poolerCpuRequest: rest[4] as string,
-                poolerCpuLimit: rest[5] as string,
-                poolerMemoryRequest: rest[6] as string,
-                poolerMemoryLimit: rest[7] as string,
+                mode: rest[0] as string | null,
+                maxConnections: rest[1] as number | null,
+                defaultPoolSize: rest[2] as number | null,
+                readWriteSplitting: rest[3] as boolean | null,
+                poolerCpuRequest: rest[4] as string | null,
+                poolerCpuLimit: rest[5] as string | null,
+                poolerMemoryRequest: rest[6] as string | null,
+                poolerMemoryLimit: rest[7] as string | null,
             };
         }
 
@@ -4281,6 +4330,7 @@ export class Postgresql {
                         databaseId: '',
                         projectId: '',
                         type: 'backup',
+                        restoreMode: 'in_place',
                         status: 'pending',
                         error: '',
                     },
@@ -4294,29 +4344,42 @@ export class Postgresql {
     /**
      * Restore a database from a backup or to a specific point in time (PITR). For backup restoration, provide a backupId. For PITR, provide a targetTime as an ISO 8601 datetime. PITR requires the database to have PITR enabled and is only available for enterprise databases.
      *
+     * By default the backup is replayed over the database it was taken from. Pass `restoreMode` as `clone` to recover it onto a second workload beside this database instead: this database keeps serving its own data while the clone is filled, and the switch happens as soon as the clone is ready, on the endpoint and credentials it already had. Pass `autoPromote` as false to hold the clone until you promote it yourself. Pass `restoreMode` as `copy` to recover onto a separate database with its own endpoint, either one you name with `targetDatabaseId` or one provisioned as a copy of this database's engine, version, specification and replicas. Neither mode is available for a point-in-time recovery or an incremental backup.
+     *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.type - Restoration type. Allowed values: backup, pitr. Use "backup" to restore from a specific backup, or "pitr" for point-in-time recovery.
-     * @param {string} params.backupId - Backup ID to restore from (required for backup type).
-     * @param {string} params.targetDatabaseId - Existing database ID to restore into. The target must be distinct, ready, and use the same engine and version.
-     * @param {string} params.targetTime - Target time for PITR (required for pitr type) as an [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) datetime.
+     * @param {string | null} params.backupId - Backup ID to restore from (required for backup type).
+     * @param {string | null} params.targetDatabaseId - Existing database ID to restore into. The target must be distinct, ready, and use the same engine and version. Omit it on a copy restoration to have one provisioned. Not accepted for a clone, which is recovered inside this database.
+     * @param {string | null} params.targetTime - Target time for PITR (required for pitr type) as an [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) datetime.
+     * @param {string | null} params.restoreMode - Where the backup is restored. Allowed values: in_place, clone, copy. Use "clone" to recover onto a second workload beside this database and leave it serving until you promote — the endpoint and credentials do not change. Use "copy" to recover onto a separate database with its own endpoint, either one you name with targetDatabaseId or one Cloud provisions. Use "in_place" to replay the backup over this database. Defaults to "copy" when a targetDatabaseId is given, "in_place" otherwise.
+     * @param {string | null} params.targetName - Display name for the database a copy restoration provisions. Defaults to this database's name followed by "(restored)". Max length: 128 chars.
+     * @param {boolean} params.autoPromote - Whether a clone restoration switches the database over as soon as the recovery is ready. Default true: the restore finishes with the database serving the recovery point on the endpoint it already had, and the side it replaced kept briefly so the switch can be reversed. Pass false to hold the recovery until you call the promotion endpoint yourself.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseRestoration>}
      */
     createRestoration(params: {
         databaseId: string;
         type?: string;
-        backupId?: string;
-        targetDatabaseId?: string;
-        targetTime?: string;
+        backupId?: string | null;
+        targetDatabaseId?: string | null;
+        targetTime?: string | null;
+        restoreMode?: string | null;
+        targetName?: string | null;
+        autoPromote?: boolean;
     }): Promise<Models.DedicatedDatabaseRestoration>;
     /**
      * Restore a database from a backup or to a specific point in time (PITR). For backup restoration, provide a backupId. For PITR, provide a targetTime as an ISO 8601 datetime. PITR requires the database to have PITR enabled and is only available for enterprise databases.
      *
+     * By default the backup is replayed over the database it was taken from. Pass `restoreMode` as `clone` to recover it onto a second workload beside this database instead: this database keeps serving its own data while the clone is filled, and the switch happens as soon as the clone is ready, on the endpoint and credentials it already had. Pass `autoPromote` as false to hold the clone until you promote it yourself. Pass `restoreMode` as `copy` to recover onto a separate database with its own endpoint, either one you name with `targetDatabaseId` or one provisioned as a copy of this database's engine, version, specification and replicas. Neither mode is available for a point-in-time recovery or an incremental backup.
+     *
      * @param {string} databaseId - Database ID.
      * @param {string} type - Restoration type. Allowed values: backup, pitr. Use "backup" to restore from a specific backup, or "pitr" for point-in-time recovery.
-     * @param {string} backupId - Backup ID to restore from (required for backup type).
-     * @param {string} targetDatabaseId - Existing database ID to restore into. The target must be distinct, ready, and use the same engine and version.
-     * @param {string} targetTime - Target time for PITR (required for pitr type) as an [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) datetime.
+     * @param {string | null} backupId - Backup ID to restore from (required for backup type).
+     * @param {string | null} targetDatabaseId - Existing database ID to restore into. The target must be distinct, ready, and use the same engine and version. Omit it on a copy restoration to have one provisioned. Not accepted for a clone, which is recovered inside this database.
+     * @param {string | null} targetTime - Target time for PITR (required for pitr type) as an [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) datetime.
+     * @param {string | null} restoreMode - Where the backup is restored. Allowed values: in_place, clone, copy. Use "clone" to recover onto a second workload beside this database and leave it serving until you promote — the endpoint and credentials do not change. Use "copy" to recover onto a separate database with its own endpoint, either one you name with targetDatabaseId or one Cloud provisions. Use "in_place" to replay the backup over this database. Defaults to "copy" when a targetDatabaseId is given, "in_place" otherwise.
+     * @param {string | null} targetName - Display name for the database a copy restoration provisions. Defaults to this database's name followed by "(restored)". Max length: 128 chars.
+     * @param {boolean} autoPromote - Whether a clone restoration switches the database over as soon as the recovery is ready. Default true: the restore finishes with the database serving the recovery point on the endpoint it already had, and the side it replaced kept briefly so the switch can be reversed. Pass false to hold the recovery until you call the promotion endpoint yourself.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabaseRestoration>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4324,28 +4387,45 @@ export class Postgresql {
     createRestoration(
         databaseId: string,
         type?: string,
-        backupId?: string,
-        targetDatabaseId?: string,
-        targetTime?: string,
+        backupId?: string | null,
+        targetDatabaseId?: string | null,
+        targetTime?: string | null,
+        restoreMode?: string | null,
+        targetName?: string | null,
+        autoPromote?: boolean,
     ): Promise<Models.DedicatedDatabaseRestoration>;
     createRestoration(
         paramsOrFirst:
             | {
                   databaseId: string;
                   type?: string;
-                  backupId?: string;
-                  targetDatabaseId?: string;
-                  targetTime?: string;
+                  backupId?: string | null;
+                  targetDatabaseId?: string | null;
+                  targetTime?: string | null;
+                  restoreMode?: string | null;
+                  targetName?: string | null;
+                  autoPromote?: boolean;
               }
             | string,
-        ...rest: [string?, string?, string?, string?]
+        ...rest: [
+            string?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            boolean?,
+        ]
     ): Promise<Models.DedicatedDatabaseRestoration> {
         let params: {
             databaseId: string;
             type?: string;
-            backupId?: string;
-            targetDatabaseId?: string;
-            targetTime?: string;
+            backupId?: string | null;
+            targetDatabaseId?: string | null;
+            targetTime?: string | null;
+            restoreMode?: string | null;
+            targetName?: string | null;
+            autoPromote?: boolean;
         };
 
         if (
@@ -4356,17 +4436,23 @@ export class Postgresql {
             params = (paramsOrFirst || {}) as {
                 databaseId: string;
                 type?: string;
-                backupId?: string;
-                targetDatabaseId?: string;
-                targetTime?: string;
+                backupId?: string | null;
+                targetDatabaseId?: string | null;
+                targetTime?: string | null;
+                restoreMode?: string | null;
+                targetName?: string | null;
+                autoPromote?: boolean;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 type: rest[0] as string,
-                backupId: rest[1] as string,
-                targetDatabaseId: rest[2] as string,
-                targetTime: rest[3] as string,
+                backupId: rest[1] as string | null,
+                targetDatabaseId: rest[2] as string | null,
+                targetTime: rest[3] as string | null,
+                restoreMode: rest[4] as string | null,
+                targetName: rest[5] as string | null,
+                autoPromote: rest[6] as boolean,
             };
         }
 
@@ -4375,6 +4461,9 @@ export class Postgresql {
         const backupId = params.backupId;
         const targetDatabaseId = params.targetDatabaseId;
         const targetTime = params.targetTime;
+        const restoreMode = params.restoreMode;
+        const targetName = params.targetName;
+        const autoPromote = params.autoPromote;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -4398,6 +4487,15 @@ export class Postgresql {
         if (typeof targetTime !== 'undefined') {
             apiPayload['targetTime'] = targetTime;
         }
+        if (typeof restoreMode !== 'undefined') {
+            apiPayload['restoreMode'] = restoreMode;
+        }
+        if (typeof targetName !== 'undefined') {
+            apiPayload['targetName'] = targetName;
+        }
+        if (typeof autoPromote !== 'undefined') {
+            apiPayload['autoPromote'] = autoPromote;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -4417,6 +4515,7 @@ export class Postgresql {
                         databaseId: '',
                         projectId: '',
                         type: 'backup',
+                        restoreMode: 'in_place',
                         status: 'pending',
                         error: '',
                     },
@@ -4512,6 +4611,111 @@ export class Postgresql {
                         databaseId: '',
                         projectId: '',
                         type: 'backup',
+                        restoreMode: 'in_place',
+                        status: 'pending',
+                        error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
+     * Switch the database over to the clone a restoration recovered. The database keeps
+     * its endpoint and credentials; clients reconnect once. Writes made after the
+     * recovery point are discarded, and the side being replaced is retained briefly so
+     * the switch can be reversed.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.restorationId - Restoration ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseRestoration>}
+     */
+    promoteRestoration(params: {
+        databaseId: string;
+        restorationId: string;
+    }): Promise<Models.DedicatedDatabaseRestoration>;
+    /**
+     * Switch the database over to the clone a restoration recovered. The database keeps
+     * its endpoint and credentials; clients reconnect once. Writes made after the
+     * recovery point are discarded, and the side being replaced is retained briefly so
+     * the switch can be reversed.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} restorationId - Restoration ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseRestoration>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    promoteRestoration(
+        databaseId: string,
+        restorationId: string,
+    ): Promise<Models.DedicatedDatabaseRestoration>;
+    promoteRestoration(
+        paramsOrFirst: { databaseId: string; restorationId: string } | string,
+        ...rest: [string?]
+    ): Promise<Models.DedicatedDatabaseRestoration> {
+        let params: { databaseId: string; restorationId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                restorationId: string;
+            };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                restorationId: rest[0] as string,
+            };
+        }
+
+        const databaseId = params.databaseId;
+        const restorationId = params.restorationId;
+
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
+        }
+        if (typeof restorationId === 'undefined' || restorationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "restorationId"',
+            );
+        }
+        const apiPath =
+            '/postgresql/{databaseId}/restorations/{restorationId}/promotions'
+                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+                .replace(
+                    '{restorationId}',
+                    encodeURIComponent(String(restorationId)),
+                );
+        const apiPayload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseRestoration',
+            models: {
+                dedicatedDatabaseRestoration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        databaseId: '',
+                        projectId: '',
+                        type: 'backup',
+                        restoreMode: 'in_place',
                         status: 'pending',
                         error: '',
                     },

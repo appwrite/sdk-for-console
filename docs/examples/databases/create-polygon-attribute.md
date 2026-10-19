@@ -20,6 +20,7 @@ const result = await databases.createPolygonAttribute({
             [1, 2],
         ],
     ], // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

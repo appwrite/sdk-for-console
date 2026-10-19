@@ -9,6 +9,7 @@ const mysql = new Mysql(client);
 
 const result = await mysql.list({
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

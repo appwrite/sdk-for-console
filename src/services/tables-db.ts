@@ -113,6 +113,7 @@ export class TablesDB {
                     defaults: {
                         $id: '',
                         name: '',
+                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
@@ -166,9 +167,10 @@ export class TablesDB {
      * @param {string} params.databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {string} params.description - Optional description for the database.
      * @param {string} params.specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @param {number} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
-     * @param {string} params.syncMode - Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
+     * @param {string | null} params.syncMode - Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
@@ -176,9 +178,10 @@ export class TablesDB {
         databaseId: string;
         name: string;
         enabled?: boolean;
+        description?: string;
         specification?: string;
         replicas?: number;
-        syncMode?: string;
+        syncMode?: string | null;
     }): Promise<Models.Database>;
     /**
      * Create a new Database.
@@ -187,9 +190,10 @@ export class TablesDB {
      * @param {string} databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {string} description - Optional description for the database.
      * @param {string} specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @param {number} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
-     * @param {string} syncMode - Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
+     * @param {string | null} syncMode - Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -198,9 +202,10 @@ export class TablesDB {
         databaseId: string,
         name: string,
         enabled?: boolean,
+        description?: string,
         specification?: string,
         replicas?: number,
-        syncMode?: string,
+        syncMode?: string | null,
     ): Promise<Models.Database>;
     create(
         paramsOrFirst:
@@ -208,20 +213,29 @@ export class TablesDB {
                   databaseId: string;
                   name: string;
                   enabled?: boolean;
+                  description?: string;
                   specification?: string;
                   replicas?: number;
-                  syncMode?: string;
+                  syncMode?: string | null;
               }
             | string,
-        ...rest: [string?, boolean?, string?, number?, string?]
+        ...rest: [
+            string?,
+            boolean?,
+            string?,
+            string?,
+            number?,
+            (string | null)?,
+        ]
     ): Promise<Models.Database> {
         let params: {
             databaseId: string;
             name: string;
             enabled?: boolean;
+            description?: string;
             specification?: string;
             replicas?: number;
-            syncMode?: string;
+            syncMode?: string | null;
         };
 
         if (
@@ -233,24 +247,27 @@ export class TablesDB {
                 databaseId: string;
                 name: string;
                 enabled?: boolean;
+                description?: string;
                 specification?: string;
                 replicas?: number;
-                syncMode?: string;
+                syncMode?: string | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                specification: rest[2] as string,
-                replicas: rest[3] as number,
-                syncMode: rest[4] as string,
+                description: rest[2] as string,
+                specification: rest[3] as string,
+                replicas: rest[4] as number,
+                syncMode: rest[5] as string | null,
             };
         }
 
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
+        const description = params.description;
         const specification = params.specification;
         const replicas = params.replicas;
         const syncMode = params.syncMode;
@@ -273,6 +290,9 @@ export class TablesDB {
         }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
+        }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
         }
         if (typeof specification !== 'undefined') {
             apiPayload['specification'] = specification;
@@ -299,6 +319,7 @@ export class TablesDB {
                     defaults: {
                         $id: '',
                         name: '',
+                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
@@ -959,6 +980,7 @@ export class TablesDB {
                     defaults: {
                         $id: '',
                         name: '',
+                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
@@ -1011,9 +1033,10 @@ export class TablesDB {
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} params.specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
-     * @param {number} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
-     * @param {string} params.syncMode - Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
+     * @param {string | null} params.description - Optional description for the database.
+     * @param {string | null} params.specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
+     * @param {number | null} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
+     * @param {string | null} params.syncMode - Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
@@ -1021,9 +1044,10 @@ export class TablesDB {
         databaseId: string;
         name?: string;
         enabled?: boolean;
-        specification?: string;
-        replicas?: number;
-        syncMode?: string;
+        description?: string | null;
+        specification?: string | null;
+        replicas?: number | null;
+        syncMode?: string | null;
     }): Promise<Models.Database>;
     /**
      * Update a database by its unique ID.
@@ -1031,9 +1055,10 @@ export class TablesDB {
      * @param {string} databaseId - Database ID.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
-     * @param {number} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
-     * @param {string} syncMode - Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
+     * @param {string | null} description - Optional description for the database.
+     * @param {string | null} specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
+     * @param {number | null} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
+     * @param {string | null} syncMode - Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1042,9 +1067,10 @@ export class TablesDB {
         databaseId: string,
         name?: string,
         enabled?: boolean,
-        specification?: string,
-        replicas?: number,
-        syncMode?: string,
+        description?: string | null,
+        specification?: string | null,
+        replicas?: number | null,
+        syncMode?: string | null,
     ): Promise<Models.Database>;
     update(
         paramsOrFirst:
@@ -1052,20 +1078,29 @@ export class TablesDB {
                   databaseId: string;
                   name?: string;
                   enabled?: boolean;
-                  specification?: string;
-                  replicas?: number;
-                  syncMode?: string;
+                  description?: string | null;
+                  specification?: string | null;
+                  replicas?: number | null;
+                  syncMode?: string | null;
               }
             | string,
-        ...rest: [string?, boolean?, string?, number?, string?]
+        ...rest: [
+            string?,
+            boolean?,
+            (string | null)?,
+            (string | null)?,
+            (number | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.Database> {
         let params: {
             databaseId: string;
             name?: string;
             enabled?: boolean;
-            specification?: string;
-            replicas?: number;
-            syncMode?: string;
+            description?: string | null;
+            specification?: string | null;
+            replicas?: number | null;
+            syncMode?: string | null;
         };
 
         if (
@@ -1077,24 +1112,27 @@ export class TablesDB {
                 databaseId: string;
                 name?: string;
                 enabled?: boolean;
-                specification?: string;
-                replicas?: number;
-                syncMode?: string;
+                description?: string | null;
+                specification?: string | null;
+                replicas?: number | null;
+                syncMode?: string | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                specification: rest[2] as string,
-                replicas: rest[3] as number,
-                syncMode: rest[4] as string,
+                description: rest[2] as string | null,
+                specification: rest[3] as string | null,
+                replicas: rest[4] as number | null,
+                syncMode: rest[5] as string | null,
             };
         }
 
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
+        const description = params.description;
         const specification = params.specification;
         const replicas = params.replicas;
         const syncMode = params.syncMode;
@@ -1114,6 +1152,9 @@ export class TablesDB {
         }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
+        }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
         }
         if (typeof specification !== 'undefined') {
             apiPayload['specification'] = specification;
@@ -1140,6 +1181,7 @@ export class TablesDB {
                     defaults: {
                         $id: '',
                         name: '',
+                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
@@ -1245,33 +1287,33 @@ export class TablesDB {
      * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation also accepts this call as a repair once nothing is driving the operation it is stuck in. Repairing a failover that did not finish, a `failed` database, a stranded upgrade or migrate, or a stranded compute resize additionally requires `targetReplicaId` to name the member to promote, because the default target may be the member that operation already promoted.
      *
      * @param {string} params.databaseId - Database ID.
-     * @param {string} params.targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
+     * @param {string | null} params.targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      */
     createFailover(params: {
         databaseId: string;
-        targetReplicaId?: string;
+        targetReplicaId?: string | null;
     }): Promise<Models.DedicatedDatabase>;
     /**
      * Trigger a manual failover for a dedicated database with high availability enabled. Promotes a replica to primary. The failover runs asynchronously; poll the database document for status updates. A database left mid-operation also accepts this call as a repair once nothing is driving the operation it is stuck in. Repairing a failover that did not finish, a `failed` database, a stranded upgrade or migrate, or a stranded compute resize additionally requires `targetReplicaId` to name the member to promote, because the default target may be the member that operation already promoted.
      *
      * @param {string} databaseId - Database ID.
-     * @param {string} targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
+     * @param {string | null} targetReplicaId - Target replica ID to promote. If not specified, the healthiest replica is selected.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DedicatedDatabase>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     createFailover(
         databaseId: string,
-        targetReplicaId?: string,
+        targetReplicaId?: string | null,
     ): Promise<Models.DedicatedDatabase>;
     createFailover(
         paramsOrFirst:
-            { databaseId: string; targetReplicaId?: string } | string,
-        ...rest: [string?]
+            { databaseId: string; targetReplicaId?: string | null } | string,
+        ...rest: [(string | null)?]
     ): Promise<Models.DedicatedDatabase> {
-        let params: { databaseId: string; targetReplicaId?: string };
+        let params: { databaseId: string; targetReplicaId?: string | null };
 
         if (
             paramsOrFirst &&
@@ -1280,12 +1322,12 @@ export class TablesDB {
         ) {
             params = (paramsOrFirst || {}) as {
                 databaseId: string;
-                targetReplicaId?: string;
+                targetReplicaId?: string | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
-                targetReplicaId: rest[0] as string,
+                targetReplicaId: rest[0] as string | null,
             };
         }
 
@@ -1470,7 +1512,7 @@ export class TablesDB {
     }
 
     /**
-     * Start migrating a serverless TablesDB database onto a dedicated MySQL compute. Data is copied to the target while the source stays live, with a brief read-only window during cutover.
+     * Start migrating a serverless TablesDB database onto a dedicated MySQL compute. Data is copied to the target while the source stays live. Reads continue throughout. Row writes are held for up to a few seconds while routing switches to the dedicated compute; a write the switch has not absorbed within that hold is refused with `database_migration_cutover` and can be retried. Schema changes (tables, columns, indexes) are refused from creation until the cutover completes, and resume once the migration is `soaking`.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.specification - Dedicated compute specification to provision as the migration target (e.g. s-2vcpu-4gb). The migration always targets a dedicated compute, so `serverless` is not accepted.
@@ -1484,7 +1526,7 @@ export class TablesDB {
         autoCutover?: boolean;
     }): Promise<Models.DatabaseMigration>;
     /**
-     * Start migrating a serverless TablesDB database onto a dedicated MySQL compute. Data is copied to the target while the source stays live, with a brief read-only window during cutover.
+     * Start migrating a serverless TablesDB database onto a dedicated MySQL compute. Data is copied to the target while the source stays live. Reads continue throughout. Row writes are held for up to a few seconds while routing switches to the dedicated compute; a write the switch has not absorbed within that hold is refused with `database_migration_cutover` and can be retried. Schema changes (tables, columns, indexes) are refused from creation until the cutover completes, and resume once the migration is `soaking`.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} specification - Dedicated compute specification to provision as the migration target (e.g. s-2vcpu-4gb). The migration always targets a dedicated compute, so `serverless` is not accepted.
@@ -1771,7 +1813,7 @@ export class TablesDB {
     }
 
     /**
-     * Cut a verified TablesDB migration over to its dedicated compute. Only applies to a migration created with `autoCutover` disabled, which waits at `ready_to_cutover` until this is called. The routing flip happens shortly after this returns, with a brief read-only window. One call buys one attempt: a cutover that fails a check returns the migration to `verifying` and parks it again, so call this once more to retry.
+     * Cut a verified TablesDB migration over to its dedicated compute. Only applies to a migration created with `autoCutover` disabled, which waits at `ready_to_cutover` until this is called. The routing flip happens shortly after this returns. Reads are unaffected; row writes are held for up to a few seconds while it lands, and a write the flip has not absorbed within that hold is refused with `database_migration_cutover` and can be retried. One call buys one attempt: a cutover that fails a check returns the migration to `verifying` and parks it again, so call this once more to retry.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.migrationId - Migration ID.
@@ -1783,7 +1825,7 @@ export class TablesDB {
         migrationId: string;
     }): Promise<Models.DatabaseMigration>;
     /**
-     * Cut a verified TablesDB migration over to its dedicated compute. Only applies to a migration created with `autoCutover` disabled, which waits at `ready_to_cutover` until this is called. The routing flip happens shortly after this returns, with a brief read-only window. One call buys one attempt: a cutover that fails a check returns the migration to `verifying` and parks it again, so call this once more to retry.
+     * Cut a verified TablesDB migration over to its dedicated compute. Only applies to a migration created with `autoCutover` disabled, which waits at `ready_to_cutover` until this is called. The routing flip happens shortly after this returns. Reads are unaffected; row writes are held for up to a few seconds while it lands, and a write the flip has not absorbed within that hold is refused with `database_migration_cutover` and can be retried. One call buys one attempt: a cutover that fails a check returns the migration to `verifying` and parks it again, so call this once more to retry.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} migrationId - Migration ID.
@@ -2325,6 +2367,7 @@ export class TablesDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
+                        description: '',
                         enabled: true,
                         rowSecurity: false,
                         columns: [],
@@ -2344,6 +2387,7 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         status: '',
                         error: '',
@@ -2363,11 +2407,12 @@ export class TablesDB {
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.tableId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Table name. Max length: 128 chars.
-     * @param {string[]} params.permissions - An array of permissions strings. By default, no user is granted with any permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+     * @param {string[] | null} params.permissions - An array of permissions strings. By default, no user is granted with any permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.rowSecurity - Enables configuring permissions for individual rows. A user needs one of row or table level permissions to access a row. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.enabled - Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
      * @param {object[]} params.columns - Array of column definitions to create. Each column should contain: key (string), type (string: string, varchar, text, mediumtext, longtext, integer, bigint, double, boolean, datetime, point, linestring, polygon, email, url, ip, enum), size (integer, required for string and varchar types), required (boolean, optional), default (mixed, optional), array (boolean, optional), and type-specific options.
      * @param {object[]} params.indexes - Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial, trigram), attributes (array of column keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).
+     * @param {string} params.description - Optional description for the table.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Table>}
      */
@@ -2375,11 +2420,12 @@ export class TablesDB {
         databaseId: string;
         tableId: string;
         name: string;
-        permissions?: string[];
+        permissions?: string[] | null;
         rowSecurity?: boolean;
         enabled?: boolean;
         columns?: object[];
         indexes?: object[];
+        description?: string;
     }): Promise<Models.Table>;
     /**
      * Create a new Table. Before using this route, you should create a new database resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
@@ -2387,11 +2433,12 @@ export class TablesDB {
      * @param {string} databaseId - Database ID.
      * @param {string} tableId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Table name. Max length: 128 chars.
-     * @param {string[]} permissions - An array of permissions strings. By default, no user is granted with any permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+     * @param {string[] | null} permissions - An array of permissions strings. By default, no user is granted with any permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} rowSecurity - Enables configuring permissions for individual rows. A user needs one of row or table level permissions to access a row. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} enabled - Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
      * @param {object[]} columns - Array of column definitions to create. Each column should contain: key (string), type (string: string, varchar, text, mediumtext, longtext, integer, bigint, double, boolean, datetime, point, linestring, polygon, email, url, ip, enum), size (integer, required for string and varchar types), required (boolean, optional), default (mixed, optional), array (boolean, optional), and type-specific options.
      * @param {object[]} indexes - Array of index definitions to create. Each index should contain: key (string), type (string: key, fulltext, unique, spatial, trigram), attributes (array of column keys), orders (array of ASC/DESC, optional), and lengths (array of integers, optional).
+     * @param {string} description - Optional description for the table.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Table>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -2400,11 +2447,12 @@ export class TablesDB {
         databaseId: string,
         tableId: string,
         name: string,
-        permissions?: string[],
+        permissions?: string[] | null,
         rowSecurity?: boolean,
         enabled?: boolean,
         columns?: object[],
         indexes?: object[],
+        description?: string,
     ): Promise<Models.Table>;
     createTable(
         paramsOrFirst:
@@ -2412,32 +2460,35 @@ export class TablesDB {
                   databaseId: string;
                   tableId: string;
                   name: string;
-                  permissions?: string[];
+                  permissions?: string[] | null;
                   rowSecurity?: boolean;
                   enabled?: boolean;
                   columns?: object[];
                   indexes?: object[];
+                  description?: string;
               }
             | string,
         ...rest: [
             string?,
             string?,
-            string[]?,
+            (string[] | null)?,
             boolean?,
             boolean?,
             object[]?,
             object[]?,
+            string?,
         ]
     ): Promise<Models.Table> {
         let params: {
             databaseId: string;
             tableId: string;
             name: string;
-            permissions?: string[];
+            permissions?: string[] | null;
             rowSecurity?: boolean;
             enabled?: boolean;
             columns?: object[];
             indexes?: object[];
+            description?: string;
         };
 
         if (
@@ -2449,22 +2500,24 @@ export class TablesDB {
                 databaseId: string;
                 tableId: string;
                 name: string;
-                permissions?: string[];
+                permissions?: string[] | null;
                 rowSecurity?: boolean;
                 enabled?: boolean;
                 columns?: object[];
                 indexes?: object[];
+                description?: string;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 name: rest[1] as string,
-                permissions: rest[2] as string[],
+                permissions: rest[2] as string[] | null,
                 rowSecurity: rest[3] as boolean,
                 enabled: rest[4] as boolean,
                 columns: rest[5] as object[],
                 indexes: rest[6] as object[],
+                description: rest[7] as string,
             };
         }
 
@@ -2476,6 +2529,7 @@ export class TablesDB {
         const enabled = params.enabled;
         const columns = params.columns;
         const indexes = params.indexes;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -2516,6 +2570,9 @@ export class TablesDB {
         if (typeof indexes !== 'undefined') {
             apiPayload['indexes'] = indexes;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2536,6 +2593,7 @@ export class TablesDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
+                        description: '',
                         enabled: true,
                         rowSecurity: false,
                         columns: [],
@@ -2555,6 +2613,7 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         status: '',
                         error: '',
@@ -2648,6 +2707,7 @@ export class TablesDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
+                        description: '',
                         enabled: true,
                         rowSecurity: false,
                         columns: [],
@@ -2667,6 +2727,7 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         status: '',
                         error: '',
@@ -2686,10 +2747,11 @@ export class TablesDB {
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.tableId - Table ID.
      * @param {string} params.name - Table name. Max length: 128 chars.
-     * @param {string[]} params.permissions - An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+     * @param {string[] | null} params.permissions - An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.rowSecurity - Enables configuring permissions for individual rows. A user needs one of row or table-level permissions to access a row. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} params.enabled - Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
      * @param {boolean} params.purge - When true, purge all cached list responses for this table as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
+     * @param {string | null} params.description - Optional description for the table.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Table>}
      */
@@ -2697,10 +2759,11 @@ export class TablesDB {
         databaseId: string;
         tableId: string;
         name?: string;
-        permissions?: string[];
+        permissions?: string[] | null;
         rowSecurity?: boolean;
         enabled?: boolean;
         purge?: boolean;
+        description?: string | null;
     }): Promise<Models.Table>;
     /**
      * Update a table by its unique ID.
@@ -2708,10 +2771,11 @@ export class TablesDB {
      * @param {string} databaseId - Database ID.
      * @param {string} tableId - Table ID.
      * @param {string} name - Table name. Max length: 128 chars.
-     * @param {string[]} permissions - An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+     * @param {string[] | null} permissions - An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} rowSecurity - Enables configuring permissions for individual rows. A user needs one of row or table-level permissions to access a row. [Learn more about permissions](https://appwrite.io/docs/permissions).
      * @param {boolean} enabled - Is table enabled? When set to 'disabled', users cannot access the table but Server SDKs with and API key can still read and write to the table. No data is lost when this is toggled.
      * @param {boolean} purge - When true, purge all cached list responses for this table as part of the update. Use this to force readers to see fresh data immediately instead of waiting for the cache TTL to expire.
+     * @param {string | null} description - Optional description for the table.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Table>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -2720,10 +2784,11 @@ export class TablesDB {
         databaseId: string,
         tableId: string,
         name?: string,
-        permissions?: string[],
+        permissions?: string[] | null,
         rowSecurity?: boolean,
         enabled?: boolean,
         purge?: boolean,
+        description?: string | null,
     ): Promise<Models.Table>;
     updateTable(
         paramsOrFirst:
@@ -2731,22 +2796,32 @@ export class TablesDB {
                   databaseId: string;
                   tableId: string;
                   name?: string;
-                  permissions?: string[];
+                  permissions?: string[] | null;
                   rowSecurity?: boolean;
                   enabled?: boolean;
                   purge?: boolean;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, string[]?, boolean?, boolean?, boolean?]
+        ...rest: [
+            string?,
+            string?,
+            (string[] | null)?,
+            boolean?,
+            boolean?,
+            boolean?,
+            (string | null)?,
+        ]
     ): Promise<Models.Table> {
         let params: {
             databaseId: string;
             tableId: string;
             name?: string;
-            permissions?: string[];
+            permissions?: string[] | null;
             rowSecurity?: boolean;
             enabled?: boolean;
             purge?: boolean;
+            description?: string | null;
         };
 
         if (
@@ -2758,20 +2833,22 @@ export class TablesDB {
                 databaseId: string;
                 tableId: string;
                 name?: string;
-                permissions?: string[];
+                permissions?: string[] | null;
                 rowSecurity?: boolean;
                 enabled?: boolean;
                 purge?: boolean;
+                description?: string | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 name: rest[1] as string,
-                permissions: rest[2] as string[],
+                permissions: rest[2] as string[] | null,
                 rowSecurity: rest[3] as boolean,
                 enabled: rest[4] as boolean,
                 purge: rest[5] as boolean,
+                description: rest[6] as string | null,
             };
         }
 
@@ -2782,6 +2859,7 @@ export class TablesDB {
         const rowSecurity = params.rowSecurity;
         const enabled = params.enabled;
         const purge = params.purge;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -2812,6 +2890,9 @@ export class TablesDB {
         if (typeof purge !== 'undefined') {
             apiPayload['purge'] = purge;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -2832,6 +2913,7 @@ export class TablesDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
+                        description: '',
                         enabled: true,
                         rowSecurity: false,
                         columns: [],
@@ -2851,6 +2933,7 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         status: '',
                         error: '',
@@ -3060,10 +3143,11 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {number | bigint} params.min - Minimum value
-     * @param {number | bigint} params.max - Maximum value
-     * @param {number | bigint} params.xdefault - Default value. Cannot be set when column is required.
+     * @param {number | bigint | null} params.min - Minimum value
+     * @param {number | bigint | null} params.max - Maximum value
+     * @param {number | bigint | null} params.xdefault - Default value. Cannot be set when column is required.
      * @param {boolean} params.array - Is column an array?
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnBigint>}
      */
@@ -3072,10 +3156,11 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        min?: number | bigint;
-        max?: number | bigint;
-        xdefault?: number | bigint;
+        min?: number | bigint | null;
+        max?: number | bigint | null;
+        xdefault?: number | bigint | null;
         array?: boolean;
+        description?: string;
     }): Promise<Models.ColumnBigint>;
     /**
      * Create a bigint column. Optionally, minimum and maximum values can be provided.
@@ -3085,10 +3170,11 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {number | bigint} min - Minimum value
-     * @param {number | bigint} max - Maximum value
-     * @param {number | bigint} xdefault - Default value. Cannot be set when column is required.
+     * @param {number | bigint | null} min - Minimum value
+     * @param {number | bigint | null} max - Maximum value
+     * @param {number | bigint | null} xdefault - Default value. Cannot be set when column is required.
      * @param {boolean} array - Is column an array?
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnBigint>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -3098,10 +3184,11 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        min?: number | bigint,
-        max?: number | bigint,
-        xdefault?: number | bigint,
+        min?: number | bigint | null,
+        max?: number | bigint | null,
+        xdefault?: number | bigint | null,
         array?: boolean,
+        description?: string,
     ): Promise<Models.ColumnBigint>;
     createBigIntColumn(
         paramsOrFirst:
@@ -3110,20 +3197,22 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  min?: number | bigint;
-                  max?: number | bigint;
-                  xdefault?: number | bigint;
+                  min?: number | bigint | null;
+                  max?: number | bigint | null;
+                  xdefault?: number | bigint | null;
                   array?: boolean;
+                  description?: string;
               }
             | string,
         ...rest: [
             string?,
             string?,
             boolean?,
-            (number | bigint)?,
-            (number | bigint)?,
-            (number | bigint)?,
+            (number | bigint | null)?,
+            (number | bigint | null)?,
+            (number | bigint | null)?,
             boolean?,
+            string?,
         ]
     ): Promise<Models.ColumnBigint> {
         let params: {
@@ -3131,10 +3220,11 @@ export class TablesDB {
             tableId: string;
             key: string;
             required: boolean;
-            min?: number | bigint;
-            max?: number | bigint;
-            xdefault?: number | bigint;
+            min?: number | bigint | null;
+            max?: number | bigint | null;
+            xdefault?: number | bigint | null;
             array?: boolean;
+            description?: string;
         };
 
         if (
@@ -3147,10 +3237,11 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                min?: number | bigint;
-                max?: number | bigint;
-                xdefault?: number | bigint;
+                min?: number | bigint | null;
+                max?: number | bigint | null;
+                xdefault?: number | bigint | null;
                 array?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -3158,10 +3249,11 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                min: rest[3] as number | bigint,
-                max: rest[4] as number | bigint,
-                xdefault: rest[5] as number | bigint,
+                min: rest[3] as number | bigint | null,
+                max: rest[4] as number | bigint | null,
+                xdefault: rest[5] as number | bigint | null,
                 array: rest[6] as boolean,
+                description: rest[7] as string,
             };
         }
 
@@ -3173,6 +3265,7 @@ export class TablesDB {
         const max = params.max;
         const xdefault = params.xdefault;
         const array = params.array;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -3214,6 +3307,9 @@ export class TablesDB {
         if (typeof array !== 'undefined') {
             apiPayload['array'] = array;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3229,6 +3325,7 @@ export class TablesDB {
                 columnBigint: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -3250,10 +3347,11 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {number | bigint} params.xdefault - Default value. Cannot be set when column is required.
-     * @param {number | bigint} params.min - Minimum value
-     * @param {number | bigint} params.max - Maximum value
-     * @param {string} params.newKey - New Column Key.
+     * @param {number | bigint | null} params.xdefault - Default value. Cannot be set when column is required.
+     * @param {number | bigint | null} params.min - Minimum value
+     * @param {number | bigint | null} params.max - Maximum value
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnBigint>}
      */
@@ -3262,10 +3360,11 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: number | bigint;
-        min?: number | bigint;
-        max?: number | bigint;
-        newKey?: string;
+        xdefault?: number | bigint | null;
+        min?: number | bigint | null;
+        max?: number | bigint | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnBigint>;
     /**
      * Update a bigint column. Changing the `default` value will not update already existing rows.
@@ -3275,10 +3374,11 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {number | bigint} xdefault - Default value. Cannot be set when column is required.
-     * @param {number | bigint} min - Minimum value
-     * @param {number | bigint} max - Maximum value
-     * @param {string} newKey - New Column Key.
+     * @param {number | bigint | null} xdefault - Default value. Cannot be set when column is required.
+     * @param {number | bigint | null} min - Minimum value
+     * @param {number | bigint | null} max - Maximum value
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnBigint>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -3288,10 +3388,11 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: number | bigint,
-        min?: number | bigint,
-        max?: number | bigint,
-        newKey?: string,
+        xdefault?: number | bigint | null,
+        min?: number | bigint | null,
+        max?: number | bigint | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnBigint>;
     updateBigIntColumn(
         paramsOrFirst:
@@ -3300,20 +3401,22 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: number | bigint;
-                  min?: number | bigint;
-                  max?: number | bigint;
-                  newKey?: string;
+                  xdefault?: number | bigint | null;
+                  min?: number | bigint | null;
+                  max?: number | bigint | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
         ...rest: [
             string?,
             string?,
             boolean?,
-            (number | bigint)?,
-            (number | bigint)?,
-            (number | bigint)?,
-            string?,
+            (number | bigint | null)?,
+            (number | bigint | null)?,
+            (number | bigint | null)?,
+            (string | null)?,
+            (string | null)?,
         ]
     ): Promise<Models.ColumnBigint> {
         let params: {
@@ -3321,10 +3424,11 @@ export class TablesDB {
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: number | bigint;
-            min?: number | bigint;
-            max?: number | bigint;
-            newKey?: string;
+            xdefault?: number | bigint | null;
+            min?: number | bigint | null;
+            max?: number | bigint | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -3337,10 +3441,11 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: number | bigint;
-                min?: number | bigint;
-                max?: number | bigint;
-                newKey?: string;
+                xdefault?: number | bigint | null;
+                min?: number | bigint | null;
+                max?: number | bigint | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -3348,10 +3453,11 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as number | bigint,
-                min: rest[4] as number | bigint,
-                max: rest[5] as number | bigint,
-                newKey: rest[6] as string,
+                xdefault: rest[3] as number | bigint | null,
+                min: rest[4] as number | bigint | null,
+                max: rest[5] as number | bigint | null,
+                newKey: rest[6] as string | null,
+                description: rest[7] as string | null,
             };
         }
 
@@ -3363,6 +3469,7 @@ export class TablesDB {
         const min = params.min;
         const max = params.max;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -3408,6 +3515,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3423,6 +3533,7 @@ export class TablesDB {
                 columnBigint: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -3444,8 +3555,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {boolean} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {boolean | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} params.array - Is column an array?
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnBoolean>}
      */
@@ -3454,8 +3566,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: boolean;
+        xdefault?: boolean | null;
         array?: boolean;
+        description?: string;
     }): Promise<Models.ColumnBoolean>;
     /**
      * Create a boolean column.
@@ -3465,8 +3578,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {boolean} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {boolean | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} array - Is column an array?
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnBoolean>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -3476,8 +3590,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: boolean,
+        xdefault?: boolean | null,
         array?: boolean,
+        description?: string,
     ): Promise<Models.ColumnBoolean>;
     createBooleanColumn(
         paramsOrFirst:
@@ -3486,19 +3601,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: boolean;
+                  xdefault?: boolean | null;
                   array?: boolean;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, boolean?, boolean?, boolean?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (boolean | null)?,
+            boolean?,
+            string?,
+        ]
     ): Promise<Models.ColumnBoolean> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: boolean;
+            xdefault?: boolean | null;
             array?: boolean;
+            description?: string;
         };
 
         if (
@@ -3511,8 +3635,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: boolean;
+                xdefault?: boolean | null;
                 array?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -3520,8 +3645,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as boolean,
+                xdefault: rest[3] as boolean | null,
                 array: rest[4] as boolean,
+                description: rest[5] as string,
             };
         }
 
@@ -3531,6 +3657,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const array = params.array;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -3567,6 +3694,9 @@ export class TablesDB {
         if (typeof array !== 'undefined') {
             apiPayload['array'] = array;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3582,6 +3712,7 @@ export class TablesDB {
                 columnBoolean: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -3602,8 +3733,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {boolean} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} params.newKey - New Column Key.
+     * @param {boolean | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnBoolean>}
      */
@@ -3612,8 +3744,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: boolean;
-        newKey?: string;
+        xdefault?: boolean | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnBoolean>;
     /**
      * Update a boolean column. Changing the `default` value will not update already existing rows.
@@ -3622,8 +3755,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {boolean} xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} newKey - New Column Key.
+     * @param {boolean | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnBoolean>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -3633,8 +3767,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: boolean,
-        newKey?: string,
+        xdefault?: boolean | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnBoolean>;
     updateBooleanColumn(
         paramsOrFirst:
@@ -3643,19 +3778,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: boolean;
-                  newKey?: string;
+                  xdefault?: boolean | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, boolean?, string?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (boolean | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnBoolean> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: boolean;
-            newKey?: string;
+            xdefault?: boolean | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -3668,8 +3812,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: boolean;
-                newKey?: string;
+                xdefault?: boolean | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -3677,8 +3822,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as boolean,
-                newKey: rest[4] as string,
+                xdefault: rest[3] as boolean | null,
+                newKey: rest[4] as string | null,
+                description: rest[5] as string | null,
             };
         }
 
@@ -3688,6 +3834,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -3727,6 +3874,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3742,6 +3892,7 @@ export class TablesDB {
                 columnBoolean: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -3762,8 +3913,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for the column in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Cannot be set when column is required.
+     * @param {string | null} params.xdefault - Default value for the column in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Cannot be set when column is required.
      * @param {boolean} params.array - Is column an array?
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnDatetime>}
      */
@@ -3772,8 +3924,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
+        xdefault?: string | null;
         array?: boolean;
+        description?: string;
     }): Promise<Models.ColumnDatetime>;
     /**
      * Create a date time column according to the ISO 8601 standard.
@@ -3782,8 +3935,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for the column in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Cannot be set when column is required.
+     * @param {string | null} xdefault - Default value for the column in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Cannot be set when column is required.
      * @param {boolean} array - Is column an array?
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnDatetime>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -3793,8 +3947,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
+        xdefault?: string | null,
         array?: boolean,
+        description?: string,
     ): Promise<Models.ColumnDatetime>;
     createDatetimeColumn(
         paramsOrFirst:
@@ -3803,19 +3958,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
+                  xdefault?: string | null;
                   array?: boolean;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, boolean?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            boolean?,
+            string?,
+        ]
     ): Promise<Models.ColumnDatetime> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
+            xdefault?: string | null;
             array?: boolean;
+            description?: string;
         };
 
         if (
@@ -3828,8 +3992,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
+                xdefault?: string | null;
                 array?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -3837,8 +4002,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
+                xdefault: rest[3] as string | null,
                 array: rest[4] as boolean,
+                description: rest[5] as string,
             };
         }
 
@@ -3848,6 +4014,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const array = params.array;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -3884,6 +4051,9 @@ export class TablesDB {
         if (typeof array !== 'undefined') {
             apiPayload['array'] = array;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -3899,6 +4069,7 @@ export class TablesDB {
                 columnDatetime: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -3919,8 +4090,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} params.newKey - New Column Key.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnDatetime>}
      */
@@ -3929,8 +4101,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
-        newKey?: string;
+        xdefault?: string | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnDatetime>;
     /**
      * Update a date time column. Changing the `default` value will not update already existing rows.
@@ -3939,8 +4112,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} newKey - New Column Key.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnDatetime>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -3950,8 +4124,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
-        newKey?: string,
+        xdefault?: string | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnDatetime>;
     updateDatetimeColumn(
         paramsOrFirst:
@@ -3960,19 +4135,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
-                  newKey?: string;
+                  xdefault?: string | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, string?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnDatetime> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
-            newKey?: string;
+            xdefault?: string | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -3985,8 +4169,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
-                newKey?: string;
+                xdefault?: string | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -3994,8 +4179,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
-                newKey: rest[4] as string,
+                xdefault: rest[3] as string | null,
+                newKey: rest[4] as string | null,
+                description: rest[5] as string | null,
             };
         }
 
@@ -4005,6 +4191,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -4044,6 +4231,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -4059,6 +4249,7 @@ export class TablesDB {
                 columnDatetime: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -4080,8 +4271,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} params.array - Is column an array?
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnEmail>}
      */
@@ -4090,8 +4282,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
+        xdefault?: string | null;
         array?: boolean;
+        description?: string;
     }): Promise<Models.ColumnEmail>;
     /**
      * Create an email column.
@@ -4101,8 +4294,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} array - Is column an array?
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnEmail>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4112,8 +4306,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
+        xdefault?: string | null,
         array?: boolean,
+        description?: string,
     ): Promise<Models.ColumnEmail>;
     createEmailColumn(
         paramsOrFirst:
@@ -4122,19 +4317,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
+                  xdefault?: string | null;
                   array?: boolean;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, boolean?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            boolean?,
+            string?,
+        ]
     ): Promise<Models.ColumnEmail> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
+            xdefault?: string | null;
             array?: boolean;
+            description?: string;
         };
 
         if (
@@ -4147,8 +4351,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
+                xdefault?: string | null;
                 array?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -4156,8 +4361,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
+                xdefault: rest[3] as string | null,
                 array: rest[4] as boolean,
+                description: rest[5] as string,
             };
         }
 
@@ -4167,6 +4373,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const array = params.array;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -4202,6 +4409,9 @@ export class TablesDB {
         if (typeof array !== 'undefined') {
             apiPayload['array'] = array;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -4217,6 +4427,7 @@ export class TablesDB {
                 columnEmail: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -4239,8 +4450,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} params.newKey - New Column Key.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnEmail>}
      */
@@ -4249,8 +4461,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
-        newKey?: string;
+        xdefault?: string | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnEmail>;
     /**
      * Update an email column. Changing the `default` value will not update already existing rows.
@@ -4260,8 +4473,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} newKey - New Column Key.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnEmail>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4271,8 +4485,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
-        newKey?: string,
+        xdefault?: string | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnEmail>;
     updateEmailColumn(
         paramsOrFirst:
@@ -4281,19 +4496,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
-                  newKey?: string;
+                  xdefault?: string | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, string?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnEmail> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
-            newKey?: string;
+            xdefault?: string | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -4306,8 +4530,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
-                newKey?: string;
+                xdefault?: string | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -4315,8 +4540,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
-                newKey: rest[4] as string,
+                xdefault: rest[3] as string | null,
+                newKey: rest[4] as string | null,
+                description: rest[5] as string | null,
             };
         }
 
@@ -4326,6 +4552,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -4365,6 +4592,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -4380,6 +4610,7 @@ export class TablesDB {
                 columnEmail: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -4402,8 +4633,9 @@ export class TablesDB {
      * @param {string} params.key - Column Key.
      * @param {string[]} params.elements - Array of enum values.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} params.array - Is column an array?
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnEnum>}
      */
@@ -4413,8 +4645,9 @@ export class TablesDB {
         key: string;
         elements: string[];
         required: boolean;
-        xdefault?: string;
+        xdefault?: string | null;
         array?: boolean;
+        description?: string;
     }): Promise<Models.ColumnEnum>;
     /**
      * Create an enumeration column. The `elements` param acts as a white-list of accepted values for this column.
@@ -4424,8 +4657,9 @@ export class TablesDB {
      * @param {string} key - Column Key.
      * @param {string[]} elements - Array of enum values.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} array - Is column an array?
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnEnum>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4436,8 +4670,9 @@ export class TablesDB {
         key: string,
         elements: string[],
         required: boolean,
-        xdefault?: string,
+        xdefault?: string | null,
         array?: boolean,
+        description?: string,
     ): Promise<Models.ColumnEnum>;
     createEnumColumn(
         paramsOrFirst:
@@ -4447,11 +4682,20 @@ export class TablesDB {
                   key: string;
                   elements: string[];
                   required: boolean;
-                  xdefault?: string;
+                  xdefault?: string | null;
                   array?: boolean;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, string[]?, boolean?, string?, boolean?]
+        ...rest: [
+            string?,
+            string?,
+            string[]?,
+            boolean?,
+            (string | null)?,
+            boolean?,
+            string?,
+        ]
     ): Promise<Models.ColumnEnum> {
         let params: {
             databaseId: string;
@@ -4459,8 +4703,9 @@ export class TablesDB {
             key: string;
             elements: string[];
             required: boolean;
-            xdefault?: string;
+            xdefault?: string | null;
             array?: boolean;
+            description?: string;
         };
 
         if (
@@ -4474,8 +4719,9 @@ export class TablesDB {
                 key: string;
                 elements: string[];
                 required: boolean;
-                xdefault?: string;
+                xdefault?: string | null;
                 array?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -4484,8 +4730,9 @@ export class TablesDB {
                 key: rest[1] as string,
                 elements: rest[2] as string[],
                 required: rest[3] as boolean,
-                xdefault: rest[4] as string,
+                xdefault: rest[4] as string | null,
                 array: rest[5] as boolean,
+                description: rest[6] as string,
             };
         }
 
@@ -4496,6 +4743,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const array = params.array;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -4539,6 +4787,9 @@ export class TablesDB {
         if (typeof array !== 'undefined') {
             apiPayload['array'] = array;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -4554,6 +4805,7 @@ export class TablesDB {
                 columnEnum: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -4578,8 +4830,9 @@ export class TablesDB {
      * @param {string} params.key - Column Key.
      * @param {string[]} params.elements - Updated list of enum values.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} params.newKey - New Column Key.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnEnum>}
      */
@@ -4589,8 +4842,9 @@ export class TablesDB {
         key: string;
         elements: string[];
         required: boolean;
-        xdefault?: string;
-        newKey?: string;
+        xdefault?: string | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnEnum>;
     /**
      * Update an enum column. Changing the `default` value will not update already existing rows.
@@ -4601,8 +4855,9 @@ export class TablesDB {
      * @param {string} key - Column Key.
      * @param {string[]} elements - Updated list of enum values.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} newKey - New Column Key.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnEnum>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4613,8 +4868,9 @@ export class TablesDB {
         key: string,
         elements: string[],
         required: boolean,
-        xdefault?: string,
-        newKey?: string,
+        xdefault?: string | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnEnum>;
     updateEnumColumn(
         paramsOrFirst:
@@ -4624,11 +4880,20 @@ export class TablesDB {
                   key: string;
                   elements: string[];
                   required: boolean;
-                  xdefault?: string;
-                  newKey?: string;
+                  xdefault?: string | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, string[]?, boolean?, string?, string?]
+        ...rest: [
+            string?,
+            string?,
+            string[]?,
+            boolean?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnEnum> {
         let params: {
             databaseId: string;
@@ -4636,8 +4901,9 @@ export class TablesDB {
             key: string;
             elements: string[];
             required: boolean;
-            xdefault?: string;
-            newKey?: string;
+            xdefault?: string | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -4651,8 +4917,9 @@ export class TablesDB {
                 key: string;
                 elements: string[];
                 required: boolean;
-                xdefault?: string;
-                newKey?: string;
+                xdefault?: string | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -4661,8 +4928,9 @@ export class TablesDB {
                 key: rest[1] as string,
                 elements: rest[2] as string[],
                 required: rest[3] as boolean,
-                xdefault: rest[4] as string,
-                newKey: rest[5] as string,
+                xdefault: rest[4] as string | null,
+                newKey: rest[5] as string | null,
+                description: rest[6] as string | null,
             };
         }
 
@@ -4673,6 +4941,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -4720,6 +4989,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -4735,6 +5007,7 @@ export class TablesDB {
                 columnEnum: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -4758,10 +5031,11 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {number} params.min - Minimum value
-     * @param {number} params.max - Maximum value
-     * @param {number} params.xdefault - Default value. Cannot be set when required.
+     * @param {number | null} params.min - Minimum value
+     * @param {number | null} params.max - Maximum value
+     * @param {number | null} params.xdefault - Default value. Cannot be set when required.
      * @param {boolean} params.array - Is column an array?
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnFloat>}
      */
@@ -4770,10 +5044,11 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        min?: number;
-        max?: number;
-        xdefault?: number;
+        min?: number | null;
+        max?: number | null;
+        xdefault?: number | null;
         array?: boolean;
+        description?: string;
     }): Promise<Models.ColumnFloat>;
     /**
      * Create a float column. Optionally, minimum and maximum values can be provided.
@@ -4783,10 +5058,11 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {number} min - Minimum value
-     * @param {number} max - Maximum value
-     * @param {number} xdefault - Default value. Cannot be set when required.
+     * @param {number | null} min - Minimum value
+     * @param {number | null} max - Maximum value
+     * @param {number | null} xdefault - Default value. Cannot be set when required.
      * @param {boolean} array - Is column an array?
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnFloat>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4796,10 +5072,11 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        min?: number,
-        max?: number,
-        xdefault?: number,
+        min?: number | null,
+        max?: number | null,
+        xdefault?: number | null,
         array?: boolean,
+        description?: string,
     ): Promise<Models.ColumnFloat>;
     createFloatColumn(
         paramsOrFirst:
@@ -4808,20 +5085,22 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  min?: number;
-                  max?: number;
-                  xdefault?: number;
+                  min?: number | null;
+                  max?: number | null;
+                  xdefault?: number | null;
                   array?: boolean;
+                  description?: string;
               }
             | string,
         ...rest: [
             string?,
             string?,
             boolean?,
-            number?,
-            number?,
-            number?,
+            (number | null)?,
+            (number | null)?,
+            (number | null)?,
             boolean?,
+            string?,
         ]
     ): Promise<Models.ColumnFloat> {
         let params: {
@@ -4829,10 +5108,11 @@ export class TablesDB {
             tableId: string;
             key: string;
             required: boolean;
-            min?: number;
-            max?: number;
-            xdefault?: number;
+            min?: number | null;
+            max?: number | null;
+            xdefault?: number | null;
             array?: boolean;
+            description?: string;
         };
 
         if (
@@ -4845,10 +5125,11 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                min?: number;
-                max?: number;
-                xdefault?: number;
+                min?: number | null;
+                max?: number | null;
+                xdefault?: number | null;
                 array?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -4856,10 +5137,11 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                min: rest[3] as number,
-                max: rest[4] as number,
-                xdefault: rest[5] as number,
+                min: rest[3] as number | null,
+                max: rest[4] as number | null,
+                xdefault: rest[5] as number | null,
                 array: rest[6] as boolean,
+                description: rest[7] as string,
             };
         }
 
@@ -4871,6 +5153,7 @@ export class TablesDB {
         const max = params.max;
         const xdefault = params.xdefault;
         const array = params.array;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -4912,6 +5195,9 @@ export class TablesDB {
         if (typeof array !== 'undefined') {
             apiPayload['array'] = array;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -4927,6 +5213,7 @@ export class TablesDB {
                 columnFloat: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -4948,10 +5235,11 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {number} params.xdefault - Default value. Cannot be set when required.
-     * @param {number} params.min - Minimum value
-     * @param {number} params.max - Maximum value
-     * @param {string} params.newKey - New Column Key.
+     * @param {number | null} params.xdefault - Default value. Cannot be set when required.
+     * @param {number | null} params.min - Minimum value
+     * @param {number | null} params.max - Maximum value
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnFloat>}
      */
@@ -4960,10 +5248,11 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: number;
-        min?: number;
-        max?: number;
-        newKey?: string;
+        xdefault?: number | null;
+        min?: number | null;
+        max?: number | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnFloat>;
     /**
      * Update a float column. Changing the `default` value will not update already existing rows.
@@ -4973,10 +5262,11 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {number} xdefault - Default value. Cannot be set when required.
-     * @param {number} min - Minimum value
-     * @param {number} max - Maximum value
-     * @param {string} newKey - New Column Key.
+     * @param {number | null} xdefault - Default value. Cannot be set when required.
+     * @param {number | null} min - Minimum value
+     * @param {number | null} max - Maximum value
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnFloat>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4986,10 +5276,11 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: number,
-        min?: number,
-        max?: number,
-        newKey?: string,
+        xdefault?: number | null,
+        min?: number | null,
+        max?: number | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnFloat>;
     updateFloatColumn(
         paramsOrFirst:
@@ -4998,20 +5289,22 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: number;
-                  min?: number;
-                  max?: number;
-                  newKey?: string;
+                  xdefault?: number | null;
+                  min?: number | null;
+                  max?: number | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
         ...rest: [
             string?,
             string?,
             boolean?,
-            number?,
-            number?,
-            number?,
-            string?,
+            (number | null)?,
+            (number | null)?,
+            (number | null)?,
+            (string | null)?,
+            (string | null)?,
         ]
     ): Promise<Models.ColumnFloat> {
         let params: {
@@ -5019,10 +5312,11 @@ export class TablesDB {
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: number;
-            min?: number;
-            max?: number;
-            newKey?: string;
+            xdefault?: number | null;
+            min?: number | null;
+            max?: number | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -5035,10 +5329,11 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: number;
-                min?: number;
-                max?: number;
-                newKey?: string;
+                xdefault?: number | null;
+                min?: number | null;
+                max?: number | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -5046,10 +5341,11 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as number,
-                min: rest[4] as number,
-                max: rest[5] as number,
-                newKey: rest[6] as string,
+                xdefault: rest[3] as number | null,
+                min: rest[4] as number | null,
+                max: rest[5] as number | null,
+                newKey: rest[6] as string | null,
+                description: rest[7] as string | null,
             };
         }
 
@@ -5061,6 +5357,7 @@ export class TablesDB {
         const min = params.min;
         const max = params.max;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -5106,6 +5403,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -5121,6 +5421,7 @@ export class TablesDB {
                 columnFloat: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -5142,10 +5443,11 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {number | bigint} params.min - Minimum value
-     * @param {number | bigint} params.max - Maximum value
-     * @param {number | bigint} params.xdefault - Default value. Cannot be set when column is required.
+     * @param {number | bigint | null} params.min - Minimum value
+     * @param {number | bigint | null} params.max - Maximum value
+     * @param {number | bigint | null} params.xdefault - Default value. Cannot be set when column is required.
      * @param {boolean} params.array - Is column an array?
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnInteger>}
      */
@@ -5154,10 +5456,11 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        min?: number | bigint;
-        max?: number | bigint;
-        xdefault?: number | bigint;
+        min?: number | bigint | null;
+        max?: number | bigint | null;
+        xdefault?: number | bigint | null;
         array?: boolean;
+        description?: string;
     }): Promise<Models.ColumnInteger>;
     /**
      * Create an integer column. Optionally, minimum and maximum values can be provided.
@@ -5167,10 +5470,11 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {number | bigint} min - Minimum value
-     * @param {number | bigint} max - Maximum value
-     * @param {number | bigint} xdefault - Default value. Cannot be set when column is required.
+     * @param {number | bigint | null} min - Minimum value
+     * @param {number | bigint | null} max - Maximum value
+     * @param {number | bigint | null} xdefault - Default value. Cannot be set when column is required.
      * @param {boolean} array - Is column an array?
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnInteger>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -5180,10 +5484,11 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        min?: number | bigint,
-        max?: number | bigint,
-        xdefault?: number | bigint,
+        min?: number | bigint | null,
+        max?: number | bigint | null,
+        xdefault?: number | bigint | null,
         array?: boolean,
+        description?: string,
     ): Promise<Models.ColumnInteger>;
     createIntegerColumn(
         paramsOrFirst:
@@ -5192,20 +5497,22 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  min?: number | bigint;
-                  max?: number | bigint;
-                  xdefault?: number | bigint;
+                  min?: number | bigint | null;
+                  max?: number | bigint | null;
+                  xdefault?: number | bigint | null;
                   array?: boolean;
+                  description?: string;
               }
             | string,
         ...rest: [
             string?,
             string?,
             boolean?,
-            (number | bigint)?,
-            (number | bigint)?,
-            (number | bigint)?,
+            (number | bigint | null)?,
+            (number | bigint | null)?,
+            (number | bigint | null)?,
             boolean?,
+            string?,
         ]
     ): Promise<Models.ColumnInteger> {
         let params: {
@@ -5213,10 +5520,11 @@ export class TablesDB {
             tableId: string;
             key: string;
             required: boolean;
-            min?: number | bigint;
-            max?: number | bigint;
-            xdefault?: number | bigint;
+            min?: number | bigint | null;
+            max?: number | bigint | null;
+            xdefault?: number | bigint | null;
             array?: boolean;
+            description?: string;
         };
 
         if (
@@ -5229,10 +5537,11 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                min?: number | bigint;
-                max?: number | bigint;
-                xdefault?: number | bigint;
+                min?: number | bigint | null;
+                max?: number | bigint | null;
+                xdefault?: number | bigint | null;
                 array?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -5240,10 +5549,11 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                min: rest[3] as number | bigint,
-                max: rest[4] as number | bigint,
-                xdefault: rest[5] as number | bigint,
+                min: rest[3] as number | bigint | null,
+                max: rest[4] as number | bigint | null,
+                xdefault: rest[5] as number | bigint | null,
                 array: rest[6] as boolean,
+                description: rest[7] as string,
             };
         }
 
@@ -5255,6 +5565,7 @@ export class TablesDB {
         const max = params.max;
         const xdefault = params.xdefault;
         const array = params.array;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -5297,6 +5608,9 @@ export class TablesDB {
         if (typeof array !== 'undefined') {
             apiPayload['array'] = array;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -5312,6 +5626,7 @@ export class TablesDB {
                 columnInteger: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -5333,10 +5648,11 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {number | bigint} params.xdefault - Default value. Cannot be set when column is required.
-     * @param {number | bigint} params.min - Minimum value
-     * @param {number | bigint} params.max - Maximum value
-     * @param {string} params.newKey - New Column Key.
+     * @param {number | bigint | null} params.xdefault - Default value. Cannot be set when column is required.
+     * @param {number | bigint | null} params.min - Minimum value
+     * @param {number | bigint | null} params.max - Maximum value
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnInteger>}
      */
@@ -5345,10 +5661,11 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: number | bigint;
-        min?: number | bigint;
-        max?: number | bigint;
-        newKey?: string;
+        xdefault?: number | bigint | null;
+        min?: number | bigint | null;
+        max?: number | bigint | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnInteger>;
     /**
      * Update an integer column. Changing the `default` value will not update already existing rows.
@@ -5358,10 +5675,11 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {number | bigint} xdefault - Default value. Cannot be set when column is required.
-     * @param {number | bigint} min - Minimum value
-     * @param {number | bigint} max - Maximum value
-     * @param {string} newKey - New Column Key.
+     * @param {number | bigint | null} xdefault - Default value. Cannot be set when column is required.
+     * @param {number | bigint | null} min - Minimum value
+     * @param {number | bigint | null} max - Maximum value
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnInteger>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -5371,10 +5689,11 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: number | bigint,
-        min?: number | bigint,
-        max?: number | bigint,
-        newKey?: string,
+        xdefault?: number | bigint | null,
+        min?: number | bigint | null,
+        max?: number | bigint | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnInteger>;
     updateIntegerColumn(
         paramsOrFirst:
@@ -5383,20 +5702,22 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: number | bigint;
-                  min?: number | bigint;
-                  max?: number | bigint;
-                  newKey?: string;
+                  xdefault?: number | bigint | null;
+                  min?: number | bigint | null;
+                  max?: number | bigint | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
         ...rest: [
             string?,
             string?,
             boolean?,
-            (number | bigint)?,
-            (number | bigint)?,
-            (number | bigint)?,
-            string?,
+            (number | bigint | null)?,
+            (number | bigint | null)?,
+            (number | bigint | null)?,
+            (string | null)?,
+            (string | null)?,
         ]
     ): Promise<Models.ColumnInteger> {
         let params: {
@@ -5404,10 +5725,11 @@ export class TablesDB {
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: number | bigint;
-            min?: number | bigint;
-            max?: number | bigint;
-            newKey?: string;
+            xdefault?: number | bigint | null;
+            min?: number | bigint | null;
+            max?: number | bigint | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -5420,10 +5742,11 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: number | bigint;
-                min?: number | bigint;
-                max?: number | bigint;
-                newKey?: string;
+                xdefault?: number | bigint | null;
+                min?: number | bigint | null;
+                max?: number | bigint | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -5431,10 +5754,11 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as number | bigint,
-                min: rest[4] as number | bigint,
-                max: rest[5] as number | bigint,
-                newKey: rest[6] as string,
+                xdefault: rest[3] as number | bigint | null,
+                min: rest[4] as number | bigint | null,
+                max: rest[5] as number | bigint | null,
+                newKey: rest[6] as string | null,
+                description: rest[7] as string | null,
             };
         }
 
@@ -5446,6 +5770,7 @@ export class TablesDB {
         const min = params.min;
         const max = params.max;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -5491,6 +5816,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -5506,6 +5834,7 @@ export class TablesDB {
                 columnInteger: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -5527,8 +5856,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value. Cannot be set when column is required.
+     * @param {string | null} params.xdefault - Default value. Cannot be set when column is required.
      * @param {boolean} params.array - Is column an array?
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnIp>}
      */
@@ -5537,8 +5867,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
+        xdefault?: string | null;
         array?: boolean;
+        description?: string;
     }): Promise<Models.ColumnIp>;
     /**
      * Create IP address column.
@@ -5548,8 +5879,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value. Cannot be set when column is required.
+     * @param {string | null} xdefault - Default value. Cannot be set when column is required.
      * @param {boolean} array - Is column an array?
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnIp>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -5559,8 +5891,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
+        xdefault?: string | null,
         array?: boolean,
+        description?: string,
     ): Promise<Models.ColumnIp>;
     createIpColumn(
         paramsOrFirst:
@@ -5569,19 +5902,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
+                  xdefault?: string | null;
                   array?: boolean;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, boolean?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            boolean?,
+            string?,
+        ]
     ): Promise<Models.ColumnIp> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
+            xdefault?: string | null;
             array?: boolean;
+            description?: string;
         };
 
         if (
@@ -5594,8 +5936,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
+                xdefault?: string | null;
                 array?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -5603,8 +5946,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
+                xdefault: rest[3] as string | null,
                 array: rest[4] as boolean,
+                description: rest[5] as string,
             };
         }
 
@@ -5614,6 +5958,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const array = params.array;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -5649,6 +5994,9 @@ export class TablesDB {
         if (typeof array !== 'undefined') {
             apiPayload['array'] = array;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -5664,6 +6012,7 @@ export class TablesDB {
                 columnIp: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -5686,8 +6035,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value. Cannot be set when column is required.
-     * @param {string} params.newKey - New Column Key.
+     * @param {string | null} params.xdefault - Default value. Cannot be set when column is required.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnIp>}
      */
@@ -5696,8 +6046,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
-        newKey?: string;
+        xdefault?: string | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnIp>;
     /**
      * Update an ip column. Changing the `default` value will not update already existing rows.
@@ -5707,8 +6058,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value. Cannot be set when column is required.
-     * @param {string} newKey - New Column Key.
+     * @param {string | null} xdefault - Default value. Cannot be set when column is required.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnIp>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -5718,8 +6070,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
-        newKey?: string,
+        xdefault?: string | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnIp>;
     updateIpColumn(
         paramsOrFirst:
@@ -5728,19 +6081,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
-                  newKey?: string;
+                  xdefault?: string | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, string?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnIp> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
-            newKey?: string;
+            xdefault?: string | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -5753,8 +6115,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
-                newKey?: string;
+                xdefault?: string | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -5762,8 +6125,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
-                newKey: rest[4] as string,
+                xdefault: rest[3] as string | null,
+                newKey: rest[4] as string | null,
+                description: rest[5] as string | null,
             };
         }
 
@@ -5773,6 +6137,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -5812,6 +6177,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -5827,6 +6195,7 @@ export class TablesDB {
                 columnIp: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -5848,7 +6217,8 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {any[][]} params.xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
+     * @param {any[][] | null} params.xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnLine>}
      */
@@ -5857,7 +6227,8 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: any[][];
+        xdefault?: any[][] | null;
+        description?: string;
     }): Promise<Models.ColumnLine>;
     /**
      * Create a geometric line column.
@@ -5866,7 +6237,8 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {any[][]} xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
+     * @param {any[][] | null} xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnLine>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -5876,7 +6248,8 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: any[][],
+        xdefault?: any[][] | null,
+        description?: string,
     ): Promise<Models.ColumnLine>;
     createLineColumn(
         paramsOrFirst:
@@ -5885,17 +6258,19 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: any[][];
+                  xdefault?: any[][] | null;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, boolean?, any[][]?]
+        ...rest: [string?, string?, boolean?, (any[][] | null)?, string?]
     ): Promise<Models.ColumnLine> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: any[][];
+            xdefault?: any[][] | null;
+            description?: string;
         };
 
         if (
@@ -5908,7 +6283,8 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: any[][];
+                xdefault?: any[][] | null;
+                description?: string;
             };
         } else {
             params = {
@@ -5916,7 +6292,8 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as any[][],
+                xdefault: rest[3] as any[][] | null,
+                description: rest[4] as string,
             };
         }
 
@@ -5925,6 +6302,7 @@ export class TablesDB {
         const key = params.key;
         const required = params.required;
         const xdefault = params.xdefault;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -5957,6 +6335,9 @@ export class TablesDB {
         if (typeof xdefault !== 'undefined') {
             apiPayload['default'] = xdefault;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -5972,6 +6353,7 @@ export class TablesDB {
                 columnLine: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -5992,8 +6374,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {any[][]} params.xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
-     * @param {string} params.newKey - New Column Key.
+     * @param {any[][] | null} params.xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnLine>}
      */
@@ -6002,8 +6385,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: any[][];
-        newKey?: string;
+        xdefault?: any[][] | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnLine>;
     /**
      * Update a line column. Changing the `default` value will not update already existing rows.
@@ -6012,8 +6396,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {any[][]} xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
-     * @param {string} newKey - New Column Key.
+     * @param {any[][] | null} xdefault - Default value for column when not provided, two-dimensional array of coordinate pairs, [[longitude, latitude], [longitude, latitude], …], listing the vertices of the line in order. Cannot be set when column is required.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnLine>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -6023,8 +6408,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: any[][],
-        newKey?: string,
+        xdefault?: any[][] | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnLine>;
     updateLineColumn(
         paramsOrFirst:
@@ -6033,19 +6419,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: any[][];
-                  newKey?: string;
+                  xdefault?: any[][] | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, any[][]?, string?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (any[][] | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnLine> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: any[][];
-            newKey?: string;
+            xdefault?: any[][] | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -6058,8 +6453,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: any[][];
-                newKey?: string;
+                xdefault?: any[][] | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -6067,8 +6463,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as any[][],
-                newKey: rest[4] as string,
+                xdefault: rest[3] as any[][] | null,
+                newKey: rest[4] as string | null,
+                description: rest[5] as string | null,
             };
         }
 
@@ -6078,6 +6475,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -6112,6 +6510,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -6127,6 +6528,7 @@ export class TablesDB {
                 columnLine: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -6148,9 +6550,10 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} params.array - Is column an array?
      * @param {boolean} params.encrypt - Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnLongtext>}
      */
@@ -6159,9 +6562,10 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
+        xdefault?: string | null;
         array?: boolean;
         encrypt?: boolean;
+        description?: string;
     }): Promise<Models.ColumnLongtext>;
     /**
      * Create a longtext column.
@@ -6171,9 +6575,10 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} array - Is column an array?
      * @param {boolean} encrypt - Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnLongtext>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -6183,9 +6588,10 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
+        xdefault?: string | null,
         array?: boolean,
         encrypt?: boolean,
+        description?: string,
     ): Promise<Models.ColumnLongtext>;
     createLongtextColumn(
         paramsOrFirst:
@@ -6194,21 +6600,31 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
+                  xdefault?: string | null;
                   array?: boolean;
                   encrypt?: boolean;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, boolean?, boolean?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            boolean?,
+            boolean?,
+            string?,
+        ]
     ): Promise<Models.ColumnLongtext> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
+            xdefault?: string | null;
             array?: boolean;
             encrypt?: boolean;
+            description?: string;
         };
 
         if (
@@ -6221,9 +6637,10 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
+                xdefault?: string | null;
                 array?: boolean;
                 encrypt?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -6231,9 +6648,10 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
+                xdefault: rest[3] as string | null,
                 array: rest[4] as boolean,
                 encrypt: rest[5] as boolean,
+                description: rest[6] as string,
             };
         }
 
@@ -6244,6 +6662,7 @@ export class TablesDB {
         const xdefault = params.xdefault;
         const array = params.array;
         const encrypt = params.encrypt;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -6283,6 +6702,9 @@ export class TablesDB {
         if (typeof encrypt !== 'undefined') {
             apiPayload['encrypt'] = encrypt;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -6298,6 +6720,7 @@ export class TablesDB {
                 columnLongtext: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -6319,8 +6742,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} params.newKey - New Column Key.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnLongtext>}
      */
@@ -6329,8 +6753,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
-        newKey?: string;
+        xdefault?: string | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnLongtext>;
     /**
      * Update a longtext column. Changing the `default` value will not update already existing rows.
@@ -6340,8 +6765,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} newKey - New Column Key.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnLongtext>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -6351,8 +6777,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
-        newKey?: string,
+        xdefault?: string | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnLongtext>;
     updateLongtextColumn(
         paramsOrFirst:
@@ -6361,19 +6788,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
-                  newKey?: string;
+                  xdefault?: string | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, string?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnLongtext> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
-            newKey?: string;
+            xdefault?: string | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -6386,8 +6822,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
-                newKey?: string;
+                xdefault?: string | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -6395,8 +6832,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
-                newKey: rest[4] as string,
+                xdefault: rest[3] as string | null,
+                newKey: rest[4] as string | null,
+                description: rest[5] as string | null,
             };
         }
 
@@ -6406,6 +6844,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -6445,6 +6884,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -6460,6 +6902,7 @@ export class TablesDB {
                 columnLongtext: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -6481,9 +6924,10 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} params.array - Is column an array?
      * @param {boolean} params.encrypt - Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnMediumtext>}
      */
@@ -6492,9 +6936,10 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
+        xdefault?: string | null;
         array?: boolean;
         encrypt?: boolean;
+        description?: string;
     }): Promise<Models.ColumnMediumtext>;
     /**
      * Create a mediumtext column.
@@ -6504,9 +6949,10 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} array - Is column an array?
      * @param {boolean} encrypt - Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnMediumtext>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -6516,9 +6962,10 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
+        xdefault?: string | null,
         array?: boolean,
         encrypt?: boolean,
+        description?: string,
     ): Promise<Models.ColumnMediumtext>;
     createMediumtextColumn(
         paramsOrFirst:
@@ -6527,21 +6974,31 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
+                  xdefault?: string | null;
                   array?: boolean;
                   encrypt?: boolean;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, boolean?, boolean?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            boolean?,
+            boolean?,
+            string?,
+        ]
     ): Promise<Models.ColumnMediumtext> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
+            xdefault?: string | null;
             array?: boolean;
             encrypt?: boolean;
+            description?: string;
         };
 
         if (
@@ -6554,9 +7011,10 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
+                xdefault?: string | null;
                 array?: boolean;
                 encrypt?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -6564,9 +7022,10 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
+                xdefault: rest[3] as string | null,
                 array: rest[4] as boolean,
                 encrypt: rest[5] as boolean,
+                description: rest[6] as string,
             };
         }
 
@@ -6577,6 +7036,7 @@ export class TablesDB {
         const xdefault = params.xdefault;
         const array = params.array;
         const encrypt = params.encrypt;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -6616,6 +7076,9 @@ export class TablesDB {
         if (typeof encrypt !== 'undefined') {
             apiPayload['encrypt'] = encrypt;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -6631,6 +7094,7 @@ export class TablesDB {
                 columnMediumtext: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -6652,8 +7116,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} params.newKey - New Column Key.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnMediumtext>}
      */
@@ -6662,8 +7127,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
-        newKey?: string;
+        xdefault?: string | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnMediumtext>;
     /**
      * Update a mediumtext column. Changing the `default` value will not update already existing rows.
@@ -6673,8 +7139,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} newKey - New Column Key.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnMediumtext>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -6684,8 +7151,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
-        newKey?: string,
+        xdefault?: string | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnMediumtext>;
     updateMediumtextColumn(
         paramsOrFirst:
@@ -6694,19 +7162,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
-                  newKey?: string;
+                  xdefault?: string | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, string?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnMediumtext> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
-            newKey?: string;
+            xdefault?: string | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -6719,8 +7196,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
-                newKey?: string;
+                xdefault?: string | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -6728,8 +7206,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
-                newKey: rest[4] as string,
+                xdefault: rest[3] as string | null,
+                newKey: rest[4] as string | null,
+                description: rest[5] as string | null,
             };
         }
 
@@ -6739,6 +7218,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -6778,6 +7258,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -6793,6 +7276,7 @@ export class TablesDB {
                 columnMediumtext: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -6813,7 +7297,8 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {number[]} params.xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
+     * @param {number[] | null} params.xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPoint>}
      */
@@ -6822,7 +7307,8 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: number[];
+        xdefault?: number[] | null;
+        description?: string;
     }): Promise<Models.ColumnPoint>;
     /**
      * Create a geometric point column.
@@ -6831,7 +7317,8 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {number[]} xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
+     * @param {number[] | null} xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPoint>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -6841,7 +7328,8 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: number[],
+        xdefault?: number[] | null,
+        description?: string,
     ): Promise<Models.ColumnPoint>;
     createPointColumn(
         paramsOrFirst:
@@ -6850,17 +7338,19 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: number[];
+                  xdefault?: number[] | null;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, boolean?, number[]?]
+        ...rest: [string?, string?, boolean?, (number[] | null)?, string?]
     ): Promise<Models.ColumnPoint> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: number[];
+            xdefault?: number[] | null;
+            description?: string;
         };
 
         if (
@@ -6873,7 +7363,8 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: number[];
+                xdefault?: number[] | null;
+                description?: string;
             };
         } else {
             params = {
@@ -6881,7 +7372,8 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as number[],
+                xdefault: rest[3] as number[] | null,
+                description: rest[4] as string,
             };
         }
 
@@ -6890,6 +7382,7 @@ export class TablesDB {
         const key = params.key;
         const required = params.required;
         const xdefault = params.xdefault;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -6922,6 +7415,9 @@ export class TablesDB {
         if (typeof xdefault !== 'undefined') {
             apiPayload['default'] = xdefault;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -6937,6 +7433,7 @@ export class TablesDB {
                 columnPoint: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -6957,8 +7454,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {number[]} params.xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
-     * @param {string} params.newKey - New Column Key.
+     * @param {number[] | null} params.xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPoint>}
      */
@@ -6967,8 +7465,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: number[];
-        newKey?: string;
+        xdefault?: number[] | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnPoint>;
     /**
      * Update a point column. Changing the `default` value will not update already existing rows.
@@ -6977,8 +7476,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {number[]} xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
-     * @param {string} newKey - New Column Key.
+     * @param {number[] | null} xdefault - Default value for column when not provided, array of two numbers [longitude, latitude], representing a single coordinate. Cannot be set when column is required.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPoint>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -6988,8 +7488,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: number[],
-        newKey?: string,
+        xdefault?: number[] | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnPoint>;
     updatePointColumn(
         paramsOrFirst:
@@ -6998,19 +7499,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: number[];
-                  newKey?: string;
+                  xdefault?: number[] | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, number[]?, string?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (number[] | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnPoint> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: number[];
-            newKey?: string;
+            xdefault?: number[] | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -7023,8 +7533,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: number[];
-                newKey?: string;
+                xdefault?: number[] | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -7032,8 +7543,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as number[],
-                newKey: rest[4] as string,
+                xdefault: rest[3] as number[] | null,
+                newKey: rest[4] as string | null,
+                description: rest[5] as string | null,
             };
         }
 
@@ -7043,6 +7555,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -7077,6 +7590,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7092,6 +7608,7 @@ export class TablesDB {
                 columnPoint: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -7112,7 +7629,8 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {any[][]} params.xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
+     * @param {any[][] | null} params.xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPolygon>}
      */
@@ -7121,7 +7639,8 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: any[][];
+        xdefault?: any[][] | null;
+        description?: string;
     }): Promise<Models.ColumnPolygon>;
     /**
      * Create a geometric polygon column.
@@ -7130,7 +7649,8 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {any[][]} xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
+     * @param {any[][] | null} xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPolygon>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -7140,7 +7660,8 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: any[][],
+        xdefault?: any[][] | null,
+        description?: string,
     ): Promise<Models.ColumnPolygon>;
     createPolygonColumn(
         paramsOrFirst:
@@ -7149,17 +7670,19 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: any[][];
+                  xdefault?: any[][] | null;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, boolean?, any[][]?]
+        ...rest: [string?, string?, boolean?, (any[][] | null)?, string?]
     ): Promise<Models.ColumnPolygon> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: any[][];
+            xdefault?: any[][] | null;
+            description?: string;
         };
 
         if (
@@ -7172,7 +7695,8 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: any[][];
+                xdefault?: any[][] | null;
+                description?: string;
             };
         } else {
             params = {
@@ -7180,7 +7704,8 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as any[][],
+                xdefault: rest[3] as any[][] | null,
+                description: rest[4] as string,
             };
         }
 
@@ -7189,6 +7714,7 @@ export class TablesDB {
         const key = params.key;
         const required = params.required;
         const xdefault = params.xdefault;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -7222,6 +7748,9 @@ export class TablesDB {
         if (typeof xdefault !== 'undefined') {
             apiPayload['default'] = xdefault;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7237,6 +7766,7 @@ export class TablesDB {
                 columnPolygon: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -7257,8 +7787,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {any[][]} params.xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
-     * @param {string} params.newKey - New Column Key.
+     * @param {any[][] | null} params.xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPolygon>}
      */
@@ -7267,8 +7798,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: any[][];
-        newKey?: string;
+        xdefault?: any[][] | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnPolygon>;
     /**
      * Update a polygon column. Changing the `default` value will not update already existing rows.
@@ -7277,8 +7809,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {any[][]} xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
-     * @param {string} newKey - New Column Key.
+     * @param {any[][] | null} xdefault - Default value for column when not provided, three-dimensional array where the outer array holds one or more linear rings, [[[longitude, latitude], …], …], the first ring is the exterior boundary, any additional rings are interior holes, and each ring must start and end with the same coordinate pair. Cannot be set when column is required.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnPolygon>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -7288,8 +7821,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: any[][],
-        newKey?: string,
+        xdefault?: any[][] | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnPolygon>;
     updatePolygonColumn(
         paramsOrFirst:
@@ -7298,19 +7832,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: any[][];
-                  newKey?: string;
+                  xdefault?: any[][] | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, any[][]?, string?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (any[][] | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnPolygon> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: any[][];
-            newKey?: string;
+            xdefault?: any[][] | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -7323,8 +7866,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: any[][];
-                newKey?: string;
+                xdefault?: any[][] | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -7332,8 +7876,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as any[][],
-                newKey: rest[4] as string,
+                xdefault: rest[3] as any[][] | null,
+                newKey: rest[4] as string | null,
+                description: rest[5] as string | null,
             };
         }
 
@@ -7343,6 +7888,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -7377,6 +7923,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7392,6 +7941,7 @@ export class TablesDB {
                 columnPolygon: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -7414,9 +7964,10 @@ export class TablesDB {
      * @param {string} params.relatedTableId - Related Table ID.
      * @param {RelationshipType} params.type - Relationship type. Possible values are: oneToOne, oneToMany, manyToOne, manyToMany.
      * @param {boolean} params.twoWay - Is Two Way?
-     * @param {string} params.key - Column Key.
-     * @param {string} params.twoWayKey - Two Way Column Key.
+     * @param {string | null} params.key - Column Key.
+     * @param {string | null} params.twoWayKey - Two Way Column Key.
      * @param {RelationMutate} params.onDelete - Delete constraint. Possible values are: cascade, restrict, setNull.
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnRelationship>}
      */
@@ -7426,9 +7977,10 @@ export class TablesDB {
         relatedTableId: string;
         type: RelationshipType;
         twoWay?: boolean;
-        key?: string;
-        twoWayKey?: string;
+        key?: string | null;
+        twoWayKey?: string | null;
         onDelete?: RelationMutate;
+        description?: string;
     }): Promise<Models.ColumnRelationship>;
     /**
      * Create relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
@@ -7439,9 +7991,10 @@ export class TablesDB {
      * @param {string} relatedTableId - Related Table ID.
      * @param {RelationshipType} type - Relationship type. Possible values are: oneToOne, oneToMany, manyToOne, manyToMany.
      * @param {boolean} twoWay - Is Two Way?
-     * @param {string} key - Column Key.
-     * @param {string} twoWayKey - Two Way Column Key.
+     * @param {string | null} key - Column Key.
+     * @param {string | null} twoWayKey - Two Way Column Key.
      * @param {RelationMutate} onDelete - Delete constraint. Possible values are: cascade, restrict, setNull.
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnRelationship>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -7452,9 +8005,10 @@ export class TablesDB {
         relatedTableId: string,
         type: RelationshipType,
         twoWay?: boolean,
-        key?: string,
-        twoWayKey?: string,
+        key?: string | null,
+        twoWayKey?: string | null,
         onDelete?: RelationMutate,
+        description?: string,
     ): Promise<Models.ColumnRelationship>;
     createRelationshipColumn(
         paramsOrFirst:
@@ -7464,9 +8018,10 @@ export class TablesDB {
                   relatedTableId: string;
                   type: RelationshipType;
                   twoWay?: boolean;
-                  key?: string;
-                  twoWayKey?: string;
+                  key?: string | null;
+                  twoWayKey?: string | null;
                   onDelete?: RelationMutate;
+                  description?: string;
               }
             | string,
         ...rest: [
@@ -7474,9 +8029,10 @@ export class TablesDB {
             string?,
             RelationshipType?,
             boolean?,
-            string?,
-            string?,
+            (string | null)?,
+            (string | null)?,
             RelationMutate?,
+            string?,
         ]
     ): Promise<Models.ColumnRelationship> {
         let params: {
@@ -7485,9 +8041,10 @@ export class TablesDB {
             relatedTableId: string;
             type: RelationshipType;
             twoWay?: boolean;
-            key?: string;
-            twoWayKey?: string;
+            key?: string | null;
+            twoWayKey?: string | null;
             onDelete?: RelationMutate;
+            description?: string;
         };
 
         if (
@@ -7501,9 +8058,10 @@ export class TablesDB {
                 relatedTableId: string;
                 type: RelationshipType;
                 twoWay?: boolean;
-                key?: string;
-                twoWayKey?: string;
+                key?: string | null;
+                twoWayKey?: string | null;
                 onDelete?: RelationMutate;
+                description?: string;
             };
         } else {
             params = {
@@ -7512,9 +8070,10 @@ export class TablesDB {
                 relatedTableId: rest[1] as string,
                 type: rest[2] as RelationshipType,
                 twoWay: rest[3] as boolean,
-                key: rest[4] as string,
-                twoWayKey: rest[5] as string,
+                key: rest[4] as string | null,
+                twoWayKey: rest[5] as string | null,
                 onDelete: rest[6] as RelationMutate,
+                description: rest[7] as string,
             };
         }
 
@@ -7526,6 +8085,7 @@ export class TablesDB {
         const key = params.key;
         const twoWayKey = params.twoWayKey;
         const onDelete = params.onDelete;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -7568,6 +8128,9 @@ export class TablesDB {
         if (typeof onDelete !== 'undefined') {
             apiPayload['onDelete'] = onDelete;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7583,6 +8146,7 @@ export class TablesDB {
                 columnRelationship: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -7608,8 +8172,9 @@ export class TablesDB {
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
-     * @param {RelationMutate} params.onDelete - Delete constraint. Possible values are: cascade, restrict, setNull.
-     * @param {string} params.newKey - New Column Key.
+     * @param {RelationMutate | null} params.onDelete - Delete constraint. Possible values are: cascade, restrict, setNull.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnRelationship>}
      */
@@ -7617,8 +8182,9 @@ export class TablesDB {
         databaseId: string;
         tableId: string;
         key: string;
-        onDelete?: RelationMutate;
-        newKey?: string;
+        onDelete?: RelationMutate | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnRelationship>;
     /**
      * Update relationship column. [Learn more about relationship columns](https://appwrite.io/docs/databases-relationships#relationship-columns).
@@ -7627,8 +8193,9 @@ export class TablesDB {
      * @param {string} databaseId - Database ID.
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
-     * @param {RelationMutate} onDelete - Delete constraint. Possible values are: cascade, restrict, setNull.
-     * @param {string} newKey - New Column Key.
+     * @param {RelationMutate | null} onDelete - Delete constraint. Possible values are: cascade, restrict, setNull.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnRelationship>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -7637,8 +8204,9 @@ export class TablesDB {
         databaseId: string,
         tableId: string,
         key: string,
-        onDelete?: RelationMutate,
-        newKey?: string,
+        onDelete?: RelationMutate | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnRelationship>;
     updateRelationshipColumn(
         paramsOrFirst:
@@ -7646,18 +8214,26 @@ export class TablesDB {
                   databaseId: string;
                   tableId: string;
                   key: string;
-                  onDelete?: RelationMutate;
-                  newKey?: string;
+                  onDelete?: RelationMutate | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, RelationMutate?, string?]
+        ...rest: [
+            string?,
+            string?,
+            (RelationMutate | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnRelationship> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
-            onDelete?: RelationMutate;
-            newKey?: string;
+            onDelete?: RelationMutate | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -7669,16 +8245,18 @@ export class TablesDB {
                 databaseId: string;
                 tableId: string;
                 key: string;
-                onDelete?: RelationMutate;
-                newKey?: string;
+                onDelete?: RelationMutate | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 key: rest[1] as string,
-                onDelete: rest[2] as RelationMutate,
-                newKey: rest[3] as string,
+                onDelete: rest[2] as RelationMutate | null,
+                newKey: rest[3] as string | null,
+                description: rest[4] as string | null,
             };
         }
 
@@ -7687,6 +8265,7 @@ export class TablesDB {
         const key = params.key;
         const onDelete = params.onDelete;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -7713,6 +8292,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7728,6 +8310,7 @@ export class TablesDB {
                 columnRelationship: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -7755,9 +8338,10 @@ export class TablesDB {
      * @param {string} params.key - Column Key.
      * @param {number} params.size - Column size for text columns, in number of characters.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} params.array - Is column an array?
      * @param {boolean} params.encrypt - Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnString>}
      * @deprecated This API has been deprecated since 1.9.0. Please use `TablesDB.createTextColumn` instead.
@@ -7768,9 +8352,10 @@ export class TablesDB {
         key: string;
         size: number;
         required: boolean;
-        xdefault?: string;
+        xdefault?: string | null;
         array?: boolean;
         encrypt?: boolean;
+        description?: string;
     }): Promise<Models.ColumnString>;
     /**
      * Create a string column.
@@ -7781,9 +8366,10 @@ export class TablesDB {
      * @param {string} key - Column Key.
      * @param {number} size - Column size for text columns, in number of characters.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} array - Is column an array?
      * @param {boolean} encrypt - Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnString>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -7794,9 +8380,10 @@ export class TablesDB {
         key: string,
         size: number,
         required: boolean,
-        xdefault?: string,
+        xdefault?: string | null,
         array?: boolean,
         encrypt?: boolean,
+        description?: string,
     ): Promise<Models.ColumnString>;
     createStringColumn(
         paramsOrFirst:
@@ -7806,9 +8393,10 @@ export class TablesDB {
                   key: string;
                   size: number;
                   required: boolean;
-                  xdefault?: string;
+                  xdefault?: string | null;
                   array?: boolean;
                   encrypt?: boolean;
+                  description?: string;
               }
             | string,
         ...rest: [
@@ -7816,9 +8404,10 @@ export class TablesDB {
             string?,
             number?,
             boolean?,
+            (string | null)?,
+            boolean?,
+            boolean?,
             string?,
-            boolean?,
-            boolean?,
         ]
     ): Promise<Models.ColumnString> {
         let params: {
@@ -7827,9 +8416,10 @@ export class TablesDB {
             key: string;
             size: number;
             required: boolean;
-            xdefault?: string;
+            xdefault?: string | null;
             array?: boolean;
             encrypt?: boolean;
+            description?: string;
         };
 
         if (
@@ -7843,9 +8433,10 @@ export class TablesDB {
                 key: string;
                 size: number;
                 required: boolean;
-                xdefault?: string;
+                xdefault?: string | null;
                 array?: boolean;
                 encrypt?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -7854,9 +8445,10 @@ export class TablesDB {
                 key: rest[1] as string,
                 size: rest[2] as number,
                 required: rest[3] as boolean,
-                xdefault: rest[4] as string,
+                xdefault: rest[4] as string | null,
                 array: rest[5] as boolean,
                 encrypt: rest[6] as boolean,
+                description: rest[7] as string,
             };
         }
 
@@ -7868,6 +8460,7 @@ export class TablesDB {
         const xdefault = params.xdefault;
         const array = params.array;
         const encrypt = params.encrypt;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -7912,6 +8505,9 @@ export class TablesDB {
         if (typeof encrypt !== 'undefined') {
             apiPayload['encrypt'] = encrypt;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -7927,6 +8523,7 @@ export class TablesDB {
                 columnString: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -7949,9 +8546,10 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {number} params.size - Maximum size of the string column.
-     * @param {string} params.newKey - New Column Key.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {number | null} params.size - Maximum size of the string column.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnString>}
      * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.updateTextColumn` instead.
@@ -7961,9 +8559,10 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
-        size?: number;
-        newKey?: string;
+        xdefault?: string | null;
+        size?: number | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnString>;
     /**
      * Update a string column. Changing the `default` value will not update already existing rows.
@@ -7973,9 +8572,10 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {number} size - Maximum size of the string column.
-     * @param {string} newKey - New Column Key.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {number | null} size - Maximum size of the string column.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnString>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -7985,9 +8585,10 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
-        size?: number,
-        newKey?: string,
+        xdefault?: string | null,
+        size?: number | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnString>;
     updateStringColumn(
         paramsOrFirst:
@@ -7996,21 +8597,31 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
-                  size?: number;
-                  newKey?: string;
+                  xdefault?: string | null;
+                  size?: number | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, number?, string?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            (number | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnString> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
-            size?: number;
-            newKey?: string;
+            xdefault?: string | null;
+            size?: number | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -8023,9 +8634,10 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
-                size?: number;
-                newKey?: string;
+                xdefault?: string | null;
+                size?: number | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -8033,9 +8645,10 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
-                size: rest[4] as number,
-                newKey: rest[5] as string,
+                xdefault: rest[3] as string | null,
+                size: rest[4] as number | null,
+                newKey: rest[5] as string | null,
+                description: rest[6] as string | null,
             };
         }
 
@@ -8046,6 +8659,7 @@ export class TablesDB {
         const xdefault = params.xdefault;
         const size = params.size;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -8088,6 +8702,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -8103,6 +8720,7 @@ export class TablesDB {
                 columnString: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -8125,9 +8743,10 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} params.array - Is column an array?
      * @param {boolean} params.encrypt - Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnText>}
      */
@@ -8136,9 +8755,10 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
+        xdefault?: string | null;
         array?: boolean;
         encrypt?: boolean;
+        description?: string;
     }): Promise<Models.ColumnText>;
     /**
      * Create a text column.
@@ -8148,9 +8768,10 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} array - Is column an array?
      * @param {boolean} encrypt - Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnText>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -8160,9 +8781,10 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
+        xdefault?: string | null,
         array?: boolean,
         encrypt?: boolean,
+        description?: string,
     ): Promise<Models.ColumnText>;
     createTextColumn(
         paramsOrFirst:
@@ -8171,21 +8793,31 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
+                  xdefault?: string | null;
                   array?: boolean;
                   encrypt?: boolean;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, boolean?, boolean?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            boolean?,
+            boolean?,
+            string?,
+        ]
     ): Promise<Models.ColumnText> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
+            xdefault?: string | null;
             array?: boolean;
             encrypt?: boolean;
+            description?: string;
         };
 
         if (
@@ -8198,9 +8830,10 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
+                xdefault?: string | null;
                 array?: boolean;
                 encrypt?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -8208,9 +8841,10 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
+                xdefault: rest[3] as string | null,
                 array: rest[4] as boolean,
                 encrypt: rest[5] as boolean,
+                description: rest[6] as string,
             };
         }
 
@@ -8221,6 +8855,7 @@ export class TablesDB {
         const xdefault = params.xdefault;
         const array = params.array;
         const encrypt = params.encrypt;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -8259,6 +8894,9 @@ export class TablesDB {
         if (typeof encrypt !== 'undefined') {
             apiPayload['encrypt'] = encrypt;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -8274,6 +8912,7 @@ export class TablesDB {
                 columnText: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -8295,8 +8934,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} params.newKey - New Column Key.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnText>}
      */
@@ -8305,8 +8945,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
-        newKey?: string;
+        xdefault?: string | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnText>;
     /**
      * Update a text column. Changing the `default` value will not update already existing rows.
@@ -8316,8 +8957,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} newKey - New Column Key.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnText>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -8327,8 +8969,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
-        newKey?: string,
+        xdefault?: string | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnText>;
     updateTextColumn(
         paramsOrFirst:
@@ -8337,19 +8980,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
-                  newKey?: string;
+                  xdefault?: string | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, string?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnText> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
-            newKey?: string;
+            xdefault?: string | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -8362,8 +9014,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
-                newKey?: string;
+                xdefault?: string | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -8371,8 +9024,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
-                newKey: rest[4] as string,
+                xdefault: rest[3] as string | null,
+                newKey: rest[4] as string | null,
+                description: rest[5] as string | null,
             };
         }
 
@@ -8382,6 +9036,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -8421,6 +9076,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -8436,6 +9094,7 @@ export class TablesDB {
                 columnText: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -8457,8 +9116,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} params.array - Is column an array?
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnUrl>}
      */
@@ -8467,8 +9127,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
+        xdefault?: string | null;
         array?: boolean;
+        description?: string;
     }): Promise<Models.ColumnUrl>;
     /**
      * Create a URL column.
@@ -8478,8 +9139,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} array - Is column an array?
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnUrl>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -8489,8 +9151,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
+        xdefault?: string | null,
         array?: boolean,
+        description?: string,
     ): Promise<Models.ColumnUrl>;
     createUrlColumn(
         paramsOrFirst:
@@ -8499,19 +9162,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
+                  xdefault?: string | null;
                   array?: boolean;
+                  description?: string;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, boolean?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            boolean?,
+            string?,
+        ]
     ): Promise<Models.ColumnUrl> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
+            xdefault?: string | null;
             array?: boolean;
+            description?: string;
         };
 
         if (
@@ -8524,8 +9196,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
+                xdefault?: string | null;
                 array?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -8533,8 +9206,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
+                xdefault: rest[3] as string | null,
                 array: rest[4] as boolean,
+                description: rest[5] as string,
             };
         }
 
@@ -8544,6 +9218,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const array = params.array;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -8579,6 +9254,9 @@ export class TablesDB {
         if (typeof array !== 'undefined') {
             apiPayload['array'] = array;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -8594,6 +9272,7 @@ export class TablesDB {
                 columnUrl: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -8616,8 +9295,9 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} params.newKey - New Column Key.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnUrl>}
      */
@@ -8626,8 +9306,9 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
-        newKey?: string;
+        xdefault?: string | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnUrl>;
     /**
      * Update an url column. Changing the `default` value will not update already existing rows.
@@ -8637,8 +9318,9 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {string} newKey - New Column Key.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnUrl>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -8648,8 +9330,9 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
-        newKey?: string,
+        xdefault?: string | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnUrl>;
     updateUrlColumn(
         paramsOrFirst:
@@ -8658,19 +9341,28 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
-                  newKey?: string;
+                  xdefault?: string | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, string?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnUrl> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
-            newKey?: string;
+            xdefault?: string | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -8683,8 +9375,9 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
-                newKey?: string;
+                xdefault?: string | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -8692,8 +9385,9 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
-                newKey: rest[4] as string,
+                xdefault: rest[3] as string | null,
+                newKey: rest[4] as string | null,
+                description: rest[5] as string | null,
             };
         }
 
@@ -8703,6 +9397,7 @@ export class TablesDB {
         const required = params.required;
         const xdefault = params.xdefault;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -8742,6 +9437,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -8757,6 +9455,7 @@ export class TablesDB {
                 columnUrl: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -8780,9 +9479,10 @@ export class TablesDB {
      * @param {string} params.key - Column Key.
      * @param {number} params.size - Column size for varchar columns, in number of characters. Maximum size is 16381.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} params.array - Is column an array?
      * @param {boolean} params.encrypt - Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+     * @param {string} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnVarchar>}
      */
@@ -8792,9 +9492,10 @@ export class TablesDB {
         key: string;
         size: number;
         required: boolean;
-        xdefault?: string;
+        xdefault?: string | null;
         array?: boolean;
         encrypt?: boolean;
+        description?: string;
     }): Promise<Models.ColumnVarchar>;
     /**
      * Create a varchar column.
@@ -8805,9 +9506,10 @@ export class TablesDB {
      * @param {string} key - Column Key.
      * @param {number} size - Column size for varchar columns, in number of characters. Maximum size is 16381.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
      * @param {boolean} array - Is column an array?
      * @param {boolean} encrypt - Toggle encryption for the column. Encryption enhances security by not storing any plain text values in the database. However, encrypted columns cannot be queried.
+     * @param {string} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnVarchar>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -8818,9 +9520,10 @@ export class TablesDB {
         key: string,
         size: number,
         required: boolean,
-        xdefault?: string,
+        xdefault?: string | null,
         array?: boolean,
         encrypt?: boolean,
+        description?: string,
     ): Promise<Models.ColumnVarchar>;
     createVarcharColumn(
         paramsOrFirst:
@@ -8830,9 +9533,10 @@ export class TablesDB {
                   key: string;
                   size: number;
                   required: boolean;
-                  xdefault?: string;
+                  xdefault?: string | null;
                   array?: boolean;
                   encrypt?: boolean;
+                  description?: string;
               }
             | string,
         ...rest: [
@@ -8840,9 +9544,10 @@ export class TablesDB {
             string?,
             number?,
             boolean?,
+            (string | null)?,
+            boolean?,
+            boolean?,
             string?,
-            boolean?,
-            boolean?,
         ]
     ): Promise<Models.ColumnVarchar> {
         let params: {
@@ -8851,9 +9556,10 @@ export class TablesDB {
             key: string;
             size: number;
             required: boolean;
-            xdefault?: string;
+            xdefault?: string | null;
             array?: boolean;
             encrypt?: boolean;
+            description?: string;
         };
 
         if (
@@ -8867,9 +9573,10 @@ export class TablesDB {
                 key: string;
                 size: number;
                 required: boolean;
-                xdefault?: string;
+                xdefault?: string | null;
                 array?: boolean;
                 encrypt?: boolean;
+                description?: string;
             };
         } else {
             params = {
@@ -8878,9 +9585,10 @@ export class TablesDB {
                 key: rest[1] as string,
                 size: rest[2] as number,
                 required: rest[3] as boolean,
-                xdefault: rest[4] as string,
+                xdefault: rest[4] as string | null,
                 array: rest[5] as boolean,
                 encrypt: rest[6] as boolean,
+                description: rest[7] as string,
             };
         }
 
@@ -8892,6 +9600,7 @@ export class TablesDB {
         const xdefault = params.xdefault;
         const array = params.array;
         const encrypt = params.encrypt;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -8937,6 +9646,9 @@ export class TablesDB {
         if (typeof encrypt !== 'undefined') {
             apiPayload['encrypt'] = encrypt;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -8952,6 +9664,7 @@ export class TablesDB {
                 columnVarchar: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -8974,9 +9687,10 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} params.key - Column Key.
      * @param {boolean} params.required - Is column required?
-     * @param {string} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {number} params.size - Maximum size of the varchar column.
-     * @param {string} params.newKey - New Column Key.
+     * @param {string | null} params.xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {number | null} params.size - Maximum size of the varchar column.
+     * @param {string | null} params.newKey - New Column Key.
+     * @param {string | null} params.description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnVarchar>}
      */
@@ -8985,9 +9699,10 @@ export class TablesDB {
         tableId: string;
         key: string;
         required: boolean;
-        xdefault?: string;
-        size?: number;
-        newKey?: string;
+        xdefault?: string | null;
+        size?: number | null;
+        newKey?: string | null;
+        description?: string | null;
     }): Promise<Models.ColumnVarchar>;
     /**
      * Update a varchar column. Changing the `default` value will not update already existing rows.
@@ -8997,9 +9712,10 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable).
      * @param {string} key - Column Key.
      * @param {boolean} required - Is column required?
-     * @param {string} xdefault - Default value for column when not provided. Cannot be set when column is required.
-     * @param {number} size - Maximum size of the varchar column.
-     * @param {string} newKey - New Column Key.
+     * @param {string | null} xdefault - Default value for column when not provided. Cannot be set when column is required.
+     * @param {number | null} size - Maximum size of the varchar column.
+     * @param {string | null} newKey - New Column Key.
+     * @param {string | null} description - Optional description for the column.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnVarchar>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -9009,9 +9725,10 @@ export class TablesDB {
         tableId: string,
         key: string,
         required: boolean,
-        xdefault?: string,
-        size?: number,
-        newKey?: string,
+        xdefault?: string | null,
+        size?: number | null,
+        newKey?: string | null,
+        description?: string | null,
     ): Promise<Models.ColumnVarchar>;
     updateVarcharColumn(
         paramsOrFirst:
@@ -9020,21 +9737,31 @@ export class TablesDB {
                   tableId: string;
                   key: string;
                   required: boolean;
-                  xdefault?: string;
-                  size?: number;
-                  newKey?: string;
+                  xdefault?: string | null;
+                  size?: number | null;
+                  newKey?: string | null;
+                  description?: string | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string?, number?, string?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            (string | null)?,
+            (number | null)?,
+            (string | null)?,
+            (string | null)?,
+        ]
     ): Promise<Models.ColumnVarchar> {
         let params: {
             databaseId: string;
             tableId: string;
             key: string;
             required: boolean;
-            xdefault?: string;
-            size?: number;
-            newKey?: string;
+            xdefault?: string | null;
+            size?: number | null;
+            newKey?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -9047,9 +9774,10 @@ export class TablesDB {
                 tableId: string;
                 key: string;
                 required: boolean;
-                xdefault?: string;
-                size?: number;
-                newKey?: string;
+                xdefault?: string | null;
+                size?: number | null;
+                newKey?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
@@ -9057,9 +9785,10 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 key: rest[1] as string,
                 required: rest[2] as boolean,
-                xdefault: rest[3] as string,
-                size: rest[4] as number,
-                newKey: rest[5] as string,
+                xdefault: rest[3] as string | null,
+                size: rest[4] as number | null,
+                newKey: rest[5] as string | null,
+                description: rest[6] as string | null,
             };
         }
 
@@ -9070,6 +9799,7 @@ export class TablesDB {
         const xdefault = params.xdefault;
         const size = params.size;
         const newKey = params.newKey;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -9112,6 +9842,9 @@ export class TablesDB {
         if (typeof newKey !== 'undefined') {
             apiPayload['newKey'] = newKey;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -9127,6 +9860,7 @@ export class TablesDB {
                 columnVarchar: {
                     defaults: {
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -9491,6 +10225,7 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         status: '',
                         error: '',
@@ -9515,6 +10250,7 @@ export class TablesDB {
      * @param {string[]} params.columns - Array of columns to index. Maximum of 100 columns are allowed, each 32 characters long.
      * @param {OrderBy[]} params.orders - Array of index orders. Maximum of 100 orders are allowed.
      * @param {number[]} params.lengths - Length of index. Maximum of 100
+     * @param {string} params.description - Optional description for the index.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnIndex>}
      */
@@ -9526,6 +10262,7 @@ export class TablesDB {
         columns: string[];
         orders?: OrderBy[];
         lengths?: number[];
+        description?: string;
     }): Promise<Models.ColumnIndex>;
     /**
      * Creates an index on the columns listed. Your index should include all the columns you will query in a single request.
@@ -9538,6 +10275,7 @@ export class TablesDB {
      * @param {string[]} columns - Array of columns to index. Maximum of 100 columns are allowed, each 32 characters long.
      * @param {OrderBy[]} orders - Array of index orders. Maximum of 100 orders are allowed.
      * @param {number[]} lengths - Length of index. Maximum of 100
+     * @param {string} description - Optional description for the index.
      * @throws {AppwriteException}
      * @returns {Promise<Models.ColumnIndex>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -9550,6 +10288,7 @@ export class TablesDB {
         columns: string[],
         orders?: OrderBy[],
         lengths?: number[],
+        description?: string,
     ): Promise<Models.ColumnIndex>;
     createIndex(
         paramsOrFirst:
@@ -9561,6 +10300,7 @@ export class TablesDB {
                   columns: string[];
                   orders?: OrderBy[];
                   lengths?: number[];
+                  description?: string;
               }
             | string,
         ...rest: [
@@ -9570,6 +10310,7 @@ export class TablesDB {
             string[]?,
             OrderBy[]?,
             number[]?,
+            string?,
         ]
     ): Promise<Models.ColumnIndex> {
         let params: {
@@ -9580,6 +10321,7 @@ export class TablesDB {
             columns: string[];
             orders?: OrderBy[];
             lengths?: number[];
+            description?: string;
         };
 
         if (
@@ -9595,6 +10337,7 @@ export class TablesDB {
                 columns: string[];
                 orders?: OrderBy[];
                 lengths?: number[];
+                description?: string;
             };
         } else {
             params = {
@@ -9605,6 +10348,7 @@ export class TablesDB {
                 columns: rest[3] as string[],
                 orders: rest[4] as OrderBy[],
                 lengths: rest[5] as number[],
+                description: rest[6] as string,
             };
         }
 
@@ -9615,6 +10359,7 @@ export class TablesDB {
         const columns = params.columns;
         const orders = params.orders;
         const lengths = params.lengths;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -9656,6 +10401,9 @@ export class TablesDB {
         if (typeof lengths !== 'undefined') {
             apiPayload['lengths'] = lengths;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -9674,6 +10422,7 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         status: '',
                         error: '',
@@ -9780,6 +10529,7 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         status: '',
                         error: '',
@@ -9879,12 +10629,14 @@ export class TablesDB {
     /**
      * Get a list of all the user's rows in a given table. You can use the query params to filter your results.
      *
+     * Rows returned by aggregate, groupBy or distinct queries hold only the columns they select, group or aggregate, typed as a row types them, with a joined column named by its join alias (`alias.column`). They have no `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`, `$databaseId` or `$tableId` unless they select or group it, and neither does a right or full join row that no row of this table matched.
+     *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/products/databases/tables#create-table).
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
      * @param {string} params.transactionId - Transaction ID to read uncommitted changes within the transaction.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {number} params.ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
+     * @param {number} params.ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
      * @throws {AppwriteException}
      * @returns {Promise<Models.RowList<Row>>}
      */
@@ -9899,12 +10651,14 @@ export class TablesDB {
     /**
      * Get a list of all the user's rows in a given table. You can use the query params to filter your results.
      *
+     * Rows returned by aggregate, groupBy or distinct queries hold only the columns they select, group or aggregate, typed as a row types them, with a joined column named by its join alias (`alias.column`). They have no `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`, `$databaseId` or `$tableId` unless they select or group it, and neither does a right or full join row that no row of this table matched.
+     *
      * @param {string} databaseId - Database ID.
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/products/databases/tables#create-table).
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
      * @param {string} transactionId - Transaction ID to read uncommitted changes within the transaction.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {number} ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Must be between 0 and 86400 (24 hours).
+     * @param {number} ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
      * @throws {AppwriteException}
      * @returns {Promise<Models.RowList<Row>>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -10042,8 +10796,8 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable). Make sure to define columns before creating rows.
      * @param {string} params.rowId - Row ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {Row extends Models.DefaultRow ? Partial<Models.Row> & Record<string, any> : Partial<Models.Row> & Omit<Row, keyof Models.Row>} params.data - Row data as JSON object.
-     * @param {string[]} params.permissions - An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
-     * @param {string} params.transactionId - Transaction ID for staging the operation.
+     * @param {string[] | null} params.permissions - An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+     * @param {string | null} params.transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Row>}
      */
@@ -10054,8 +10808,8 @@ export class TablesDB {
         data: Row extends Models.DefaultRow
             ? Partial<Models.Row> & Record<string, any>
             : Partial<Models.Row> & Omit<Row, keyof Models.Row>;
-        permissions?: string[];
-        transactionId?: string;
+        permissions?: string[] | null;
+        transactionId?: string | null;
     }): Promise<Row>;
     /**
      * Create a new Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
@@ -10064,8 +10818,8 @@ export class TablesDB {
      * @param {string} tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable). Make sure to define columns before creating rows.
      * @param {string} rowId - Row ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {Row extends Models.DefaultRow ? Partial<Models.Row> & Record<string, any> : Partial<Models.Row> & Omit<Row, keyof Models.Row>} data - Row data as JSON object.
-     * @param {string[]} permissions - An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
-     * @param {string} transactionId - Transaction ID for staging the operation.
+     * @param {string[] | null} permissions - An array of permissions strings. By default, only the current user is granted all permissions. [Learn more about permissions](https://appwrite.io/docs/permissions).
+     * @param {string | null} transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Row>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -10077,8 +10831,8 @@ export class TablesDB {
         data: Row extends Models.DefaultRow
             ? Partial<Models.Row> & Record<string, any>
             : Partial<Models.Row> & Omit<Row, keyof Models.Row>,
-        permissions?: string[],
-        transactionId?: string,
+        permissions?: string[] | null,
+        transactionId?: string | null,
     ): Promise<Row>;
     createRow<Row extends Models.Row = Models.DefaultRow>(
         paramsOrFirst:
@@ -10089,8 +10843,8 @@ export class TablesDB {
                   data: Row extends Models.DefaultRow
                       ? Partial<Models.Row> & Record<string, any>
                       : Partial<Models.Row> & Omit<Row, keyof Models.Row>;
-                  permissions?: string[];
-                  transactionId?: string;
+                  permissions?: string[] | null;
+                  transactionId?: string | null;
               }
             | string,
         ...rest: [
@@ -10099,8 +10853,8 @@ export class TablesDB {
             (Row extends Models.DefaultRow
                 ? Partial<Models.Row> & Record<string, any>
                 : Partial<Models.Row> & Omit<Row, keyof Models.Row>)?,
-            string[]?,
-            string?,
+            (string[] | null)?,
+            (string | null)?,
         ]
     ): Promise<Row> {
         let params: {
@@ -10110,8 +10864,8 @@ export class TablesDB {
             data: Row extends Models.DefaultRow
                 ? Partial<Models.Row> & Record<string, any>
                 : Partial<Models.Row> & Omit<Row, keyof Models.Row>;
-            permissions?: string[];
-            transactionId?: string;
+            permissions?: string[] | null;
+            transactionId?: string | null;
         };
 
         if (
@@ -10126,8 +10880,8 @@ export class TablesDB {
                 data: Row extends Models.DefaultRow
                     ? Partial<Models.Row> & Record<string, any>
                     : Partial<Models.Row> & Omit<Row, keyof Models.Row>;
-                permissions?: string[];
-                transactionId?: string;
+                permissions?: string[] | null;
+                transactionId?: string | null;
             };
         } else {
             params = {
@@ -10137,8 +10891,8 @@ export class TablesDB {
                 data: rest[2] as Row extends Models.DefaultRow
                     ? Partial<Models.Row> & Record<string, any>
                     : Partial<Models.Row> & Omit<Row, keyof Models.Row>,
-                permissions: rest[3] as string[],
-                transactionId: rest[4] as string,
+                permissions: rest[3] as string[] | null,
+                transactionId: rest[4] as string | null,
             };
         }
 
@@ -10216,7 +10970,7 @@ export class TablesDB {
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable). Make sure to define columns before creating rows.
      * @param {object[]} params.rows - Array of rows data as JSON objects.
-     * @param {string} params.transactionId - Transaction ID for staging the operation.
+     * @param {string | null} params.transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Models.RowList<Row>>}
      */
@@ -10224,7 +10978,7 @@ export class TablesDB {
         databaseId: string;
         tableId: string;
         rows: object[];
-        transactionId?: string;
+        transactionId?: string | null;
     }): Promise<Models.RowList<Row>>;
     /**
      * Create new Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
@@ -10232,7 +10986,7 @@ export class TablesDB {
      * @param {string} databaseId - Database ID.
      * @param {string} tableId - Table ID. You can create a new table using the Database service [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable). Make sure to define columns before creating rows.
      * @param {object[]} rows - Array of rows data as JSON objects.
-     * @param {string} transactionId - Transaction ID for staging the operation.
+     * @param {string | null} transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Models.RowList<Row>>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -10241,7 +10995,7 @@ export class TablesDB {
         databaseId: string,
         tableId: string,
         rows: object[],
-        transactionId?: string,
+        transactionId?: string | null,
     ): Promise<Models.RowList<Row>>;
     createRows<Row extends Models.Row = Models.DefaultRow>(
         paramsOrFirst:
@@ -10249,16 +11003,16 @@ export class TablesDB {
                   databaseId: string;
                   tableId: string;
                   rows: object[];
-                  transactionId?: string;
+                  transactionId?: string | null;
               }
             | string,
-        ...rest: [string?, object[]?, string?]
+        ...rest: [string?, object[]?, (string | null)?]
     ): Promise<Models.RowList<Row>> {
         let params: {
             databaseId: string;
             tableId: string;
             rows: object[];
-            transactionId?: string;
+            transactionId?: string | null;
         };
 
         if (
@@ -10270,14 +11024,14 @@ export class TablesDB {
                 databaseId: string;
                 tableId: string;
                 rows: object[];
-                transactionId?: string;
+                transactionId?: string | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 rows: rest[1] as object[],
-                transactionId: rest[2] as string,
+                transactionId: rest[2] as string | null,
             };
         }
 
@@ -10356,7 +11110,7 @@ export class TablesDB {
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.tableId - Table ID.
      * @param {object[]} params.rows - Array of row data as JSON objects. May contain partial rows.
-     * @param {string} params.transactionId - Transaction ID for staging the operation.
+     * @param {string | null} params.transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Models.RowList<Row>>}
      */
@@ -10364,7 +11118,7 @@ export class TablesDB {
         databaseId: string;
         tableId: string;
         rows: object[];
-        transactionId?: string;
+        transactionId?: string | null;
     }): Promise<Models.RowList<Row>>;
     /**
      * Create or update Rows. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
@@ -10373,7 +11127,7 @@ export class TablesDB {
      * @param {string} databaseId - Database ID.
      * @param {string} tableId - Table ID.
      * @param {object[]} rows - Array of row data as JSON objects. May contain partial rows.
-     * @param {string} transactionId - Transaction ID for staging the operation.
+     * @param {string | null} transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Models.RowList<Row>>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -10382,7 +11136,7 @@ export class TablesDB {
         databaseId: string,
         tableId: string,
         rows: object[],
-        transactionId?: string,
+        transactionId?: string | null,
     ): Promise<Models.RowList<Row>>;
     upsertRows<Row extends Models.Row = Models.DefaultRow>(
         paramsOrFirst:
@@ -10390,16 +11144,16 @@ export class TablesDB {
                   databaseId: string;
                   tableId: string;
                   rows: object[];
-                  transactionId?: string;
+                  transactionId?: string | null;
               }
             | string,
-        ...rest: [string?, object[]?, string?]
+        ...rest: [string?, object[]?, (string | null)?]
     ): Promise<Models.RowList<Row>> {
         let params: {
             databaseId: string;
             tableId: string;
             rows: object[];
-            transactionId?: string;
+            transactionId?: string | null;
         };
 
         if (
@@ -10411,14 +11165,14 @@ export class TablesDB {
                 databaseId: string;
                 tableId: string;
                 rows: object[];
-                transactionId?: string;
+                transactionId?: string | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 tableId: rest[0] as string,
                 rows: rest[1] as object[],
-                transactionId: rest[2] as string,
+                transactionId: rest[2] as string | null,
             };
         }
 
@@ -10497,7 +11251,7 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {object} params.data - Row data as JSON object. Include only column and value pairs to be updated.
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-     * @param {string} params.transactionId - Transaction ID for staging the operation.
+     * @param {string | null} params.transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Models.RowList<Row>>}
      */
@@ -10506,7 +11260,7 @@ export class TablesDB {
         tableId: string;
         data?: object;
         queries?: string[];
-        transactionId?: string;
+        transactionId?: string | null;
     }): Promise<Models.RowList<Row>>;
     /**
      * Update all rows that match your queries, if no queries are submitted then all rows are updated. You can pass only specific fields to be updated.
@@ -10515,7 +11269,7 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {object} data - Row data as JSON object. Include only column and value pairs to be updated.
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-     * @param {string} transactionId - Transaction ID for staging the operation.
+     * @param {string | null} transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Models.RowList<Row>>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -10525,7 +11279,7 @@ export class TablesDB {
         tableId: string,
         data?: object,
         queries?: string[],
-        transactionId?: string,
+        transactionId?: string | null,
     ): Promise<Models.RowList<Row>>;
     updateRows<Row extends Models.Row = Models.DefaultRow>(
         paramsOrFirst:
@@ -10534,17 +11288,17 @@ export class TablesDB {
                   tableId: string;
                   data?: object;
                   queries?: string[];
-                  transactionId?: string;
+                  transactionId?: string | null;
               }
             | string,
-        ...rest: [string?, object?, string[]?, string?]
+        ...rest: [string?, object?, string[]?, (string | null)?]
     ): Promise<Models.RowList<Row>> {
         let params: {
             databaseId: string;
             tableId: string;
             data?: object;
             queries?: string[];
-            transactionId?: string;
+            transactionId?: string | null;
         };
 
         if (
@@ -10557,7 +11311,7 @@ export class TablesDB {
                 tableId: string;
                 data?: object;
                 queries?: string[];
-                transactionId?: string;
+                transactionId?: string | null;
             };
         } else {
             params = {
@@ -10565,7 +11319,7 @@ export class TablesDB {
                 tableId: rest[0] as string,
                 data: rest[1] as object,
                 queries: rest[2] as string[],
-                transactionId: rest[3] as string,
+                transactionId: rest[3] as string | null,
             };
         }
 
@@ -10775,6 +11529,168 @@ export class TablesDB {
     }
 
     /**
+     * Get a list of all the user's rows in a given table using a POST request. This behaves identically to the list rows endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
+     *
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/products/databases/tables#create-table).
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {string | null} params.transactionId - Transaction ID to read uncommitted changes within the transaction.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @param {number} params.ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.RowList<Row>>}
+     */
+    createQuery<Row extends Models.Row = Models.DefaultRow>(params: {
+        databaseId: string;
+        tableId: string;
+        queries?: string[];
+        transactionId?: string | null;
+        total?: boolean;
+        ttl?: number;
+    }): Promise<Models.RowList<Row>>;
+    /**
+     * Get a list of all the user's rows in a given table using a POST request. This behaves identically to the list rows endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
+     *
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/products/databases/tables#create-table).
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {string | null} transactionId - Transaction ID to read uncommitted changes within the transaction.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @param {number} ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.RowList<Row>>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createQuery<Row extends Models.Row = Models.DefaultRow>(
+        databaseId: string,
+        tableId: string,
+        queries?: string[],
+        transactionId?: string | null,
+        total?: boolean,
+        ttl?: number,
+    ): Promise<Models.RowList<Row>>;
+    createQuery<Row extends Models.Row = Models.DefaultRow>(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  tableId: string;
+                  queries?: string[];
+                  transactionId?: string | null;
+                  total?: boolean;
+                  ttl?: number;
+              }
+            | string,
+        ...rest: [string?, string[]?, (string | null)?, boolean?, number?]
+    ): Promise<Models.RowList<Row>> {
+        let params: {
+            databaseId: string;
+            tableId: string;
+            queries?: string[];
+            transactionId?: string | null;
+            total?: boolean;
+            ttl?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                tableId: string;
+                queries?: string[];
+                transactionId?: string | null;
+                total?: boolean;
+                ttl?: number;
+            };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                tableId: rest[0] as string,
+                queries: rest[1] as string[],
+                transactionId: rest[2] as string | null,
+                total: rest[3] as boolean,
+                ttl: rest[4] as number,
+            };
+        }
+
+        const databaseId = params.databaseId;
+        const tableId = params.tableId;
+        const queries = params.queries;
+        const transactionId = params.transactionId;
+        const total = params.total;
+        const ttl = params.ttl;
+
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
+        }
+        if (typeof tableId === 'undefined' || tableId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "tableId"',
+            );
+        }
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/query'
+            .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+            .replace('{tableId}', encodeURIComponent(String(tableId)));
+        const apiPayload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            apiPayload['queries'] = queries;
+        }
+        if (typeof transactionId !== 'undefined') {
+            apiPayload['transactionId'] = transactionId;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
+        }
+        if (typeof ttl !== 'undefined') {
+            apiPayload['ttl'] = ttl;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'rowList',
+            models: {
+                rowList: {
+                    defaults: {
+                        total: 0,
+                        rows: [],
+                    },
+                    properties: {
+                        rows: {
+                            items: 'row',
+                        },
+                    },
+                },
+                row: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $tableId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
      * Get a row by its unique ID. This endpoint response returns a JSON object with the row data.
      *
      * @param {string} params.databaseId - Database ID.
@@ -10918,8 +11834,8 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.rowId - Row ID.
      * @param {Row extends Models.DefaultRow ? Partial<Models.Row> & Record<string, any> : Partial<Models.Row> & Partial<Omit<Row, keyof Models.Row>>} params.data - Row data as JSON object. Include all required columns of the row to be created or updated.
-     * @param {string[]} params.permissions - An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
-     * @param {string} params.transactionId - Transaction ID for staging the operation.
+     * @param {string[] | null} params.permissions - An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+     * @param {string | null} params.transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Row>}
      */
@@ -10930,8 +11846,8 @@ export class TablesDB {
         data?: Row extends Models.DefaultRow
             ? Partial<Models.Row> & Record<string, any>
             : Partial<Models.Row> & Partial<Omit<Row, keyof Models.Row>>;
-        permissions?: string[];
-        transactionId?: string;
+        permissions?: string[] | null;
+        transactionId?: string | null;
     }): Promise<Row>;
     /**
      * Create or update a Row. Before using this route, you should create a new table resource using either a [server integration](https://appwrite.io/docs/references/cloud/server-dart/tablesDB#createTable) API or directly from your database console.
@@ -10940,8 +11856,8 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} rowId - Row ID.
      * @param {Row extends Models.DefaultRow ? Partial<Models.Row> & Record<string, any> : Partial<Models.Row> & Partial<Omit<Row, keyof Models.Row>>} data - Row data as JSON object. Include all required columns of the row to be created or updated.
-     * @param {string[]} permissions - An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
-     * @param {string} transactionId - Transaction ID for staging the operation.
+     * @param {string[] | null} permissions - An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+     * @param {string | null} transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Row>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -10953,8 +11869,8 @@ export class TablesDB {
         data?: Row extends Models.DefaultRow
             ? Partial<Models.Row> & Record<string, any>
             : Partial<Models.Row> & Partial<Omit<Row, keyof Models.Row>>,
-        permissions?: string[],
-        transactionId?: string,
+        permissions?: string[] | null,
+        transactionId?: string | null,
     ): Promise<Row>;
     upsertRow<Row extends Models.Row = Models.DefaultRow>(
         paramsOrFirst:
@@ -10966,8 +11882,8 @@ export class TablesDB {
                       ? Partial<Models.Row> & Record<string, any>
                       : Partial<Models.Row> &
                             Partial<Omit<Row, keyof Models.Row>>;
-                  permissions?: string[];
-                  transactionId?: string;
+                  permissions?: string[] | null;
+                  transactionId?: string | null;
               }
             | string,
         ...rest: [
@@ -10976,8 +11892,8 @@ export class TablesDB {
             (Row extends Models.DefaultRow
                 ? Partial<Models.Row> & Record<string, any>
                 : Partial<Models.Row> & Partial<Omit<Row, keyof Models.Row>>)?,
-            string[]?,
-            string?,
+            (string[] | null)?,
+            (string | null)?,
         ]
     ): Promise<Row> {
         let params: {
@@ -10987,8 +11903,8 @@ export class TablesDB {
             data?: Row extends Models.DefaultRow
                 ? Partial<Models.Row> & Record<string, any>
                 : Partial<Models.Row> & Partial<Omit<Row, keyof Models.Row>>;
-            permissions?: string[];
-            transactionId?: string;
+            permissions?: string[] | null;
+            transactionId?: string | null;
         };
 
         if (
@@ -11004,8 +11920,8 @@ export class TablesDB {
                     ? Partial<Models.Row> & Record<string, any>
                     : Partial<Models.Row> &
                           Partial<Omit<Row, keyof Models.Row>>;
-                permissions?: string[];
-                transactionId?: string;
+                permissions?: string[] | null;
+                transactionId?: string | null;
             };
         } else {
             params = {
@@ -11016,8 +11932,8 @@ export class TablesDB {
                     ? Partial<Models.Row> & Record<string, any>
                     : Partial<Models.Row> &
                           Partial<Omit<Row, keyof Models.Row>>,
-                permissions: rest[3] as string[],
-                transactionId: rest[4] as string,
+                permissions: rest[3] as string[] | null,
+                transactionId: rest[4] as string | null,
             };
         }
 
@@ -11091,8 +12007,8 @@ export class TablesDB {
      * @param {string} params.tableId - Table ID.
      * @param {string} params.rowId - Row ID.
      * @param {Row extends Models.DefaultRow ? Partial<Models.Row> & Record<string, any> : Partial<Models.Row> & Partial<Omit<Row, keyof Models.Row>>} params.data - Row data as JSON object. Include only columns and value pairs to be updated.
-     * @param {string[]} params.permissions - An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
-     * @param {string} params.transactionId - Transaction ID for staging the operation.
+     * @param {string[] | null} params.permissions - An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+     * @param {string | null} params.transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Row>}
      */
@@ -11103,8 +12019,8 @@ export class TablesDB {
         data?: Row extends Models.DefaultRow
             ? Partial<Models.Row> & Record<string, any>
             : Partial<Models.Row> & Partial<Omit<Row, keyof Models.Row>>;
-        permissions?: string[];
-        transactionId?: string;
+        permissions?: string[] | null;
+        transactionId?: string | null;
     }): Promise<Row>;
     /**
      * Update a row by its unique ID. Using the patch method you can pass only specific fields that will get updated.
@@ -11113,8 +12029,8 @@ export class TablesDB {
      * @param {string} tableId - Table ID.
      * @param {string} rowId - Row ID.
      * @param {Row extends Models.DefaultRow ? Partial<Models.Row> & Record<string, any> : Partial<Models.Row> & Partial<Omit<Row, keyof Models.Row>>} data - Row data as JSON object. Include only columns and value pairs to be updated.
-     * @param {string[]} permissions - An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
-     * @param {string} transactionId - Transaction ID for staging the operation.
+     * @param {string[] | null} permissions - An array of permissions strings. By default, the current permissions are inherited. [Learn more about permissions](https://appwrite.io/docs/permissions).
+     * @param {string | null} transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Row>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -11126,8 +12042,8 @@ export class TablesDB {
         data?: Row extends Models.DefaultRow
             ? Partial<Models.Row> & Record<string, any>
             : Partial<Models.Row> & Partial<Omit<Row, keyof Models.Row>>,
-        permissions?: string[],
-        transactionId?: string,
+        permissions?: string[] | null,
+        transactionId?: string | null,
     ): Promise<Row>;
     updateRow<Row extends Models.Row = Models.DefaultRow>(
         paramsOrFirst:
@@ -11139,8 +12055,8 @@ export class TablesDB {
                       ? Partial<Models.Row> & Record<string, any>
                       : Partial<Models.Row> &
                             Partial<Omit<Row, keyof Models.Row>>;
-                  permissions?: string[];
-                  transactionId?: string;
+                  permissions?: string[] | null;
+                  transactionId?: string | null;
               }
             | string,
         ...rest: [
@@ -11149,8 +12065,8 @@ export class TablesDB {
             (Row extends Models.DefaultRow
                 ? Partial<Models.Row> & Record<string, any>
                 : Partial<Models.Row> & Partial<Omit<Row, keyof Models.Row>>)?,
-            string[]?,
-            string?,
+            (string[] | null)?,
+            (string | null)?,
         ]
     ): Promise<Row> {
         let params: {
@@ -11160,8 +12076,8 @@ export class TablesDB {
             data?: Row extends Models.DefaultRow
                 ? Partial<Models.Row> & Record<string, any>
                 : Partial<Models.Row> & Partial<Omit<Row, keyof Models.Row>>;
-            permissions?: string[];
-            transactionId?: string;
+            permissions?: string[] | null;
+            transactionId?: string | null;
         };
 
         if (
@@ -11177,8 +12093,8 @@ export class TablesDB {
                     ? Partial<Models.Row> & Record<string, any>
                     : Partial<Models.Row> &
                           Partial<Omit<Row, keyof Models.Row>>;
-                permissions?: string[];
-                transactionId?: string;
+                permissions?: string[] | null;
+                transactionId?: string | null;
             };
         } else {
             params = {
@@ -11189,8 +12105,8 @@ export class TablesDB {
                     ? Partial<Models.Row> & Record<string, any>
                     : Partial<Models.Row> &
                           Partial<Omit<Row, keyof Models.Row>>,
-                permissions: rest[3] as string[],
-                transactionId: rest[4] as string,
+                permissions: rest[3] as string[] | null,
+                transactionId: rest[4] as string | null,
             };
         }
 
@@ -11373,8 +12289,8 @@ export class TablesDB {
      * @param {string} params.rowId - Row ID.
      * @param {string} params.column - Column key.
      * @param {number} params.value - Value to increment the column by. The value must be a number.
-     * @param {number} params.min - Minimum value for the column. If the current value is lesser than this value, an exception will be thrown.
-     * @param {string} params.transactionId - Transaction ID for staging the operation.
+     * @param {number | null} params.min - Minimum value for the column. If the current value is lesser than this value, an exception will be thrown.
+     * @param {string | null} params.transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Row>}
      */
@@ -11384,8 +12300,8 @@ export class TablesDB {
         rowId: string;
         column: string;
         value?: number;
-        min?: number;
-        transactionId?: string;
+        min?: number | null;
+        transactionId?: string | null;
     }): Promise<Row>;
     /**
      * Decrement a specific column of a row by a given value.
@@ -11395,8 +12311,8 @@ export class TablesDB {
      * @param {string} rowId - Row ID.
      * @param {string} column - Column key.
      * @param {number} value - Value to increment the column by. The value must be a number.
-     * @param {number} min - Minimum value for the column. If the current value is lesser than this value, an exception will be thrown.
-     * @param {string} transactionId - Transaction ID for staging the operation.
+     * @param {number | null} min - Minimum value for the column. If the current value is lesser than this value, an exception will be thrown.
+     * @param {string | null} transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Row>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -11407,8 +12323,8 @@ export class TablesDB {
         rowId: string,
         column: string,
         value?: number,
-        min?: number,
-        transactionId?: string,
+        min?: number | null,
+        transactionId?: string | null,
     ): Promise<Row>;
     decrementRowColumn<Row extends Models.Row = Models.DefaultRow>(
         paramsOrFirst:
@@ -11418,11 +12334,18 @@ export class TablesDB {
                   rowId: string;
                   column: string;
                   value?: number;
-                  min?: number;
-                  transactionId?: string;
+                  min?: number | null;
+                  transactionId?: string | null;
               }
             | string,
-        ...rest: [string?, string?, string?, number?, number?, string?]
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            number?,
+            (number | null)?,
+            (string | null)?,
+        ]
     ): Promise<Row> {
         let params: {
             databaseId: string;
@@ -11430,8 +12353,8 @@ export class TablesDB {
             rowId: string;
             column: string;
             value?: number;
-            min?: number;
-            transactionId?: string;
+            min?: number | null;
+            transactionId?: string | null;
         };
 
         if (
@@ -11445,8 +12368,8 @@ export class TablesDB {
                 rowId: string;
                 column: string;
                 value?: number;
-                min?: number;
-                transactionId?: string;
+                min?: number | null;
+                transactionId?: string | null;
             };
         } else {
             params = {
@@ -11455,8 +12378,8 @@ export class TablesDB {
                 rowId: rest[1] as string,
                 column: rest[2] as string,
                 value: rest[3] as number,
-                min: rest[4] as number,
-                transactionId: rest[5] as string,
+                min: rest[4] as number | null,
+                transactionId: rest[5] as string | null,
             };
         }
 
@@ -11537,8 +12460,8 @@ export class TablesDB {
      * @param {string} params.rowId - Row ID.
      * @param {string} params.column - Column key.
      * @param {number} params.value - Value to increment the column by. The value must be a number.
-     * @param {number} params.max - Maximum value for the column. If the current value is greater than this value, an error will be thrown.
-     * @param {string} params.transactionId - Transaction ID for staging the operation.
+     * @param {number | null} params.max - Maximum value for the column. If the current value is greater than this value, an error will be thrown.
+     * @param {string | null} params.transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Row>}
      */
@@ -11548,8 +12471,8 @@ export class TablesDB {
         rowId: string;
         column: string;
         value?: number;
-        max?: number;
-        transactionId?: string;
+        max?: number | null;
+        transactionId?: string | null;
     }): Promise<Row>;
     /**
      * Increment a specific column of a row by a given value.
@@ -11559,8 +12482,8 @@ export class TablesDB {
      * @param {string} rowId - Row ID.
      * @param {string} column - Column key.
      * @param {number} value - Value to increment the column by. The value must be a number.
-     * @param {number} max - Maximum value for the column. If the current value is greater than this value, an error will be thrown.
-     * @param {string} transactionId - Transaction ID for staging the operation.
+     * @param {number | null} max - Maximum value for the column. If the current value is greater than this value, an error will be thrown.
+     * @param {string | null} transactionId - Transaction ID for staging the operation.
      * @throws {AppwriteException}
      * @returns {Promise<Row>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -11571,8 +12494,8 @@ export class TablesDB {
         rowId: string,
         column: string,
         value?: number,
-        max?: number,
-        transactionId?: string,
+        max?: number | null,
+        transactionId?: string | null,
     ): Promise<Row>;
     incrementRowColumn<Row extends Models.Row = Models.DefaultRow>(
         paramsOrFirst:
@@ -11582,11 +12505,18 @@ export class TablesDB {
                   rowId: string;
                   column: string;
                   value?: number;
-                  max?: number;
-                  transactionId?: string;
+                  max?: number | null;
+                  transactionId?: string | null;
               }
             | string,
-        ...rest: [string?, string?, string?, number?, number?, string?]
+        ...rest: [
+            string?,
+            string?,
+            string?,
+            number?,
+            (number | null)?,
+            (string | null)?,
+        ]
     ): Promise<Row> {
         let params: {
             databaseId: string;
@@ -11594,8 +12524,8 @@ export class TablesDB {
             rowId: string;
             column: string;
             value?: number;
-            max?: number;
-            transactionId?: string;
+            max?: number | null;
+            transactionId?: string | null;
         };
 
         if (
@@ -11609,8 +12539,8 @@ export class TablesDB {
                 rowId: string;
                 column: string;
                 value?: number;
-                max?: number;
-                transactionId?: string;
+                max?: number | null;
+                transactionId?: string | null;
             };
         } else {
             params = {
@@ -11619,8 +12549,8 @@ export class TablesDB {
                 rowId: rest[1] as string,
                 column: rest[2] as string,
                 value: rest[3] as number,
-                max: rest[4] as number,
-                transactionId: rest[5] as string,
+                max: rest[4] as number | null,
+                transactionId: rest[5] as string | null,
             };
         }
 

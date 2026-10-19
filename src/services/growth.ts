@@ -215,7 +215,7 @@ export class Growth {
     /**
      * Record a self-hosted installation. Every report is stored as its own row; the admin email is optional because headless CLI installs create no account.
      *
-     * @param {string} params.email - Admin email from the installation, when an account was created.
+     * @param {string | null} params.email - Admin email from the installation, when an account was created.
      * @param {string} params.name - Admin name.
      * @param {string} params.version - Appwrite version.
      * @param {string} params.domain - Installation domain.
@@ -230,7 +230,7 @@ export class Growth {
      * @returns {Promise<{}>}
      */
     createInstallation(params?: {
-        email?: string;
+        email?: string | null;
         name?: string;
         version?: string;
         domain?: string;
@@ -245,7 +245,7 @@ export class Growth {
     /**
      * Record a self-hosted installation. Every report is stored as its own row; the admin email is optional because headless CLI installs create no account.
      *
-     * @param {string} email - Admin email from the installation, when an account was created.
+     * @param {string | null} email - Admin email from the installation, when an account was created.
      * @param {string} name - Admin name.
      * @param {string} version - Appwrite version.
      * @param {string} domain - Installation domain.
@@ -261,7 +261,7 @@ export class Growth {
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     createInstallation(
-        email?: string,
+        email?: string | null,
         name?: string,
         version?: string,
         domain?: string,
@@ -276,7 +276,7 @@ export class Growth {
     createInstallation(
         paramsOrFirst?:
             | {
-                  email?: string;
+                  email?: string | null;
                   name?: string;
                   version?: string;
                   domain?: string;
@@ -288,7 +288,8 @@ export class Growth {
                   cpus?: number;
                   ram?: number;
               }
-            | string,
+            | string
+            | null,
         ...rest: [
             string?,
             string?,
@@ -303,7 +304,7 @@ export class Growth {
         ]
     ): Promise<{}> {
         let params: {
-            email?: string;
+            email?: string | null;
             name?: string;
             version?: string;
             domain?: string;
@@ -323,7 +324,7 @@ export class Growth {
                 !Array.isArray(paramsOrFirst))
         ) {
             params = (paramsOrFirst || {}) as {
-                email?: string;
+                email?: string | null;
                 name?: string;
                 version?: string;
                 domain?: string;
@@ -337,7 +338,7 @@ export class Growth {
             };
         } else {
             params = {
-                email: paramsOrFirst as string,
+                email: paramsOrFirst as string | null,
                 name: rest[0] as string,
                 version: rest[1] as string,
                 domain: rest[2] as string,

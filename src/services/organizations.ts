@@ -20,6 +20,7 @@ export class Organizations {
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, total, billingPlan, paymentMethodId, backupPaymentMethodId, platform
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OrganizationList<Preferences>>}
      */
@@ -28,12 +29,14 @@ export class Organizations {
     >(params?: {
         queries?: string[];
         search?: string;
+        total?: boolean;
     }): Promise<Models.OrganizationList<Preferences>>;
     /**
      * Get a list of all the teams in which the current user is a member. You can use the parameters to filter your results.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, total, billingPlan, paymentMethodId, backupPaymentMethodId, platform
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OrganizationList<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -41,12 +44,14 @@ export class Organizations {
     list<Preferences extends Models.Preferences = Models.DefaultPreferences>(
         queries?: string[],
         search?: string,
+        total?: boolean,
     ): Promise<Models.OrganizationList<Preferences>>;
     list<Preferences extends Models.Preferences = Models.DefaultPreferences>(
-        paramsOrFirst?: { queries?: string[]; search?: string } | string[],
-        ...rest: [string?]
+        paramsOrFirst?:
+            { queries?: string[]; search?: string; total?: boolean } | string[],
+        ...rest: [string?, boolean?]
     ): Promise<Models.OrganizationList<Preferences>> {
-        let params: { queries?: string[]; search?: string };
+        let params: { queries?: string[]; search?: string; total?: boolean };
 
         if (
             (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
@@ -57,16 +62,19 @@ export class Organizations {
             params = (paramsOrFirst || {}) as {
                 queries?: string[];
                 search?: string;
+                total?: boolean;
             };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
                 search: rest[0] as string,
+                total: rest[1] as boolean,
             };
         }
 
         const queries = params.queries;
         const search = params.search;
+        const total = params.total;
 
         const apiPath = '/organizations';
         const apiPayload: Payload = {};
@@ -75,6 +83,9 @@ export class Organizations {
         }
         if (typeof search !== 'undefined') {
             apiPayload['search'] = search;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -128,12 +139,12 @@ export class Organizations {
      * @param {string} params.organizationId - Organization ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Organization name. Max length: 128 chars.
      * @param {string} params.billingPlan - Organization billing plan chosen
-     * @param {string} params.paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
-     * @param {string} params.billingAddressId - Unique ID of billing address
+     * @param {string | null} params.paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
+     * @param {string | null} params.billingAddressId - Unique ID of billing address
      * @param {string[]} params.invites - Additional member invites
-     * @param {string} params.couponId - Coupon id
-     * @param {string} params.taxId - Tax Id associated to billing.
-     * @param {number} params.budget - Budget limit for additional usage set for the organization
+     * @param {string | null} params.couponId - Coupon id
+     * @param {string | null} params.taxId - Tax Id associated to billing.
+     * @param {number | null} params.budget - Budget limit for additional usage set for the organization
      * @param {Platform} params.platform - Platform type
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>}
@@ -144,12 +155,12 @@ export class Organizations {
         organizationId: string;
         name: string;
         billingPlan: string;
-        paymentMethodId?: string;
-        billingAddressId?: string;
+        paymentMethodId?: string | null;
+        billingAddressId?: string | null;
         invites?: string[];
-        couponId?: string;
-        taxId?: string;
-        budget?: number;
+        couponId?: string | null;
+        taxId?: string | null;
+        budget?: number | null;
         platform?: Platform;
     }): Promise<
         Models.Organization<Preferences> | Models.PaymentAuthentication
@@ -161,12 +172,12 @@ export class Organizations {
      * @param {string} organizationId - Organization ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Organization name. Max length: 128 chars.
      * @param {string} billingPlan - Organization billing plan chosen
-     * @param {string} paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
-     * @param {string} billingAddressId - Unique ID of billing address
+     * @param {string | null} paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
+     * @param {string | null} billingAddressId - Unique ID of billing address
      * @param {string[]} invites - Additional member invites
-     * @param {string} couponId - Coupon id
-     * @param {string} taxId - Tax Id associated to billing.
-     * @param {number} budget - Budget limit for additional usage set for the organization
+     * @param {string | null} couponId - Coupon id
+     * @param {string | null} taxId - Tax Id associated to billing.
+     * @param {number | null} budget - Budget limit for additional usage set for the organization
      * @param {Platform} platform - Platform type
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>}
@@ -176,12 +187,12 @@ export class Organizations {
         organizationId: string,
         name: string,
         billingPlan: string,
-        paymentMethodId?: string,
-        billingAddressId?: string,
+        paymentMethodId?: string | null,
+        billingAddressId?: string | null,
         invites?: string[],
-        couponId?: string,
-        taxId?: string,
-        budget?: number,
+        couponId?: string | null,
+        taxId?: string | null,
+        budget?: number | null,
         platform?: Platform,
     ): Promise<Models.Organization<Preferences> | Models.PaymentAuthentication>;
     create<Preferences extends Models.Preferences = Models.DefaultPreferences>(
@@ -190,24 +201,24 @@ export class Organizations {
                   organizationId: string;
                   name: string;
                   billingPlan: string;
-                  paymentMethodId?: string;
-                  billingAddressId?: string;
+                  paymentMethodId?: string | null;
+                  billingAddressId?: string | null;
                   invites?: string[];
-                  couponId?: string;
-                  taxId?: string;
-                  budget?: number;
+                  couponId?: string | null;
+                  taxId?: string | null;
+                  budget?: number | null;
                   platform?: Platform;
               }
             | string,
         ...rest: [
             string?,
             string?,
-            string?,
-            string?,
+            (string | null)?,
+            (string | null)?,
             string[]?,
-            string?,
-            string?,
-            number?,
+            (string | null)?,
+            (string | null)?,
+            (number | null)?,
             Platform?,
         ]
     ): Promise<
@@ -217,12 +228,12 @@ export class Organizations {
             organizationId: string;
             name: string;
             billingPlan: string;
-            paymentMethodId?: string;
-            billingAddressId?: string;
+            paymentMethodId?: string | null;
+            billingAddressId?: string | null;
             invites?: string[];
-            couponId?: string;
-            taxId?: string;
-            budget?: number;
+            couponId?: string | null;
+            taxId?: string | null;
+            budget?: number | null;
             platform?: Platform;
         };
 
@@ -235,12 +246,12 @@ export class Organizations {
                 organizationId: string;
                 name: string;
                 billingPlan: string;
-                paymentMethodId?: string;
-                billingAddressId?: string;
+                paymentMethodId?: string | null;
+                billingAddressId?: string | null;
                 invites?: string[];
-                couponId?: string;
-                taxId?: string;
-                budget?: number;
+                couponId?: string | null;
+                taxId?: string | null;
+                budget?: number | null;
                 platform?: Platform;
             };
         } else {
@@ -248,12 +259,12 @@ export class Organizations {
                 organizationId: paramsOrFirst as string,
                 name: rest[0] as string,
                 billingPlan: rest[1] as string,
-                paymentMethodId: rest[2] as string,
-                billingAddressId: rest[3] as string,
+                paymentMethodId: rest[2] as string | null,
+                billingAddressId: rest[3] as string | null,
                 invites: rest[4] as string[],
-                couponId: rest[5] as string,
-                taxId: rest[6] as string,
-                budget: rest[7] as number,
+                couponId: rest[5] as string | null,
+                taxId: rest[6] as string | null,
+                budget: rest[7] as number | null,
                 platform: rest[8] as Platform,
             };
         }
@@ -329,27 +340,27 @@ export class Organizations {
      * Get estimation for creating an organization.
      *
      * @param {string} params.billingPlan - Organization billing plan chosen
-     * @param {string} params.paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
+     * @param {string | null} params.paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string[]} params.invites - Additional member invites
-     * @param {string} params.couponId - Coupon id
+     * @param {string | null} params.couponId - Coupon id
      * @param {Platform} params.platform - Platform type
      * @throws {AppwriteException}
      * @returns {Promise<Models.Estimation>}
      */
     estimationCreateOrganization(params: {
         billingPlan: string;
-        paymentMethodId?: string;
+        paymentMethodId?: string | null;
         invites?: string[];
-        couponId?: string;
+        couponId?: string | null;
         platform?: Platform;
     }): Promise<Models.Estimation>;
     /**
      * Get estimation for creating an organization.
      *
      * @param {string} billingPlan - Organization billing plan chosen
-     * @param {string} paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
+     * @param {string | null} paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string[]} invites - Additional member invites
-     * @param {string} couponId - Coupon id
+     * @param {string | null} couponId - Coupon id
      * @param {Platform} platform - Platform type
      * @throws {AppwriteException}
      * @returns {Promise<Models.Estimation>}
@@ -357,28 +368,28 @@ export class Organizations {
      */
     estimationCreateOrganization(
         billingPlan: string,
-        paymentMethodId?: string,
+        paymentMethodId?: string | null,
         invites?: string[],
-        couponId?: string,
+        couponId?: string | null,
         platform?: Platform,
     ): Promise<Models.Estimation>;
     estimationCreateOrganization(
         paramsOrFirst:
             | {
                   billingPlan: string;
-                  paymentMethodId?: string;
+                  paymentMethodId?: string | null;
                   invites?: string[];
-                  couponId?: string;
+                  couponId?: string | null;
                   platform?: Platform;
               }
             | string,
-        ...rest: [string?, string[]?, string?, Platform?]
+        ...rest: [(string | null)?, string[]?, (string | null)?, Platform?]
     ): Promise<Models.Estimation> {
         let params: {
             billingPlan: string;
-            paymentMethodId?: string;
+            paymentMethodId?: string | null;
             invites?: string[];
-            couponId?: string;
+            couponId?: string | null;
             platform?: Platform;
         };
 
@@ -389,17 +400,17 @@ export class Organizations {
         ) {
             params = (paramsOrFirst || {}) as {
                 billingPlan: string;
-                paymentMethodId?: string;
+                paymentMethodId?: string | null;
                 invites?: string[];
-                couponId?: string;
+                couponId?: string | null;
                 platform?: Platform;
             };
         } else {
             params = {
                 billingPlan: paramsOrFirst as string,
-                paymentMethodId: rest[0] as string,
+                paymentMethodId: rest[0] as string | null,
                 invites: rest[1] as string[],
-                couponId: rest[2] as string,
+                couponId: rest[2] as string | null,
                 platform: rest[3] as Platform,
             };
         }
@@ -1154,18 +1165,21 @@ export class Organizations {
      *
      * @param {string} params.organizationId - Organization ID
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, aggregationId, from, to
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AggregationTeamList>}
      */
     listAggregations(params: {
         organizationId: string;
         queries?: string[];
+        total?: boolean;
     }): Promise<Models.AggregationTeamList>;
     /**
      * Get a list of all aggregations for an organization.
      *
      * @param {string} organizationId - Organization ID
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, aggregationId, from, to
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AggregationTeamList>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1173,12 +1187,19 @@ export class Organizations {
     listAggregations(
         organizationId: string,
         queries?: string[],
+        total?: boolean,
     ): Promise<Models.AggregationTeamList>;
     listAggregations(
-        paramsOrFirst: { organizationId: string; queries?: string[] } | string,
-        ...rest: [string[]?]
+        paramsOrFirst:
+            | { organizationId: string; queries?: string[]; total?: boolean }
+            | string,
+        ...rest: [string[]?, boolean?]
     ): Promise<Models.AggregationTeamList> {
-        let params: { organizationId: string; queries?: string[] };
+        let params: {
+            organizationId: string;
+            queries?: string[];
+            total?: boolean;
+        };
 
         if (
             paramsOrFirst &&
@@ -1188,16 +1209,19 @@ export class Organizations {
             params = (paramsOrFirst || {}) as {
                 organizationId: string;
                 queries?: string[];
+                total?: boolean;
             };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 queries: rest[0] as string[],
+                total: rest[1] as boolean,
             };
         }
 
         const organizationId = params.organizationId;
         const queries = params.queries;
+        const total = params.total;
 
         if (typeof organizationId === 'undefined' || organizationId === '') {
             throw new AppwriteException(
@@ -1211,6 +1235,9 @@ export class Organizations {
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1882,7 +1909,7 @@ export class Organizations {
      * Update the budget limit for an organization.
      *
      * @param {string} params.organizationId - Organization Unique ID
-     * @param {number} params.budget - Budget limit for additional usage set for the organization
+     * @param {number | null} params.budget - Budget limit for additional usage set for the organization
      * @param {number[]} params.alerts - Budget alert limit percentage
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
@@ -1891,14 +1918,14 @@ export class Organizations {
         Preferences extends Models.Preferences = Models.DefaultPreferences,
     >(params: {
         organizationId: string;
-        budget?: number;
+        budget?: number | null;
         alerts?: number[];
     }): Promise<Models.Organization<Preferences>>;
     /**
      * Update the budget limit for an organization.
      *
      * @param {string} organizationId - Organization Unique ID
-     * @param {number} budget - Budget limit for additional usage set for the organization
+     * @param {number | null} budget - Budget limit for additional usage set for the organization
      * @param {number[]} alerts - Budget alert limit percentage
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
@@ -1908,20 +1935,24 @@ export class Organizations {
         Preferences extends Models.Preferences = Models.DefaultPreferences,
     >(
         organizationId: string,
-        budget?: number,
+        budget?: number | null,
         alerts?: number[],
     ): Promise<Models.Organization<Preferences>>;
     updateBudget<
         Preferences extends Models.Preferences = Models.DefaultPreferences,
     >(
         paramsOrFirst:
-            | { organizationId: string; budget?: number; alerts?: number[] }
+            | {
+                  organizationId: string;
+                  budget?: number | null;
+                  alerts?: number[];
+              }
             | string,
-        ...rest: [number?, number[]?]
+        ...rest: [(number | null)?, number[]?]
     ): Promise<Models.Organization<Preferences>> {
         let params: {
             organizationId: string;
-            budget?: number;
+            budget?: number | null;
             alerts?: number[];
         };
 
@@ -1932,13 +1963,13 @@ export class Organizations {
         ) {
             params = (paramsOrFirst || {}) as {
                 organizationId: string;
-                budget?: number;
+                budget?: number | null;
                 alerts?: number[];
             };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                budget: rest[0] as number,
+                budget: rest[0] as number | null,
                 alerts: rest[1] as number[],
             };
         }
@@ -2007,12 +2038,14 @@ export class Organizations {
      *
      * @param {string} params.organizationId - Organization ID
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, couponId, credits, expiration, status
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.CreditList>}
      */
     listCredits(params: {
         organizationId: string;
         queries?: string[];
+        total?: boolean;
     }): Promise<Models.CreditList>;
     /**
      * List all credits for an organization.
@@ -2020,6 +2053,7 @@ export class Organizations {
      *
      * @param {string} organizationId - Organization ID
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, couponId, credits, expiration, status
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.CreditList>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -2027,12 +2061,19 @@ export class Organizations {
     listCredits(
         organizationId: string,
         queries?: string[],
+        total?: boolean,
     ): Promise<Models.CreditList>;
     listCredits(
-        paramsOrFirst: { organizationId: string; queries?: string[] } | string,
-        ...rest: [string[]?]
+        paramsOrFirst:
+            | { organizationId: string; queries?: string[]; total?: boolean }
+            | string,
+        ...rest: [string[]?, boolean?]
     ): Promise<Models.CreditList> {
-        let params: { organizationId: string; queries?: string[] };
+        let params: {
+            organizationId: string;
+            queries?: string[];
+            total?: boolean;
+        };
 
         if (
             paramsOrFirst &&
@@ -2042,16 +2083,19 @@ export class Organizations {
             params = (paramsOrFirst || {}) as {
                 organizationId: string;
                 queries?: string[];
+                total?: boolean;
             };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 queries: rest[0] as string[],
+                total: rest[1] as boolean,
             };
         }
 
         const organizationId = params.organizationId;
         const queries = params.queries;
+        const total = params.total;
 
         if (typeof organizationId === 'undefined' || organizationId === '') {
             throw new AppwriteException(
@@ -2065,6 +2109,9 @@ export class Organizations {
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2503,7 +2550,7 @@ export class Organizations {
      * @param {string} params.organizationId - Organization ID
      * @param {string} params.billingPlan - Organization billing plan chosen
      * @param {string[]} params.invites - Additional member invites
-     * @param {string} params.couponId - Coupon id
+     * @param {string | null} params.couponId - Coupon id
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationUpdatePlan>}
      */
@@ -2511,7 +2558,7 @@ export class Organizations {
         organizationId: string;
         billingPlan: string;
         invites?: string[];
-        couponId?: string;
+        couponId?: string | null;
     }): Promise<Models.EstimationUpdatePlan>;
     /**
      * Get estimation for updating the organization plan.
@@ -2519,7 +2566,7 @@ export class Organizations {
      * @param {string} organizationId - Organization ID
      * @param {string} billingPlan - Organization billing plan chosen
      * @param {string[]} invites - Additional member invites
-     * @param {string} couponId - Coupon id
+     * @param {string | null} couponId - Coupon id
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationUpdatePlan>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -2528,7 +2575,7 @@ export class Organizations {
         organizationId: string,
         billingPlan: string,
         invites?: string[],
-        couponId?: string,
+        couponId?: string | null,
     ): Promise<Models.EstimationUpdatePlan>;
     estimationUpdatePlan(
         paramsOrFirst:
@@ -2536,16 +2583,16 @@ export class Organizations {
                   organizationId: string;
                   billingPlan: string;
                   invites?: string[];
-                  couponId?: string;
+                  couponId?: string | null;
               }
             | string,
-        ...rest: [string?, string[]?, string?]
+        ...rest: [string?, string[]?, (string | null)?]
     ): Promise<Models.EstimationUpdatePlan> {
         let params: {
             organizationId: string;
             billingPlan: string;
             invites?: string[];
-            couponId?: string;
+            couponId?: string | null;
         };
 
         if (
@@ -2557,14 +2604,14 @@ export class Organizations {
                 organizationId: string;
                 billingPlan: string;
                 invites?: string[];
-                couponId?: string;
+                couponId?: string | null;
             };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 billingPlan: rest[0] as string,
                 invites: rest[1] as string[],
-                couponId: rest[2] as string,
+                couponId: rest[2] as string | null,
             };
         }
 
@@ -2806,18 +2853,21 @@ export class Organizations {
      *
      * @param {string} params.organizationId - Organization ID
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, aggregationId, type, amount, currency, from, to, dueAt, attempts, status, grossAmount
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.InvoiceList>}
      */
     listInvoices(params: {
         organizationId: string;
         queries?: string[];
+        total?: boolean;
     }): Promise<Models.InvoiceList>;
     /**
      * List all invoices for an organization.
      *
      * @param {string} organizationId - Organization ID
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, aggregationId, type, amount, currency, from, to, dueAt, attempts, status, grossAmount
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.InvoiceList>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -2825,12 +2875,19 @@ export class Organizations {
     listInvoices(
         organizationId: string,
         queries?: string[],
+        total?: boolean,
     ): Promise<Models.InvoiceList>;
     listInvoices(
-        paramsOrFirst: { organizationId: string; queries?: string[] } | string,
-        ...rest: [string[]?]
+        paramsOrFirst:
+            | { organizationId: string; queries?: string[]; total?: boolean }
+            | string,
+        ...rest: [string[]?, boolean?]
     ): Promise<Models.InvoiceList> {
-        let params: { organizationId: string; queries?: string[] };
+        let params: {
+            organizationId: string;
+            queries?: string[];
+            total?: boolean;
+        };
 
         if (
             paramsOrFirst &&
@@ -2840,16 +2897,19 @@ export class Organizations {
             params = (paramsOrFirst || {}) as {
                 organizationId: string;
                 queries?: string[];
+                total?: boolean;
             };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 queries: rest[0] as string[],
+                total: rest[1] as boolean,
             };
         }
 
         const organizationId = params.organizationId;
         const queries = params.queries;
+        const total = params.total;
 
         if (typeof organizationId === 'undefined' || organizationId === '') {
             throw new AppwriteException(
@@ -2863,6 +2923,9 @@ export class Organizations {
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4115,6 +4178,7 @@ export class Organizations {
                         deploymentSize: 0,
                         buildSize: 0,
                         functionsIntervalMinimum: 0,
+                        functionsAllowCron: true,
                         databasesAllowEncrypt: false,
                         databaseComputeCredit: 0,
                     },
@@ -4130,12 +4194,12 @@ export class Organizations {
      *
      * @param {string} params.organizationId - Organization Unique ID
      * @param {string} params.billingPlan - Organization billing plan chosen
-     * @param {string} params.paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
+     * @param {string | null} params.paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string} params.billingAddressId - Unique ID of billing address
      * @param {string[]} params.invites - Additional member invites
-     * @param {string} params.couponId - Coupon id
-     * @param {string} params.taxId - Tax Id associated to billing.
-     * @param {number} params.budget - Budget limit for additional usage set for the organization
+     * @param {string | null} params.couponId - Coupon id
+     * @param {string | null} params.taxId - Tax Id associated to billing.
+     * @param {number | null} params.budget - Budget limit for additional usage set for the organization
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
@@ -4144,24 +4208,24 @@ export class Organizations {
     >(params: {
         organizationId: string;
         billingPlan: string;
-        paymentMethodId?: string;
+        paymentMethodId?: string | null;
         billingAddressId?: string;
         invites?: string[];
-        couponId?: string;
-        taxId?: string;
-        budget?: number;
+        couponId?: string | null;
+        taxId?: string | null;
+        budget?: number | null;
     }): Promise<Models.Organization<Preferences>>;
     /**
      * Update the billing plan for an organization.
      *
      * @param {string} organizationId - Organization Unique ID
      * @param {string} billingPlan - Organization billing plan chosen
-     * @param {string} paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
+     * @param {string | null} paymentMethodId - Payment method ID. Required for pro plans when trial is not available and user doesn't have default payment method set.
      * @param {string} billingAddressId - Unique ID of billing address
      * @param {string[]} invites - Additional member invites
-     * @param {string} couponId - Coupon id
-     * @param {string} taxId - Tax Id associated to billing.
-     * @param {number} budget - Budget limit for additional usage set for the organization
+     * @param {string | null} couponId - Coupon id
+     * @param {string | null} taxId - Tax Id associated to billing.
+     * @param {number | null} budget - Budget limit for additional usage set for the organization
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4171,12 +4235,12 @@ export class Organizations {
     >(
         organizationId: string,
         billingPlan: string,
-        paymentMethodId?: string,
+        paymentMethodId?: string | null,
         billingAddressId?: string,
         invites?: string[],
-        couponId?: string,
-        taxId?: string,
-        budget?: number,
+        couponId?: string | null,
+        taxId?: string | null,
+        budget?: number | null,
     ): Promise<Models.Organization<Preferences>>;
     updatePlan<
         Preferences extends Models.Preferences = Models.DefaultPreferences,
@@ -4185,33 +4249,33 @@ export class Organizations {
             | {
                   organizationId: string;
                   billingPlan: string;
-                  paymentMethodId?: string;
+                  paymentMethodId?: string | null;
                   billingAddressId?: string;
                   invites?: string[];
-                  couponId?: string;
-                  taxId?: string;
-                  budget?: number;
+                  couponId?: string | null;
+                  taxId?: string | null;
+                  budget?: number | null;
               }
             | string,
         ...rest: [
             string?,
-            string?,
+            (string | null)?,
             string?,
             string[]?,
-            string?,
-            string?,
-            number?,
+            (string | null)?,
+            (string | null)?,
+            (number | null)?,
         ]
     ): Promise<Models.Organization<Preferences>> {
         let params: {
             organizationId: string;
             billingPlan: string;
-            paymentMethodId?: string;
+            paymentMethodId?: string | null;
             billingAddressId?: string;
             invites?: string[];
-            couponId?: string;
-            taxId?: string;
-            budget?: number;
+            couponId?: string | null;
+            taxId?: string | null;
+            budget?: number | null;
         };
 
         if (
@@ -4222,23 +4286,23 @@ export class Organizations {
             params = (paramsOrFirst || {}) as {
                 organizationId: string;
                 billingPlan: string;
-                paymentMethodId?: string;
+                paymentMethodId?: string | null;
                 billingAddressId?: string;
                 invites?: string[];
-                couponId?: string;
-                taxId?: string;
-                budget?: number;
+                couponId?: string | null;
+                taxId?: string | null;
+                budget?: number | null;
             };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 billingPlan: rest[0] as string,
-                paymentMethodId: rest[1] as string,
+                paymentMethodId: rest[1] as string | null,
                 billingAddressId: rest[2] as string,
                 invites: rest[3] as string[],
-                couponId: rest[4] as string,
-                taxId: rest[5] as string,
-                budget: rest[6] as number,
+                couponId: rest[4] as string | null,
+                taxId: rest[5] as string | null,
+                budget: rest[6] as number | null,
             };
         }
 
@@ -4329,7 +4393,7 @@ export class Organizations {
      * @param {string} params.organizationId - Organization ID
      * @param {string} params.billingPlan - Target billing plan
      * @param {string[]} params.invites - Additional member invites
-     * @param {string} params.couponId - Coupon id
+     * @param {string | null} params.couponId - Coupon id
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationPlanChange>}
      */
@@ -4337,7 +4401,7 @@ export class Organizations {
         organizationId: string;
         billingPlan: string;
         invites?: string[];
-        couponId?: string;
+        couponId?: string | null;
     }): Promise<Models.EstimationPlanChange>;
     /**
      * Create a billing plan estimation for upgrading or downgrading an organization plan.
@@ -4346,7 +4410,7 @@ export class Organizations {
      * @param {string} organizationId - Organization ID
      * @param {string} billingPlan - Target billing plan
      * @param {string[]} invites - Additional member invites
-     * @param {string} couponId - Coupon id
+     * @param {string | null} couponId - Coupon id
      * @throws {AppwriteException}
      * @returns {Promise<Models.EstimationPlanChange>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4355,7 +4419,7 @@ export class Organizations {
         organizationId: string,
         billingPlan: string,
         invites?: string[],
-        couponId?: string,
+        couponId?: string | null,
     ): Promise<Models.EstimationPlanChange>;
     createPlanEstimation(
         paramsOrFirst:
@@ -4363,16 +4427,16 @@ export class Organizations {
                   organizationId: string;
                   billingPlan: string;
                   invites?: string[];
-                  couponId?: string;
+                  couponId?: string | null;
               }
             | string,
-        ...rest: [string?, string[]?, string?]
+        ...rest: [string?, string[]?, (string | null)?]
     ): Promise<Models.EstimationPlanChange> {
         let params: {
             organizationId: string;
             billingPlan: string;
             invites?: string[];
-            couponId?: string;
+            couponId?: string | null;
         };
 
         if (
@@ -4384,14 +4448,14 @@ export class Organizations {
                 organizationId: string;
                 billingPlan: string;
                 invites?: string[];
-                couponId?: string;
+                couponId?: string | null;
             };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 billingPlan: rest[0] as string,
                 invites: rest[1] as string[],
-                couponId: rest[2] as string,
+                couponId: rest[2] as string | null,
             };
         }
 
@@ -4625,7 +4689,7 @@ export class Organizations {
      * Set an organization's billing tax ID.
      *
      * @param {string} params.organizationId - Organization ID
-     * @param {string} params.taxId - Tax Id associated to billing.
+     * @param {string | null} params.taxId - Tax Id associated to billing.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
@@ -4633,13 +4697,13 @@ export class Organizations {
         Preferences extends Models.Preferences = Models.DefaultPreferences,
     >(params: {
         organizationId: string;
-        taxId?: string;
+        taxId?: string | null;
     }): Promise<Models.Organization<Preferences>>;
     /**
      * Set an organization's billing tax ID.
      *
      * @param {string} organizationId - Organization ID
-     * @param {string} taxId - Tax Id associated to billing.
+     * @param {string | null} taxId - Tax Id associated to billing.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4648,15 +4712,16 @@ export class Organizations {
         Preferences extends Models.Preferences = Models.DefaultPreferences,
     >(
         organizationId: string,
-        taxId?: string,
+        taxId?: string | null,
     ): Promise<Models.Organization<Preferences>>;
     setBillingTaxId<
         Preferences extends Models.Preferences = Models.DefaultPreferences,
     >(
-        paramsOrFirst: { organizationId: string; taxId?: string } | string,
-        ...rest: [string?]
+        paramsOrFirst:
+            { organizationId: string; taxId?: string | null } | string,
+        ...rest: [(string | null)?]
     ): Promise<Models.Organization<Preferences>> {
-        let params: { organizationId: string; taxId?: string };
+        let params: { organizationId: string; taxId?: string | null };
 
         if (
             paramsOrFirst &&
@@ -4665,12 +4730,12 @@ export class Organizations {
         ) {
             params = (paramsOrFirst || {}) as {
                 organizationId: string;
-                taxId?: string;
+                taxId?: string | null;
             };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
-                taxId: rest[0] as string,
+                taxId: rest[0] as string | null,
             };
         }
 

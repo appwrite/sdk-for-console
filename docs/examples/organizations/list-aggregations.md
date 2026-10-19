@@ -10,6 +10,7 @@ const organizations = new Organizations(client);
 const result = await organizations.listAggregations({
     organizationId: '<ORGANIZATION_ID>',
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

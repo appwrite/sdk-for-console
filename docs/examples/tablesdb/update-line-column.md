@@ -18,6 +18,7 @@ const result = await tablesDB.updateLineColumn({
         [5, 6],
     ], // optional
     newKey: '<NEW_KEY>', // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

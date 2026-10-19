@@ -115,7 +115,7 @@ export class Waf {
      * @param {string} params.ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
      * @param {string} params.resourceType - Resource type the rule applies to.
      * @param {string} params.name - Rule name.
-     * @param {string} params.resourceId - Resource identifier. Leave empty for the API resource type.
+     * @param {string | null} params.resourceId - Resource identifier. Leave empty for the API resource type.
      * @param {string} params.description - Optional description for the rule.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to create the rule in a disabled state.
@@ -127,7 +127,7 @@ export class Waf {
         ruleId: string;
         resourceType: string;
         name: string;
-        resourceId?: string;
+        resourceId?: string | null;
         description?: string;
         priority?: number;
         enabled?: boolean;
@@ -140,7 +140,7 @@ export class Waf {
      * @param {string} ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
      * @param {string} resourceType - Resource type the rule applies to.
      * @param {string} name - Rule name.
-     * @param {string} resourceId - Resource identifier. Leave empty for the API resource type.
+     * @param {string | null} resourceId - Resource identifier. Leave empty for the API resource type.
      * @param {string} description - Optional description for the rule.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to create the rule in a disabled state.
@@ -153,7 +153,7 @@ export class Waf {
         ruleId: string,
         resourceType: string,
         name: string,
-        resourceId?: string,
+        resourceId?: string | null,
         description?: string,
         priority?: number,
         enabled?: boolean,
@@ -165,7 +165,7 @@ export class Waf {
                   ruleId: string;
                   resourceType: string;
                   name: string;
-                  resourceId?: string;
+                  resourceId?: string | null;
                   description?: string;
                   priority?: number;
                   enabled?: boolean;
@@ -175,7 +175,7 @@ export class Waf {
         ...rest: [
             string?,
             string?,
-            string?,
+            (string | null)?,
             string?,
             number?,
             boolean?,
@@ -186,7 +186,7 @@ export class Waf {
             ruleId: string;
             resourceType: string;
             name: string;
-            resourceId?: string;
+            resourceId?: string | null;
             description?: string;
             priority?: number;
             enabled?: boolean;
@@ -202,7 +202,7 @@ export class Waf {
                 ruleId: string;
                 resourceType: string;
                 name: string;
-                resourceId?: string;
+                resourceId?: string | null;
                 description?: string;
                 priority?: number;
                 enabled?: boolean;
@@ -213,7 +213,7 @@ export class Waf {
                 ruleId: paramsOrFirst as string,
                 resourceType: rest[0] as string,
                 name: rest[1] as string,
-                resourceId: rest[2] as string,
+                resourceId: rest[2] as string | null,
                 description: rest[3] as string,
                 priority: rest[4] as number,
                 enabled: rest[5] as boolean,
@@ -293,7 +293,7 @@ export class Waf {
                         priority: 0,
                         enabled: true,
                         conditions: [],
-                        config: [],
+                        config: {},
                     },
                 },
             },
@@ -307,84 +307,84 @@ export class Waf {
      *
      *
      * @param {string} params.ruleId - Rule ID.
-     * @param {string} params.resourceType - Resource type the rule applies to.
-     * @param {string} params.resourceId - Resource identifier. Required for functions and sites.
-     * @param {string} params.name - Rule name.
-     * @param {string} params.description - Optional description for the rule.
-     * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
-     * @param {boolean} params.enabled - Set to false to disable the rule.
-     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string | null} params.resourceType - Resource type the rule applies to.
+     * @param {string | null} params.resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} params.name - Rule name.
+     * @param {string | null} params.description - Optional description for the rule.
+     * @param {number | null} params.priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean | null} params.enabled - Set to false to disable the rule.
+     * @param {string[] | null} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleBypass>}
      */
     updateBypassRule(params: {
         ruleId: string;
-        resourceType?: string;
-        resourceId?: string;
-        name?: string;
-        description?: string;
-        priority?: number;
-        enabled?: boolean;
-        conditions?: string[];
+        resourceType?: string | null;
+        resourceId?: string | null;
+        name?: string | null;
+        description?: string | null;
+        priority?: number | null;
+        enabled?: boolean | null;
+        conditions?: string[] | null;
     }): Promise<Models.WafRuleBypass>;
     /**
      * Update a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      *
      *
      * @param {string} ruleId - Rule ID.
-     * @param {string} resourceType - Resource type the rule applies to.
-     * @param {string} resourceId - Resource identifier. Required for functions and sites.
-     * @param {string} name - Rule name.
-     * @param {string} description - Optional description for the rule.
-     * @param {number} priority - Evaluation priority. Lower numbers run earlier.
-     * @param {boolean} enabled - Set to false to disable the rule.
-     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string | null} resourceType - Resource type the rule applies to.
+     * @param {string | null} resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} name - Rule name.
+     * @param {string | null} description - Optional description for the rule.
+     * @param {number | null} priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean | null} enabled - Set to false to disable the rule.
+     * @param {string[] | null} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleBypass>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     updateBypassRule(
         ruleId: string,
-        resourceType?: string,
-        resourceId?: string,
-        name?: string,
-        description?: string,
-        priority?: number,
-        enabled?: boolean,
-        conditions?: string[],
+        resourceType?: string | null,
+        resourceId?: string | null,
+        name?: string | null,
+        description?: string | null,
+        priority?: number | null,
+        enabled?: boolean | null,
+        conditions?: string[] | null,
     ): Promise<Models.WafRuleBypass>;
     updateBypassRule(
         paramsOrFirst:
             | {
                   ruleId: string;
-                  resourceType?: string;
-                  resourceId?: string;
-                  name?: string;
-                  description?: string;
-                  priority?: number;
-                  enabled?: boolean;
-                  conditions?: string[];
+                  resourceType?: string | null;
+                  resourceId?: string | null;
+                  name?: string | null;
+                  description?: string | null;
+                  priority?: number | null;
+                  enabled?: boolean | null;
+                  conditions?: string[] | null;
               }
             | string,
         ...rest: [
-            string?,
-            string?,
-            string?,
-            string?,
-            number?,
-            boolean?,
-            string[]?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (number | null)?,
+            (boolean | null)?,
+            (string[] | null)?,
         ]
     ): Promise<Models.WafRuleBypass> {
         let params: {
             ruleId: string;
-            resourceType?: string;
-            resourceId?: string;
-            name?: string;
-            description?: string;
-            priority?: number;
-            enabled?: boolean;
-            conditions?: string[];
+            resourceType?: string | null;
+            resourceId?: string | null;
+            name?: string | null;
+            description?: string | null;
+            priority?: number | null;
+            enabled?: boolean | null;
+            conditions?: string[] | null;
         };
 
         if (
@@ -394,24 +394,24 @@ export class Waf {
         ) {
             params = (paramsOrFirst || {}) as {
                 ruleId: string;
-                resourceType?: string;
-                resourceId?: string;
-                name?: string;
-                description?: string;
-                priority?: number;
-                enabled?: boolean;
-                conditions?: string[];
+                resourceType?: string | null;
+                resourceId?: string | null;
+                name?: string | null;
+                description?: string | null;
+                priority?: number | null;
+                enabled?: boolean | null;
+                conditions?: string[] | null;
             };
         } else {
             params = {
                 ruleId: paramsOrFirst as string,
-                resourceType: rest[0] as string,
-                resourceId: rest[1] as string,
-                name: rest[2] as string,
-                description: rest[3] as string,
-                priority: rest[4] as number,
-                enabled: rest[5] as boolean,
-                conditions: rest[6] as string[],
+                resourceType: rest[0] as string | null,
+                resourceId: rest[1] as string | null,
+                name: rest[2] as string | null,
+                description: rest[3] as string | null,
+                priority: rest[4] as number | null,
+                enabled: rest[5] as boolean | null,
+                conditions: rest[6] as string[] | null,
             };
         }
 
@@ -479,7 +479,7 @@ export class Waf {
                         priority: 0,
                         enabled: true,
                         conditions: [],
-                        config: [],
+                        config: {},
                     },
                 },
             },
@@ -495,7 +495,7 @@ export class Waf {
      * @param {string} params.ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
      * @param {string} params.resourceType - Resource type the rule applies to.
      * @param {string} params.name - Rule name.
-     * @param {string} params.resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} params.resourceId - Resource identifier. Required for functions and sites.
      * @param {string} params.description - Optional description for the rule.
      * @param {string} params.challengeType - Challenge type enforced by the rule.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
@@ -510,7 +510,7 @@ export class Waf {
         ruleId: string;
         resourceType: string;
         name: string;
-        resourceId?: string;
+        resourceId?: string | null;
         description?: string;
         challengeType?: string;
         priority?: number;
@@ -526,7 +526,7 @@ export class Waf {
      * @param {string} ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
      * @param {string} resourceType - Resource type the rule applies to.
      * @param {string} name - Rule name.
-     * @param {string} resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} resourceId - Resource identifier. Required for functions and sites.
      * @param {string} description - Optional description for the rule.
      * @param {string} challengeType - Challenge type enforced by the rule.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
@@ -542,7 +542,7 @@ export class Waf {
         ruleId: string,
         resourceType: string,
         name: string,
-        resourceId?: string,
+        resourceId?: string | null,
         description?: string,
         challengeType?: string,
         priority?: number,
@@ -557,7 +557,7 @@ export class Waf {
                   ruleId: string;
                   resourceType: string;
                   name: string;
-                  resourceId?: string;
+                  resourceId?: string | null;
                   description?: string;
                   challengeType?: string;
                   priority?: number;
@@ -570,7 +570,7 @@ export class Waf {
         ...rest: [
             string?,
             string?,
-            string?,
+            (string | null)?,
             string?,
             string?,
             number?,
@@ -584,7 +584,7 @@ export class Waf {
             ruleId: string;
             resourceType: string;
             name: string;
-            resourceId?: string;
+            resourceId?: string | null;
             description?: string;
             challengeType?: string;
             priority?: number;
@@ -603,7 +603,7 @@ export class Waf {
                 ruleId: string;
                 resourceType: string;
                 name: string;
-                resourceId?: string;
+                resourceId?: string | null;
                 description?: string;
                 challengeType?: string;
                 priority?: number;
@@ -617,7 +617,7 @@ export class Waf {
                 ruleId: paramsOrFirst as string,
                 resourceType: rest[0] as string,
                 name: rest[1] as string,
-                resourceId: rest[2] as string,
+                resourceId: rest[2] as string | null,
                 description: rest[3] as string,
                 challengeType: rest[4] as string,
                 priority: rest[5] as number,
@@ -712,7 +712,7 @@ export class Waf {
                         priority: 0,
                         enabled: true,
                         conditions: [],
-                        config: [],
+                        config: {},
                         challengeType: 'compute',
                         difficulty: 3,
                         ttl: 1800,
@@ -729,105 +729,105 @@ export class Waf {
      *
      *
      * @param {string} params.ruleId - Rule ID.
-     * @param {string} params.resourceType - Resource type the rule applies to.
-     * @param {string} params.resourceId - Resource identifier. Required for functions and sites.
-     * @param {string} params.name - Rule name.
-     * @param {string} params.description - Optional description for the rule.
-     * @param {string} params.challengeType - Challenge type enforced by the rule.
-     * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
-     * @param {boolean} params.enabled - Set to false to disable the rule.
-     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
-     * @param {number} params.difficulty - Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
-     * @param {number} params.ttl - How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
+     * @param {string | null} params.resourceType - Resource type the rule applies to.
+     * @param {string | null} params.resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} params.name - Rule name.
+     * @param {string | null} params.description - Optional description for the rule.
+     * @param {string | null} params.challengeType - Challenge type enforced by the rule.
+     * @param {number | null} params.priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean | null} params.enabled - Set to false to disable the rule.
+     * @param {string[] | null} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {number | null} params.difficulty - Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
+     * @param {number | null} params.ttl - How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleChallenge>}
      */
     updateChallengeRule(params: {
         ruleId: string;
-        resourceType?: string;
-        resourceId?: string;
-        name?: string;
-        description?: string;
-        challengeType?: string;
-        priority?: number;
-        enabled?: boolean;
-        conditions?: string[];
-        difficulty?: number;
-        ttl?: number;
+        resourceType?: string | null;
+        resourceId?: string | null;
+        name?: string | null;
+        description?: string | null;
+        challengeType?: string | null;
+        priority?: number | null;
+        enabled?: boolean | null;
+        conditions?: string[] | null;
+        difficulty?: number | null;
+        ttl?: number | null;
     }): Promise<Models.WafRuleChallenge>;
     /**
      * Update a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      *
      *
      * @param {string} ruleId - Rule ID.
-     * @param {string} resourceType - Resource type the rule applies to.
-     * @param {string} resourceId - Resource identifier. Required for functions and sites.
-     * @param {string} name - Rule name.
-     * @param {string} description - Optional description for the rule.
-     * @param {string} challengeType - Challenge type enforced by the rule.
-     * @param {number} priority - Evaluation priority. Lower numbers run earlier.
-     * @param {boolean} enabled - Set to false to disable the rule.
-     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
-     * @param {number} difficulty - Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
-     * @param {number} ttl - How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
+     * @param {string | null} resourceType - Resource type the rule applies to.
+     * @param {string | null} resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} name - Rule name.
+     * @param {string | null} description - Optional description for the rule.
+     * @param {string | null} challengeType - Challenge type enforced by the rule.
+     * @param {number | null} priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean | null} enabled - Set to false to disable the rule.
+     * @param {string[] | null} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {number | null} difficulty - Challenge difficulty from 1 (easiest) to 5 (hardest). Higher values demand more client-side proof-of-work.
+     * @param {number | null} ttl - How long, in seconds, a visitor stays cleared after passing the challenge before being challenged again.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleChallenge>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     updateChallengeRule(
         ruleId: string,
-        resourceType?: string,
-        resourceId?: string,
-        name?: string,
-        description?: string,
-        challengeType?: string,
-        priority?: number,
-        enabled?: boolean,
-        conditions?: string[],
-        difficulty?: number,
-        ttl?: number,
+        resourceType?: string | null,
+        resourceId?: string | null,
+        name?: string | null,
+        description?: string | null,
+        challengeType?: string | null,
+        priority?: number | null,
+        enabled?: boolean | null,
+        conditions?: string[] | null,
+        difficulty?: number | null,
+        ttl?: number | null,
     ): Promise<Models.WafRuleChallenge>;
     updateChallengeRule(
         paramsOrFirst:
             | {
                   ruleId: string;
-                  resourceType?: string;
-                  resourceId?: string;
-                  name?: string;
-                  description?: string;
-                  challengeType?: string;
-                  priority?: number;
-                  enabled?: boolean;
-                  conditions?: string[];
-                  difficulty?: number;
-                  ttl?: number;
+                  resourceType?: string | null;
+                  resourceId?: string | null;
+                  name?: string | null;
+                  description?: string | null;
+                  challengeType?: string | null;
+                  priority?: number | null;
+                  enabled?: boolean | null;
+                  conditions?: string[] | null;
+                  difficulty?: number | null;
+                  ttl?: number | null;
               }
             | string,
         ...rest: [
-            string?,
-            string?,
-            string?,
-            string?,
-            string?,
-            number?,
-            boolean?,
-            string[]?,
-            number?,
-            number?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (number | null)?,
+            (boolean | null)?,
+            (string[] | null)?,
+            (number | null)?,
+            (number | null)?,
         ]
     ): Promise<Models.WafRuleChallenge> {
         let params: {
             ruleId: string;
-            resourceType?: string;
-            resourceId?: string;
-            name?: string;
-            description?: string;
-            challengeType?: string;
-            priority?: number;
-            enabled?: boolean;
-            conditions?: string[];
-            difficulty?: number;
-            ttl?: number;
+            resourceType?: string | null;
+            resourceId?: string | null;
+            name?: string | null;
+            description?: string | null;
+            challengeType?: string | null;
+            priority?: number | null;
+            enabled?: boolean | null;
+            conditions?: string[] | null;
+            difficulty?: number | null;
+            ttl?: number | null;
         };
 
         if (
@@ -837,30 +837,30 @@ export class Waf {
         ) {
             params = (paramsOrFirst || {}) as {
                 ruleId: string;
-                resourceType?: string;
-                resourceId?: string;
-                name?: string;
-                description?: string;
-                challengeType?: string;
-                priority?: number;
-                enabled?: boolean;
-                conditions?: string[];
-                difficulty?: number;
-                ttl?: number;
+                resourceType?: string | null;
+                resourceId?: string | null;
+                name?: string | null;
+                description?: string | null;
+                challengeType?: string | null;
+                priority?: number | null;
+                enabled?: boolean | null;
+                conditions?: string[] | null;
+                difficulty?: number | null;
+                ttl?: number | null;
             };
         } else {
             params = {
                 ruleId: paramsOrFirst as string,
-                resourceType: rest[0] as string,
-                resourceId: rest[1] as string,
-                name: rest[2] as string,
-                description: rest[3] as string,
-                challengeType: rest[4] as string,
-                priority: rest[5] as number,
-                enabled: rest[6] as boolean,
-                conditions: rest[7] as string[],
-                difficulty: rest[8] as number,
-                ttl: rest[9] as number,
+                resourceType: rest[0] as string | null,
+                resourceId: rest[1] as string | null,
+                name: rest[2] as string | null,
+                description: rest[3] as string | null,
+                challengeType: rest[4] as string | null,
+                priority: rest[5] as number | null,
+                enabled: rest[6] as boolean | null,
+                conditions: rest[7] as string[] | null,
+                difficulty: rest[8] as number | null,
+                ttl: rest[9] as number | null,
             };
         }
 
@@ -940,7 +940,7 @@ export class Waf {
                         priority: 0,
                         enabled: true,
                         conditions: [],
-                        config: [],
+                        config: {},
                         challengeType: 'compute',
                         difficulty: 3,
                         ttl: 1800,
@@ -959,7 +959,7 @@ export class Waf {
      * @param {string} params.ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
      * @param {string} params.resourceType - Resource type the rule applies to.
      * @param {string} params.name - Rule name.
-     * @param {string} params.resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} params.resourceId - Resource identifier. Required for functions and sites.
      * @param {string} params.description - Optional description for the rule.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to create the rule in a disabled state.
@@ -971,7 +971,7 @@ export class Waf {
         ruleId: string;
         resourceType: string;
         name: string;
-        resourceId?: string;
+        resourceId?: string | null;
         description?: string;
         priority?: number;
         enabled?: boolean;
@@ -984,7 +984,7 @@ export class Waf {
      * @param {string} ruleId - Rule ID. Choose a custom ID or pass `ID.unique()` to generate a unique one.
      * @param {string} resourceType - Resource type the rule applies to.
      * @param {string} name - Rule name.
-     * @param {string} resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} resourceId - Resource identifier. Required for functions and sites.
      * @param {string} description - Optional description for the rule.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to create the rule in a disabled state.
@@ -997,7 +997,7 @@ export class Waf {
         ruleId: string,
         resourceType: string,
         name: string,
-        resourceId?: string,
+        resourceId?: string | null,
         description?: string,
         priority?: number,
         enabled?: boolean,
@@ -1009,7 +1009,7 @@ export class Waf {
                   ruleId: string;
                   resourceType: string;
                   name: string;
-                  resourceId?: string;
+                  resourceId?: string | null;
                   description?: string;
                   priority?: number;
                   enabled?: boolean;
@@ -1019,7 +1019,7 @@ export class Waf {
         ...rest: [
             string?,
             string?,
-            string?,
+            (string | null)?,
             string?,
             number?,
             boolean?,
@@ -1030,7 +1030,7 @@ export class Waf {
             ruleId: string;
             resourceType: string;
             name: string;
-            resourceId?: string;
+            resourceId?: string | null;
             description?: string;
             priority?: number;
             enabled?: boolean;
@@ -1046,7 +1046,7 @@ export class Waf {
                 ruleId: string;
                 resourceType: string;
                 name: string;
-                resourceId?: string;
+                resourceId?: string | null;
                 description?: string;
                 priority?: number;
                 enabled?: boolean;
@@ -1057,7 +1057,7 @@ export class Waf {
                 ruleId: paramsOrFirst as string,
                 resourceType: rest[0] as string,
                 name: rest[1] as string,
-                resourceId: rest[2] as string,
+                resourceId: rest[2] as string | null,
                 description: rest[3] as string,
                 priority: rest[4] as number,
                 enabled: rest[5] as boolean,
@@ -1137,7 +1137,7 @@ export class Waf {
                         priority: 0,
                         enabled: true,
                         conditions: [],
-                        config: [],
+                        config: {},
                     },
                 },
             },
@@ -1151,84 +1151,84 @@ export class Waf {
      *
      *
      * @param {string} params.ruleId - Rule ID.
-     * @param {string} params.resourceType - Resource type the rule applies to.
-     * @param {string} params.resourceId - Resource identifier. Required for functions and sites.
-     * @param {string} params.name - Rule name.
-     * @param {string} params.description - Optional description for the rule.
-     * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
-     * @param {boolean} params.enabled - Set to false to disable the rule.
-     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string | null} params.resourceType - Resource type the rule applies to.
+     * @param {string | null} params.resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} params.name - Rule name.
+     * @param {string | null} params.description - Optional description for the rule.
+     * @param {number | null} params.priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean | null} params.enabled - Set to false to disable the rule.
+     * @param {string[] | null} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleDeny>}
      */
     updateDenyRule(params: {
         ruleId: string;
-        resourceType?: string;
-        resourceId?: string;
-        name?: string;
-        description?: string;
-        priority?: number;
-        enabled?: boolean;
-        conditions?: string[];
+        resourceType?: string | null;
+        resourceId?: string | null;
+        name?: string | null;
+        description?: string | null;
+        priority?: number | null;
+        enabled?: boolean | null;
+        conditions?: string[] | null;
     }): Promise<Models.WafRuleDeny>;
     /**
      * Update a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      *
      *
      * @param {string} ruleId - Rule ID.
-     * @param {string} resourceType - Resource type the rule applies to.
-     * @param {string} resourceId - Resource identifier. Required for functions and sites.
-     * @param {string} name - Rule name.
-     * @param {string} description - Optional description for the rule.
-     * @param {number} priority - Evaluation priority. Lower numbers run earlier.
-     * @param {boolean} enabled - Set to false to disable the rule.
-     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string | null} resourceType - Resource type the rule applies to.
+     * @param {string | null} resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} name - Rule name.
+     * @param {string | null} description - Optional description for the rule.
+     * @param {number | null} priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean | null} enabled - Set to false to disable the rule.
+     * @param {string[] | null} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleDeny>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     updateDenyRule(
         ruleId: string,
-        resourceType?: string,
-        resourceId?: string,
-        name?: string,
-        description?: string,
-        priority?: number,
-        enabled?: boolean,
-        conditions?: string[],
+        resourceType?: string | null,
+        resourceId?: string | null,
+        name?: string | null,
+        description?: string | null,
+        priority?: number | null,
+        enabled?: boolean | null,
+        conditions?: string[] | null,
     ): Promise<Models.WafRuleDeny>;
     updateDenyRule(
         paramsOrFirst:
             | {
                   ruleId: string;
-                  resourceType?: string;
-                  resourceId?: string;
-                  name?: string;
-                  description?: string;
-                  priority?: number;
-                  enabled?: boolean;
-                  conditions?: string[];
+                  resourceType?: string | null;
+                  resourceId?: string | null;
+                  name?: string | null;
+                  description?: string | null;
+                  priority?: number | null;
+                  enabled?: boolean | null;
+                  conditions?: string[] | null;
               }
             | string,
         ...rest: [
-            string?,
-            string?,
-            string?,
-            string?,
-            number?,
-            boolean?,
-            string[]?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (number | null)?,
+            (boolean | null)?,
+            (string[] | null)?,
         ]
     ): Promise<Models.WafRuleDeny> {
         let params: {
             ruleId: string;
-            resourceType?: string;
-            resourceId?: string;
-            name?: string;
-            description?: string;
-            priority?: number;
-            enabled?: boolean;
-            conditions?: string[];
+            resourceType?: string | null;
+            resourceId?: string | null;
+            name?: string | null;
+            description?: string | null;
+            priority?: number | null;
+            enabled?: boolean | null;
+            conditions?: string[] | null;
         };
 
         if (
@@ -1238,24 +1238,24 @@ export class Waf {
         ) {
             params = (paramsOrFirst || {}) as {
                 ruleId: string;
-                resourceType?: string;
-                resourceId?: string;
-                name?: string;
-                description?: string;
-                priority?: number;
-                enabled?: boolean;
-                conditions?: string[];
+                resourceType?: string | null;
+                resourceId?: string | null;
+                name?: string | null;
+                description?: string | null;
+                priority?: number | null;
+                enabled?: boolean | null;
+                conditions?: string[] | null;
             };
         } else {
             params = {
                 ruleId: paramsOrFirst as string,
-                resourceType: rest[0] as string,
-                resourceId: rest[1] as string,
-                name: rest[2] as string,
-                description: rest[3] as string,
-                priority: rest[4] as number,
-                enabled: rest[5] as boolean,
-                conditions: rest[6] as string[],
+                resourceType: rest[0] as string | null,
+                resourceId: rest[1] as string | null,
+                name: rest[2] as string | null,
+                description: rest[3] as string | null,
+                priority: rest[4] as number | null,
+                enabled: rest[5] as boolean | null,
+                conditions: rest[6] as string[] | null,
             };
         }
 
@@ -1323,7 +1323,7 @@ export class Waf {
                         priority: 0,
                         enabled: true,
                         conditions: [],
-                        config: [],
+                        config: {},
                     },
                 },
             },
@@ -1341,11 +1341,11 @@ export class Waf {
      * @param {string} params.name - Rule name.
      * @param {number} params.limit - Maximum number of matching requests allowed in the configured interval.
      * @param {number} params.interval - Interval in seconds used for rate limiting.
-     * @param {string} params.resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} params.resourceId - Resource identifier. Required for functions and sites.
      * @param {string} params.description - Optional description for the rule.
      * @param {string} params.key - Rate limit key. Use `ip` to limit per client IP or `userId` to limit per authenticated user. Requests without an authenticated user skip `userId` rules.
      * @param {string} params.strategy - Rate limit strategy. `fixedWindow` counts requests in discrete intervals, `slidingWindow` weights the previous interval for smoother limiting, and `tokenBucket` refills allowance continuously to permit short bursts.
-     * @param {number} params.maxBucketSize - Maximum number of tokens the bucket can hold for the `tokenBucket` strategy, controlling how large a burst is allowed. The sustained refill rate is `limit / interval`. Defaults to `limit` when omitted. Ignored by other strategies.
+     * @param {number | null} params.maxBucketSize - Maximum number of tokens the bucket can hold for the `tokenBucket` strategy, controlling how large a burst is allowed. The sustained refill rate is `limit / interval`. Defaults to `limit` when omitted. Ignored by other strategies.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to create the rule in a disabled state.
      * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
@@ -1358,11 +1358,11 @@ export class Waf {
         name: string;
         limit: number;
         interval: number;
-        resourceId?: string;
+        resourceId?: string | null;
         description?: string;
         key?: string;
         strategy?: string;
-        maxBucketSize?: number;
+        maxBucketSize?: number | null;
         priority?: number;
         enabled?: boolean;
         conditions?: string[];
@@ -1376,11 +1376,11 @@ export class Waf {
      * @param {string} name - Rule name.
      * @param {number} limit - Maximum number of matching requests allowed in the configured interval.
      * @param {number} interval - Interval in seconds used for rate limiting.
-     * @param {string} resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} resourceId - Resource identifier. Required for functions and sites.
      * @param {string} description - Optional description for the rule.
      * @param {string} key - Rate limit key. Use `ip` to limit per client IP or `userId` to limit per authenticated user. Requests without an authenticated user skip `userId` rules.
      * @param {string} strategy - Rate limit strategy. `fixedWindow` counts requests in discrete intervals, `slidingWindow` weights the previous interval for smoother limiting, and `tokenBucket` refills allowance continuously to permit short bursts.
-     * @param {number} maxBucketSize - Maximum number of tokens the bucket can hold for the `tokenBucket` strategy, controlling how large a burst is allowed. The sustained refill rate is `limit / interval`. Defaults to `limit` when omitted. Ignored by other strategies.
+     * @param {number | null} maxBucketSize - Maximum number of tokens the bucket can hold for the `tokenBucket` strategy, controlling how large a burst is allowed. The sustained refill rate is `limit / interval`. Defaults to `limit` when omitted. Ignored by other strategies.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to create the rule in a disabled state.
      * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
@@ -1394,11 +1394,11 @@ export class Waf {
         name: string,
         limit: number,
         interval: number,
-        resourceId?: string,
+        resourceId?: string | null,
         description?: string,
         key?: string,
         strategy?: string,
-        maxBucketSize?: number,
+        maxBucketSize?: number | null,
         priority?: number,
         enabled?: boolean,
         conditions?: string[],
@@ -1411,11 +1411,11 @@ export class Waf {
                   name: string;
                   limit: number;
                   interval: number;
-                  resourceId?: string;
+                  resourceId?: string | null;
                   description?: string;
                   key?: string;
                   strategy?: string;
-                  maxBucketSize?: number;
+                  maxBucketSize?: number | null;
                   priority?: number;
                   enabled?: boolean;
                   conditions?: string[];
@@ -1426,11 +1426,11 @@ export class Waf {
             string?,
             number?,
             number?,
+            (string | null)?,
             string?,
             string?,
             string?,
-            string?,
-            number?,
+            (number | null)?,
             number?,
             boolean?,
             string[]?,
@@ -1442,11 +1442,11 @@ export class Waf {
             name: string;
             limit: number;
             interval: number;
-            resourceId?: string;
+            resourceId?: string | null;
             description?: string;
             key?: string;
             strategy?: string;
-            maxBucketSize?: number;
+            maxBucketSize?: number | null;
             priority?: number;
             enabled?: boolean;
             conditions?: string[];
@@ -1463,11 +1463,11 @@ export class Waf {
                 name: string;
                 limit: number;
                 interval: number;
-                resourceId?: string;
+                resourceId?: string | null;
                 description?: string;
                 key?: string;
                 strategy?: string;
-                maxBucketSize?: number;
+                maxBucketSize?: number | null;
                 priority?: number;
                 enabled?: boolean;
                 conditions?: string[];
@@ -1479,11 +1479,11 @@ export class Waf {
                 name: rest[1] as string,
                 limit: rest[2] as number,
                 interval: rest[3] as number,
-                resourceId: rest[4] as string,
+                resourceId: rest[4] as string | null,
                 description: rest[5] as string,
                 key: rest[6] as string,
                 strategy: rest[7] as string,
-                maxBucketSize: rest[8] as number,
+                maxBucketSize: rest[8] as number | null,
                 priority: rest[9] as number,
                 enabled: rest[10] as boolean,
                 conditions: rest[11] as string[],
@@ -1590,7 +1590,7 @@ export class Waf {
                         priority: 0,
                         enabled: true,
                         conditions: [],
-                        config: [],
+                        config: {},
                         limit: 100,
                         interval: 3600,
                         key: 'ip',
@@ -1609,112 +1609,112 @@ export class Waf {
      *
      *
      * @param {string} params.ruleId - Rule ID.
-     * @param {string} params.resourceType - Resource type the rule applies to.
-     * @param {string} params.resourceId - Resource identifier. Required for functions and sites.
-     * @param {string} params.name - Rule name.
-     * @param {string} params.description - Optional description for the rule.
-     * @param {number} params.limit - Maximum number of matching requests allowed in the configured interval.
-     * @param {number} params.interval - Interval in seconds used for rate limiting.
-     * @param {string} params.key - Rate limit key. Use `ip` to limit per client IP or `userId` to limit per authenticated user. Requests without an authenticated user skip `userId` rules.
-     * @param {number} params.maxBucketSize - Maximum number of tokens the bucket can hold for the `tokenBucket` strategy, controlling how large a burst is allowed. The sustained refill rate is `limit / interval`. Ignored by other strategies. The strategy itself cannot be changed after creation.
-     * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
-     * @param {boolean} params.enabled - Set to false to disable the rule.
-     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string | null} params.resourceType - Resource type the rule applies to.
+     * @param {string | null} params.resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} params.name - Rule name.
+     * @param {string | null} params.description - Optional description for the rule.
+     * @param {number | null} params.limit - Maximum number of matching requests allowed in the configured interval.
+     * @param {number | null} params.interval - Interval in seconds used for rate limiting.
+     * @param {string | null} params.key - Rate limit key. Use `ip` to limit per client IP or `userId` to limit per authenticated user. Requests without an authenticated user skip `userId` rules.
+     * @param {number | null} params.maxBucketSize - Maximum number of tokens the bucket can hold for the `tokenBucket` strategy, controlling how large a burst is allowed. The sustained refill rate is `limit / interval`. Ignored by other strategies. The strategy itself cannot be changed after creation.
+     * @param {number | null} params.priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean | null} params.enabled - Set to false to disable the rule.
+     * @param {string[] | null} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRateLimit>}
      */
     updateRateLimitRule(params: {
         ruleId: string;
-        resourceType?: string;
-        resourceId?: string;
-        name?: string;
-        description?: string;
-        limit?: number;
-        interval?: number;
-        key?: string;
-        maxBucketSize?: number;
-        priority?: number;
-        enabled?: boolean;
-        conditions?: string[];
+        resourceType?: string | null;
+        resourceId?: string | null;
+        name?: string | null;
+        description?: string | null;
+        limit?: number | null;
+        interval?: number | null;
+        key?: string | null;
+        maxBucketSize?: number | null;
+        priority?: number | null;
+        enabled?: boolean | null;
+        conditions?: string[] | null;
     }): Promise<Models.WafRuleRateLimit>;
     /**
      * Update a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      *
      *
      * @param {string} ruleId - Rule ID.
-     * @param {string} resourceType - Resource type the rule applies to.
-     * @param {string} resourceId - Resource identifier. Required for functions and sites.
-     * @param {string} name - Rule name.
-     * @param {string} description - Optional description for the rule.
-     * @param {number} limit - Maximum number of matching requests allowed in the configured interval.
-     * @param {number} interval - Interval in seconds used for rate limiting.
-     * @param {string} key - Rate limit key. Use `ip` to limit per client IP or `userId` to limit per authenticated user. Requests without an authenticated user skip `userId` rules.
-     * @param {number} maxBucketSize - Maximum number of tokens the bucket can hold for the `tokenBucket` strategy, controlling how large a burst is allowed. The sustained refill rate is `limit / interval`. Ignored by other strategies. The strategy itself cannot be changed after creation.
-     * @param {number} priority - Evaluation priority. Lower numbers run earlier.
-     * @param {boolean} enabled - Set to false to disable the rule.
-     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string | null} resourceType - Resource type the rule applies to.
+     * @param {string | null} resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} name - Rule name.
+     * @param {string | null} description - Optional description for the rule.
+     * @param {number | null} limit - Maximum number of matching requests allowed in the configured interval.
+     * @param {number | null} interval - Interval in seconds used for rate limiting.
+     * @param {string | null} key - Rate limit key. Use `ip` to limit per client IP or `userId` to limit per authenticated user. Requests without an authenticated user skip `userId` rules.
+     * @param {number | null} maxBucketSize - Maximum number of tokens the bucket can hold for the `tokenBucket` strategy, controlling how large a burst is allowed. The sustained refill rate is `limit / interval`. Ignored by other strategies. The strategy itself cannot be changed after creation.
+     * @param {number | null} priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean | null} enabled - Set to false to disable the rule.
+     * @param {string[] | null} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRateLimit>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     updateRateLimitRule(
         ruleId: string,
-        resourceType?: string,
-        resourceId?: string,
-        name?: string,
-        description?: string,
-        limit?: number,
-        interval?: number,
-        key?: string,
-        maxBucketSize?: number,
-        priority?: number,
-        enabled?: boolean,
-        conditions?: string[],
+        resourceType?: string | null,
+        resourceId?: string | null,
+        name?: string | null,
+        description?: string | null,
+        limit?: number | null,
+        interval?: number | null,
+        key?: string | null,
+        maxBucketSize?: number | null,
+        priority?: number | null,
+        enabled?: boolean | null,
+        conditions?: string[] | null,
     ): Promise<Models.WafRuleRateLimit>;
     updateRateLimitRule(
         paramsOrFirst:
             | {
                   ruleId: string;
-                  resourceType?: string;
-                  resourceId?: string;
-                  name?: string;
-                  description?: string;
-                  limit?: number;
-                  interval?: number;
-                  key?: string;
-                  maxBucketSize?: number;
-                  priority?: number;
-                  enabled?: boolean;
-                  conditions?: string[];
+                  resourceType?: string | null;
+                  resourceId?: string | null;
+                  name?: string | null;
+                  description?: string | null;
+                  limit?: number | null;
+                  interval?: number | null;
+                  key?: string | null;
+                  maxBucketSize?: number | null;
+                  priority?: number | null;
+                  enabled?: boolean | null;
+                  conditions?: string[] | null;
               }
             | string,
         ...rest: [
-            string?,
-            string?,
-            string?,
-            string?,
-            number?,
-            number?,
-            string?,
-            number?,
-            number?,
-            boolean?,
-            string[]?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (number | null)?,
+            (number | null)?,
+            (string | null)?,
+            (number | null)?,
+            (number | null)?,
+            (boolean | null)?,
+            (string[] | null)?,
         ]
     ): Promise<Models.WafRuleRateLimit> {
         let params: {
             ruleId: string;
-            resourceType?: string;
-            resourceId?: string;
-            name?: string;
-            description?: string;
-            limit?: number;
-            interval?: number;
-            key?: string;
-            maxBucketSize?: number;
-            priority?: number;
-            enabled?: boolean;
-            conditions?: string[];
+            resourceType?: string | null;
+            resourceId?: string | null;
+            name?: string | null;
+            description?: string | null;
+            limit?: number | null;
+            interval?: number | null;
+            key?: string | null;
+            maxBucketSize?: number | null;
+            priority?: number | null;
+            enabled?: boolean | null;
+            conditions?: string[] | null;
         };
 
         if (
@@ -1724,32 +1724,32 @@ export class Waf {
         ) {
             params = (paramsOrFirst || {}) as {
                 ruleId: string;
-                resourceType?: string;
-                resourceId?: string;
-                name?: string;
-                description?: string;
-                limit?: number;
-                interval?: number;
-                key?: string;
-                maxBucketSize?: number;
-                priority?: number;
-                enabled?: boolean;
-                conditions?: string[];
+                resourceType?: string | null;
+                resourceId?: string | null;
+                name?: string | null;
+                description?: string | null;
+                limit?: number | null;
+                interval?: number | null;
+                key?: string | null;
+                maxBucketSize?: number | null;
+                priority?: number | null;
+                enabled?: boolean | null;
+                conditions?: string[] | null;
             };
         } else {
             params = {
                 ruleId: paramsOrFirst as string,
-                resourceType: rest[0] as string,
-                resourceId: rest[1] as string,
-                name: rest[2] as string,
-                description: rest[3] as string,
-                limit: rest[4] as number,
-                interval: rest[5] as number,
-                key: rest[6] as string,
-                maxBucketSize: rest[7] as number,
-                priority: rest[8] as number,
-                enabled: rest[9] as boolean,
-                conditions: rest[10] as string[],
+                resourceType: rest[0] as string | null,
+                resourceId: rest[1] as string | null,
+                name: rest[2] as string | null,
+                description: rest[3] as string | null,
+                limit: rest[4] as number | null,
+                interval: rest[5] as number | null,
+                key: rest[6] as string | null,
+                maxBucketSize: rest[7] as number | null,
+                priority: rest[8] as number | null,
+                enabled: rest[9] as boolean | null,
+                conditions: rest[10] as string[] | null,
             };
         }
 
@@ -1833,7 +1833,7 @@ export class Waf {
                         priority: 0,
                         enabled: true,
                         conditions: [],
-                        config: [],
+                        config: {},
                         limit: 100,
                         interval: 3600,
                         key: 'ip',
@@ -1856,7 +1856,7 @@ export class Waf {
      * @param {string} params.name - Rule name.
      * @param {string} params.location - Location used for redirect responses.
      * @param {number} params.statusCode - Integer status code used for redirect responses.
-     * @param {string} params.resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} params.resourceId - Resource identifier. Required for functions and sites.
      * @param {string} params.description - Optional description for the rule.
      * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} params.enabled - Set to false to create the rule in a disabled state.
@@ -1870,7 +1870,7 @@ export class Waf {
         name: string;
         location: string;
         statusCode: number;
-        resourceId?: string;
+        resourceId?: string | null;
         description?: string;
         priority?: number;
         enabled?: boolean;
@@ -1885,7 +1885,7 @@ export class Waf {
      * @param {string} name - Rule name.
      * @param {string} location - Location used for redirect responses.
      * @param {number} statusCode - Integer status code used for redirect responses.
-     * @param {string} resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} resourceId - Resource identifier. Required for functions and sites.
      * @param {string} description - Optional description for the rule.
      * @param {number} priority - Evaluation priority. Lower numbers run earlier.
      * @param {boolean} enabled - Set to false to create the rule in a disabled state.
@@ -1900,7 +1900,7 @@ export class Waf {
         name: string,
         location: string,
         statusCode: number,
-        resourceId?: string,
+        resourceId?: string | null,
         description?: string,
         priority?: number,
         enabled?: boolean,
@@ -1914,7 +1914,7 @@ export class Waf {
                   name: string;
                   location: string;
                   statusCode: number;
-                  resourceId?: string;
+                  resourceId?: string | null;
                   description?: string;
                   priority?: number;
                   enabled?: boolean;
@@ -1926,7 +1926,7 @@ export class Waf {
             string?,
             string?,
             number?,
-            string?,
+            (string | null)?,
             string?,
             number?,
             boolean?,
@@ -1939,7 +1939,7 @@ export class Waf {
             name: string;
             location: string;
             statusCode: number;
-            resourceId?: string;
+            resourceId?: string | null;
             description?: string;
             priority?: number;
             enabled?: boolean;
@@ -1957,7 +1957,7 @@ export class Waf {
                 name: string;
                 location: string;
                 statusCode: number;
-                resourceId?: string;
+                resourceId?: string | null;
                 description?: string;
                 priority?: number;
                 enabled?: boolean;
@@ -1970,7 +1970,7 @@ export class Waf {
                 name: rest[1] as string,
                 location: rest[2] as string,
                 statusCode: rest[3] as number,
-                resourceId: rest[4] as string,
+                resourceId: rest[4] as string | null,
                 description: rest[5] as string,
                 priority: rest[6] as number,
                 enabled: rest[7] as boolean,
@@ -2068,7 +2068,7 @@ export class Waf {
                         priority: 0,
                         enabled: true,
                         conditions: [],
-                        config: [],
+                        config: {},
                         location: '/',
                         statusCode: 302,
                     },
@@ -2084,98 +2084,98 @@ export class Waf {
      *
      *
      * @param {string} params.ruleId - Rule ID.
-     * @param {string} params.resourceType - Resource type the rule applies to.
-     * @param {string} params.resourceId - Resource identifier. Required for functions and sites.
-     * @param {string} params.name - Rule name.
-     * @param {string} params.description - Optional description for the rule.
-     * @param {string} params.location - Location used for redirect responses.
-     * @param {number} params.statusCode - Integer status code used for redirect responses.
-     * @param {number} params.priority - Evaluation priority. Lower numbers run earlier.
-     * @param {boolean} params.enabled - Set to false to disable the rule.
-     * @param {string[]} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string | null} params.resourceType - Resource type the rule applies to.
+     * @param {string | null} params.resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} params.name - Rule name.
+     * @param {string | null} params.description - Optional description for the rule.
+     * @param {string | null} params.location - Location used for redirect responses.
+     * @param {number | null} params.statusCode - Integer status code used for redirect responses.
+     * @param {number | null} params.priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean | null} params.enabled - Set to false to disable the rule.
+     * @param {string[] | null} params.conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRedirect>}
      */
     updateRedirectRule(params: {
         ruleId: string;
-        resourceType?: string;
-        resourceId?: string;
-        name?: string;
-        description?: string;
-        location?: string;
-        statusCode?: number;
-        priority?: number;
-        enabled?: boolean;
-        conditions?: string[];
+        resourceType?: string | null;
+        resourceId?: string | null;
+        name?: string | null;
+        description?: string | null;
+        location?: string | null;
+        statusCode?: number | null;
+        priority?: number | null;
+        enabled?: boolean | null;
+        conditions?: string[] | null;
     }): Promise<Models.WafRuleRedirect>;
     /**
      * Update a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.
      *
      *
      * @param {string} ruleId - Rule ID.
-     * @param {string} resourceType - Resource type the rule applies to.
-     * @param {string} resourceId - Resource identifier. Required for functions and sites.
-     * @param {string} name - Rule name.
-     * @param {string} description - Optional description for the rule.
-     * @param {string} location - Location used for redirect responses.
-     * @param {number} statusCode - Integer status code used for redirect responses.
-     * @param {number} priority - Evaluation priority. Lower numbers run earlier.
-     * @param {boolean} enabled - Set to false to disable the rule.
-     * @param {string[]} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
+     * @param {string | null} resourceType - Resource type the rule applies to.
+     * @param {string | null} resourceId - Resource identifier. Required for functions and sites.
+     * @param {string | null} name - Rule name.
+     * @param {string | null} description - Optional description for the rule.
+     * @param {string | null} location - Location used for redirect responses.
+     * @param {number | null} statusCode - Integer status code used for redirect responses.
+     * @param {number | null} priority - Evaluation priority. Lower numbers run earlier.
+     * @param {boolean | null} enabled - Set to false to disable the rule.
+     * @param {string[] | null} conditions - Array of condition strings generated using the WAF Condition builder. Maximum of 100 conditions are allowed, each 4096 characters long.
      * @throws {AppwriteException}
      * @returns {Promise<Models.WafRuleRedirect>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     updateRedirectRule(
         ruleId: string,
-        resourceType?: string,
-        resourceId?: string,
-        name?: string,
-        description?: string,
-        location?: string,
-        statusCode?: number,
-        priority?: number,
-        enabled?: boolean,
-        conditions?: string[],
+        resourceType?: string | null,
+        resourceId?: string | null,
+        name?: string | null,
+        description?: string | null,
+        location?: string | null,
+        statusCode?: number | null,
+        priority?: number | null,
+        enabled?: boolean | null,
+        conditions?: string[] | null,
     ): Promise<Models.WafRuleRedirect>;
     updateRedirectRule(
         paramsOrFirst:
             | {
                   ruleId: string;
-                  resourceType?: string;
-                  resourceId?: string;
-                  name?: string;
-                  description?: string;
-                  location?: string;
-                  statusCode?: number;
-                  priority?: number;
-                  enabled?: boolean;
-                  conditions?: string[];
+                  resourceType?: string | null;
+                  resourceId?: string | null;
+                  name?: string | null;
+                  description?: string | null;
+                  location?: string | null;
+                  statusCode?: number | null;
+                  priority?: number | null;
+                  enabled?: boolean | null;
+                  conditions?: string[] | null;
               }
             | string,
         ...rest: [
-            string?,
-            string?,
-            string?,
-            string?,
-            string?,
-            number?,
-            number?,
-            boolean?,
-            string[]?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (string | null)?,
+            (number | null)?,
+            (number | null)?,
+            (boolean | null)?,
+            (string[] | null)?,
         ]
     ): Promise<Models.WafRuleRedirect> {
         let params: {
             ruleId: string;
-            resourceType?: string;
-            resourceId?: string;
-            name?: string;
-            description?: string;
-            location?: string;
-            statusCode?: number;
-            priority?: number;
-            enabled?: boolean;
-            conditions?: string[];
+            resourceType?: string | null;
+            resourceId?: string | null;
+            name?: string | null;
+            description?: string | null;
+            location?: string | null;
+            statusCode?: number | null;
+            priority?: number | null;
+            enabled?: boolean | null;
+            conditions?: string[] | null;
         };
 
         if (
@@ -2185,28 +2185,28 @@ export class Waf {
         ) {
             params = (paramsOrFirst || {}) as {
                 ruleId: string;
-                resourceType?: string;
-                resourceId?: string;
-                name?: string;
-                description?: string;
-                location?: string;
-                statusCode?: number;
-                priority?: number;
-                enabled?: boolean;
-                conditions?: string[];
+                resourceType?: string | null;
+                resourceId?: string | null;
+                name?: string | null;
+                description?: string | null;
+                location?: string | null;
+                statusCode?: number | null;
+                priority?: number | null;
+                enabled?: boolean | null;
+                conditions?: string[] | null;
             };
         } else {
             params = {
                 ruleId: paramsOrFirst as string,
-                resourceType: rest[0] as string,
-                resourceId: rest[1] as string,
-                name: rest[2] as string,
-                description: rest[3] as string,
-                location: rest[4] as string,
-                statusCode: rest[5] as number,
-                priority: rest[6] as number,
-                enabled: rest[7] as boolean,
-                conditions: rest[8] as string[],
+                resourceType: rest[0] as string | null,
+                resourceId: rest[1] as string | null,
+                name: rest[2] as string | null,
+                description: rest[3] as string | null,
+                location: rest[4] as string | null,
+                statusCode: rest[5] as number | null,
+                priority: rest[6] as number | null,
+                enabled: rest[7] as boolean | null,
+                conditions: rest[8] as string[] | null,
             };
         }
 
@@ -2282,7 +2282,7 @@ export class Waf {
                         priority: 0,
                         enabled: true,
                         conditions: [],
-                        config: [],
+                        config: {},
                         location: '/',
                         statusCode: 302,
                     },

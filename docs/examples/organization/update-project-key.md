@@ -13,6 +13,7 @@ const result = await organization.updateProjectKey({
     name: '<NAME>',
     scopes: [ProjectKeyScopes.UsersRead],
     expire: '2020-10-15T06:38:00.000+00:00', // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

@@ -14,6 +14,7 @@ const result = await databases.createEmailAttribute({
     required: false,
     xdefault: 'email@example.com', // optional
     array: false, // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

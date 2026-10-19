@@ -9,6 +9,7 @@ const activities = new Activities(client);
 
 const result = await activities.listEvents({
     queries: [], // optional
+    total: false, // optional
 });
 
 console.log(result);

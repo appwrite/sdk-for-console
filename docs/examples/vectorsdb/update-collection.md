@@ -15,6 +15,7 @@ const result = await vectorsDB.updateCollection({
     permissions: [Permission.read(Role.any())], // optional
     documentSecurity: false, // optional
     enabled: false, // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

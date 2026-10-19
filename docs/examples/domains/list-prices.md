@@ -9,7 +9,7 @@ const domains = new Domains(client);
 
 const result = await domains.listPrices({
     domains: [],
-    periodYears: null, // optional
+    periodYears: 1, // optional
     registrationType: DomainRegistrationType.New, // optional
 });
 

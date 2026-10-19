@@ -13,6 +13,7 @@ const result = await databases.updateRelationshipAttribute({
     key: '<KEY>',
     onDelete: RelationMutate.Cascade, // optional
     newKey: '<NEW_KEY>', // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

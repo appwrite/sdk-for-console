@@ -349,57 +349,62 @@ export class Analytics {
      * Update an analytics property. Only the attributes you pass are changed; omitted attributes keep their current value.
      *
      * @param {string} params.propertyId - Analytics property unique ID.
-     * @param {string} params.name - Human-readable name for this property.
-     * @param {string} params.domain - Primary domain to track (e.g. example.com). Pass an empty string to clear it.
-     * @param {boolean} params.enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
-     * @param {string[]} params.allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
+     * @param {string | null} params.name - Human-readable name for this property.
+     * @param {string | null} params.domain - Primary domain to track (e.g. example.com). Pass an empty string to clear it.
+     * @param {boolean | null} params.enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
+     * @param {string[] | null} params.allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AnalyticsProperty>}
      */
     updateProperty(params: {
         propertyId: string;
-        name?: string;
-        domain?: string;
-        enabled?: boolean;
-        allowedOrigins?: string[];
+        name?: string | null;
+        domain?: string | null;
+        enabled?: boolean | null;
+        allowedOrigins?: string[] | null;
     }): Promise<Models.AnalyticsProperty>;
     /**
      * Update an analytics property. Only the attributes you pass are changed; omitted attributes keep their current value.
      *
      * @param {string} propertyId - Analytics property unique ID.
-     * @param {string} name - Human-readable name for this property.
-     * @param {string} domain - Primary domain to track (e.g. example.com). Pass an empty string to clear it.
-     * @param {boolean} enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
-     * @param {string[]} allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
+     * @param {string | null} name - Human-readable name for this property.
+     * @param {string | null} domain - Primary domain to track (e.g. example.com). Pass an empty string to clear it.
+     * @param {boolean | null} enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
+     * @param {string[] | null} allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AnalyticsProperty>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     updateProperty(
         propertyId: string,
-        name?: string,
-        domain?: string,
-        enabled?: boolean,
-        allowedOrigins?: string[],
+        name?: string | null,
+        domain?: string | null,
+        enabled?: boolean | null,
+        allowedOrigins?: string[] | null,
     ): Promise<Models.AnalyticsProperty>;
     updateProperty(
         paramsOrFirst:
             | {
                   propertyId: string;
-                  name?: string;
-                  domain?: string;
-                  enabled?: boolean;
-                  allowedOrigins?: string[];
+                  name?: string | null;
+                  domain?: string | null;
+                  enabled?: boolean | null;
+                  allowedOrigins?: string[] | null;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string[]?]
+        ...rest: [
+            (string | null)?,
+            (string | null)?,
+            (boolean | null)?,
+            (string[] | null)?,
+        ]
     ): Promise<Models.AnalyticsProperty> {
         let params: {
             propertyId: string;
-            name?: string;
-            domain?: string;
-            enabled?: boolean;
-            allowedOrigins?: string[];
+            name?: string | null;
+            domain?: string | null;
+            enabled?: boolean | null;
+            allowedOrigins?: string[] | null;
         };
 
         if (
@@ -409,18 +414,18 @@ export class Analytics {
         ) {
             params = (paramsOrFirst || {}) as {
                 propertyId: string;
-                name?: string;
-                domain?: string;
-                enabled?: boolean;
-                allowedOrigins?: string[];
+                name?: string | null;
+                domain?: string | null;
+                enabled?: boolean | null;
+                allowedOrigins?: string[] | null;
             };
         } else {
             params = {
                 propertyId: paramsOrFirst as string,
-                name: rest[0] as string,
-                domain: rest[1] as string,
-                enabled: rest[2] as boolean,
-                allowedOrigins: rest[3] as string[],
+                name: rest[0] as string | null,
+                domain: rest[1] as string | null,
+                enabled: rest[2] as boolean | null,
+                allowedOrigins: rest[3] as string[] | null,
             };
         }
 
@@ -791,6 +796,7 @@ export class Analytics {
      * @param {string} params.startAt - Explicit window start in ISO 8601. Defaults to endAt minus dateRange.
      * @param {string} params.endAt - Explicit window end in ISO 8601. Defaults to the current time.
      * @param {number} params.limit - Maximum number of ranked values to return.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AnalyticsMetricList>}
      */
@@ -803,6 +809,7 @@ export class Analytics {
         startAt?: string;
         endAt?: string;
         limit?: number;
+        total?: boolean;
     }): Promise<Models.AnalyticsMetricList>;
     /**
      * Read analytics metrics (visitors, sessions, pageviews, events, bounceRate, …) for a property over a date range.
@@ -822,6 +829,7 @@ export class Analytics {
      * @param {string} startAt - Explicit window start in ISO 8601. Defaults to endAt minus dateRange.
      * @param {string} endAt - Explicit window end in ISO 8601. Defaults to the current time.
      * @param {number} limit - Maximum number of ranked values to return.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AnalyticsMetricList>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -835,6 +843,7 @@ export class Analytics {
         startAt?: string,
         endAt?: string,
         limit?: number,
+        total?: boolean,
     ): Promise<Models.AnalyticsMetricList>;
     listMetrics(
         paramsOrFirst:
@@ -847,6 +856,7 @@ export class Analytics {
                   startAt?: string;
                   endAt?: string;
                   limit?: number;
+                  total?: boolean;
               }
             | string,
         ...rest: [
@@ -857,6 +867,7 @@ export class Analytics {
             string?,
             string?,
             number?,
+            boolean?,
         ]
     ): Promise<Models.AnalyticsMetricList> {
         let params: {
@@ -868,6 +879,7 @@ export class Analytics {
             startAt?: string;
             endAt?: string;
             limit?: number;
+            total?: boolean;
         };
 
         if (
@@ -884,6 +896,7 @@ export class Analytics {
                 startAt?: string;
                 endAt?: string;
                 limit?: number;
+                total?: boolean;
             };
         } else {
             params = {
@@ -895,6 +908,7 @@ export class Analytics {
                 startAt: rest[4] as string,
                 endAt: rest[5] as string,
                 limit: rest[6] as number,
+                total: rest[7] as boolean,
             };
         }
 
@@ -906,6 +920,7 @@ export class Analytics {
         const startAt = params.startAt;
         const endAt = params.endAt;
         const limit = params.limit;
+        const total = params.total;
 
         if (typeof propertyId === 'undefined' || propertyId === '') {
             throw new AppwriteException(
@@ -937,6 +952,9 @@ export class Analytics {
         }
         if (typeof limit !== 'undefined') {
             apiPayload['limit'] = limit;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 

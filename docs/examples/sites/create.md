@@ -39,6 +39,7 @@ const result = await sites.create({
     runtimeSpecification: 's-1vcpu-512mb', // optional
     deploymentRetention: 0, // optional
     scopes: [ProjectKeyScopes.ProjectRead], // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);

@@ -16,6 +16,7 @@ const result = await databases.createBigIntAttribute({
     max: 1000000, // optional
     xdefault: 0, // optional
     array: false, // optional
+    description: '<DESCRIPTION>', // optional
 });
 
 console.log(result);
