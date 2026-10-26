@@ -37,6 +37,6 @@ export enum AppwriteMigrationResource {
     Projectlabels = 'project-labels',
     Projectservices = 'project-services',
     Projectemailtemplate = 'project-email-template',
-    Projectenvironment = 'project-environment',
     Rule = 'rule',
+    Projectenvironment = 'project-environment',
 }

@@ -9,11 +9,11 @@ const messaging = new Messaging(client);
 
 const result = await messaging.updatePush({
     messageId: '<MESSAGE_ID>',
+    title: '<TITLE>', // optional
+    body: '<BODY>', // optional
     topics: [], // optional
     users: [], // optional
     targets: [], // optional
-    title: '<TITLE>', // optional
-    body: '<BODY>', // optional
     data: {}, // optional
     action: '<ACTION>', // optional
     image: '<ID1:ID2>', // optional

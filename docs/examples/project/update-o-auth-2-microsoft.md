@@ -15,8 +15,8 @@ const result = await project.updateOAuth2Microsoft({
     applicationId: '<APPLICATION_ID>', // optional
     applicationSecret: '<APPLICATION_SECRET>', // optional
     tenant: '<TENANT>', // optional
-    enabled: false, // optional
     prompt: [ProjectOAuth2MicrosoftPrompt.None], // optional
+    enabled: false, // optional
 });
 
 console.log(result);

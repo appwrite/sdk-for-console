@@ -10,8 +10,8 @@ const project = new Project(client);
 const result = await project.updateOAuth2Zoho({
     clientId: '<CLIENT_ID>', // optional
     clientSecret: '<CLIENT_SECRET>', // optional
-    enabled: false, // optional
     prompt: [ProjectOAuth2ZohoPrompt.Consent], // optional
+    enabled: false, // optional
 });
 
 console.log(result);

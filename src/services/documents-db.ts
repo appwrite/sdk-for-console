@@ -20,28 +20,36 @@ export class DocumentsDB {
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DatabaseList>}
      */
     list(params?: {
         queries?: string[];
         total?: boolean;
+        search?: string;
     }): Promise<Models.DatabaseList>;
     /**
      * Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DatabaseList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    list(queries?: string[], total?: boolean): Promise<Models.DatabaseList>;
     list(
-        paramsOrFirst?: { queries?: string[]; total?: boolean } | string[],
-        ...rest: [boolean?]
+        queries?: string[],
+        total?: boolean,
+        search?: string,
+    ): Promise<Models.DatabaseList>;
+    list(
+        paramsOrFirst?:
+            { queries?: string[]; total?: boolean; search?: string } | string[],
+        ...rest: [boolean?, string?]
     ): Promise<Models.DatabaseList> {
-        let params: { queries?: string[]; total?: boolean };
+        let params: { queries?: string[]; total?: boolean; search?: string };
 
         if (
             (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
@@ -52,16 +60,19 @@ export class DocumentsDB {
             params = (paramsOrFirst || {}) as {
                 queries?: string[];
                 total?: boolean;
+                search?: string;
             };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
                 total: rest[0] as boolean,
+                search: rest[1] as string,
             };
         }
 
         const queries = params.queries;
         const total = params.total;
+        const search = params.search;
 
         const apiPath = '/documentsdb';
         const apiPayload: Payload = {};
@@ -70,6 +81,9 @@ export class DocumentsDB {
         }
         if (typeof total !== 'undefined') {
             apiPayload['total'] = total;
+        }
+        if (typeof search !== 'undefined') {
+            apiPayload['search'] = search;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -97,11 +111,11 @@ export class DocumentsDB {
                     defaults: {
                         $id: '',
                         name: '',
-                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
+                        description: '',
                     },
                     properties: {
                         policies: {
@@ -151,10 +165,10 @@ export class DocumentsDB {
      * @param {string} params.databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} params.description - Optional description for the database.
      * @param {string} params.specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @param {number} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
      * @param {string | null} params.syncMode - Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
+     * @param {string} params.description - Optional description for the database.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
@@ -162,10 +176,10 @@ export class DocumentsDB {
         databaseId: string;
         name: string;
         enabled?: boolean;
-        description?: string;
         specification?: string;
         replicas?: number;
         syncMode?: string | null;
+        description?: string;
     }): Promise<Models.Database>;
     /**
      * Create a new Database.
@@ -174,10 +188,10 @@ export class DocumentsDB {
      * @param {string} databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} description - Optional description for the database.
      * @param {string} specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @param {number} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
      * @param {string | null} syncMode - Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
+     * @param {string} description - Optional description for the database.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -186,10 +200,10 @@ export class DocumentsDB {
         databaseId: string,
         name: string,
         enabled?: boolean,
-        description?: string,
         specification?: string,
         replicas?: number,
         syncMode?: string | null,
+        description?: string,
     ): Promise<Models.Database>;
     create(
         paramsOrFirst:
@@ -197,29 +211,29 @@ export class DocumentsDB {
                   databaseId: string;
                   name: string;
                   enabled?: boolean;
-                  description?: string;
                   specification?: string;
                   replicas?: number;
                   syncMode?: string | null;
+                  description?: string;
               }
             | string,
         ...rest: [
             string?,
             boolean?,
             string?,
-            string?,
             number?,
             (string | null)?,
+            string?,
         ]
     ): Promise<Models.Database> {
         let params: {
             databaseId: string;
             name: string;
             enabled?: boolean;
-            description?: string;
             specification?: string;
             replicas?: number;
             syncMode?: string | null;
+            description?: string;
         };
 
         if (
@@ -231,30 +245,30 @@ export class DocumentsDB {
                 databaseId: string;
                 name: string;
                 enabled?: boolean;
-                description?: string;
                 specification?: string;
                 replicas?: number;
                 syncMode?: string | null;
+                description?: string;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                description: rest[2] as string,
-                specification: rest[3] as string,
-                replicas: rest[4] as number,
-                syncMode: rest[5] as string | null,
+                specification: rest[2] as string,
+                replicas: rest[3] as number,
+                syncMode: rest[4] as string | null,
+                description: rest[5] as string,
             };
         }
 
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
-        const description = params.description;
         const specification = params.specification;
         const replicas = params.replicas;
         const syncMode = params.syncMode;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException(
@@ -275,9 +289,6 @@ export class DocumentsDB {
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
         }
-        if (typeof description !== 'undefined') {
-            apiPayload['description'] = description;
-        }
         if (typeof specification !== 'undefined') {
             apiPayload['specification'] = specification;
         }
@@ -286,6 +297,9 @@ export class DocumentsDB {
         }
         if (typeof syncMode !== 'undefined') {
             apiPayload['syncMode'] = syncMode;
+        }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -303,11 +317,11 @@ export class DocumentsDB {
                     defaults: {
                         $id: '',
                         name: '',
-                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
+                        description: '',
                     },
                     properties: {
                         policies: {
@@ -871,11 +885,11 @@ export class DocumentsDB {
                     defaults: {
                         $id: '',
                         name: '',
-                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
+                        description: '',
                     },
                     properties: {
                         policies: {
@@ -924,10 +938,10 @@ export class DocumentsDB {
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string | null} params.description - Optional description for the database.
      * @param {string | null} params.specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
      * @param {number | null} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
      * @param {string | null} params.syncMode - Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
+     * @param {string | null} params.description - Optional description for the database.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
@@ -935,10 +949,10 @@ export class DocumentsDB {
         databaseId: string;
         name: string;
         enabled?: boolean;
-        description?: string | null;
         specification?: string | null;
         replicas?: number | null;
         syncMode?: string | null;
+        description?: string | null;
     }): Promise<Models.Database>;
     /**
      * Update a database by its unique ID.
@@ -946,10 +960,10 @@ export class DocumentsDB {
      * @param {string} databaseId - Database ID.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string | null} description - Optional description for the database.
      * @param {string | null} specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
      * @param {number | null} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
      * @param {string | null} syncMode - Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
+     * @param {string | null} description - Optional description for the database.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -958,10 +972,10 @@ export class DocumentsDB {
         databaseId: string,
         name: string,
         enabled?: boolean,
-        description?: string | null,
         specification?: string | null,
         replicas?: number | null,
         syncMode?: string | null,
+        description?: string | null,
     ): Promise<Models.Database>;
     update(
         paramsOrFirst:
@@ -969,18 +983,18 @@ export class DocumentsDB {
                   databaseId: string;
                   name: string;
                   enabled?: boolean;
-                  description?: string | null;
                   specification?: string | null;
                   replicas?: number | null;
                   syncMode?: string | null;
+                  description?: string | null;
               }
             | string,
         ...rest: [
             string?,
             boolean?,
             (string | null)?,
-            (string | null)?,
             (number | null)?,
+            (string | null)?,
             (string | null)?,
         ]
     ): Promise<Models.Database> {
@@ -988,10 +1002,10 @@ export class DocumentsDB {
             databaseId: string;
             name: string;
             enabled?: boolean;
-            description?: string | null;
             specification?: string | null;
             replicas?: number | null;
             syncMode?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -1003,30 +1017,30 @@ export class DocumentsDB {
                 databaseId: string;
                 name: string;
                 enabled?: boolean;
-                description?: string | null;
                 specification?: string | null;
                 replicas?: number | null;
                 syncMode?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                description: rest[2] as string | null,
-                specification: rest[3] as string | null,
-                replicas: rest[4] as number | null,
-                syncMode: rest[5] as string | null,
+                specification: rest[2] as string | null,
+                replicas: rest[3] as number | null,
+                syncMode: rest[4] as string | null,
+                description: rest[5] as string | null,
             };
         }
 
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
-        const description = params.description;
         const specification = params.specification;
         const replicas = params.replicas;
         const syncMode = params.syncMode;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -1047,9 +1061,6 @@ export class DocumentsDB {
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
         }
-        if (typeof description !== 'undefined') {
-            apiPayload['description'] = description;
-        }
         if (typeof specification !== 'undefined') {
             apiPayload['specification'] = specification;
         }
@@ -1058,6 +1069,9 @@ export class DocumentsDB {
         }
         if (typeof syncMode !== 'undefined') {
             apiPayload['syncMode'] = syncMode;
+        }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1075,11 +1089,11 @@ export class DocumentsDB {
                     defaults: {
                         $id: '',
                         name: '',
-                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
+                        description: '',
                     },
                     properties: {
                         policies: {
@@ -1302,13 +1316,13 @@ export class DocumentsDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
-                        description: '',
                         enabled: true,
                         documentSecurity: false,
                         attributes: [],
                         indexes: [],
                         bytesMax: 0,
                         bytesUsed: 0,
+                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -1322,11 +1336,11 @@ export class DocumentsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -1527,13 +1541,13 @@ export class DocumentsDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
-                        description: '',
                         enabled: true,
                         documentSecurity: false,
                         attributes: [],
                         indexes: [],
                         bytesMax: 0,
                         bytesUsed: 0,
+                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -1547,11 +1561,11 @@ export class DocumentsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -1646,13 +1660,13 @@ export class DocumentsDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
-                        description: '',
                         enabled: true,
                         documentSecurity: false,
                         attributes: [],
                         indexes: [],
                         bytesMax: 0,
                         bytesUsed: 0,
+                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -1666,11 +1680,11 @@ export class DocumentsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -1857,13 +1871,13 @@ export class DocumentsDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
-                        description: '',
                         enabled: true,
                         documentSecurity: false,
                         attributes: [],
                         indexes: [],
                         bytesMax: 0,
                         bytesUsed: 0,
+                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -1877,11 +1891,11 @@ export class DocumentsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -2879,174 +2893,6 @@ export class DocumentsDB {
         };
 
         const request = this.client.call('delete', uri, apiHeaders, apiPayload);
-        const defaults = {
-            root: 'documentList',
-            models: {
-                documentList: {
-                    defaults: {
-                        total: 0,
-                        documents: [],
-                    },
-                    properties: {
-                        documents: {
-                            items: 'document',
-                        },
-                    },
-                },
-                document: {
-                    defaults: {
-                        $id: '',
-                        $sequence: '',
-                        $collectionId: '',
-                        $databaseId: '',
-                        $createdAt: '',
-                        $updatedAt: '',
-                        $permissions: [],
-                    },
-                },
-            },
-        };
-
-        return request.then((response) => applyDefaults(response, defaults));
-    }
-
-    /**
-     * Get a list of all the user's documents in a given collection using a POST request. This behaves identically to the list documents endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
-     *
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-     * @param {string} params.transactionId - Transaction ID to read uncommitted changes within the transaction.
-     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {number} params.ttl - TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DocumentList<Document>>}
-     */
-    createQuery<
-        Document extends Models.Document = Models.DefaultDocument,
-    >(params: {
-        databaseId: string;
-        collectionId: string;
-        queries?: string[];
-        transactionId?: string;
-        total?: boolean;
-        ttl?: number;
-    }): Promise<Models.DocumentList<Document>>;
-    /**
-     * Get a list of all the user's documents in a given collection using a POST request. This behaves identically to the list documents endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
-     *
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-     * @param {string} transactionId - Transaction ID to read uncommitted changes within the transaction.
-     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {number} ttl - TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DocumentList<Document>>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    createQuery<Document extends Models.Document = Models.DefaultDocument>(
-        databaseId: string,
-        collectionId: string,
-        queries?: string[],
-        transactionId?: string,
-        total?: boolean,
-        ttl?: number,
-    ): Promise<Models.DocumentList<Document>>;
-    createQuery<Document extends Models.Document = Models.DefaultDocument>(
-        paramsOrFirst:
-            | {
-                  databaseId: string;
-                  collectionId: string;
-                  queries?: string[];
-                  transactionId?: string;
-                  total?: boolean;
-                  ttl?: number;
-              }
-            | string,
-        ...rest: [string?, string[]?, string?, boolean?, number?]
-    ): Promise<Models.DocumentList<Document>> {
-        let params: {
-            databaseId: string;
-            collectionId: string;
-            queries?: string[];
-            transactionId?: string;
-            total?: boolean;
-            ttl?: number;
-        };
-
-        if (
-            paramsOrFirst &&
-            typeof paramsOrFirst === 'object' &&
-            !Array.isArray(paramsOrFirst)
-        ) {
-            params = (paramsOrFirst || {}) as {
-                databaseId: string;
-                collectionId: string;
-                queries?: string[];
-                transactionId?: string;
-                total?: boolean;
-                ttl?: number;
-            };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                collectionId: rest[0] as string,
-                queries: rest[1] as string[],
-                transactionId: rest[2] as string,
-                total: rest[3] as boolean,
-                ttl: rest[4] as number,
-            };
-        }
-
-        const databaseId = params.databaseId;
-        const collectionId = params.collectionId;
-        const queries = params.queries;
-        const transactionId = params.transactionId;
-        const total = params.total;
-        const ttl = params.ttl;
-
-        if (typeof databaseId === 'undefined' || databaseId === '') {
-            throw new AppwriteException(
-                'Missing required parameter: "databaseId"',
-            );
-        }
-        if (typeof collectionId === 'undefined' || collectionId === '') {
-            throw new AppwriteException(
-                'Missing required parameter: "collectionId"',
-            );
-        }
-        const apiPath =
-            '/documentsdb/{databaseId}/collections/{collectionId}/documents/query'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                );
-        const apiPayload: Payload = {};
-        if (typeof queries !== 'undefined') {
-            apiPayload['queries'] = queries;
-        }
-        if (typeof transactionId !== 'undefined') {
-            apiPayload['transactionId'] = transactionId;
-        }
-        if (typeof total !== 'undefined') {
-            apiPayload['total'] = total;
-        }
-        if (typeof ttl !== 'undefined') {
-            apiPayload['ttl'] = ttl;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'content-type': 'application/json',
-            accept: 'application/json',
-        };
-
-        const request = this.client.call('post', uri, apiHeaders, apiPayload);
         const defaults = {
             root: 'documentList',
             models: {
@@ -4201,11 +4047,11 @@ export class DocumentsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -4401,11 +4247,11 @@ export class DocumentsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -4511,11 +4357,11 @@ export class DocumentsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -5061,6 +4907,174 @@ export class DocumentsDB {
                         usedPercent: '0%',
                         available: '0GB',
                         mounted: false,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
+     * Get a list of all the user's documents in a given collection using a POST request. This behaves identically to the list documents endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
+     *
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {string} params.transactionId - Transaction ID to read uncommitted changes within the transaction.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @param {number} params.ttl - TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DocumentList<Document>>}
+     */
+    createQuery<
+        Document extends Models.Document = Models.DefaultDocument,
+    >(params: {
+        databaseId: string;
+        collectionId: string;
+        queries?: string[];
+        transactionId?: string;
+        total?: boolean;
+        ttl?: number;
+    }): Promise<Models.DocumentList<Document>>;
+    /**
+     * Get a list of all the user's documents in a given collection using a POST request. This behaves identically to the list documents endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
+     *
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {string} transactionId - Transaction ID to read uncommitted changes within the transaction.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @param {number} ttl - TTL (seconds) for cached responses when caching is enabled for select queries. Must be between 0 and 86400 (24 hours).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DocumentList<Document>>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createQuery<Document extends Models.Document = Models.DefaultDocument>(
+        databaseId: string,
+        collectionId: string,
+        queries?: string[],
+        transactionId?: string,
+        total?: boolean,
+        ttl?: number,
+    ): Promise<Models.DocumentList<Document>>;
+    createQuery<Document extends Models.Document = Models.DefaultDocument>(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  collectionId: string;
+                  queries?: string[];
+                  transactionId?: string;
+                  total?: boolean;
+                  ttl?: number;
+              }
+            | string,
+        ...rest: [string?, string[]?, string?, boolean?, number?]
+    ): Promise<Models.DocumentList<Document>> {
+        let params: {
+            databaseId: string;
+            collectionId: string;
+            queries?: string[];
+            transactionId?: string;
+            total?: boolean;
+            ttl?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                collectionId: string;
+                queries?: string[];
+                transactionId?: string;
+                total?: boolean;
+                ttl?: number;
+            };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                queries: rest[1] as string[],
+                transactionId: rest[2] as string,
+                total: rest[3] as boolean,
+                ttl: rest[4] as number,
+            };
+        }
+
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
+        const queries = params.queries;
+        const transactionId = params.transactionId;
+        const total = params.total;
+        const ttl = params.ttl;
+
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
+        }
+        if (typeof collectionId === 'undefined' || collectionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "collectionId"',
+            );
+        }
+        const apiPath =
+            '/documentsdb/{databaseId}/collections/{collectionId}/documents/query'
+                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+                .replace(
+                    '{collectionId}',
+                    encodeURIComponent(String(collectionId)),
+                );
+        const apiPayload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            apiPayload['queries'] = queries;
+        }
+        if (typeof transactionId !== 'undefined') {
+            apiPayload['transactionId'] = transactionId;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
+        }
+        if (typeof ttl !== 'undefined') {
+            apiPayload['ttl'] = ttl;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'documentList',
+            models: {
+                documentList: {
+                    defaults: {
+                        total: 0,
+                        documents: [],
+                    },
+                    properties: {
+                        documents: {
+                            items: 'document',
+                        },
+                    },
+                },
+                document: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $collectionId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
                     },
                 },
             },

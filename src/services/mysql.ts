@@ -3976,9 +3976,9 @@ export class Mysql {
                         databaseId: '',
                         projectId: '',
                         type: 'backup',
-                        restoreMode: 'in_place',
                         status: 'pending',
                         error: '',
+                        restoreMode: 'in_place',
                     },
                 },
             },
@@ -4161,9 +4161,9 @@ export class Mysql {
                         databaseId: '',
                         projectId: '',
                         type: 'backup',
-                        restoreMode: 'in_place',
                         status: 'pending',
                         error: '',
+                        restoreMode: 'in_place',
                     },
                 },
             },
@@ -4257,113 +4257,9 @@ export class Mysql {
                         databaseId: '',
                         projectId: '',
                         type: 'backup',
-                        restoreMode: 'in_place',
                         status: 'pending',
                         error: '',
-                    },
-                },
-            },
-        };
-
-        return request.then((response) => applyDefaults(response, defaults));
-    }
-
-    /**
-     * Switch the database over to the clone a restoration recovered. The database keeps
-     * its endpoint and credentials; clients reconnect once. Writes made after the
-     * recovery point are discarded, and the side being replaced is retained briefly so
-     * the switch can be reversed.
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.restorationId - Restoration ID.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DedicatedDatabaseRestoration>}
-     */
-    promoteRestoration(params: {
-        databaseId: string;
-        restorationId: string;
-    }): Promise<Models.DedicatedDatabaseRestoration>;
-    /**
-     * Switch the database over to the clone a restoration recovered. The database keeps
-     * its endpoint and credentials; clients reconnect once. Writes made after the
-     * recovery point are discarded, and the side being replaced is retained briefly so
-     * the switch can be reversed.
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} restorationId - Restoration ID.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DedicatedDatabaseRestoration>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    promoteRestoration(
-        databaseId: string,
-        restorationId: string,
-    ): Promise<Models.DedicatedDatabaseRestoration>;
-    promoteRestoration(
-        paramsOrFirst: { databaseId: string; restorationId: string } | string,
-        ...rest: [string?]
-    ): Promise<Models.DedicatedDatabaseRestoration> {
-        let params: { databaseId: string; restorationId: string };
-
-        if (
-            paramsOrFirst &&
-            typeof paramsOrFirst === 'object' &&
-            !Array.isArray(paramsOrFirst)
-        ) {
-            params = (paramsOrFirst || {}) as {
-                databaseId: string;
-                restorationId: string;
-            };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                restorationId: rest[0] as string,
-            };
-        }
-
-        const databaseId = params.databaseId;
-        const restorationId = params.restorationId;
-
-        if (typeof databaseId === 'undefined' || databaseId === '') {
-            throw new AppwriteException(
-                'Missing required parameter: "databaseId"',
-            );
-        }
-        if (typeof restorationId === 'undefined' || restorationId === '') {
-            throw new AppwriteException(
-                'Missing required parameter: "restorationId"',
-            );
-        }
-        const apiPath =
-            '/mysql/{databaseId}/restorations/{restorationId}/promotions'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{restorationId}',
-                    encodeURIComponent(String(restorationId)),
-                );
-        const apiPayload: Payload = {};
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'content-type': 'application/json',
-            accept: 'application/json',
-        };
-
-        const request = this.client.call('post', uri, apiHeaders, apiPayload);
-        const defaults = {
-            root: 'dedicatedDatabaseRestoration',
-            models: {
-                dedicatedDatabaseRestoration: {
-                    defaults: {
-                        $id: '',
-                        $createdAt: '',
-                        databaseId: '',
-                        projectId: '',
-                        type: 'backup',
                         restoreMode: 'in_place',
-                        status: 'pending',
-                        error: '',
                     },
                 },
             },
@@ -4600,6 +4496,110 @@ export class Mysql {
                         sqlApiMaxBytes: 10485760,
                         sqlApiTimeoutSeconds: 30,
                         error: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
+     * Switch the database over to the clone a restoration recovered. The database keeps
+     * its endpoint and credentials; clients reconnect once. Writes made after the
+     * recovery point are discarded, and the side being replaced is retained briefly so
+     * the switch can be reversed.
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.restorationId - Restoration ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseRestoration>}
+     */
+    promoteRestoration(params: {
+        databaseId: string;
+        restorationId: string;
+    }): Promise<Models.DedicatedDatabaseRestoration>;
+    /**
+     * Switch the database over to the clone a restoration recovered. The database keeps
+     * its endpoint and credentials; clients reconnect once. Writes made after the
+     * recovery point are discarded, and the side being replaced is retained briefly so
+     * the switch can be reversed.
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} restorationId - Restoration ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DedicatedDatabaseRestoration>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    promoteRestoration(
+        databaseId: string,
+        restorationId: string,
+    ): Promise<Models.DedicatedDatabaseRestoration>;
+    promoteRestoration(
+        paramsOrFirst: { databaseId: string; restorationId: string } | string,
+        ...rest: [string?]
+    ): Promise<Models.DedicatedDatabaseRestoration> {
+        let params: { databaseId: string; restorationId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                restorationId: string;
+            };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                restorationId: rest[0] as string,
+            };
+        }
+
+        const databaseId = params.databaseId;
+        const restorationId = params.restorationId;
+
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
+        }
+        if (typeof restorationId === 'undefined' || restorationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "restorationId"',
+            );
+        }
+        const apiPath =
+            '/mysql/{databaseId}/restorations/{restorationId}/promotions'
+                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+                .replace(
+                    '{restorationId}',
+                    encodeURIComponent(String(restorationId)),
+                );
+        const apiPayload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'dedicatedDatabaseRestoration',
+            models: {
+                dedicatedDatabaseRestoration: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        databaseId: '',
+                        projectId: '',
+                        type: 'backup',
+                        status: 'pending',
+                        error: '',
+                        restoreMode: 'in_place',
                     },
                 },
             },

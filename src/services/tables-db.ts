@@ -113,11 +113,11 @@ export class TablesDB {
                     defaults: {
                         $id: '',
                         name: '',
-                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
+                        description: '',
                     },
                     properties: {
                         policies: {
@@ -167,10 +167,10 @@ export class TablesDB {
      * @param {string} params.databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} params.description - Optional description for the database.
      * @param {string} params.specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @param {number} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
      * @param {string | null} params.syncMode - Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
+     * @param {string} params.description - Optional description for the database.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
@@ -178,10 +178,10 @@ export class TablesDB {
         databaseId: string;
         name: string;
         enabled?: boolean;
-        description?: string;
         specification?: string;
         replicas?: number;
         syncMode?: string | null;
+        description?: string;
     }): Promise<Models.Database>;
     /**
      * Create a new Database.
@@ -190,10 +190,10 @@ export class TablesDB {
      * @param {string} databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string} description - Optional description for the database.
      * @param {string} specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @param {number} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
      * @param {string | null} syncMode - Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
+     * @param {string} description - Optional description for the database.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -202,10 +202,10 @@ export class TablesDB {
         databaseId: string,
         name: string,
         enabled?: boolean,
-        description?: string,
         specification?: string,
         replicas?: number,
         syncMode?: string | null,
+        description?: string,
     ): Promise<Models.Database>;
     create(
         paramsOrFirst:
@@ -213,29 +213,29 @@ export class TablesDB {
                   databaseId: string;
                   name: string;
                   enabled?: boolean;
-                  description?: string;
                   specification?: string;
                   replicas?: number;
                   syncMode?: string | null;
+                  description?: string;
               }
             | string,
         ...rest: [
             string?,
             boolean?,
             string?,
-            string?,
             number?,
             (string | null)?,
+            string?,
         ]
     ): Promise<Models.Database> {
         let params: {
             databaseId: string;
             name: string;
             enabled?: boolean;
-            description?: string;
             specification?: string;
             replicas?: number;
             syncMode?: string | null;
+            description?: string;
         };
 
         if (
@@ -247,30 +247,30 @@ export class TablesDB {
                 databaseId: string;
                 name: string;
                 enabled?: boolean;
-                description?: string;
                 specification?: string;
                 replicas?: number;
                 syncMode?: string | null;
+                description?: string;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                description: rest[2] as string,
-                specification: rest[3] as string,
-                replicas: rest[4] as number,
-                syncMode: rest[5] as string | null,
+                specification: rest[2] as string,
+                replicas: rest[3] as number,
+                syncMode: rest[4] as string | null,
+                description: rest[5] as string,
             };
         }
 
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
-        const description = params.description;
         const specification = params.specification;
         const replicas = params.replicas;
         const syncMode = params.syncMode;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException(
@@ -291,9 +291,6 @@ export class TablesDB {
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
         }
-        if (typeof description !== 'undefined') {
-            apiPayload['description'] = description;
-        }
         if (typeof specification !== 'undefined') {
             apiPayload['specification'] = specification;
         }
@@ -302,6 +299,9 @@ export class TablesDB {
         }
         if (typeof syncMode !== 'undefined') {
             apiPayload['syncMode'] = syncMode;
+        }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -319,11 +319,11 @@ export class TablesDB {
                     defaults: {
                         $id: '',
                         name: '',
-                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
+                        description: '',
                     },
                     properties: {
                         policies: {
@@ -980,11 +980,11 @@ export class TablesDB {
                     defaults: {
                         $id: '',
                         name: '',
-                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
+                        description: '',
                     },
                     properties: {
                         policies: {
@@ -1033,10 +1033,10 @@ export class TablesDB {
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string | null} params.description - Optional description for the database.
      * @param {string | null} params.specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
      * @param {number | null} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
      * @param {string | null} params.syncMode - Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
+     * @param {string | null} params.description - Optional description for the database.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
@@ -1044,10 +1044,10 @@ export class TablesDB {
         databaseId: string;
         name?: string;
         enabled?: boolean;
-        description?: string | null;
         specification?: string | null;
         replicas?: number | null;
         syncMode?: string | null;
+        description?: string | null;
     }): Promise<Models.Database>;
     /**
      * Update a database by its unique ID.
@@ -1055,10 +1055,10 @@ export class TablesDB {
      * @param {string} databaseId - Database ID.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
-     * @param {string | null} description - Optional description for the database.
      * @param {string | null} specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
      * @param {number | null} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
      * @param {string | null} syncMode - Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
+     * @param {string | null} description - Optional description for the database.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1067,10 +1067,10 @@ export class TablesDB {
         databaseId: string,
         name?: string,
         enabled?: boolean,
-        description?: string | null,
         specification?: string | null,
         replicas?: number | null,
         syncMode?: string | null,
+        description?: string | null,
     ): Promise<Models.Database>;
     update(
         paramsOrFirst:
@@ -1078,18 +1078,18 @@ export class TablesDB {
                   databaseId: string;
                   name?: string;
                   enabled?: boolean;
-                  description?: string | null;
                   specification?: string | null;
                   replicas?: number | null;
                   syncMode?: string | null;
+                  description?: string | null;
               }
             | string,
         ...rest: [
             string?,
             boolean?,
             (string | null)?,
-            (string | null)?,
             (number | null)?,
+            (string | null)?,
             (string | null)?,
         ]
     ): Promise<Models.Database> {
@@ -1097,10 +1097,10 @@ export class TablesDB {
             databaseId: string;
             name?: string;
             enabled?: boolean;
-            description?: string | null;
             specification?: string | null;
             replicas?: number | null;
             syncMode?: string | null;
+            description?: string | null;
         };
 
         if (
@@ -1112,30 +1112,30 @@ export class TablesDB {
                 databaseId: string;
                 name?: string;
                 enabled?: boolean;
-                description?: string | null;
                 specification?: string | null;
                 replicas?: number | null;
                 syncMode?: string | null;
+                description?: string | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                description: rest[2] as string | null,
-                specification: rest[3] as string | null,
-                replicas: rest[4] as number | null,
-                syncMode: rest[5] as string | null,
+                specification: rest[2] as string | null,
+                replicas: rest[3] as number | null,
+                syncMode: rest[4] as string | null,
+                description: rest[5] as string | null,
             };
         }
 
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
-        const description = params.description;
         const specification = params.specification;
         const replicas = params.replicas;
         const syncMode = params.syncMode;
+        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -1153,9 +1153,6 @@ export class TablesDB {
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
         }
-        if (typeof description !== 'undefined') {
-            apiPayload['description'] = description;
-        }
         if (typeof specification !== 'undefined') {
             apiPayload['specification'] = specification;
         }
@@ -1164,6 +1161,9 @@ export class TablesDB {
         }
         if (typeof syncMode !== 'undefined') {
             apiPayload['syncMode'] = syncMode;
+        }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1181,11 +1181,11 @@ export class TablesDB {
                     defaults: {
                         $id: '',
                         name: '',
-                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
+                        description: '',
                     },
                     properties: {
                         policies: {
@@ -2367,13 +2367,13 @@ export class TablesDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
-                        description: '',
                         enabled: true,
                         rowSecurity: false,
                         columns: [],
                         indexes: [],
                         bytesMax: 0,
                         bytesUsed: 0,
+                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -2387,12 +2387,12 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         status: '',
                         error: '',
                         columns: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -2593,13 +2593,13 @@ export class TablesDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
-                        description: '',
                         enabled: true,
                         rowSecurity: false,
                         columns: [],
                         indexes: [],
                         bytesMax: 0,
                         bytesUsed: 0,
+                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -2613,12 +2613,12 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         status: '',
                         error: '',
                         columns: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -2707,13 +2707,13 @@ export class TablesDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
-                        description: '',
                         enabled: true,
                         rowSecurity: false,
                         columns: [],
                         indexes: [],
                         bytesMax: 0,
                         bytesUsed: 0,
+                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -2727,12 +2727,12 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         status: '',
                         error: '',
                         columns: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -2913,13 +2913,13 @@ export class TablesDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
-                        description: '',
                         enabled: true,
                         rowSecurity: false,
                         columns: [],
                         indexes: [],
                         bytesMax: 0,
                         bytesUsed: 0,
+                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -2933,12 +2933,12 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         status: '',
                         error: '',
                         columns: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -3325,12 +3325,12 @@ export class TablesDB {
                 columnBigint: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -3533,12 +3533,12 @@ export class TablesDB {
                 columnBigint: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -3712,12 +3712,12 @@ export class TablesDB {
                 columnBoolean: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -3892,12 +3892,12 @@ export class TablesDB {
                 columnBoolean: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -4069,12 +4069,12 @@ export class TablesDB {
                 columnDatetime: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -4249,12 +4249,12 @@ export class TablesDB {
                 columnDatetime: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -4427,13 +4427,13 @@ export class TablesDB {
                 columnEmail: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         format: 'email',
+                        description: '',
                     },
                 },
             },
@@ -4610,13 +4610,13 @@ export class TablesDB {
                 columnEmail: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         format: 'email',
+                        description: '',
                     },
                 },
             },
@@ -4805,7 +4805,6 @@ export class TablesDB {
                 columnEnum: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -4813,6 +4812,7 @@ export class TablesDB {
                         $updatedAt: '',
                         elements: [],
                         format: 'enum',
+                        description: '',
                     },
                 },
             },
@@ -5007,7 +5007,6 @@ export class TablesDB {
                 columnEnum: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -5015,6 +5014,7 @@ export class TablesDB {
                         $updatedAt: '',
                         elements: [],
                         format: 'enum',
+                        description: '',
                     },
                 },
             },
@@ -5213,12 +5213,12 @@ export class TablesDB {
                 columnFloat: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -5421,12 +5421,12 @@ export class TablesDB {
                 columnFloat: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -5626,12 +5626,12 @@ export class TablesDB {
                 columnInteger: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -5834,12 +5834,12 @@ export class TablesDB {
                 columnInteger: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -6012,13 +6012,13 @@ export class TablesDB {
                 columnIp: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         format: 'ip',
+                        description: '',
                     },
                 },
             },
@@ -6195,13 +6195,13 @@ export class TablesDB {
                 columnIp: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         format: 'ip',
+                        description: '',
                     },
                 },
             },
@@ -6353,12 +6353,12 @@ export class TablesDB {
                 columnLine: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -6528,12 +6528,12 @@ export class TablesDB {
                 columnLine: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -6720,12 +6720,12 @@ export class TablesDB {
                 columnLongtext: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -6902,12 +6902,12 @@ export class TablesDB {
                 columnLongtext: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -7094,12 +7094,12 @@ export class TablesDB {
                 columnMediumtext: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -7276,12 +7276,12 @@ export class TablesDB {
                 columnMediumtext: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -7433,12 +7433,12 @@ export class TablesDB {
                 columnPoint: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -7608,12 +7608,12 @@ export class TablesDB {
                 columnPoint: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -7766,12 +7766,12 @@ export class TablesDB {
                 columnPolygon: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -7941,12 +7941,12 @@ export class TablesDB {
                 columnPolygon: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -8146,7 +8146,6 @@ export class TablesDB {
                 columnRelationship: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -8157,6 +8156,7 @@ export class TablesDB {
                         twoWayKey: '',
                         onDelete: 'restrict',
                         side: '',
+                        description: '',
                     },
                 },
             },
@@ -8310,7 +8310,6 @@ export class TablesDB {
                 columnRelationship: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -8321,6 +8320,7 @@ export class TablesDB {
                         twoWayKey: '',
                         onDelete: 'restrict',
                         side: '',
+                        description: '',
                     },
                 },
             },
@@ -8523,13 +8523,13 @@ export class TablesDB {
                 columnString: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         size: 0,
+                        description: '',
                     },
                 },
             },
@@ -8720,13 +8720,13 @@ export class TablesDB {
                 columnString: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         size: 0,
+                        description: '',
                     },
                 },
             },
@@ -8912,12 +8912,12 @@ export class TablesDB {
                 columnText: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -9094,12 +9094,12 @@ export class TablesDB {
                 columnText: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -9272,13 +9272,13 @@ export class TablesDB {
                 columnUrl: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         format: 'url',
+                        description: '',
                     },
                 },
             },
@@ -9455,13 +9455,13 @@ export class TablesDB {
                 columnUrl: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         format: 'url',
+                        description: '',
                     },
                 },
             },
@@ -9664,13 +9664,13 @@ export class TablesDB {
                 columnVarchar: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         size: 0,
+                        description: '',
                     },
                 },
             },
@@ -9860,13 +9860,13 @@ export class TablesDB {
                 columnVarchar: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         size: 0,
+                        description: '',
                     },
                 },
             },
@@ -10225,12 +10225,12 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         status: '',
                         error: '',
                         columns: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -10422,12 +10422,12 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         status: '',
                         error: '',
                         columns: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -10529,12 +10529,12 @@ export class TablesDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         status: '',
                         error: '',
                         columns: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -11529,168 +11529,6 @@ export class TablesDB {
     }
 
     /**
-     * Get a list of all the user's rows in a given table using a POST request. This behaves identically to the list rows endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
-     *
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/products/databases/tables#create-table).
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-     * @param {string | null} params.transactionId - Transaction ID to read uncommitted changes within the transaction.
-     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {number} params.ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.RowList<Row>>}
-     */
-    createQuery<Row extends Models.Row = Models.DefaultRow>(params: {
-        databaseId: string;
-        tableId: string;
-        queries?: string[];
-        transactionId?: string | null;
-        total?: boolean;
-        ttl?: number;
-    }): Promise<Models.RowList<Row>>;
-    /**
-     * Get a list of all the user's rows in a given table using a POST request. This behaves identically to the list rows endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
-     *
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/products/databases/tables#create-table).
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-     * @param {string | null} transactionId - Transaction ID to read uncommitted changes within the transaction.
-     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {number} ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.RowList<Row>>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    createQuery<Row extends Models.Row = Models.DefaultRow>(
-        databaseId: string,
-        tableId: string,
-        queries?: string[],
-        transactionId?: string | null,
-        total?: boolean,
-        ttl?: number,
-    ): Promise<Models.RowList<Row>>;
-    createQuery<Row extends Models.Row = Models.DefaultRow>(
-        paramsOrFirst:
-            | {
-                  databaseId: string;
-                  tableId: string;
-                  queries?: string[];
-                  transactionId?: string | null;
-                  total?: boolean;
-                  ttl?: number;
-              }
-            | string,
-        ...rest: [string?, string[]?, (string | null)?, boolean?, number?]
-    ): Promise<Models.RowList<Row>> {
-        let params: {
-            databaseId: string;
-            tableId: string;
-            queries?: string[];
-            transactionId?: string | null;
-            total?: boolean;
-            ttl?: number;
-        };
-
-        if (
-            paramsOrFirst &&
-            typeof paramsOrFirst === 'object' &&
-            !Array.isArray(paramsOrFirst)
-        ) {
-            params = (paramsOrFirst || {}) as {
-                databaseId: string;
-                tableId: string;
-                queries?: string[];
-                transactionId?: string | null;
-                total?: boolean;
-                ttl?: number;
-            };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                tableId: rest[0] as string,
-                queries: rest[1] as string[],
-                transactionId: rest[2] as string | null,
-                total: rest[3] as boolean,
-                ttl: rest[4] as number,
-            };
-        }
-
-        const databaseId = params.databaseId;
-        const tableId = params.tableId;
-        const queries = params.queries;
-        const transactionId = params.transactionId;
-        const total = params.total;
-        const ttl = params.ttl;
-
-        if (typeof databaseId === 'undefined' || databaseId === '') {
-            throw new AppwriteException(
-                'Missing required parameter: "databaseId"',
-            );
-        }
-        if (typeof tableId === 'undefined' || tableId === '') {
-            throw new AppwriteException(
-                'Missing required parameter: "tableId"',
-            );
-        }
-        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/query'
-            .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-            .replace('{tableId}', encodeURIComponent(String(tableId)));
-        const apiPayload: Payload = {};
-        if (typeof queries !== 'undefined') {
-            apiPayload['queries'] = queries;
-        }
-        if (typeof transactionId !== 'undefined') {
-            apiPayload['transactionId'] = transactionId;
-        }
-        if (typeof total !== 'undefined') {
-            apiPayload['total'] = total;
-        }
-        if (typeof ttl !== 'undefined') {
-            apiPayload['ttl'] = ttl;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'content-type': 'application/json',
-            accept: 'application/json',
-        };
-
-        const request = this.client.call('post', uri, apiHeaders, apiPayload);
-        const defaults = {
-            root: 'rowList',
-            models: {
-                rowList: {
-                    defaults: {
-                        total: 0,
-                        rows: [],
-                    },
-                    properties: {
-                        rows: {
-                            items: 'row',
-                        },
-                    },
-                },
-                row: {
-                    defaults: {
-                        $id: '',
-                        $sequence: '',
-                        $tableId: '',
-                        $databaseId: '',
-                        $createdAt: '',
-                        $updatedAt: '',
-                        $permissions: [],
-                    },
-                },
-            },
-        };
-
-        return request.then((response) => applyDefaults(response, defaults));
-    }
-
-    /**
      * Get a row by its unique ID. This endpoint response returns a JSON object with the row data.
      *
      * @param {string} params.databaseId - Database ID.
@@ -12606,6 +12444,168 @@ export class TablesDB {
         const defaults = {
             root: 'row',
             models: {
+                row: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $tableId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
+     * Get a list of all the user's rows in a given table using a POST request. This behaves identically to the list rows endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
+     *
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/products/databases/tables#create-table).
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {string | null} params.transactionId - Transaction ID to read uncommitted changes within the transaction.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @param {number} params.ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.RowList<Row>>}
+     */
+    createQuery<Row extends Models.Row = Models.DefaultRow>(params: {
+        databaseId: string;
+        tableId: string;
+        queries?: string[];
+        transactionId?: string | null;
+        total?: boolean;
+        ttl?: number;
+    }): Promise<Models.RowList<Row>>;
+    /**
+     * Get a list of all the user's rows in a given table using a POST request. This behaves identically to the list rows endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
+     *
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/products/databases/tables#create-table).
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {string | null} transactionId - Transaction ID to read uncommitted changes within the transaction.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @param {number} ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, table, schema version (columns and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; row writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.RowList<Row>>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createQuery<Row extends Models.Row = Models.DefaultRow>(
+        databaseId: string,
+        tableId: string,
+        queries?: string[],
+        transactionId?: string | null,
+        total?: boolean,
+        ttl?: number,
+    ): Promise<Models.RowList<Row>>;
+    createQuery<Row extends Models.Row = Models.DefaultRow>(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  tableId: string;
+                  queries?: string[];
+                  transactionId?: string | null;
+                  total?: boolean;
+                  ttl?: number;
+              }
+            | string,
+        ...rest: [string?, string[]?, (string | null)?, boolean?, number?]
+    ): Promise<Models.RowList<Row>> {
+        let params: {
+            databaseId: string;
+            tableId: string;
+            queries?: string[];
+            transactionId?: string | null;
+            total?: boolean;
+            ttl?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                tableId: string;
+                queries?: string[];
+                transactionId?: string | null;
+                total?: boolean;
+                ttl?: number;
+            };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                tableId: rest[0] as string,
+                queries: rest[1] as string[],
+                transactionId: rest[2] as string | null,
+                total: rest[3] as boolean,
+                ttl: rest[4] as number,
+            };
+        }
+
+        const databaseId = params.databaseId;
+        const tableId = params.tableId;
+        const queries = params.queries;
+        const transactionId = params.transactionId;
+        const total = params.total;
+        const ttl = params.ttl;
+
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
+        }
+        if (typeof tableId === 'undefined' || tableId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "tableId"',
+            );
+        }
+        const apiPath = '/tablesdb/{databaseId}/tables/{tableId}/rows/query'
+            .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+            .replace('{tableId}', encodeURIComponent(String(tableId)));
+        const apiPayload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            apiPayload['queries'] = queries;
+        }
+        if (typeof transactionId !== 'undefined') {
+            apiPayload['transactionId'] = transactionId;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
+        }
+        if (typeof ttl !== 'undefined') {
+            apiPayload['ttl'] = ttl;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'rowList',
+            models: {
+                rowList: {
+                    defaults: {
+                        total: 0,
+                        rows: [],
+                    },
+                    properties: {
+                        rows: {
+                            items: 'row',
+                        },
+                    },
+                },
                 row: {
                     defaults: {
                         $id: '',

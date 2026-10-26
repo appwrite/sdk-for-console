@@ -5,4 +5,5 @@ export enum Region {
     Sfo = 'sfo',
     Sgp = 'sgp',
     Tor = 'tor',
+    Default = 'default',
 }

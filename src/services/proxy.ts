@@ -715,119 +715,6 @@ export class Proxy {
     }
 
     /**
-     * Create an SMTP ingress rule that asynchronously executes an Appwrite Function for incoming email.
-     *
-     * @param {string} params.domain - Domain that receives email.
-     * @param {string} params.functionId - ID of function to execute.
-     * @param {string} params.branch - Name of VCS branch to deploy changes automatically.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.ProxyRule>}
-     */
-    createSMTPRule(params: {
-        domain: string;
-        functionId: string;
-        branch?: string;
-    }): Promise<Models.ProxyRule>;
-    /**
-     * Create an SMTP ingress rule that asynchronously executes an Appwrite Function for incoming email.
-     *
-     * @param {string} domain - Domain that receives email.
-     * @param {string} functionId - ID of function to execute.
-     * @param {string} branch - Name of VCS branch to deploy changes automatically.
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.ProxyRule>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    createSMTPRule(
-        domain: string,
-        functionId: string,
-        branch?: string,
-    ): Promise<Models.ProxyRule>;
-    createSMTPRule(
-        paramsOrFirst:
-            { domain: string; functionId: string; branch?: string } | string,
-        ...rest: [string?, string?]
-    ): Promise<Models.ProxyRule> {
-        let params: { domain: string; functionId: string; branch?: string };
-
-        if (
-            paramsOrFirst &&
-            typeof paramsOrFirst === 'object' &&
-            !Array.isArray(paramsOrFirst)
-        ) {
-            params = (paramsOrFirst || {}) as {
-                domain: string;
-                functionId: string;
-                branch?: string;
-            };
-        } else {
-            params = {
-                domain: paramsOrFirst as string,
-                functionId: rest[0] as string,
-                branch: rest[1] as string,
-            };
-        }
-
-        const domain = params.domain;
-        const functionId = params.functionId;
-        const branch = params.branch;
-
-        if (typeof domain === 'undefined') {
-            throw new AppwriteException('Missing required parameter: "domain"');
-        }
-        if (typeof functionId === 'undefined') {
-            throw new AppwriteException(
-                'Missing required parameter: "functionId"',
-            );
-        }
-        const apiPath = '/proxy/rules/smtp';
-        const apiPayload: Payload = {};
-        if (typeof domain !== 'undefined') {
-            apiPayload['domain'] = domain;
-        }
-        if (typeof functionId !== 'undefined') {
-            apiPayload['functionId'] = functionId;
-        }
-        if (typeof branch !== 'undefined') {
-            apiPayload['branch'] = branch;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'content-type': 'application/json',
-            accept: 'application/json',
-        };
-
-        const request = this.client.call('post', uri, apiHeaders, apiPayload);
-        const defaults = {
-            root: 'proxyRule',
-            models: {
-                proxyRule: {
-                    defaults: {
-                        $id: '',
-                        $createdAt: '',
-                        $updatedAt: '',
-                        domain: '',
-                        type: '',
-                        trigger: '',
-                        redirectUrl: '',
-                        redirectStatusCode: 301,
-                        deploymentId: '',
-                        deploymentResourceId: '',
-                        deploymentVcsProviderBranch: '',
-                        status: 'unverified',
-                        logs: '',
-                        protocol: 'http',
-                    },
-                },
-            },
-        };
-
-        return request.then((response) => applyDefaults(response, defaults));
-    }
-
-    /**
      * Get a proxy rule by its unique ID.
      *
      * @param {string} params.ruleId - Rule ID.
@@ -1012,6 +899,119 @@ export class Proxy {
         };
 
         const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'proxyRule',
+            models: {
+                proxyRule: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        domain: '',
+                        type: '',
+                        trigger: '',
+                        redirectUrl: '',
+                        redirectStatusCode: 301,
+                        deploymentId: '',
+                        deploymentResourceId: '',
+                        deploymentVcsProviderBranch: '',
+                        status: 'unverified',
+                        logs: '',
+                        protocol: 'http',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
+     * Create an SMTP ingress rule that asynchronously executes an Appwrite Function for incoming email.
+     *
+     * @param {string} params.domain - Domain that receives email.
+     * @param {string} params.functionId - ID of function to execute.
+     * @param {string} params.branch - Name of VCS branch to deploy changes automatically.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ProxyRule>}
+     */
+    createSMTPRule(params: {
+        domain: string;
+        functionId: string;
+        branch?: string;
+    }): Promise<Models.ProxyRule>;
+    /**
+     * Create an SMTP ingress rule that asynchronously executes an Appwrite Function for incoming email.
+     *
+     * @param {string} domain - Domain that receives email.
+     * @param {string} functionId - ID of function to execute.
+     * @param {string} branch - Name of VCS branch to deploy changes automatically.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.ProxyRule>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createSMTPRule(
+        domain: string,
+        functionId: string,
+        branch?: string,
+    ): Promise<Models.ProxyRule>;
+    createSMTPRule(
+        paramsOrFirst:
+            { domain: string; functionId: string; branch?: string } | string,
+        ...rest: [string?, string?]
+    ): Promise<Models.ProxyRule> {
+        let params: { domain: string; functionId: string; branch?: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                domain: string;
+                functionId: string;
+                branch?: string;
+            };
+        } else {
+            params = {
+                domain: paramsOrFirst as string,
+                functionId: rest[0] as string,
+                branch: rest[1] as string,
+            };
+        }
+
+        const domain = params.domain;
+        const functionId = params.functionId;
+        const branch = params.branch;
+
+        if (typeof domain === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "domain"');
+        }
+        if (typeof functionId === 'undefined') {
+            throw new AppwriteException(
+                'Missing required parameter: "functionId"',
+            );
+        }
+        const apiPath = '/proxy/rules/smtp';
+        const apiPayload: Payload = {};
+        if (typeof domain !== 'undefined') {
+            apiPayload['domain'] = domain;
+        }
+        if (typeof functionId !== 'undefined') {
+            apiPayload['functionId'] = functionId;
+        }
+        if (typeof branch !== 'undefined') {
+            apiPayload['branch'] = branch;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
         const defaults = {
             root: 'proxyRule',
             models: {

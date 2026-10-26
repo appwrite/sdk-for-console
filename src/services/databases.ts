@@ -114,11 +114,11 @@ export class Databases {
                     defaults: {
                         $id: '',
                         name: '',
-                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
+                        description: '',
                     },
                     properties: {
                         policies: {
@@ -278,11 +278,11 @@ export class Databases {
                     defaults: {
                         $id: '',
                         name: '',
-                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
+                        description: '',
                     },
                     properties: {
                         policies: {
@@ -892,11 +892,11 @@ export class Databases {
                     defaults: {
                         $id: '',
                         name: '',
-                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
+                        description: '',
                     },
                     properties: {
                         policies: {
@@ -1051,11 +1051,11 @@ export class Databases {
                     defaults: {
                         $id: '',
                         name: '',
-                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
+                        description: '',
                     },
                     properties: {
                         policies: {
@@ -1280,13 +1280,13 @@ export class Databases {
                         $permissions: [],
                         databaseId: '',
                         name: '',
-                        description: '',
                         enabled: true,
                         documentSecurity: false,
                         attributes: [],
                         indexes: [],
                         bytesMax: 0,
                         bytesUsed: 0,
+                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -1300,11 +1300,11 @@ export class Databases {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -1506,13 +1506,13 @@ export class Databases {
                         $permissions: [],
                         databaseId: '',
                         name: '',
-                        description: '',
                         enabled: true,
                         documentSecurity: false,
                         attributes: [],
                         indexes: [],
                         bytesMax: 0,
                         bytesUsed: 0,
+                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -1526,11 +1526,11 @@ export class Databases {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -1626,13 +1626,13 @@ export class Databases {
                         $permissions: [],
                         databaseId: '',
                         name: '',
-                        description: '',
                         enabled: true,
                         documentSecurity: false,
                         attributes: [],
                         indexes: [],
                         bytesMax: 0,
                         bytesUsed: 0,
+                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -1646,11 +1646,11 @@ export class Databases {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -1835,13 +1835,13 @@ export class Databases {
                         $permissions: [],
                         databaseId: '',
                         name: '',
-                        description: '',
                         enabled: true,
                         documentSecurity: false,
                         attributes: [],
                         indexes: [],
                         bytesMax: 0,
                         bytesUsed: 0,
+                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -1855,11 +1855,11 @@ export class Databases {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -2263,12 +2263,12 @@ export class Databases {
                 attributeBigint: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -2475,12 +2475,12 @@ export class Databases {
                 attributeBigint: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -2658,12 +2658,12 @@ export class Databases {
                 attributeBoolean: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -2842,12 +2842,12 @@ export class Databases {
                 attributeBoolean: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -3023,12 +3023,12 @@ export class Databases {
                 attributeDatetime: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -3207,12 +3207,12 @@ export class Databases {
                 attributeDatetime: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -3390,13 +3390,13 @@ export class Databases {
                 attributeEmail: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         format: 'email',
+                        description: '',
                     },
                 },
             },
@@ -3577,13 +3577,13 @@ export class Databases {
                 attributeEmail: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         format: 'email',
+                        description: '',
                     },
                 },
             },
@@ -3779,7 +3779,6 @@ export class Databases {
                 attributeEnum: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -3787,6 +3786,7 @@ export class Databases {
                         $updatedAt: '',
                         elements: [],
                         format: 'enum',
+                        description: '',
                     },
                 },
             },
@@ -3985,7 +3985,6 @@ export class Databases {
                 attributeEnum: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -3993,6 +3992,7 @@ export class Databases {
                         $updatedAt: '',
                         elements: [],
                         format: 'enum',
+                        description: '',
                     },
                 },
             },
@@ -4196,12 +4196,12 @@ export class Databases {
                 attributeFloat: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -4408,12 +4408,12 @@ export class Databases {
                 attributeFloat: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -4617,12 +4617,12 @@ export class Databases {
                 attributeInteger: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -4829,12 +4829,12 @@ export class Databases {
                 attributeInteger: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -5012,13 +5012,13 @@ export class Databases {
                 attributeIp: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         format: 'ip',
+                        description: '',
                     },
                 },
             },
@@ -5199,13 +5199,13 @@ export class Databases {
                 attributeIp: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         format: 'ip',
+                        description: '',
                     },
                 },
             },
@@ -5362,12 +5362,12 @@ export class Databases {
                 attributeLine: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -5541,12 +5541,12 @@ export class Databases {
                 attributeLine: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -5737,12 +5737,12 @@ export class Databases {
                 attributeLongtext: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -5923,12 +5923,12 @@ export class Databases {
                 attributeLongtext: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -6119,12 +6119,12 @@ export class Databases {
                 attributeMediumtext: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -6305,12 +6305,12 @@ export class Databases {
                 attributeMediumtext: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -6467,12 +6467,12 @@ export class Databases {
                 attributePoint: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -6646,12 +6646,12 @@ export class Databases {
                 attributePoint: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -6808,12 +6808,12 @@ export class Databases {
                 attributePolygon: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -6987,12 +6987,12 @@ export class Databases {
                 attributePolygon: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -7196,7 +7196,6 @@ export class Databases {
                 attributeRelationship: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -7207,6 +7206,7 @@ export class Databases {
                         twoWayKey: '',
                         onDelete: 'restrict',
                         side: '',
+                        description: '',
                     },
                 },
             },
@@ -7364,7 +7364,6 @@ export class Databases {
                 attributeRelationship: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
@@ -7375,6 +7374,7 @@ export class Databases {
                         twoWayKey: '',
                         onDelete: 'restrict',
                         side: '',
+                        description: '',
                     },
                 },
             },
@@ -7581,13 +7581,13 @@ export class Databases {
                 attributeString: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         size: 0,
+                        description: '',
                     },
                 },
             },
@@ -7781,13 +7781,13 @@ export class Databases {
                 attributeString: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         size: 0,
+                        description: '',
                     },
                 },
             },
@@ -7978,12 +7978,12 @@ export class Databases {
                 attributeText: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -8164,12 +8164,12 @@ export class Databases {
                 attributeText: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
+                        description: '',
                     },
                 },
             },
@@ -8347,13 +8347,13 @@ export class Databases {
                 attributeUrl: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         format: 'url',
+                        description: '',
                     },
                 },
             },
@@ -8534,13 +8534,13 @@ export class Databases {
                 attributeUrl: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         format: 'url',
+                        description: '',
                     },
                 },
             },
@@ -8747,13 +8747,13 @@ export class Databases {
                 attributeVarchar: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         size: 0,
+                        description: '',
                     },
                 },
             },
@@ -8947,13 +8947,13 @@ export class Databases {
                 attributeVarchar: {
                     defaults: {
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         required: false,
                         $createdAt: '',
                         $updatedAt: '',
                         size: 0,
+                        description: '',
                     },
                 },
             },
@@ -10158,175 +10158,6 @@ export class Databases {
     }
 
     /**
-     * Get a list of all the user's documents in a given collection using a POST request. This behaves identically to the list documents endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
-     *
-     *
-     * @param {string} params.databaseId - Database ID.
-     * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-     * @param {string | null} params.transactionId - Transaction ID to read uncommitted changes within the transaction.
-     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {number} params.ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DocumentList<Document>>}
-     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createQuery` instead.
-     */
-    createQuery<
-        Document extends Models.Document = Models.DefaultDocument,
-    >(params: {
-        databaseId: string;
-        collectionId: string;
-        queries?: string[];
-        transactionId?: string | null;
-        total?: boolean;
-        ttl?: number;
-    }): Promise<Models.DocumentList<Document>>;
-    /**
-     * Get a list of all the user's documents in a given collection using a POST request. This behaves identically to the list documents endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
-     *
-     *
-     * @param {string} databaseId - Database ID.
-     * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
-     * @param {string | null} transactionId - Transaction ID to read uncommitted changes within the transaction.
-     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {number} ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
-     * @throws {AppwriteException}
-     * @returns {Promise<Models.DocumentList<Document>>}
-     * @deprecated Use the object parameter style method for a better developer experience.
-     */
-    createQuery<Document extends Models.Document = Models.DefaultDocument>(
-        databaseId: string,
-        collectionId: string,
-        queries?: string[],
-        transactionId?: string | null,
-        total?: boolean,
-        ttl?: number,
-    ): Promise<Models.DocumentList<Document>>;
-    createQuery<Document extends Models.Document = Models.DefaultDocument>(
-        paramsOrFirst:
-            | {
-                  databaseId: string;
-                  collectionId: string;
-                  queries?: string[];
-                  transactionId?: string | null;
-                  total?: boolean;
-                  ttl?: number;
-              }
-            | string,
-        ...rest: [string?, string[]?, (string | null)?, boolean?, number?]
-    ): Promise<Models.DocumentList<Document>> {
-        let params: {
-            databaseId: string;
-            collectionId: string;
-            queries?: string[];
-            transactionId?: string | null;
-            total?: boolean;
-            ttl?: number;
-        };
-
-        if (
-            paramsOrFirst &&
-            typeof paramsOrFirst === 'object' &&
-            !Array.isArray(paramsOrFirst)
-        ) {
-            params = (paramsOrFirst || {}) as {
-                databaseId: string;
-                collectionId: string;
-                queries?: string[];
-                transactionId?: string | null;
-                total?: boolean;
-                ttl?: number;
-            };
-        } else {
-            params = {
-                databaseId: paramsOrFirst as string,
-                collectionId: rest[0] as string,
-                queries: rest[1] as string[],
-                transactionId: rest[2] as string | null,
-                total: rest[3] as boolean,
-                ttl: rest[4] as number,
-            };
-        }
-
-        const databaseId = params.databaseId;
-        const collectionId = params.collectionId;
-        const queries = params.queries;
-        const transactionId = params.transactionId;
-        const total = params.total;
-        const ttl = params.ttl;
-
-        if (typeof databaseId === 'undefined' || databaseId === '') {
-            throw new AppwriteException(
-                'Missing required parameter: "databaseId"',
-            );
-        }
-        if (typeof collectionId === 'undefined' || collectionId === '') {
-            throw new AppwriteException(
-                'Missing required parameter: "collectionId"',
-            );
-        }
-        const apiPath =
-            '/databases/{databaseId}/collections/{collectionId}/documents/query'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                );
-        const apiPayload: Payload = {};
-        if (typeof queries !== 'undefined') {
-            apiPayload['queries'] = queries;
-        }
-        if (typeof transactionId !== 'undefined') {
-            apiPayload['transactionId'] = transactionId;
-        }
-        if (typeof total !== 'undefined') {
-            apiPayload['total'] = total;
-        }
-        if (typeof ttl !== 'undefined') {
-            apiPayload['ttl'] = ttl;
-        }
-        const uri = new URL(this.client.config.endpoint + apiPath);
-
-        const apiHeaders: { [header: string]: string } = {
-            'X-Appwrite-Project': this.client.config.project,
-            'content-type': 'application/json',
-            accept: 'application/json',
-        };
-
-        const request = this.client.call('post', uri, apiHeaders, apiPayload);
-        const defaults = {
-            root: 'documentList',
-            models: {
-                documentList: {
-                    defaults: {
-                        total: 0,
-                        documents: [],
-                    },
-                    properties: {
-                        documents: {
-                            items: 'document',
-                        },
-                    },
-                },
-                document: {
-                    defaults: {
-                        $id: '',
-                        $sequence: '',
-                        $collectionId: '',
-                        $databaseId: '',
-                        $createdAt: '',
-                        $updatedAt: '',
-                        $permissions: [],
-                    },
-                },
-            },
-        };
-
-        return request.then((response) => applyDefaults(response, defaults));
-    }
-
-    /**
      * Get a document by its unique ID. This endpoint response returns a JSON object with the document data.
      *
      * @param {string} params.databaseId - Database ID.
@@ -11470,11 +11301,11 @@ export class Databases {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -11671,11 +11502,11 @@ export class Databases {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -11782,11 +11613,11 @@ export class Databases {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
-                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
+                        description: '',
                     },
                 },
             },
@@ -11885,5 +11716,174 @@ export class Databases {
         };
 
         return this.client.call('delete', uri, apiHeaders, apiPayload);
+    }
+
+    /**
+     * Get a list of all the user's documents in a given collection using a POST request. This behaves identically to the list documents endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
+     *
+     *
+     * @param {string} params.databaseId - Database ID.
+     * @param {string} params.collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {string | null} params.transactionId - Transaction ID to read uncommitted changes within the transaction.
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @param {number} params.ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DocumentList<Document>>}
+     * @deprecated This API has been deprecated since 1.8.0. Please use `TablesDB.createQuery` instead.
+     */
+    createQuery<
+        Document extends Models.Document = Models.DefaultDocument,
+    >(params: {
+        databaseId: string;
+        collectionId: string;
+        queries?: string[];
+        transactionId?: string | null;
+        total?: boolean;
+        ttl?: number;
+    }): Promise<Models.DocumentList<Document>>;
+    /**
+     * Get a list of all the user's documents in a given collection using a POST request. This behaves identically to the list documents endpoint but accepts the queries in the request body, allowing much larger `queries` arrays than can fit in a URL query string.
+     *
+     *
+     * @param {string} databaseId - Database ID.
+     * @param {string} collectionId - Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long.
+     * @param {string | null} transactionId - Transaction ID to read uncommitted changes within the transaction.
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @param {number} ttl - TTL (seconds) for caching list responses. Responses are stored in an in-memory key-value cache, keyed per project, collection, schema version (attributes and indexes), caller authorization roles, and the exact query — so users with different permissions never share cached entries. Schema changes invalidate cached entries automatically; document writes do not, so choose a TTL you are comfortable serving as stale data. Set to 0 to disable caching. Lists with join queries are not cached. Must be between 0 and 86400 (24 hours).
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.DocumentList<Document>>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createQuery<Document extends Models.Document = Models.DefaultDocument>(
+        databaseId: string,
+        collectionId: string,
+        queries?: string[],
+        transactionId?: string | null,
+        total?: boolean,
+        ttl?: number,
+    ): Promise<Models.DocumentList<Document>>;
+    createQuery<Document extends Models.Document = Models.DefaultDocument>(
+        paramsOrFirst:
+            | {
+                  databaseId: string;
+                  collectionId: string;
+                  queries?: string[];
+                  transactionId?: string | null;
+                  total?: boolean;
+                  ttl?: number;
+              }
+            | string,
+        ...rest: [string?, string[]?, (string | null)?, boolean?, number?]
+    ): Promise<Models.DocumentList<Document>> {
+        let params: {
+            databaseId: string;
+            collectionId: string;
+            queries?: string[];
+            transactionId?: string | null;
+            total?: boolean;
+            ttl?: number;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                databaseId: string;
+                collectionId: string;
+                queries?: string[];
+                transactionId?: string | null;
+                total?: boolean;
+                ttl?: number;
+            };
+        } else {
+            params = {
+                databaseId: paramsOrFirst as string,
+                collectionId: rest[0] as string,
+                queries: rest[1] as string[],
+                transactionId: rest[2] as string | null,
+                total: rest[3] as boolean,
+                ttl: rest[4] as number,
+            };
+        }
+
+        const databaseId = params.databaseId;
+        const collectionId = params.collectionId;
+        const queries = params.queries;
+        const transactionId = params.transactionId;
+        const total = params.total;
+        const ttl = params.ttl;
+
+        if (typeof databaseId === 'undefined' || databaseId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "databaseId"',
+            );
+        }
+        if (typeof collectionId === 'undefined' || collectionId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "collectionId"',
+            );
+        }
+        const apiPath =
+            '/databases/{databaseId}/collections/{collectionId}/documents/query'
+                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
+                .replace(
+                    '{collectionId}',
+                    encodeURIComponent(String(collectionId)),
+                );
+        const apiPayload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            apiPayload['queries'] = queries;
+        }
+        if (typeof transactionId !== 'undefined') {
+            apiPayload['transactionId'] = transactionId;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
+        }
+        if (typeof ttl !== 'undefined') {
+            apiPayload['ttl'] = ttl;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'documentList',
+            models: {
+                documentList: {
+                    defaults: {
+                        total: 0,
+                        documents: [],
+                    },
+                    properties: {
+                        documents: {
+                            items: 'document',
+                        },
+                    },
+                },
+                document: {
+                    defaults: {
+                        $id: '',
+                        $sequence: '',
+                        $collectionId: '',
+                        $databaseId: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        $permissions: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }
