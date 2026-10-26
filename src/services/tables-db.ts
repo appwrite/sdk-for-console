@@ -10629,7 +10629,7 @@ export class TablesDB {
     /**
      * Get a list of all the user's rows in a given table. You can use the query params to filter your results.
      *
-     * Rows returned by aggregate, groupBy or distinct queries hold only the columns they select, group or aggregate, typed as a row types them, with a joined column named by its join alias (`alias.column`). They have no `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`, `$databaseId` or `$tableId` unless they select or group it, and neither does a right or full join row that no row of this table matched.
+     * Rows returned by aggregate, groupBy or distinct queries hold only the columns they select, group or aggregate, typed as a row types them, with a joined column named by its join alias (`alias.column`). The response omits their `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`, `$databaseId` and `$tableId` unless they select or group it, and those of a right or full join row that no row of this table matched. SDK row models fill omitted system columns with empty values.
      *
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/products/databases/tables#create-table).
@@ -10651,7 +10651,7 @@ export class TablesDB {
     /**
      * Get a list of all the user's rows in a given table. You can use the query params to filter your results.
      *
-     * Rows returned by aggregate, groupBy or distinct queries hold only the columns they select, group or aggregate, typed as a row types them, with a joined column named by its join alias (`alias.column`). They have no `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`, `$databaseId` or `$tableId` unless they select or group it, and neither does a right or full join row that no row of this table matched.
+     * Rows returned by aggregate, groupBy or distinct queries hold only the columns they select, group or aggregate, typed as a row types them, with a joined column named by its join alias (`alias.column`). The response omits their `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`, `$databaseId` and `$tableId` unless they select or group it, and those of a right or full join row that no row of this table matched. SDK row models fill omitted system columns with empty values.
      *
      * @param {string} databaseId - Database ID.
      * @param {string} tableId - Table ID. You can create a new table using the TablesDB service [server integration](https://appwrite.io/docs/products/databases/tables#create-table).

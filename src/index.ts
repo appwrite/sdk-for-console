@@ -1,7 +1,7 @@
 /**
  * Appwrite Console SDK
  *
- * This SDK targets Appwrite server version 2.5.x as shipped on Appwrite Cloud.
+ * This SDK targets Appwrite server version 2.6.x as shipped on Appwrite Cloud.
  * Self-hosted releases can lag behind Cloud — if you run an older self-hosted
  * build, use a matching older SDK from
  * [previous releases](https://github.com/appwrite/sdk-for-console/releases)
@@ -92,8 +92,12 @@ export { AuthenticatorType } from './enums/authenticator-type';
 export { AuthenticationFactor } from './enums/authentication-factor';
 export { IdTokenProvider } from './enums/id-token-provider';
 export { OAuthProvider } from './enums/o-auth-provider';
+export { BlockResourceType } from './enums/block-resource-type';
+export { BlockMode } from './enums/block-mode';
 export { PlatformResourceType } from './enums/platform-resource-type';
 export { ProjectResourceType } from './enums/project-resource-type';
+export { CreditStatus } from './enums/credit-status';
+export { PlanEffective } from './enums/plan-effective';
 export { ThreatResourceType } from './enums/threat-resource-type';
 export { ThreatStatus } from './enums/threat-status';
 export { AnalyticsInterval } from './enums/analytics-interval';
@@ -127,8 +131,6 @@ export { VCSReferenceType } from './enums/vcs-reference-type';
 export { DeploymentDownloadType } from './enums/deployment-download-type';
 export { ExecutionMethod } from './enums/execution-method';
 export { ConversationType } from './enums/conversation-type';
-export { BlockResourceType } from './enums/block-resource-type';
-export { BlockMode } from './enums/block-mode';
 export { Region } from './enums/region';
 export { CacheTarget } from './enums/cache-target';
 export { CacheDatabase } from './enums/cache-database';

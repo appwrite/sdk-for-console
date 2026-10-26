@@ -26,6 +26,7 @@ const result = await storage.createBucket({
     antivirus: false, // optional
     transformations: false, // optional
     description: '<DESCRIPTION>', // optional
+    stripMetadata: false, // optional
 });
 
 console.log(result);

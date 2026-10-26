@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "version": "2.5.0",
+        "version": "2.6.2",
         "title": "Appwrite",
         "description": "Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to [https:\/\/appwrite.io\/docs](https:\/\/appwrite.io\/docs)",
         "termsOfService": "https:\/\/appwrite.io\/policy\/terms",
@@ -4839,7 +4839,10 @@
                     "demo": "account\/update-magic-url-session.md",
                     "rate-limit": 10,
                     "rate-time": 3600,
-                    "rate-key": "ip:{ip},userId:{param-userId}",
+                    "rate-key": [
+                        "ip:{ip},userId:{param-userId}",
+                        "projectId:{projectId},url:{url},userId:{param-userId}"
+                    ],
                     "scope": "sessions.write",
                     "platforms": [
                         "console",
@@ -5377,7 +5380,10 @@
                     "demo": "account\/update-phone-session.md",
                     "rate-limit": 10,
                     "rate-time": 3600,
-                    "rate-key": "ip:{ip},userId:{param-userId}",
+                    "rate-key": [
+                        "ip:{ip},userId:{param-userId}",
+                        "projectId:{projectId},url:{url},userId:{param-userId}"
+                    ],
                     "scope": "sessions.write",
                     "platforms": [
                         "console",
@@ -5454,7 +5460,10 @@
                     "demo": "account\/create-session.md",
                     "rate-limit": 10,
                     "rate-time": 3600,
-                    "rate-key": "ip:{ip},userId:{param-userId}",
+                    "rate-key": [
+                        "ip:{ip},userId:{param-userId}",
+                        "projectId:{projectId},url:{url},userId:{param-userId}"
+                    ],
                     "scope": "sessions.write",
                     "platforms": [
                         "console",
@@ -7435,6 +7444,354 @@
                 ]
             }
         },
+        "\/admin\/blocks": {
+            "get": {
+                "summary": "List blocks",
+                "operationId": "adminListBlocks",
+                "tags": [
+                    "admin"
+                ],
+                "description": "List the blocks placed on projects across the platform, expired ones included. Use queries to narrow the list to a project, a resource type or resource, a mode, or the threat whose detection placed the block.",
+                "responses": {
+                    "200": {
+                        "description": "Admin blocks list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/adminBlockList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "blocks",
+                    "demo": "admin\/list-blocks.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "queries",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: projectId, resourceType, resourceId, mode, expiredAt, threatId",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "default": []
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "total",
+                        "description": "When set to false, the total count returned will be 0 and will not be calculated.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "example": false,
+                            "default": true
+                        },
+                        "in": "query"
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create block",
+                "operationId": "adminCreateBlock",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Block a project's traffic to a resource type, to one resource of that type, or to the whole project with `projects`. A `full` block refuses every request to the resource; a `readOnly` block, for databases only, refuses writes and still serves reads. The block holds in every region until it is deleted or `expiredAt` passes. The reason is for operators; the project's owners see the block without it.",
+                "responses": {
+                    "201": {
+                        "description": "AdminBlock",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/adminBlock"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "blocks",
+                    "demo": "admin\/create-block.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "projectId": {
+                                        "description": "Project ID.",
+                                        "type": "string",
+                                        "example": "<PROJECT_ID>"
+                                    },
+                                    "resourceType": {
+                                        "description": "Type of the resource to block. `projects` blocks the whole project.",
+                                        "type": "string",
+                                        "example": "projects",
+                                        "title": "BlockResourceType",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "projects"
+                                                ],
+                                                "title": "projects"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "functions"
+                                                ],
+                                                "title": "functions"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "sites"
+                                                ],
+                                                "title": "sites"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "databases"
+                                                ],
+                                                "title": "databases"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "buckets"
+                                                ],
+                                                "title": "buckets"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "providers"
+                                                ],
+                                                "title": "providers"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "topics"
+                                                ],
+                                                "title": "topics"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "subscribers"
+                                                ],
+                                                "title": "subscribers"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "messages"
+                                                ],
+                                                "title": "messages"
+                                            }
+                                        ]
+                                    },
+                                    "resourceId": {
+                                        "description": "ID of the resource to block. Leave empty to block every resource of the type.",
+                                        "type": "string",
+                                        "default": "",
+                                        "example": "<RESOURCE_ID>"
+                                    },
+                                    "mode": {
+                                        "description": "Block mode. `full` refuses reads and writes; `readOnly`, for databases only, refuses writes and serves reads.",
+                                        "type": "string",
+                                        "default": "full",
+                                        "example": "full",
+                                        "title": "BlockMode",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "full"
+                                                ],
+                                                "title": "full"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "readonly"
+                                                ],
+                                                "title": "readonly"
+                                            }
+                                        ]
+                                    },
+                                    "reason": {
+                                        "description": "Why the block was placed, for operators. The project's owners never see it.",
+                                        "type": "string",
+                                        "default": "",
+                                        "example": "<REASON>"
+                                    },
+                                    "expiredAt": {
+                                        "description": "When the block lifts itself, in ISO 8601 format. Leave empty for a block that holds until it is deleted.",
+                                        "type": "string",
+                                        "default": "",
+                                        "example": "2020-10-15T06:38:00.000+00:00",
+                                        "format": "datetime"
+                                    }
+                                },
+                                "required": [
+                                    "projectId",
+                                    "resourceType"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/admin\/blocks\/{blockId}": {
+            "get": {
+                "summary": "Get block",
+                "operationId": "adminGetBlock",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Get a block by its unique ID, with the reason it was placed for and the threat that placed it, if a detection did.",
+                "responses": {
+                    "200": {
+                        "description": "AdminBlock",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/adminBlock"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "blocks",
+                    "demo": "admin\/get-block.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "blockId",
+                        "description": "Block ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<BLOCK_ID>"
+                        },
+                        "in": "path"
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Delete block",
+                "operationId": "adminDeleteBlock",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Lift a block. The project's traffic to the resource resumes with its next request, in every region.",
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "blocks",
+                    "demo": "admin\/delete-block.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "blockId",
+                        "description": "Block ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<BLOCK_ID>"
+                        },
+                        "in": "path"
+                    }
+                ]
+            }
+        },
         "\/admin\/cache\/platform": {
             "delete": {
                 "summary": "Delete platform cache",
@@ -7793,6 +8150,1378 @@
                             "default": ""
                         },
                         "in": "query"
+                    }
+                ]
+            }
+        },
+        "\/admin\/credits": {
+            "get": {
+                "summary": "List credits",
+                "operationId": "adminListCredits",
+                "tags": [
+                    "admin"
+                ],
+                "description": "List the credits granted across the platform, spent, expired and disabled ones included. Use queries to narrow the list to an organization, a coupon, a status or an expiry window.",
+                "responses": {
+                    "200": {
+                        "description": "Admin credits list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/adminCreditList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "credits",
+                    "demo": "admin\/list-credits.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "queries",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, couponId, credits, expiration, status",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "default": []
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "total",
+                        "description": "When set to false, the total count returned will be 0 and will not be calculated.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "example": false,
+                            "default": true
+                        },
+                        "in": "query"
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create credit",
+                "operationId": "adminCreateCredit",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Grant an organization credits: a balance its invoices draw on before its card is charged, from the next invoice until the expiration passes. The organization's plan has to apply credits. The reason is kept in the audit log.",
+                "responses": {
+                    "201": {
+                        "description": "Credit",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/credit"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "credits",
+                    "demo": "admin\/create-credit.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "teamId": {
+                                        "description": "Organization ID.",
+                                        "type": "string",
+                                        "example": "<TEAM_ID>"
+                                    },
+                                    "credits": {
+                                        "description": "Amount to grant, in USD.",
+                                        "type": "number",
+                                        "example": 0.01,
+                                        "format": "float"
+                                    },
+                                    "expiration": {
+                                        "description": "When the balance expires, in ISO 8601 format. Must be in the future.",
+                                        "type": "string",
+                                        "example": "2020-10-15T06:38:00.000+00:00",
+                                        "format": "datetime"
+                                    },
+                                    "reason": {
+                                        "description": "Why the credits are granted, for the audit log.",
+                                        "type": "string",
+                                        "default": "",
+                                        "example": "<REASON>"
+                                    }
+                                },
+                                "required": [
+                                    "teamId",
+                                    "credits",
+                                    "expiration"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/admin\/credits\/{creditId}": {
+            "get": {
+                "summary": "Get credit",
+                "operationId": "adminGetCredit",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Get a credit by its unique ID: what it was granted as, what is left of it, when it expires and whether it is active.",
+                "responses": {
+                    "200": {
+                        "description": "Credit",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/credit"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "credits",
+                    "demo": "admin\/get-credit.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "creditId",
+                        "description": "Credit ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<CREDIT_ID>"
+                        },
+                        "in": "path"
+                    }
+                ]
+            }
+        },
+        "\/admin\/credits\/{creditId}\/status": {
+            "patch": {
+                "summary": "Update credit status",
+                "operationId": "adminUpdateCreditStatus",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Disable a credit to take back what is left of it: a disabled credit is not spent on invoices and does not count towards the organization's available balance, while what it already paid for stays recorded. Enable it to hand the remainder back.",
+                "responses": {
+                    "200": {
+                        "description": "Credit",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/credit"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "credits",
+                    "demo": "admin\/update-credit-status.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "creditId",
+                        "description": "Credit ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<CREDIT_ID>"
+                        },
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "description": "Credit status. `disabled` takes the remainder back, `active` hands it back.",
+                                        "type": "string",
+                                        "example": "active",
+                                        "title": "CreditStatus",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "active"
+                                                ],
+                                                "title": "active"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "disabled"
+                                                ],
+                                                "title": "disabled"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "status"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/admin\/invoices": {
+            "get": {
+                "summary": "List invoices",
+                "operationId": "adminListInvoices",
+                "tags": [
+                    "admin"
+                ],
+                "description": "List invoices across the platform in every status, the open cycle's pending ones included. Use queries to narrow the list to an organization, a status, a type, an amount or a date range.",
+                "responses": {
+                    "200": {
+                        "description": "Billing invoices list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/invoiceList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "invoices",
+                    "demo": "admin\/list-invoices.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "queries",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, aggregationId, type, amount, currency, from, to, dueAt, attempts, status, grossAmount",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "default": []
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "total",
+                        "description": "When set to false, the total count returned will be 0 and will not be calculated.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "example": false,
+                            "default": true
+                        },
+                        "in": "query"
+                    }
+                ]
+            }
+        },
+        "\/admin\/invoices\/{invoiceId}": {
+            "get": {
+                "summary": "Get invoice",
+                "operationId": "adminGetInvoice",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Get an invoice by its unique ID: its amounts, status, period and last payment error. Its payment attempts are on the payments list, filtered by invoiceId.",
+                "responses": {
+                    "200": {
+                        "description": "Invoice",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/invoice"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "invoices",
+                    "demo": "admin\/get-invoice.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "invoiceId",
+                        "description": "Invoice ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<INVOICE_ID>"
+                        },
+                        "in": "path"
+                    }
+                ]
+            }
+        },
+        "\/admin\/invoices\/{invoiceId}\/download": {
+            "get": {
+                "summary": "Get invoice download",
+                "operationId": "adminGetInvoiceDownload",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Get an invoice as the PDF its organization receives, to download.",
+                "responses": {
+                    "200": {
+                        "description": "File",
+                        "content": {
+                            "*\/*": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "invoices",
+                    "demo": "admin\/get-invoice-download.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "invoiceId",
+                        "description": "Invoice ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<INVOICE_ID>"
+                        },
+                        "in": "path"
+                    }
+                ]
+            }
+        },
+        "\/admin\/invoices\/{invoiceId}\/refunds": {
+            "post": {
+                "summary": "Create invoice refund",
+                "operationId": "adminCreateInvoiceRefund",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Refund the payment that settled an invoice, in full or in part. The refund is made at the payment provider and recorded on the payment: a full refund, in one go or as the last of several partial ones, also marks the invoice refunded. A refund the provider still reports as pending counts as made, as it does in the provider's own refunded total. Only a succeeded or partially refunded payment can be refunded, and only up to what is left of it. Nothing else changes: the organization keeps its plan and anything the invoice paid for. The reason goes to the audit log.",
+                "responses": {
+                    "200": {
+                        "description": "Payment",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/payment"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "invoices",
+                    "demo": "admin\/create-invoice-refund.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "invoiceId",
+                        "description": "Invoice ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<INVOICE_ID>"
+                        },
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "amount": {
+                                        "description": "Amount to refund, in the invoice currency. Leave empty to refund everything that is left of the payment.",
+                                        "type": "number",
+                                        "default": 0,
+                                        "example": 0,
+                                        "format": "float"
+                                    },
+                                    "reason": {
+                                        "description": "Why the payment is refunded, for the audit log.",
+                                        "type": "string",
+                                        "default": "",
+                                        "example": "<REASON>"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/admin\/organizations": {
+            "get": {
+                "summary": "List organizations",
+                "operationId": "adminListOrganizations",
+                "tags": [
+                    "admin"
+                ],
+                "description": "List every organization on the platform, whether or not the caller is a member. Draft organizations, which the console hides, are included. Use queries or the search term to narrow the list.",
+                "responses": {
+                    "200": {
+                        "description": "Organizations list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/organizationList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "organizations",
+                    "demo": "admin\/list-organizations.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "queries",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, total, billingPlan, paymentMethodId, backupPaymentMethodId, platform",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "default": []
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "search",
+                        "description": "Search term to filter your list results. Max length: 256 chars.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "<SEARCH>",
+                            "default": ""
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "total",
+                        "description": "When set to false, the total count returned will be 0 and will not be calculated.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "example": false,
+                            "default": true
+                        },
+                        "in": "query"
+                    }
+                ]
+            }
+        },
+        "\/admin\/organizations\/{organizationId}": {
+            "get": {
+                "summary": "Get organization",
+                "operationId": "adminGetOrganization",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Get an organization by its unique ID, with its billing plan, status, budget, billing cycle dates and the payment method and billing address it is set up with.",
+                "responses": {
+                    "200": {
+                        "description": "Organization",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/organization"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "organizations",
+                    "demo": "admin\/get-organization.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organizationId",
+                        "description": "Organization ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<ORGANIZATION_ID>"
+                        },
+                        "in": "path"
+                    }
+                ]
+            }
+        },
+        "\/admin\/organizations\/{organizationId}\/aggregations": {
+            "get": {
+                "summary": "List organization aggregations",
+                "operationId": "adminListOrganizationAggregations",
+                "tags": [
+                    "admin"
+                ],
+                "description": "List an organization's billing aggregations: one per billing cycle, with the usage and the amount it added up to.",
+                "responses": {
+                    "200": {
+                        "description": "Aggregation team list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/aggregationTeamList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "organizations",
+                    "demo": "admin\/list-organization-aggregations.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organizationId",
+                        "description": "Organization ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<ORGANIZATION_ID>"
+                        },
+                        "in": "path"
+                    },
+                    {
+                        "name": "queries",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, aggregationId, from, to",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "default": []
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "total",
+                        "description": "When set to false, the total count returned will be 0 and will not be calculated.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "example": false,
+                            "default": true
+                        },
+                        "in": "query"
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create organization aggregation",
+                "operationId": "adminCreateOrganizationAggregation",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Recalculate an organization's current billing cycle now instead of at its next scheduled run: its aggregation, its pending invoice and the usage limits it has crossed. The recalculation runs in the background, on the project aggregations already recorded; recalculate a project first for its latest usage.",
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "organizations",
+                    "demo": "admin\/create-organization-aggregation.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organizationId",
+                        "description": "Organization ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<ORGANIZATION_ID>"
+                        },
+                        "in": "path"
+                    }
+                ]
+            }
+        },
+        "\/admin\/organizations\/{organizationId}\/domains": {
+            "get": {
+                "summary": "List organization domains",
+                "operationId": "adminListOrganizationDomains",
+                "tags": [
+                    "admin"
+                ],
+                "description": "List the domains registered to an organization, with their nameservers, registrar and renewal details.",
+                "responses": {
+                    "200": {
+                        "description": "Domains list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/domainsList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "organizations",
+                    "demo": "admin\/list-organization-domains.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organizationId",
+                        "description": "Organization ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<ORGANIZATION_ID>"
+                        },
+                        "in": "path"
+                    },
+                    {
+                        "name": "queries",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: teamId, domain, registrar, nameservers, expire, renewal, autoRenewal, renewalPrice",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "default": []
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "search",
+                        "description": "Search term to filter your list results. Max length: 256 chars.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "<SEARCH>",
+                            "default": ""
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "total",
+                        "description": "When set to false, the total count returned will be 0 and will not be calculated.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "example": false,
+                            "default": true
+                        },
+                        "in": "query"
+                    }
+                ]
+            }
+        },
+        "\/admin\/organizations\/{organizationId}\/memberships": {
+            "get": {
+                "summary": "List organization memberships",
+                "operationId": "adminListOrganizationMemberships",
+                "tags": [
+                    "admin"
+                ],
+                "description": "List an organization's members and pending invites with each member's name, email, phone, roles and MFA status.",
+                "responses": {
+                    "200": {
+                        "description": "Memberships List",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/membershipList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "organizations",
+                    "demo": "admin\/list-organization-memberships.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organizationId",
+                        "description": "Organization ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<ORGANIZATION_ID>"
+                        },
+                        "in": "path"
+                    },
+                    {
+                        "name": "queries",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: userId, teamId, invited, joined, confirm, roles",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "default": []
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "search",
+                        "description": "Search term to filter your list results. Max length: 256 chars.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "<SEARCH>",
+                            "default": ""
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "total",
+                        "description": "When set to false, the total count returned will be 0 and will not be calculated.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "example": false,
+                            "default": true
+                        },
+                        "in": "query"
+                    }
+                ]
+            }
+        },
+        "\/admin\/organizations\/{organizationId}\/plan": {
+            "patch": {
+                "summary": "Update organization plan",
+                "operationId": "adminUpdateOrganizationPlan",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Move an organization to another plan without collecting a payment or checking the new plan's limits. Applied `now`, the plan takes effect at once and the current billing cycle is re-priced on it; on a free plan the cycle's pending invoice is cancelled. A downgrade can instead wait for the `next-cycle`: the organization keeps its plan until the cycle closes and is billed for the next one on the new plan. Trial plans and plans of another platform are refused.",
+                "responses": {
+                    "200": {
+                        "description": "Organization",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/organization"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "organizations",
+                    "demo": "admin\/update-organization-plan.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organizationId",
+                        "description": "Organization ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<ORGANIZATION_ID>"
+                        },
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "billingPlan": {
+                                        "description": "Plan ID.",
+                                        "type": "string",
+                                        "example": "tier-0"
+                                    },
+                                    "effective": {
+                                        "description": "When the plan takes effect. `next-cycle` is only for a downgrade.",
+                                        "type": "string",
+                                        "default": "now",
+                                        "example": "now",
+                                        "title": "PlanEffective",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "now"
+                                                ],
+                                                "title": "now"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "next-cycle"
+                                                ],
+                                                "title": "next-cycle"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "billingPlan"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/admin\/organizations\/{organizationId}\/projects": {
+            "get": {
+                "summary": "List organization projects",
+                "operationId": "adminListOrganizationProjects",
+                "tags": [
+                    "admin"
+                ],
+                "description": "List an organization's projects in every status. Archived projects, which the console hides, are included; filter on status to narrow the list.",
+                "responses": {
+                    "200": {
+                        "description": "Projects List",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/projectList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "organizations",
+                    "demo": "admin\/list-organization-projects.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "organizationId",
+                        "description": "Organization ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<ORGANIZATION_ID>"
+                        },
+                        "in": "path"
+                    },
+                    {
+                        "name": "queries",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, teamId, labels, search, accessedAt, status, parentId",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "default": []
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "search",
+                        "description": "Search term to filter your list results. Max length: 256 chars.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "<SEARCH>",
+                            "default": ""
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "total",
+                        "description": "When set to false, the total count returned will be 0 and will not be calculated.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "example": false,
+                            "default": true
+                        },
+                        "in": "query"
+                    }
+                ]
+            }
+        },
+        "\/admin\/payments": {
+            "get": {
+                "summary": "List payments",
+                "operationId": "adminListPayments",
+                "tags": [
+                    "admin"
+                ],
+                "description": "List payment attempts across the platform. Filter on invoiceId for one invoice's attempts and refunds, on teamId for an organization's, or on status to find the failed ones.",
+                "responses": {
+                    "200": {
+                        "description": "Payments list",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/paymentList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "payments",
+                    "demo": "admin\/list-payments.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "queries",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: invoiceId, teamId, providerPaymentId, paymentMethodId, amount, currency, status, date",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "default": []
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "total",
+                        "description": "When set to false, the total count returned will be 0 and will not be calculated.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "example": false,
+                            "default": true
+                        },
+                        "in": "query"
+                    }
+                ]
+            }
+        },
+        "\/admin\/payments\/{paymentId}": {
+            "get": {
+                "summary": "Get payment",
+                "operationId": "adminGetPayment",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Get a payment attempt by its unique ID, with its provider ID, status and last error.",
+                "responses": {
+                    "200": {
+                        "description": "Payment",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/payment"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "payments",
+                    "demo": "admin\/get-payment.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "paymentId",
+                        "description": "Payment ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<PAYMENT_ID>"
+                        },
+                        "in": "path"
+                    }
+                ]
+            }
+        },
+        "\/admin\/projects\/{projectId}\/aggregations": {
+            "post": {
+                "summary": "Create project aggregation",
+                "operationId": "adminCreateProjectAggregation",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Recalculate a project's usage for its organization's current billing cycle now instead of at its next scheduled run. The recalculation runs in the background, in the project's region; the organization's invoice picks it up at its own next recalculation.",
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "projects",
+                    "demo": "admin\/create-project-aggregation.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "description": "Project ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<PROJECT_ID>"
+                        },
+                        "in": "path"
                     }
                 ]
             }
@@ -8319,6 +10048,81 @@
                                 },
                                 "required": [
                                     "admin"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/admin\/users\/{userId}\/impersonator": {
+            "patch": {
+                "summary": "Update user impersonator capability",
+                "operationId": "adminUpdateUserImpersonator",
+                "tags": [
+                    "admin"
+                ],
+                "description": "Enable or disable a console user's impersonator capability. An impersonator can browse console users to pick a target and pass impersonation headers to act as that user, and can call the manager API. While impersonating, the request runs as the target for API behavior, account endpoints are read-only, and audit logs still attribute the action to the impersonator.",
+                "responses": {
+                    "200": {
+                        "description": "User",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/user"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "users",
+                    "demo": "admin\/update-user-impersonator.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "console",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "description": "Console user ID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<USER_ID>"
+                        },
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "impersonator": {
+                                        "description": "Whether the user can impersonate other console users. When true, the user can browse console users, act as one of them with impersonation headers, and call the manager API.",
+                                        "type": "boolean",
+                                        "example": false
+                                    }
+                                },
+                                "required": [
+                                    "impersonator"
                                 ]
                             }
                         }
@@ -9322,7 +11126,7 @@
                 "tags": [
                     "analytics"
                 ],
-                "description": "Read analytics metrics (visitors, sessions, pageviews, events, bounceRate, \u2026) for a property over a date range.\n\n**Three response shapes**, chosen by `dimensions[]` and `interval`:\n- Neither: one row aggregating the whole window, with `value` and `date` null. Only this shape carries `pageviews`, `visits`, `bounceRate`, `visitDuration`, `viewsPerVisit`, `scrollDepth` and `engagementTime`.\n- `dimensions[]`: one row per dimension value, ranked by visitors, with `value` set and `date` null.\n- `interval`: one row per time bucket in chronological order, with `date` set and `value` null.\n\nCombining `dimensions[]` with `interval` is not supported yet. `queries[]` filters the underlying events using standard Utopia query syntax.",
+                "description": "Read analytics metrics (visitors, sessions, pageviews, events, bounceRate, \u2026) for a property over a date range.\n\n**Three response shapes**, chosen by `dimensions[]` and `interval`:\n- Neither: one row aggregating the whole window, with `value` and `date` null. Only this shape carries `visits`, `bounceRate`, `visitDuration`, `viewsPerVisit`, `scrollDepth` and `engagementTime`.\n- `dimensions[]`: one row per dimension value, ranked by visitors, with `value` set and `date` null.\n- `interval`: one row per time bucket in chronological order, with `date` set and `value` null.\n\n`pageviews` is carried by the flat aggregate and by `interval`, but not by a breakdown.\n\nCombining `dimensions[]` with `interval` is not supported yet. `queries[]` filters the underlying events using standard Utopia query syntax.",
                 "responses": {
                     "200": {
                         "description": "AnalyticsMetricList",
@@ -9372,7 +11176,7 @@
                     },
                     {
                         "name": "queries",
-                        "description": "Up to 10 filter queries in Utopia syntax. Allowed attributes: country, region, city, browser, operatingSystem, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, botName, botCategory, eventName. page, eventName are only accepted alongside `interval`, or with a breakdown on a dimension other than entryPage, exitPage. Allowed methods: equal, notEqual, contains, startsWith, endsWith. Example: `queries[]=equal(\"country\", [\"US\"])`.",
+                        "description": "Up to 10 filter queries in Utopia syntax. Allowed attributes: country, region, city, browser, browserVersion, operatingSystem, operatingSystemVersion, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, botName, botCategory, eventName. page, eventName are only accepted alongside `interval`, or with a breakdown on a dimension other than entryPage, exitPage. Allowed methods: equal, notEqual, contains, startsWith, endsWith. Example: `queries[]=equal(\"country\", [\"US\"])`.",
                         "required": false,
                         "schema": {
                             "type": "array",
@@ -9426,7 +11230,7 @@
                     },
                     {
                         "name": "dimensions",
-                        "description": "Dimension to break the metrics down by. One at most for now; the parameter is a list so that cap can be raised without a breaking change. Allowed: country, region, city, browser, operatingSystem, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, entryPage, exitPage, trafficType, botName, botCategory, eventName.",
+                        "description": "Dimension to break the metrics down by. One at most for now; the parameter is a list so that cap can be raised without a breaking change. Allowed: country, region, city, browser, browserVersion, operatingSystem, operatingSystemVersion, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, entryPage, exitPage, trafficType, botName, botCategory, eventName.",
                         "required": false,
                         "schema": {
                             "type": "array",
@@ -9465,9 +11269,23 @@
                                     {
                                         "type": "string",
                                         "enum": [
+                                            "browserVersion"
+                                        ],
+                                        "title": "browserVersion"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "enum": [
                                             "operatingSystem"
                                         ],
                                         "title": "operatingSystem"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "enum": [
+                                            "operatingSystemVersion"
+                                        ],
+                                        "title": "operatingSystemVersion"
                                     },
                                     {
                                         "type": "string",
@@ -11861,8 +13679,8 @@
                 "x-appwrite": {
                     "group": null,
                     "demo": "avatars\/get-favicon.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
+                    "rate-limit": 60,
+                    "rate-time": 60,
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "avatars.read",
                     "platforms": [
@@ -13406,8 +15224,8 @@
                 "x-appwrite": {
                     "group": null,
                     "demo": "avatars\/get-image.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
+                    "rate-limit": 60,
+                    "rate-time": 60,
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "avatars.read",
                     "platforms": [
@@ -18475,7 +20293,7 @@
                     "rate-limit": 50,
                     "rate-time": 3600,
                     "rate-key": "url:{url},ip:{ip}",
-                    "scope": "public",
+                    "scope": "account",
                     "platforms": [
                         "console"
                     ],
@@ -19235,6 +21053,62 @@
                                         "nullable": true
                                     }
                                 }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Update sources",
+                "operationId": "consoleUpdateSources",
+                "tags": [
+                    "console"
+                ],
+                "description": "Link sources captured before sign-up to the current console user. Pass the `claim` values returned when each source was created; invalid claims, sources older than 30 days and sources already linked to a user are ignored.",
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": null,
+                    "demo": "console\/update-sources.md",
+                    "rate-limit": 10,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},userId:{userId}",
+                    "scope": "account",
+                    "platforms": [
+                        "console"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "claims": {
+                                        "description": "Source claims, as returned by create source, to link to the current user.",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "claims"
+                                ]
                             }
                         }
                     }
@@ -20105,6 +21979,55 @@
                                         "transactionlogs"
                                     ],
                                     "title": "transaction_logs"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "videos"
+                                    ],
+                                    "title": "videos"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "videostimelines"
+                                    ],
+                                    "title": "videos_timelines"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "videosrenditions"
+                                    ],
+                                    "title": "videos_renditions"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "videosrenditionssegments"
+                                    ],
+                                    "title": "videos_renditions_segments"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "videosprofiles"
+                                    ],
+                                    "title": "videos_profiles"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "videoscaptions"
+                                    ],
+                                    "title": "videos_captions"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "videoscaptionssegments"
+                                    ],
+                                    "title": "videos_captions_segments"
                                 },
                                 {
                                     "type": "string",
@@ -21564,7 +23487,10 @@
                     "rate-limit": 0,
                     "rate-time": 3600,
                     "rate-key": "url:{url},ip:{ip}",
-                    "scope": "rows.read",
+                    "scope": [
+                        "documents.read",
+                        "rows.read"
+                    ],
                     "platforms": [
                         "console",
                         "server",
@@ -21638,9 +23564,9 @@
                 "x-appwrite": {
                     "group": "transactions",
                     "demo": "databases\/create-transaction.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
-                    "rate-key": "url:{url},ip:{ip}",
+                    "rate-limit": 120,
+                    "rate-time": 60,
+                    "rate-key": "ip:{ip},method:{method},url:{url},userId:{userId}",
                     "scope": "documents.write",
                     "platforms": [
                         "console",
@@ -21712,7 +23638,10 @@
                     "rate-limit": 0,
                     "rate-time": 3600,
                     "rate-key": "url:{url},ip:{ip}",
-                    "scope": "rows.read",
+                    "scope": [
+                        "documents.read",
+                        "rows.read"
+                    ],
                     "platforms": [
                         "console",
                         "server",
@@ -21772,9 +23701,9 @@
                 "x-appwrite": {
                     "group": "transactions",
                     "demo": "databases\/update-transaction.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
-                    "rate-key": "url:{url},ip:{ip}",
+                    "rate-limit": 120,
+                    "rate-time": 60,
+                    "rate-key": "ip:{ip},method:{method},url:{url},userId:{userId}",
                     "scope": "documents.write",
                     "platforms": [
                         "console",
@@ -21865,9 +23794,9 @@
                 "x-appwrite": {
                     "group": "transactions",
                     "demo": "databases\/delete-transaction.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
-                    "rate-key": "url:{url},ip:{ip}",
+                    "rate-limit": 60,
+                    "rate-time": 60,
+                    "rate-key": "ip:{ip},method:{method},url:{url},userId:{userId}",
                     "scope": "documents.write",
                     "platforms": [
                         "console",
@@ -28029,7 +29958,7 @@
                 "tags": [
                     "databases"
                 ],
-                "description": "Get a list of all the user's documents in a given collection. You can use the query params to filter your results.\n\nDocuments returned by aggregate, groupBy or distinct queries hold only the attributes they select, group or aggregate, typed as a document types them, with a joined attribute named by its join alias (`alias.attribute`). They have no `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`, `$databaseId` or `$collectionId` unless they select or group it, and neither does a right or full join document that no document of this collection matched.",
+                "description": "Get a list of all the user's documents in a given collection. You can use the query params to filter your results.\n\nDocuments returned by aggregate, groupBy or distinct queries hold only the attributes they select, group or aggregate, typed as a document types them, with a joined attribute named by its join alias (`alias.attribute`). The response omits their `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`, `$databaseId` and `$collectionId` unless they select or group it, and those of a right or full join document that no document of this collection matched. SDK document models fill omitted system attributes with empty values.",
                 "responses": {
                     "200": {
                         "description": "Documents List",
@@ -30341,9 +32270,9 @@
                 "x-appwrite": {
                     "group": "transactions",
                     "demo": "documentsdb\/create-transaction.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
-                    "rate-key": "url:{url},ip:{ip}",
+                    "rate-limit": 120,
+                    "rate-time": 60,
+                    "rate-key": "ip:{ip},method:{method},url:{url},userId:{userId}",
                     "scope": "documentsdb.documents.write",
                     "platforms": [
                         "console",
@@ -30467,9 +32396,9 @@
                 "x-appwrite": {
                     "group": "transactions",
                     "demo": "documentsdb\/update-transaction.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
-                    "rate-key": "url:{url},ip:{ip}",
+                    "rate-limit": 120,
+                    "rate-time": 60,
+                    "rate-key": "ip:{ip},method:{method},url:{url},userId:{userId}",
                     "scope": "documentsdb.documents.write",
                     "platforms": [
                         "console",
@@ -30556,9 +32485,9 @@
                 "x-appwrite": {
                     "group": "transactions",
                     "demo": "documentsdb\/delete-transaction.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
-                    "rate-key": "url:{url},ip:{ip}",
+                    "rate-limit": 60,
+                    "rate-time": 60,
+                    "rate-key": "ip:{ip},method:{method},url:{url},userId:{userId}",
                     "scope": "documentsdb.documents.write",
                     "platforms": [
                         "console",
@@ -35542,7 +37471,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain).",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -35647,7 +37576,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain).",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -35742,7 +37671,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain).",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -35847,7 +37776,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain).",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -35942,7 +37871,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name.",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -36048,7 +37977,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name.",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -36144,7 +38073,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name.",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -36249,7 +38178,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name.",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -36344,7 +38273,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain).",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -36450,7 +38379,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain).",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -36546,7 +38475,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain).",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -36652,7 +38581,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain).",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -36748,7 +38677,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain).",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -36861,7 +38790,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain).",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -36964,7 +38893,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain).",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -37070,7 +38999,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain).",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -37166,7 +39095,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (service name).",
+                                        "description": "Record name relative to the domain: the service and protocol, such as `_sip._tcp`. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -37293,7 +39222,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (service name).",
+                                        "description": "Record name relative to the domain: the service and protocol, such as `_sip._tcp`. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -37410,7 +39339,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain) for the TXT record.",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -37516,7 +39445,7 @@
                                 "type": "object",
                                 "properties": {
                                     "name": {
-                                        "description": "Record name (subdomain) for the TXT record.",
+                                        "description": "Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.",
                                         "type": "string"
                                     },
                                     "value": {
@@ -37873,12 +39802,12 @@
                 ]
             },
             "put": {
-                "summary": "Update the DNS zone for the given domain using the provided zone file content. All parsed records are imported and then the main domain document is returned.",
+                "summary": "Update the DNS zone for the given domain using the provided zone file content. All parsed records the domain does not already have are imported and then the main domain document is returned.",
                 "operationId": "domainsUpdateZone",
                 "tags": [
                     "domains"
                 ],
-                "description": "Update the DNS zone for the given domain using the provided zone file content.\nAll parsed records are imported and then the main domain document is returned.",
+                "description": "Update the DNS zone for the given domain using the provided zone file content.\nAll parsed records the domain does not already have are imported and then the main domain document is returned.",
                 "responses": {
                     "201": {
                         "description": "Domain",
@@ -38427,6 +40356,13 @@
                                             {
                                                 "type": "string",
                                                 "enum": [
+                                                    "python-3.15"
+                                                ],
+                                                "title": "python-3.15"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
                                                     "python-ml-3.11"
                                                 ],
                                                 "title": "python-ml-3.11"
@@ -38479,6 +40415,13 @@
                                                     "deno-2.6"
                                                 ],
                                                 "title": "deno-2.6"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "deno-2.9"
+                                                ],
+                                                "title": "deno-2.9"
                                             },
                                             {
                                                 "type": "string",
@@ -38812,9 +40755,23 @@
                                             {
                                                 "type": "string",
                                                 "enum": [
+                                                    "go-1.27"
+                                                ],
+                                                "title": "go-1.27"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
                                                     "rust-1.83"
                                                 ],
                                                 "title": "rust-1.83"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "rust-1.99"
+                                                ],
+                                                "title": "rust-1.99"
                                             },
                                             {
                                                 "type": "string",
@@ -39889,7 +41846,7 @@
                                         "example": "s-1vcpu-512mb"
                                     },
                                     "deploymentRetention": {
-                                        "description": "Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.",
+                                        "description": "Days to keep non-active deployments before deletion. Value 0 keeps all deployments unless the server applies a default retention.",
                                         "type": "integer",
                                         "default": 0,
                                         "example": 0,
@@ -40308,6 +42265,13 @@
                                     {
                                         "type": "string",
                                         "enum": [
+                                            "python-3.15"
+                                        ],
+                                        "title": "python-3.15"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "enum": [
                                             "python-ml-3.11"
                                         ],
                                         "title": "python-ml-3.11"
@@ -40360,6 +42324,13 @@
                                             "deno-2.6"
                                         ],
                                         "title": "deno-2.6"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "enum": [
+                                            "deno-2.9"
+                                        ],
+                                        "title": "deno-2.9"
                                     },
                                     {
                                         "type": "string",
@@ -40693,9 +42664,23 @@
                                     {
                                         "type": "string",
                                         "enum": [
+                                            "go-1.27"
+                                        ],
+                                        "title": "go-1.27"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "enum": [
                                             "rust-1.83"
                                         ],
                                         "title": "rust-1.83"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "enum": [
+                                            "rust-1.99"
+                                        ],
+                                        "title": "rust-1.99"
                                     },
                                     {
                                         "type": "string",
@@ -41267,6 +43252,13 @@
                                             {
                                                 "type": "string",
                                                 "enum": [
+                                                    "python-3.15"
+                                                ],
+                                                "title": "python-3.15"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
                                                     "python-ml-3.11"
                                                 ],
                                                 "title": "python-ml-3.11"
@@ -41319,6 +43311,13 @@
                                                     "deno-2.6"
                                                 ],
                                                 "title": "deno-2.6"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "deno-2.9"
+                                                ],
+                                                "title": "deno-2.9"
                                             },
                                             {
                                                 "type": "string",
@@ -41652,9 +43651,23 @@
                                             {
                                                 "type": "string",
                                                 "enum": [
+                                                    "go-1.27"
+                                                ],
+                                                "title": "go-1.27"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
                                                     "rust-1.83"
                                                 ],
                                                 "title": "rust-1.83"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "rust-1.99"
+                                                ],
+                                                "title": "rust-1.99"
                                             },
                                             {
                                                 "type": "string",
@@ -42729,7 +44742,7 @@
                                         "nullable": true
                                     },
                                     "deploymentRetention": {
-                                        "description": "Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.",
+                                        "description": "Days to keep non-active deployments before deletion. Value 0 keeps all deployments unless the server applies a default retention.",
                                         "type": "integer",
                                         "default": 0,
                                         "example": 0,
@@ -51874,6 +53887,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.read",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -51884,7 +53898,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "parameters": [
@@ -51955,6 +53970,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -51965,7 +53981,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "requestBody": {
@@ -52355,6 +54372,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -52365,7 +54383,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "parameters": [
@@ -52727,6 +54746,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -52737,7 +54757,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "requestBody": {
@@ -52848,6 +54869,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -52858,7 +54880,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "requestBody": {
@@ -52965,6 +54988,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -52975,7 +54999,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "requestBody": {
@@ -53112,6 +55137,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -53122,7 +55148,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "parameters": [
@@ -53256,6 +55283,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -53266,7 +55294,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "requestBody": {
@@ -53353,6 +55382,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -53363,7 +55393,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "requestBody": {
@@ -53470,6 +55501,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -53480,7 +55512,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "requestBody": {
@@ -53662,6 +55695,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -53672,7 +55706,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "parameters": [
@@ -53876,6 +55911,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -53886,7 +55922,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "requestBody": {
@@ -54063,6 +56100,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -54073,7 +56111,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "parameters": [
@@ -54268,6 +56307,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.read",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -54278,7 +56318,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "parameters": [
@@ -54322,6 +56363,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -54332,7 +56374,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "parameters": [
@@ -54369,6 +56412,7 @@
                     "rate-key": "url:{url},ip:{ip}",
                     "scope": "migrations.write",
                     "platforms": [
+                        "server",
                         "console"
                     ],
                     "packaging": false,
@@ -54379,7 +56423,8 @@
                 },
                 "security": [
                     {
-                        "Project": []
+                        "Project": [],
+                        "Key": []
                     }
                 ],
                 "parameters": [
@@ -62220,7 +64265,7 @@
                 "tags": [
                     "organization"
                 ],
-                "description": "Create a new organization API key.",
+                "description": "Create a new organization API key as an organization owner. Replace legacy keys with a new key to authorize organization deletion or owner membership grants.",
                 "responses": {
                     "201": {
                         "description": "Key",
@@ -67481,7 +69526,7 @@
                     "rate-limit": 0,
                     "rate-time": 3600,
                     "rate-key": "url:{url},ip:{ip}",
-                    "scope": "teams.read",
+                    "scope": "billing.read",
                     "platforms": [
                         "console"
                     ],
@@ -67561,7 +69606,7 @@
                     "rate-limit": 0,
                     "rate-time": 3600,
                     "rate-key": "url:{url},ip:{ip}",
-                    "scope": "teams.read",
+                    "scope": "billing.read",
                     "platforms": [
                         "console"
                     ],
@@ -90888,6 +92933,13 @@
                                             {
                                                 "type": "string",
                                                 "enum": [
+                                                    "python-3.15"
+                                                ],
+                                                "title": "python-3.15"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
                                                     "python-ml-3.11"
                                                 ],
                                                 "title": "python-ml-3.11"
@@ -90940,6 +92992,13 @@
                                                     "deno-2.6"
                                                 ],
                                                 "title": "deno-2.6"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "deno-2.9"
+                                                ],
+                                                "title": "deno-2.9"
                                             },
                                             {
                                                 "type": "string",
@@ -91273,9 +93332,23 @@
                                             {
                                                 "type": "string",
                                                 "enum": [
+                                                    "go-1.27"
+                                                ],
+                                                "title": "go-1.27"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
                                                     "rust-1.83"
                                                 ],
                                                 "title": "rust-1.83"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "rust-1.99"
+                                                ],
+                                                "title": "rust-1.99"
                                             },
                                             {
                                                 "type": "string",
@@ -91436,7 +93509,7 @@
                                         "example": "s-1vcpu-512mb"
                                     },
                                     "deploymentRetention": {
-                                        "description": "Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.",
+                                        "description": "Days to keep non-active deployments before deletion. Value 0 keeps all deployments unless the server applies a default retention.",
                                         "type": "integer",
                                         "default": 0,
                                         "example": 0,
@@ -93318,6 +95391,13 @@
                                             {
                                                 "type": "string",
                                                 "enum": [
+                                                    "python-3.15"
+                                                ],
+                                                "title": "python-3.15"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
                                                     "python-ml-3.11"
                                                 ],
                                                 "title": "python-ml-3.11"
@@ -93370,6 +95450,13 @@
                                                     "deno-2.6"
                                                 ],
                                                 "title": "deno-2.6"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "deno-2.9"
+                                                ],
+                                                "title": "deno-2.9"
                                             },
                                             {
                                                 "type": "string",
@@ -93703,9 +95790,23 @@
                                             {
                                                 "type": "string",
                                                 "enum": [
+                                                    "go-1.27"
+                                                ],
+                                                "title": "go-1.27"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
                                                     "rust-1.83"
                                                 ],
                                                 "title": "rust-1.83"
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "rust-1.99"
+                                                ],
+                                                "title": "rust-1.99"
                                             },
                                             {
                                                 "type": "string",
@@ -93867,7 +95968,7 @@
                                         "example": "s-1vcpu-512mb"
                                     },
                                     "deploymentRetention": {
-                                        "description": "Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.",
+                                        "description": "Days to keep non-active deployments before deletion. Value 0 keeps all deployments unless the server applies a default retention.",
                                         "type": "integer",
                                         "default": 0,
                                         "example": 0,
@@ -96394,7 +98495,7 @@
                 "parameters": [
                     {
                         "name": "queries",
-                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: enabled, name, fileSecurity, maximumFileSize, encryption, antivirus, transformations",
+                        "description": "Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https:\/\/appwrite.io\/docs\/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: enabled, name, fileSecurity, maximumFileSize, encryption, antivirus, transformations, stripMetadata",
                         "required": false,
                         "schema": {
                             "type": "array",
@@ -96579,6 +98680,12 @@
                                         "type": "string",
                                         "default": "",
                                         "example": "<DESCRIPTION>"
+                                    },
+                                    "stripMetadata": {
+                                        "description": "Remove metadata such as location, device and capture time from uploaded images. The color profile and orientation are kept. For file size above 20MB metadata is not removed even if it's enabled.",
+                                        "type": "boolean",
+                                        "default": false,
+                                        "example": false
                                     }
                                 },
                                 "required": [
@@ -96807,6 +98914,12 @@
                                         "description": "Optional description for the bucket.",
                                         "type": "string",
                                         "example": "<DESCRIPTION>",
+                                        "nullable": true
+                                    },
+                                    "stripMetadata": {
+                                        "description": "Remove metadata such as location, device and capture time from uploaded images. The color profile and orientation are kept. For file size above 20MB metadata is not removed even if it's enabled. By default, the current setting is kept.",
+                                        "type": "boolean",
+                                        "example": false,
                                         "nullable": true
                                     }
                                 },
@@ -97211,8 +99324,7 @@
                                 "properties": {
                                     "name": {
                                         "description": "File name.",
-                                        "type": "string",
-                                        "example": "<NAME>"
+                                        "type": "string"
                                     },
                                     "permissions": {
                                         "description": "An array of permission strings. By default, the current permissions are inherited. [Learn more about permissions](https:\/\/appwrite.io\/docs\/permissions).",
@@ -98148,9 +100260,9 @@
                 "x-appwrite": {
                     "group": "transactions",
                     "demo": "tablesdb\/create-transaction.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
-                    "rate-key": "url:{url},ip:{ip}",
+                    "rate-limit": 120,
+                    "rate-time": 60,
+                    "rate-key": "ip:{ip},method:{method},url:{url},userId:{userId}",
                     "scope": [
                         "documents.write",
                         "rows.write"
@@ -98280,9 +100392,9 @@
                 "x-appwrite": {
                     "group": "transactions",
                     "demo": "tablesdb\/update-transaction.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
-                    "rate-key": "url:{url},ip:{ip}",
+                    "rate-limit": 120,
+                    "rate-time": 60,
+                    "rate-key": "ip:{ip},method:{method},url:{url},userId:{userId}",
                     "scope": [
                         "documents.write",
                         "rows.write"
@@ -98372,9 +100484,9 @@
                 "x-appwrite": {
                     "group": "transactions",
                     "demo": "tablesdb\/delete-transaction.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
-                    "rate-key": "url:{url},ip:{ip}",
+                    "rate-limit": 60,
+                    "rate-time": 60,
+                    "rate-key": "ip:{ip},method:{method},url:{url},userId:{userId}",
                     "scope": [
                         "documents.write",
                         "rows.write"
@@ -105534,7 +107646,7 @@
                 "tags": [
                     "tablesDB"
                 ],
-                "description": "Get a list of all the user's rows in a given table. You can use the query params to filter your results.\n\nRows returned by aggregate, groupBy or distinct queries hold only the columns they select, group or aggregate, typed as a row types them, with a joined column named by its join alias (`alias.column`). They have no `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`, `$databaseId` or `$tableId` unless they select or group it, and neither does a right or full join row that no row of this table matched.",
+                "description": "Get a list of all the user's rows in a given table. You can use the query params to filter your results.\n\nRows returned by aggregate, groupBy or distinct queries hold only the columns they select, group or aggregate, typed as a row types them, with a joined column named by its join alias (`alias.column`). The response omits their `$id`, `$sequence`, `$createdAt`, `$updatedAt`, `$permissions`, `$databaseId` and `$tableId` unless they select or group it, and those of a right or full join row that no row of this table matched. SDK row models fill omitted system columns with empty values.",
                 "responses": {
                     "200": {
                         "description": "Rows List",
@@ -110618,9 +112730,7 @@
                                     },
                                     "password": {
                                         "description": "User password hashed using Argon2.",
-                                        "type": "string",
-                                        "example": "password",
-                                        "format": "password"
+                                        "type": "string"
                                     },
                                     "name": {
                                         "description": "User name. Max length: 128 chars.",
@@ -110703,9 +112813,7 @@
                                     },
                                     "password": {
                                         "description": "User password hashed using Bcrypt.",
-                                        "type": "string",
-                                        "example": "password",
-                                        "format": "password"
+                                        "type": "string"
                                     },
                                     "name": {
                                         "description": "User name. Max length: 128 chars.",
@@ -111007,9 +113115,7 @@
                                     },
                                     "password": {
                                         "description": "User password hashed using PHPass.",
-                                        "type": "string",
-                                        "example": "password",
-                                        "format": "password"
+                                        "type": "string"
                                     },
                                     "name": {
                                         "description": "User name. Max length: 128 chars.",
@@ -111102,25 +113208,25 @@
                                         "example": "<PASSWORD_SALT>"
                                     },
                                     "passwordCpu": {
-                                        "description": "Optional CPU cost used to hash password.",
+                                        "description": "Optional CPU cost used to hash password. Must be a power of two, at most 65536.",
                                         "type": "integer",
                                         "example": 8,
                                         "format": "int32"
                                     },
                                     "passwordMemory": {
-                                        "description": "Optional memory cost used to hash password.",
+                                        "description": "Optional memory cost used to hash password. Maximum is 16.",
                                         "type": "integer",
-                                        "example": 65536,
+                                        "example": 14,
                                         "format": "int32"
                                     },
                                     "passwordParallel": {
-                                        "description": "Optional parallelization cost used to hash password.",
+                                        "description": "Optional parallelization cost used to hash password. Maximum is 4.",
                                         "type": "integer",
                                         "example": 1,
                                         "format": "int32"
                                     },
                                     "passwordLength": {
-                                        "description": "Optional hash length used to hash password.",
+                                        "description": "Optional hash length used to hash password. Must be between 16 and 128.",
                                         "type": "integer",
                                         "example": 64,
                                         "format": "int32"
@@ -112551,7 +114657,7 @@
                     "rate-limit": 0,
                     "rate-time": 3600,
                     "rate-key": "url:{url},ip:{ip}",
-                    "scope": "users.read",
+                    "scope": "users.write",
                     "platforms": [
                         "console",
                         "server"
@@ -115793,9 +117899,9 @@
                 "x-appwrite": {
                     "group": "transactions",
                     "demo": "vectorsdb\/create-transaction.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
-                    "rate-key": "url:{url},ip:{ip}",
+                    "rate-limit": 120,
+                    "rate-time": 60,
+                    "rate-key": "ip:{ip},method:{method},url:{url},userId:{userId}",
                     "scope": "vectorsdb.documents.write",
                     "platforms": [
                         "console",
@@ -115919,9 +118025,9 @@
                 "x-appwrite": {
                     "group": "transactions",
                     "demo": "vectorsdb\/update-transaction.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
-                    "rate-key": "url:{url},ip:{ip}",
+                    "rate-limit": 120,
+                    "rate-time": 60,
+                    "rate-key": "ip:{ip},method:{method},url:{url},userId:{userId}",
                     "scope": "vectorsdb.documents.write",
                     "platforms": [
                         "console",
@@ -116008,9 +118114,9 @@
                 "x-appwrite": {
                     "group": "transactions",
                     "demo": "vectorsdb\/delete-transaction.md",
-                    "rate-limit": 0,
-                    "rate-time": 3600,
-                    "rate-key": "url:{url},ip:{ip}",
+                    "rate-limit": 60,
+                    "rate-time": 60,
+                    "rate-key": "ip:{ip},method:{method},url:{url},userId:{userId}",
                     "scope": "vectorsdb.documents.write",
                     "platforms": [
                         "console",
@@ -118892,7 +120998,7 @@
                 "tags": [
                     "waf"
                 ],
-                "description": "Create a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
+                "description": "Create a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
                 "responses": {
                     "201": {
                         "description": "WafRuleBypass",
@@ -119015,7 +121121,7 @@
                 "tags": [
                     "waf"
                 ],
-                "description": "Update a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
+                "description": "Update a bypass WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
                 "responses": {
                     "200": {
                         "description": "WafRuleBypass",
@@ -119129,7 +121235,7 @@
                 "tags": [
                     "waf"
                 ],
-                "description": "Create a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
+                "description": "Create a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
                 "responses": {
                     "201": {
                         "description": "WafRuleChallenge",
@@ -119272,7 +121378,7 @@
                 "tags": [
                     "waf"
                 ],
-                "description": "Update a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
+                "description": "Update a challenge WAF rule. Use `difficulty` (1 easiest to 5 hardest) to tune the client-side proof-of-work cost, and `ttl` to control how long, in seconds, a visitor stays cleared after passing the challenge before being challenged again. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
                 "responses": {
                     "200": {
                         "description": "WafRuleChallenge",
@@ -119406,7 +121512,7 @@
                 "tags": [
                     "waf"
                 ],
-                "description": "Create a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
+                "description": "Create a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon. `sessionAge` and `mfaAge` hold the seconds since the request's session was created and since its last MFA challenge. Both are null for requests without a session, such as guests and API keys, while a request authenticated with the `x-appwrite-jwt` header carries the age of the session its token is bound to; on `functions` rules the session comes from the `x-appwrite-user-jwt` header, and `mfaAge` is null when the session never completed MFA. A deny matching on `mfaAge` returns `user_challenge_required` and one matching on `sessionAge` returns `user_reauthentication_required`, both with status 401, so the user can sign in again and retry. To also deny requests without a session, combine `isNull` and `greaterThan` in an `or` condition.\n",
                 "responses": {
                     "201": {
                         "description": "WafRuleDeny",
@@ -119529,7 +121635,7 @@
                 "tags": [
                     "waf"
                 ],
-                "description": "Update a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
+                "description": "Update a deny WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon. `sessionAge` and `mfaAge` hold the seconds since the request's session was created and since its last MFA challenge. Both are null for requests without a session, such as guests and API keys, while a request authenticated with the `x-appwrite-jwt` header carries the age of the session its token is bound to; on `functions` rules the session comes from the `x-appwrite-user-jwt` header, and `mfaAge` is null when the session never completed MFA. A deny matching on `mfaAge` returns `user_challenge_required` and one matching on `sessionAge` returns `user_reauthentication_required`, both with status 401, so the user can sign in again and retry. To also deny requests without a session, combine `isNull` and `greaterThan` in an `or` condition.\n",
                 "responses": {
                     "200": {
                         "description": "WafRuleDeny",
@@ -119643,7 +121749,7 @@
                 "tags": [
                     "waf"
                 ],
-                "description": "Create a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
+                "description": "Create a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
                 "responses": {
                     "201": {
                         "description": "WafRuleRateLimit",
@@ -119801,7 +121907,7 @@
                 "tags": [
                     "waf"
                 ],
-                "description": "Update a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
+                "description": "Update a rate limit WAF rule. Use `key` to choose the counter: `ip` limits per client IP, while `userId` limits per authenticated user (requests without an authenticated user skip `userId` rules). Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
                 "responses": {
                     "200": {
                         "description": "WafRuleRateLimit",
@@ -119942,7 +122048,7 @@
                 "tags": [
                     "waf"
                 ],
-                "description": "Create a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
+                "description": "Create a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
                 "responses": {
                     "201": {
                         "description": "WafRuleRedirect",
@@ -120080,7 +122186,7 @@
                 "tags": [
                     "waf"
                 ],
-                "description": "Update a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
+                "description": "Update a redirect WAF rule. Conditions can match request attributes including `ip` (plain IPs or CIDR blocks like `10.0.0.0\/8`), `method`, `path`, `host`, `country`, `continent`, `headers.<name>`, `query.<key>`, `queryKeys`, `accept`, `acceptLanguage`, `cookie`, `userAgent`, `os`, `osVersion`, `browser`, and `browserVersion`. Conditions on `city` and `state` require the premium Geo DB addon.\n",
                 "responses": {
                     "200": {
                         "description": "WafRuleRedirect",
@@ -132765,6 +134871,12 @@
                         "example": false,
                         "default": true
                     },
+                    "stripMetadata": {
+                        "type": "boolean",
+                        "description": "Metadata such as location, device and capture time is removed from uploaded images.",
+                        "example": true,
+                        "default": false
+                    },
                     "totalSize": {
                         "type": "integer",
                         "description": "Total size of this bucket in bytes.",
@@ -132788,6 +134900,7 @@
                     "encryption",
                     "antivirus",
                     "transformations",
+                    "stripMetadata",
                     "totalSize"
                 ],
                 "example": {
@@ -132810,6 +134923,7 @@
                     "encryption": false,
                     "antivirus": false,
                     "transformations": false,
+                    "stripMetadata": true,
                     "totalSize": 128
                 }
             },
@@ -142056,6 +144170,12 @@
                         "description": "Appwrite-owned zone for function testing email addresses, delivered to {functionId}@{projectId}.{zone}. Empty when inbound email is not configured.",
                         "example": "appwrite.email",
                         "default": ""
+                    },
+                    "_APP_DOMAIN_TARGET_SMTP": {
+                        "type": "string",
+                        "description": "MX target a custom inbound email (SMTP) domain must point at. Empty when inbound email is not configured.",
+                        "example": "mail.appwrite.email",
+                        "default": ""
                     }
                 },
                 "required": [
@@ -142092,7 +144212,8 @@
                     "maxIndexLength",
                     "supportForIntegerIds",
                     "_APP_CONSOLE_EMAIL_VERIFICATION",
-                    "_APP_DOMAIN_EMAIL"
+                    "_APP_DOMAIN_EMAIL",
+                    "_APP_DOMAIN_TARGET_SMTP"
                 ],
                 "example": {
                     "_APP_DOMAIN_TARGET_CNAME": "appwrite.io",
@@ -142134,7 +144255,8 @@
                     "maxIndexLength": 768,
                     "supportForIntegerIds": true,
                     "_APP_CONSOLE_EMAIL_VERIFICATION": "true",
-                    "_APP_DOMAIN_EMAIL": "appwrite.email"
+                    "_APP_DOMAIN_EMAIL": "appwrite.email",
+                    "_APP_DOMAIN_TARGET_SMTP": "mail.appwrite.email"
                 }
             },
             "consoleOAuth2ProviderParameter": {
@@ -142747,7 +144869,7 @@
                     "credentials": {
                         "type": "object",
                         "additionalProperties": true,
-                        "description": "Provider credentials.",
+                        "description": "Provider credentials. Secret values are write-only and never returned.",
                         "example": {
                             "key": "123456789"
                         },
@@ -145012,7 +147134,7 @@
                     },
                     "pageviews": {
                         "type": "integer",
-                        "description": "Total pageview events (events with name=\"pageview\") in the requested range. Only the flat aggregate computes it; null on breakdown and time-series rows.",
+                        "description": "Total pageview events (events with name=\"pageview\") in the requested range. The flat aggregate and the time series compute it; null on breakdown rows.",
                         "format": "int32",
                         "example": 5678,
                         "nullable": true
@@ -146182,6 +148304,27 @@
                         "example": 10000,
                         "default": 1000
                     },
+                    "deploymentRetention": {
+                        "type": "integer",
+                        "description": "Days non-active deployments are kept when a function or site sets no retention.",
+                        "format": "int32",
+                        "example": 30,
+                        "default": 0
+                    },
+                    "deploymentRetentionMax": {
+                        "type": "integer",
+                        "description": "Maximum deployment retention in days a function or site can set. 0 means unlimited.",
+                        "format": "int32",
+                        "example": 1095,
+                        "default": 0
+                    },
+                    "deploymentsRetentionCount": {
+                        "type": "integer",
+                        "description": "Non-active deployments kept per function or site. 0 means unlimited.",
+                        "format": "int32",
+                        "example": 100,
+                        "default": 0
+                    },
                     "GBHours": {
                         "type": "integer",
                         "description": "GB hours for functions",
@@ -146596,6 +148739,9 @@
                     "sites",
                     "executions",
                     "executionsRetentionCount",
+                    "deploymentRetention",
+                    "deploymentRetentionMax",
+                    "deploymentsRetentionCount",
                     "GBHours",
                     "realtime",
                     "realtimeMessages",
@@ -146664,6 +148810,9 @@
                     "sites": 1,
                     "executions": 25,
                     "executionsRetentionCount": 10000,
+                    "deploymentRetention": 30,
+                    "deploymentRetentionMax": 1095,
+                    "deploymentsRetentionCount": 100,
                     "GBHours": 100,
                     "realtime": 25,
                     "realtimeMessages": 100000,
@@ -148662,7 +150811,7 @@
                     },
                     "name": {
                         "type": "string",
-                        "description": "Record name or subdomain.",
+                        "description": "Record name relative to the domain, or `@` for the domain itself.",
                         "example": "mail",
                         "default": ""
                     },
@@ -150345,6 +152494,95 @@
                     "blocks": []
                 }
             },
+            "adminBlock": {
+                "description": "AdminBlock",
+                "type": "object",
+                "properties": {
+                    "$createdAt": {
+                        "type": "string",
+                        "description": "Block creation date in ISO 8601 format.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "default": ""
+                    },
+                    "resourceType": {
+                        "type": "string",
+                        "description": "Resource type that is blocked",
+                        "example": "project",
+                        "default": ""
+                    },
+                    "resourceId": {
+                        "type": "string",
+                        "description": "Resource identifier that is blocked",
+                        "example": "5e5ea5c16897e",
+                        "default": ""
+                    },
+                    "mode": {
+                        "type": "string",
+                        "description": "Block mode. full blocks reads and writes; readOnly blocks writes only.",
+                        "example": "readOnly",
+                        "default": "full"
+                    },
+                    "expiredAt": {
+                        "type": "string",
+                        "description": "Block expiration date in ISO 8601 format. Can be null if the block does not expire.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "nullable": true
+                    },
+                    "$id": {
+                        "type": "string",
+                        "description": "Block ID.",
+                        "example": "5e5ea5c16897e",
+                        "default": ""
+                    },
+                    "$updatedAt": {
+                        "type": "string",
+                        "description": "Block update date in ISO 8601 format.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "default": ""
+                    },
+                    "projectId": {
+                        "type": "string",
+                        "description": "ID of the project the block is placed on.",
+                        "example": "5e5ea5c16897e",
+                        "default": ""
+                    },
+                    "reason": {
+                        "type": "string",
+                        "description": "Why the block was placed, in the operator's words. Empty when none was given.",
+                        "example": "Chargeback under review",
+                        "default": ""
+                    },
+                    "threatId": {
+                        "type": "string",
+                        "description": "ID of the threat whose detection placed the block. Empty for a block an operator placed.",
+                        "example": "5e5ea5c16897e",
+                        "default": ""
+                    }
+                },
+                "required": [
+                    "$createdAt",
+                    "resourceType",
+                    "resourceId",
+                    "mode",
+                    "$id",
+                    "$updatedAt",
+                    "projectId",
+                    "reason",
+                    "threatId"
+                ],
+                "example": {
+                    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+                    "resourceType": "project",
+                    "resourceId": "5e5ea5c16897e",
+                    "mode": "readOnly",
+                    "expiredAt": "2020-10-15T06:38:00.000+00:00",
+                    "$id": "5e5ea5c16897e",
+                    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+                    "projectId": "5e5ea5c16897e",
+                    "reason": "Chargeback under review",
+                    "threatId": "5e5ea5c16897e"
+                }
+            },
             "threat": {
                 "description": "Threat",
                 "type": "object",
@@ -150828,6 +153066,112 @@
                     "markedForDeletion": "",
                     "platform": "imagine",
                     "projects": ""
+                }
+            },
+            "payment": {
+                "description": "Payment",
+                "type": "object",
+                "properties": {
+                    "$id": {
+                        "type": "string",
+                        "description": "Payment ID.",
+                        "example": "5e5ea5c16897e",
+                        "default": ""
+                    },
+                    "$createdAt": {
+                        "type": "string",
+                        "description": "Payment creation date in ISO 8601 format.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "default": ""
+                    },
+                    "$updatedAt": {
+                        "type": "string",
+                        "description": "Payment update date in ISO 8601 format.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "default": ""
+                    },
+                    "invoiceId": {
+                        "type": "string",
+                        "description": "ID of the invoice the payment collects.",
+                        "example": "5e5ea5c16897e",
+                        "default": ""
+                    },
+                    "teamId": {
+                        "type": "string",
+                        "description": "ID of the organization that is charged.",
+                        "example": "5e5ea5c16897e",
+                        "default": ""
+                    },
+                    "providerPaymentId": {
+                        "type": "string",
+                        "description": "ID of the payment at the payment provider.",
+                        "example": "pi_3P1ZbQ2eZvKYlo2C0QhL6b4n",
+                        "default": ""
+                    },
+                    "paymentMethodId": {
+                        "type": "string",
+                        "description": "ID of the payment method that was charged. Empty when none was.",
+                        "example": "5e5ea5c16897e",
+                        "default": ""
+                    },
+                    "amount": {
+                        "type": "number",
+                        "description": "Amount charged, in the invoice currency.",
+                        "format": "double",
+                        "example": 15,
+                        "default": 0
+                    },
+                    "currency": {
+                        "type": "string",
+                        "description": "Currency the payment is in.",
+                        "example": "usd",
+                        "default": ""
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Payment status. One of `pending` (confirmation in progress), `processing`, `requires_authentication`, `succeeded`, `failed`, `disputed`, `partially_refunded` or `refunded`.",
+                        "example": "succeeded",
+                        "default": ""
+                    },
+                    "date": {
+                        "type": "string",
+                        "description": "When the payment was attempted, in ISO 8601 format.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "default": ""
+                    },
+                    "lastError": {
+                        "type": "string",
+                        "description": "The provider's last error for a failed payment, or the refunded amount for a partially refunded one. Null otherwise.",
+                        "example": "Your card was declined.",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "$id",
+                    "$createdAt",
+                    "$updatedAt",
+                    "invoiceId",
+                    "teamId",
+                    "providerPaymentId",
+                    "paymentMethodId",
+                    "amount",
+                    "currency",
+                    "status",
+                    "date"
+                ],
+                "example": {
+                    "$id": "5e5ea5c16897e",
+                    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+                    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+                    "invoiceId": "5e5ea5c16897e",
+                    "teamId": "5e5ea5c16897e",
+                    "providerPaymentId": "pi_3P1ZbQ2eZvKYlo2C0QhL6b4n",
+                    "paymentMethodId": "5e5ea5c16897e",
+                    "amount": 15,
+                    "currency": "usd",
+                    "status": "succeeded",
+                    "date": "2020-10-15T06:38:00.000+00:00",
+                    "lastError": "Your card was declined."
                 }
             },
             "paymentAuthentication": {
@@ -155698,6 +158042,35 @@
                     "invoices": ""
                 }
             },
+            "paymentList": {
+                "description": "Payments list",
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "integer",
+                        "description": "Total number of payments that matched your query.",
+                        "format": "int32",
+                        "example": 5,
+                        "default": 0
+                    },
+                    "payments": {
+                        "type": "array",
+                        "description": "List of payments.",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/payment"
+                        },
+                        "example": []
+                    }
+                },
+                "required": [
+                    "total",
+                    "payments"
+                ],
+                "example": {
+                    "total": 5,
+                    "payments": ""
+                }
+            },
             "billingPlanList": {
                 "description": "Billing plan list",
                 "type": "object",
@@ -155783,6 +158156,64 @@
                 "example": {
                     "total": 5,
                     "threats": ""
+                }
+            },
+            "adminCreditList": {
+                "description": "Admin credits list",
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "integer",
+                        "description": "Total number of credits that matched your query.",
+                        "format": "int32",
+                        "example": 5,
+                        "default": 0
+                    },
+                    "credits": {
+                        "type": "array",
+                        "description": "List of credits.",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/credit"
+                        },
+                        "example": []
+                    }
+                },
+                "required": [
+                    "total",
+                    "credits"
+                ],
+                "example": {
+                    "total": 5,
+                    "credits": ""
+                }
+            },
+            "adminBlockList": {
+                "description": "Admin blocks list",
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "type": "integer",
+                        "description": "Total number of blocks that matched your query.",
+                        "format": "int32",
+                        "example": 5,
+                        "default": 0
+                    },
+                    "blocks": {
+                        "type": "array",
+                        "description": "List of blocks.",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/adminBlock"
+                        },
+                        "example": []
+                    }
+                },
+                "required": [
+                    "total",
+                    "blocks"
+                ],
+                "example": {
+                    "total": 5,
+                    "blocks": ""
                 }
             },
             "databaseMigrationList": {

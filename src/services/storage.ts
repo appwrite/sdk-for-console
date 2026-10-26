@@ -20,7 +20,7 @@ export class Storage {
     /**
      * Get a list of all the storage buckets. You can use the query params to filter your results.
      *
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: enabled, name, fileSecurity, maximumFileSize, encryption, antivirus, transformations
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: enabled, name, fileSecurity, maximumFileSize, encryption, antivirus, transformations, stripMetadata
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -34,7 +34,7 @@ export class Storage {
     /**
      * Get a list of all the storage buckets. You can use the query params to filter your results.
      *
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: enabled, name, fileSecurity, maximumFileSize, encryption, antivirus, transformations
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: enabled, name, fileSecurity, maximumFileSize, encryption, antivirus, transformations, stripMetadata
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -125,6 +125,7 @@ export class Storage {
                         encryption: true,
                         antivirus: true,
                         transformations: true,
+                        stripMetadata: false,
                         totalSize: 0,
                     },
                 },
@@ -149,6 +150,7 @@ export class Storage {
      * @param {boolean} params.antivirus - Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it's enabled
      * @param {boolean} params.transformations - Are image transformations enabled?
      * @param {string} params.description - Optional description for the bucket.
+     * @param {boolean} params.stripMetadata - Remove metadata such as location, device and capture time from uploaded images. The color profile and orientation are kept. For file size above 20MB metadata is not removed even if it's enabled.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Bucket>}
      */
@@ -165,6 +167,7 @@ export class Storage {
         antivirus?: boolean;
         transformations?: boolean;
         description?: string;
+        stripMetadata?: boolean;
     }): Promise<Models.Bucket>;
     /**
      * Create a new storage bucket.
@@ -181,6 +184,7 @@ export class Storage {
      * @param {boolean} antivirus - Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it's enabled
      * @param {boolean} transformations - Are image transformations enabled?
      * @param {string} description - Optional description for the bucket.
+     * @param {boolean} stripMetadata - Remove metadata such as location, device and capture time from uploaded images. The color profile and orientation are kept. For file size above 20MB metadata is not removed even if it's enabled.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Bucket>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -198,6 +202,7 @@ export class Storage {
         antivirus?: boolean,
         transformations?: boolean,
         description?: string,
+        stripMetadata?: boolean,
     ): Promise<Models.Bucket>;
     createBucket(
         paramsOrFirst:
@@ -214,6 +219,7 @@ export class Storage {
                   antivirus?: boolean;
                   transformations?: boolean;
                   description?: string;
+                  stripMetadata?: boolean;
               }
             | string,
         ...rest: [
@@ -228,6 +234,7 @@ export class Storage {
             boolean?,
             boolean?,
             string?,
+            boolean?,
         ]
     ): Promise<Models.Bucket> {
         let params: {
@@ -243,6 +250,7 @@ export class Storage {
             antivirus?: boolean;
             transformations?: boolean;
             description?: string;
+            stripMetadata?: boolean;
         };
 
         if (
@@ -263,6 +271,7 @@ export class Storage {
                 antivirus?: boolean;
                 transformations?: boolean;
                 description?: string;
+                stripMetadata?: boolean;
             };
         } else {
             params = {
@@ -278,6 +287,7 @@ export class Storage {
                 antivirus: rest[8] as boolean,
                 transformations: rest[9] as boolean,
                 description: rest[10] as string,
+                stripMetadata: rest[11] as boolean,
             };
         }
 
@@ -293,6 +303,7 @@ export class Storage {
         const antivirus = params.antivirus;
         const transformations = params.transformations;
         const description = params.description;
+        const stripMetadata = params.stripMetadata;
 
         if (typeof bucketId === 'undefined') {
             throw new AppwriteException(
@@ -340,6 +351,9 @@ export class Storage {
         if (typeof description !== 'undefined') {
             apiPayload['description'] = description;
         }
+        if (typeof stripMetadata !== 'undefined') {
+            apiPayload['stripMetadata'] = stripMetadata;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -368,6 +382,7 @@ export class Storage {
                         encryption: true,
                         antivirus: true,
                         transformations: true,
+                        stripMetadata: false,
                         totalSize: 0,
                     },
                 },
@@ -450,6 +465,7 @@ export class Storage {
                         encryption: true,
                         antivirus: true,
                         transformations: true,
+                        stripMetadata: false,
                         totalSize: 0,
                     },
                 },
@@ -474,6 +490,7 @@ export class Storage {
      * @param {boolean} params.antivirus - Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it's enabled
      * @param {boolean} params.transformations - Are image transformations enabled?
      * @param {string | null} params.description - Optional description for the bucket.
+     * @param {boolean | null} params.stripMetadata - Remove metadata such as location, device and capture time from uploaded images. The color profile and orientation are kept. For file size above 20MB metadata is not removed even if it's enabled. By default, the current setting is kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Bucket>}
      */
@@ -490,6 +507,7 @@ export class Storage {
         antivirus?: boolean;
         transformations?: boolean;
         description?: string | null;
+        stripMetadata?: boolean | null;
     }): Promise<Models.Bucket>;
     /**
      * Update a storage bucket by its unique ID.
@@ -506,6 +524,7 @@ export class Storage {
      * @param {boolean} antivirus - Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it's enabled
      * @param {boolean} transformations - Are image transformations enabled?
      * @param {string | null} description - Optional description for the bucket.
+     * @param {boolean | null} stripMetadata - Remove metadata such as location, device and capture time from uploaded images. The color profile and orientation are kept. For file size above 20MB metadata is not removed even if it's enabled. By default, the current setting is kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Bucket>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -523,6 +542,7 @@ export class Storage {
         antivirus?: boolean,
         transformations?: boolean,
         description?: string | null,
+        stripMetadata?: boolean | null,
     ): Promise<Models.Bucket>;
     updateBucket(
         paramsOrFirst:
@@ -539,6 +559,7 @@ export class Storage {
                   antivirus?: boolean;
                   transformations?: boolean;
                   description?: string | null;
+                  stripMetadata?: boolean | null;
               }
             | string,
         ...rest: [
@@ -553,6 +574,7 @@ export class Storage {
             boolean?,
             boolean?,
             (string | null)?,
+            (boolean | null)?,
         ]
     ): Promise<Models.Bucket> {
         let params: {
@@ -568,6 +590,7 @@ export class Storage {
             antivirus?: boolean;
             transformations?: boolean;
             description?: string | null;
+            stripMetadata?: boolean | null;
         };
 
         if (
@@ -588,6 +611,7 @@ export class Storage {
                 antivirus?: boolean;
                 transformations?: boolean;
                 description?: string | null;
+                stripMetadata?: boolean | null;
             };
         } else {
             params = {
@@ -603,6 +627,7 @@ export class Storage {
                 antivirus: rest[8] as boolean,
                 transformations: rest[9] as boolean,
                 description: rest[10] as string | null,
+                stripMetadata: rest[11] as boolean | null,
             };
         }
 
@@ -618,6 +643,7 @@ export class Storage {
         const antivirus = params.antivirus;
         const transformations = params.transformations;
         const description = params.description;
+        const stripMetadata = params.stripMetadata;
 
         if (typeof bucketId === 'undefined' || bucketId === '') {
             throw new AppwriteException(
@@ -665,6 +691,9 @@ export class Storage {
         if (typeof description !== 'undefined') {
             apiPayload['description'] = description;
         }
+        if (typeof stripMetadata !== 'undefined') {
+            apiPayload['stripMetadata'] = stripMetadata;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -693,6 +722,7 @@ export class Storage {
                         encryption: true,
                         antivirus: true,
                         transformations: true,
+                        stripMetadata: false,
                         totalSize: 0,
                     },
                 },
