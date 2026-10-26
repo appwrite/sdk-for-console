@@ -782,16 +782,18 @@ export class Analytics {
      * Read analytics metrics (visitors, sessions, pageviews, events, bounceRate, …) for a property over a date range.
      *
      * **Three response shapes**, chosen by `dimensions[]` and `interval`:
-     * - Neither: one row aggregating the whole window, with `value` and `date` null. Only this shape carries `pageviews`, `visits`, `bounceRate`, `visitDuration`, `viewsPerVisit`, `scrollDepth` and `engagementTime`.
+     * - Neither: one row aggregating the whole window, with `value` and `date` null. Only this shape carries `visits`, `bounceRate`, `visitDuration`, `viewsPerVisit`, `scrollDepth` and `engagementTime`.
      * - `dimensions[]`: one row per dimension value, ranked by visitors, with `value` set and `date` null.
      * - `interval`: one row per time bucket in chronological order, with `date` set and `value` null.
+     *
+     * `pageviews` is carried by the flat aggregate and by `interval`, but not by a breakdown.
      *
      * Combining `dimensions[]` with `interval` is not supported yet. `queries[]` filters the underlying events using standard Utopia query syntax.
      *
      * @param {string} params.propertyId - Analytics property unique ID.
-     * @param {string[]} params.queries - Up to 10 filter queries in Utopia syntax. Allowed attributes: country, region, city, browser, operatingSystem, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, botName, botCategory, eventName. page, eventName are only accepted alongside `interval`, or with a breakdown on a dimension other than entryPage, exitPage. Allowed methods: equal, notEqual, contains, startsWith, endsWith. Example: `queries[]=equal("country", ["US"])`.
+     * @param {string[]} params.queries - Up to 10 filter queries in Utopia syntax. Allowed attributes: country, region, city, browser, browserVersion, operatingSystem, operatingSystemVersion, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, botName, botCategory, eventName. page, eventName are only accepted alongside `interval`, or with a breakdown on a dimension other than entryPage, exitPage. Allowed methods: equal, notEqual, contains, startsWith, endsWith. Example: `queries[]=equal("country", ["US"])`.
      * @param {AnalyticsInterval} params.interval - Time bucket size. Omit (null) for a flat aggregate over the whole window. Allowed: 1h, 1d, 1w, 1m.
-     * @param {AnalyticsDimension[]} params.dimensions - Dimension to break the metrics down by. One at most for now; the parameter is a list so that cap can be raised without a breaking change. Allowed: country, region, city, browser, operatingSystem, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, entryPage, exitPage, trafficType, botName, botCategory, eventName.
+     * @param {AnalyticsDimension[]} params.dimensions - Dimension to break the metrics down by. One at most for now; the parameter is a list so that cap can be raised without a breaking change. Allowed: country, region, city, browser, browserVersion, operatingSystem, operatingSystemVersion, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, entryPage, exitPage, trafficType, botName, botCategory, eventName.
      * @param {string} params.dateRange - Date range shorthand (e.g. 7d, 30d). Ignored for any bound you supply explicitly via startAt/endAt.
      * @param {string} params.startAt - Explicit window start in ISO 8601. Defaults to endAt minus dateRange.
      * @param {string} params.endAt - Explicit window end in ISO 8601. Defaults to the current time.
@@ -815,16 +817,18 @@ export class Analytics {
      * Read analytics metrics (visitors, sessions, pageviews, events, bounceRate, …) for a property over a date range.
      *
      * **Three response shapes**, chosen by `dimensions[]` and `interval`:
-     * - Neither: one row aggregating the whole window, with `value` and `date` null. Only this shape carries `pageviews`, `visits`, `bounceRate`, `visitDuration`, `viewsPerVisit`, `scrollDepth` and `engagementTime`.
+     * - Neither: one row aggregating the whole window, with `value` and `date` null. Only this shape carries `visits`, `bounceRate`, `visitDuration`, `viewsPerVisit`, `scrollDepth` and `engagementTime`.
      * - `dimensions[]`: one row per dimension value, ranked by visitors, with `value` set and `date` null.
      * - `interval`: one row per time bucket in chronological order, with `date` set and `value` null.
+     *
+     * `pageviews` is carried by the flat aggregate and by `interval`, but not by a breakdown.
      *
      * Combining `dimensions[]` with `interval` is not supported yet. `queries[]` filters the underlying events using standard Utopia query syntax.
      *
      * @param {string} propertyId - Analytics property unique ID.
-     * @param {string[]} queries - Up to 10 filter queries in Utopia syntax. Allowed attributes: country, region, city, browser, operatingSystem, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, botName, botCategory, eventName. page, eventName are only accepted alongside `interval`, or with a breakdown on a dimension other than entryPage, exitPage. Allowed methods: equal, notEqual, contains, startsWith, endsWith. Example: `queries[]=equal("country", ["US"])`.
+     * @param {string[]} queries - Up to 10 filter queries in Utopia syntax. Allowed attributes: country, region, city, browser, browserVersion, operatingSystem, operatingSystemVersion, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, botName, botCategory, eventName. page, eventName are only accepted alongside `interval`, or with a breakdown on a dimension other than entryPage, exitPage. Allowed methods: equal, notEqual, contains, startsWith, endsWith. Example: `queries[]=equal("country", ["US"])`.
      * @param {AnalyticsInterval} interval - Time bucket size. Omit (null) for a flat aggregate over the whole window. Allowed: 1h, 1d, 1w, 1m.
-     * @param {AnalyticsDimension[]} dimensions - Dimension to break the metrics down by. One at most for now; the parameter is a list so that cap can be raised without a breaking change. Allowed: country, region, city, browser, operatingSystem, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, entryPage, exitPage, trafficType, botName, botCategory, eventName.
+     * @param {AnalyticsDimension[]} dimensions - Dimension to break the metrics down by. One at most for now; the parameter is a list so that cap can be raised without a breaking change. Allowed: country, region, city, browser, browserVersion, operatingSystem, operatingSystemVersion, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, entryPage, exitPage, trafficType, botName, botCategory, eventName.
      * @param {string} dateRange - Date range shorthand (e.g. 7d, 30d). Ignored for any bound you supply explicitly via startAt/endAt.
      * @param {string} startAt - Explicit window start in ISO 8601. Defaults to endAt minus dateRange.
      * @param {string} endAt - Explicit window end in ISO 8601. Defaults to the current time.

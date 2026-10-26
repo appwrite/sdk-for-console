@@ -4293,6 +4293,10 @@ export namespace Models {
          */
         transformations: boolean;
         /**
+         * Metadata such as location, device and capture time is removed from uploaded images.
+         */
+        stripMetadata: boolean;
+        /**
          * Total size of this bucket in bytes.
          */
         totalSize: number;
@@ -8412,6 +8416,10 @@ export namespace Models {
          * Appwrite-owned zone for function testing email addresses, delivered to {functionId}@{projectId}.{zone}. Empty when inbound email is not configured.
          */
         _APP_DOMAIN_EMAIL: string;
+        /**
+         * MX target a custom inbound email (SMTP) domain must point at. Empty when inbound email is not configured.
+         */
+        _APP_DOMAIN_TARGET_SMTP: string;
     };
 
     /**
@@ -8727,7 +8735,7 @@ export namespace Models {
          */
         type: string;
         /**
-         * Provider credentials.
+         * Provider credentials. Secret values are write-only and never returned.
          */
         credentials: object;
         /**
@@ -9767,7 +9775,7 @@ export namespace Models {
          */
         sessions: number;
         /**
-         * Total pageview events (events with name="pageview") in the requested range. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         * Total pageview events (events with name="pageview") in the requested range. The flat aggregate and the time series compute it; null on breakdown rows.
          */
         pageviews?: number | null;
         /**
@@ -10346,6 +10354,18 @@ export namespace Models {
          * Rolling max executions retained per function/site
          */
         executionsRetentionCount: number;
+        /**
+         * Days non-active deployments are kept when a function or site sets no retention.
+         */
+        deploymentRetention: number;
+        /**
+         * Maximum deployment retention in days a function or site can set. 0 means unlimited.
+         */
+        deploymentRetentionMax: number;
+        /**
+         * Non-active deployments kept per function or site. 0 means unlimited.
+         */
+        deploymentsRetentionCount: number;
         /**
          * GB hours for functions
          */
@@ -11443,7 +11463,7 @@ export namespace Models {
          */
         type: string;
         /**
-         * Record name or subdomain.
+         * Record name relative to the domain, or `@` for the domain itself.
          */
         name: string;
         /**
@@ -12193,6 +12213,52 @@ export namespace Models {
     };
 
     /**
+     * AdminBlock
+     */
+    export type AdminBlock = {
+        /**
+         * Block creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Resource type that is blocked
+         */
+        resourceType: string;
+        /**
+         * Resource identifier that is blocked
+         */
+        resourceId: string;
+        /**
+         * Block mode. full blocks reads and writes; readOnly blocks writes only.
+         */
+        mode: string;
+        /**
+         * Block expiration date in ISO 8601 format. Can be null if the block does not expire.
+         */
+        expiredAt?: string | null;
+        /**
+         * Block ID.
+         */
+        $id: string;
+        /**
+         * Block update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the project the block is placed on.
+         */
+        projectId: string;
+        /**
+         * Why the block was placed, in the operator's words. Empty when none was given.
+         */
+        reason: string;
+        /**
+         * ID of the threat whose detection placed the block. Empty for a block an operator placed.
+         */
+        threatId: string;
+    };
+
+    /**
      * Threat
      */
     export type Threat = {
@@ -12428,6 +12494,60 @@ export namespace Models {
          * Selected projects
          */
         projects: string[];
+    };
+
+    /**
+     * Payment
+     */
+    export type Payment = {
+        /**
+         * Payment ID.
+         */
+        $id: string;
+        /**
+         * Payment creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Payment update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the invoice the payment collects.
+         */
+        invoiceId: string;
+        /**
+         * ID of the organization that is charged.
+         */
+        teamId: string;
+        /**
+         * ID of the payment at the payment provider.
+         */
+        providerPaymentId: string;
+        /**
+         * ID of the payment method that was charged. Empty when none was.
+         */
+        paymentMethodId: string;
+        /**
+         * Amount charged, in the invoice currency.
+         */
+        amount: number;
+        /**
+         * Currency the payment is in.
+         */
+        currency: string;
+        /**
+         * Payment status. One of `pending` (confirmation in progress), `processing`, `requires_authentication`, `succeeded`, `failed`, `disputed`, `partially_refunded` or `refunded`.
+         */
+        status: string;
+        /**
+         * When the payment was attempted, in ISO 8601 format.
+         */
+        date: string;
+        /**
+         * The provider's last error for a failed payment, or the refunded amount for a partially refunded one. Null otherwise.
+         */
+        lastError?: string | null;
     };
 
     /**
@@ -14575,6 +14695,20 @@ export namespace Models {
     };
 
     /**
+     * Payments list
+     */
+    export type PaymentList = {
+        /**
+         * Total number of payments that matched your query.
+         */
+        total: number;
+        /**
+         * List of payments.
+         */
+        payments: Payment[];
+    };
+
+    /**
      * Billing plan list
      */
     export type BillingPlanList = {
@@ -14614,6 +14748,34 @@ export namespace Models {
          * List of threats.
          */
         threats: Threat[];
+    };
+
+    /**
+     * Admin credits list
+     */
+    export type AdminCreditList = {
+        /**
+         * Total number of credits that matched your query.
+         */
+        total: number;
+        /**
+         * List of credits.
+         */
+        credits: Credit[];
+    };
+
+    /**
+     * Admin blocks list
+     */
+    export type AdminBlockList = {
+        /**
+         * Total number of blocks that matched your query.
+         */
+        total: number;
+        /**
+         * List of blocks.
+         */
+        blocks: AdminBlock[];
     };
 
     /**

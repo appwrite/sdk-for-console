@@ -508,6 +508,9 @@ export class Console {
                         sites: 0,
                         executions: 0,
                         executionsRetentionCount: 1000,
+                        deploymentRetention: 0,
+                        deploymentRetentionMax: 0,
+                        deploymentsRetentionCount: 0,
                         GBHours: 0,
                         realtime: 0,
                         realtimeMessages: 0,
@@ -635,6 +638,9 @@ export class Console {
                         sites: 0,
                         executions: 0,
                         executionsRetentionCount: 1000,
+                        deploymentRetention: 0,
+                        deploymentRetentionMax: 0,
+                        deploymentsRetentionCount: 0,
                         GBHours: 0,
                         realtime: 0,
                         realtimeMessages: 0,
@@ -1287,6 +1293,59 @@ export class Console {
     }
 
     /**
+     * Link sources captured before sign-up to the current console user. Pass the `claim` values returned when each source was created; invalid claims, sources older than 30 days and sources already linked to a user are ignored.
+     *
+     * @param {string[]} params.claims - Source claims, as returned by create source, to link to the current user.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    updateSources(params: { claims: string[] }): Promise<{}>;
+    /**
+     * Link sources captured before sign-up to the current console user. Pass the `claim` values returned when each source was created; invalid claims, sources older than 30 days and sources already linked to a user are ignored.
+     *
+     * @param {string[]} claims - Source claims, as returned by create source, to link to the current user.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateSources(claims: string[]): Promise<{}>;
+    updateSources(paramsOrFirst: { claims: string[] } | string[]): Promise<{}> {
+        let params: { claims: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as { claims: string[] };
+        } else {
+            params = {
+                claims: paramsOrFirst as string[],
+            };
+        }
+
+        const claims = params.claims;
+
+        if (typeof claims === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "claims"');
+        }
+        const apiPath = '/console/sources';
+        const apiPayload: Payload = {};
+        if (typeof claims !== 'undefined') {
+            apiPayload['claims'] = claims;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
+    }
+
+    /**
      * Suggests column names and their size limits based on the provided table name. The API will also analyze other tables in the same database to provide context-aware suggestions, ensuring consistency across schema design. Users may optionally provide custom context to further refine the suggestions.
      *
      * @param {string} params.databaseId - Database ID.
@@ -1831,6 +1890,7 @@ export class Console {
                         supportForIntegerIds: true,
                         _APP_CONSOLE_EMAIL_VERIFICATION: '',
                         _APP_DOMAIN_EMAIL: '',
+                        _APP_DOMAIN_TARGET_SMTP: '',
                     },
                 },
             },

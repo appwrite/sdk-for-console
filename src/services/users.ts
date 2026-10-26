@@ -1115,10 +1115,10 @@ export class Users {
      * @param {string} params.email - User email.
      * @param {string} params.password - User password hashed using Scrypt.
      * @param {string} params.passwordSalt - Optional salt used to hash password.
-     * @param {number} params.passwordCpu - Optional CPU cost used to hash password.
-     * @param {number} params.passwordMemory - Optional memory cost used to hash password.
-     * @param {number} params.passwordParallel - Optional parallelization cost used to hash password.
-     * @param {number} params.passwordLength - Optional hash length used to hash password.
+     * @param {number} params.passwordCpu - Optional CPU cost used to hash password. Must be a power of two, at most 65536.
+     * @param {number} params.passwordMemory - Optional memory cost used to hash password. Maximum is 16.
+     * @param {number} params.passwordParallel - Optional parallelization cost used to hash password. Maximum is 4.
+     * @param {number} params.passwordLength - Optional hash length used to hash password. Must be between 16 and 128.
      * @param {string} params.name - User name. Max length: 128 chars.
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
@@ -1143,10 +1143,10 @@ export class Users {
      * @param {string} email - User email.
      * @param {string} password - User password hashed using Scrypt.
      * @param {string} passwordSalt - Optional salt used to hash password.
-     * @param {number} passwordCpu - Optional CPU cost used to hash password.
-     * @param {number} passwordMemory - Optional memory cost used to hash password.
-     * @param {number} passwordParallel - Optional parallelization cost used to hash password.
-     * @param {number} passwordLength - Optional hash length used to hash password.
+     * @param {number} passwordCpu - Optional CPU cost used to hash password. Must be a power of two, at most 65536.
+     * @param {number} passwordMemory - Optional memory cost used to hash password. Maximum is 16.
+     * @param {number} passwordParallel - Optional parallelization cost used to hash password. Maximum is 4.
+     * @param {number} passwordLength - Optional hash length used to hash password. Must be between 16 and 128.
      * @param {string} name - User name. Max length: 128 chars.
      * @throws {AppwriteException}
      * @returns {Promise<Models.User<Preferences>>}
