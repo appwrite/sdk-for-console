@@ -690,7 +690,7 @@ export class Organization {
     }
 
     /**
-     * Create a new organization API key.
+     * Create a new organization API key as an organization owner. Replace legacy keys with a new key to authorize organization deletion or owner membership grants.
      *
      * @param {string} params.keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Key name. Max length: 128 chars.
@@ -706,7 +706,7 @@ export class Organization {
         expire?: string | null;
     }): Promise<Models.Key>;
     /**
-     * Create a new organization API key.
+     * Create a new organization API key as an organization owner. Replace legacy keys with a new key to authorize organization deletion or owner membership grants.
      *
      * @param {string} keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Key name. Max length: 128 chars.

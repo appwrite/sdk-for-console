@@ -1,5 +1,21 @@
 # Change Log
 
+## 20.1.0
+
+* Added: `admin.updateOrganizationPlan` and the `PlanEffective` enum, to move an organization's plan without payment
+* Added: `admin.createOrganizationAggregation` and `admin.createProjectAggregation` to recalculate billing
+* Added: `admin.listOrganizations`, `getOrganization` and an organization's projects, memberships, domains and aggregations
+* Added: `admin` blocks: `createBlock`, `listBlocks`, `getBlock`, `deleteBlock` and the `AdminBlock` model
+* Added: `admin` credits: `createCredit`, `listCredits`, `getCredit`, `updateCreditStatus` and the `CreditStatus` enum
+* Added: `admin` invoices and payments, including `createInvoiceRefund`, and the `Payment` model
+* Added: `admin.updateUserImpersonator`
+* Added: `console.updateSources`
+* Added: `Bucket.stripMetadata` and `BillingPlan` deployment retention fields
+* Added: `AnalyticsDimension.BrowserVersion` and `AnalyticsDimension.OperatingSystemVersion`
+* Added: `python-3.15`, `deno-2.9`, `go-1.27` and `rust-1.99` runtimes, and video resources in `QuerySuggestionResource`
+* Updated: requests send `X-Appwrite-Response-Format: 2.6.2`; response shapes are unchanged
+* Fixed: push subscriptions reconnect after the broker refuses a connection
+
 ## 20.0.0
 
 * Breaking: requests send `X-Appwrite-Response-Format: 2.5.0`; responses follow the 2.5 shapes
