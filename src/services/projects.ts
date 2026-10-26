@@ -1353,7 +1353,6 @@ export class Projects {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {

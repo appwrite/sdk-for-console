@@ -20,36 +20,28 @@ export class VectorsDB {
      *
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DatabaseList>}
      */
     list(params?: {
         queries?: string[];
         total?: boolean;
-        search?: string;
     }): Promise<Models.DatabaseList>;
     /**
      * Get a list of all databases from the current Appwrite project. You can use the search parameter to filter your results.
      *
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following columns: name
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
-     * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @throws {AppwriteException}
      * @returns {Promise<Models.DatabaseList>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
+    list(queries?: string[], total?: boolean): Promise<Models.DatabaseList>;
     list(
-        queries?: string[],
-        total?: boolean,
-        search?: string,
-    ): Promise<Models.DatabaseList>;
-    list(
-        paramsOrFirst?:
-            { queries?: string[]; total?: boolean; search?: string } | string[],
-        ...rest: [boolean?, string?]
+        paramsOrFirst?: { queries?: string[]; total?: boolean } | string[],
+        ...rest: [boolean?]
     ): Promise<Models.DatabaseList> {
-        let params: { queries?: string[]; total?: boolean; search?: string };
+        let params: { queries?: string[]; total?: boolean };
 
         if (
             (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
@@ -60,19 +52,16 @@ export class VectorsDB {
             params = (paramsOrFirst || {}) as {
                 queries?: string[];
                 total?: boolean;
-                search?: string;
             };
         } else {
             params = {
                 queries: paramsOrFirst as string[],
                 total: rest[0] as boolean,
-                search: rest[1] as string,
             };
         }
 
         const queries = params.queries;
         const total = params.total;
-        const search = params.search;
 
         const apiPath = '/vectorsdb';
         const apiPayload: Payload = {};
@@ -81,9 +70,6 @@ export class VectorsDB {
         }
         if (typeof total !== 'undefined') {
             apiPayload['total'] = total;
-        }
-        if (typeof search !== 'undefined') {
-            apiPayload['search'] = search;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -111,11 +97,11 @@ export class VectorsDB {
                     defaults: {
                         $id: '',
                         name: '',
+                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
-                        description: '',
                     },
                     properties: {
                         policies: {
@@ -165,10 +151,10 @@ export class VectorsDB {
      * @param {string} params.databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {string} params.description - Optional description for the database.
      * @param {string} params.specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @param {number} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
      * @param {string | null} params.syncMode - Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
-     * @param {string} params.description - Optional description for the database.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
@@ -176,10 +162,10 @@ export class VectorsDB {
         databaseId: string;
         name: string;
         enabled?: boolean;
+        description?: string;
         specification?: string;
         replicas?: number;
         syncMode?: string | null;
-        description?: string;
     }): Promise<Models.Database>;
     /**
      * Create a new Database.
@@ -188,10 +174,10 @@ export class VectorsDB {
      * @param {string} databaseId - Unique Id. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is the database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {string} description - Optional description for the database.
      * @param {string} specification - Database specification. Defaults to `serverless`, which creates the database on the shared pool. Any other value provisions a dedicated database on that specification.
      * @param {number} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Requires a dedicated `specification`; must be 0 for a serverless database. High availability is enabled when greater than 0.
      * @param {string | null} syncMode - Replication sync mode for the dedicated database backing this database. Requires a dedicated `specification`; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
-     * @param {string} description - Optional description for the database.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -200,10 +186,10 @@ export class VectorsDB {
         databaseId: string,
         name: string,
         enabled?: boolean,
+        description?: string,
         specification?: string,
         replicas?: number,
         syncMode?: string | null,
-        description?: string,
     ): Promise<Models.Database>;
     create(
         paramsOrFirst:
@@ -211,29 +197,29 @@ export class VectorsDB {
                   databaseId: string;
                   name: string;
                   enabled?: boolean;
+                  description?: string;
                   specification?: string;
                   replicas?: number;
                   syncMode?: string | null;
-                  description?: string;
               }
             | string,
         ...rest: [
             string?,
             boolean?,
             string?,
+            string?,
             number?,
             (string | null)?,
-            string?,
         ]
     ): Promise<Models.Database> {
         let params: {
             databaseId: string;
             name: string;
             enabled?: boolean;
+            description?: string;
             specification?: string;
             replicas?: number;
             syncMode?: string | null;
-            description?: string;
         };
 
         if (
@@ -245,30 +231,30 @@ export class VectorsDB {
                 databaseId: string;
                 name: string;
                 enabled?: boolean;
+                description?: string;
                 specification?: string;
                 replicas?: number;
                 syncMode?: string | null;
-                description?: string;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                specification: rest[2] as string,
-                replicas: rest[3] as number,
-                syncMode: rest[4] as string | null,
-                description: rest[5] as string,
+                description: rest[2] as string,
+                specification: rest[3] as string,
+                replicas: rest[4] as number,
+                syncMode: rest[5] as string | null,
             };
         }
 
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
+        const description = params.description;
         const specification = params.specification;
         const replicas = params.replicas;
         const syncMode = params.syncMode;
-        const description = params.description;
 
         if (typeof databaseId === 'undefined') {
             throw new AppwriteException(
@@ -289,6 +275,9 @@ export class VectorsDB {
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         if (typeof specification !== 'undefined') {
             apiPayload['specification'] = specification;
         }
@@ -297,9 +286,6 @@ export class VectorsDB {
         }
         if (typeof syncMode !== 'undefined') {
             apiPayload['syncMode'] = syncMode;
-        }
-        if (typeof description !== 'undefined') {
-            apiPayload['description'] = description;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -317,11 +303,11 @@ export class VectorsDB {
                     defaults: {
                         $id: '',
                         name: '',
+                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
-                        description: '',
                     },
                     properties: {
                         policies: {
@@ -978,11 +964,11 @@ export class VectorsDB {
                     defaults: {
                         $id: '',
                         name: '',
+                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
-                        description: '',
                     },
                     properties: {
                         policies: {
@@ -1031,10 +1017,10 @@ export class VectorsDB {
      * @param {string} params.databaseId - Database ID.
      * @param {string} params.name - Database name. Max length: 128 chars.
      * @param {boolean} params.enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {string | null} params.description - Optional description for the database.
      * @param {string | null} params.specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
      * @param {number | null} params.replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
      * @param {string | null} params.syncMode - Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
-     * @param {string | null} params.description - Optional description for the database.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      */
@@ -1042,10 +1028,10 @@ export class VectorsDB {
         databaseId: string;
         name: string;
         enabled?: boolean;
+        description?: string | null;
         specification?: string | null;
         replicas?: number | null;
         syncMode?: string | null;
-        description?: string | null;
     }): Promise<Models.Database>;
     /**
      * Update a database by its unique ID.
@@ -1053,10 +1039,10 @@ export class VectorsDB {
      * @param {string} databaseId - Database ID.
      * @param {string} name - Database name. Max length: 128 chars.
      * @param {boolean} enabled - Is database enabled? When set to 'disabled', users cannot access the database but Server SDKs with an API key can still read and write to the database. No data is lost when this is toggled.
+     * @param {string | null} description - Optional description for the database.
      * @param {string | null} specification - Database specification. Resizing between dedicated specifications changes cpu, memory, storage and the connection ceiling via a rolling cutover with zero downtime. Moving a `serverless` database onto a dedicated specification is a data migration, not a resize.
      * @param {number | null} replicas - Number of high availability replicas (0-5) for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification. High availability is enabled when greater than 0.
      * @param {string | null} syncMode - Replication sync mode for the dedicated database backing this database. Only valid when the database is backed by a dedicated specification; the mode is only in force once there is at least one replica. Allowed values: async, sync, quorum.
-     * @param {string | null} description - Optional description for the database.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Database>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1065,10 +1051,10 @@ export class VectorsDB {
         databaseId: string,
         name: string,
         enabled?: boolean,
+        description?: string | null,
         specification?: string | null,
         replicas?: number | null,
         syncMode?: string | null,
-        description?: string | null,
     ): Promise<Models.Database>;
     update(
         paramsOrFirst:
@@ -1076,18 +1062,18 @@ export class VectorsDB {
                   databaseId: string;
                   name: string;
                   enabled?: boolean;
+                  description?: string | null;
                   specification?: string | null;
                   replicas?: number | null;
                   syncMode?: string | null;
-                  description?: string | null;
               }
             | string,
         ...rest: [
             string?,
             boolean?,
             (string | null)?,
-            (number | null)?,
             (string | null)?,
+            (number | null)?,
             (string | null)?,
         ]
     ): Promise<Models.Database> {
@@ -1095,10 +1081,10 @@ export class VectorsDB {
             databaseId: string;
             name: string;
             enabled?: boolean;
+            description?: string | null;
             specification?: string | null;
             replicas?: number | null;
             syncMode?: string | null;
-            description?: string | null;
         };
 
         if (
@@ -1110,30 +1096,30 @@ export class VectorsDB {
                 databaseId: string;
                 name: string;
                 enabled?: boolean;
+                description?: string | null;
                 specification?: string | null;
                 replicas?: number | null;
                 syncMode?: string | null;
-                description?: string | null;
             };
         } else {
             params = {
                 databaseId: paramsOrFirst as string,
                 name: rest[0] as string,
                 enabled: rest[1] as boolean,
-                specification: rest[2] as string | null,
-                replicas: rest[3] as number | null,
-                syncMode: rest[4] as string | null,
-                description: rest[5] as string | null,
+                description: rest[2] as string | null,
+                specification: rest[3] as string | null,
+                replicas: rest[4] as number | null,
+                syncMode: rest[5] as string | null,
             };
         }
 
         const databaseId = params.databaseId;
         const name = params.name;
         const enabled = params.enabled;
+        const description = params.description;
         const specification = params.specification;
         const replicas = params.replicas;
         const syncMode = params.syncMode;
-        const description = params.description;
 
         if (typeof databaseId === 'undefined' || databaseId === '') {
             throw new AppwriteException(
@@ -1154,6 +1140,9 @@ export class VectorsDB {
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
         }
+        if (typeof description !== 'undefined') {
+            apiPayload['description'] = description;
+        }
         if (typeof specification !== 'undefined') {
             apiPayload['specification'] = specification;
         }
@@ -1162,9 +1151,6 @@ export class VectorsDB {
         }
         if (typeof syncMode !== 'undefined') {
             apiPayload['syncMode'] = syncMode;
-        }
-        if (typeof description !== 'undefined') {
-            apiPayload['description'] = description;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1182,11 +1168,11 @@ export class VectorsDB {
                     defaults: {
                         $id: '',
                         name: '',
+                        description: '',
                         $createdAt: '',
                         $updatedAt: '',
                         enabled: true,
                         type: 'legacy',
-                        description: '',
                     },
                     properties: {
                         policies: {
@@ -1409,6 +1395,7 @@ export class VectorsDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
+                        description: '',
                         enabled: true,
                         documentSecurity: false,
                         attributes: [],
@@ -1416,7 +1403,6 @@ export class VectorsDB {
                         bytesMax: 0,
                         bytesUsed: 0,
                         dimension: 0,
-                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -1430,11 +1416,11 @@ export class VectorsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
-                        description: '',
                     },
                 },
             },
@@ -1627,6 +1613,7 @@ export class VectorsDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
+                        description: '',
                         enabled: true,
                         documentSecurity: false,
                         attributes: [],
@@ -1634,7 +1621,6 @@ export class VectorsDB {
                         bytesMax: 0,
                         bytesUsed: 0,
                         dimension: 0,
-                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -1648,11 +1634,11 @@ export class VectorsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
-                        description: '',
                     },
                 },
             },
@@ -1747,6 +1733,7 @@ export class VectorsDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
+                        description: '',
                         enabled: true,
                         documentSecurity: false,
                         attributes: [],
@@ -1754,7 +1741,6 @@ export class VectorsDB {
                         bytesMax: 0,
                         bytesUsed: 0,
                         dimension: 0,
-                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -1768,11 +1754,11 @@ export class VectorsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
-                        description: '',
                     },
                 },
             },
@@ -1959,6 +1945,7 @@ export class VectorsDB {
                         $permissions: [],
                         databaseId: '',
                         name: '',
+                        description: '',
                         enabled: true,
                         documentSecurity: false,
                         attributes: [],
@@ -1966,7 +1953,6 @@ export class VectorsDB {
                         bytesMax: 0,
                         bytesUsed: 0,
                         dimension: 0,
-                        description: '',
                     },
                     properties: {
                         indexes: {
@@ -1980,11 +1966,11 @@ export class VectorsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
-                        description: '',
                     },
                 },
             },
@@ -3950,11 +3936,11 @@ export class VectorsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
-                        description: '',
                     },
                 },
             },
@@ -4150,11 +4136,11 @@ export class VectorsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
-                        description: '',
                     },
                 },
             },
@@ -4260,11 +4246,11 @@ export class VectorsDB {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         type: '',
                         error: '',
                         attributes: [],
                         lengths: [],
-                        description: '',
                     },
                 },
             },

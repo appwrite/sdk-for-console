@@ -139,11 +139,11 @@ export class Messaging {
      * @param {string[]} params.cc - Array of target IDs to be added as CC.
      * @param {string[]} params.bcc - Array of target IDs to be added as BCC.
      * @param {string[] | null} params.attachments - Array of compound ID strings of bucket IDs and file IDs to be attached to the email. They should be formatted as <BUCKET_ID>:<FILE_ID>.
-     * @param {string} params.replyToEmail - Email address to reply to. If not set, defaults to the sender email address.
-     * @param {string} params.replyToName - Name of the reply to recipient. If not set, defaults to the sender name.
      * @param {boolean} params.draft - Is message a draft
      * @param {boolean} params.html - Is content of type HTML
      * @param {string | null} params.scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
+     * @param {string} params.replyToEmail - Email address to reply to. If not set, defaults to the sender email address.
+     * @param {string} params.replyToName - Name of the reply to recipient. If not set, defaults to the sender name.
      * @param {string[]} params.emails - List of email addresses to send the message to. Use this to deliver to recipients that are not backed by an Appwrite user, target, or topic.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Message>}
@@ -158,11 +158,11 @@ export class Messaging {
         cc?: string[];
         bcc?: string[];
         attachments?: string[] | null;
-        replyToEmail?: string;
-        replyToName?: string;
         draft?: boolean;
         html?: boolean;
         scheduledAt?: string | null;
+        replyToEmail?: string;
+        replyToName?: string;
         emails?: string[];
     }): Promise<Models.Message>;
     /**
@@ -177,11 +177,11 @@ export class Messaging {
      * @param {string[]} cc - Array of target IDs to be added as CC.
      * @param {string[]} bcc - Array of target IDs to be added as BCC.
      * @param {string[] | null} attachments - Array of compound ID strings of bucket IDs and file IDs to be attached to the email. They should be formatted as <BUCKET_ID>:<FILE_ID>.
-     * @param {string} replyToEmail - Email address to reply to. If not set, defaults to the sender email address.
-     * @param {string} replyToName - Name of the reply to recipient. If not set, defaults to the sender name.
      * @param {boolean} draft - Is message a draft
      * @param {boolean} html - Is content of type HTML
      * @param {string | null} scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
+     * @param {string} replyToEmail - Email address to reply to. If not set, defaults to the sender email address.
+     * @param {string} replyToName - Name of the reply to recipient. If not set, defaults to the sender name.
      * @param {string[]} emails - List of email addresses to send the message to. Use this to deliver to recipients that are not backed by an Appwrite user, target, or topic.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Message>}
@@ -197,11 +197,11 @@ export class Messaging {
         cc?: string[],
         bcc?: string[],
         attachments?: string[] | null,
-        replyToEmail?: string,
-        replyToName?: string,
         draft?: boolean,
         html?: boolean,
         scheduledAt?: string | null,
+        replyToEmail?: string,
+        replyToName?: string,
         emails?: string[],
     ): Promise<Models.Message>;
     createEmail(
@@ -216,11 +216,11 @@ export class Messaging {
                   cc?: string[];
                   bcc?: string[];
                   attachments?: string[] | null;
-                  replyToEmail?: string;
-                  replyToName?: string;
                   draft?: boolean;
                   html?: boolean;
                   scheduledAt?: string | null;
+                  replyToEmail?: string;
+                  replyToName?: string;
                   emails?: string[];
               }
             | string,
@@ -233,11 +233,11 @@ export class Messaging {
             string[]?,
             string[]?,
             (string[] | null)?,
-            string?,
-            string?,
             boolean?,
             boolean?,
             (string | null)?,
+            string?,
+            string?,
             string[]?,
         ]
     ): Promise<Models.Message> {
@@ -251,11 +251,11 @@ export class Messaging {
             cc?: string[];
             bcc?: string[];
             attachments?: string[] | null;
-            replyToEmail?: string;
-            replyToName?: string;
             draft?: boolean;
             html?: boolean;
             scheduledAt?: string | null;
+            replyToEmail?: string;
+            replyToName?: string;
             emails?: string[];
         };
 
@@ -274,11 +274,11 @@ export class Messaging {
                 cc?: string[];
                 bcc?: string[];
                 attachments?: string[] | null;
-                replyToEmail?: string;
-                replyToName?: string;
                 draft?: boolean;
                 html?: boolean;
                 scheduledAt?: string | null;
+                replyToEmail?: string;
+                replyToName?: string;
                 emails?: string[];
             };
         } else {
@@ -292,11 +292,11 @@ export class Messaging {
                 cc: rest[5] as string[],
                 bcc: rest[6] as string[],
                 attachments: rest[7] as string[] | null,
-                replyToEmail: rest[8] as string,
-                replyToName: rest[9] as string,
-                draft: rest[10] as boolean,
-                html: rest[11] as boolean,
-                scheduledAt: rest[12] as string | null,
+                draft: rest[8] as boolean,
+                html: rest[9] as boolean,
+                scheduledAt: rest[10] as string | null,
+                replyToEmail: rest[11] as string,
+                replyToName: rest[12] as string,
                 emails: rest[13] as string[],
             };
         }
@@ -310,11 +310,11 @@ export class Messaging {
         const cc = params.cc;
         const bcc = params.bcc;
         const attachments = params.attachments;
-        const replyToEmail = params.replyToEmail;
-        const replyToName = params.replyToName;
         const draft = params.draft;
         const html = params.html;
         const scheduledAt = params.scheduledAt;
+        const replyToEmail = params.replyToEmail;
+        const replyToName = params.replyToName;
         const emails = params.emails;
 
         if (typeof messageId === 'undefined') {
@@ -361,12 +361,6 @@ export class Messaging {
         if (typeof attachments !== 'undefined') {
             apiPayload['attachments'] = attachments;
         }
-        if (typeof replyToEmail !== 'undefined') {
-            apiPayload['replyToEmail'] = replyToEmail;
-        }
-        if (typeof replyToName !== 'undefined') {
-            apiPayload['replyToName'] = replyToName;
-        }
         if (typeof draft !== 'undefined') {
             apiPayload['draft'] = draft;
         }
@@ -375,6 +369,12 @@ export class Messaging {
         }
         if (typeof scheduledAt !== 'undefined') {
             apiPayload['scheduledAt'] = scheduledAt;
+        }
+        if (typeof replyToEmail !== 'undefined') {
+            apiPayload['replyToEmail'] = replyToEmail;
+        }
+        if (typeof replyToName !== 'undefined') {
+            apiPayload['replyToName'] = replyToName;
         }
         if (typeof emails !== 'undefined') {
             apiPayload['emails'] = emails;
@@ -416,38 +416,38 @@ export class Messaging {
      *
      *
      * @param {string} params.messageId - Message ID.
-     * @param {string | null} params.subject - Email Subject.
-     * @param {string | null} params.content - Email Content.
      * @param {string[] | null} params.topics - List of Topic IDs.
      * @param {string[] | null} params.users - List of User IDs.
      * @param {string[] | null} params.targets - List of Targets IDs.
+     * @param {string | null} params.subject - Email Subject.
+     * @param {string | null} params.content - Email Content.
+     * @param {boolean | null} params.draft - Is message a draft
+     * @param {boolean | null} params.html - Is content of type HTML
      * @param {string[] | null} params.cc - Array of target IDs to be added as CC.
      * @param {string[] | null} params.bcc - Array of target IDs to be added as BCC.
+     * @param {string | null} params.scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
      * @param {string[] | null} params.attachments - Array of compound ID strings of bucket IDs and file IDs to be attached to the email. They should be formatted as <BUCKET_ID>:<FILE_ID>.
      * @param {string | null} params.replyToEmail - Email address to reply to. Pass an empty string to restore the provider or sender default.
      * @param {string | null} params.replyToName - Name of the reply to recipient. Pass an empty string to restore the provider or sender default.
-     * @param {boolean | null} params.draft - Is message a draft
-     * @param {boolean | null} params.html - Is content of type HTML
-     * @param {string | null} params.scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
      * @param {string[] | null} params.emails - List of email addresses to send the message to. Use this to deliver to recipients that are not backed by an Appwrite user, target, or topic.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Message>}
      */
     updateEmail(params: {
         messageId: string;
-        subject?: string | null;
-        content?: string | null;
         topics?: string[] | null;
         users?: string[] | null;
         targets?: string[] | null;
+        subject?: string | null;
+        content?: string | null;
+        draft?: boolean | null;
+        html?: boolean | null;
         cc?: string[] | null;
         bcc?: string[] | null;
+        scheduledAt?: string | null;
         attachments?: string[] | null;
         replyToEmail?: string | null;
         replyToName?: string | null;
-        draft?: boolean | null;
-        html?: boolean | null;
-        scheduledAt?: string | null;
         emails?: string[] | null;
     }): Promise<Models.Message>;
     /**
@@ -455,19 +455,19 @@ export class Messaging {
      *
      *
      * @param {string} messageId - Message ID.
-     * @param {string | null} subject - Email Subject.
-     * @param {string | null} content - Email Content.
      * @param {string[] | null} topics - List of Topic IDs.
      * @param {string[] | null} users - List of User IDs.
      * @param {string[] | null} targets - List of Targets IDs.
+     * @param {string | null} subject - Email Subject.
+     * @param {string | null} content - Email Content.
+     * @param {boolean | null} draft - Is message a draft
+     * @param {boolean | null} html - Is content of type HTML
      * @param {string[] | null} cc - Array of target IDs to be added as CC.
      * @param {string[] | null} bcc - Array of target IDs to be added as BCC.
+     * @param {string | null} scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
      * @param {string[] | null} attachments - Array of compound ID strings of bucket IDs and file IDs to be attached to the email. They should be formatted as <BUCKET_ID>:<FILE_ID>.
      * @param {string | null} replyToEmail - Email address to reply to. Pass an empty string to restore the provider or sender default.
      * @param {string | null} replyToName - Name of the reply to recipient. Pass an empty string to restore the provider or sender default.
-     * @param {boolean | null} draft - Is message a draft
-     * @param {boolean | null} html - Is content of type HTML
-     * @param {string | null} scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
      * @param {string[] | null} emails - List of email addresses to send the message to. Use this to deliver to recipients that are not backed by an Appwrite user, target, or topic.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Message>}
@@ -475,47 +475,42 @@ export class Messaging {
      */
     updateEmail(
         messageId: string,
-        subject?: string | null,
-        content?: string | null,
         topics?: string[] | null,
         users?: string[] | null,
         targets?: string[] | null,
+        subject?: string | null,
+        content?: string | null,
+        draft?: boolean | null,
+        html?: boolean | null,
         cc?: string[] | null,
         bcc?: string[] | null,
+        scheduledAt?: string | null,
         attachments?: string[] | null,
         replyToEmail?: string | null,
         replyToName?: string | null,
-        draft?: boolean | null,
-        html?: boolean | null,
-        scheduledAt?: string | null,
         emails?: string[] | null,
     ): Promise<Models.Message>;
     updateEmail(
         paramsOrFirst:
             | {
                   messageId: string;
-                  subject?: string | null;
-                  content?: string | null;
                   topics?: string[] | null;
                   users?: string[] | null;
                   targets?: string[] | null;
+                  subject?: string | null;
+                  content?: string | null;
+                  draft?: boolean | null;
+                  html?: boolean | null;
                   cc?: string[] | null;
                   bcc?: string[] | null;
+                  scheduledAt?: string | null;
                   attachments?: string[] | null;
                   replyToEmail?: string | null;
                   replyToName?: string | null;
-                  draft?: boolean | null;
-                  html?: boolean | null;
-                  scheduledAt?: string | null;
                   emails?: string[] | null;
               }
             | string,
         ...rest: [
-            (string | null)?,
-            (string | null)?,
-            (string[] | null)?,
-            (string[] | null)?,
-            (string[] | null)?,
             (string[] | null)?,
             (string[] | null)?,
             (string[] | null)?,
@@ -523,25 +518,30 @@ export class Messaging {
             (string | null)?,
             (boolean | null)?,
             (boolean | null)?,
+            (string[] | null)?,
+            (string[] | null)?,
+            (string | null)?,
+            (string[] | null)?,
+            (string | null)?,
             (string | null)?,
             (string[] | null)?,
         ]
     ): Promise<Models.Message> {
         let params: {
             messageId: string;
-            subject?: string | null;
-            content?: string | null;
             topics?: string[] | null;
             users?: string[] | null;
             targets?: string[] | null;
+            subject?: string | null;
+            content?: string | null;
+            draft?: boolean | null;
+            html?: boolean | null;
             cc?: string[] | null;
             bcc?: string[] | null;
+            scheduledAt?: string | null;
             attachments?: string[] | null;
             replyToEmail?: string | null;
             replyToName?: string | null;
-            draft?: boolean | null;
-            html?: boolean | null;
-            scheduledAt?: string | null;
             emails?: string[] | null;
         };
 
@@ -552,55 +552,55 @@ export class Messaging {
         ) {
             params = (paramsOrFirst || {}) as {
                 messageId: string;
-                subject?: string | null;
-                content?: string | null;
                 topics?: string[] | null;
                 users?: string[] | null;
                 targets?: string[] | null;
+                subject?: string | null;
+                content?: string | null;
+                draft?: boolean | null;
+                html?: boolean | null;
                 cc?: string[] | null;
                 bcc?: string[] | null;
+                scheduledAt?: string | null;
                 attachments?: string[] | null;
                 replyToEmail?: string | null;
                 replyToName?: string | null;
-                draft?: boolean | null;
-                html?: boolean | null;
-                scheduledAt?: string | null;
                 emails?: string[] | null;
             };
         } else {
             params = {
                 messageId: paramsOrFirst as string,
-                subject: rest[0] as string | null,
-                content: rest[1] as string | null,
-                topics: rest[2] as string[] | null,
-                users: rest[3] as string[] | null,
-                targets: rest[4] as string[] | null,
-                cc: rest[5] as string[] | null,
-                bcc: rest[6] as string[] | null,
-                attachments: rest[7] as string[] | null,
-                replyToEmail: rest[8] as string | null,
-                replyToName: rest[9] as string | null,
-                draft: rest[10] as boolean | null,
-                html: rest[11] as boolean | null,
-                scheduledAt: rest[12] as string | null,
+                topics: rest[0] as string[] | null,
+                users: rest[1] as string[] | null,
+                targets: rest[2] as string[] | null,
+                subject: rest[3] as string | null,
+                content: rest[4] as string | null,
+                draft: rest[5] as boolean | null,
+                html: rest[6] as boolean | null,
+                cc: rest[7] as string[] | null,
+                bcc: rest[8] as string[] | null,
+                scheduledAt: rest[9] as string | null,
+                attachments: rest[10] as string[] | null,
+                replyToEmail: rest[11] as string | null,
+                replyToName: rest[12] as string | null,
                 emails: rest[13] as string[] | null,
             };
         }
 
         const messageId = params.messageId;
-        const subject = params.subject;
-        const content = params.content;
         const topics = params.topics;
         const users = params.users;
         const targets = params.targets;
+        const subject = params.subject;
+        const content = params.content;
+        const draft = params.draft;
+        const html = params.html;
         const cc = params.cc;
         const bcc = params.bcc;
+        const scheduledAt = params.scheduledAt;
         const attachments = params.attachments;
         const replyToEmail = params.replyToEmail;
         const replyToName = params.replyToName;
-        const draft = params.draft;
-        const html = params.html;
-        const scheduledAt = params.scheduledAt;
         const emails = params.emails;
 
         if (typeof messageId === 'undefined' || messageId === '') {
@@ -613,12 +613,6 @@ export class Messaging {
             encodeURIComponent(String(messageId)),
         );
         const apiPayload: Payload = {};
-        if (typeof subject !== 'undefined') {
-            apiPayload['subject'] = subject;
-        }
-        if (typeof content !== 'undefined') {
-            apiPayload['content'] = content;
-        }
         if (typeof topics !== 'undefined') {
             apiPayload['topics'] = topics;
         }
@@ -628,11 +622,26 @@ export class Messaging {
         if (typeof targets !== 'undefined') {
             apiPayload['targets'] = targets;
         }
+        if (typeof subject !== 'undefined') {
+            apiPayload['subject'] = subject;
+        }
+        if (typeof content !== 'undefined') {
+            apiPayload['content'] = content;
+        }
+        if (typeof draft !== 'undefined') {
+            apiPayload['draft'] = draft;
+        }
+        if (typeof html !== 'undefined') {
+            apiPayload['html'] = html;
+        }
         if (typeof cc !== 'undefined') {
             apiPayload['cc'] = cc;
         }
         if (typeof bcc !== 'undefined') {
             apiPayload['bcc'] = bcc;
+        }
+        if (typeof scheduledAt !== 'undefined') {
+            apiPayload['scheduledAt'] = scheduledAt;
         }
         if (typeof attachments !== 'undefined') {
             apiPayload['attachments'] = attachments;
@@ -642,15 +651,6 @@ export class Messaging {
         }
         if (typeof replyToName !== 'undefined') {
             apiPayload['replyToName'] = replyToName;
-        }
-        if (typeof draft !== 'undefined') {
-            apiPayload['draft'] = draft;
-        }
-        if (typeof html !== 'undefined') {
-            apiPayload['html'] = html;
-        }
-        if (typeof scheduledAt !== 'undefined') {
-            apiPayload['scheduledAt'] = scheduledAt;
         }
         if (typeof emails !== 'undefined') {
             apiPayload['emails'] = emails;
@@ -1031,11 +1031,11 @@ export class Messaging {
      *
      *
      * @param {string} params.messageId - Message ID.
-     * @param {string | null} params.title - Title for push notification.
-     * @param {string | null} params.body - Body for push notification.
      * @param {string[] | null} params.topics - List of Topic IDs.
      * @param {string[] | null} params.users - List of User IDs.
      * @param {string[] | null} params.targets - List of Targets IDs.
+     * @param {string | null} params.title - Title for push notification.
+     * @param {string | null} params.body - Body for push notification.
      * @param {object | null} params.data - Additional Data for push notification.
      * @param {string | null} params.action - Action for push notification.
      * @param {string | null} params.image - Image for push notification. Must be a compound bucket ID to file ID of a jpeg, png, or bmp image in Appwrite Storage. It should be formatted as <BUCKET_ID>:<FILE_ID>.
@@ -1055,11 +1055,11 @@ export class Messaging {
      */
     updatePush(params: {
         messageId: string;
-        title?: string | null;
-        body?: string | null;
         topics?: string[] | null;
         users?: string[] | null;
         targets?: string[] | null;
+        title?: string | null;
+        body?: string | null;
         data?: object | null;
         action?: string | null;
         image?: string | null;
@@ -1080,11 +1080,11 @@ export class Messaging {
      *
      *
      * @param {string} messageId - Message ID.
-     * @param {string | null} title - Title for push notification.
-     * @param {string | null} body - Body for push notification.
      * @param {string[] | null} topics - List of Topic IDs.
      * @param {string[] | null} users - List of User IDs.
      * @param {string[] | null} targets - List of Targets IDs.
+     * @param {string | null} title - Title for push notification.
+     * @param {string | null} body - Body for push notification.
      * @param {object | null} data - Additional Data for push notification.
      * @param {string | null} action - Action for push notification.
      * @param {string | null} image - Image for push notification. Must be a compound bucket ID to file ID of a jpeg, png, or bmp image in Appwrite Storage. It should be formatted as <BUCKET_ID>:<FILE_ID>.
@@ -1105,11 +1105,11 @@ export class Messaging {
      */
     updatePush(
         messageId: string,
-        title?: string | null,
-        body?: string | null,
         topics?: string[] | null,
         users?: string[] | null,
         targets?: string[] | null,
+        title?: string | null,
+        body?: string | null,
         data?: object | null,
         action?: string | null,
         image?: string | null,
@@ -1129,11 +1129,11 @@ export class Messaging {
         paramsOrFirst:
             | {
                   messageId: string;
-                  title?: string | null;
-                  body?: string | null;
                   topics?: string[] | null;
                   users?: string[] | null;
                   targets?: string[] | null;
+                  title?: string | null;
+                  body?: string | null;
                   data?: object | null;
                   action?: string | null;
                   image?: string | null;
@@ -1151,11 +1151,11 @@ export class Messaging {
               }
             | string,
         ...rest: [
+            (string[] | null)?,
+            (string[] | null)?,
+            (string[] | null)?,
             (string | null)?,
             (string | null)?,
-            (string[] | null)?,
-            (string[] | null)?,
-            (string[] | null)?,
             (object | null)?,
             (string | null)?,
             (string | null)?,
@@ -1174,11 +1174,11 @@ export class Messaging {
     ): Promise<Models.Message> {
         let params: {
             messageId: string;
-            title?: string | null;
-            body?: string | null;
             topics?: string[] | null;
             users?: string[] | null;
             targets?: string[] | null;
+            title?: string | null;
+            body?: string | null;
             data?: object | null;
             action?: string | null;
             image?: string | null;
@@ -1202,11 +1202,11 @@ export class Messaging {
         ) {
             params = (paramsOrFirst || {}) as {
                 messageId: string;
-                title?: string | null;
-                body?: string | null;
                 topics?: string[] | null;
                 users?: string[] | null;
                 targets?: string[] | null;
+                title?: string | null;
+                body?: string | null;
                 data?: object | null;
                 action?: string | null;
                 image?: string | null;
@@ -1225,11 +1225,11 @@ export class Messaging {
         } else {
             params = {
                 messageId: paramsOrFirst as string,
-                title: rest[0] as string | null,
-                body: rest[1] as string | null,
-                topics: rest[2] as string[] | null,
-                users: rest[3] as string[] | null,
-                targets: rest[4] as string[] | null,
+                topics: rest[0] as string[] | null,
+                users: rest[1] as string[] | null,
+                targets: rest[2] as string[] | null,
+                title: rest[3] as string | null,
+                body: rest[4] as string | null,
                 data: rest[5] as object | null,
                 action: rest[6] as string | null,
                 image: rest[7] as string | null,
@@ -1248,11 +1248,11 @@ export class Messaging {
         }
 
         const messageId = params.messageId;
-        const title = params.title;
-        const body = params.body;
         const topics = params.topics;
         const users = params.users;
         const targets = params.targets;
+        const title = params.title;
+        const body = params.body;
         const data = params.data;
         const action = params.action;
         const image = params.image;
@@ -1278,12 +1278,6 @@ export class Messaging {
             encodeURIComponent(String(messageId)),
         );
         const apiPayload: Payload = {};
-        if (typeof title !== 'undefined') {
-            apiPayload['title'] = title;
-        }
-        if (typeof body !== 'undefined') {
-            apiPayload['body'] = body;
-        }
         if (typeof topics !== 'undefined') {
             apiPayload['topics'] = topics;
         }
@@ -1292,6 +1286,12 @@ export class Messaging {
         }
         if (typeof targets !== 'undefined') {
             apiPayload['targets'] = targets;
+        }
+        if (typeof title !== 'undefined') {
+            apiPayload['title'] = title;
+        }
+        if (typeof body !== 'undefined') {
+            apiPayload['body'] = body;
         }
         if (typeof data !== 'undefined') {
             apiPayload['data'] = data;
@@ -1723,10 +1723,10 @@ export class Messaging {
      *
      *
      * @param {string} params.messageId - Message ID.
-     * @param {string | null} params.content - Email Content.
      * @param {string[] | null} params.topics - List of Topic IDs.
      * @param {string[] | null} params.users - List of User IDs.
      * @param {string[] | null} params.targets - List of Targets IDs.
+     * @param {string | null} params.content - Email Content.
      * @param {boolean | null} params.draft - Is message a draft
      * @param {string | null} params.scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
      * @throws {AppwriteException}
@@ -1735,10 +1735,10 @@ export class Messaging {
      */
     updateSms(params: {
         messageId: string;
-        content?: string | null;
         topics?: string[] | null;
         users?: string[] | null;
         targets?: string[] | null;
+        content?: string | null;
         draft?: boolean | null;
         scheduledAt?: string | null;
     }): Promise<Models.Message>;
@@ -1747,10 +1747,10 @@ export class Messaging {
      *
      *
      * @param {string} messageId - Message ID.
-     * @param {string | null} content - Email Content.
      * @param {string[] | null} topics - List of Topic IDs.
      * @param {string[] | null} users - List of User IDs.
      * @param {string[] | null} targets - List of Targets IDs.
+     * @param {string | null} content - Email Content.
      * @param {boolean | null} draft - Is message a draft
      * @param {string | null} scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
      * @throws {AppwriteException}
@@ -1759,10 +1759,10 @@ export class Messaging {
      */
     updateSms(
         messageId: string,
-        content?: string | null,
         topics?: string[] | null,
         users?: string[] | null,
         targets?: string[] | null,
+        content?: string | null,
         draft?: boolean | null,
         scheduledAt?: string | null,
     ): Promise<Models.Message>;
@@ -1770,29 +1770,29 @@ export class Messaging {
         paramsOrFirst:
             | {
                   messageId: string;
-                  content?: string | null;
                   topics?: string[] | null;
                   users?: string[] | null;
                   targets?: string[] | null;
+                  content?: string | null;
                   draft?: boolean | null;
                   scheduledAt?: string | null;
               }
             | string,
         ...rest: [
+            (string[] | null)?,
+            (string[] | null)?,
+            (string[] | null)?,
             (string | null)?,
-            (string[] | null)?,
-            (string[] | null)?,
-            (string[] | null)?,
             (boolean | null)?,
             (string | null)?,
         ]
     ): Promise<Models.Message> {
         let params: {
             messageId: string;
-            content?: string | null;
             topics?: string[] | null;
             users?: string[] | null;
             targets?: string[] | null;
+            content?: string | null;
             draft?: boolean | null;
             scheduledAt?: string | null;
         };
@@ -1804,30 +1804,30 @@ export class Messaging {
         ) {
             params = (paramsOrFirst || {}) as {
                 messageId: string;
-                content?: string | null;
                 topics?: string[] | null;
                 users?: string[] | null;
                 targets?: string[] | null;
+                content?: string | null;
                 draft?: boolean | null;
                 scheduledAt?: string | null;
             };
         } else {
             params = {
                 messageId: paramsOrFirst as string,
-                content: rest[0] as string | null,
-                topics: rest[1] as string[] | null,
-                users: rest[2] as string[] | null,
-                targets: rest[3] as string[] | null,
+                topics: rest[0] as string[] | null,
+                users: rest[1] as string[] | null,
+                targets: rest[2] as string[] | null,
+                content: rest[3] as string | null,
                 draft: rest[4] as boolean | null,
                 scheduledAt: rest[5] as string | null,
             };
         }
 
         const messageId = params.messageId;
-        const content = params.content;
         const topics = params.topics;
         const users = params.users;
         const targets = params.targets;
+        const content = params.content;
         const draft = params.draft;
         const scheduledAt = params.scheduledAt;
 
@@ -1841,9 +1841,6 @@ export class Messaging {
             encodeURIComponent(String(messageId)),
         );
         const apiPayload: Payload = {};
-        if (typeof content !== 'undefined') {
-            apiPayload['content'] = content;
-        }
         if (typeof topics !== 'undefined') {
             apiPayload['topics'] = topics;
         }
@@ -1852,6 +1849,9 @@ export class Messaging {
         }
         if (typeof targets !== 'undefined') {
             apiPayload['targets'] = targets;
+        }
+        if (typeof content !== 'undefined') {
+            apiPayload['content'] = content;
         }
         if (typeof draft !== 'undefined') {
             apiPayload['draft'] = draft;
@@ -1896,10 +1896,10 @@ export class Messaging {
      *
      *
      * @param {string} params.messageId - Message ID.
-     * @param {string | null} params.content - Email Content.
      * @param {string[] | null} params.topics - List of Topic IDs.
      * @param {string[] | null} params.users - List of User IDs.
      * @param {string[] | null} params.targets - List of Targets IDs.
+     * @param {string | null} params.content - Email Content.
      * @param {boolean | null} params.draft - Is message a draft
      * @param {string | null} params.scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
      * @throws {AppwriteException}
@@ -1907,10 +1907,10 @@ export class Messaging {
      */
     updateSMS(params: {
         messageId: string;
-        content?: string | null;
         topics?: string[] | null;
         users?: string[] | null;
         targets?: string[] | null;
+        content?: string | null;
         draft?: boolean | null;
         scheduledAt?: string | null;
     }): Promise<Models.Message>;
@@ -1919,10 +1919,10 @@ export class Messaging {
      *
      *
      * @param {string} messageId - Message ID.
-     * @param {string | null} content - Email Content.
      * @param {string[] | null} topics - List of Topic IDs.
      * @param {string[] | null} users - List of User IDs.
      * @param {string[] | null} targets - List of Targets IDs.
+     * @param {string | null} content - Email Content.
      * @param {boolean | null} draft - Is message a draft
      * @param {string | null} scheduledAt - Scheduled delivery time for message in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. DateTime value must be in future.
      * @throws {AppwriteException}
@@ -1931,10 +1931,10 @@ export class Messaging {
      */
     updateSMS(
         messageId: string,
-        content?: string | null,
         topics?: string[] | null,
         users?: string[] | null,
         targets?: string[] | null,
+        content?: string | null,
         draft?: boolean | null,
         scheduledAt?: string | null,
     ): Promise<Models.Message>;
@@ -1942,29 +1942,29 @@ export class Messaging {
         paramsOrFirst:
             | {
                   messageId: string;
-                  content?: string | null;
                   topics?: string[] | null;
                   users?: string[] | null;
                   targets?: string[] | null;
+                  content?: string | null;
                   draft?: boolean | null;
                   scheduledAt?: string | null;
               }
             | string,
         ...rest: [
+            (string[] | null)?,
+            (string[] | null)?,
+            (string[] | null)?,
             (string | null)?,
-            (string[] | null)?,
-            (string[] | null)?,
-            (string[] | null)?,
             (boolean | null)?,
             (string | null)?,
         ]
     ): Promise<Models.Message> {
         let params: {
             messageId: string;
-            content?: string | null;
             topics?: string[] | null;
             users?: string[] | null;
             targets?: string[] | null;
+            content?: string | null;
             draft?: boolean | null;
             scheduledAt?: string | null;
         };
@@ -1976,30 +1976,30 @@ export class Messaging {
         ) {
             params = (paramsOrFirst || {}) as {
                 messageId: string;
-                content?: string | null;
                 topics?: string[] | null;
                 users?: string[] | null;
                 targets?: string[] | null;
+                content?: string | null;
                 draft?: boolean | null;
                 scheduledAt?: string | null;
             };
         } else {
             params = {
                 messageId: paramsOrFirst as string,
-                content: rest[0] as string | null,
-                topics: rest[1] as string[] | null,
-                users: rest[2] as string[] | null,
-                targets: rest[3] as string[] | null,
+                topics: rest[0] as string[] | null,
+                users: rest[1] as string[] | null,
+                targets: rest[2] as string[] | null,
+                content: rest[3] as string | null,
                 draft: rest[4] as boolean | null,
                 scheduledAt: rest[5] as string | null,
             };
         }
 
         const messageId = params.messageId;
-        const content = params.content;
         const topics = params.topics;
         const users = params.users;
         const targets = params.targets;
+        const content = params.content;
         const draft = params.draft;
         const scheduledAt = params.scheduledAt;
 
@@ -2013,9 +2013,6 @@ export class Messaging {
             encodeURIComponent(String(messageId)),
         );
         const apiPayload: Payload = {};
-        if (typeof content !== 'undefined') {
-            apiPayload['content'] = content;
-        }
         if (typeof topics !== 'undefined') {
             apiPayload['topics'] = topics;
         }
@@ -2024,6 +2021,9 @@ export class Messaging {
         }
         if (typeof targets !== 'undefined') {
             apiPayload['targets'] = targets;
+        }
+        if (typeof content !== 'undefined') {
+            apiPayload['content'] = content;
         }
         if (typeof draft !== 'undefined') {
             apiPayload['draft'] = draft;
@@ -8299,11 +8299,11 @@ export class Messaging {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         emailTotal: 0,
                         smsTotal: 0,
                         pushTotal: 0,
                         subscribe: ['users'],
-                        description: '',
                     },
                 },
             },
@@ -8458,11 +8458,11 @@ export class Messaging {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         emailTotal: 0,
                         smsTotal: 0,
                         pushTotal: 0,
                         subscribe: ['users'],
-                        description: '',
                     },
                 },
             },
@@ -8536,11 +8536,11 @@ export class Messaging {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         emailTotal: 0,
                         smsTotal: 0,
                         pushTotal: 0,
                         subscribe: ['users'],
-                        description: '',
                     },
                 },
             },
@@ -8694,11 +8694,11 @@ export class Messaging {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         emailTotal: 0,
                         smsTotal: 0,
                         pushTotal: 0,
                         subscribe: ['users'],
-                        description: '',
                     },
                 },
             },

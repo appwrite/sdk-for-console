@@ -10,7 +10,7 @@ const users = new Users(client);
 const result = await users.createBcryptUser({
     userId: '<USER_ID>',
     email: 'email@example.com',
-    password: 'password',
+    password: '',
     name: '<NAME>', // optional
 });
 

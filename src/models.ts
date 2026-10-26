@@ -931,6 +931,10 @@ export namespace Models {
          */
         name: string;
         /**
+         * Optional description for the database.
+         */
+        description: string;
+        /**
          * Database creation date in ISO 8601 format.
          */
         $createdAt: string;
@@ -982,10 +986,6 @@ export namespace Models {
          * Database backup archives.
          */
         archives?: BackupArchive[] | null;
-        /**
-         * Optional description for the database.
-         */
-        description: string;
     };
 
     /**
@@ -1039,6 +1039,10 @@ export namespace Models {
          */
         name: string;
         /**
+         * Optional description for the collection.
+         */
+        description: string;
+        /**
          * Collection enabled. Can be 'enabled' or 'disabled'. When disabled, the collection is inaccessible to users, but remains accessible to Server SDKs using API keys.
          */
         enabled: boolean;
@@ -1081,10 +1085,6 @@ export namespace Models {
          * Currently used document size in bytes based on defined attributes.
          */
         bytesUsed: number;
-        /**
-         * Optional description for the collection.
-         */
-        description: string;
     };
 
     /**
@@ -1129,6 +1129,10 @@ export namespace Models {
          */
         key: string;
         /**
+         * Optional description for the attribute.
+         */
+        description: string;
+        /**
          * Attribute type.
          */
         type: string;
@@ -1168,10 +1172,6 @@ export namespace Models {
          * Defines whether this attribute is encrypted or not.
          */
         encrypt?: boolean | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1182,6 +1182,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -1222,10 +1226,6 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: number | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1236,6 +1236,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -1276,10 +1280,6 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: number | bigint | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1290,6 +1290,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -1330,10 +1334,6 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: number | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1344,6 +1344,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -1376,10 +1380,6 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: boolean | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1390,6 +1390,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -1426,10 +1430,6 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: string | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1440,6 +1440,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -1480,10 +1484,6 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: string | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1495,6 +1495,10 @@ export namespace Models {
          */
         key: string;
         /**
+         * Optional description for the attribute.
+         */
+        description: string;
+        /**
          * Attribute type.
          */
         type: string;
@@ -1530,10 +1534,6 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: string | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1545,6 +1545,10 @@ export namespace Models {
          */
         key: string;
         /**
+         * Optional description for the attribute.
+         */
+        description: string;
+        /**
          * Attribute type.
          */
         type: string;
@@ -1580,10 +1584,6 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: string | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1594,6 +1594,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -1630,10 +1634,6 @@ export namespace Models {
          * Default value for attribute when not provided. Only null is optional
          */
         default?: string | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1644,6 +1644,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -1696,10 +1700,6 @@ export namespace Models {
          * Whether this is the parent or child side of the relationship
          */
         side: string;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1710,6 +1710,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -1742,10 +1746,6 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: number[] | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1756,6 +1756,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -1788,10 +1792,6 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: number[][] | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1802,6 +1802,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -1834,10 +1838,6 @@ export namespace Models {
          * Default value for attribute when not provided. Cannot be set when attribute is required.
          */
         default?: number[][][] | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1848,6 +1848,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -1888,10 +1892,6 @@ export namespace Models {
          * Defines whether this attribute is encrypted or not.
          */
         encrypt?: boolean | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1903,6 +1903,10 @@ export namespace Models {
          */
         key: string;
         /**
+         * Optional description for the attribute.
+         */
+        description: string;
+        /**
          * Attribute type.
          */
         type: string;
@@ -1938,10 +1942,6 @@ export namespace Models {
          * Defines whether this attribute is encrypted or not.
          */
         encrypt?: boolean | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -1953,6 +1953,10 @@ export namespace Models {
          */
         key: string;
         /**
+         * Optional description for the attribute.
+         */
+        description: string;
+        /**
          * Attribute type.
          */
         type: string;
@@ -1988,10 +1992,6 @@ export namespace Models {
          * Defines whether this attribute is encrypted or not.
          */
         encrypt?: boolean | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -2003,6 +2003,10 @@ export namespace Models {
          */
         key: string;
         /**
+         * Optional description for the attribute.
+         */
+        description: string;
+        /**
          * Attribute type.
          */
         type: string;
@@ -2038,10 +2042,6 @@ export namespace Models {
          * Defines whether this attribute is encrypted or not.
          */
         encrypt?: boolean | null;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -2073,6 +2073,10 @@ export namespace Models {
          */
         name: string;
         /**
+         * Optional description for the collection.
+         */
+        description: string;
+        /**
          * Collection enabled. Can be 'enabled' or 'disabled'. When disabled, the collection is inaccessible to users, but remains accessible to Server SDKs using API keys.
          */
         enabled: boolean;
@@ -2100,10 +2104,6 @@ export namespace Models {
          * Embedding dimension.
          */
         dimension: number;
-        /**
-         * Optional description for the collection.
-         */
-        description: string;
     };
 
     /**
@@ -2114,6 +2114,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -2142,10 +2146,6 @@ export namespace Models {
          * Attribute update date in ISO 8601 format.
          */
         $updatedAt: string;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -2156,6 +2156,10 @@ export namespace Models {
          * Attribute Key.
          */
         key: string;
+        /**
+         * Optional description for the attribute.
+         */
+        description: string;
         /**
          * Attribute type.
          */
@@ -2188,10 +2192,6 @@ export namespace Models {
          * Vector dimensions.
          */
         size: number;
-        /**
-         * Optional description for the attribute.
-         */
-        description: string;
     };
 
     /**
@@ -2222,6 +2222,10 @@ export namespace Models {
          * Table name.
          */
         name: string;
+        /**
+         * Optional description for the table.
+         */
+        description: string;
         /**
          * Table enabled. Can be 'enabled' or 'disabled'. When disabled, the table is inaccessible to users, but remains accessible to Server SDKs using API keys.
          */
@@ -2265,10 +2269,6 @@ export namespace Models {
          * Currently used row size in bytes based on defined columns.
          */
         bytesUsed: number;
-        /**
-         * Optional description for the table.
-         */
-        description: string;
     };
 
     /**
@@ -2313,6 +2313,10 @@ export namespace Models {
          */
         key: string;
         /**
+         * Optional description for the column.
+         */
+        description: string;
+        /**
          * Column type.
          */
         type: string;
@@ -2352,10 +2356,6 @@ export namespace Models {
          * Defines whether this column is encrypted or not.
          */
         encrypt?: boolean | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -2366,6 +2366,10 @@ export namespace Models {
          * Column Key.
          */
         key: string;
+        /**
+         * Optional description for the column.
+         */
+        description: string;
         /**
          * Column type.
          */
@@ -2406,10 +2410,6 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: number | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -2420,6 +2420,10 @@ export namespace Models {
          * Column Key.
          */
         key: string;
+        /**
+         * Optional description for the column.
+         */
+        description: string;
         /**
          * Column type.
          */
@@ -2460,10 +2464,6 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: number | bigint | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -2474,6 +2474,10 @@ export namespace Models {
          * Column Key.
          */
         key: string;
+        /**
+         * Optional description for the column.
+         */
+        description: string;
         /**
          * Column type.
          */
@@ -2514,10 +2518,6 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: number | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -2528,6 +2528,10 @@ export namespace Models {
          * Column Key.
          */
         key: string;
+        /**
+         * Optional description for the column.
+         */
+        description: string;
         /**
          * Column type.
          */
@@ -2560,10 +2564,6 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: boolean | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -2574,6 +2574,10 @@ export namespace Models {
          * Column Key.
          */
         key: string;
+        /**
+         * Optional description for the column.
+         */
+        description: string;
         /**
          * Column type.
          */
@@ -2610,10 +2614,6 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: string | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -2624,6 +2624,10 @@ export namespace Models {
          * Column Key.
          */
         key: string;
+        /**
+         * Optional description for the column.
+         */
+        description: string;
         /**
          * Column type.
          */
@@ -2664,10 +2668,6 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: string | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -2679,6 +2679,10 @@ export namespace Models {
          */
         key: string;
         /**
+         * Optional description for the column.
+         */
+        description: string;
+        /**
          * Column type.
          */
         type: string;
@@ -2714,10 +2718,6 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: string | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -2729,6 +2729,10 @@ export namespace Models {
          */
         key: string;
         /**
+         * Optional description for the column.
+         */
+        description: string;
+        /**
          * Column type.
          */
         type: string;
@@ -2764,10 +2768,6 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: string | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -2778,6 +2778,10 @@ export namespace Models {
          * Column Key.
          */
         key: string;
+        /**
+         * Optional description for the column.
+         */
+        description: string;
         /**
          * Column type.
          */
@@ -2814,10 +2818,6 @@ export namespace Models {
          * Default value for column when not provided. Only null is optional
          */
         default?: string | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -2828,6 +2828,10 @@ export namespace Models {
          * Column Key.
          */
         key: string;
+        /**
+         * Optional description for the column.
+         */
+        description: string;
         /**
          * Column type.
          */
@@ -2880,10 +2884,6 @@ export namespace Models {
          * Whether this is the parent or child side of the relationship
          */
         side: string;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -2894,6 +2894,10 @@ export namespace Models {
          * Column Key.
          */
         key: string;
+        /**
+         * Optional description for the column.
+         */
+        description: string;
         /**
          * Column type.
          */
@@ -2926,10 +2930,6 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: number[] | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -2940,6 +2940,10 @@ export namespace Models {
          * Column Key.
          */
         key: string;
+        /**
+         * Optional description for the column.
+         */
+        description: string;
         /**
          * Column type.
          */
@@ -2972,10 +2976,6 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: number[][] | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -2986,6 +2986,10 @@ export namespace Models {
          * Column Key.
          */
         key: string;
+        /**
+         * Optional description for the column.
+         */
+        description: string;
         /**
          * Column type.
          */
@@ -3018,10 +3022,6 @@ export namespace Models {
          * Default value for column when not provided. Cannot be set when column is required.
          */
         default?: number[][][] | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -3032,6 +3032,10 @@ export namespace Models {
          * Column Key.
          */
         key: string;
+        /**
+         * Optional description for the column.
+         */
+        description: string;
         /**
          * Column type.
          */
@@ -3072,10 +3076,6 @@ export namespace Models {
          * Defines whether this column is encrypted or not.
          */
         encrypt?: boolean | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -3087,6 +3087,10 @@ export namespace Models {
          */
         key: string;
         /**
+         * Optional description for the column.
+         */
+        description: string;
+        /**
          * Column type.
          */
         type: string;
@@ -3122,10 +3126,6 @@ export namespace Models {
          * Defines whether this column is encrypted or not.
          */
         encrypt?: boolean | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -3137,6 +3137,10 @@ export namespace Models {
          */
         key: string;
         /**
+         * Optional description for the column.
+         */
+        description: string;
+        /**
          * Column type.
          */
         type: string;
@@ -3172,10 +3176,6 @@ export namespace Models {
          * Defines whether this column is encrypted or not.
          */
         encrypt?: boolean | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -3187,6 +3187,10 @@ export namespace Models {
          */
         key: string;
         /**
+         * Optional description for the column.
+         */
+        description: string;
+        /**
          * Column type.
          */
         type: string;
@@ -3222,10 +3226,6 @@ export namespace Models {
          * Defines whether this column is encrypted or not.
          */
         encrypt?: boolean | null;
-        /**
-         * Optional description for the column.
-         */
-        description: string;
     };
 
     /**
@@ -3248,6 +3248,10 @@ export namespace Models {
          * Index key.
          */
         key: string;
+        /**
+         * Optional description for the index.
+         */
+        description: string;
         /**
          * Index type.
          */
@@ -3272,10 +3276,6 @@ export namespace Models {
          * Index orders.
          */
         orders?: string[] | null;
-        /**
-         * Optional description for the index.
-         */
-        description: string;
     };
 
     /**
@@ -3298,6 +3298,10 @@ export namespace Models {
          * Index Key.
          */
         key: string;
+        /**
+         * Optional description for the index.
+         */
+        description: string;
         /**
          * Index type.
          */
@@ -3322,10 +3326,6 @@ export namespace Models {
          * Index orders.
          */
         orders?: string[] | null;
-        /**
-         * Optional description for the index.
-         */
-        description: string;
     };
 
     /**
@@ -4261,6 +4261,10 @@ export namespace Models {
          */
         name: string;
         /**
+         * Optional description for the bucket.
+         */
+        description: string;
+        /**
          * Bucket enabled.
          */
         enabled: boolean;
@@ -4289,17 +4293,13 @@ export namespace Models {
          */
         transformations: boolean;
         /**
-         * Total size of this bucket in bytes.
-         */
-        totalSize: number;
-        /**
-         * Optional description for the bucket.
-         */
-        description: string;
-        /**
          * Metadata such as location, device and capture time is removed from uploaded images.
          */
         stripMetadata: boolean;
+        /**
+         * Total size of this bucket in bytes.
+         */
+        totalSize: number;
     };
 
     /**
@@ -4455,6 +4455,10 @@ export namespace Models {
          */
         name: string;
         /**
+         * Optional description for the site.
+         */
+        description: string;
+        /**
          * Site enabled.
          */
         enabled: boolean;
@@ -4578,10 +4582,6 @@ export namespace Models {
          * Name of fallback file to use instead of 404 page. If null, Appwrite 404 page will be displayed.
          */
         fallbackFile: string;
-        /**
-         * Optional description for the site.
-         */
-        description: string;
     };
 
     /**
@@ -4709,6 +4709,10 @@ export namespace Models {
          */
         name: string;
         /**
+         * Optional description for the function.
+         */
+        description: string;
+        /**
          * Function enabled.
          */
         enabled: boolean;
@@ -4820,10 +4824,6 @@ export namespace Models {
          * Machine specification for executions.
          */
         runtimeSpecification: string;
-        /**
-         * Optional description for the function.
-         */
-        description: string;
         /**
          * Whether inbound email (SMTP) may trigger this function. Opt-in; default is false. When disabled, recipients for this function are rejected.
          */
@@ -5635,7 +5635,7 @@ export namespace Models {
         /**
          * Whether WAF enforcement is enabled for the project.
          */
-        wafEnabled: boolean | null;
+        wafEnabled?: boolean | null;
         /**
          * ID of the project this environment belongs to. Null when the project is not an environment.
          */
@@ -5785,6 +5785,10 @@ export namespace Models {
          */
         name: string;
         /**
+         * Optional description for the webhook.
+         */
+        description: string;
+        /**
          * Webhook URL endpoint.
          */
         url: string;
@@ -5820,10 +5824,6 @@ export namespace Models {
          * Number of consecutive failed webhook attempts.
          */
         attempts: number;
-        /**
-         * Optional description for the webhook.
-         */
-        description: string;
     };
 
     /**
@@ -5847,6 +5847,10 @@ export namespace Models {
          */
         name: string;
         /**
+         * Optional description for the key.
+         */
+        description: string;
+        /**
          * Key expiration date in ISO 8601 format.
          */
         expire: string;
@@ -5866,10 +5870,6 @@ export namespace Models {
          * List of SDK user agents that used this key.
          */
         sdks: string[];
-        /**
-         * Optional description for the key.
-         */
-        description: string;
     };
 
     /**
@@ -5893,6 +5893,10 @@ export namespace Models {
          */
         name: string;
         /**
+         * Optional description for the key.
+         */
+        description: string;
+        /**
          * Key expiration date in ISO 8601 format.
          */
         expire: string;
@@ -5912,10 +5916,6 @@ export namespace Models {
          * List of SDK user agents that used this key.
          */
         sdks: string[];
-        /**
-         * Optional description for the key.
-         */
-        description: string;
     };
 
     /**
@@ -7675,6 +7675,10 @@ export namespace Models {
          */
         key: string;
         /**
+         * Optional description for the variable.
+         */
+        description: string;
+        /**
          * Variable value.
          */
         value: string;
@@ -7690,10 +7694,6 @@ export namespace Models {
          * ID of resource to which the variable belongs. If resourceType is "project", it is empty. If resourceType is "function", it is ID of the function.
          */
         resourceId: string;
-        /**
-         * Optional description for the variable.
-         */
-        description: string;
     };
 
     /**
@@ -8353,6 +8353,10 @@ export namespace Models {
          */
         _APP_DB_ADAPTER: string;
         /**
+         * Whether the database adapter enforces defined attributes.
+         */
+        supportForAttributes: boolean;
+        /**
          * Whether the database adapter supports relationships.
          */
         supportForRelationships: boolean;
@@ -8364,6 +8368,14 @@ export namespace Models {
          * Whether the database adapter supports spatial attributes.
          */
         supportForSpatials: boolean;
+        /**
+         * Whether the database adapter supports aggregation queries.
+         */
+        supportForAggregations: boolean;
+        /**
+         * Whether the database adapter supports join queries.
+         */
+        supportForJoins: boolean;
         /**
          * Whether the database adapter supports spatial indexes on nullable columns.
          */
@@ -8400,18 +8412,6 @@ export namespace Models {
          * Whether email verification for console users is required. Can be "true" or "false".
          */
         _APP_CONSOLE_EMAIL_VERIFICATION: string;
-        /**
-         * Whether the database adapter enforces defined attributes.
-         */
-        supportForAttributes: boolean;
-        /**
-         * Whether the database adapter supports aggregation queries.
-         */
-        supportForAggregations: boolean;
-        /**
-         * Whether the database adapter supports join queries.
-         */
-        supportForJoins: boolean;
         /**
          * Appwrite-owned zone for function testing email addresses, delivered to {functionId}@{projectId}.{zone}. Empty when inbound email is not configured.
          */
@@ -8823,6 +8823,10 @@ export namespace Models {
          */
         name: string;
         /**
+         * Optional description for the topic.
+         */
+        description: string;
+        /**
          * Total count of email subscribers subscribed to the topic.
          */
         emailTotal: number;
@@ -8846,10 +8850,6 @@ export namespace Models {
          * Message retention in seconds for offline delivery. Null inherits the lowest expiry of the project's enabled Appwrite providers, or the 7-day ledger window if none sets one.
          */
         expiry?: number | null;
-        /**
-         * Optional description for the topic.
-         */
-        description: string;
     };
 
     /**
@@ -9137,6 +9137,10 @@ export namespace Models {
          */
         projectemailtemplate: number;
         /**
+         * Number of project environments to be migrated. Each is recreated under a new ID, empty: its own resources belong to a separate project.
+         */
+        projectenvironment: number;
+        /**
          * Number of sites to be migrated.
          */
         site: number;
@@ -9172,10 +9176,6 @@ export namespace Models {
          * Number of backup policies to be migrated.
          */
         backuppolicy: number;
-        /**
-         * Number of project environments to be migrated. Each is recreated under a new ID, empty: its own resources belong to a separate project.
-         */
-        projectenvironment: number;
     };
 
     /**
@@ -10355,6 +10355,18 @@ export namespace Models {
          */
         executionsRetentionCount: number;
         /**
+         * Days non-active deployments are kept when a function or site sets no retention.
+         */
+        deploymentRetention: number;
+        /**
+         * Maximum deployment retention in days a function or site can set. 0 means unlimited.
+         */
+        deploymentRetentionMax: number;
+        /**
+         * Non-active deployments kept per function or site. 0 means unlimited.
+         */
+        deploymentsRetentionCount: number;
+        /**
          * GB hours for functions
          */
         GBHours: number;
@@ -10519,6 +10531,10 @@ export namespace Models {
          */
         functionsIntervalMinimum: number;
         /**
+         * Does the plan allow cron function schedules or only intervals.
+         */
+        functionsAllowCron: boolean;
+        /**
          * Does the plan support encrypted string attributes or not.
          */
         databasesAllowEncrypt: boolean;
@@ -10542,22 +10558,6 @@ export namespace Models {
          * Dedicated database limits available to this plan.
          */
         dedicatedDatabases?: BillingPlanDedicatedDatabaseLimits | null;
-        /**
-         * Days non-active deployments are kept when a function or site sets no retention.
-         */
-        deploymentRetention: number;
-        /**
-         * Maximum deployment retention in days a function or site can set. 0 means unlimited.
-         */
-        deploymentRetentionMax: number;
-        /**
-         * Non-active deployments kept per function or site. 0 means unlimited.
-         */
-        deploymentsRetentionCount: number;
-        /**
-         * Does the plan allow cron function schedules or only intervals.
-         */
-        functionsAllowCron: boolean;
     };
 
     /**
@@ -11355,6 +11355,10 @@ export namespace Models {
          */
         type: string;
         /**
+         * Where the backup was restored. Possible values: in_place (replayed over the database that took the backup), clone (recovered onto a second workload beside the database, which keeps serving until the clone is promoted onto its endpoint), copy (recovered onto a separate database with its own endpoint).
+         */
+        restoreMode: string;
+        /**
          * Restoration status. Possible values: pending (queued for processing), running (currently in progress), completed (successfully finished), failed (encountered an error).
          */
         status: string;
@@ -11374,10 +11378,6 @@ export namespace Models {
          * Error message if restoration failed.
          */
         error: string;
-        /**
-         * Where the backup was restored. Possible values: in_place (replayed over the database that took the backup), clone (recovered onto a second workload beside the database, which keeps serving until the clone is promoted onto its endpoint), copy (recovered onto a separate database with its own endpoint).
-         */
-        restoreMode: string;
     };
 
     /**
@@ -12213,6 +12213,52 @@ export namespace Models {
     };
 
     /**
+     * AdminBlock
+     */
+    export type AdminBlock = {
+        /**
+         * Block creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Resource type that is blocked
+         */
+        resourceType: string;
+        /**
+         * Resource identifier that is blocked
+         */
+        resourceId: string;
+        /**
+         * Block mode. full blocks reads and writes; readOnly blocks writes only.
+         */
+        mode: string;
+        /**
+         * Block expiration date in ISO 8601 format. Can be null if the block does not expire.
+         */
+        expiredAt?: string | null;
+        /**
+         * Block ID.
+         */
+        $id: string;
+        /**
+         * Block update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the project the block is placed on.
+         */
+        projectId: string;
+        /**
+         * Why the block was placed, in the operator's words. Empty when none was given.
+         */
+        reason: string;
+        /**
+         * ID of the threat whose detection placed the block. Empty for a block an operator placed.
+         */
+        threatId: string;
+    };
+
+    /**
      * Threat
      */
     export type Threat = {
@@ -12448,6 +12494,60 @@ export namespace Models {
          * Selected projects
          */
         projects: string[];
+    };
+
+    /**
+     * Payment
+     */
+    export type Payment = {
+        /**
+         * Payment ID.
+         */
+        $id: string;
+        /**
+         * Payment creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Payment update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the invoice the payment collects.
+         */
+        invoiceId: string;
+        /**
+         * ID of the organization that is charged.
+         */
+        teamId: string;
+        /**
+         * ID of the payment at the payment provider.
+         */
+        providerPaymentId: string;
+        /**
+         * ID of the payment method that was charged. Empty when none was.
+         */
+        paymentMethodId: string;
+        /**
+         * Amount charged, in the invoice currency.
+         */
+        amount: number;
+        /**
+         * Currency the payment is in.
+         */
+        currency: string;
+        /**
+         * Payment status. One of `pending` (confirmation in progress), `processing`, `requires_authentication`, `succeeded`, `failed`, `disputed`, `partially_refunded` or `refunded`.
+         */
+        status: string;
+        /**
+         * When the payment was attempted, in ISO 8601 format.
+         */
+        date: string;
+        /**
+         * The provider's last error for a failed payment, or the refunded amount for a partially refunded one. Null otherwise.
+         */
+        lastError?: string | null;
     };
 
     /**
@@ -14595,6 +14695,20 @@ export namespace Models {
     };
 
     /**
+     * Payments list
+     */
+    export type PaymentList = {
+        /**
+         * Total number of payments that matched your query.
+         */
+        total: number;
+        /**
+         * List of payments.
+         */
+        payments: Payment[];
+    };
+
+    /**
      * Billing plan list
      */
     export type BillingPlanList = {
@@ -14634,6 +14748,34 @@ export namespace Models {
          * List of threats.
          */
         threats: Threat[];
+    };
+
+    /**
+     * Admin credits list
+     */
+    export type AdminCreditList = {
+        /**
+         * Total number of credits that matched your query.
+         */
+        total: number;
+        /**
+         * List of credits.
+         */
+        credits: Credit[];
+    };
+
+    /**
+     * Admin blocks list
+     */
+    export type AdminBlockList = {
+        /**
+         * Total number of blocks that matched your query.
+         */
+        total: number;
+        /**
+         * List of blocks.
+         */
+        blocks: AdminBlock[];
     };
 
     /**
@@ -14849,17 +14991,17 @@ export namespace Models {
     };
 
     /**
-     * Videos List
+     * Video Subtitles List
      */
-    export type VideoList = {
+    export type VideoSubtitleList = {
         /**
-         * Total number of videos that matched your query.
+         * Total number of subtitles that matched your query.
          */
         total: number;
         /**
-         * List of videos.
+         * List of subtitles.
          */
-        videos: Video[];
+        subtitles: VideoSubtitle[];
     };
 
     /**
@@ -14877,31 +15019,17 @@ export namespace Models {
     };
 
     /**
-     * Video Renditions List
+     * Videos List
      */
-    export type VideoRenditionList = {
+    export type VideoList = {
         /**
-         * Total number of renditions that matched your query.
+         * Total number of videos that matched your query.
          */
         total: number;
         /**
-         * List of renditions.
+         * List of videos.
          */
-        renditions: VideoRendition[];
-    };
-
-    /**
-     * Video Subtitles List
-     */
-    export type VideoSubtitleList = {
-        /**
-         * Total number of subtitles that matched your query.
-         */
-        total: number;
-        /**
-         * List of subtitles.
-         */
-        subtitles: VideoSubtitle[];
+        videos: Video[];
     };
 
     /**
@@ -15015,41 +15143,17 @@ export namespace Models {
     };
 
     /**
-     * Video profile
+     * Video Renditions List
      */
-    export type VideoProfile = {
+    export type VideoRenditionList = {
         /**
-         * Video profile ID.
+         * Total number of renditions that matched your query.
          */
-        $id: string;
+        total: number;
         /**
-         * Video profile creation time in ISO 8601 format.
+         * List of renditions.
          */
-        $createdAt: string;
-        /**
-         * Video profile update date in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * Video profile name.
-         */
-        name: string;
-        /**
-         * Target video bitrate in kilobits per second.
-         */
-        videoBitRate: number;
-        /**
-         * Target audio bitrate in kilobits per second.
-         */
-        audioBitRate: number;
-        /**
-         * Target video width in pixels.
-         */
-        width: number;
-        /**
-         * Target video height in pixels.
-         */
-        height: number;
+        renditions: VideoRendition[];
     };
 
     /**
@@ -15177,144 +15281,40 @@ export namespace Models {
     };
 
     /**
-     * AdminBlock
+     * Video profile
      */
-    export type AdminBlock = {
+    export type VideoProfile = {
         /**
-         * Block creation date in ISO 8601 format.
-         */
-        $createdAt: string;
-        /**
-         * Resource type that is blocked
-         */
-        resourceType: string;
-        /**
-         * Resource identifier that is blocked
-         */
-        resourceId: string;
-        /**
-         * Block mode. full blocks reads and writes; readOnly blocks writes only.
-         */
-        mode: string;
-        /**
-         * Block expiration date in ISO 8601 format. Can be null if the block does not expire.
-         */
-        expiredAt?: string | null;
-        /**
-         * Block ID.
+         * Video profile ID.
          */
         $id: string;
         /**
-         * Block update date in ISO 8601 format.
-         */
-        $updatedAt: string;
-        /**
-         * ID of the project the block is placed on.
-         */
-        projectId: string;
-        /**
-         * Why the block was placed, in the operator's words. Empty when none was given.
-         */
-        reason: string;
-        /**
-         * ID of the threat whose detection placed the block. Empty for a block an operator placed.
-         */
-        threatId: string;
-    };
-
-    /**
-     * Payment
-     */
-    export type Payment = {
-        /**
-         * Payment ID.
-         */
-        $id: string;
-        /**
-         * Payment creation date in ISO 8601 format.
+         * Video profile creation time in ISO 8601 format.
          */
         $createdAt: string;
         /**
-         * Payment update date in ISO 8601 format.
+         * Video profile update date in ISO 8601 format.
          */
         $updatedAt: string;
         /**
-         * ID of the invoice the payment collects.
+         * Video profile name.
          */
-        invoiceId: string;
+        name: string;
         /**
-         * ID of the organization that is charged.
+         * Target video bitrate in kilobits per second.
          */
-        teamId: string;
+        videoBitRate: number;
         /**
-         * ID of the payment at the payment provider.
+         * Target audio bitrate in kilobits per second.
          */
-        providerPaymentId: string;
+        audioBitRate: number;
         /**
-         * ID of the payment method that was charged. Empty when none was.
+         * Target video width in pixels.
          */
-        paymentMethodId: string;
+        width: number;
         /**
-         * Amount charged, in the invoice currency.
+         * Target video height in pixels.
          */
-        amount: number;
-        /**
-         * Currency the payment is in.
-         */
-        currency: string;
-        /**
-         * Payment status. One of `pending` (confirmation in progress), `processing`, `requires_authentication`, `succeeded`, `failed`, `disputed`, `partially_refunded` or `refunded`.
-         */
-        status: string;
-        /**
-         * When the payment was attempted, in ISO 8601 format.
-         */
-        date: string;
-        /**
-         * The provider's last error for a failed payment, or the refunded amount for a partially refunded one. Null otherwise.
-         */
-        lastError?: string | null;
-    };
-
-    /**
-     * Payments list
-     */
-    export type PaymentList = {
-        /**
-         * Total number of payments that matched your query.
-         */
-        total: number;
-        /**
-         * List of payments.
-         */
-        payments: Payment[];
-    };
-
-    /**
-     * Admin credits list
-     */
-    export type AdminCreditList = {
-        /**
-         * Total number of credits that matched your query.
-         */
-        total: number;
-        /**
-         * List of credits.
-         */
-        credits: Credit[];
-    };
-
-    /**
-     * Admin blocks list
-     */
-    export type AdminBlockList = {
-        /**
-         * Total number of blocks that matched your query.
-         */
-        total: number;
-        /**
-         * List of blocks.
-         */
-        blocks: AdminBlock[];
+        height: number;
     };
 }

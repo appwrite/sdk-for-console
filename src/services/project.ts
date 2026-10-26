@@ -80,7 +80,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -257,7 +256,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -412,7 +410,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -564,7 +561,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -695,7 +691,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -847,7 +842,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -1034,12 +1028,12 @@ export class Project {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
                         accessedAt: '',
                         sdks: [],
-                        description: '',
                     },
                 },
             },
@@ -1181,12 +1175,12 @@ export class Project {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
                         accessedAt: '',
                         sdks: [],
-                        description: '',
                     },
                 },
             },
@@ -1286,12 +1280,12 @@ export class Project {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
                         accessedAt: '',
                         sdks: [],
-                        description: '',
                     },
                 },
             },
@@ -1359,12 +1353,12 @@ export class Project {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
                         accessedAt: '',
                         sdks: [],
-                        description: '',
                     },
                 },
             },
@@ -1507,12 +1501,12 @@ export class Project {
                         $createdAt: '',
                         $updatedAt: '',
                         name: '',
+                        description: '',
                         expire: '',
                         scopes: [],
                         secret: '',
                         accessedAt: '',
                         sdks: [],
-                        description: '',
                     },
                 },
             },
@@ -1658,7 +1652,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -2474,7 +2467,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -2633,8 +2625,8 @@ export class Project {
      * @param {string | null} params.keyId - 'Key ID' of Apple OAuth2 app. For example: P4000000N8
      * @param {string | null} params.teamId - 'Team ID' of Apple OAuth2 app. For example: D4000000R6
      * @param {string | null} params.p8File - Contents of the Apple OAuth2 app .p8 private key file. The secret key wrapped by the PEM markers is 200 characters long. For example: -----BEGIN PRIVATE KEY-----MIGTAg...jy2Xbna-----END PRIVATE KEY-----
-     * @param {string[] | null} params.nativeClientIds - App bundle IDs accepted as ID token audiences for native Sign in with Apple. For example: com.example.app. Together with the Services ID, these are the only client IDs whose tokens are trusted. Pass an empty array to clear the list.
      * @param {boolean | null} params.enabled - Browser-based OAuth2 sign-in status. Set to true to enable new session creation through the redirect flow. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid. Has no effect on native sign-in, which is controlled by nativeEnabled only.
+     * @param {string[] | null} params.nativeClientIds - App bundle IDs accepted as ID token audiences for native Sign in with Apple. For example: com.example.app. Together with the Services ID, these are the only client IDs whose tokens are trusted. Pass an empty array to clear the list.
      * @param {boolean | null} params.nativeEnabled - Native Sign in with Apple status. This is the only switch for creating sessions from ID tokens obtained on device and is independent of enabled. Needs a Services ID or at least one native client ID to match tokens against, but no key or team ID: this method verifies a signature rather than redeeming an authorization code.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Apple>}
@@ -2644,8 +2636,8 @@ export class Project {
         keyId?: string | null;
         teamId?: string | null;
         p8File?: string | null;
-        nativeClientIds?: string[] | null;
         enabled?: boolean | null;
+        nativeClientIds?: string[] | null;
         nativeEnabled?: boolean | null;
     }): Promise<Models.OAuth2Apple>;
     /**
@@ -2655,8 +2647,8 @@ export class Project {
      * @param {string | null} keyId - 'Key ID' of Apple OAuth2 app. For example: P4000000N8
      * @param {string | null} teamId - 'Team ID' of Apple OAuth2 app. For example: D4000000R6
      * @param {string | null} p8File - Contents of the Apple OAuth2 app .p8 private key file. The secret key wrapped by the PEM markers is 200 characters long. For example: -----BEGIN PRIVATE KEY-----MIGTAg...jy2Xbna-----END PRIVATE KEY-----
-     * @param {string[] | null} nativeClientIds - App bundle IDs accepted as ID token audiences for native Sign in with Apple. For example: com.example.app. Together with the Services ID, these are the only client IDs whose tokens are trusted. Pass an empty array to clear the list.
      * @param {boolean | null} enabled - Browser-based OAuth2 sign-in status. Set to true to enable new session creation through the redirect flow. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid. Has no effect on native sign-in, which is controlled by nativeEnabled only.
+     * @param {string[] | null} nativeClientIds - App bundle IDs accepted as ID token audiences for native Sign in with Apple. For example: com.example.app. Together with the Services ID, these are the only client IDs whose tokens are trusted. Pass an empty array to clear the list.
      * @param {boolean | null} nativeEnabled - Native Sign in with Apple status. This is the only switch for creating sessions from ID tokens obtained on device and is independent of enabled. Needs a Services ID or at least one native client ID to match tokens against, but no key or team ID: this method verifies a signature rather than redeeming an authorization code.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Apple>}
@@ -2667,8 +2659,8 @@ export class Project {
         keyId?: string | null,
         teamId?: string | null,
         p8File?: string | null,
-        nativeClientIds?: string[] | null,
         enabled?: boolean | null,
+        nativeClientIds?: string[] | null,
         nativeEnabled?: boolean | null,
     ): Promise<Models.OAuth2Apple>;
     updateOAuth2Apple(
@@ -2678,8 +2670,8 @@ export class Project {
                   keyId?: string | null;
                   teamId?: string | null;
                   p8File?: string | null;
-                  nativeClientIds?: string[] | null;
                   enabled?: boolean | null;
+                  nativeClientIds?: string[] | null;
                   nativeEnabled?: boolean | null;
               }
             | string
@@ -2688,8 +2680,8 @@ export class Project {
             (string | null)?,
             (string | null)?,
             (string | null)?,
-            (string[] | null)?,
             (boolean | null)?,
+            (string[] | null)?,
             (boolean | null)?,
         ]
     ): Promise<Models.OAuth2Apple> {
@@ -2698,8 +2690,8 @@ export class Project {
             keyId?: string | null;
             teamId?: string | null;
             p8File?: string | null;
-            nativeClientIds?: string[] | null;
             enabled?: boolean | null;
+            nativeClientIds?: string[] | null;
             nativeEnabled?: boolean | null;
         };
 
@@ -2714,8 +2706,8 @@ export class Project {
                 keyId?: string | null;
                 teamId?: string | null;
                 p8File?: string | null;
-                nativeClientIds?: string[] | null;
                 enabled?: boolean | null;
+                nativeClientIds?: string[] | null;
                 nativeEnabled?: boolean | null;
             };
         } else {
@@ -2724,8 +2716,8 @@ export class Project {
                 keyId: rest[0] as string | null,
                 teamId: rest[1] as string | null,
                 p8File: rest[2] as string | null,
-                nativeClientIds: rest[3] as string[] | null,
-                enabled: rest[4] as boolean | null,
+                enabled: rest[3] as boolean | null,
+                nativeClientIds: rest[4] as string[] | null,
                 nativeEnabled: rest[5] as boolean | null,
             };
         }
@@ -2734,8 +2726,8 @@ export class Project {
         const keyId = params.keyId;
         const teamId = params.teamId;
         const p8File = params.p8File;
-        const nativeClientIds = params.nativeClientIds;
         const enabled = params.enabled;
+        const nativeClientIds = params.nativeClientIds;
         const nativeEnabled = params.nativeEnabled;
 
         const apiPath = '/project/oauth2/apple';
@@ -2752,11 +2744,11 @@ export class Project {
         if (typeof p8File !== 'undefined') {
             apiPayload['p8File'] = p8File;
         }
-        if (typeof nativeClientIds !== 'undefined') {
-            apiPayload['nativeClientIds'] = nativeClientIds;
-        }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
+        }
+        if (typeof nativeClientIds !== 'undefined') {
+            apiPayload['nativeClientIds'] = nativeClientIds;
         }
         if (typeof nativeEnabled !== 'undefined') {
             apiPayload['nativeEnabled'] = nativeEnabled;
@@ -2903,8 +2895,8 @@ export class Project {
      * @param {string | null} params.clientId - 'Client ID' of Auth0 OAuth2 app. For example: OaOkIA000000000000000000005KLSYq
      * @param {string | null} params.clientSecret - 'Client Secret' of Auth0 OAuth2 app. For example: zXz0000-00000000000000000000000000000-00000000000000000000PJafnF
      * @param {string | null} params.endpoint - Domain of Auth0 instance. For example: example.us.auth0.com
-     * @param {ProjectOAuth2Auth0Prompt[] | null} params.prompt - Array of Auth0 OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. Pass an empty array to use the Auth0 default.
      * @param {boolean | null} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2Auth0Prompt[] | null} params.prompt - Array of Auth0 OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. Pass an empty array to use the Auth0 default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Auth0>}
      */
@@ -2912,8 +2904,8 @@ export class Project {
         clientId?: string | null;
         clientSecret?: string | null;
         endpoint?: string | null;
-        prompt?: ProjectOAuth2Auth0Prompt[] | null;
         enabled?: boolean | null;
+        prompt?: ProjectOAuth2Auth0Prompt[] | null;
     }): Promise<Models.OAuth2Auth0>;
     /**
      * Update the project OAuth2 Auth0 configuration.
@@ -2921,8 +2913,8 @@ export class Project {
      * @param {string | null} clientId - 'Client ID' of Auth0 OAuth2 app. For example: OaOkIA000000000000000000005KLSYq
      * @param {string | null} clientSecret - 'Client Secret' of Auth0 OAuth2 app. For example: zXz0000-00000000000000000000000000000-00000000000000000000PJafnF
      * @param {string | null} endpoint - Domain of Auth0 instance. For example: example.us.auth0.com
-     * @param {ProjectOAuth2Auth0Prompt[] | null} prompt - Array of Auth0 OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. Pass an empty array to use the Auth0 default.
      * @param {boolean | null} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2Auth0Prompt[] | null} prompt - Array of Auth0 OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. Pass an empty array to use the Auth0 default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Auth0>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -2931,8 +2923,8 @@ export class Project {
         clientId?: string | null,
         clientSecret?: string | null,
         endpoint?: string | null,
-        prompt?: ProjectOAuth2Auth0Prompt[] | null,
         enabled?: boolean | null,
+        prompt?: ProjectOAuth2Auth0Prompt[] | null,
     ): Promise<Models.OAuth2Auth0>;
     updateOAuth2Auth0(
         paramsOrFirst?:
@@ -2940,24 +2932,24 @@ export class Project {
                   clientId?: string | null;
                   clientSecret?: string | null;
                   endpoint?: string | null;
-                  prompt?: ProjectOAuth2Auth0Prompt[] | null;
                   enabled?: boolean | null;
+                  prompt?: ProjectOAuth2Auth0Prompt[] | null;
               }
             | string
             | null,
         ...rest: [
             (string | null)?,
             (string | null)?,
-            (ProjectOAuth2Auth0Prompt[] | null)?,
             (boolean | null)?,
+            (ProjectOAuth2Auth0Prompt[] | null)?,
         ]
     ): Promise<Models.OAuth2Auth0> {
         let params: {
             clientId?: string | null;
             clientSecret?: string | null;
             endpoint?: string | null;
-            prompt?: ProjectOAuth2Auth0Prompt[] | null;
             enabled?: boolean | null;
+            prompt?: ProjectOAuth2Auth0Prompt[] | null;
         };
 
         if (
@@ -2970,24 +2962,24 @@ export class Project {
                 clientId?: string | null;
                 clientSecret?: string | null;
                 endpoint?: string | null;
-                prompt?: ProjectOAuth2Auth0Prompt[] | null;
                 enabled?: boolean | null;
+                prompt?: ProjectOAuth2Auth0Prompt[] | null;
             };
         } else {
             params = {
                 clientId: paramsOrFirst as string | null,
                 clientSecret: rest[0] as string | null,
                 endpoint: rest[1] as string | null,
-                prompt: rest[2] as ProjectOAuth2Auth0Prompt[] | null,
-                enabled: rest[3] as boolean | null,
+                enabled: rest[2] as boolean | null,
+                prompt: rest[3] as ProjectOAuth2Auth0Prompt[] | null,
             };
         }
 
         const clientId = params.clientId;
         const clientSecret = params.clientSecret;
         const endpoint = params.endpoint;
-        const prompt = params.prompt;
         const enabled = params.enabled;
+        const prompt = params.prompt;
 
         const apiPath = '/project/oauth2/auth0';
         const apiPayload: Payload = {};
@@ -3000,11 +2992,11 @@ export class Project {
         if (typeof endpoint !== 'undefined') {
             apiPayload['endpoint'] = endpoint;
         }
-        if (typeof prompt !== 'undefined') {
-            apiPayload['prompt'] = prompt;
-        }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
+        }
+        if (typeof prompt !== 'undefined') {
+            apiPayload['prompt'] = prompt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3794,24 +3786,24 @@ export class Project {
      *
      * @param {string | null} params.clientId - 'Client ID' of Discord OAuth2 app. For example: 950722000000343754
      * @param {string | null} params.clientSecret - 'Client Secret' of Discord OAuth2 app. For example: YmPXnM000000000000000000002zFg5D
-     * @param {ProjectOAuth2DiscordPrompt[] | null} params.prompt - Array with at most one Discord OAuth2 prompt value. "none" means: skip the authorization screen for users who already authorized the app with the requested scopes. "consent" means: ask users who already authorized the app to approve it again. Pass an empty array to use the Discord default.
      * @param {boolean | null} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2DiscordPrompt[] | null} params.prompt - Array with at most one Discord OAuth2 prompt value. "none" means: skip the authorization screen for users who already authorized the app with the requested scopes. "consent" means: ask users who already authorized the app to approve it again. Pass an empty array to use the Discord default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Discord>}
      */
     updateOAuth2Discord(params?: {
         clientId?: string | null;
         clientSecret?: string | null;
-        prompt?: ProjectOAuth2DiscordPrompt[] | null;
         enabled?: boolean | null;
+        prompt?: ProjectOAuth2DiscordPrompt[] | null;
     }): Promise<Models.OAuth2Discord>;
     /**
      * Update the project OAuth2 Discord configuration.
      *
      * @param {string | null} clientId - 'Client ID' of Discord OAuth2 app. For example: 950722000000343754
      * @param {string | null} clientSecret - 'Client Secret' of Discord OAuth2 app. For example: YmPXnM000000000000000000002zFg5D
-     * @param {ProjectOAuth2DiscordPrompt[] | null} prompt - Array with at most one Discord OAuth2 prompt value. "none" means: skip the authorization screen for users who already authorized the app with the requested scopes. "consent" means: ask users who already authorized the app to approve it again. Pass an empty array to use the Discord default.
      * @param {boolean | null} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2DiscordPrompt[] | null} prompt - Array with at most one Discord OAuth2 prompt value. "none" means: skip the authorization screen for users who already authorized the app with the requested scopes. "consent" means: ask users who already authorized the app to approve it again. Pass an empty array to use the Discord default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Discord>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -3819,30 +3811,30 @@ export class Project {
     updateOAuth2Discord(
         clientId?: string | null,
         clientSecret?: string | null,
-        prompt?: ProjectOAuth2DiscordPrompt[] | null,
         enabled?: boolean | null,
+        prompt?: ProjectOAuth2DiscordPrompt[] | null,
     ): Promise<Models.OAuth2Discord>;
     updateOAuth2Discord(
         paramsOrFirst?:
             | {
                   clientId?: string | null;
                   clientSecret?: string | null;
-                  prompt?: ProjectOAuth2DiscordPrompt[] | null;
                   enabled?: boolean | null;
+                  prompt?: ProjectOAuth2DiscordPrompt[] | null;
               }
             | string
             | null,
         ...rest: [
             (string | null)?,
-            (ProjectOAuth2DiscordPrompt[] | null)?,
             (boolean | null)?,
+            (ProjectOAuth2DiscordPrompt[] | null)?,
         ]
     ): Promise<Models.OAuth2Discord> {
         let params: {
             clientId?: string | null;
             clientSecret?: string | null;
-            prompt?: ProjectOAuth2DiscordPrompt[] | null;
             enabled?: boolean | null;
+            prompt?: ProjectOAuth2DiscordPrompt[] | null;
         };
 
         if (
@@ -3854,22 +3846,22 @@ export class Project {
             params = (paramsOrFirst || {}) as {
                 clientId?: string | null;
                 clientSecret?: string | null;
-                prompt?: ProjectOAuth2DiscordPrompt[] | null;
                 enabled?: boolean | null;
+                prompt?: ProjectOAuth2DiscordPrompt[] | null;
             };
         } else {
             params = {
                 clientId: paramsOrFirst as string | null,
                 clientSecret: rest[0] as string | null,
-                prompt: rest[1] as ProjectOAuth2DiscordPrompt[] | null,
-                enabled: rest[2] as boolean | null,
+                enabled: rest[1] as boolean | null,
+                prompt: rest[2] as ProjectOAuth2DiscordPrompt[] | null,
             };
         }
 
         const clientId = params.clientId;
         const clientSecret = params.clientSecret;
-        const prompt = params.prompt;
         const enabled = params.enabled;
+        const prompt = params.prompt;
 
         const apiPath = '/project/oauth2/discord';
         const apiPayload: Payload = {};
@@ -3879,11 +3871,11 @@ export class Project {
         if (typeof clientSecret !== 'undefined') {
             apiPayload['clientSecret'] = clientSecret;
         }
-        if (typeof prompt !== 'undefined') {
-            apiPayload['prompt'] = prompt;
-        }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
+        }
+        if (typeof prompt !== 'undefined') {
+            apiPayload['prompt'] = prompt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4566,24 +4558,24 @@ export class Project {
      *
      * @param {string | null} params.clientId - 'OAuth2 app Client ID, or App ID' of GitHub OAuth2 app. For example: e4d87900000000540733. Example of wrong value: 370006
      * @param {string | null} params.clientSecret - 'Client Secret' of GitHub OAuth2 app. For example: 5e07c00000000000000000000000000000198bcc
-     * @param {ProjectOAuth2GitHubPrompt[] | null} params.prompt - Array of GitHub OAuth2 prompt values. "select_account" means: prompt the user to select an account. Pass an empty array to use the GitHub default.
      * @param {boolean | null} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2GitHubPrompt[] | null} params.prompt - Array of GitHub OAuth2 prompt values. "select_account" means: prompt the user to select an account. Pass an empty array to use the GitHub default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Github>}
      */
     updateOAuth2GitHub(params?: {
         clientId?: string | null;
         clientSecret?: string | null;
-        prompt?: ProjectOAuth2GitHubPrompt[] | null;
         enabled?: boolean | null;
+        prompt?: ProjectOAuth2GitHubPrompt[] | null;
     }): Promise<Models.OAuth2Github>;
     /**
      * Update the project OAuth2 GitHub configuration.
      *
      * @param {string | null} clientId - 'OAuth2 app Client ID, or App ID' of GitHub OAuth2 app. For example: e4d87900000000540733. Example of wrong value: 370006
      * @param {string | null} clientSecret - 'Client Secret' of GitHub OAuth2 app. For example: 5e07c00000000000000000000000000000198bcc
-     * @param {ProjectOAuth2GitHubPrompt[] | null} prompt - Array of GitHub OAuth2 prompt values. "select_account" means: prompt the user to select an account. Pass an empty array to use the GitHub default.
      * @param {boolean | null} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2GitHubPrompt[] | null} prompt - Array of GitHub OAuth2 prompt values. "select_account" means: prompt the user to select an account. Pass an empty array to use the GitHub default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Github>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -4591,30 +4583,30 @@ export class Project {
     updateOAuth2GitHub(
         clientId?: string | null,
         clientSecret?: string | null,
-        prompt?: ProjectOAuth2GitHubPrompt[] | null,
         enabled?: boolean | null,
+        prompt?: ProjectOAuth2GitHubPrompt[] | null,
     ): Promise<Models.OAuth2Github>;
     updateOAuth2GitHub(
         paramsOrFirst?:
             | {
                   clientId?: string | null;
                   clientSecret?: string | null;
-                  prompt?: ProjectOAuth2GitHubPrompt[] | null;
                   enabled?: boolean | null;
+                  prompt?: ProjectOAuth2GitHubPrompt[] | null;
               }
             | string
             | null,
         ...rest: [
             (string | null)?,
-            (ProjectOAuth2GitHubPrompt[] | null)?,
             (boolean | null)?,
+            (ProjectOAuth2GitHubPrompt[] | null)?,
         ]
     ): Promise<Models.OAuth2Github> {
         let params: {
             clientId?: string | null;
             clientSecret?: string | null;
-            prompt?: ProjectOAuth2GitHubPrompt[] | null;
             enabled?: boolean | null;
+            prompt?: ProjectOAuth2GitHubPrompt[] | null;
         };
 
         if (
@@ -4626,22 +4618,22 @@ export class Project {
             params = (paramsOrFirst || {}) as {
                 clientId?: string | null;
                 clientSecret?: string | null;
-                prompt?: ProjectOAuth2GitHubPrompt[] | null;
                 enabled?: boolean | null;
+                prompt?: ProjectOAuth2GitHubPrompt[] | null;
             };
         } else {
             params = {
                 clientId: paramsOrFirst as string | null,
                 clientSecret: rest[0] as string | null,
-                prompt: rest[1] as ProjectOAuth2GitHubPrompt[] | null,
-                enabled: rest[2] as boolean | null,
+                enabled: rest[1] as boolean | null,
+                prompt: rest[2] as ProjectOAuth2GitHubPrompt[] | null,
             };
         }
 
         const clientId = params.clientId;
         const clientSecret = params.clientSecret;
-        const prompt = params.prompt;
         const enabled = params.enabled;
+        const prompt = params.prompt;
 
         const apiPath = '/project/oauth2/github';
         const apiPayload: Payload = {};
@@ -4651,11 +4643,11 @@ export class Project {
         if (typeof clientSecret !== 'undefined') {
             apiPayload['clientSecret'] = clientSecret;
         }
-        if (typeof prompt !== 'undefined') {
-            apiPayload['prompt'] = prompt;
-        }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
+        }
+        if (typeof prompt !== 'undefined') {
+            apiPayload['prompt'] = prompt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4809,8 +4801,8 @@ export class Project {
      * @param {string | null} params.clientId - 'Client ID' of Google OAuth2 app. For example: 120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com
      * @param {string | null} params.clientSecret - 'Client Secret' of Google OAuth2 app. For example: GOCSPX-2k8gsR0000000000000000VNahJj
      * @param {ProjectOAuth2GooglePrompt[] | null} params.prompt - Array of Google OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. Must not be specified with other values. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
-     * @param {string[] | null} params.nativeClientIds - Additional OAuth2 client IDs accepted as ID token audiences for native sign-in (Android and iOS client IDs). Together with the client ID, which is always accepted, these are the only client IDs whose tokens are trusted. Pass an empty array to clear the list.
      * @param {boolean | null} params.enabled - Browser-based OAuth2 sign-in status. Set to true to enable new session creation through the redirect flow. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid. Has no effect on native sign-in, which is controlled by nativeEnabled only.
+     * @param {string[] | null} params.nativeClientIds - Additional OAuth2 client IDs accepted as ID token audiences for native sign-in (Android and iOS client IDs). Together with the client ID, which is always accepted, these are the only client IDs whose tokens are trusted. Pass an empty array to clear the list.
      * @param {boolean | null} params.nativeEnabled - Native Google sign-in status. This is the only switch for creating sessions from ID tokens obtained on device and is independent of enabled. Needs a client ID or at least one native client ID to match tokens against, but no client secret: this method verifies a signature rather than redeeming an authorization code.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Google>}
@@ -4819,8 +4811,8 @@ export class Project {
         clientId?: string | null;
         clientSecret?: string | null;
         prompt?: ProjectOAuth2GooglePrompt[] | null;
-        nativeClientIds?: string[] | null;
         enabled?: boolean | null;
+        nativeClientIds?: string[] | null;
         nativeEnabled?: boolean | null;
     }): Promise<Models.OAuth2Google>;
     /**
@@ -4829,8 +4821,8 @@ export class Project {
      * @param {string | null} clientId - 'Client ID' of Google OAuth2 app. For example: 120000000095-92ifjb00000000000000000000g7ijfb.apps.googleusercontent.com
      * @param {string | null} clientSecret - 'Client Secret' of Google OAuth2 app. For example: GOCSPX-2k8gsR0000000000000000VNahJj
      * @param {ProjectOAuth2GooglePrompt[] | null} prompt - Array of Google OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. Must not be specified with other values. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account.
-     * @param {string[] | null} nativeClientIds - Additional OAuth2 client IDs accepted as ID token audiences for native sign-in (Android and iOS client IDs). Together with the client ID, which is always accepted, these are the only client IDs whose tokens are trusted. Pass an empty array to clear the list.
      * @param {boolean | null} enabled - Browser-based OAuth2 sign-in status. Set to true to enable new session creation through the redirect flow. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid. Has no effect on native sign-in, which is controlled by nativeEnabled only.
+     * @param {string[] | null} nativeClientIds - Additional OAuth2 client IDs accepted as ID token audiences for native sign-in (Android and iOS client IDs). Together with the client ID, which is always accepted, these are the only client IDs whose tokens are trusted. Pass an empty array to clear the list.
      * @param {boolean | null} nativeEnabled - Native Google sign-in status. This is the only switch for creating sessions from ID tokens obtained on device and is independent of enabled. Needs a client ID or at least one native client ID to match tokens against, but no client secret: this method verifies a signature rather than redeeming an authorization code.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Google>}
@@ -4840,8 +4832,8 @@ export class Project {
         clientId?: string | null,
         clientSecret?: string | null,
         prompt?: ProjectOAuth2GooglePrompt[] | null,
-        nativeClientIds?: string[] | null,
         enabled?: boolean | null,
+        nativeClientIds?: string[] | null,
         nativeEnabled?: boolean | null,
     ): Promise<Models.OAuth2Google>;
     updateOAuth2Google(
@@ -4850,8 +4842,8 @@ export class Project {
                   clientId?: string | null;
                   clientSecret?: string | null;
                   prompt?: ProjectOAuth2GooglePrompt[] | null;
-                  nativeClientIds?: string[] | null;
                   enabled?: boolean | null;
+                  nativeClientIds?: string[] | null;
                   nativeEnabled?: boolean | null;
               }
             | string
@@ -4859,8 +4851,8 @@ export class Project {
         ...rest: [
             (string | null)?,
             (ProjectOAuth2GooglePrompt[] | null)?,
-            (string[] | null)?,
             (boolean | null)?,
+            (string[] | null)?,
             (boolean | null)?,
         ]
     ): Promise<Models.OAuth2Google> {
@@ -4868,8 +4860,8 @@ export class Project {
             clientId?: string | null;
             clientSecret?: string | null;
             prompt?: ProjectOAuth2GooglePrompt[] | null;
-            nativeClientIds?: string[] | null;
             enabled?: boolean | null;
+            nativeClientIds?: string[] | null;
             nativeEnabled?: boolean | null;
         };
 
@@ -4883,8 +4875,8 @@ export class Project {
                 clientId?: string | null;
                 clientSecret?: string | null;
                 prompt?: ProjectOAuth2GooglePrompt[] | null;
-                nativeClientIds?: string[] | null;
                 enabled?: boolean | null;
+                nativeClientIds?: string[] | null;
                 nativeEnabled?: boolean | null;
             };
         } else {
@@ -4892,8 +4884,8 @@ export class Project {
                 clientId: paramsOrFirst as string | null,
                 clientSecret: rest[0] as string | null,
                 prompt: rest[1] as ProjectOAuth2GooglePrompt[] | null,
-                nativeClientIds: rest[2] as string[] | null,
-                enabled: rest[3] as boolean | null,
+                enabled: rest[2] as boolean | null,
+                nativeClientIds: rest[3] as string[] | null,
                 nativeEnabled: rest[4] as boolean | null,
             };
         }
@@ -4901,8 +4893,8 @@ export class Project {
         const clientId = params.clientId;
         const clientSecret = params.clientSecret;
         const prompt = params.prompt;
-        const nativeClientIds = params.nativeClientIds;
         const enabled = params.enabled;
+        const nativeClientIds = params.nativeClientIds;
         const nativeEnabled = params.nativeEnabled;
 
         const apiPath = '/project/oauth2/google';
@@ -4916,11 +4908,11 @@ export class Project {
         if (typeof prompt !== 'undefined') {
             apiPayload['prompt'] = prompt;
         }
-        if (typeof nativeClientIds !== 'undefined') {
-            apiPayload['nativeClientIds'] = nativeClientIds;
-        }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
+        }
+        if (typeof nativeClientIds !== 'undefined') {
+            apiPayload['nativeClientIds'] = nativeClientIds;
         }
         if (typeof nativeEnabled !== 'undefined') {
             apiPayload['nativeEnabled'] = nativeEnabled;
@@ -5065,24 +5057,24 @@ export class Project {
      *
      * @param {string | null} params.clientId - 'REST API key' of Kakao OAuth2 app. For example: 839ff5000000000000000000013206de
      * @param {string | null} params.clientSecret - 'Client Secret' of Kakao OAuth2 app. For example: jLNVOK00000000000000000000yJebea. Generate it under Kakao Login > Security and set its status to enabled
-     * @param {ProjectOAuth2KakaoPrompt[] | null} params.prompt - Array of Kakao OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "create" means: prompt the user to sign up. "select_account" means: prompt the user to select an account. Pass an empty array to use the Kakao default.
      * @param {boolean | null} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2KakaoPrompt[] | null} params.prompt - Array of Kakao OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "create" means: prompt the user to sign up. "select_account" means: prompt the user to select an account. Pass an empty array to use the Kakao default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Kakao>}
      */
     updateOAuth2Kakao(params?: {
         clientId?: string | null;
         clientSecret?: string | null;
-        prompt?: ProjectOAuth2KakaoPrompt[] | null;
         enabled?: boolean | null;
+        prompt?: ProjectOAuth2KakaoPrompt[] | null;
     }): Promise<Models.OAuth2Kakao>;
     /**
      * Update the project OAuth2 Kakao configuration.
      *
      * @param {string | null} clientId - 'REST API key' of Kakao OAuth2 app. For example: 839ff5000000000000000000013206de
      * @param {string | null} clientSecret - 'Client Secret' of Kakao OAuth2 app. For example: jLNVOK00000000000000000000yJebea. Generate it under Kakao Login > Security and set its status to enabled
-     * @param {ProjectOAuth2KakaoPrompt[] | null} prompt - Array of Kakao OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "create" means: prompt the user to sign up. "select_account" means: prompt the user to select an account. Pass an empty array to use the Kakao default.
      * @param {boolean | null} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2KakaoPrompt[] | null} prompt - Array of Kakao OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "create" means: prompt the user to sign up. "select_account" means: prompt the user to select an account. Pass an empty array to use the Kakao default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Kakao>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -5090,30 +5082,30 @@ export class Project {
     updateOAuth2Kakao(
         clientId?: string | null,
         clientSecret?: string | null,
-        prompt?: ProjectOAuth2KakaoPrompt[] | null,
         enabled?: boolean | null,
+        prompt?: ProjectOAuth2KakaoPrompt[] | null,
     ): Promise<Models.OAuth2Kakao>;
     updateOAuth2Kakao(
         paramsOrFirst?:
             | {
                   clientId?: string | null;
                   clientSecret?: string | null;
-                  prompt?: ProjectOAuth2KakaoPrompt[] | null;
                   enabled?: boolean | null;
+                  prompt?: ProjectOAuth2KakaoPrompt[] | null;
               }
             | string
             | null,
         ...rest: [
             (string | null)?,
-            (ProjectOAuth2KakaoPrompt[] | null)?,
             (boolean | null)?,
+            (ProjectOAuth2KakaoPrompt[] | null)?,
         ]
     ): Promise<Models.OAuth2Kakao> {
         let params: {
             clientId?: string | null;
             clientSecret?: string | null;
-            prompt?: ProjectOAuth2KakaoPrompt[] | null;
             enabled?: boolean | null;
+            prompt?: ProjectOAuth2KakaoPrompt[] | null;
         };
 
         if (
@@ -5125,22 +5117,22 @@ export class Project {
             params = (paramsOrFirst || {}) as {
                 clientId?: string | null;
                 clientSecret?: string | null;
-                prompt?: ProjectOAuth2KakaoPrompt[] | null;
                 enabled?: boolean | null;
+                prompt?: ProjectOAuth2KakaoPrompt[] | null;
             };
         } else {
             params = {
                 clientId: paramsOrFirst as string | null,
                 clientSecret: rest[0] as string | null,
-                prompt: rest[1] as ProjectOAuth2KakaoPrompt[] | null,
-                enabled: rest[2] as boolean | null,
+                enabled: rest[1] as boolean | null,
+                prompt: rest[2] as ProjectOAuth2KakaoPrompt[] | null,
             };
         }
 
         const clientId = params.clientId;
         const clientSecret = params.clientSecret;
-        const prompt = params.prompt;
         const enabled = params.enabled;
+        const prompt = params.prompt;
 
         const apiPath = '/project/oauth2/kakao';
         const apiPayload: Payload = {};
@@ -5150,11 +5142,11 @@ export class Project {
         if (typeof clientSecret !== 'undefined') {
             apiPayload['clientSecret'] = clientSecret;
         }
-        if (typeof prompt !== 'undefined') {
-            apiPayload['prompt'] = prompt;
-        }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
+        }
+        if (typeof prompt !== 'undefined') {
+            apiPayload['prompt'] = prompt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5538,8 +5530,8 @@ export class Project {
      * @param {string | null} params.applicationId - 'Entra ID Application ID, also known as Client ID' of Microsoft OAuth2 app. For example: 00001111-aaaa-2222-bbbb-3333cccc4444
      * @param {string | null} params.applicationSecret - 'Entra ID Application Secret, also known as Client Secret' of Microsoft OAuth2 app. For example: A1bC2dE3fH4iJ5kL6mN7oP8qR9sT0u
      * @param {string | null} params.tenant - Microsoft Entra ID tenant identifier. Use 'common', 'organizations', 'consumers' or a specific tenant ID. For example: common
-     * @param {ProjectOAuth2MicrosoftPrompt[] | null} params.prompt - Array of Microsoft OAuth2 prompt values. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account. Pass an empty array to use the Microsoft default.
      * @param {boolean | null} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2MicrosoftPrompt[] | null} params.prompt - Array of Microsoft OAuth2 prompt values. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account. Pass an empty array to use the Microsoft default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Microsoft>}
      */
@@ -5547,8 +5539,8 @@ export class Project {
         applicationId?: string | null;
         applicationSecret?: string | null;
         tenant?: string | null;
-        prompt?: ProjectOAuth2MicrosoftPrompt[] | null;
         enabled?: boolean | null;
+        prompt?: ProjectOAuth2MicrosoftPrompt[] | null;
     }): Promise<Models.OAuth2Microsoft>;
     /**
      * Update the project OAuth2 Microsoft configuration.
@@ -5556,8 +5548,8 @@ export class Project {
      * @param {string | null} applicationId - 'Entra ID Application ID, also known as Client ID' of Microsoft OAuth2 app. For example: 00001111-aaaa-2222-bbbb-3333cccc4444
      * @param {string | null} applicationSecret - 'Entra ID Application Secret, also known as Client Secret' of Microsoft OAuth2 app. For example: A1bC2dE3fH4iJ5kL6mN7oP8qR9sT0u
      * @param {string | null} tenant - Microsoft Entra ID tenant identifier. Use 'common', 'organizations', 'consumers' or a specific tenant ID. For example: common
-     * @param {ProjectOAuth2MicrosoftPrompt[] | null} prompt - Array of Microsoft OAuth2 prompt values. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account. Pass an empty array to use the Microsoft default.
      * @param {boolean | null} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2MicrosoftPrompt[] | null} prompt - Array of Microsoft OAuth2 prompt values. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. "select_account" means: prompt the user to select an account. Pass an empty array to use the Microsoft default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Microsoft>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -5566,8 +5558,8 @@ export class Project {
         applicationId?: string | null,
         applicationSecret?: string | null,
         tenant?: string | null,
-        prompt?: ProjectOAuth2MicrosoftPrompt[] | null,
         enabled?: boolean | null,
+        prompt?: ProjectOAuth2MicrosoftPrompt[] | null,
     ): Promise<Models.OAuth2Microsoft>;
     updateOAuth2Microsoft(
         paramsOrFirst?:
@@ -5575,24 +5567,24 @@ export class Project {
                   applicationId?: string | null;
                   applicationSecret?: string | null;
                   tenant?: string | null;
-                  prompt?: ProjectOAuth2MicrosoftPrompt[] | null;
                   enabled?: boolean | null;
+                  prompt?: ProjectOAuth2MicrosoftPrompt[] | null;
               }
             | string
             | null,
         ...rest: [
             (string | null)?,
             (string | null)?,
-            (ProjectOAuth2MicrosoftPrompt[] | null)?,
             (boolean | null)?,
+            (ProjectOAuth2MicrosoftPrompt[] | null)?,
         ]
     ): Promise<Models.OAuth2Microsoft> {
         let params: {
             applicationId?: string | null;
             applicationSecret?: string | null;
             tenant?: string | null;
-            prompt?: ProjectOAuth2MicrosoftPrompt[] | null;
             enabled?: boolean | null;
+            prompt?: ProjectOAuth2MicrosoftPrompt[] | null;
         };
 
         if (
@@ -5605,24 +5597,24 @@ export class Project {
                 applicationId?: string | null;
                 applicationSecret?: string | null;
                 tenant?: string | null;
-                prompt?: ProjectOAuth2MicrosoftPrompt[] | null;
                 enabled?: boolean | null;
+                prompt?: ProjectOAuth2MicrosoftPrompt[] | null;
             };
         } else {
             params = {
                 applicationId: paramsOrFirst as string | null,
                 applicationSecret: rest[0] as string | null,
                 tenant: rest[1] as string | null,
-                prompt: rest[2] as ProjectOAuth2MicrosoftPrompt[] | null,
-                enabled: rest[3] as boolean | null,
+                enabled: rest[2] as boolean | null,
+                prompt: rest[3] as ProjectOAuth2MicrosoftPrompt[] | null,
             };
         }
 
         const applicationId = params.applicationId;
         const applicationSecret = params.applicationSecret;
         const tenant = params.tenant;
-        const prompt = params.prompt;
         const enabled = params.enabled;
+        const prompt = params.prompt;
 
         const apiPath = '/project/oauth2/microsoft';
         const apiPayload: Payload = {};
@@ -5635,11 +5627,11 @@ export class Project {
         if (typeof tenant !== 'undefined') {
             apiPayload['tenant'] = tenant;
         }
-        if (typeof prompt !== 'undefined') {
-            apiPayload['prompt'] = prompt;
-        }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
+        }
+        if (typeof prompt !== 'undefined') {
+            apiPayload['prompt'] = prompt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -5974,8 +5966,8 @@ export class Project {
      * @param {string | null} params.clientSecret - 'Client Secret' of Okta OAuth2 app. For example: Kiq0000000000000000000000000000000000000-00000000000H2L5-3SJ-vRV
      * @param {string | null} params.domain - Okta company domain. Required when enabling the provider. For example: trial-6400025.okta.com. Example of wrong value: trial-6400025-admin.okta.com, or https://trial-6400025.okta.com/
      * @param {string | null} params.authorizationServerId - Custom Authorization Servers. Optional, can be left empty or unconfigured. For example: aus000000000000000h7z
-     * @param {ProjectOAuth2OktaPrompt[] | null} params.prompt - Array of Okta OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. Pass an empty array to use the Okta default.
      * @param {boolean | null} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2OktaPrompt[] | null} params.prompt - Array of Okta OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. Pass an empty array to use the Okta default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Okta>}
      */
@@ -5984,8 +5976,8 @@ export class Project {
         clientSecret?: string | null;
         domain?: string | null;
         authorizationServerId?: string | null;
-        prompt?: ProjectOAuth2OktaPrompt[] | null;
         enabled?: boolean | null;
+        prompt?: ProjectOAuth2OktaPrompt[] | null;
     }): Promise<Models.OAuth2Okta>;
     /**
      * Update the project OAuth2 Okta configuration.
@@ -5994,8 +5986,8 @@ export class Project {
      * @param {string | null} clientSecret - 'Client Secret' of Okta OAuth2 app. For example: Kiq0000000000000000000000000000000000000-00000000000H2L5-3SJ-vRV
      * @param {string | null} domain - Okta company domain. Required when enabling the provider. For example: trial-6400025.okta.com. Example of wrong value: trial-6400025-admin.okta.com, or https://trial-6400025.okta.com/
      * @param {string | null} authorizationServerId - Custom Authorization Servers. Optional, can be left empty or unconfigured. For example: aus000000000000000h7z
-     * @param {ProjectOAuth2OktaPrompt[] | null} prompt - Array of Okta OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. Pass an empty array to use the Okta default.
      * @param {boolean | null} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2OktaPrompt[] | null} prompt - Array of Okta OAuth2 prompt values. If "none" is included, it must be the only element. "none" means: don't display any authentication or consent screens. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. Pass an empty array to use the Okta default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Okta>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -6005,8 +5997,8 @@ export class Project {
         clientSecret?: string | null,
         domain?: string | null,
         authorizationServerId?: string | null,
-        prompt?: ProjectOAuth2OktaPrompt[] | null,
         enabled?: boolean | null,
+        prompt?: ProjectOAuth2OktaPrompt[] | null,
     ): Promise<Models.OAuth2Okta>;
     updateOAuth2Okta(
         paramsOrFirst?:
@@ -6015,8 +6007,8 @@ export class Project {
                   clientSecret?: string | null;
                   domain?: string | null;
                   authorizationServerId?: string | null;
-                  prompt?: ProjectOAuth2OktaPrompt[] | null;
                   enabled?: boolean | null;
+                  prompt?: ProjectOAuth2OktaPrompt[] | null;
               }
             | string
             | null,
@@ -6024,8 +6016,8 @@ export class Project {
             (string | null)?,
             (string | null)?,
             (string | null)?,
-            (ProjectOAuth2OktaPrompt[] | null)?,
             (boolean | null)?,
+            (ProjectOAuth2OktaPrompt[] | null)?,
         ]
     ): Promise<Models.OAuth2Okta> {
         let params: {
@@ -6033,8 +6025,8 @@ export class Project {
             clientSecret?: string | null;
             domain?: string | null;
             authorizationServerId?: string | null;
-            prompt?: ProjectOAuth2OktaPrompt[] | null;
             enabled?: boolean | null;
+            prompt?: ProjectOAuth2OktaPrompt[] | null;
         };
 
         if (
@@ -6048,8 +6040,8 @@ export class Project {
                 clientSecret?: string | null;
                 domain?: string | null;
                 authorizationServerId?: string | null;
-                prompt?: ProjectOAuth2OktaPrompt[] | null;
                 enabled?: boolean | null;
+                prompt?: ProjectOAuth2OktaPrompt[] | null;
             };
         } else {
             params = {
@@ -6057,8 +6049,8 @@ export class Project {
                 clientSecret: rest[0] as string | null,
                 domain: rest[1] as string | null,
                 authorizationServerId: rest[2] as string | null,
-                prompt: rest[3] as ProjectOAuth2OktaPrompt[] | null,
-                enabled: rest[4] as boolean | null,
+                enabled: rest[3] as boolean | null,
+                prompt: rest[4] as ProjectOAuth2OktaPrompt[] | null,
             };
         }
 
@@ -6066,8 +6058,8 @@ export class Project {
         const clientSecret = params.clientSecret;
         const domain = params.domain;
         const authorizationServerId = params.authorizationServerId;
-        const prompt = params.prompt;
         const enabled = params.enabled;
+        const prompt = params.prompt;
 
         const apiPath = '/project/oauth2/okta';
         const apiPayload: Payload = {};
@@ -6083,11 +6075,11 @@ export class Project {
         if (typeof authorizationServerId !== 'undefined') {
             apiPayload['authorizationServerId'] = authorizationServerId;
         }
-        if (typeof prompt !== 'undefined') {
-            apiPayload['prompt'] = prompt;
-        }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
+        }
+        if (typeof prompt !== 'undefined') {
+            apiPayload['prompt'] = prompt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6547,24 +6539,24 @@ export class Project {
      *
      * @param {string | null} params.customerKey - 'Consumer Key' of Salesforce OAuth2 app. For example: 3MVG9I0000000000000000000000000000000000000000000000000000000000000000000000000C5Aejq
      * @param {string | null} params.customerSecret - 'Consumer Secret' of Salesforce OAuth2 app. For example: 3w000000000000e2
-     * @param {ProjectOAuth2SalesforcePrompt[] | null} params.prompt - Array of Salesforce OAuth2 prompt values. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. Pass an empty array to use the Salesforce default.
      * @param {boolean | null} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2SalesforcePrompt[] | null} params.prompt - Array of Salesforce OAuth2 prompt values. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. Pass an empty array to use the Salesforce default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Salesforce>}
      */
     updateOAuth2Salesforce(params?: {
         customerKey?: string | null;
         customerSecret?: string | null;
-        prompt?: ProjectOAuth2SalesforcePrompt[] | null;
         enabled?: boolean | null;
+        prompt?: ProjectOAuth2SalesforcePrompt[] | null;
     }): Promise<Models.OAuth2Salesforce>;
     /**
      * Update the project OAuth2 Salesforce configuration.
      *
      * @param {string | null} customerKey - 'Consumer Key' of Salesforce OAuth2 app. For example: 3MVG9I0000000000000000000000000000000000000000000000000000000000000000000000000C5Aejq
      * @param {string | null} customerSecret - 'Consumer Secret' of Salesforce OAuth2 app. For example: 3w000000000000e2
-     * @param {ProjectOAuth2SalesforcePrompt[] | null} prompt - Array of Salesforce OAuth2 prompt values. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. Pass an empty array to use the Salesforce default.
      * @param {boolean | null} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2SalesforcePrompt[] | null} prompt - Array of Salesforce OAuth2 prompt values. "login" means: prompt the user to re-authenticate. "consent" means: prompt the user for consent. Pass an empty array to use the Salesforce default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Salesforce>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -6572,30 +6564,30 @@ export class Project {
     updateOAuth2Salesforce(
         customerKey?: string | null,
         customerSecret?: string | null,
-        prompt?: ProjectOAuth2SalesforcePrompt[] | null,
         enabled?: boolean | null,
+        prompt?: ProjectOAuth2SalesforcePrompt[] | null,
     ): Promise<Models.OAuth2Salesforce>;
     updateOAuth2Salesforce(
         paramsOrFirst?:
             | {
                   customerKey?: string | null;
                   customerSecret?: string | null;
-                  prompt?: ProjectOAuth2SalesforcePrompt[] | null;
                   enabled?: boolean | null;
+                  prompt?: ProjectOAuth2SalesforcePrompt[] | null;
               }
             | string
             | null,
         ...rest: [
             (string | null)?,
-            (ProjectOAuth2SalesforcePrompt[] | null)?,
             (boolean | null)?,
+            (ProjectOAuth2SalesforcePrompt[] | null)?,
         ]
     ): Promise<Models.OAuth2Salesforce> {
         let params: {
             customerKey?: string | null;
             customerSecret?: string | null;
-            prompt?: ProjectOAuth2SalesforcePrompt[] | null;
             enabled?: boolean | null;
+            prompt?: ProjectOAuth2SalesforcePrompt[] | null;
         };
 
         if (
@@ -6607,22 +6599,22 @@ export class Project {
             params = (paramsOrFirst || {}) as {
                 customerKey?: string | null;
                 customerSecret?: string | null;
-                prompt?: ProjectOAuth2SalesforcePrompt[] | null;
                 enabled?: boolean | null;
+                prompt?: ProjectOAuth2SalesforcePrompt[] | null;
             };
         } else {
             params = {
                 customerKey: paramsOrFirst as string | null,
                 customerSecret: rest[0] as string | null,
-                prompt: rest[1] as ProjectOAuth2SalesforcePrompt[] | null,
-                enabled: rest[2] as boolean | null,
+                enabled: rest[1] as boolean | null,
+                prompt: rest[2] as ProjectOAuth2SalesforcePrompt[] | null,
             };
         }
 
         const customerKey = params.customerKey;
         const customerSecret = params.customerSecret;
-        const prompt = params.prompt;
         const enabled = params.enabled;
+        const prompt = params.prompt;
 
         const apiPath = '/project/oauth2/salesforce';
         const apiPayload: Payload = {};
@@ -6632,11 +6624,11 @@ export class Project {
         if (typeof customerSecret !== 'undefined') {
             apiPayload['customerSecret'] = customerSecret;
         }
-        if (typeof prompt !== 'undefined') {
-            apiPayload['prompt'] = prompt;
-        }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
+        }
+        if (typeof prompt !== 'undefined') {
+            apiPayload['prompt'] = prompt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -7942,24 +7934,24 @@ export class Project {
      *
      * @param {string | null} params.clientId - 'Client ID' of Zoho OAuth2 app. For example: 1000.83C178000000000000000000RPNX0B
      * @param {string | null} params.clientSecret - 'Client Secret' of Zoho OAuth2 app. For example: fb5cac000000000000000000000000000000a68f6e
-     * @param {ProjectOAuth2ZohoPrompt[] | null} params.prompt - Array of Zoho OAuth2 prompt values. "consent" means: prompt the user for consent. Pass an empty array to use the Zoho default.
      * @param {boolean | null} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2ZohoPrompt[] | null} params.prompt - Array of Zoho OAuth2 prompt values. "consent" means: prompt the user for consent. Pass an empty array to use the Zoho default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Zoho>}
      */
     updateOAuth2Zoho(params?: {
         clientId?: string | null;
         clientSecret?: string | null;
-        prompt?: ProjectOAuth2ZohoPrompt[] | null;
         enabled?: boolean | null;
+        prompt?: ProjectOAuth2ZohoPrompt[] | null;
     }): Promise<Models.OAuth2Zoho>;
     /**
      * Update the project OAuth2 Zoho configuration.
      *
      * @param {string | null} clientId - 'Client ID' of Zoho OAuth2 app. For example: 1000.83C178000000000000000000RPNX0B
      * @param {string | null} clientSecret - 'Client Secret' of Zoho OAuth2 app. For example: fb5cac000000000000000000000000000000a68f6e
-     * @param {ProjectOAuth2ZohoPrompt[] | null} prompt - Array of Zoho OAuth2 prompt values. "consent" means: prompt the user for consent. Pass an empty array to use the Zoho default.
      * @param {boolean | null} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @param {ProjectOAuth2ZohoPrompt[] | null} prompt - Array of Zoho OAuth2 prompt values. "consent" means: prompt the user for consent. Pass an empty array to use the Zoho default.
      * @throws {AppwriteException}
      * @returns {Promise<Models.OAuth2Zoho>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -7967,30 +7959,30 @@ export class Project {
     updateOAuth2Zoho(
         clientId?: string | null,
         clientSecret?: string | null,
-        prompt?: ProjectOAuth2ZohoPrompt[] | null,
         enabled?: boolean | null,
+        prompt?: ProjectOAuth2ZohoPrompt[] | null,
     ): Promise<Models.OAuth2Zoho>;
     updateOAuth2Zoho(
         paramsOrFirst?:
             | {
                   clientId?: string | null;
                   clientSecret?: string | null;
-                  prompt?: ProjectOAuth2ZohoPrompt[] | null;
                   enabled?: boolean | null;
+                  prompt?: ProjectOAuth2ZohoPrompt[] | null;
               }
             | string
             | null,
         ...rest: [
             (string | null)?,
-            (ProjectOAuth2ZohoPrompt[] | null)?,
             (boolean | null)?,
+            (ProjectOAuth2ZohoPrompt[] | null)?,
         ]
     ): Promise<Models.OAuth2Zoho> {
         let params: {
             clientId?: string | null;
             clientSecret?: string | null;
-            prompt?: ProjectOAuth2ZohoPrompt[] | null;
             enabled?: boolean | null;
+            prompt?: ProjectOAuth2ZohoPrompt[] | null;
         };
 
         if (
@@ -8002,22 +7994,22 @@ export class Project {
             params = (paramsOrFirst || {}) as {
                 clientId?: string | null;
                 clientSecret?: string | null;
-                prompt?: ProjectOAuth2ZohoPrompt[] | null;
                 enabled?: boolean | null;
+                prompt?: ProjectOAuth2ZohoPrompt[] | null;
             };
         } else {
             params = {
                 clientId: paramsOrFirst as string | null,
                 clientSecret: rest[0] as string | null,
-                prompt: rest[1] as ProjectOAuth2ZohoPrompt[] | null,
-                enabled: rest[2] as boolean | null,
+                enabled: rest[1] as boolean | null,
+                prompt: rest[2] as ProjectOAuth2ZohoPrompt[] | null,
             };
         }
 
         const clientId = params.clientId;
         const clientSecret = params.clientSecret;
-        const prompt = params.prompt;
         const enabled = params.enabled;
+        const prompt = params.prompt;
 
         const apiPath = '/project/oauth2/zoho';
         const apiPayload: Payload = {};
@@ -8027,11 +8019,11 @@ export class Project {
         if (typeof clientSecret !== 'undefined') {
             apiPayload['clientSecret'] = clientSecret;
         }
-        if (typeof prompt !== 'undefined') {
-            apiPayload['prompt'] = prompt;
-        }
         if (typeof enabled !== 'undefined') {
             apiPayload['enabled'] = enabled;
+        }
+        if (typeof prompt !== 'undefined') {
+            apiPayload['prompt'] = prompt;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9920,7 +9912,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -10054,7 +10045,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -10188,7 +10178,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -10322,7 +10311,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -10523,7 +10511,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -10700,7 +10687,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -10830,7 +10816,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -10984,7 +10969,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -11120,7 +11104,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -11276,7 +11259,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -11433,7 +11415,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -11578,7 +11559,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -11843,7 +11823,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -11977,7 +11956,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -12111,7 +12089,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -12243,7 +12220,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -12375,7 +12351,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -12650,7 +12625,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -12807,7 +12781,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -13067,7 +13040,6 @@ export class Project {
                         protocols: [],
                         blocks: [],
                         consoleAccessedAt: '',
-                        wafEnabled: false,
                     },
                     properties: {
                         authMethods: {
@@ -13644,11 +13616,11 @@ export class Project {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         value: '',
                         secret: false,
                         resourceType: '',
                         resourceId: '',
-                        description: '',
                     },
                 },
             },
@@ -13788,11 +13760,11 @@ export class Project {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         value: '',
                         secret: false,
                         resourceType: '',
                         resourceId: '',
-                        description: '',
                     },
                 },
             },
@@ -13864,11 +13836,11 @@ export class Project {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         value: '',
                         secret: false,
                         resourceType: '',
                         resourceId: '',
-                        description: '',
                     },
                 },
             },
@@ -14007,11 +13979,11 @@ export class Project {
                         $createdAt: '',
                         $updatedAt: '',
                         key: '',
+                        description: '',
                         value: '',
                         secret: false,
                         resourceType: '',
                         resourceId: '',
-                        description: '',
                     },
                 },
             },

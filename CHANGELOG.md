@@ -2,7 +2,7 @@
 
 ## 20.1.0-rc.2
 
-* Release candidate of 20.1.0 that keeps the `Videos` service and models from 19.1.0-rc.1, which 20.1.0 does not include
+* Release candidate of 20.1.0 with the `Videos` service and models from 19.1.0-rc.1, which 20.1.0 does not include
 * Added: `admin.updateOrganizationPlan` and the `PlanEffective` enum, to move an organization's plan without payment
 * Added: `admin.createOrganizationAggregation` and `admin.createProjectAggregation` to recalculate billing
 * Added: `admin.listOrganizations`, `getOrganization` and an organization's projects, memberships, domains and aggregations
