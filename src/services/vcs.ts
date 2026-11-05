@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -106,7 +107,7 @@ export class Vcs {
         const apiPath =
             '/vcs/github/installations/{installationId}/detections'.replace(
                 '{installationId}',
-                encodeURIComponent(String(installationId)),
+                encodePath(installationId),
             );
         const apiPayload: Payload = {};
         if (typeof providerRepositoryId !== 'undefined') {
@@ -234,7 +235,7 @@ export class Vcs {
         const apiPath =
             '/vcs/github/installations/{installationId}/providerRepositories'.replace(
                 '{installationId}',
-                encodeURIComponent(String(installationId)),
+                encodePath(installationId),
             );
         const apiPayload: Payload = {};
         if (typeof type !== 'undefined') {
@@ -351,7 +352,7 @@ export class Vcs {
         const apiPath =
             '/vcs/github/installations/{installationId}/providerRepositories'.replace(
                 '{installationId}',
-                encodeURIComponent(String(installationId)),
+                encodePath(installationId),
             );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -459,13 +460,10 @@ export class Vcs {
         }
         const apiPath =
             '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}'
-                .replace(
-                    '{installationId}',
-                    encodeURIComponent(String(installationId)),
-                )
+                .replace('{installationId}', encodePath(installationId))
                 .replace(
                     '{providerRepositoryId}',
-                    encodeURIComponent(String(providerRepositoryId)),
+                    encodePath(providerRepositoryId),
                 );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -599,13 +597,10 @@ export class Vcs {
         }
         const apiPath =
             '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}/branches'
-                .replace(
-                    '{installationId}',
-                    encodeURIComponent(String(installationId)),
-                )
+                .replace('{installationId}', encodePath(installationId))
                 .replace(
                     '{providerRepositoryId}',
-                    encodeURIComponent(String(providerRepositoryId)),
+                    encodePath(providerRepositoryId),
                 );
         const apiPayload: Payload = {};
         if (typeof search !== 'undefined') {
@@ -741,13 +736,10 @@ export class Vcs {
         }
         const apiPath =
             '/vcs/github/installations/{installationId}/providerRepositories/{providerRepositoryId}/contents'
-                .replace(
-                    '{installationId}',
-                    encodeURIComponent(String(installationId)),
-                )
+                .replace('{installationId}', encodePath(installationId))
                 .replace(
                     '{providerRepositoryId}',
-                    encodeURIComponent(String(providerRepositoryId)),
+                    encodePath(providerRepositoryId),
                 );
         const apiPayload: Payload = {};
         if (typeof providerRootDirectory !== 'undefined') {
@@ -873,14 +865,8 @@ export class Vcs {
         }
         const apiPath =
             '/vcs/github/installations/{installationId}/repositories/{repositoryId}'
-                .replace(
-                    '{installationId}',
-                    encodeURIComponent(String(installationId)),
-                )
-                .replace(
-                    '{repositoryId}',
-                    encodeURIComponent(String(repositoryId)),
-                );
+                .replace('{installationId}', encodePath(installationId))
+                .replace('{repositoryId}', encodePath(repositoryId));
         const apiPayload: Payload = {};
         if (typeof providerPullRequestId !== 'undefined') {
             apiPayload['providerPullRequestId'] = providerPullRequestId;
@@ -1050,7 +1036,7 @@ export class Vcs {
         }
         const apiPath = '/vcs/installations/{installationId}'.replace(
             '{installationId}',
-            encodeURIComponent(String(installationId)),
+            encodePath(installationId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1122,7 +1108,7 @@ export class Vcs {
         }
         const apiPath = '/vcs/installations/{installationId}'.replace(
             '{installationId}',
-            encodeURIComponent(String(installationId)),
+            encodePath(installationId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1220,7 +1206,7 @@ export class Vcs {
         const apiPath =
             '/vcs/installations/{installationId}/namespaces'.replace(
                 '{installationId}',
-                encodeURIComponent(String(installationId)),
+                encodePath(installationId),
             );
         const apiPayload: Payload = {};
         if (typeof search !== 'undefined') {

@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -173,7 +174,7 @@ export class Notifications {
         }
         const apiPath = '/notifications/{notificationId}'.replace(
             '{notificationId}',
-            encodeURIComponent(String(notificationId)),
+            encodePath(notificationId),
         );
         const apiPayload: Payload = {};
         if (typeof read !== 'undefined') {

@@ -429,6 +429,14 @@ class AppwriteException extends Error {
     }
 }
 
+export function encodePath(value: unknown): string {
+    const segment = String(value);
+    if (segment === '.' || segment === '..') {
+        throw new AppwriteException('Path parameter cannot be "." or ".."');
+    }
+    return encodeURIComponent(segment);
+}
+
 /**
  * Client that handles requests to Appwrite
  */
@@ -449,6 +457,7 @@ class Client {
         jwt: string;
         bearer: string;
         locale: string;
+        environment: string;
         mode: string;
         cookie: string;
         session: string;
@@ -469,6 +478,7 @@ class Client {
         jwt: '',
         bearer: '',
         locale: '',
+        environment: '',
         mode: '',
         cookie: '',
         session: '',
@@ -486,8 +496,8 @@ class Client {
         'x-sdk-name': 'Console',
         'x-sdk-platform': 'console',
         'x-sdk-language': 'web',
-        'x-sdk-version': '20.0.0',
-        'X-Appwrite-Response-Format': '2.5.0',
+        'x-sdk-version': '20.1.0-rc.3',
+        'X-Appwrite-Response-Format': '2.7.0',
     };
 
     /**
@@ -746,6 +756,20 @@ class Client {
         return this;
     }
     /**
+     * Set Environment
+     *
+     * The ID of the project environment to act in, alongside the project ID. Used with Appwrite Cloud projects that have environments.
+     *
+     * @param value string
+     *
+     * @return {this}
+     */
+    setEnvironment(value: string): this {
+        this.headers['X-Appwrite-Environment'] = value;
+        this.config.environment = value;
+        return this;
+    }
+    /**
      * Set Mode
      *
      * @param value string
@@ -902,6 +926,12 @@ class Client {
                     '&jwt=' + encodeURIComponent(this.config.jwt as string);
             }
 
+            if (this.config.environment) {
+                queryParams +=
+                    '&environment=' +
+                    encodeURIComponent(this.config.environment);
+            }
+
             const url =
                 this.config.endpointRealtime + '/realtime?' + queryParams;
 
@@ -997,10 +1027,12 @@ class Client {
                                         'cookieFallback',
                                     ) ?? '{}',
                                 );
-                                session =
-                                    cookie?.[
-                                        `a_session_${this.config.project}`
-                                    ];
+                                // An environment's session is named by its project and environment IDs.
+                                const { project, environment } = this.config;
+                                const name = environment
+                                    ? `a_session_${project}_env_${environment}`
+                                    : `a_session_${project}`;
+                                session = cookie?.[name];
                             }
                             if (session && !messageData?.user) {
                                 this.realtime.socket?.send(

@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -638,10 +639,7 @@ export class Apps {
         if (typeof appId === 'undefined' || appId === '') {
             throw new AppwriteException('Missing required parameter: "appId"');
         }
-        const apiPath = '/apps/{appId}'.replace(
-            '{appId}',
-            encodeURIComponent(String(appId)),
-        );
+        const apiPath = '/apps/{appId}'.replace('{appId}', encodePath(appId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -953,10 +951,7 @@ export class Apps {
         if (typeof name === 'undefined') {
             throw new AppwriteException('Missing required parameter: "name"');
         }
-        const apiPath = '/apps/{appId}'.replace(
-            '{appId}',
-            encodeURIComponent(String(appId)),
-        );
+        const apiPath = '/apps/{appId}'.replace('{appId}', encodePath(appId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -1117,10 +1112,7 @@ export class Apps {
         if (typeof appId === 'undefined' || appId === '') {
             throw new AppwriteException('Missing required parameter: "appId"');
         }
-        const apiPath = '/apps/{appId}'.replace(
-            '{appId}',
-            encodeURIComponent(String(appId)),
-        );
+        const apiPath = '/apps/{appId}'.replace('{appId}', encodePath(appId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1196,7 +1188,7 @@ export class Apps {
         }
         const apiPath = '/apps/{appId}/installations'.replace(
             '{appId}',
-            encodeURIComponent(String(appId)),
+            encodePath(appId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -1305,11 +1297,8 @@ export class Apps {
             );
         }
         const apiPath = '/apps/{appId}/installations/{installationId}'
-            .replace('{appId}', encodeURIComponent(String(appId)))
-            .replace(
-                '{installationId}',
-                encodeURIComponent(String(installationId)),
-            );
+            .replace('{appId}', encodePath(appId))
+            .replace('{installationId}', encodePath(installationId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1397,11 +1386,8 @@ export class Apps {
             );
         }
         const apiPath = '/apps/{appId}/installations/{installationId}'
-            .replace('{appId}', encodeURIComponent(String(appId)))
-            .replace(
-                '{installationId}',
-                encodeURIComponent(String(installationId)),
-            );
+            .replace('{appId}', encodePath(appId))
+            .replace('{installationId}', encodePath(installationId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1473,11 +1459,8 @@ export class Apps {
             );
         }
         const apiPath = '/apps/{appId}/installations/{installationId}/tokens'
-            .replace('{appId}', encodeURIComponent(String(appId)))
-            .replace(
-                '{installationId}',
-                encodeURIComponent(String(installationId)),
-            );
+            .replace('{appId}', encodePath(appId))
+            .replace('{installationId}', encodePath(installationId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1569,7 +1552,7 @@ export class Apps {
         }
         const apiPath = '/apps/{appId}/keys'.replace(
             '{appId}',
-            encodeURIComponent(String(appId)),
+            encodePath(appId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -1659,7 +1642,7 @@ export class Apps {
         }
         const apiPath = '/apps/{appId}/keys'.replace(
             '{appId}',
-            encodeURIComponent(String(appId)),
+            encodePath(appId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1740,8 +1723,8 @@ export class Apps {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
         const apiPath = '/apps/{appId}/keys/{keyId}'
-            .replace('{appId}', encodeURIComponent(String(appId)))
-            .replace('{keyId}', encodeURIComponent(String(keyId)));
+            .replace('{appId}', encodePath(appId))
+            .replace('{keyId}', encodePath(keyId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1820,8 +1803,8 @@ export class Apps {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
         const apiPath = '/apps/{appId}/keys/{keyId}'
-            .replace('{appId}', encodeURIComponent(String(appId)))
-            .replace('{keyId}', encodeURIComponent(String(keyId)));
+            .replace('{appId}', encodePath(appId))
+            .replace('{keyId}', encodePath(keyId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1889,7 +1872,7 @@ export class Apps {
         }
         const apiPath = '/apps/{appId}/labels'.replace(
             '{appId}',
-            encodeURIComponent(String(appId)),
+            encodePath(appId),
         );
         const apiPayload: Payload = {};
         if (typeof labels !== 'undefined') {
@@ -2023,7 +2006,7 @@ export class Apps {
         }
         const apiPath = '/apps/{appId}/secrets'.replace(
             '{appId}',
-            encodeURIComponent(String(appId)),
+            encodePath(appId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -2113,7 +2096,7 @@ export class Apps {
         }
         const apiPath = '/apps/{appId}/secrets'.replace(
             '{appId}',
-            encodeURIComponent(String(appId)),
+            encodePath(appId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2202,8 +2185,8 @@ export class Apps {
             );
         }
         const apiPath = '/apps/{appId}/secrets/{secretId}'
-            .replace('{appId}', encodeURIComponent(String(appId)))
-            .replace('{secretId}', encodeURIComponent(String(secretId)));
+            .replace('{appId}', encodePath(appId))
+            .replace('{secretId}', encodePath(secretId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2287,8 +2270,8 @@ export class Apps {
             );
         }
         const apiPath = '/apps/{appId}/secrets/{secretId}'
-            .replace('{appId}', encodeURIComponent(String(appId)))
-            .replace('{secretId}', encodeURIComponent(String(secretId)));
+            .replace('{appId}', encodePath(appId))
+            .replace('{secretId}', encodePath(secretId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2350,7 +2333,7 @@ export class Apps {
         }
         const apiPath = '/apps/{appId}/team'.replace(
             '{appId}',
-            encodeURIComponent(String(appId)),
+            encodePath(appId),
         );
         const apiPayload: Payload = {};
         if (typeof teamId !== 'undefined') {
@@ -2460,7 +2443,7 @@ export class Apps {
         }
         const apiPath = '/apps/{appId}/tokens'.replace(
             '{appId}',
-            encodeURIComponent(String(appId)),
+            encodePath(appId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);

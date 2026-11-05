@@ -3,9 +3,11 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
+import { AnalyticsPropertyType } from '../enums/analytics-property-type';
 import { AnalyticsInterval } from '../enums/analytics-interval';
 import { AnalyticsDimension } from '../enums/analytics-dimension';
 export class Analytics {
@@ -18,7 +20,7 @@ export class Analytics {
     /**
      * List analytics properties for the current project.
      *
-     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, domain, enabled
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, domain, enabled, type
      * @param {string} params.search - Search term to filter your list results. Matches the property ID, name and domain. Max length: 256 chars.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -32,7 +34,7 @@ export class Analytics {
     /**
      * List analytics properties for the current project.
      *
-     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, domain, enabled
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, domain, enabled, type
      * @param {string} search - Search term to filter your list results. Matches the property ID, name and domain. Max length: 256 chars.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
@@ -116,6 +118,8 @@ export class Analytics {
                         domain: '',
                         enabled: true,
                         allowedOrigins: ['*'],
+                        type: 'web',
+                        identifyUsers: false,
                         accessedAt: '',
                         firstAccessedAt: '',
                     },
@@ -131,9 +135,11 @@ export class Analytics {
      *
      * @param {string} params.propertyId - Unique ID. Choose a custom ID or generate a random ID with `ID.unique()`. Max length is 36 chars.
      * @param {string} params.name - Human-readable name for this property.
-     * @param {string} params.domain - Primary domain to track (e.g. example.com). Optional for native apps.
+     * @param {string} params.domain - Primary domain to track (e.g. example.com). May be empty for mobile and agent properties.
      * @param {boolean} params.enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
      * @param {string[]} params.allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
+     * @param {boolean} params.identifyUsers - Record the signed-in user's ID on events sent from a client session, so traffic can be broken down and counted by user. Off by default.
+     * @param {AnalyticsPropertyType} params.type - Kind of product this property tracks. Only changes which panels the dashboard shows; ingestion accepts the same events for every type.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AnalyticsProperty>}
      */
@@ -143,15 +149,19 @@ export class Analytics {
         domain?: string;
         enabled?: boolean;
         allowedOrigins?: string[];
+        identifyUsers?: boolean;
+        type?: AnalyticsPropertyType;
     }): Promise<Models.AnalyticsProperty>;
     /**
      * Create a new analytics property to track a website or application.
      *
      * @param {string} propertyId - Unique ID. Choose a custom ID or generate a random ID with `ID.unique()`. Max length is 36 chars.
      * @param {string} name - Human-readable name for this property.
-     * @param {string} domain - Primary domain to track (e.g. example.com). Optional for native apps.
+     * @param {string} domain - Primary domain to track (e.g. example.com). May be empty for mobile and agent properties.
      * @param {boolean} enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
      * @param {string[]} allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
+     * @param {boolean} identifyUsers - Record the signed-in user's ID on events sent from a client session, so traffic can be broken down and counted by user. Off by default.
+     * @param {AnalyticsPropertyType} type - Kind of product this property tracks. Only changes which panels the dashboard shows; ingestion accepts the same events for every type.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AnalyticsProperty>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -162,6 +172,8 @@ export class Analytics {
         domain?: string,
         enabled?: boolean,
         allowedOrigins?: string[],
+        identifyUsers?: boolean,
+        type?: AnalyticsPropertyType,
     ): Promise<Models.AnalyticsProperty>;
     createProperty(
         paramsOrFirst:
@@ -171,9 +183,18 @@ export class Analytics {
                   domain?: string;
                   enabled?: boolean;
                   allowedOrigins?: string[];
+                  identifyUsers?: boolean;
+                  type?: AnalyticsPropertyType;
               }
             | string,
-        ...rest: [string?, string?, boolean?, string[]?]
+        ...rest: [
+            string?,
+            string?,
+            boolean?,
+            string[]?,
+            boolean?,
+            AnalyticsPropertyType?,
+        ]
     ): Promise<Models.AnalyticsProperty> {
         let params: {
             propertyId: string;
@@ -181,6 +202,8 @@ export class Analytics {
             domain?: string;
             enabled?: boolean;
             allowedOrigins?: string[];
+            identifyUsers?: boolean;
+            type?: AnalyticsPropertyType;
         };
 
         if (
@@ -194,6 +217,8 @@ export class Analytics {
                 domain?: string;
                 enabled?: boolean;
                 allowedOrigins?: string[];
+                identifyUsers?: boolean;
+                type?: AnalyticsPropertyType;
             };
         } else {
             params = {
@@ -202,6 +227,8 @@ export class Analytics {
                 domain: rest[1] as string,
                 enabled: rest[2] as boolean,
                 allowedOrigins: rest[3] as string[],
+                identifyUsers: rest[4] as boolean,
+                type: rest[5] as AnalyticsPropertyType,
             };
         }
 
@@ -210,6 +237,8 @@ export class Analytics {
         const domain = params.domain;
         const enabled = params.enabled;
         const allowedOrigins = params.allowedOrigins;
+        const identifyUsers = params.identifyUsers;
+        const type = params.type;
 
         if (typeof propertyId === 'undefined') {
             throw new AppwriteException(
@@ -236,6 +265,12 @@ export class Analytics {
         if (typeof allowedOrigins !== 'undefined') {
             apiPayload['allowedOrigins'] = allowedOrigins;
         }
+        if (typeof identifyUsers !== 'undefined') {
+            apiPayload['identifyUsers'] = identifyUsers;
+        }
+        if (typeof type !== 'undefined') {
+            apiPayload['type'] = type;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -257,6 +292,8 @@ export class Analytics {
                         domain: '',
                         enabled: true,
                         allowedOrigins: ['*'],
+                        type: 'web',
+                        identifyUsers: false,
                         accessedAt: '',
                         firstAccessedAt: '',
                     },
@@ -312,7 +349,7 @@ export class Analytics {
         }
         const apiPath = '/analytics/properties/{propertyId}'.replace(
             '{propertyId}',
-            encodeURIComponent(String(propertyId)),
+            encodePath(propertyId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -335,6 +372,8 @@ export class Analytics {
                         domain: '',
                         enabled: true,
                         allowedOrigins: ['*'],
+                        type: 'web',
+                        identifyUsers: false,
                         accessedAt: '',
                         firstAccessedAt: '',
                     },
@@ -353,6 +392,8 @@ export class Analytics {
      * @param {string | null} params.domain - Primary domain to track (e.g. example.com). Pass an empty string to clear it.
      * @param {boolean | null} params.enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
      * @param {string[] | null} params.allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
+     * @param {boolean | null} params.identifyUsers - Record the signed-in user's ID on events sent from a client session, so traffic can be broken down and counted by user.
+     * @param {AnalyticsPropertyType | null} params.type - Kind of product this property tracks. Only changes which panels the dashboard shows; stored events are kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AnalyticsProperty>}
      */
@@ -362,6 +403,8 @@ export class Analytics {
         domain?: string | null;
         enabled?: boolean | null;
         allowedOrigins?: string[] | null;
+        identifyUsers?: boolean | null;
+        type?: AnalyticsPropertyType | null;
     }): Promise<Models.AnalyticsProperty>;
     /**
      * Update an analytics property. Only the attributes you pass are changed; omitted attributes keep their current value.
@@ -371,6 +414,8 @@ export class Analytics {
      * @param {string | null} domain - Primary domain to track (e.g. example.com). Pass an empty string to clear it.
      * @param {boolean | null} enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
      * @param {string[] | null} allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
+     * @param {boolean | null} identifyUsers - Record the signed-in user's ID on events sent from a client session, so traffic can be broken down and counted by user.
+     * @param {AnalyticsPropertyType | null} type - Kind of product this property tracks. Only changes which panels the dashboard shows; stored events are kept.
      * @throws {AppwriteException}
      * @returns {Promise<Models.AnalyticsProperty>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -381,6 +426,8 @@ export class Analytics {
         domain?: string | null,
         enabled?: boolean | null,
         allowedOrigins?: string[] | null,
+        identifyUsers?: boolean | null,
+        type?: AnalyticsPropertyType | null,
     ): Promise<Models.AnalyticsProperty>;
     updateProperty(
         paramsOrFirst:
@@ -390,6 +437,8 @@ export class Analytics {
                   domain?: string | null;
                   enabled?: boolean | null;
                   allowedOrigins?: string[] | null;
+                  identifyUsers?: boolean | null;
+                  type?: AnalyticsPropertyType | null;
               }
             | string,
         ...rest: [
@@ -397,6 +446,8 @@ export class Analytics {
             (string | null)?,
             (boolean | null)?,
             (string[] | null)?,
+            (boolean | null)?,
+            (AnalyticsPropertyType | null)?,
         ]
     ): Promise<Models.AnalyticsProperty> {
         let params: {
@@ -405,6 +456,8 @@ export class Analytics {
             domain?: string | null;
             enabled?: boolean | null;
             allowedOrigins?: string[] | null;
+            identifyUsers?: boolean | null;
+            type?: AnalyticsPropertyType | null;
         };
 
         if (
@@ -418,6 +471,8 @@ export class Analytics {
                 domain?: string | null;
                 enabled?: boolean | null;
                 allowedOrigins?: string[] | null;
+                identifyUsers?: boolean | null;
+                type?: AnalyticsPropertyType | null;
             };
         } else {
             params = {
@@ -426,6 +481,8 @@ export class Analytics {
                 domain: rest[1] as string | null,
                 enabled: rest[2] as boolean | null,
                 allowedOrigins: rest[3] as string[] | null,
+                identifyUsers: rest[4] as boolean | null,
+                type: rest[5] as AnalyticsPropertyType | null,
             };
         }
 
@@ -434,6 +491,8 @@ export class Analytics {
         const domain = params.domain;
         const enabled = params.enabled;
         const allowedOrigins = params.allowedOrigins;
+        const identifyUsers = params.identifyUsers;
+        const type = params.type;
 
         if (typeof propertyId === 'undefined' || propertyId === '') {
             throw new AppwriteException(
@@ -442,7 +501,7 @@ export class Analytics {
         }
         const apiPath = '/analytics/properties/{propertyId}'.replace(
             '{propertyId}',
-            encodeURIComponent(String(propertyId)),
+            encodePath(propertyId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -456,6 +515,12 @@ export class Analytics {
         }
         if (typeof allowedOrigins !== 'undefined') {
             apiPayload['allowedOrigins'] = allowedOrigins;
+        }
+        if (typeof identifyUsers !== 'undefined') {
+            apiPayload['identifyUsers'] = identifyUsers;
+        }
+        if (typeof type !== 'undefined') {
+            apiPayload['type'] = type;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -478,6 +543,8 @@ export class Analytics {
                         domain: '',
                         enabled: true,
                         allowedOrigins: ['*'],
+                        type: 'web',
+                        identifyUsers: false,
                         accessedAt: '',
                         firstAccessedAt: '',
                     },
@@ -531,7 +598,7 @@ export class Analytics {
         }
         const apiPath = '/analytics/properties/{propertyId}'.replace(
             '{propertyId}',
-            encodeURIComponent(String(propertyId)),
+            encodePath(propertyId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -549,7 +616,7 @@ export class Analytics {
      * Send a tracking event from a browser, native app, or server-side SDK.
      *
      * @param {string} params.propertyId - Analytics property ID.
-     * @param {string} params.name - Event name. "pageview" is just a conventional event name; events are not modeled specially.
+     * @param {string} params.name - Event name. "pageview" and "screen_view" are counted as views, every other name is a custom event.
      * @param {string} params.url - Full page URL or screen identifier.
      * @param {string} params.domain - Hostname (e.g. example.com).
      * @param {string} params.referrer - Referrer URL.
@@ -558,9 +625,10 @@ export class Analytics {
      * @param {number} params.scrollDepth - Scroll depth percentage 0-100.
      * @param {number} params.engagementTime - Engagement time in seconds, 0-4294967295.
      * @param {string[]} params.props - Custom string properties as a flat key=value list (max 32 entries, alternating key,value).
-     * @param {string} params.userId - Override user ID. Requires API-key auth with analytics.write scope.
+     * @param {string} params.userId - Override user ID. Pass an opaque ID, not personal data such as an email. Requires API-key auth with analytics.write scope.
      * @param {string} params.ip - Override IP address. Requires API-key auth with analytics.write scope.
      * @param {string} params.userAgent - Override user agent. Requires API-key auth with analytics.write scope.
+     * @param {boolean | null} params.interactive - Whether this event is a visitor interaction that ends a bounce. Set false for telemetry such as heartbeats or background syncs. Defaults to true for custom events and false for the automatic engagement, scroll and app lifecycle events. Ignored for views.
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      */
@@ -578,12 +646,13 @@ export class Analytics {
         userId?: string;
         ip?: string;
         userAgent?: string;
+        interactive?: boolean | null;
     }): Promise<{}>;
     /**
      * Send a tracking event from a browser, native app, or server-side SDK.
      *
      * @param {string} propertyId - Analytics property ID.
-     * @param {string} name - Event name. "pageview" is just a conventional event name; events are not modeled specially.
+     * @param {string} name - Event name. "pageview" and "screen_view" are counted as views, every other name is a custom event.
      * @param {string} url - Full page URL or screen identifier.
      * @param {string} domain - Hostname (e.g. example.com).
      * @param {string} referrer - Referrer URL.
@@ -592,9 +661,10 @@ export class Analytics {
      * @param {number} scrollDepth - Scroll depth percentage 0-100.
      * @param {number} engagementTime - Engagement time in seconds, 0-4294967295.
      * @param {string[]} props - Custom string properties as a flat key=value list (max 32 entries, alternating key,value).
-     * @param {string} userId - Override user ID. Requires API-key auth with analytics.write scope.
+     * @param {string} userId - Override user ID. Pass an opaque ID, not personal data such as an email. Requires API-key auth with analytics.write scope.
      * @param {string} ip - Override IP address. Requires API-key auth with analytics.write scope.
      * @param {string} userAgent - Override user agent. Requires API-key auth with analytics.write scope.
+     * @param {boolean | null} interactive - Whether this event is a visitor interaction that ends a bounce. Set false for telemetry such as heartbeats or background syncs. Defaults to true for custom events and false for the automatic engagement, scroll and app lifecycle events. Ignored for views.
      * @throws {AppwriteException}
      * @returns {Promise<{}>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -613,6 +683,7 @@ export class Analytics {
         userId?: string,
         ip?: string,
         userAgent?: string,
+        interactive?: boolean | null,
     ): Promise<{}>;
     createEvent(
         paramsOrFirst:
@@ -630,6 +701,7 @@ export class Analytics {
                   userId?: string;
                   ip?: string;
                   userAgent?: string;
+                  interactive?: boolean | null;
               }
             | string,
         ...rest: [
@@ -645,6 +717,7 @@ export class Analytics {
             string?,
             string?,
             string?,
+            (boolean | null)?,
         ]
     ): Promise<{}> {
         let params: {
@@ -661,6 +734,7 @@ export class Analytics {
             userId?: string;
             ip?: string;
             userAgent?: string;
+            interactive?: boolean | null;
         };
 
         if (
@@ -682,6 +756,7 @@ export class Analytics {
                 userId?: string;
                 ip?: string;
                 userAgent?: string;
+                interactive?: boolean | null;
             };
         } else {
             params = {
@@ -698,6 +773,7 @@ export class Analytics {
                 userId: rest[9] as string,
                 ip: rest[10] as string,
                 userAgent: rest[11] as string,
+                interactive: rest[12] as boolean | null,
             };
         }
 
@@ -714,6 +790,7 @@ export class Analytics {
         const userId = params.userId;
         const ip = params.ip;
         const userAgent = params.userAgent;
+        const interactive = params.interactive;
 
         if (typeof propertyId === 'undefined' || propertyId === '') {
             throw new AppwriteException(
@@ -728,7 +805,7 @@ export class Analytics {
         }
         const apiPath = '/analytics/properties/{propertyId}/events'.replace(
             '{propertyId}',
-            encodeURIComponent(String(propertyId)),
+            encodePath(propertyId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -767,6 +844,9 @@ export class Analytics {
         if (typeof userAgent !== 'undefined') {
             apiPayload['userAgent'] = userAgent;
         }
+        if (typeof interactive !== 'undefined') {
+            apiPayload['interactive'] = interactive;
+        }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         const apiHeaders: { [header: string]: string } = {
@@ -782,16 +862,23 @@ export class Analytics {
      * Read analytics metrics (visitors, sessions, pageviews, events, bounceRate, …) for a property over a date range.
      *
      * **Three response shapes**, chosen by `dimensions[]` and `interval`:
-     * - Neither: one row aggregating the whole window, with `value` and `date` null. Only this shape carries `pageviews`, `visits`, `bounceRate`, `visitDuration`, `viewsPerVisit`, `scrollDepth` and `engagementTime`.
+     * - Neither: one row aggregating the whole window, with `value` and `date` null. Only this shape carries `visits`, `bounceRate`, `visitDuration`, `viewsPerVisit`, `scrollDepth` and `engagementTime`.
      * - `dimensions[]`: one row per dimension value, ranked by visitors, with `value` set and `date` null.
      * - `interval`: one row per time bucket in chronological order, with `date` set and `value` null.
+     *
+     * `pageviews` is carried by the flat aggregate and by `interval`, but not by a breakdown.
+     *
+     * `userId` and `users` cover identified traffic only: events sent with an API key's `userId`, or from a signed-in session on a property with `identifyUsers` on. A `userId` breakdown leaves out anonymous events; returned values are the project's user IDs.
+     *
+     * Custom event props: `dimensions[]=props` ranks the prop keys seen in the window, and adding `propKey` ranks the values of that one key. `queries[]` filters on a prop's value with the `props.<key>` attribute, e.g. `equal("props.plan", ["pro"])`.
      *
      * Combining `dimensions[]` with `interval` is not supported yet. `queries[]` filters the underlying events using standard Utopia query syntax.
      *
      * @param {string} params.propertyId - Analytics property unique ID.
-     * @param {string[]} params.queries - Up to 10 filter queries in Utopia syntax. Allowed attributes: country, region, city, browser, operatingSystem, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, botName, botCategory, eventName. page, eventName are only accepted alongside `interval`, or with a breakdown on a dimension other than entryPage, exitPage. Allowed methods: equal, notEqual, contains, startsWith, endsWith. Example: `queries[]=equal("country", ["US"])`.
+     * @param {string[]} params.queries - Up to 10 filter queries in Utopia syntax. Allowed attributes: country, region, city, browser, browserVersion, operatingSystem, operatingSystemVersion, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, botName, botCategory, userId, eventName, and `props.<key>` for a custom prop. page, userId, eventName and `props.<key>` are only accepted alongside `interval`, or with a breakdown on a dimension other than entryPage, exitPage. Allowed methods: equal, notEqual, contains, startsWith, endsWith. Example: `queries[]=equal("country", ["US"])`.
      * @param {AnalyticsInterval} params.interval - Time bucket size. Omit (null) for a flat aggregate over the whole window. Allowed: 1h, 1d, 1w, 1m.
-     * @param {AnalyticsDimension[]} params.dimensions - Dimension to break the metrics down by. One at most for now; the parameter is a list so that cap can be raised without a breaking change. Allowed: country, region, city, browser, operatingSystem, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, entryPage, exitPage, trafficType, botName, botCategory, eventName.
+     * @param {AnalyticsDimension[]} params.dimensions - Dimension to break the metrics down by. One at most for now; the parameter is a list so that cap can be raised without a breaking change. Allowed: country, region, city, browser, browserVersion, operatingSystem, operatingSystemVersion, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, entryPage, exitPage, trafficType, botName, botCategory, userId, eventName, props.
+     * @param {string} params.propKey - Custom prop key whose values to rank, with `dimensions[]=props`. Omit to rank the prop keys themselves.
      * @param {string} params.dateRange - Date range shorthand (e.g. 7d, 30d). Ignored for any bound you supply explicitly via startAt/endAt.
      * @param {string} params.startAt - Explicit window start in ISO 8601. Defaults to endAt minus dateRange.
      * @param {string} params.endAt - Explicit window end in ISO 8601. Defaults to the current time.
@@ -805,6 +892,7 @@ export class Analytics {
         queries?: string[];
         interval?: AnalyticsInterval;
         dimensions?: AnalyticsDimension[];
+        propKey?: string;
         dateRange?: string;
         startAt?: string;
         endAt?: string;
@@ -815,16 +903,23 @@ export class Analytics {
      * Read analytics metrics (visitors, sessions, pageviews, events, bounceRate, …) for a property over a date range.
      *
      * **Three response shapes**, chosen by `dimensions[]` and `interval`:
-     * - Neither: one row aggregating the whole window, with `value` and `date` null. Only this shape carries `pageviews`, `visits`, `bounceRate`, `visitDuration`, `viewsPerVisit`, `scrollDepth` and `engagementTime`.
+     * - Neither: one row aggregating the whole window, with `value` and `date` null. Only this shape carries `visits`, `bounceRate`, `visitDuration`, `viewsPerVisit`, `scrollDepth` and `engagementTime`.
      * - `dimensions[]`: one row per dimension value, ranked by visitors, with `value` set and `date` null.
      * - `interval`: one row per time bucket in chronological order, with `date` set and `value` null.
+     *
+     * `pageviews` is carried by the flat aggregate and by `interval`, but not by a breakdown.
+     *
+     * `userId` and `users` cover identified traffic only: events sent with an API key's `userId`, or from a signed-in session on a property with `identifyUsers` on. A `userId` breakdown leaves out anonymous events; returned values are the project's user IDs.
+     *
+     * Custom event props: `dimensions[]=props` ranks the prop keys seen in the window, and adding `propKey` ranks the values of that one key. `queries[]` filters on a prop's value with the `props.<key>` attribute, e.g. `equal("props.plan", ["pro"])`.
      *
      * Combining `dimensions[]` with `interval` is not supported yet. `queries[]` filters the underlying events using standard Utopia query syntax.
      *
      * @param {string} propertyId - Analytics property unique ID.
-     * @param {string[]} queries - Up to 10 filter queries in Utopia syntax. Allowed attributes: country, region, city, browser, operatingSystem, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, botName, botCategory, eventName. page, eventName are only accepted alongside `interval`, or with a breakdown on a dimension other than entryPage, exitPage. Allowed methods: equal, notEqual, contains, startsWith, endsWith. Example: `queries[]=equal("country", ["US"])`.
+     * @param {string[]} queries - Up to 10 filter queries in Utopia syntax. Allowed attributes: country, region, city, browser, browserVersion, operatingSystem, operatingSystemVersion, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, botName, botCategory, userId, eventName, and `props.<key>` for a custom prop. page, userId, eventName and `props.<key>` are only accepted alongside `interval`, or with a breakdown on a dimension other than entryPage, exitPage. Allowed methods: equal, notEqual, contains, startsWith, endsWith. Example: `queries[]=equal("country", ["US"])`.
      * @param {AnalyticsInterval} interval - Time bucket size. Omit (null) for a flat aggregate over the whole window. Allowed: 1h, 1d, 1w, 1m.
-     * @param {AnalyticsDimension[]} dimensions - Dimension to break the metrics down by. One at most for now; the parameter is a list so that cap can be raised without a breaking change. Allowed: country, region, city, browser, operatingSystem, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, entryPage, exitPage, trafficType, botName, botCategory, eventName.
+     * @param {AnalyticsDimension[]} dimensions - Dimension to break the metrics down by. One at most for now; the parameter is a list so that cap can be raised without a breaking change. Allowed: country, region, city, browser, browserVersion, operatingSystem, operatingSystemVersion, device, screenSize, referrerSource, channel, utmSource, utmMedium, utmCampaign, utmContent, utmTerm, page, hostname, entryPage, exitPage, trafficType, botName, botCategory, userId, eventName, props.
+     * @param {string} propKey - Custom prop key whose values to rank, with `dimensions[]=props`. Omit to rank the prop keys themselves.
      * @param {string} dateRange - Date range shorthand (e.g. 7d, 30d). Ignored for any bound you supply explicitly via startAt/endAt.
      * @param {string} startAt - Explicit window start in ISO 8601. Defaults to endAt minus dateRange.
      * @param {string} endAt - Explicit window end in ISO 8601. Defaults to the current time.
@@ -839,6 +934,7 @@ export class Analytics {
         queries?: string[],
         interval?: AnalyticsInterval,
         dimensions?: AnalyticsDimension[],
+        propKey?: string,
         dateRange?: string,
         startAt?: string,
         endAt?: string,
@@ -852,6 +948,7 @@ export class Analytics {
                   queries?: string[];
                   interval?: AnalyticsInterval;
                   dimensions?: AnalyticsDimension[];
+                  propKey?: string;
                   dateRange?: string;
                   startAt?: string;
                   endAt?: string;
@@ -866,6 +963,7 @@ export class Analytics {
             string?,
             string?,
             string?,
+            string?,
             number?,
             boolean?,
         ]
@@ -875,6 +973,7 @@ export class Analytics {
             queries?: string[];
             interval?: AnalyticsInterval;
             dimensions?: AnalyticsDimension[];
+            propKey?: string;
             dateRange?: string;
             startAt?: string;
             endAt?: string;
@@ -892,6 +991,7 @@ export class Analytics {
                 queries?: string[];
                 interval?: AnalyticsInterval;
                 dimensions?: AnalyticsDimension[];
+                propKey?: string;
                 dateRange?: string;
                 startAt?: string;
                 endAt?: string;
@@ -904,11 +1004,12 @@ export class Analytics {
                 queries: rest[0] as string[],
                 interval: rest[1] as AnalyticsInterval,
                 dimensions: rest[2] as AnalyticsDimension[],
-                dateRange: rest[3] as string,
-                startAt: rest[4] as string,
-                endAt: rest[5] as string,
-                limit: rest[6] as number,
-                total: rest[7] as boolean,
+                propKey: rest[3] as string,
+                dateRange: rest[4] as string,
+                startAt: rest[5] as string,
+                endAt: rest[6] as string,
+                limit: rest[7] as number,
+                total: rest[8] as boolean,
             };
         }
 
@@ -916,6 +1017,7 @@ export class Analytics {
         const queries = params.queries;
         const interval = params.interval;
         const dimensions = params.dimensions;
+        const propKey = params.propKey;
         const dateRange = params.dateRange;
         const startAt = params.startAt;
         const endAt = params.endAt;
@@ -929,7 +1031,7 @@ export class Analytics {
         }
         const apiPath = '/analytics/properties/{propertyId}/metrics'.replace(
             '{propertyId}',
-            encodeURIComponent(String(propertyId)),
+            encodePath(propertyId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -940,6 +1042,9 @@ export class Analytics {
         }
         if (typeof dimensions !== 'undefined') {
             apiPayload['dimensions'] = dimensions;
+        }
+        if (typeof propKey !== 'undefined') {
+            apiPayload['propKey'] = propKey;
         }
         if (typeof dateRange !== 'undefined') {
             apiPayload['dateRange'] = dateRange;

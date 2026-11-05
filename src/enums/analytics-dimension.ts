@@ -3,7 +3,9 @@ export enum AnalyticsDimension {
     Region = 'region',
     City = 'city',
     Browser = 'browser',
+    BrowserVersion = 'browserVersion',
     OperatingSystem = 'operatingSystem',
+    OperatingSystemVersion = 'operatingSystemVersion',
     Device = 'device',
     ScreenSize = 'screenSize',
     ReferrerSource = 'referrerSource',
@@ -20,5 +22,7 @@ export enum AnalyticsDimension {
     TrafficType = 'trafficType',
     BotName = 'botName',
     BotCategory = 'botCategory',
+    UserId = 'userId',
     EventName = 'eventName',
+    Props = 'props',
 }

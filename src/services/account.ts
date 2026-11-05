@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -558,7 +559,7 @@ export class Account {
         }
         const apiPath = '/account/billing-addresses/{billingAddressId}'.replace(
             '{billingAddressId}',
-            encodeURIComponent(String(billingAddressId)),
+            encodePath(billingAddressId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -720,7 +721,7 @@ export class Account {
         }
         const apiPath = '/account/billing-addresses/{billingAddressId}'.replace(
             '{billingAddressId}',
-            encodeURIComponent(String(billingAddressId)),
+            encodePath(billingAddressId),
         );
         const apiPayload: Payload = {};
         if (typeof country !== 'undefined') {
@@ -814,7 +815,7 @@ export class Account {
         }
         const apiPath = '/account/billing-addresses/{billingAddressId}'.replace(
             '{billingAddressId}',
-            encodeURIComponent(String(billingAddressId)),
+            encodePath(billingAddressId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -972,7 +973,7 @@ export class Account {
         }
         const apiPath = '/account/consents/{consentId}'.replace(
             '{consentId}',
-            encodeURIComponent(String(consentId)),
+            encodePath(consentId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1047,7 +1048,7 @@ export class Account {
         }
         const apiPath = '/account/consents/{consentId}'.replace(
             '{consentId}',
-            encodeURIComponent(String(consentId)),
+            encodePath(consentId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1126,7 +1127,7 @@ export class Account {
         }
         const apiPath = '/account/consents/{consentId}/tokens'.replace(
             '{consentId}',
-            encodeURIComponent(String(consentId)),
+            encodePath(consentId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -1239,8 +1240,8 @@ export class Account {
             );
         }
         const apiPath = '/account/consents/{consentId}/tokens/{tokenId}'
-            .replace('{consentId}', encodeURIComponent(String(consentId)))
-            .replace('{tokenId}', encodeURIComponent(String(tokenId)));
+            .replace('{consentId}', encodePath(consentId))
+            .replace('{tokenId}', encodePath(tokenId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1332,8 +1333,8 @@ export class Account {
             );
         }
         const apiPath = '/account/consents/{consentId}/tokens/{tokenId}'
-            .replace('{consentId}', encodeURIComponent(String(consentId)))
-            .replace('{tokenId}', encodeURIComponent(String(tokenId)));
+            .replace('{consentId}', encodePath(consentId))
+            .replace('{tokenId}', encodePath(tokenId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1389,7 +1390,7 @@ export class Account {
         }
         const apiPath = '/account/coupons/{couponId}'.replace(
             '{couponId}',
-            encodeURIComponent(String(couponId)),
+            encodePath(couponId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1692,7 +1693,7 @@ export class Account {
         }
         const apiPath = '/account/identities/{identityId}'.replace(
             '{identityId}',
-            encodeURIComponent(String(identityId)),
+            encodePath(identityId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2138,7 +2139,7 @@ export class Account {
         }
         const apiPath = '/account/keys/{keyId}'.replace(
             '{keyId}',
-            encodeURIComponent(String(keyId)),
+            encodePath(keyId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2259,7 +2260,7 @@ export class Account {
         }
         const apiPath = '/account/keys/{keyId}'.replace(
             '{keyId}',
-            encodeURIComponent(String(keyId)),
+            encodePath(keyId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -2342,7 +2343,7 @@ export class Account {
         }
         const apiPath = '/account/keys/{keyId}'.replace(
             '{keyId}',
-            encodeURIComponent(String(keyId)),
+            encodePath(keyId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2505,7 +2506,7 @@ export class Account {
         }
         const apiPath = '/account/mfa/authenticators/{type}'.replace(
             '{type}',
-            encodeURIComponent(String(type)),
+            encodePath(type),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2576,7 +2577,7 @@ export class Account {
         }
         const apiPath = '/account/mfa/authenticators/{type}'.replace(
             '{type}',
-            encodeURIComponent(String(type)),
+            encodePath(type),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2667,7 +2668,7 @@ export class Account {
         }
         const apiPath = '/account/mfa/authenticators/{type}'.replace(
             '{type}',
-            encodeURIComponent(String(type)),
+            encodePath(type),
         );
         const apiPayload: Payload = {};
         if (typeof otp !== 'undefined') {
@@ -2790,7 +2791,7 @@ export class Account {
         }
         const apiPath = '/account/mfa/authenticators/{type}'.replace(
             '{type}',
-            encodeURIComponent(String(type)),
+            encodePath(type),
         );
         const apiPayload: Payload = {};
         if (typeof otp !== 'undefined') {
@@ -2893,7 +2894,7 @@ export class Account {
         }
         const apiPath = '/account/mfa/authenticators/{type}'.replace(
             '{type}',
-            encodeURIComponent(String(type)),
+            encodePath(type),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2949,7 +2950,7 @@ export class Account {
         }
         const apiPath = '/account/mfa/authenticators/{type}'.replace(
             '{type}',
-            encodeURIComponent(String(type)),
+            encodePath(type),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -3942,7 +3943,7 @@ export class Account {
         }
         const apiPath = '/account/passkeys/{passkeyId}'.replace(
             '{passkeyId}',
-            encodeURIComponent(String(passkeyId)),
+            encodePath(passkeyId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -4028,7 +4029,7 @@ export class Account {
         }
         const apiPath = '/account/passkeys/{passkeyId}'.replace(
             '{passkeyId}',
-            encodeURIComponent(String(passkeyId)),
+            encodePath(passkeyId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -4102,7 +4103,7 @@ export class Account {
         }
         const apiPath = '/account/passkeys/{passkeyId}'.replace(
             '{passkeyId}',
-            encodeURIComponent(String(passkeyId)),
+            encodePath(passkeyId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -4178,7 +4179,7 @@ export class Account {
         }
         const apiPath = '/account/passkeys/{passkeyId}/verification'.replace(
             '{passkeyId}',
-            encodeURIComponent(String(passkeyId)),
+            encodePath(passkeyId),
         );
         const apiPayload: Payload = {};
         if (typeof credential !== 'undefined') {
@@ -4519,7 +4520,7 @@ export class Account {
         }
         const apiPath = '/account/payment-methods/{paymentMethodId}'.replace(
             '{paymentMethodId}',
-            encodeURIComponent(String(paymentMethodId)),
+            encodePath(paymentMethodId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -4645,7 +4646,7 @@ export class Account {
         }
         const apiPath = '/account/payment-methods/{paymentMethodId}'.replace(
             '{paymentMethodId}',
-            encodeURIComponent(String(paymentMethodId)),
+            encodePath(paymentMethodId),
         );
         const apiPayload: Payload = {};
         if (typeof expiryMonth !== 'undefined') {
@@ -4731,7 +4732,7 @@ export class Account {
         }
         const apiPath = '/account/payment-methods/{paymentMethodId}'.replace(
             '{paymentMethodId}',
-            encodeURIComponent(String(paymentMethodId)),
+            encodePath(paymentMethodId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -4837,7 +4838,7 @@ export class Account {
         const apiPath =
             '/account/payment-methods/{paymentMethodId}/provider'.replace(
                 '{paymentMethodId}',
-                encodeURIComponent(String(paymentMethodId)),
+                encodePath(paymentMethodId),
             );
         const apiPayload: Payload = {};
         if (typeof providerMethodId !== 'undefined') {
@@ -4928,7 +4929,7 @@ export class Account {
         const apiPath =
             '/account/payment-methods/{paymentMethodId}/setup'.replace(
                 '{paymentMethodId}',
-                encodeURIComponent(String(paymentMethodId)),
+                encodePath(paymentMethodId),
             );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -6303,7 +6304,7 @@ export class Account {
      * A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
      *
      *
-     * @param {OAuthProvider} params.provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
+     * @param {OAuthProvider} params.provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, vipps, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
      * @param {string} params.success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} params.failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} params.scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
@@ -6326,7 +6327,7 @@ export class Account {
      * A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
      *
      *
-     * @param {OAuthProvider} provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
+     * @param {OAuthProvider} provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, vipps, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
      * @param {string} success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
@@ -6402,7 +6403,7 @@ export class Account {
         }
         const apiPath = '/account/sessions/oauth2/{provider}'.replace(
             '{provider}',
-            encodeURIComponent(String(provider)),
+            encodePath(provider),
         );
         const apiPayload: Payload = {};
         if (typeof success !== 'undefined') {
@@ -6701,7 +6702,7 @@ export class Account {
         }
         const apiPath = '/account/sessions/{sessionId}'.replace(
             '{sessionId}',
-            encodeURIComponent(String(sessionId)),
+            encodePath(sessionId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -6797,7 +6798,7 @@ export class Account {
         }
         const apiPath = '/account/sessions/{sessionId}'.replace(
             '{sessionId}',
-            encodeURIComponent(String(sessionId)),
+            encodePath(sessionId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -6892,7 +6893,7 @@ export class Account {
         }
         const apiPath = '/account/sessions/{sessionId}'.replace(
             '{sessionId}',
-            encodeURIComponent(String(sessionId)),
+            encodePath(sessionId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -7201,7 +7202,7 @@ export class Account {
         }
         const apiPath = '/account/targets/{targetId}/push'.replace(
             '{targetId}',
-            encodeURIComponent(String(targetId)),
+            encodePath(targetId),
         );
         const apiPayload: Payload = {};
         if (typeof identifier !== 'undefined') {
@@ -7286,7 +7287,7 @@ export class Account {
         }
         const apiPath = '/account/targets/{targetId}/push'.replace(
             '{targetId}',
-            encodeURIComponent(String(targetId)),
+            encodePath(targetId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -7543,7 +7544,7 @@ export class Account {
      *
      * A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
      *
-     * @param {OAuthProvider} params.provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
+     * @param {OAuthProvider} params.provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, vipps, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
      * @param {string} params.success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} params.failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} params.scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
@@ -7567,7 +7568,7 @@ export class Account {
      *
      * A user is limited to 10 active sessions at a time by default. [Learn more about session limits](https://appwrite.io/docs/authentication-security#limits).
      *
-     * @param {OAuthProvider} provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
+     * @param {OAuthProvider} provider - OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, vipps, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.
      * @param {string} success - URL to redirect back to your app after a successful login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string} failure - URL to redirect back to your app after a failed login attempt.  Only URLs from hostnames in your project's platform list are allowed. This requirement helps to prevent an [open redirect](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html) attack against your project API.
      * @param {string[]} scopes - A list of custom OAuth2 scopes. Check each provider internal docs for a list of supported scopes. Maximum of 100 scopes are allowed, each 4096 characters long.
@@ -7643,7 +7644,7 @@ export class Account {
         }
         const apiPath = '/account/tokens/oauth2/{provider}'.replace(
             '{provider}',
-            encodeURIComponent(String(provider)),
+            encodePath(provider),
         );
         const apiPayload: Payload = {};
         if (typeof success !== 'undefined') {

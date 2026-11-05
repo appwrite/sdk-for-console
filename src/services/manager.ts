@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -344,7 +345,7 @@ export class Manager {
         }
         const apiPath = '/manager/blocks/{projectId}'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -638,6 +639,8 @@ export class Manager {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',

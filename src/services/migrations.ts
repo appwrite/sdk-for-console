@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -436,6 +437,7 @@ export class Migrations {
                     defaults: {
                         user: 0,
                         team: 0,
+                        membership: 0,
                         database: 0,
                         row: 0,
                         file: 0,
@@ -448,6 +450,7 @@ export class Migrations {
                         'auth-methods': 0,
                         'project-protocols': 0,
                         'project-labels': 0,
+                        'project-preferences': 0,
                         'project-services': 0,
                         policies: 0,
                         smtp: 0,
@@ -1082,6 +1085,7 @@ export class Migrations {
                     defaults: {
                         user: 0,
                         team: 0,
+                        membership: 0,
                         database: 0,
                         row: 0,
                         file: 0,
@@ -1094,6 +1098,7 @@ export class Migrations {
                         'auth-methods': 0,
                         'project-protocols': 0,
                         'project-labels': 0,
+                        'project-preferences': 0,
                         'project-services': 0,
                         policies: 0,
                         smtp: 0,
@@ -1884,6 +1889,7 @@ export class Migrations {
                     defaults: {
                         user: 0,
                         team: 0,
+                        membership: 0,
                         database: 0,
                         row: 0,
                         file: 0,
@@ -1896,6 +1902,7 @@ export class Migrations {
                         'auth-methods': 0,
                         'project-protocols': 0,
                         'project-labels': 0,
+                        'project-preferences': 0,
                         'project-services': 0,
                         policies: 0,
                         smtp: 0,
@@ -2299,6 +2306,7 @@ export class Migrations {
                     defaults: {
                         user: 0,
                         team: 0,
+                        membership: 0,
                         database: 0,
                         row: 0,
                         file: 0,
@@ -2311,6 +2319,7 @@ export class Migrations {
                         'auth-methods': 0,
                         'project-protocols': 0,
                         'project-labels': 0,
+                        'project-preferences': 0,
                         'project-services': 0,
                         policies: 0,
                         smtp: 0,
@@ -2377,7 +2386,7 @@ export class Migrations {
         }
         const apiPath = '/migrations/{migrationId}'.replace(
             '{migrationId}',
-            encodeURIComponent(String(migrationId)),
+            encodePath(migrationId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2465,7 +2474,7 @@ export class Migrations {
         }
         const apiPath = '/migrations/{migrationId}'.replace(
             '{migrationId}',
-            encodeURIComponent(String(migrationId)),
+            encodePath(migrationId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2552,7 +2561,7 @@ export class Migrations {
         }
         const apiPath = '/migrations/{migrationId}'.replace(
             '{migrationId}',
-            encodeURIComponent(String(migrationId)),
+            encodePath(migrationId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);

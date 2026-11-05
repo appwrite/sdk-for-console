@@ -1,7 +1,7 @@
 /**
  * Appwrite Console SDK
  *
- * This SDK targets Appwrite server version 2.5.x as shipped on Appwrite Cloud.
+ * This SDK targets Appwrite server version 2.7.x as shipped on Appwrite Cloud.
  * Self-hosted releases can lag behind Cloud — if you run an older self-hosted
  * build, use a matching older SDK from
  * [previous releases](https://github.com/appwrite/sdk-for-console/releases)
@@ -57,6 +57,7 @@ export { Vcs } from './services/vcs';
 export { VectorsDB } from './services/vectors-db';
 export { Waf } from './services/waf';
 export { Webhooks } from './services/webhooks';
+export { Videos } from './services/videos';
 export { Realtime } from './services/realtime';
 export { Push } from './services/push';
 export { Tracking } from './services/analytics-tracking';
@@ -92,10 +93,15 @@ export { AuthenticatorType } from './enums/authenticator-type';
 export { AuthenticationFactor } from './enums/authentication-factor';
 export { IdTokenProvider } from './enums/id-token-provider';
 export { OAuthProvider } from './enums/o-auth-provider';
+export { BlockResourceType } from './enums/block-resource-type';
+export { BlockMode } from './enums/block-mode';
 export { PlatformResourceType } from './enums/platform-resource-type';
 export { ProjectResourceType } from './enums/project-resource-type';
+export { CreditStatus } from './enums/credit-status';
+export { PlanEffective } from './enums/plan-effective';
 export { ThreatResourceType } from './enums/threat-resource-type';
 export { ThreatStatus } from './enums/threat-status';
+export { AnalyticsPropertyType } from './enums/analytics-property-type';
 export { AnalyticsInterval } from './enums/analytics-interval';
 export { AnalyticsDimension } from './enums/analytics-dimension';
 export { Browser } from './enums/browser';
@@ -127,8 +133,6 @@ export { VCSReferenceType } from './enums/vcs-reference-type';
 export { DeploymentDownloadType } from './enums/deployment-download-type';
 export { ExecutionMethod } from './enums/execution-method';
 export { ConversationType } from './enums/conversation-type';
-export { BlockResourceType } from './enums/block-resource-type';
-export { BlockMode } from './enums/block-mode';
 export { Region } from './enums/region';
 export { CacheTarget } from './enums/cache-target';
 export { CacheDatabase } from './enums/cache-database';
@@ -143,6 +147,7 @@ export { OrganizationKeyScopes } from './enums/organization-key-scopes';
 export { AddonKey } from './enums/addon-key';
 export { UsageRange } from './enums/usage-range';
 export { ProjectAuthMethodId } from './enums/project-auth-method-id';
+export { EnvironmentResource } from './enums/environment-resource';
 export { ProjectOAuth2Auth0Prompt } from './enums/project-o-auth-2-auth-0-prompt';
 export { ProjectOAuth2DiscordPrompt } from './enums/project-o-auth-2-discord-prompt';
 export { ProjectOAuth2GitHubPrompt } from './enums/project-o-auth-2-git-hub-prompt';
@@ -181,6 +186,8 @@ export { PasswordHash } from './enums/password-hash';
 export { MessagingProviderType } from './enums/messaging-provider-type';
 export { VCSDetectionType } from './enums/vcs-detection-type';
 export { VectorsDBIndexType } from './enums/vectors-db-index-type';
+export { VideoOutput } from './enums/video-output';
+export { VideoRenditionStatus } from './enums/video-rendition-status';
 export { DatabaseType } from './enums/database-type';
 export { DatabaseStatus } from './enums/database-status';
 export { AttributeStatus } from './enums/attribute-status';

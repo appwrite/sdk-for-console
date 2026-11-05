@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -61,7 +62,7 @@ export class Console {
         }
         const apiPath = '/console/campaigns/{campaignId}'.replace(
             '{campaignId}',
-            encodeURIComponent(String(campaignId)),
+            encodePath(campaignId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -84,11 +85,11 @@ export class Console {
                     },
                     properties: {
                         reviews: {
-                            items: 'review',
+                            items: 'campaignReview',
                         },
                     },
                 },
-                review: {
+                campaignReview: {
                     defaults: {
                         name: '',
                         image: '',
@@ -145,7 +146,7 @@ export class Console {
         }
         const apiPath = '/console/coupons/{couponId}'.replace(
             '{couponId}',
-            encodeURIComponent(String(couponId)),
+            encodePath(couponId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -592,7 +593,7 @@ export class Console {
         }
         const apiPath = '/console/plans/{planId}'.replace(
             '{planId}',
-            encodeURIComponent(String(planId)),
+            encodePath(planId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -767,7 +768,7 @@ export class Console {
         }
         const apiPath = '/console/programs/{programId}'.replace(
             '{programId}',
-            encodeURIComponent(String(programId)),
+            encodePath(programId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -849,7 +850,7 @@ export class Console {
         }
         const apiPath = '/console/programs/{programId}/memberships'.replace(
             '{programId}',
-            encodeURIComponent(String(programId)),
+            encodePath(programId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -872,6 +873,8 @@ export class Console {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -1284,6 +1287,59 @@ export class Console {
         };
 
         return this.client.call('post', uri, apiHeaders, apiPayload);
+    }
+
+    /**
+     * Link sources captured before sign-up to the current console user. Pass the `claim` values returned when each source was created; invalid claims, sources older than 30 days and sources already linked to a user are ignored.
+     *
+     * @param {string[]} params.claims - Source claims, as returned by create source, to link to the current user.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    updateSources(params: { claims: string[] }): Promise<{}>;
+    /**
+     * Link sources captured before sign-up to the current console user. Pass the `claim` values returned when each source was created; invalid claims, sources older than 30 days and sources already linked to a user are ignored.
+     *
+     * @param {string[]} claims - Source claims, as returned by create source, to link to the current user.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateSources(claims: string[]): Promise<{}>;
+    updateSources(paramsOrFirst: { claims: string[] } | string[]): Promise<{}> {
+        let params: { claims: string[] };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as { claims: string[] };
+        } else {
+            params = {
+                claims: paramsOrFirst as string[],
+            };
+        }
+
+        const claims = params.claims;
+
+        if (typeof claims === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "claims"');
+        }
+        const apiPath = '/console/sources';
+        const apiPayload: Payload = {};
+        if (typeof claims !== 'undefined') {
+            apiPayload['claims'] = claims;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        return this.client.call('patch', uri, apiHeaders, apiPayload);
     }
 
     /**
@@ -1743,7 +1799,7 @@ export class Console {
         }
         const apiPath = '/console/templates/email/{templateId}'.replace(
             '{templateId}',
-            encodeURIComponent(String(templateId)),
+            encodePath(templateId),
         );
         const apiPayload: Payload = {};
         if (typeof locale !== 'undefined') {
@@ -1810,6 +1866,7 @@ export class Console {
                         _APP_VCS_PROVIDERS_WITH_REPOSITORY_CREATION: [],
                         _APP_VCS_PROVIDERS_WITH_PUBLIC_REPOSITORIES: [],
                         _APP_DOMAIN_ENABLED: false,
+                        _APP_REVIEWS_ENABLED: false,
                         _APP_DOMAIN_SITES: '',
                         _APP_DOMAIN_FUNCTIONS: '',
                         _APP_OPTIONS_FORCE_HTTPS: '',
@@ -1831,6 +1888,7 @@ export class Console {
                         supportForIntegerIds: true,
                         _APP_CONSOLE_EMAIL_VERIFICATION: '',
                         _APP_DOMAIN_EMAIL: '',
+                        _APP_DOMAIN_TARGET_SMTP: '',
                     },
                 },
             },

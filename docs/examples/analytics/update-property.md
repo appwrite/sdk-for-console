@@ -1,5 +1,5 @@
 ```javascript
-import { Client, Analytics } from '@appwrite.io/console';
+import { Client, Analytics, AnalyticsPropertyType } from '@appwrite.io/console';
 
 const client = new Client()
     .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
@@ -13,6 +13,8 @@ const result = await analytics.updateProperty({
     domain: '<DOMAIN>', // optional
     enabled: false, // optional
     allowedOrigins: [], // optional
+    identifyUsers: false, // optional
+    type: AnalyticsPropertyType.Web, // optional
 });
 
 console.log(result);

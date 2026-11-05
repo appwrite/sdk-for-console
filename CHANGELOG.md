@@ -1,5 +1,21 @@
 # Change Log
 
+## 20.1.0-rc.3
+
+* Release candidate of 20.1.0 with everything in 20.1.0-rc.2, including the `admin` API and the `Videos` service, models and enums, which 20.1.0 does not include
+* Breaking: the campaign `Review` model is renamed `CampaignReview`
+* Added: analytics property `type` with the `AnalyticsPropertyType` enum, and `identifyUsers`
+* Added: `AnalyticsDimension.UserId` and `Props`, `propKey` on `analytics.listMetrics` and `users` on `AnalyticsMetric`
+* Added: optional `interactive` as the last param of `analytics.createEvent`; the tracker sends `scroll_depth` and `engagement_time` with `interactive: false`
+* Added: organization project transfers: `createProjectTransfer`, `listProjectTransfers`, `getProjectTransfer`, `updateProjectTransferStatus`, `deleteProjectTransfer`
+* Added: `project.getPrefs`, `updatePrefs`, `deleteSessions` and `updateDenyRealtimeGuestsPolicy`
+* Added: `proxy.updateFunctionRule`, `updateRedirectRule` and `updateSiteRule`
+* Added: `client.setEnvironment`, `resources` on `project.createEnvironment`, and `notify` and `critical` on `organizations.updateBudget`
+* Added: Vipps OAuth2 provider
+* Updated: requests send `X-Appwrite-Response-Format: 2.7.0`; the SDK targets Appwrite 2.7.x
+
+Generated from the 2.7.x Cloud console spec plus the Videos paths and models of 20.1.0-rc.2, so the Console keeps its Videos pages. The package's `spec.json` is the exact spec this SDK was built from.
+
 ## 20.0.0
 
 * Breaking: requests send `X-Appwrite-Response-Format: 2.5.0`; responses follow the 2.5 shapes

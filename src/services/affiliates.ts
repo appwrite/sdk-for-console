@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -240,7 +241,7 @@ export class Affiliates {
         }
         const apiPath = '/affiliates/links/{linkId}'.replace(
             '{linkId}',
-            encodeURIComponent(String(linkId)),
+            encodePath(linkId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -311,7 +312,7 @@ export class Affiliates {
         }
         const apiPath = '/affiliates/links/{linkId}'.replace(
             '{linkId}',
-            encodeURIComponent(String(linkId)),
+            encodePath(linkId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -608,7 +609,7 @@ export class Affiliates {
         }
         const apiPath = '/affiliates/rewards/{rewardId}'.replace(
             '{rewardId}',
-            encodeURIComponent(String(rewardId)),
+            encodePath(rewardId),
         );
         const apiPayload: Payload = {};
         if (typeof status !== 'undefined') {
