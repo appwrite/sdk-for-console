@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -61,7 +62,7 @@ export class Console {
         }
         const apiPath = '/console/campaigns/{campaignId}'.replace(
             '{campaignId}',
-            encodeURIComponent(String(campaignId)),
+            encodePath(campaignId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -84,11 +85,11 @@ export class Console {
                     },
                     properties: {
                         reviews: {
-                            items: 'review',
+                            items: 'campaignReview',
                         },
                     },
                 },
-                review: {
+                campaignReview: {
                     defaults: {
                         name: '',
                         image: '',
@@ -145,7 +146,7 @@ export class Console {
         }
         const apiPath = '/console/coupons/{couponId}'.replace(
             '{couponId}',
-            encodeURIComponent(String(couponId)),
+            encodePath(couponId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -508,9 +509,6 @@ export class Console {
                         sites: 0,
                         executions: 0,
                         executionsRetentionCount: 1000,
-                        deploymentRetention: 0,
-                        deploymentRetentionMax: 0,
-                        deploymentsRetentionCount: 0,
                         GBHours: 0,
                         realtime: 0,
                         realtimeMessages: 0,
@@ -595,7 +593,7 @@ export class Console {
         }
         const apiPath = '/console/plans/{planId}'.replace(
             '{planId}',
-            encodeURIComponent(String(planId)),
+            encodePath(planId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -638,9 +636,6 @@ export class Console {
                         sites: 0,
                         executions: 0,
                         executionsRetentionCount: 1000,
-                        deploymentRetention: 0,
-                        deploymentRetentionMax: 0,
-                        deploymentsRetentionCount: 0,
                         GBHours: 0,
                         realtime: 0,
                         realtimeMessages: 0,
@@ -773,7 +768,7 @@ export class Console {
         }
         const apiPath = '/console/programs/{programId}'.replace(
             '{programId}',
-            encodeURIComponent(String(programId)),
+            encodePath(programId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -855,7 +850,7 @@ export class Console {
         }
         const apiPath = '/console/programs/{programId}/memberships'.replace(
             '{programId}',
-            encodeURIComponent(String(programId)),
+            encodePath(programId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -878,6 +873,8 @@ export class Console {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -1802,7 +1799,7 @@ export class Console {
         }
         const apiPath = '/console/templates/email/{templateId}'.replace(
             '{templateId}',
-            encodeURIComponent(String(templateId)),
+            encodePath(templateId),
         );
         const apiPayload: Payload = {};
         if (typeof locale !== 'undefined') {
@@ -1869,6 +1866,7 @@ export class Console {
                         _APP_VCS_PROVIDERS_WITH_REPOSITORY_CREATION: [],
                         _APP_VCS_PROVIDERS_WITH_PUBLIC_REPOSITORIES: [],
                         _APP_DOMAIN_ENABLED: false,
+                        _APP_REVIEWS_ENABLED: false,
                         _APP_DOMAIN_SITES: '',
                         _APP_DOMAIN_FUNCTIONS: '',
                         _APP_OPTIONS_FORCE_HTTPS: '',

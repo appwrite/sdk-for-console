@@ -22,5 +22,7 @@ export enum AnalyticsDimension {
     TrafficType = 'trafficType',
     BotName = 'botName',
     BotCategory = 'botCategory',
+    UserId = 'userId',
     EventName = 'eventName',
+    Props = 'props',
 }

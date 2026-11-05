@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -319,7 +320,7 @@ export class Admin {
         }
         const apiPath = '/admin/blocks/{blockId}'.replace(
             '{blockId}',
-            encodeURIComponent(String(blockId)),
+            encodePath(blockId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -393,7 +394,7 @@ export class Admin {
         }
         const apiPath = '/admin/blocks/{blockId}'.replace(
             '{blockId}',
-            encodeURIComponent(String(blockId)),
+            encodePath(blockId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -941,7 +942,7 @@ export class Admin {
         }
         const apiPath = '/admin/credits/{creditId}'.replace(
             '{creditId}',
-            encodeURIComponent(String(creditId)),
+            encodePath(creditId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1036,7 +1037,7 @@ export class Admin {
         }
         const apiPath = '/admin/credits/{creditId}/status'.replace(
             '{creditId}',
-            encodeURIComponent(String(creditId)),
+            encodePath(creditId),
         );
         const apiPayload: Payload = {};
         if (typeof status !== 'undefined') {
@@ -1246,7 +1247,7 @@ export class Admin {
         }
         const apiPath = '/admin/invoices/{invoiceId}'.replace(
             '{invoiceId}',
-            encodeURIComponent(String(invoiceId)),
+            encodePath(invoiceId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1348,7 +1349,7 @@ export class Admin {
         }
         const apiPath = '/admin/invoices/{invoiceId}/download'.replace(
             '{invoiceId}',
-            encodeURIComponent(String(invoiceId)),
+            encodePath(invoiceId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1427,7 +1428,7 @@ export class Admin {
         }
         const apiPath = '/admin/invoices/{invoiceId}/refunds'.replace(
             '{invoiceId}',
-            encodeURIComponent(String(invoiceId)),
+            encodePath(invoiceId),
         );
         const apiPayload: Payload = {};
         if (typeof amount !== 'undefined') {
@@ -1575,6 +1576,8 @@ export class Admin {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -1641,7 +1644,7 @@ export class Admin {
         }
         const apiPath = '/admin/organizations/{organizationId}'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1663,6 +1666,8 @@ export class Admin {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -1749,7 +1754,7 @@ export class Admin {
         const apiPath =
             '/admin/organizations/{organizationId}/aggregations'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -1901,7 +1906,7 @@ export class Admin {
         const apiPath =
             '/admin/organizations/{organizationId}/aggregations'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1998,7 +2003,7 @@ export class Admin {
         }
         const apiPath = '/admin/organizations/{organizationId}/domains'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -2159,7 +2164,7 @@ export class Admin {
         const apiPath =
             '/admin/organizations/{organizationId}/memberships'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -2303,7 +2308,7 @@ export class Admin {
         }
         const apiPath = '/admin/organizations/{organizationId}/plan'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
@@ -2332,6 +2337,8 @@ export class Admin {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -2355,14 +2362,16 @@ export class Admin {
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.ProjectList>}
+     * @returns {Promise<Models.ProjectList<Preferences>>}
      */
-    listOrganizationProjects(params: {
+    listOrganizationProjects<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
         organizationId: string;
         queries?: string[];
         search?: string;
         total?: boolean;
-    }): Promise<Models.ProjectList>;
+    }): Promise<Models.ProjectList<Preferences>>;
     /**
      * List an organization's projects in every status. Archived projects, which the console hides, are included; filter on status to narrow the list.
      *
@@ -2371,16 +2380,20 @@ export class Admin {
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.ProjectList>}
+     * @returns {Promise<Models.ProjectList<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listOrganizationProjects(
+    listOrganizationProjects<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
         organizationId: string,
         queries?: string[],
         search?: string,
         total?: boolean,
-    ): Promise<Models.ProjectList>;
-    listOrganizationProjects(
+    ): Promise<Models.ProjectList<Preferences>>;
+    listOrganizationProjects<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
         paramsOrFirst:
             | {
                   organizationId: string;
@@ -2390,7 +2403,7 @@ export class Admin {
               }
             | string,
         ...rest: [string[]?, string?, boolean?]
-    ): Promise<Models.ProjectList> {
+    ): Promise<Models.ProjectList<Preferences>> {
         let params: {
             organizationId: string;
             queries?: string[];
@@ -2431,7 +2444,7 @@ export class Admin {
         const apiPath =
             '/admin/organizations/{organizationId}/projects'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -2683,7 +2696,7 @@ export class Admin {
         }
         const apiPath = '/admin/payments/{paymentId}'.replace(
             '{paymentId}',
-            encodeURIComponent(String(paymentId)),
+            encodePath(paymentId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2761,7 +2774,7 @@ export class Admin {
         }
         const apiPath = '/admin/projects/{projectId}/aggregations'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -3090,7 +3103,7 @@ export class Admin {
         }
         const apiPath = '/admin/threats/{threatId}'.replace(
             '{threatId}',
-            encodeURIComponent(String(threatId)),
+            encodePath(threatId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -3176,7 +3189,7 @@ export class Admin {
         }
         const apiPath = '/admin/threats/{threatId}'.replace(
             '{threatId}',
-            encodeURIComponent(String(threatId)),
+            encodePath(threatId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -3250,7 +3263,7 @@ export class Admin {
         }
         const apiPath = '/admin/threats/{threatId}/status'.replace(
             '{threatId}',
-            encodeURIComponent(String(threatId)),
+            encodePath(threatId),
         );
         const apiPayload: Payload = {};
         if (typeof status !== 'undefined') {
@@ -3360,7 +3373,7 @@ export class Admin {
         }
         const apiPath = '/admin/users/{userId}/admin'.replace(
             '{userId}',
-            encodeURIComponent(String(userId)),
+            encodePath(userId),
         );
         const apiPayload: Payload = {};
         if (typeof admin !== 'undefined') {
@@ -3483,7 +3496,7 @@ export class Admin {
         }
         const apiPath = '/admin/users/{userId}/impersonator'.replace(
             '{userId}',
-            encodeURIComponent(String(userId)),
+            encodePath(userId),
         );
         const apiPayload: Payload = {};
         if (typeof impersonator !== 'undefined') {

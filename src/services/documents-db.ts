@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -616,7 +617,7 @@ export class DocumentsDB {
         }
         const apiPath = '/documentsdb/transactions/{transactionId}'.replace(
             '{transactionId}',
-            encodeURIComponent(String(transactionId)),
+            encodePath(transactionId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -716,7 +717,7 @@ export class DocumentsDB {
         }
         const apiPath = '/documentsdb/transactions/{transactionId}'.replace(
             '{transactionId}',
-            encodeURIComponent(String(transactionId)),
+            encodePath(transactionId),
         );
         const apiPayload: Payload = {};
         if (typeof commit !== 'undefined') {
@@ -796,7 +797,7 @@ export class DocumentsDB {
         }
         const apiPath = '/documentsdb/transactions/{transactionId}'.replace(
             '{transactionId}',
-            encodeURIComponent(String(transactionId)),
+            encodePath(transactionId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -853,7 +854,7 @@ export class DocumentsDB {
         }
         const apiPath = '/documentsdb/{databaseId}'.replace(
             '{databaseId}',
-            encodeURIComponent(String(databaseId)),
+            encodePath(databaseId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1038,7 +1039,7 @@ export class DocumentsDB {
         }
         const apiPath = '/documentsdb/{databaseId}'.replace(
             '{databaseId}',
-            encodeURIComponent(String(databaseId)),
+            encodePath(databaseId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -1163,7 +1164,7 @@ export class DocumentsDB {
         }
         const apiPath = '/documentsdb/{databaseId}'.replace(
             '{databaseId}',
-            encodeURIComponent(String(databaseId)),
+            encodePath(databaseId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1260,7 +1261,7 @@ export class DocumentsDB {
         }
         const apiPath = '/documentsdb/{databaseId}/collections'.replace(
             '{databaseId}',
-            encodeURIComponent(String(databaseId)),
+            encodePath(databaseId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -1480,7 +1481,7 @@ export class DocumentsDB {
         }
         const apiPath = '/documentsdb/{databaseId}/collections'.replace(
             '{databaseId}',
-            encodeURIComponent(String(databaseId)),
+            encodePath(databaseId),
         );
         const apiPayload: Payload = {};
         if (typeof collectionId !== 'undefined') {
@@ -1621,11 +1622,8 @@ export class DocumentsDB {
             );
         }
         const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}'
-            .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-            .replace(
-                '{collectionId}',
-                encodeURIComponent(String(collectionId)),
-            );
+            .replace('{databaseId}', encodePath(databaseId))
+            .replace('{collectionId}', encodePath(collectionId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1813,11 +1811,8 @@ export class DocumentsDB {
             throw new AppwriteException('Missing required parameter: "name"');
         }
         const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}'
-            .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-            .replace(
-                '{collectionId}',
-                encodeURIComponent(String(collectionId)),
-            );
+            .replace('{databaseId}', encodePath(databaseId))
+            .replace('{collectionId}', encodePath(collectionId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -1948,11 +1943,8 @@ export class DocumentsDB {
             );
         }
         const apiPath = '/documentsdb/{databaseId}/collections/{collectionId}'
-            .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-            .replace(
-                '{collectionId}',
-                encodeURIComponent(String(collectionId)),
-            );
+            .replace('{databaseId}', encodePath(databaseId))
+            .replace('{collectionId}', encodePath(collectionId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2073,11 +2065,8 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/documents'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                );
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId));
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
@@ -2271,11 +2260,8 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/documents'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                );
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId));
         const apiPayload: Payload = {};
         if (typeof documentId !== 'undefined') {
             apiPayload['documentId'] = documentId;
@@ -2413,11 +2399,8 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/documents'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                );
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId));
         const apiPayload: Payload = {};
         if (typeof documents !== 'undefined') {
             apiPayload['documents'] = documents;
@@ -2562,11 +2545,8 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/documents'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                );
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId));
         const apiPayload: Payload = {};
         if (typeof documents !== 'undefined') {
             apiPayload['documents'] = documents;
@@ -2713,11 +2693,8 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/documents'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                );
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId));
         const apiPayload: Payload = {};
         if (typeof data !== 'undefined') {
             apiPayload['data'] = data;
@@ -2858,11 +2835,8 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/documents'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                );
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId));
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
@@ -3020,11 +2994,8 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/documents/query'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                );
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId));
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
@@ -3182,15 +3153,9 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                )
-                .replace(
-                    '{documentId}',
-                    encodeURIComponent(String(documentId)),
-                );
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId))
+                .replace('{documentId}', encodePath(documentId));
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
@@ -3366,15 +3331,9 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                )
-                .replace(
-                    '{documentId}',
-                    encodeURIComponent(String(documentId)),
-                );
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId))
+                .replace('{documentId}', encodePath(documentId));
         const apiPayload: Payload = {};
         if (typeof data !== 'undefined') {
             apiPayload['data'] = data;
@@ -3554,15 +3513,9 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                )
-                .replace(
-                    '{documentId}',
-                    encodeURIComponent(String(documentId)),
-                );
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId))
+                .replace('{documentId}', encodePath(documentId));
         const apiPayload: Payload = {};
         if (typeof data !== 'undefined') {
             apiPayload['data'] = data;
@@ -3695,15 +3648,9 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                )
-                .replace(
-                    '{documentId}',
-                    encodeURIComponent(String(documentId)),
-                );
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId))
+                .replace('{documentId}', encodePath(documentId));
         const apiPayload: Payload = {};
         if (typeof transactionId !== 'undefined') {
             apiPayload['transactionId'] = transactionId;
@@ -3850,13 +3797,10 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/decrement'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                )
-                .replace('{documentId}', encodeURIComponent(String(documentId)))
-                .replace('{attribute}', encodeURIComponent(String(attribute)));
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId))
+                .replace('{documentId}', encodePath(documentId))
+                .replace('{attribute}', encodePath(attribute));
         const apiPayload: Payload = {};
         if (typeof value !== 'undefined') {
             apiPayload['value'] = value;
@@ -4027,13 +3971,10 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/documents/{documentId}/{attribute}/increment'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                )
-                .replace('{documentId}', encodeURIComponent(String(documentId)))
-                .replace('{attribute}', encodeURIComponent(String(attribute)));
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId))
+                .replace('{documentId}', encodePath(documentId))
+                .replace('{attribute}', encodePath(attribute));
         const apiPayload: Payload = {};
         if (typeof value !== 'undefined') {
             apiPayload['value'] = value;
@@ -4161,11 +4102,8 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/indexes'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                );
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId));
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
@@ -4359,11 +4297,8 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/indexes'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                );
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId));
         const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
             apiPayload['key'] = key;
@@ -4487,12 +4422,9 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/indexes/{key}'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                )
-                .replace('{key}', encodeURIComponent(String(key)));
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId))
+                .replace('{key}', encodePath(key));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4597,12 +4529,9 @@ export class DocumentsDB {
         }
         const apiPath =
             '/documentsdb/{databaseId}/collections/{collectionId}/indexes/{key}'
-                .replace('{databaseId}', encodeURIComponent(String(databaseId)))
-                .replace(
-                    '{collectionId}',
-                    encodeURIComponent(String(collectionId)),
-                )
-                .replace('{key}', encodeURIComponent(String(key)));
+                .replace('{databaseId}', encodePath(databaseId))
+                .replace('{collectionId}', encodePath(collectionId))
+                .replace('{key}', encodePath(key));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4673,7 +4602,7 @@ export class DocumentsDB {
         }
         const apiPath = '/documentsdb/{databaseId}/failovers'.replace(
             '{databaseId}',
-            encodeURIComponent(String(databaseId)),
+            encodePath(databaseId),
         );
         const apiPayload: Payload = {};
         if (typeof targetReplicaId !== 'undefined') {
@@ -4733,7 +4662,12 @@ export class DocumentsDB {
                         maintenanceWindowHourUtc: 3,
                         metricsEnabled: false,
                         sqlApiEnabled: true,
-                        sqlApiAllowedStatements: ['SELECT', 'INSERT', 'UPDATE', 'DELETE'],
+                        sqlApiAllowedStatements: [
+                            'SELECT',
+                            'INSERT',
+                            'UPDATE',
+                            'DELETE',
+                        ],
                         sqlApiMaxRows: 10000,
                         sqlApiMaxBytes: 10485760,
                         sqlApiTimeoutSeconds: 30,
@@ -4829,7 +4763,7 @@ export class DocumentsDB {
         }
         const apiPath = '/documentsdb/{databaseId}/operations'.replace(
             '{databaseId}',
-            encodeURIComponent(String(databaseId)),
+            encodePath(databaseId),
         );
         const apiPayload: Payload = {};
         if (typeof status !== 'undefined') {
@@ -4926,7 +4860,7 @@ export class DocumentsDB {
         }
         const apiPath = '/documentsdb/{databaseId}/replicas'.replace(
             '{databaseId}',
-            encodeURIComponent(String(databaseId)),
+            encodePath(databaseId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -5011,7 +4945,7 @@ export class DocumentsDB {
         }
         const apiPath = '/documentsdb/{databaseId}/status'.replace(
             '{databaseId}',
-            encodeURIComponent(String(databaseId)),
+            encodePath(databaseId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);

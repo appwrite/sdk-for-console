@@ -1,7 +1,7 @@
 /**
  * Appwrite Console SDK
  *
- * This SDK targets Appwrite server version 2.6.x as shipped on Appwrite Cloud.
+ * This SDK targets Appwrite server version 2.7.x as shipped on Appwrite Cloud.
  * Self-hosted releases can lag behind Cloud — if you run an older self-hosted
  * build, use a matching older SDK from
  * [previous releases](https://github.com/appwrite/sdk-for-console/releases)
@@ -100,6 +100,7 @@ export { CreditStatus } from './enums/credit-status';
 export { PlanEffective } from './enums/plan-effective';
 export { ThreatResourceType } from './enums/threat-resource-type';
 export { ThreatStatus } from './enums/threat-status';
+export { AnalyticsPropertyType } from './enums/analytics-property-type';
 export { AnalyticsInterval } from './enums/analytics-interval';
 export { AnalyticsDimension } from './enums/analytics-dimension';
 export { Browser } from './enums/browser';
@@ -145,6 +146,7 @@ export { OrganizationKeyScopes } from './enums/organization-key-scopes';
 export { AddonKey } from './enums/addon-key';
 export { UsageRange } from './enums/usage-range';
 export { ProjectAuthMethodId } from './enums/project-auth-method-id';
+export { EnvironmentResource } from './enums/environment-resource';
 export { ProjectOAuth2Auth0Prompt } from './enums/project-o-auth-2-auth-0-prompt';
 export { ProjectOAuth2DiscordPrompt } from './enums/project-o-auth-2-discord-prompt';
 export { ProjectOAuth2GitHubPrompt } from './enums/project-o-auth-2-git-hub-prompt';

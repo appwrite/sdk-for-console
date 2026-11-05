@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -819,7 +820,7 @@ export class Domains {
         }
         const apiPath = '/domains/purchases/{invoiceId}'.replace(
             '{invoiceId}',
-            encodeURIComponent(String(invoiceId)),
+            encodePath(invoiceId),
         );
         const apiPayload: Payload = {};
         if (typeof organizationId !== 'undefined') {
@@ -1223,7 +1224,7 @@ export class Domains {
         }
         const apiPath = '/domains/transfers/in/{invoiceId}'.replace(
             '{invoiceId}',
-            encodeURIComponent(String(invoiceId)),
+            encodePath(invoiceId),
         );
         const apiPayload: Payload = {};
         if (typeof organizationId !== 'undefined') {
@@ -1393,7 +1394,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1493,7 +1494,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1569,7 +1570,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/auto-renewal'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof autoRenewal !== 'undefined') {
@@ -1689,7 +1690,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/nameservers'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof nameservers !== 'undefined') {
@@ -1797,7 +1798,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/nameservers/verification'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1900,7 +1901,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/google-workspace'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1996,7 +1997,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/google-workspace'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2089,7 +2090,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/icloud'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2183,7 +2184,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/icloud'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2276,7 +2277,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/mailgun'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2370,7 +2371,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/mailgun'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2463,7 +2464,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/outlook'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2557,7 +2558,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/outlook'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2650,7 +2651,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/proton-mail'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2744,7 +2745,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/proton-mail'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2835,7 +2836,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/zoho'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2929,7 +2930,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/zoho'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -3044,7 +3045,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -3200,7 +3201,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/a'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -3367,8 +3368,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/a/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -3519,7 +3520,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/aaaa'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -3686,8 +3687,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/aaaa/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -3840,7 +3841,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/alias'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -4011,8 +4012,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/alias/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -4163,7 +4164,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/caa'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -4330,8 +4331,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/caa/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -4488,7 +4489,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/cname'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -4651,8 +4652,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/cname/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -4803,7 +4804,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/https'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -4970,8 +4971,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/https/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -5140,7 +5141,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/mx'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -5320,8 +5321,8 @@ export class Domains {
             );
         }
         const apiPath = '/domains/{domainId}/records/mx/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -5475,7 +5476,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/ns'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -5644,8 +5645,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/ns/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -5836,7 +5837,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/srv'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -6081,8 +6082,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "port"');
         }
         const apiPath = '/domains/{domainId}/records/srv/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -6241,7 +6242,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/txt'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -6410,8 +6411,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/txt/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -6525,8 +6526,8 @@ export class Domains {
             );
         }
         const apiPath = '/domains/{domainId}/records/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6618,8 +6619,8 @@ export class Domains {
             );
         }
         const apiPath = '/domains/{domainId}/records/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6697,7 +6698,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/team'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof teamId !== 'undefined') {
@@ -6803,7 +6804,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/transfers/status'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -6873,7 +6874,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/zone'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -6947,7 +6948,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/zone'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof content !== 'undefined') {

@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -98,8 +99,8 @@ export class Tokens {
             throw new AppwriteException('Missing required parameter: "fileId"');
         }
         const apiPath = '/tokens/buckets/{bucketId}/files/{fileId}'
-            .replace('{bucketId}', encodeURIComponent(String(bucketId)))
-            .replace('{fileId}', encodeURIComponent(String(fileId)));
+            .replace('{bucketId}', encodePath(bucketId))
+            .replace('{fileId}', encodePath(fileId));
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
             apiPayload['queries'] = queries;
@@ -218,8 +219,8 @@ export class Tokens {
             throw new AppwriteException('Missing required parameter: "fileId"');
         }
         const apiPath = '/tokens/buckets/{bucketId}/files/{fileId}'
-            .replace('{bucketId}', encodeURIComponent(String(bucketId)))
-            .replace('{fileId}', encodeURIComponent(String(fileId)));
+            .replace('{bucketId}', encodePath(bucketId))
+            .replace('{fileId}', encodePath(fileId));
         const apiPayload: Payload = {};
         if (typeof expire !== 'undefined') {
             apiPayload['expire'] = expire;
@@ -296,7 +297,7 @@ export class Tokens {
         }
         const apiPath = '/tokens/{tokenId}'.replace(
             '{tokenId}',
-            encodeURIComponent(String(tokenId)),
+            encodePath(tokenId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -384,7 +385,7 @@ export class Tokens {
         }
         const apiPath = '/tokens/{tokenId}'.replace(
             '{tokenId}',
-            encodeURIComponent(String(tokenId)),
+            encodePath(tokenId),
         );
         const apiPayload: Payload = {};
         if (typeof expire !== 'undefined') {
@@ -460,7 +461,7 @@ export class Tokens {
         }
         const apiPath = '/tokens/{tokenId}'.replace(
             '{tokenId}',
-            encodeURIComponent(String(tokenId)),
+            encodePath(tokenId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);

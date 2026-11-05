@@ -41,6 +41,7 @@ export enum ProjectOAuthProviderId {
     Tradeshift = 'tradeshift',
     TradeshiftBox = 'tradeshiftBox',
     Twitch = 'twitch',
+    Vipps = 'vipps',
     Webflow = 'webflow',
     Wordpress = 'wordpress',
     X = 'x',

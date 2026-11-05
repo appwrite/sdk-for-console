@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -60,7 +61,7 @@ export class Projects {
         }
         const apiPath = '/projects/{projectId}/addons'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -151,7 +152,7 @@ export class Projects {
         }
         const apiPath = '/projects/{projectId}/addons/premium-geo-db'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -245,8 +246,8 @@ export class Projects {
             );
         }
         const apiPath = '/projects/{projectId}/addons/{addonId}'
-            .replace('{projectId}', encodeURIComponent(String(projectId)))
-            .replace('{addonId}', encodeURIComponent(String(addonId)));
+            .replace('{projectId}', encodePath(projectId))
+            .replace('{addonId}', encodePath(addonId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -335,8 +336,8 @@ export class Projects {
             );
         }
         const apiPath = '/projects/{projectId}/addons/{addonId}'
-            .replace('{projectId}', encodeURIComponent(String(projectId)))
-            .replace('{addonId}', encodeURIComponent(String(addonId)));
+            .replace('{projectId}', encodePath(projectId))
+            .replace('{addonId}', encodePath(addonId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -412,8 +413,8 @@ export class Projects {
             );
         }
         const apiPath = '/projects/{projectId}/addons/{addonId}/confirmations'
-            .replace('{projectId}', encodeURIComponent(String(projectId)))
-            .replace('{addonId}', encodeURIComponent(String(addonId)));
+            .replace('{projectId}', encodePath(projectId))
+            .replace('{addonId}', encodePath(addonId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -504,8 +505,8 @@ export class Projects {
             throw new AppwriteException('Missing required parameter: "addon"');
         }
         const apiPath = '/projects/{projectId}/addons/{addon}/price'
-            .replace('{projectId}', encodeURIComponent(String(projectId)))
-            .replace('{addon}', encodeURIComponent(String(addon)));
+            .replace('{projectId}', encodePath(projectId))
+            .replace('{addon}', encodePath(addon));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -581,7 +582,7 @@ export class Projects {
         }
         const apiPath = '/projects/{projectId}/console-access'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -660,7 +661,7 @@ export class Projects {
         }
         const apiPath = '/projects/{projectId}/schedules'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -839,7 +840,7 @@ export class Projects {
         }
         const apiPath = '/projects/{projectId}/schedules'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         if (typeof resourceType !== 'undefined') {
@@ -954,8 +955,8 @@ export class Projects {
             );
         }
         const apiPath = '/projects/{projectId}/schedules/{scheduleId}'
-            .replace('{projectId}', encodeURIComponent(String(projectId)))
-            .replace('{scheduleId}', encodeURIComponent(String(scheduleId)));
+            .replace('{projectId}', encodePath(projectId))
+            .replace('{scheduleId}', encodePath(scheduleId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1034,7 +1035,7 @@ export class Projects {
         }
         const apiPath = '/projects/{projectId}/stages'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1144,8 +1145,8 @@ export class Projects {
             );
         }
         const apiPath = '/projects/{projectId}/stages/{stageId}'
-            .replace('{projectId}', encodeURIComponent(String(projectId)))
-            .replace('{stageId}', encodeURIComponent(String(stageId)));
+            .replace('{projectId}', encodePath(projectId))
+            .replace('{stageId}', encodePath(stageId));
         const apiPayload: Payload = {};
         if (typeof skip !== 'undefined') {
             apiPayload['skip'] = skip;
@@ -1233,7 +1234,7 @@ export class Projects {
         }
         const apiPath = '/projects/{projectId}/status'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         if (typeof status !== 'undefined') {
@@ -1256,26 +1257,32 @@ export class Projects {
      * @param {string} params.projectId - Project unique ID.
      * @param {string} params.teamId - Team ID of the team to transfer project to.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
+     * @returns {Promise<Models.Project<Preferences>>}
      */
-    updateTeam(params: {
+    updateTeam<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
         projectId: string;
         teamId: string;
-    }): Promise<Models.Project>;
+    }): Promise<Models.Project<Preferences>>;
     /**
      * Update the team ID of a project allowing for it to be transferred to another team.
      *
      * @param {string} projectId - Project unique ID.
      * @param {string} teamId - Team ID of the team to transfer project to.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
+     * @returns {Promise<Models.Project<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateTeam(projectId: string, teamId: string): Promise<Models.Project>;
-    updateTeam(
+    updateTeam<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(projectId: string, teamId: string): Promise<Models.Project<Preferences>>;
+    updateTeam<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
         paramsOrFirst: { projectId: string; teamId: string } | string,
         ...rest: [string?]
-    ): Promise<Models.Project> {
+    ): Promise<Models.Project<Preferences>> {
         let params: { projectId: string; teamId: string };
 
         if (
@@ -1307,7 +1314,7 @@ export class Projects {
         }
         const apiPath = '/projects/{projectId}/team'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         if (typeof teamId !== 'undefined') {

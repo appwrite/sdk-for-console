@@ -15,7 +15,7 @@ const result = await postgresql.updateBackupStorage({
     secretKey: '<SECRET_KEY>',
     region: '<REGION>', // optional
     prefix: '<PREFIX>', // optional
-    endpoint: '<ENDPOINT>', // optional
+    endpoint: 'https://example.com', // optional
 });
 
 console.log(result);

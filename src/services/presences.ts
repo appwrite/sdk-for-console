@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -249,7 +250,7 @@ export class Presences {
         }
         const apiPath = '/presences/{presenceId}'.replace(
             '{presenceId}',
-            encodeURIComponent(String(presenceId)),
+            encodePath(presenceId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -376,7 +377,7 @@ export class Presences {
         }
         const apiPath = '/presences/{presenceId}'.replace(
             '{presenceId}',
-            encodeURIComponent(String(presenceId)),
+            encodePath(presenceId),
         );
         const apiPayload: Payload = {};
         if (typeof status !== 'undefined') {
@@ -522,7 +523,7 @@ export class Presences {
         }
         const apiPath = '/presences/{presenceId}'.replace(
             '{presenceId}',
-            encodeURIComponent(String(presenceId)),
+            encodePath(presenceId),
         );
         const apiPayload: Payload = {};
         if (typeof status !== 'undefined') {
@@ -611,7 +612,7 @@ export class Presences {
         }
         const apiPath = '/presences/{presenceId}'.replace(
             '{presenceId}',
-            encodeURIComponent(String(presenceId)),
+            encodePath(presenceId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);

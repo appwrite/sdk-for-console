@@ -1,0 +1,24 @@
+```javascript
+import {
+    Client,
+    Proxy,
+    StatusCode,
+    ProxyResourceType,
+} from '@appwrite.io/console';
+
+const client = new Client()
+    .setEndpoint('https://<REGION>.cloud.appwrite.io/v1') // Your API Endpoint
+    .setProject('<YOUR_PROJECT_ID>'); // Your project ID
+
+const proxy = new Proxy(client);
+
+const result = await proxy.updateRedirectRule({
+    ruleId: '<RULE_ID>',
+    url: 'https://example.com',
+    statusCode: StatusCode.MovedPermanently,
+    resourceId: '<RESOURCE_ID>',
+    resourceType: ProxyResourceType.Site,
+});
+
+console.log(result);
+```

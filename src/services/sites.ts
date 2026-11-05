@@ -4,6 +4,7 @@ import {
     type Payload,
     UploadProgress,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -964,6 +965,7 @@ export class Sites {
                         providerOwner: '',
                         providerVersion: '',
                         variables: [],
+                        scopes: [],
                     },
                     properties: {
                         frameworks: {
@@ -1046,7 +1048,7 @@ export class Sites {
         }
         const apiPath = '/sites/templates/{templateId}'.replace(
             '{templateId}',
-            encodeURIComponent(String(templateId)),
+            encodePath(templateId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1074,6 +1076,7 @@ export class Sites {
                         providerOwner: '',
                         providerVersion: '',
                         variables: [],
+                        scopes: [],
                     },
                     properties: {
                         frameworks: {
@@ -1152,7 +1155,7 @@ export class Sites {
         }
         const apiPath = '/sites/{siteId}'.replace(
             '{siteId}',
-            encodeURIComponent(String(siteId)),
+            encodePath(siteId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1531,7 +1534,7 @@ export class Sites {
         }
         const apiPath = '/sites/{siteId}'.replace(
             '{siteId}',
-            encodeURIComponent(String(siteId)),
+            encodePath(siteId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -1719,7 +1722,7 @@ export class Sites {
         }
         const apiPath = '/sites/{siteId}'.replace(
             '{siteId}',
-            encodeURIComponent(String(siteId)),
+            encodePath(siteId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1793,7 +1796,7 @@ export class Sites {
         }
         const apiPath = '/sites/{siteId}/deployment'.replace(
             '{siteId}',
-            encodeURIComponent(String(siteId)),
+            encodePath(siteId),
         );
         const apiPayload: Payload = {};
         if (typeof deploymentId !== 'undefined') {
@@ -1954,7 +1957,7 @@ export class Sites {
         }
         const apiPath = '/sites/{siteId}/deployments'.replace(
             '{siteId}',
-            encodeURIComponent(String(siteId)),
+            encodePath(siteId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -2141,7 +2144,7 @@ export class Sites {
         }
         const apiPath = '/sites/{siteId}/deployments'.replace(
             '{siteId}',
-            encodeURIComponent(String(siteId)),
+            encodePath(siteId),
         );
         const apiPayload: Payload = {};
         if (typeof installCommand !== 'undefined') {
@@ -2236,7 +2239,7 @@ export class Sites {
         }
         const apiPath = '/sites/{siteId}/deployments/duplicate'.replace(
             '{siteId}',
-            encodeURIComponent(String(siteId)),
+            encodePath(siteId),
         );
         const apiPayload: Payload = {};
         if (typeof deploymentId !== 'undefined') {
@@ -2430,7 +2433,7 @@ export class Sites {
         }
         const apiPath = '/sites/{siteId}/deployments/template'.replace(
             '{siteId}',
-            encodeURIComponent(String(siteId)),
+            encodePath(siteId),
         );
         const apiPayload: Payload = {};
         if (typeof repository !== 'undefined') {
@@ -2592,7 +2595,7 @@ export class Sites {
         }
         const apiPath = '/sites/{siteId}/deployments/vcs'.replace(
             '{siteId}',
-            encodeURIComponent(String(siteId)),
+            encodePath(siteId),
         );
         const apiPayload: Payload = {};
         if (typeof type !== 'undefined') {
@@ -2711,11 +2714,8 @@ export class Sites {
             );
         }
         const apiPath = '/sites/{siteId}/deployments/{deploymentId}'
-            .replace('{siteId}', encodeURIComponent(String(siteId)))
-            .replace(
-                '{deploymentId}',
-                encodeURIComponent(String(deploymentId)),
-            );
+            .replace('{siteId}', encodePath(siteId))
+            .replace('{deploymentId}', encodePath(deploymentId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2820,11 +2820,8 @@ export class Sites {
             );
         }
         const apiPath = '/sites/{siteId}/deployments/{deploymentId}'
-            .replace('{siteId}', encodeURIComponent(String(siteId)))
-            .replace(
-                '{deploymentId}',
-                encodeURIComponent(String(deploymentId)),
-            );
+            .replace('{siteId}', encodePath(siteId))
+            .replace('{deploymentId}', encodePath(deploymentId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2922,11 +2919,8 @@ export class Sites {
             );
         }
         const apiPath = '/sites/{siteId}/deployments/{deploymentId}/download'
-            .replace('{siteId}', encodeURIComponent(String(siteId)))
-            .replace(
-                '{deploymentId}',
-                encodeURIComponent(String(deploymentId)),
-            );
+            .replace('{siteId}', encodePath(siteId))
+            .replace('{deploymentId}', encodePath(deploymentId));
         const apiPayload: Payload = {};
         if (typeof type !== 'undefined') {
             apiPayload['type'] = type;
@@ -2937,6 +2931,7 @@ export class Sites {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
+        apiPayload['environment'] = this.client.config.environment;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
@@ -3005,11 +3000,8 @@ export class Sites {
             );
         }
         const apiPath = '/sites/{siteId}/deployments/{deploymentId}/status'
-            .replace('{siteId}', encodeURIComponent(String(siteId)))
-            .replace(
-                '{deploymentId}',
-                encodeURIComponent(String(deploymentId)),
-            );
+            .replace('{siteId}', encodePath(siteId))
+            .replace('{deploymentId}', encodePath(deploymentId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3122,7 +3114,7 @@ export class Sites {
         }
         const apiPath = '/sites/{siteId}/logs'.replace(
             '{siteId}',
-            encodeURIComponent(String(siteId)),
+            encodePath(siteId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -3244,8 +3236,8 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "logId"');
         }
         const apiPath = '/sites/{siteId}/logs/{logId}'
-            .replace('{siteId}', encodeURIComponent(String(siteId)))
-            .replace('{logId}', encodeURIComponent(String(logId)));
+            .replace('{siteId}', encodePath(siteId))
+            .replace('{logId}', encodePath(logId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3346,8 +3338,8 @@ export class Sites {
             throw new AppwriteException('Missing required parameter: "logId"');
         }
         const apiPath = '/sites/{siteId}/logs/{logId}'
-            .replace('{siteId}', encodeURIComponent(String(siteId)))
-            .replace('{logId}', encodeURIComponent(String(logId)));
+            .replace('{siteId}', encodePath(siteId))
+            .replace('{logId}', encodePath(logId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3423,7 +3415,7 @@ export class Sites {
         }
         const apiPath = '/sites/{siteId}/variables'.replace(
             '{siteId}',
-            encodeURIComponent(String(siteId)),
+            encodePath(siteId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -3583,7 +3575,7 @@ export class Sites {
         }
         const apiPath = '/sites/{siteId}/variables'.replace(
             '{siteId}',
-            encodeURIComponent(String(siteId)),
+            encodePath(siteId),
         );
         const apiPayload: Payload = {};
         if (typeof variableId !== 'undefined') {
@@ -3688,8 +3680,8 @@ export class Sites {
             );
         }
         const apiPath = '/sites/{siteId}/variables/{variableId}'
-            .replace('{siteId}', encodeURIComponent(String(siteId)))
-            .replace('{variableId}', encodeURIComponent(String(variableId)));
+            .replace('{siteId}', encodePath(siteId))
+            .replace('{variableId}', encodePath(variableId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3830,8 +3822,8 @@ export class Sites {
             );
         }
         const apiPath = '/sites/{siteId}/variables/{variableId}'
-            .replace('{siteId}', encodeURIComponent(String(siteId)))
-            .replace('{variableId}', encodeURIComponent(String(variableId)));
+            .replace('{siteId}', encodePath(siteId))
+            .replace('{variableId}', encodePath(variableId));
         const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
             apiPayload['key'] = key;
@@ -3929,8 +3921,8 @@ export class Sites {
             );
         }
         const apiPath = '/sites/{siteId}/variables/{variableId}'
-            .replace('{siteId}', encodeURIComponent(String(siteId)))
-            .replace('{variableId}', encodeURIComponent(String(variableId)));
+            .replace('{siteId}', encodePath(siteId))
+            .replace('{variableId}', encodePath(variableId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
