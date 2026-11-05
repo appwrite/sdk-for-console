@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -46,6 +47,8 @@ export class Organization {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -129,6 +132,8 @@ export class Organization {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -402,7 +407,7 @@ export class Organization {
         }
         const apiPath = '/organization/installations/{installationId}'.replace(
             '{installationId}',
-            encodeURIComponent(String(installationId)),
+            encodePath(installationId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -497,7 +502,7 @@ export class Organization {
         }
         const apiPath = '/organization/installations/{installationId}'.replace(
             '{installationId}',
-            encodeURIComponent(String(installationId)),
+            encodePath(installationId),
         );
         const apiPayload: Payload = {};
         if (typeof authorizationDetails !== 'undefined') {
@@ -577,7 +582,7 @@ export class Organization {
         }
         const apiPath = '/organization/installations/{installationId}'.replace(
             '{installationId}',
-            encodeURIComponent(String(installationId)),
+            encodePath(installationId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -690,7 +695,7 @@ export class Organization {
     }
 
     /**
-     * Create a new organization API key.
+     * Create a new organization API key as an organization owner. Replace legacy keys with a new key to authorize organization deletion or owner membership grants.
      *
      * @param {string} params.keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} params.name - Key name. Max length: 128 chars.
@@ -706,7 +711,7 @@ export class Organization {
         expire?: string | null;
     }): Promise<Models.Key>;
     /**
-     * Create a new organization API key.
+     * Create a new organization API key as an organization owner. Replace legacy keys with a new key to authorize organization deletion or owner membership grants.
      *
      * @param {string} keyId - Key ID. Choose a custom ID or generate a random ID with `ID.unique()`. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param {string} name - Key name. Max length: 128 chars.
@@ -859,7 +864,7 @@ export class Organization {
         }
         const apiPath = '/organization/keys/{keyId}'.replace(
             '{keyId}',
-            encodeURIComponent(String(keyId)),
+            encodePath(keyId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -980,7 +985,7 @@ export class Organization {
         }
         const apiPath = '/organization/keys/{keyId}'.replace(
             '{keyId}',
-            encodeURIComponent(String(keyId)),
+            encodePath(keyId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -1063,7 +1068,7 @@ export class Organization {
         }
         const apiPath = '/organization/keys/{keyId}'.replace(
             '{keyId}',
-            encodeURIComponent(String(keyId)),
+            encodePath(keyId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1391,7 +1396,7 @@ export class Organization {
         }
         const apiPath = '/organization/memberships/{membershipId}'.replace(
             '{membershipId}',
-            encodeURIComponent(String(membershipId)),
+            encodePath(membershipId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1490,7 +1495,7 @@ export class Organization {
         }
         const apiPath = '/organization/memberships/{membershipId}'.replace(
             '{membershipId}',
-            encodeURIComponent(String(membershipId)),
+            encodePath(membershipId),
         );
         const apiPayload: Payload = {};
         if (typeof roles !== 'undefined') {
@@ -1576,7 +1581,7 @@ export class Organization {
         }
         const apiPath = '/organization/memberships/{membershipId}'.replace(
             '{membershipId}',
-            encodeURIComponent(String(membershipId)),
+            encodePath(membershipId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1597,13 +1602,15 @@ export class Organization {
      * @param {string} params.search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.ProjectList>}
+     * @returns {Promise<Models.ProjectList<Preferences>>}
      */
-    listProjects(params?: {
+    listProjects<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params?: {
         queries?: string[];
         search?: string;
         total?: boolean;
-    }): Promise<Models.ProjectList>;
+    }): Promise<Models.ProjectList<Preferences>>;
     /**
      * Get a list of all projects. You can use the query params to filter your results.
      *
@@ -1611,19 +1618,23 @@ export class Organization {
      * @param {string} search - Search term to filter your list results. Max length: 256 chars.
      * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.ProjectList>}
+     * @returns {Promise<Models.ProjectList<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    listProjects(
+    listProjects<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
         queries?: string[],
         search?: string,
         total?: boolean,
-    ): Promise<Models.ProjectList>;
-    listProjects(
+    ): Promise<Models.ProjectList<Preferences>>;
+    listProjects<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
         paramsOrFirst?:
             { queries?: string[]; search?: string; total?: boolean } | string[],
         ...rest: [string?, boolean?]
-    ): Promise<Models.ProjectList> {
+    ): Promise<Models.ProjectList<Preferences>> {
         let params: { queries?: string[]; search?: string; total?: boolean };
 
         if (
@@ -1762,13 +1773,15 @@ export class Organization {
      * @param {string} params.name - Project name. Max length: 128 chars.
      * @param {Region} params.region - Project Region.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
+     * @returns {Promise<Models.Project<Preferences>>}
      */
-    createProject(params: {
+    createProject<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
         projectId: string;
         name: string;
         region?: Region;
-    }): Promise<Models.Project>;
+    }): Promise<Models.Project<Preferences>>;
     /**
      * Create a new project.
      *
@@ -1776,19 +1789,23 @@ export class Organization {
      * @param {string} name - Project name. Max length: 128 chars.
      * @param {Region} region - Project Region.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
+     * @returns {Promise<Models.Project<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    createProject(
+    createProject<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
         projectId: string,
         name: string,
         region?: Region,
-    ): Promise<Models.Project>;
-    createProject(
+    ): Promise<Models.Project<Preferences>>;
+    createProject<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
         paramsOrFirst:
             { projectId: string; name: string; region?: Region } | string,
         ...rest: [string?, Region?]
-    ): Promise<Models.Project> {
+    ): Promise<Models.Project<Preferences>> {
         let params: { projectId: string; name: string; region?: Region };
 
         if (
@@ -1922,21 +1939,27 @@ export class Organization {
      *
      * @param {string} params.projectId - Project unique ID.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
+     * @returns {Promise<Models.Project<Preferences>>}
      */
-    getProject(params: { projectId: string }): Promise<Models.Project>;
+    getProject<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: { projectId: string }): Promise<Models.Project<Preferences>>;
     /**
      * Get a project.
      *
      * @param {string} projectId - Project unique ID.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
+     * @returns {Promise<Models.Project<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    getProject(projectId: string): Promise<Models.Project>;
-    getProject(
+    getProject<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(projectId: string): Promise<Models.Project<Preferences>>;
+    getProject<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
         paramsOrFirst: { projectId: string } | string,
-    ): Promise<Models.Project> {
+    ): Promise<Models.Project<Preferences>> {
         let params: { projectId: string };
 
         if (
@@ -1960,7 +1983,7 @@ export class Organization {
         }
         const apiPath = '/organization/projects/{projectId}'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2053,26 +2076,32 @@ export class Organization {
      * @param {string} params.projectId - Project unique ID.
      * @param {string} params.name - Project name. Max length: 128 chars.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
+     * @returns {Promise<Models.Project<Preferences>>}
      */
-    updateProject(params: {
+    updateProject<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
         projectId: string;
         name: string;
-    }): Promise<Models.Project>;
+    }): Promise<Models.Project<Preferences>>;
     /**
      * Update a project by its unique ID.
      *
      * @param {string} projectId - Project unique ID.
      * @param {string} name - Project name. Max length: 128 chars.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.Project>}
+     * @returns {Promise<Models.Project<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
-    updateProject(projectId: string, name: string): Promise<Models.Project>;
-    updateProject(
+    updateProject<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(projectId: string, name: string): Promise<Models.Project<Preferences>>;
+    updateProject<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
         paramsOrFirst: { projectId: string; name: string } | string,
         ...rest: [string?]
-    ): Promise<Models.Project> {
+    ): Promise<Models.Project<Preferences>> {
         let params: { projectId: string; name: string };
 
         if (
@@ -2104,7 +2133,7 @@ export class Organization {
         }
         const apiPath = '/organization/projects/{projectId}'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -2236,7 +2265,7 @@ export class Organization {
         }
         const apiPath = '/organization/projects/{projectId}'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2315,7 +2344,7 @@ export class Organization {
         }
         const apiPath = '/organization/projects/{projectId}/keys'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -2486,7 +2515,7 @@ export class Organization {
         }
         const apiPath = '/organization/projects/{projectId}/keys'.replace(
             '{projectId}',
-            encodeURIComponent(String(projectId)),
+            encodePath(projectId),
         );
         const apiPayload: Payload = {};
         if (typeof keyId !== 'undefined') {
@@ -2623,7 +2652,7 @@ export class Organization {
         const apiPath =
             '/organization/projects/{projectId}/keys/ephemeral'.replace(
                 '{projectId}',
-                encodeURIComponent(String(projectId)),
+                encodePath(projectId),
             );
         const apiPayload: Payload = {};
         if (typeof scopes !== 'undefined') {
@@ -2720,8 +2749,8 @@ export class Organization {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
         const apiPath = '/organization/projects/{projectId}/keys/{keyId}'
-            .replace('{projectId}', encodeURIComponent(String(projectId)))
-            .replace('{keyId}', encodeURIComponent(String(keyId)));
+            .replace('{projectId}', encodePath(projectId))
+            .replace('{keyId}', encodePath(keyId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2869,8 +2898,8 @@ export class Organization {
             throw new AppwriteException('Missing required parameter: "scopes"');
         }
         const apiPath = '/organization/projects/{projectId}/keys/{keyId}'
-            .replace('{projectId}', encodeURIComponent(String(projectId)))
-            .replace('{keyId}', encodeURIComponent(String(keyId)));
+            .replace('{projectId}', encodePath(projectId))
+            .replace('{keyId}', encodePath(keyId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -2969,8 +2998,8 @@ export class Organization {
             throw new AppwriteException('Missing required parameter: "keyId"');
         }
         const apiPath = '/organization/projects/{projectId}/keys/{keyId}'
-            .replace('{projectId}', encodeURIComponent(String(projectId)))
-            .replace('{keyId}', encodeURIComponent(String(keyId)));
+            .replace('{projectId}', encodePath(projectId))
+            .replace('{keyId}', encodePath(keyId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2981,5 +3010,554 @@ export class Organization {
         };
 
         return this.client.call('delete', uri, apiHeaders, apiPayload);
+    }
+
+    /**
+     * Get a list of the pending transfers of projects in your organization, with their secrets so their links can be shared again.
+     *
+     * @param {string} params.projectId - Only list the transfers of this project.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: recipientId, expire
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.TransferList>}
+     */
+    listProjectTransfers(params?: {
+        projectId?: string;
+        queries?: string[];
+        total?: boolean;
+    }): Promise<Models.TransferList>;
+    /**
+     * Get a list of the pending transfers of projects in your organization, with their secrets so their links can be shared again.
+     *
+     * @param {string} projectId - Only list the transfers of this project.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: recipientId, expire
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.TransferList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listProjectTransfers(
+        projectId?: string,
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.TransferList>;
+    listProjectTransfers(
+        paramsOrFirst?:
+            | { projectId?: string; queries?: string[]; total?: boolean }
+            | string,
+        ...rest: [string[]?, boolean?]
+    ): Promise<Models.TransferList> {
+        let params: { projectId?: string; queries?: string[]; total?: boolean };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId?: string;
+                queries?: string[];
+                total?: boolean;
+            };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string,
+                queries: rest[0] as string[],
+                total: rest[1] as boolean,
+            };
+        }
+
+        const projectId = params.projectId;
+        const queries = params.queries;
+        const total = params.total;
+
+        const apiPath = '/organization/transfers';
+        const apiPayload: Payload = {};
+        if (typeof projectId !== 'undefined') {
+            apiPayload['projectId'] = projectId;
+        }
+        if (typeof queries !== 'undefined') {
+            apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'transferList',
+            models: {
+                transferList: {
+                    defaults: {
+                        total: 0,
+                        transfers: [],
+                    },
+                    properties: {
+                        transfers: {
+                            items: 'transfer',
+                        },
+                    },
+                },
+                transfer: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        resourceType: '',
+                        resourceId: '',
+                        resourceName: '',
+                        senderType: '',
+                        senderId: '',
+                        senderName: '',
+                        recipientType: '',
+                        recipientId: '',
+                        recipientName: '',
+                        expire: '',
+                        secret: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
+     * Create a transfer for a project in your organization. Share the returned transfer ID and secret with another organization so it can claim the project, even when you are not a member of it.
+     *
+     * Your organization can get the secret again by getting or listing the transfer. A transfer expires after 24 hours unless you set a different expiration date.
+     *
+     * @param {string} params.projectId - ID of the project to transfer.
+     * @param {string} params.recipientId - ID of the only organization allowed to claim the project. Leave empty to allow any organization.
+     * @param {string | null} params.expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Defaults to 24 hours from now. Maximum of 30 days from now.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Transfer>}
+     */
+    createProjectTransfer(params: {
+        projectId: string;
+        recipientId?: string;
+        expire?: string | null;
+    }): Promise<Models.Transfer>;
+    /**
+     * Create a transfer for a project in your organization. Share the returned transfer ID and secret with another organization so it can claim the project, even when you are not a member of it.
+     *
+     * Your organization can get the secret again by getting or listing the transfer. A transfer expires after 24 hours unless you set a different expiration date.
+     *
+     * @param {string} projectId - ID of the project to transfer.
+     * @param {string} recipientId - ID of the only organization allowed to claim the project. Leave empty to allow any organization.
+     * @param {string | null} expire - Expiration time in [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format. Defaults to 24 hours from now. Maximum of 30 days from now.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Transfer>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    createProjectTransfer(
+        projectId: string,
+        recipientId?: string,
+        expire?: string | null,
+    ): Promise<Models.Transfer>;
+    createProjectTransfer(
+        paramsOrFirst:
+            | {
+                  projectId: string;
+                  recipientId?: string;
+                  expire?: string | null;
+              }
+            | string,
+        ...rest: [string?, (string | null)?]
+    ): Promise<Models.Transfer> {
+        let params: {
+            projectId: string;
+            recipientId?: string;
+            expire?: string | null;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                projectId: string;
+                recipientId?: string;
+                expire?: string | null;
+            };
+        } else {
+            params = {
+                projectId: paramsOrFirst as string,
+                recipientId: rest[0] as string,
+                expire: rest[1] as string | null,
+            };
+        }
+
+        const projectId = params.projectId;
+        const recipientId = params.recipientId;
+        const expire = params.expire;
+
+        if (typeof projectId === 'undefined') {
+            throw new AppwriteException(
+                'Missing required parameter: "projectId"',
+            );
+        }
+        const apiPath = '/organization/transfers';
+        const apiPayload: Payload = {};
+        if (typeof projectId !== 'undefined') {
+            apiPayload['projectId'] = projectId;
+        }
+        if (typeof recipientId !== 'undefined') {
+            apiPayload['recipientId'] = recipientId;
+        }
+        if (typeof expire !== 'undefined') {
+            apiPayload['expire'] = expire;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('post', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'transfer',
+            models: {
+                transfer: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        resourceType: '',
+                        resourceId: '',
+                        resourceName: '',
+                        senderType: '',
+                        senderId: '',
+                        senderName: '',
+                        recipientType: '',
+                        recipientId: '',
+                        recipientName: '',
+                        expire: '',
+                        secret: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
+     * Get a project transfer by its unique ID. The organization that owns the project can get it without a secret. Any other organization needs the transfer secret, so it can see which project it is about to claim and which organizations are involved.
+     *
+     * @param {string} params.transferId - Transfer ID.
+     * @param {string} params.secret - Transfer secret. Required unless the project belongs to your organization.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Transfer>}
+     */
+    getProjectTransfer(params: {
+        transferId: string;
+        secret?: string;
+    }): Promise<Models.Transfer>;
+    /**
+     * Get a project transfer by its unique ID. The organization that owns the project can get it without a secret. Any other organization needs the transfer secret, so it can see which project it is about to claim and which organizations are involved.
+     *
+     * @param {string} transferId - Transfer ID.
+     * @param {string} secret - Transfer secret. Required unless the project belongs to your organization.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Transfer>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getProjectTransfer(
+        transferId: string,
+        secret?: string,
+    ): Promise<Models.Transfer>;
+    getProjectTransfer(
+        paramsOrFirst: { transferId: string; secret?: string } | string,
+        ...rest: [string?]
+    ): Promise<Models.Transfer> {
+        let params: { transferId: string; secret?: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                transferId: string;
+                secret?: string;
+            };
+        } else {
+            params = {
+                transferId: paramsOrFirst as string,
+                secret: rest[0] as string,
+            };
+        }
+
+        const transferId = params.transferId;
+        const secret = params.secret;
+
+        if (typeof transferId === 'undefined' || transferId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "transferId"',
+            );
+        }
+        const apiPath = '/organization/transfers/{transferId}'.replace(
+            '{transferId}',
+            encodePath(transferId),
+        );
+        const apiPayload: Payload = {};
+        if (typeof secret !== 'undefined') {
+            apiPayload['secret'] = secret;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'transfer',
+            models: {
+                transfer: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        resourceType: '',
+                        resourceId: '',
+                        resourceName: '',
+                        senderType: '',
+                        senderId: '',
+                        senderName: '',
+                        recipientType: '',
+                        recipientId: '',
+                        recipientName: '',
+                        expire: '',
+                        secret: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
+     * Delete a project transfer, so its secret can no longer be used to claim the project.
+     *
+     * @param {string} params.transferId - Transfer ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     */
+    deleteProjectTransfer(params: { transferId: string }): Promise<{}>;
+    /**
+     * Delete a project transfer, so its secret can no longer be used to claim the project.
+     *
+     * @param {string} transferId - Transfer ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<{}>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    deleteProjectTransfer(transferId: string): Promise<{}>;
+    deleteProjectTransfer(
+        paramsOrFirst: { transferId: string } | string,
+    ): Promise<{}> {
+        let params: { transferId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as { transferId: string };
+        } else {
+            params = {
+                transferId: paramsOrFirst as string,
+            };
+        }
+
+        const transferId = params.transferId;
+
+        if (typeof transferId === 'undefined' || transferId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "transferId"',
+            );
+        }
+        const apiPath = '/organization/transfers/{transferId}'.replace(
+            '{transferId}',
+            encodePath(transferId),
+        );
+        const apiPayload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        return this.client.call('delete', uri, apiHeaders, apiPayload);
+    }
+
+    /**
+     * Claim a project with the transfer ID and secret its owner shared with you. The project moves to your organization, and the transfer can't be used again.
+     *
+     * @param {string} params.transferId - Transfer ID.
+     * @param {string} params.secret - Transfer secret.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project<Preferences>>}
+     */
+    updateProjectTransferStatus<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: {
+        transferId: string;
+        secret: string;
+    }): Promise<Models.Project<Preferences>>;
+    /**
+     * Claim a project with the transfer ID and secret its owner shared with you. The project moves to your organization, and the transfer can't be used again.
+     *
+     * @param {string} transferId - Transfer ID.
+     * @param {string} secret - Transfer secret.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project<Preferences>>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateProjectTransferStatus<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(transferId: string, secret: string): Promise<Models.Project<Preferences>>;
+    updateProjectTransferStatus<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { transferId: string; secret: string } | string,
+        ...rest: [string?]
+    ): Promise<Models.Project<Preferences>> {
+        let params: { transferId: string; secret: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                transferId: string;
+                secret: string;
+            };
+        } else {
+            params = {
+                transferId: paramsOrFirst as string,
+                secret: rest[0] as string,
+            };
+        }
+
+        const transferId = params.transferId;
+        const secret = params.secret;
+
+        if (typeof transferId === 'undefined' || transferId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "transferId"',
+            );
+        }
+        if (typeof secret === 'undefined') {
+            throw new AppwriteException('Missing required parameter: "secret"');
+        }
+        const apiPath = '/organization/transfers/{transferId}/status'.replace(
+            '{transferId}',
+            encodePath(transferId),
+        );
+        const apiPayload: Payload = {};
+        if (typeof secret !== 'undefined') {
+            apiPayload['secret'] = secret;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'project',
+            models: {
+                project: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        teamId: '',
+                        region: 'fra',
+                        smtpEnabled: false,
+                        smtpSenderName: '',
+                        smtpSenderEmail: '',
+                        smtpReplyToName: '',
+                        smtpReplyToEmail: '',
+                        smtpHost: '',
+                        smtpPort: 0,
+                        smtpUsername: '',
+                        smtpPassword: '',
+                        smtpSecure: '',
+                        pingCount: 0,
+                        pingedAt: '',
+                        labels: [],
+                        status: 'active',
+                        onboarding: {},
+                        authMethods: [],
+                        services: [],
+                        protocols: [],
+                        blocks: [],
+                        consoleAccessedAt: '',
+                    },
+                    properties: {
+                        authMethods: {
+                            items: 'projectAuthMethod',
+                        },
+                        services: {
+                            items: 'projectService',
+                        },
+                        protocols: {
+                            items: 'projectProtocol',
+                        },
+                        blocks: {
+                            items: 'block',
+                        },
+                    },
+                },
+                projectAuthMethod: {
+                    defaults: {
+                        enabled: true,
+                    },
+                },
+                projectService: {
+                    defaults: {
+                        enabled: true,
+                    },
+                },
+                projectProtocol: {
+                    defaults: {
+                        enabled: true,
+                    },
+                },
+                block: {
+                    defaults: {
+                        $createdAt: '',
+                        resourceType: '',
+                        resourceId: '',
+                        mode: 'full',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 }

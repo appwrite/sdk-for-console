@@ -19,6 +19,7 @@ const result = await waf.updateChallengeRule({
     conditions: [], // optional
     difficulty: 1, // optional
     ttl: 900, // optional
+    schedule: {}, // optional
 });
 
 console.log(result);

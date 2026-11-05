@@ -1,5 +1,23 @@
 # Change Log
 
+## 21.0.0
+
+* Breaking: requests send `X-Appwrite-Response-Format: 2.7.0`; responses follow the 2.7 shapes
+* Breaking: renamed the `Review` model to `CampaignReview`, as typed on `Campaign.reviews`
+* Breaking: `MigrationReport` keys now match the API's kebab case, such as `apikey` to `'api-key'`
+* Added: `membership` and `'project-preferences'` counts on `MigrationReport`
+* Added: optional `schedule` on every `waf` create and update rule method, and `schedule` on the `WafRule*` models
+* Added: `organization` project transfers: `createProjectTransfer`, `getProjectTransfer`, `listProjectTransfers`, `updateProjectTransferStatus`, `deleteProjectTransfer`
+* Added: `project.getPrefs`, `project.updatePrefs`, `project.deleteSessions`, `project.updateDenyRealtimeGuestsPolicy` and `project.updateOAuth2Vipps`
+* Added: `proxy.updateFunctionRule`, `proxy.updateSiteRule` and `proxy.updateRedirectRule`
+* Added: `admin` methods for credits, invoices, payments, blocks, aggregations and organizations
+* Added: `console.updateSources` and `Client.setEnvironment()`
+* Added: `stripMetadata` on `storage.createBucket` and `storage.updateBucket`
+* Added: analytics property `type` and `identifyUsers`, event `interactive`, and `propKey` on `analytics.listMetrics`
+* Added: `resources` on `project.createEnvironment`, with the `EnvironmentResource` enum
+* Added: `tracker.js` on the CDN, which tracks pageviews and engagement from a script tag
+* Fixed: `.` and `..` path parameters are rejected instead of resolving to another route
+
 ## 20.0.0
 
 * Breaking: requests send `X-Appwrite-Response-Format: 2.5.0`; responses follow the 2.5 shapes

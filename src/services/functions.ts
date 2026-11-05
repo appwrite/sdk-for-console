@@ -4,6 +4,7 @@ import {
     type Payload,
     UploadProgress,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -199,7 +200,7 @@ export class Functions {
      * @param {string[]} params.providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
      * @param {string} params.buildSpecification - Build specification for the function deployments.
      * @param {string} params.runtimeSpecification - Runtime specification for the function executions.
-     * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
+     * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 keeps all deployments unless the server applies a default retention.
      * @param {number} params.interval - Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule.
      * @param {string} params.description - Optional description for the function.
      * @throws {AppwriteException}
@@ -255,7 +256,7 @@ export class Functions {
      * @param {string[]} providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
      * @param {string} buildSpecification - Build specification for the function deployments.
      * @param {string} runtimeSpecification - Runtime specification for the function executions.
-     * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
+     * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 keeps all deployments unless the server applies a default retention.
      * @param {number} interval - Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule.
      * @param {string} description - Optional description for the function.
      * @throws {AppwriteException}
@@ -1022,7 +1023,7 @@ export class Functions {
         }
         const apiPath = '/functions/templates/{templateId}'.replace(
             '{templateId}',
-            encodeURIComponent(String(templateId)),
+            encodePath(templateId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1133,7 +1134,7 @@ export class Functions {
         }
         const apiPath = '/functions/{functionId}'.replace(
             '{functionId}',
-            encodeURIComponent(String(functionId)),
+            encodePath(functionId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1233,7 +1234,7 @@ export class Functions {
      * @param {string[] | null} params.providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
      * @param {string | null} params.buildSpecification - Build specification for the function deployments.
      * @param {string | null} params.runtimeSpecification - Runtime specification for the function executions.
-     * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
+     * @param {number} params.deploymentRetention - Days to keep non-active deployments before deletion. Value 0 keeps all deployments unless the server applies a default retention.
      * @param {number | null} params.interval - Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule. When omitted, the current interval is kept unless schedule is set.
      * @param {string | null} params.description - Optional description for the function.
      * @param {boolean | null} params.emailEnabled - Enable inbound email triggering for this function. When false or omitted on create, SMTP recipients are rejected. Opt-in; default is off.
@@ -1291,7 +1292,7 @@ export class Functions {
      * @param {string[] | null} providerPaths - List of file path patterns to trigger automatic deployments. Supports wildcards. Leave empty to deploy on all file changes.
      * @param {string | null} buildSpecification - Build specification for the function deployments.
      * @param {string | null} runtimeSpecification - Runtime specification for the function executions.
-     * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 means all deployments will be kept.
+     * @param {number} deploymentRetention - Days to keep non-active deployments before deletion. Value 0 keeps all deployments unless the server applies a default retention.
      * @param {number | null} interval - Minutes between scheduled executions. Appwrite picks when within each interval the function runs. Use 0 to disable. Cannot be combined with schedule. When omitted, the current interval is kept unless schedule is set.
      * @param {string | null} description - Optional description for the function.
      * @param {boolean | null} emailEnabled - Enable inbound email triggering for this function. When false or omitted on create, SMTP recipients are rejected. Opt-in; default is off.
@@ -1509,7 +1510,7 @@ export class Functions {
         }
         const apiPath = '/functions/{functionId}'.replace(
             '{functionId}',
-            encodeURIComponent(String(functionId)),
+            encodePath(functionId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -1699,7 +1700,7 @@ export class Functions {
         }
         const apiPath = '/functions/{functionId}'.replace(
             '{functionId}',
-            encodeURIComponent(String(functionId)),
+            encodePath(functionId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1775,7 +1776,7 @@ export class Functions {
         }
         const apiPath = '/functions/{functionId}/deployment'.replace(
             '{functionId}',
-            encodeURIComponent(String(functionId)),
+            encodePath(functionId),
         );
         const apiPayload: Payload = {};
         if (typeof deploymentId !== 'undefined') {
@@ -1938,7 +1939,7 @@ export class Functions {
         }
         const apiPath = '/functions/{functionId}/deployments'.replace(
             '{functionId}',
-            encodeURIComponent(String(functionId)),
+            encodePath(functionId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -2130,7 +2131,7 @@ export class Functions {
         }
         const apiPath = '/functions/{functionId}/deployments'.replace(
             '{functionId}',
-            encodeURIComponent(String(functionId)),
+            encodePath(functionId),
         );
         const apiPayload: Payload = {};
         if (typeof entrypoint !== 'undefined') {
@@ -2237,7 +2238,7 @@ export class Functions {
         }
         const apiPath = '/functions/{functionId}/deployments/duplicate'.replace(
             '{functionId}',
-            encodeURIComponent(String(functionId)),
+            encodePath(functionId),
         );
         const apiPayload: Payload = {};
         if (typeof deploymentId !== 'undefined') {
@@ -2436,7 +2437,7 @@ export class Functions {
         }
         const apiPath = '/functions/{functionId}/deployments/template'.replace(
             '{functionId}',
-            encodeURIComponent(String(functionId)),
+            encodePath(functionId),
         );
         const apiPayload: Payload = {};
         if (typeof repository !== 'undefined') {
@@ -2600,7 +2601,7 @@ export class Functions {
         }
         const apiPath = '/functions/{functionId}/deployments/vcs'.replace(
             '{functionId}',
-            encodeURIComponent(String(functionId)),
+            encodePath(functionId),
         );
         const apiPayload: Payload = {};
         if (typeof type !== 'undefined') {
@@ -2721,11 +2722,8 @@ export class Functions {
             );
         }
         const apiPath = '/functions/{functionId}/deployments/{deploymentId}'
-            .replace('{functionId}', encodeURIComponent(String(functionId)))
-            .replace(
-                '{deploymentId}',
-                encodeURIComponent(String(deploymentId)),
-            );
+            .replace('{functionId}', encodePath(functionId))
+            .replace('{deploymentId}', encodePath(deploymentId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2832,11 +2830,8 @@ export class Functions {
             );
         }
         const apiPath = '/functions/{functionId}/deployments/{deploymentId}'
-            .replace('{functionId}', encodeURIComponent(String(functionId)))
-            .replace(
-                '{deploymentId}',
-                encodeURIComponent(String(deploymentId)),
-            );
+            .replace('{functionId}', encodePath(functionId))
+            .replace('{deploymentId}', encodePath(deploymentId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2937,11 +2932,8 @@ export class Functions {
         }
         const apiPath =
             '/functions/{functionId}/deployments/{deploymentId}/download'
-                .replace('{functionId}', encodeURIComponent(String(functionId)))
-                .replace(
-                    '{deploymentId}',
-                    encodeURIComponent(String(deploymentId)),
-                );
+                .replace('{functionId}', encodePath(functionId))
+                .replace('{deploymentId}', encodePath(deploymentId));
         const apiPayload: Payload = {};
         if (typeof type !== 'undefined') {
             apiPayload['type'] = type;
@@ -2952,6 +2944,7 @@ export class Functions {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
+        apiPayload['environment'] = this.client.config.environment;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
@@ -3023,11 +3016,8 @@ export class Functions {
         }
         const apiPath =
             '/functions/{functionId}/deployments/{deploymentId}/status'
-                .replace('{functionId}', encodeURIComponent(String(functionId)))
-                .replace(
-                    '{deploymentId}',
-                    encodeURIComponent(String(deploymentId)),
-                );
+                .replace('{functionId}', encodePath(functionId))
+                .replace('{deploymentId}', encodePath(deploymentId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3143,7 +3133,7 @@ export class Functions {
         }
         const apiPath = '/functions/{functionId}/executions'.replace(
             '{functionId}',
-            encodeURIComponent(String(functionId)),
+            encodePath(functionId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -3331,7 +3321,7 @@ export class Functions {
         }
         const apiPath = '/functions/{functionId}/executions'.replace(
             '{functionId}',
-            encodeURIComponent(String(functionId)),
+            encodePath(functionId),
         );
         const apiPayload: Payload = {};
         if (typeof body !== 'undefined') {
@@ -3465,8 +3455,8 @@ export class Functions {
             );
         }
         const apiPath = '/functions/{functionId}/executions/{executionId}'
-            .replace('{functionId}', encodeURIComponent(String(functionId)))
-            .replace('{executionId}', encodeURIComponent(String(executionId)));
+            .replace('{functionId}', encodePath(functionId))
+            .replace('{executionId}', encodePath(executionId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3577,8 +3567,8 @@ export class Functions {
             );
         }
         const apiPath = '/functions/{functionId}/executions/{executionId}'
-            .replace('{functionId}', encodeURIComponent(String(functionId)))
-            .replace('{executionId}', encodeURIComponent(String(executionId)));
+            .replace('{functionId}', encodePath(functionId))
+            .replace('{executionId}', encodePath(executionId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3657,7 +3647,7 @@ export class Functions {
         }
         const apiPath = '/functions/{functionId}/variables'.replace(
             '{functionId}',
-            encodeURIComponent(String(functionId)),
+            encodePath(functionId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -3819,7 +3809,7 @@ export class Functions {
         }
         const apiPath = '/functions/{functionId}/variables'.replace(
             '{functionId}',
-            encodeURIComponent(String(functionId)),
+            encodePath(functionId),
         );
         const apiPayload: Payload = {};
         if (typeof variableId !== 'undefined') {
@@ -3929,8 +3919,8 @@ export class Functions {
             );
         }
         const apiPath = '/functions/{functionId}/variables/{variableId}'
-            .replace('{functionId}', encodeURIComponent(String(functionId)))
-            .replace('{variableId}', encodeURIComponent(String(variableId)));
+            .replace('{functionId}', encodePath(functionId))
+            .replace('{variableId}', encodePath(variableId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4073,8 +4063,8 @@ export class Functions {
             );
         }
         const apiPath = '/functions/{functionId}/variables/{variableId}'
-            .replace('{functionId}', encodeURIComponent(String(functionId)))
-            .replace('{variableId}', encodeURIComponent(String(variableId)));
+            .replace('{functionId}', encodePath(functionId))
+            .replace('{variableId}', encodePath(variableId));
         const apiPayload: Payload = {};
         if (typeof key !== 'undefined') {
             apiPayload['key'] = key;
@@ -4177,8 +4167,8 @@ export class Functions {
             );
         }
         const apiPath = '/functions/{functionId}/variables/{variableId}'
-            .replace('{functionId}', encodeURIComponent(String(functionId)))
-            .replace('{variableId}', encodeURIComponent(String(variableId)));
+            .replace('{functionId}', encodePath(functionId))
+            .replace('{variableId}', encodePath(variableId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 

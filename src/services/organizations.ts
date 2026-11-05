@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -117,6 +118,8 @@ export class Organizations {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -526,7 +529,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -585,7 +588,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/addons'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -674,7 +677,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/addons/baa'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -756,7 +759,7 @@ export class Organizations {
         const apiPath =
             '/organizations/{organizationId}/addons/premium-geo-db'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -850,11 +853,8 @@ export class Organizations {
             );
         }
         const apiPath = '/organizations/{organizationId}/addons/{addonId}'
-            .replace(
-                '{organizationId}',
-                encodeURIComponent(String(organizationId)),
-            )
-            .replace('{addonId}', encodeURIComponent(String(addonId)));
+            .replace('{organizationId}', encodePath(organizationId))
+            .replace('{addonId}', encodePath(addonId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -946,11 +946,8 @@ export class Organizations {
             );
         }
         const apiPath = '/organizations/{organizationId}/addons/{addonId}'
-            .replace(
-                '{organizationId}',
-                encodeURIComponent(String(organizationId)),
-            )
-            .replace('{addonId}', encodeURIComponent(String(addonId)));
+            .replace('{organizationId}', encodePath(organizationId))
+            .replace('{addonId}', encodePath(addonId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1027,11 +1024,8 @@ export class Organizations {
         }
         const apiPath =
             '/organizations/{organizationId}/addons/{addonId}/confirmations'
-                .replace(
-                    '{organizationId}',
-                    encodeURIComponent(String(organizationId)),
-                )
-                .replace('{addonId}', encodeURIComponent(String(addonId)));
+                .replace('{organizationId}', encodePath(organizationId))
+                .replace('{addonId}', encodePath(addonId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1125,11 +1119,8 @@ export class Organizations {
             throw new AppwriteException('Missing required parameter: "addon"');
         }
         const apiPath = '/organizations/{organizationId}/addons/{addon}/price'
-            .replace(
-                '{organizationId}',
-                encodeURIComponent(String(organizationId)),
-            )
-            .replace('{addon}', encodeURIComponent(String(addon)));
+            .replace('{organizationId}', encodePath(organizationId))
+            .replace('{addon}', encodePath(addon));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1230,7 +1221,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/aggregations'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -1424,14 +1415,8 @@ export class Organizations {
         }
         const apiPath =
             '/organizations/{organizationId}/aggregations/{aggregationId}'
-                .replace(
-                    '{organizationId}',
-                    encodeURIComponent(String(organizationId)),
-                )
-                .replace(
-                    '{aggregationId}',
-                    encodeURIComponent(String(aggregationId)),
-                );
+                .replace('{organizationId}', encodePath(organizationId))
+                .replace('{aggregationId}', encodePath(aggregationId));
         const apiPayload: Payload = {};
         if (typeof limit !== 'undefined') {
             apiPayload['limit'] = limit;
@@ -1595,7 +1580,7 @@ export class Organizations {
         const apiPath =
             '/organizations/{organizationId}/billing-address'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         if (typeof billingAddressId !== 'undefined') {
@@ -1621,6 +1606,8 @@ export class Organizations {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -1680,7 +1667,7 @@ export class Organizations {
         const apiPath =
             '/organizations/{organizationId}/billing-address'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1760,14 +1747,8 @@ export class Organizations {
         }
         const apiPath =
             '/organizations/{organizationId}/billing-addresses/{billingAddressId}'
-                .replace(
-                    '{organizationId}',
-                    encodeURIComponent(String(organizationId)),
-                )
-                .replace(
-                    '{billingAddressId}',
-                    encodeURIComponent(String(billingAddressId)),
-                );
+                .replace('{organizationId}', encodePath(organizationId))
+                .replace('{billingAddressId}', encodePath(billingAddressId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -1864,7 +1845,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/billing-email'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         if (typeof billingEmail !== 'undefined') {
@@ -1890,6 +1871,8 @@ export class Organizations {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -1906,11 +1889,14 @@ export class Organizations {
     }
 
     /**
-     * Update the budget limit for an organization.
+     * Update the budget limit for an organization, the percentages of it that raise an alert, and the organization roles those alerts are emailed to.
+     *
      *
      * @param {string} params.organizationId - Organization Unique ID
      * @param {number | null} params.budget - Budget limit for additional usage set for the organization
      * @param {number[]} params.alerts - Budget alert limit percentage
+     * @param {string[] | null} params.notify - Organization roles whose confirmed members are emailed when a budget alert fires. Omit to keep the current roles; owners and billing members until changed.
+     * @param {number[] | null} params.critical - Budget alert percentages, from `alerts` or 100 for the cap, whose push notifications are critical and ring on devices that allow it even on silent. Omit to keep the current ones.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      */
@@ -1920,13 +1906,18 @@ export class Organizations {
         organizationId: string;
         budget?: number | null;
         alerts?: number[];
+        notify?: string[] | null;
+        critical?: number[] | null;
     }): Promise<Models.Organization<Preferences>>;
     /**
-     * Update the budget limit for an organization.
+     * Update the budget limit for an organization, the percentages of it that raise an alert, and the organization roles those alerts are emailed to.
+     *
      *
      * @param {string} organizationId - Organization Unique ID
      * @param {number | null} budget - Budget limit for additional usage set for the organization
      * @param {number[]} alerts - Budget alert limit percentage
+     * @param {string[] | null} notify - Organization roles whose confirmed members are emailed when a budget alert fires. Omit to keep the current roles; owners and billing members until changed.
+     * @param {number[] | null} critical - Budget alert percentages, from `alerts` or 100 for the cap, whose push notifications are critical and ring on devices that allow it even on silent. Omit to keep the current ones.
      * @throws {AppwriteException}
      * @returns {Promise<Models.Organization<Preferences>>}
      * @deprecated Use the object parameter style method for a better developer experience.
@@ -1937,6 +1928,8 @@ export class Organizations {
         organizationId: string,
         budget?: number | null,
         alerts?: number[],
+        notify?: string[] | null,
+        critical?: number[] | null,
     ): Promise<Models.Organization<Preferences>>;
     updateBudget<
         Preferences extends Models.Preferences = Models.DefaultPreferences,
@@ -1946,14 +1939,23 @@ export class Organizations {
                   organizationId: string;
                   budget?: number | null;
                   alerts?: number[];
+                  notify?: string[] | null;
+                  critical?: number[] | null;
               }
             | string,
-        ...rest: [(number | null)?, number[]?]
+        ...rest: [
+            (number | null)?,
+            number[]?,
+            (string[] | null)?,
+            (number[] | null)?,
+        ]
     ): Promise<Models.Organization<Preferences>> {
         let params: {
             organizationId: string;
             budget?: number | null;
             alerts?: number[];
+            notify?: string[] | null;
+            critical?: number[] | null;
         };
 
         if (
@@ -1965,18 +1967,24 @@ export class Organizations {
                 organizationId: string;
                 budget?: number | null;
                 alerts?: number[];
+                notify?: string[] | null;
+                critical?: number[] | null;
             };
         } else {
             params = {
                 organizationId: paramsOrFirst as string,
                 budget: rest[0] as number | null,
                 alerts: rest[1] as number[],
+                notify: rest[2] as string[] | null,
+                critical: rest[3] as number[] | null,
             };
         }
 
         const organizationId = params.organizationId;
         const budget = params.budget;
         const alerts = params.alerts;
+        const notify = params.notify;
+        const critical = params.critical;
 
         if (typeof organizationId === 'undefined' || organizationId === '') {
             throw new AppwriteException(
@@ -1988,7 +1996,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/budget'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         if (typeof budget !== 'undefined') {
@@ -1996,6 +2004,12 @@ export class Organizations {
         }
         if (typeof alerts !== 'undefined') {
             apiPayload['alerts'] = alerts;
+        }
+        if (typeof notify !== 'undefined') {
+            apiPayload['notify'] = notify;
+        }
+        if (typeof critical !== 'undefined') {
+            apiPayload['critical'] = critical;
         }
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2017,6 +2031,8 @@ export class Organizations {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -2104,7 +2120,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/credits'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -2216,7 +2232,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/credits'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         if (typeof couponId !== 'undefined') {
@@ -2303,7 +2319,7 @@ export class Organizations {
         const apiPath =
             '/organizations/{organizationId}/credits/available'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2386,11 +2402,8 @@ export class Organizations {
             );
         }
         const apiPath = '/organizations/{organizationId}/credits/{creditId}'
-            .replace(
-                '{organizationId}',
-                encodeURIComponent(String(organizationId)),
-            )
-            .replace('{creditId}', encodeURIComponent(String(creditId)));
+            .replace('{organizationId}', encodePath(organizationId))
+            .replace('{creditId}', encodePath(creditId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -2472,7 +2485,7 @@ export class Organizations {
         const apiPath =
             '/organizations/{organizationId}/estimations/delete-organization'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2633,7 +2646,7 @@ export class Organizations {
         const apiPath =
             '/organizations/{organizationId}/estimations/update-plan'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
@@ -2801,7 +2814,7 @@ export class Organizations {
         const apiPath =
             '/organizations/{organizationId}/feedbacks/downgrade'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         if (typeof reason !== 'undefined') {
@@ -2918,7 +2931,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/invoices'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -3057,11 +3070,8 @@ export class Organizations {
             );
         }
         const apiPath = '/organizations/{organizationId}/invoices/{invoiceId}'
-            .replace(
-                '{organizationId}',
-                encodeURIComponent(String(organizationId)),
-            )
-            .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+            .replace('{organizationId}', encodePath(organizationId))
+            .replace('{invoiceId}', encodePath(invoiceId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3180,11 +3190,8 @@ export class Organizations {
         }
         const apiPath =
             '/organizations/{organizationId}/invoices/{invoiceId}/download'
-                .replace(
-                    '{organizationId}',
-                    encodeURIComponent(String(organizationId)),
-                )
-                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+                .replace('{organizationId}', encodePath(organizationId))
+                .replace('{invoiceId}', encodePath(invoiceId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3282,11 +3289,8 @@ export class Organizations {
         }
         const apiPath =
             '/organizations/{organizationId}/invoices/{invoiceId}/payments'
-                .replace(
-                    '{organizationId}',
-                    encodeURIComponent(String(organizationId)),
-                )
-                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+                .replace('{organizationId}', encodePath(organizationId))
+                .replace('{invoiceId}', encodePath(invoiceId));
         const apiPayload: Payload = {};
         if (typeof paymentMethodId !== 'undefined') {
             apiPayload['paymentMethodId'] = paymentMethodId;
@@ -3412,11 +3416,8 @@ export class Organizations {
         }
         const apiPath =
             '/organizations/{organizationId}/invoices/{invoiceId}/status'
-                .replace(
-                    '{organizationId}',
-                    encodeURIComponent(String(organizationId)),
-                )
-                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+                .replace('{organizationId}', encodePath(organizationId))
+                .replace('{invoiceId}', encodePath(invoiceId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3536,11 +3537,8 @@ export class Organizations {
         }
         const apiPath =
             '/organizations/{organizationId}/invoices/{invoiceId}/view'
-                .replace(
-                    '{organizationId}',
-                    encodeURIComponent(String(organizationId)),
-                )
-                .replace('{invoiceId}', encodeURIComponent(String(invoiceId)));
+                .replace('{organizationId}', encodePath(organizationId))
+                .replace('{invoiceId}', encodePath(invoiceId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -3624,7 +3622,7 @@ export class Organizations {
         const apiPath =
             '/organizations/{organizationId}/payment-method'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         if (typeof paymentMethodId !== 'undefined') {
@@ -3650,6 +3648,8 @@ export class Organizations {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -3717,7 +3717,7 @@ export class Organizations {
         const apiPath =
             '/organizations/{organizationId}/payment-method'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -3740,6 +3740,8 @@ export class Organizations {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -3827,7 +3829,7 @@ export class Organizations {
         const apiPath =
             '/organizations/{organizationId}/payment-method/backup'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         if (typeof paymentMethodId !== 'undefined') {
@@ -3853,6 +3855,8 @@ export class Organizations {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -3920,7 +3924,7 @@ export class Organizations {
         const apiPath =
             '/organizations/{organizationId}/payment-method/backup'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -3943,6 +3947,8 @@ export class Organizations {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -4021,14 +4027,8 @@ export class Organizations {
         }
         const apiPath =
             '/organizations/{organizationId}/payment-methods/{paymentMethodId}'
-                .replace(
-                    '{organizationId}',
-                    encodeURIComponent(String(organizationId)),
-                )
-                .replace(
-                    '{paymentMethodId}',
-                    encodeURIComponent(String(paymentMethodId)),
-                );
+                .replace('{organizationId}', encodePath(organizationId))
+                .replace('{paymentMethodId}', encodePath(paymentMethodId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -4103,7 +4103,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/plan'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -4327,7 +4327,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/plan'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
@@ -4371,6 +4371,8 @@ export class Organizations {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -4477,7 +4479,7 @@ export class Organizations {
         const apiPath =
             '/organizations/{organizationId}/plan/estimations'.replace(
                 '{organizationId}',
-                encodeURIComponent(String(organizationId)),
+                encodePath(organizationId),
             );
         const apiPayload: Payload = {};
         if (typeof billingPlan !== 'undefined') {
@@ -4559,7 +4561,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/regions'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -4656,7 +4658,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/roles'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         if (typeof projectId !== 'undefined') {
@@ -4752,7 +4754,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/taxId'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         if (typeof taxId !== 'undefined') {
@@ -4778,6 +4780,8 @@ export class Organizations {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',
@@ -4863,7 +4867,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/usage'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         if (typeof startDate !== 'undefined') {
@@ -5048,7 +5052,7 @@ export class Organizations {
         }
         const apiPath = '/organizations/{organizationId}/validate'.replace(
             '{organizationId}',
-            encodeURIComponent(String(organizationId)),
+            encodePath(organizationId),
         );
         const apiPayload: Payload = {};
         if (typeof invites !== 'undefined') {
@@ -5074,6 +5078,8 @@ export class Organizations {
                         name: '',
                         total: 0,
                         budgetAlerts: [75],
+                        budgetNotify: ['owner', 'billing'],
+                        budgetCritical: [],
                         billingPlan: 'tier-0',
                         billingPlanId: 'tier-0',
                         billingEmail: '',

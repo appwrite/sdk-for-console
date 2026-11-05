@@ -26,6 +26,7 @@ import { ProxyRuleDeploymentResourceType } from './enums/proxy-rule-deployment-r
 import { ProxyRuleStatus } from './enums/proxy-rule-status';
 import { ProxyRuleProtocol } from './enums/proxy-rule-protocol';
 import { MessageStatus } from './enums/message-status';
+import { AnalyticsPropertyType } from './enums/analytics-property-type';
 import { BillingPlanGroup } from './enums/billing-plan-group';
 import { DomainTransferStatusEnum } from './enums/domain-transfer-status-enum';
 import { DomainPurchaseStatus } from './enums/domain-purchase-status';
@@ -500,7 +501,9 @@ export namespace Models {
     /**
      * Projects List
      */
-    export type ProjectList = {
+    export type ProjectList<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    > = {
         /**
          * Total number of projects that matched your query.
          */
@@ -508,7 +511,7 @@ export namespace Models {
         /**
          * List of projects.
          */
-        projects: Project[];
+        projects: Project<Preferences>[];
     };
 
     /**
@@ -537,6 +540,20 @@ export namespace Models {
          * List of keys.
          */
         keys: Key[];
+    };
+
+    /**
+     * Transfers List
+     */
+    export type TransferList = {
+        /**
+         * Total number of transfers that matched your query.
+         */
+        total: number;
+        /**
+         * List of transfers.
+         */
+        transfers: Transfer[];
     };
 
     /**
@@ -666,6 +683,7 @@ export namespace Models {
             | Models.PolicyDenyDisposableEmail
             | Models.PolicyDenyFreeEmail
             | Models.PolicyDenyCorporateEmail
+            | Models.PolicyDenyRealtimeGuests
             | Models.PolicyPasskey
         )[];
     };
@@ -4293,6 +4311,10 @@ export namespace Models {
          */
         transformations: boolean;
         /**
+         * Metadata such as location, device and capture time is removed from uploaded images.
+         */
+        stripMetadata: boolean;
+        /**
          * Total size of this bucket in bytes.
          */
         totalSize: number;
@@ -4636,6 +4658,10 @@ export namespace Models {
          * Site variables.
          */
         variables: TemplateVariable[];
+        /**
+         * Site scopes.
+         */
+        scopes: string[];
     };
 
     /**
@@ -5523,7 +5549,9 @@ export namespace Models {
     /**
      * Project
      */
-    export type Project = {
+    export type Project<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    > = {
         /**
          * Project ID.
          */
@@ -5601,6 +5629,10 @@ export namespace Models {
          */
         labels: string[];
         /**
+         * Project preferences as a key-value object
+         */
+        prefs?: Preferences | null;
+        /**
          * Project status
          */
         status: string;
@@ -5636,6 +5668,10 @@ export namespace Models {
          * ID of the project this environment belongs to. Null when the project is not an environment.
          */
         parentId?: string | null;
+        /**
+         * ID of the environment, as passed in the X-Appwrite-Environment header, when the project is accessed as one. Null when the project is not an environment.
+         */
+        environmentId?: string | null;
         /**
          * Billing limits reached
          */
@@ -5866,6 +5902,68 @@ export namespace Models {
          * List of SDK user agents that used this key.
          */
         sdks: string[];
+    };
+
+    /**
+     * Transfer
+     */
+    export type Transfer = {
+        /**
+         * Transfer ID.
+         */
+        $id: string;
+        /**
+         * Transfer creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Transfer update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Type of the resource being transferred.
+         */
+        resourceType: string;
+        /**
+         * ID of the resource being transferred.
+         */
+        resourceId: string;
+        /**
+         * Name of the resource being transferred, so the recipient can see what they are claiming.
+         */
+        resourceName: string;
+        /**
+         * Type of the sender that owns the resource.
+         */
+        senderType: string;
+        /**
+         * ID of the sender that owns the resource.
+         */
+        senderId: string;
+        /**
+         * Name of the sender that owns the resource.
+         */
+        senderName: string;
+        /**
+         * Type of the recipient that can claim the resource.
+         */
+        recipientType: string;
+        /**
+         * ID of the only recipient that can claim the resource. Empty when any recipient of the recipient type can claim it.
+         */
+        recipientId: string;
+        /**
+         * Name of the only recipient that can claim the resource. Empty when any recipient of the recipient type can claim it.
+         */
+        recipientName: string;
+        /**
+         * Transfer expiration date in ISO 8601 format.
+         */
+        expire: string;
+        /**
+         * Secret the recipient uses to claim the resource. Only returned to the sender.
+         */
+        secret: string;
     };
 
     /**
@@ -6953,6 +7051,28 @@ export namespace Models {
     };
 
     /**
+     * OAuth2Vipps
+     */
+    export type OAuth2Vipps = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Vipps MobilePay OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Vipps MobilePay OAuth2 client secret.
+         */
+        clientSecret: string;
+    };
+
+    /**
      * OAuth2Apple
      */
     export type OAuth2Apple = {
@@ -7149,6 +7269,7 @@ export namespace Models {
             | Models.OAuth2Cloudflare
             | Models.OAuth2TikTok
             | Models.OAuth2Kakao
+            | Models.OAuth2Vipps
         )[];
     };
 
@@ -7472,6 +7593,20 @@ export namespace Models {
         $id: string;
         /**
          * Whether the deny non-corporate email policy is enabled.
+         */
+        enabled: boolean;
+    };
+
+    /**
+     * Policy Deny Realtime Guests
+     */
+    export type PolicyDenyRealtimeGuests = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether guests are stopped from subscribing to realtime channels.
          */
         enabled: boolean;
     };
@@ -8329,6 +8464,10 @@ export namespace Models {
          */
         _APP_DOMAIN_ENABLED: boolean;
         /**
+         * Defines if code review is enabled.
+         */
+        _APP_REVIEWS_ENABLED: boolean;
+        /**
          * A comma separated list of domains to use for site URLs.
          */
         _APP_DOMAIN_SITES: string;
@@ -8409,9 +8548,13 @@ export namespace Models {
          */
         _APP_CONSOLE_EMAIL_VERIFICATION: string;
         /**
-         * Appwrite-owned zone for function testing email addresses, delivered to {functionId}@{projectId}.{zone}. Empty when inbound email is not configured.
+         * Appwrite-owned zone for function testing email addresses, delivered to {anything}@{functionId}-{projectId}.{zone}. Empty when inbound email is not configured.
          */
         _APP_DOMAIN_EMAIL: string;
+        /**
+         * MX target a custom inbound email (SMTP) domain must point at. Empty when inbound email is not configured.
+         */
+        _APP_DOMAIN_TARGET_SMTP: string;
     };
 
     /**
@@ -8727,7 +8870,7 @@ export namespace Models {
          */
         type: string;
         /**
-         * Provider credentials.
+         * Provider credentials. Secret values are write-only and never returned.
          */
         credentials: object;
         /**
@@ -9061,6 +9204,10 @@ export namespace Models {
          */
         team: number;
         /**
+         * Number of memberships to be migrated.
+         */
+        membership: number;
+        /**
          * Number of databases to be migrated.
          */
         database: number;
@@ -9087,11 +9234,11 @@ export namespace Models {
         /**
          * Number of API keys to be migrated.
          */
-        apikey: number;
+        'api-key': number;
         /**
          * Number of project variables to be migrated.
          */
-        projectvariable: number;
+        'project-variable': number;
         /**
          * Number of webhooks to be migrated.
          */
@@ -9099,19 +9246,23 @@ export namespace Models {
         /**
          * Number of auth-method configs to be migrated (always 0 or 1 — the project-level flag bundle).
          */
-        authmethods: number;
+        'auth-methods': number;
         /**
          * Number of protocol configs to be migrated (always 0 or 1 — the project-level REST/GraphQL/WebSocket flags).
          */
-        projectprotocols: number;
+        'project-protocols': number;
         /**
          * Number of label sets to be migrated (always 0 or 1 — the project-level RBAC label array).
          */
-        projectlabels: number;
+        'project-labels': number;
+        /**
+         * Number of project preference sets to be migrated (always 0 or 1).
+         */
+        'project-preferences': number;
         /**
          * Number of service configs to be migrated (always 0 or 1 — the project-level enable/disable flags for all 17 services).
          */
-        projectservices: number;
+        'project-services': number;
         /**
          * Number of policy bundles to be migrated (always 0 or 1 — the project-level security policies covering password rules, session behavior, user limits, and membership privacy).
          */
@@ -9127,11 +9278,11 @@ export namespace Models {
         /**
          * Number of custom email templates to be migrated (one per templateId × locale pair).
          */
-        projectemailtemplate: number;
+        'project-email-template': number;
         /**
          * Number of project environments to be migrated. Each is recreated under a new ID, empty: its own resources belong to a separate project.
          */
-        projectenvironment: number;
+        'project-environment': number;
         /**
          * Number of sites to be migrated.
          */
@@ -9163,11 +9314,11 @@ export namespace Models {
         /**
          * Number of OAuth2 provider configurations to be migrated. Secrets (clientSecret, p8File) are never migrated — destination admin must re-enter them per provider.
          */
-        oauth2provider: number;
+        'oauth2-provider': number;
         /**
          * Number of backup policies to be migrated.
          */
-        backuppolicy: number;
+        'backup-policy': number;
     };
 
     /**
@@ -9440,6 +9591,10 @@ export namespace Models {
          * Version of the SDK that triggered the event.
          */
         sdkVersion: string;
+        /**
+         * Why the actor made the request, as sent in the `X-Appwrite-Reason` header. Empty when no reason was given.
+         */
+        reason: string;
     };
 
     /**
@@ -9767,7 +9922,7 @@ export namespace Models {
          */
         sessions: number;
         /**
-         * Total pageview events (events with name="pageview") in the requested range. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         * Total page and screen view events (events named "pageview" or "screen_view") in the requested range. The flat aggregate and the time series compute it; null on breakdown rows.
          */
         pageviews?: number | null;
         /**
@@ -9775,11 +9930,15 @@ export namespace Models {
          */
         events: number;
         /**
+         * Unique identified users in the requested range. Anonymous events are not counted. Null on entry and exit page breakdown rows.
+         */
+        users?: number | null;
+        /**
          * Total sessions with activity in the requested range. Only the flat aggregate computes it; null on breakdown and time-series rows.
          */
         visits?: number | null;
         /**
-         * Share of single-event sessions, as a percentage. Only the flat aggregate computes it; null on breakdown and time-series rows.
+         * Share of bounced visits, as a percentage; a visit is a bounce unless it records two or more page or screen views, at least one interaction, or ten seconds or more of activity. An interaction is any event that is neither a view nor automatic measurement such as "app_foregrounded", "engagement_time" or "scroll_depth". Only the flat aggregate computes it; null on breakdown and time-series rows.
          */
         bounceRate?: number | null;
         /**
@@ -9835,7 +9994,7 @@ export namespace Models {
          */
         name: string;
         /**
-         * Primary domain being tracked (e.g. example.com). May be empty for native apps.
+         * Primary domain being tracked (e.g. example.com). May be empty for mobile and agent properties.
          */
         domain: string;
         /**
@@ -9846,6 +10005,14 @@ export namespace Models {
          * List of origins allowed to send tracking events. Use ["*"] to allow all.
          */
         allowedOrigins: string[];
+        /**
+         * Kind of product this property tracks. Decides which dashboard panels apply.
+         */
+        type: AnalyticsPropertyType;
+        /**
+         * Whether events sent from a signed-in client session record that user's ID.
+         */
+        identifyUsers: boolean;
         /**
          * Most recent event date in ISO 8601 format. This attribute is only updated again after 24 hours.
          */
@@ -10347,6 +10514,18 @@ export namespace Models {
          */
         executionsRetentionCount: number;
         /**
+         * Days non-active deployments are kept when a function or site sets no retention.
+         */
+        deploymentRetention?: number | null;
+        /**
+         * Maximum deployment retention in days a function or site can set. 0 means unlimited.
+         */
+        deploymentRetentionMax?: number | null;
+        /**
+         * Non-active deployments kept per function or site. 0 means unlimited.
+         */
+        deploymentsRetentionCount?: number | null;
+        /**
          * GB hours for functions
          */
         GBHours: number;
@@ -10843,7 +11022,7 @@ export namespace Models {
         /**
          * Campaign reviews
          */
-        reviews?: Review[] | null;
+        reviews?: CampaignReview[] | null;
         /**
          * Campaign valid only for new orgs.
          */
@@ -11443,7 +11622,7 @@ export namespace Models {
          */
         type: string;
         /**
-         * Record name or subdomain.
+         * Record name relative to the domain, or `@` for the domain itself.
          */
         name: string;
         /**
@@ -12193,6 +12372,52 @@ export namespace Models {
     };
 
     /**
+     * AdminBlock
+     */
+    export type AdminBlock = {
+        /**
+         * Block creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Resource type that is blocked
+         */
+        resourceType: string;
+        /**
+         * Resource identifier that is blocked
+         */
+        resourceId: string;
+        /**
+         * Block mode. full blocks reads and writes; readOnly blocks writes only.
+         */
+        mode: string;
+        /**
+         * Block expiration date in ISO 8601 format. Can be null if the block does not expire.
+         */
+        expiredAt?: string | null;
+        /**
+         * Block ID.
+         */
+        $id: string;
+        /**
+         * Block update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the project the block is placed on.
+         */
+        projectId: string;
+        /**
+         * Why the block was placed, in the operator's words. Empty when none was given.
+         */
+        reason: string;
+        /**
+         * ID of the threat whose detection placed the block. Empty for a block an operator placed.
+         */
+        threatId: string;
+    };
+
+    /**
      * Threat
      */
     export type Threat = {
@@ -12321,6 +12546,14 @@ export namespace Models {
          */
         budgetAlerts: number[];
         /**
+         * Organization roles whose confirmed members are emailed when a budget alert fires.
+         */
+        budgetNotify: string[];
+        /**
+         * Budget alert percentages whose push notifications are critical.
+         */
+        budgetCritical: number[];
+        /**
          * Organization's billing plan ID.
          */
         billingPlan: string;
@@ -12405,6 +12638,10 @@ export namespace Models {
          */
         programDiscordChannelUrl?: string | null;
         /**
+         * When the education plan ends, for an organization on it.
+         */
+        educationExpiresAt?: string | null;
+        /**
          * Billing limits reached
          */
         billingLimits?: BillingLimits | null;
@@ -12428,6 +12665,60 @@ export namespace Models {
          * Selected projects
          */
         projects: string[];
+    };
+
+    /**
+     * Payment
+     */
+    export type Payment = {
+        /**
+         * Payment ID.
+         */
+        $id: string;
+        /**
+         * Payment creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Payment update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the invoice the payment collects.
+         */
+        invoiceId: string;
+        /**
+         * ID of the organization that is charged.
+         */
+        teamId: string;
+        /**
+         * ID of the payment at the payment provider.
+         */
+        providerPaymentId: string;
+        /**
+         * ID of the payment method that was charged. Empty when none was.
+         */
+        paymentMethodId: string;
+        /**
+         * Amount charged, in the invoice currency.
+         */
+        amount: number;
+        /**
+         * Currency the payment is in.
+         */
+        currency: string;
+        /**
+         * Payment status. One of `pending` (confirmation in progress), `processing`, `requires_authentication`, `succeeded`, `failed`, `disputed`, `partially_refunded` or `refunded`.
+         */
+        status: string;
+        /**
+         * When the payment was attempted, in ISO 8601 format.
+         */
+        date: string;
+        /**
+         * The provider's last error for a failed payment, or the refunded amount for a partially refunded one. Null otherwise.
+         */
+        lastError?: string | null;
     };
 
     /**
@@ -12857,6 +13148,46 @@ export namespace Models {
     };
 
     /**
+     * Environment
+     */
+    export type Environment = {
+        /**
+         * Environment ID, as passed in the X-Appwrite-Environment header.
+         */
+        $id: string;
+        /**
+         * Environment creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Environment update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the project the environment belongs to, as passed in the X-Appwrite-Project header.
+         */
+        projectId: string;
+        /**
+         * Environment name.
+         */
+        name: string;
+    };
+
+    /**
+     * Environments list
+     */
+    export type EnvironmentList = {
+        /**
+         * Total number of environments that matched your query.
+         */
+        total: number;
+        /**
+         * List of environments.
+         */
+        environments: Environment[];
+    };
+
+    /**
      * Region
      */
     export type ConsoleRegion = {
@@ -12951,9 +13282,9 @@ export namespace Models {
     };
 
     /**
-     * Review
+     * Campaign Review
      */
-    export type Review = {
+    export type CampaignReview = {
         /**
          * Name of user
          */
@@ -14054,6 +14385,10 @@ export namespace Models {
          * Action specific configuration.
          */
         config: object;
+        /**
+         * When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
+         */
+        schedule?: object;
     };
 
     /**
@@ -14116,6 +14451,10 @@ export namespace Models {
          * Action specific configuration.
          */
         config: object;
+        /**
+         * When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
+         */
+        schedule?: object;
     };
 
     /**
@@ -14178,6 +14517,10 @@ export namespace Models {
          * Action specific configuration.
          */
         config: object;
+        /**
+         * When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
+         */
+        schedule?: object;
         /**
          * Challenge type enforced when the rule matches.
          */
@@ -14252,6 +14595,10 @@ export namespace Models {
          * Action specific configuration.
          */
         config: object;
+        /**
+         * When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
+         */
+        schedule?: object;
         /**
          * Maximum number of matching requests allowed for the given interval.
          */
@@ -14334,6 +14681,10 @@ export namespace Models {
          * Action specific configuration.
          */
         config: object;
+        /**
+         * When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
+         */
+        schedule?: object;
         /**
          * Target location for the redirect.
          */
@@ -14575,6 +14926,20 @@ export namespace Models {
     };
 
     /**
+     * Payments list
+     */
+    export type PaymentList = {
+        /**
+         * Total number of payments that matched your query.
+         */
+        total: number;
+        /**
+         * List of payments.
+         */
+        payments: Payment[];
+    };
+
+    /**
      * Billing plan list
      */
     export type BillingPlanList = {
@@ -14614,6 +14979,34 @@ export namespace Models {
          * List of threats.
          */
         threats: Threat[];
+    };
+
+    /**
+     * Admin credits list
+     */
+    export type AdminCreditList = {
+        /**
+         * Total number of credits that matched your query.
+         */
+        total: number;
+        /**
+         * List of credits.
+         */
+        credits: Credit[];
+    };
+
+    /**
+     * Admin blocks list
+     */
+    export type AdminBlockList = {
+        /**
+         * Total number of blocks that matched your query.
+         */
+        total: number;
+        /**
+         * List of blocks.
+         */
+        blocks: AdminBlock[];
     };
 
     /**

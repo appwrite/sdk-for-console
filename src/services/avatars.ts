@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     UploadProgress,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -109,7 +110,7 @@ export class Avatars {
         }
         const apiPath = '/avatars/browsers/{code}'.replace(
             '{code}',
-            encodeURIComponent(String(code)),
+            encodePath(code),
         );
         const apiPayload: Payload = {};
         if (typeof width !== 'undefined') {
@@ -124,6 +125,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
+        apiPayload['environment'] = this.client.config.environment;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
@@ -224,7 +226,7 @@ export class Avatars {
         }
         const apiPath = '/avatars/credit-cards/{code}'.replace(
             '{code}',
-            encodeURIComponent(String(code)),
+            encodePath(code),
         );
         const apiPayload: Payload = {};
         if (typeof width !== 'undefined') {
@@ -239,6 +241,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
+        apiPayload['environment'] = this.client.config.environment;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
@@ -297,6 +300,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
+        apiPayload['environment'] = this.client.config.environment;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
@@ -392,7 +396,7 @@ export class Avatars {
         }
         const apiPath = '/avatars/flags/{code}'.replace(
             '{code}',
-            encodeURIComponent(String(code)),
+            encodePath(code),
         );
         const apiPayload: Payload = {};
         if (typeof width !== 'undefined') {
@@ -407,6 +411,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
+        apiPayload['environment'] = this.client.config.environment;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
@@ -491,6 +496,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
+        apiPayload['environment'] = this.client.config.environment;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
@@ -604,6 +610,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
+        apiPayload['environment'] = this.client.config.environment;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
@@ -759,6 +766,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
+        apiPayload['environment'] = this.client.config.environment;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
@@ -968,6 +976,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
+        apiPayload['environment'] = this.client.config.environment;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {
@@ -1293,6 +1302,7 @@ export class Avatars {
         const uri = new URL(this.client.config.endpoint + apiPath);
 
         apiPayload['project'] = this.client.config.project;
+        apiPayload['environment'] = this.client.config.environment;
         apiPayload['impersonateuserid'] = this.client.config.impersonateuserid;
 
         for (const [key, value] of Object.entries(Client.flatten(apiPayload))) {

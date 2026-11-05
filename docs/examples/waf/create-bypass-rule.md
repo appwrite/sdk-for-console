@@ -16,6 +16,7 @@ const result = await waf.createBypassRule({
     priority: -100000, // optional
     enabled: false, // optional
     conditions: [], // optional
+    schedule: {}, // optional
 });
 
 console.log(result);

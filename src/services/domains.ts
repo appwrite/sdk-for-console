@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -819,7 +820,7 @@ export class Domains {
         }
         const apiPath = '/domains/purchases/{invoiceId}'.replace(
             '{invoiceId}',
-            encodeURIComponent(String(invoiceId)),
+            encodePath(invoiceId),
         );
         const apiPayload: Payload = {};
         if (typeof organizationId !== 'undefined') {
@@ -1223,7 +1224,7 @@ export class Domains {
         }
         const apiPath = '/domains/transfers/in/{invoiceId}'.replace(
             '{invoiceId}',
-            encodeURIComponent(String(invoiceId)),
+            encodePath(invoiceId),
         );
         const apiPayload: Payload = {};
         if (typeof organizationId !== 'undefined') {
@@ -1393,7 +1394,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1493,7 +1494,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1569,7 +1570,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/auto-renewal'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof autoRenewal !== 'undefined') {
@@ -1689,7 +1690,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/nameservers'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof nameservers !== 'undefined') {
@@ -1797,7 +1798,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/nameservers/verification'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1900,7 +1901,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/google-workspace'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -1996,7 +1997,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/google-workspace'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2089,7 +2090,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/icloud'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2183,7 +2184,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/icloud'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2276,7 +2277,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/mailgun'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2370,7 +2371,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/mailgun'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2463,7 +2464,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/outlook'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2557,7 +2558,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/outlook'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2650,7 +2651,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/proton-mail'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2744,7 +2745,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/proton-mail'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2835,7 +2836,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/zoho'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2929,7 +2930,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/presets/zoho'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -3044,7 +3045,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -3102,7 +3103,7 @@ export class Domains {
      * to an IPv4 address. The record value should be a valid IPv4 address.
      *
      * @param {string} params.domainId - Domain unique ID.
-     * @param {string} params.name - Record name (subdomain).
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - IPv4 address for this A record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment explaining what this record is for.
@@ -3121,7 +3122,7 @@ export class Domains {
      * to an IPv4 address. The record value should be a valid IPv4 address.
      *
      * @param {string} domainId - Domain unique ID.
-     * @param {string} name - Record name (subdomain).
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - IPv4 address for this A record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment explaining what this record is for.
@@ -3200,7 +3201,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/a'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -3256,7 +3257,7 @@ export class Domains {
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
-     * @param {string} params.name - Record name (subdomain).
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - IPv4 address for this A record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment explaining what this record is for.
@@ -3278,7 +3279,7 @@ export class Domains {
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
-     * @param {string} name - Record name (subdomain).
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - IPv4 address for this A record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment explaining what this record is for.
@@ -3367,8 +3368,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/a/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -3421,7 +3422,7 @@ export class Domains {
      * to your domain. The record will be used to point a hostname to an IPv6 address.
      *
      * @param {string} params.domainId - Domain unique ID.
-     * @param {string} params.name - Record name (subdomain).
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - IPv6 address for this AAAA record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment explaining what this record is for.
@@ -3440,7 +3441,7 @@ export class Domains {
      * to your domain. The record will be used to point a hostname to an IPv6 address.
      *
      * @param {string} domainId - Domain unique ID.
-     * @param {string} name - Record name (subdomain).
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - IPv6 address for this AAAA record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment explaining what this record is for.
@@ -3519,7 +3520,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/aaaa'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -3575,7 +3576,7 @@ export class Domains {
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
-     * @param {string} params.name - Record name (subdomain).
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - IPv6 address for this AAAA record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
@@ -3597,7 +3598,7 @@ export class Domains {
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
-     * @param {string} name - Record name (subdomain).
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - IPv6 address for this AAAA record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
@@ -3686,8 +3687,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/aaaa/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -3741,7 +3742,7 @@ export class Domains {
      * map your domain to a target domain that may change its IP address.
      *
      * @param {string} params.domainId - Domain unique ID.
-     * @param {string} params.name - Record name.
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - Target domain for this ALIAS record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
@@ -3761,7 +3762,7 @@ export class Domains {
      * map your domain to a target domain that may change its IP address.
      *
      * @param {string} domainId - Domain unique ID.
-     * @param {string} name - Record name.
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - Target domain for this ALIAS record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
@@ -3840,7 +3841,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/alias'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -3898,7 +3899,7 @@ export class Domains {
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
-     * @param {string} params.name - Record name.
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - Target domain for this ALIAS record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
@@ -3922,7 +3923,7 @@ export class Domains {
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
-     * @param {string} name - Record name.
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - Target domain for this ALIAS record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
@@ -4011,8 +4012,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/alias/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -4065,7 +4066,7 @@ export class Domains {
      * Certificate Authorities (CAs) are allowed to issue SSL/TLS certificates for your domain.
      *
      * @param {string} params.domainId - Domain unique ID.
-     * @param {string} params.name - Record name.
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - CAA value (e.g. issuer domain).
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
@@ -4084,7 +4085,7 @@ export class Domains {
      * Certificate Authorities (CAs) are allowed to issue SSL/TLS certificates for your domain.
      *
      * @param {string} domainId - Domain unique ID.
-     * @param {string} name - Record name.
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - CAA value (e.g. issuer domain).
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
@@ -4163,7 +4164,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/caa'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -4219,7 +4220,7 @@ export class Domains {
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
-     * @param {string} params.name - Record name.
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - CAA value (e.g. issuer domain).
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
@@ -4241,7 +4242,7 @@ export class Domains {
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
-     * @param {string} name - Record name.
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - CAA value (e.g. issuer domain).
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
@@ -4330,8 +4331,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/caa/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -4387,7 +4388,7 @@ export class Domains {
      * to 'example.wordpress.com'.
      *
      * @param {string} params.domainId - Domain unique ID.
-     * @param {string} params.name - Record name (subdomain).
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - Canonical target for this CNAME record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
@@ -4409,7 +4410,7 @@ export class Domains {
      * to 'example.wordpress.com'.
      *
      * @param {string} domainId - Domain unique ID.
-     * @param {string} name - Record name (subdomain).
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - Canonical target for this CNAME record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
@@ -4488,7 +4489,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/cname'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -4542,7 +4543,7 @@ export class Domains {
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
-     * @param {string} params.name - Record name (subdomain).
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - Canonical target for this CNAME record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
@@ -4562,7 +4563,7 @@ export class Domains {
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
-     * @param {string} name - Record name (subdomain).
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - Canonical target for this CNAME record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
@@ -4651,8 +4652,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/cname/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -4705,7 +4706,7 @@ export class Domains {
      * settings for your domain, enabling secure communication over SSL/TLS.
      *
      * @param {string} params.domainId - Domain unique ID.
-     * @param {string} params.name - Record name (subdomain).
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - Target for the HTTPS record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
@@ -4724,7 +4725,7 @@ export class Domains {
      * settings for your domain, enabling secure communication over SSL/TLS.
      *
      * @param {string} domainId - Domain unique ID.
-     * @param {string} name - Record name (subdomain).
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - Target for the HTTPS record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
@@ -4803,7 +4804,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/https'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -4859,7 +4860,7 @@ export class Domains {
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
-     * @param {string} params.name - Record name (subdomain).
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - Target for the HTTPS record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
@@ -4881,7 +4882,7 @@ export class Domains {
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
-     * @param {string} name - Record name (subdomain).
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - Target for the HTTPS record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
@@ -4970,8 +4971,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/https/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -5026,7 +5027,7 @@ export class Domains {
      * higher priority.
      *
      * @param {string} params.domainId - Domain unique ID.
-     * @param {string} params.name - Record name (subdomain).
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - Mail server domain for this MX record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {number} params.priority - MX priority. Lower values are tried first.
@@ -5049,7 +5050,7 @@ export class Domains {
      * higher priority.
      *
      * @param {string} domainId - Domain unique ID.
-     * @param {string} name - Record name (subdomain).
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - Mail server domain for this MX record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {number} priority - MX priority. Lower values are tried first.
@@ -5140,7 +5141,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/mx'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -5197,7 +5198,7 @@ export class Domains {
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
-     * @param {string} params.name - Record name (subdomain).
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - Mail server domain for this MX record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {number} params.priority - MX priority. Lower values are tried first.
@@ -5219,7 +5220,7 @@ export class Domains {
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
-     * @param {string} name - Record name (subdomain).
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - Mail server domain for this MX record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {number} priority - MX priority. Lower values are tried first.
@@ -5320,8 +5321,8 @@ export class Domains {
             );
         }
         const apiPath = '/domains/{domainId}/records/mx/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -5377,7 +5378,7 @@ export class Domains {
      * to resolve the domain name to IP addresses. Each domain can have multiple NS records.
      *
      * @param {string} params.domainId - Domain unique ID.
-     * @param {string} params.name - Record name (subdomain).
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - Nameserver target for this NS record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
@@ -5396,7 +5397,7 @@ export class Domains {
      * to resolve the domain name to IP addresses. Each domain can have multiple NS records.
      *
      * @param {string} domainId - Domain unique ID.
-     * @param {string} name - Record name (subdomain).
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - Nameserver target for this NS record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
@@ -5475,7 +5476,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/ns'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -5532,7 +5533,7 @@ export class Domains {
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
-     * @param {string} params.name - Record name (subdomain).
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - Nameserver target for this NS record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
@@ -5555,7 +5556,7 @@ export class Domains {
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
-     * @param {string} name - Record name (subdomain).
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - Nameserver target for this NS record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
@@ -5644,8 +5645,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/ns/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -5699,7 +5700,7 @@ export class Domains {
      * handles a specific service like SIP or XMPP for the domain.
      *
      * @param {string} params.domainId - Domain unique ID.
-     * @param {string} params.name - Record name (service name).
+     * @param {string} params.name - Record name relative to the domain: the service and protocol, such as `_sip._tcp`. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - Target hostname for this SRV record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {number} params.priority - Record priority. Lower values are tried first.
@@ -5725,7 +5726,7 @@ export class Domains {
      * handles a specific service like SIP or XMPP for the domain.
      *
      * @param {string} domainId - Domain unique ID.
-     * @param {string} name - Record name (service name).
+     * @param {string} name - Record name relative to the domain: the service and protocol, such as `_sip._tcp`. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - Target hostname for this SRV record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {number} priority - Record priority. Lower values are tried first.
@@ -5836,7 +5837,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/srv'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -5912,7 +5913,7 @@ export class Domains {
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
-     * @param {string} params.name - Record name (service name).
+     * @param {string} params.name - Record name relative to the domain: the service and protocol, such as `_sip._tcp`. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - Target hostname for this SRV record.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {number} params.priority - Record priority. Lower values are tried first.
@@ -5951,7 +5952,7 @@ export class Domains {
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
-     * @param {string} name - Record name (service name).
+     * @param {string} name - Record name relative to the domain: the service and protocol, such as `_sip._tcp`. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - Target hostname for this SRV record.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {number} priority - Record priority. Lower values are tried first.
@@ -6081,8 +6082,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "port"');
         }
         const apiPath = '/domains/{domainId}/records/srv/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -6145,7 +6146,7 @@ export class Domains {
      * verification records, SPF records, or DKIM records.
      *
      * @param {string} params.domainId - Domain unique ID.
-     * @param {string} params.name - Record name (subdomain) for the TXT record.
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.value - TXT record value.
      * @param {string} params.comment - A comment for this record.
@@ -6165,7 +6166,7 @@ export class Domains {
      * verification records, SPF records, or DKIM records.
      *
      * @param {string} domainId - Domain unique ID.
-     * @param {string} name - Record name (subdomain) for the TXT record.
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} value - TXT record value.
      * @param {string} comment - A comment for this record.
@@ -6241,7 +6242,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/records/txt'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -6298,7 +6299,7 @@ export class Domains {
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.recordId - DNS record unique ID.
-     * @param {string} params.name - Record name (subdomain) for the TXT record.
+     * @param {string} params.name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} params.value - TXT record value.
      * @param {number} params.ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} params.comment - A comment for this record.
@@ -6321,7 +6322,7 @@ export class Domains {
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} recordId - DNS record unique ID.
-     * @param {string} name - Record name (subdomain) for the TXT record.
+     * @param {string} name - Record name relative to the domain, such as `www`, or `@` for the domain itself. A full name ending in the domain is also accepted and stored relative to it.
      * @param {string} value - TXT record value.
      * @param {number} ttl - Time to live, in seconds. Must be between 1 and 2147483647.
      * @param {string} comment - A comment for this record.
@@ -6410,8 +6411,8 @@ export class Domains {
             throw new AppwriteException('Missing required parameter: "ttl"');
         }
         const apiPath = '/domains/{domainId}/records/txt/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
             apiPayload['name'] = name;
@@ -6525,8 +6526,8 @@ export class Domains {
             );
         }
         const apiPath = '/domains/{domainId}/records/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6618,8 +6619,8 @@ export class Domains {
             );
         }
         const apiPath = '/domains/{domainId}/records/{recordId}'
-            .replace('{domainId}', encodeURIComponent(String(domainId)))
-            .replace('{recordId}', encodeURIComponent(String(recordId)));
+            .replace('{domainId}', encodePath(domainId))
+            .replace('{recordId}', encodePath(recordId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -6697,7 +6698,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/team'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof teamId !== 'undefined') {
@@ -6803,7 +6804,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/transfers/status'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -6873,7 +6874,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/zone'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -6888,7 +6889,7 @@ export class Domains {
 
     /**
      * Update the DNS zone for the given domain using the provided zone file content.
-     * All parsed records are imported and then the main domain document is returned.
+     * All parsed records the domain does not already have are imported and then the main domain document is returned.
      *
      * @param {string} params.domainId - Domain unique ID.
      * @param {string} params.content - DNS zone file content as a string.
@@ -6901,7 +6902,7 @@ export class Domains {
     }): Promise<Models.Domain>;
     /**
      * Update the DNS zone for the given domain using the provided zone file content.
-     * All parsed records are imported and then the main domain document is returned.
+     * All parsed records the domain does not already have are imported and then the main domain document is returned.
      *
      * @param {string} domainId - Domain unique ID.
      * @param {string} content - DNS zone file content as a string.
@@ -6947,7 +6948,7 @@ export class Domains {
         }
         const apiPath = '/domains/{domainId}/zone'.replace(
             '{domainId}',
-            encodeURIComponent(String(domainId)),
+            encodePath(domainId),
         );
         const apiPayload: Payload = {};
         if (typeof content !== 'undefined') {

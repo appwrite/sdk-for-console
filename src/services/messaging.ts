@@ -3,6 +3,7 @@ import {
     Client,
     type Payload,
     applyDefaults,
+    encodePath,
 } from '../client';
 import type { Models } from '../models';
 
@@ -610,7 +611,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/messages/email/{messageId}'.replace(
             '{messageId}',
-            encodeURIComponent(String(messageId)),
+            encodePath(messageId),
         );
         const apiPayload: Payload = {};
         if (typeof topics !== 'undefined') {
@@ -1275,7 +1276,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/messages/push/{messageId}'.replace(
             '{messageId}',
-            encodeURIComponent(String(messageId)),
+            encodePath(messageId),
         );
         const apiPayload: Payload = {};
         if (typeof topics !== 'undefined') {
@@ -1838,7 +1839,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/messages/sms/{messageId}'.replace(
             '{messageId}',
-            encodeURIComponent(String(messageId)),
+            encodePath(messageId),
         );
         const apiPayload: Payload = {};
         if (typeof topics !== 'undefined') {
@@ -2010,7 +2011,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/messages/sms/{messageId}'.replace(
             '{messageId}',
-            encodeURIComponent(String(messageId)),
+            encodePath(messageId),
         );
         const apiPayload: Payload = {};
         if (typeof topics !== 'undefined') {
@@ -2108,7 +2109,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/messages/{messageId}'.replace(
             '{messageId}',
-            encodeURIComponent(String(messageId)),
+            encodePath(messageId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2183,7 +2184,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/messages/{messageId}'.replace(
             '{messageId}',
-            encodeURIComponent(String(messageId)),
+            encodePath(messageId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -2262,7 +2263,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/messages/{messageId}/targets'.replace(
             '{messageId}',
-            encodeURIComponent(String(messageId)),
+            encodePath(messageId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -2918,7 +2919,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/apns/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -3099,7 +3100,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/apns/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -3395,7 +3396,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/appwrite/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -3781,7 +3782,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/fcm/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -3906,7 +3907,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/fcm/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -4305,7 +4306,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/mailgun/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -4618,7 +4619,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/msg91/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -4977,7 +4978,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/resend/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -5342,7 +5343,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/sendgrid/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -5753,7 +5754,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/ses/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -6532,7 +6533,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/smtp/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -6791,7 +6792,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/smtp/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -7116,7 +7117,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/telesign/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -7417,7 +7418,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/textmagic/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -7718,7 +7719,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/twilio/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -8019,7 +8020,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/vonage/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -8112,7 +8113,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -8187,7 +8188,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/providers/{providerId}'.replace(
             '{providerId}',
-            encodeURIComponent(String(providerId)),
+            encodePath(providerId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -8516,7 +8517,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/topics/{topicId}'.replace(
             '{topicId}',
-            encodeURIComponent(String(topicId)),
+            encodePath(topicId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -8658,7 +8659,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/topics/{topicId}'.replace(
             '{topicId}',
-            encodeURIComponent(String(topicId)),
+            encodePath(topicId),
         );
         const apiPayload: Payload = {};
         if (typeof name !== 'undefined') {
@@ -8748,7 +8749,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/topics/{topicId}'.replace(
             '{topicId}',
-            encodeURIComponent(String(topicId)),
+            encodePath(topicId),
         );
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
@@ -8845,7 +8846,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/topics/{topicId}/subscribers'.replace(
             '{topicId}',
-            encodeURIComponent(String(topicId)),
+            encodePath(topicId),
         );
         const apiPayload: Payload = {};
         if (typeof queries !== 'undefined') {
@@ -8973,7 +8974,7 @@ export class Messaging {
         }
         const apiPath = '/messaging/topics/{topicId}/subscribers'.replace(
             '{topicId}',
-            encodeURIComponent(String(topicId)),
+            encodePath(topicId),
         );
         const apiPayload: Payload = {};
         if (typeof subscriberId !== 'undefined') {
@@ -9075,11 +9076,8 @@ export class Messaging {
             );
         }
         const apiPath = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
-            .replace('{topicId}', encodeURIComponent(String(topicId)))
-            .replace(
-                '{subscriberId}',
-                encodeURIComponent(String(subscriberId)),
-            );
+            .replace('{topicId}', encodePath(topicId))
+            .replace('{subscriberId}', encodePath(subscriberId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
@@ -9168,11 +9166,8 @@ export class Messaging {
             );
         }
         const apiPath = '/messaging/topics/{topicId}/subscribers/{subscriberId}'
-            .replace('{topicId}', encodeURIComponent(String(topicId)))
-            .replace(
-                '{subscriberId}',
-                encodeURIComponent(String(subscriberId)),
-            );
+            .replace('{topicId}', encodePath(topicId))
+            .replace('{subscriberId}', encodePath(subscriberId));
         const apiPayload: Payload = {};
         const uri = new URL(this.client.config.endpoint + apiPath);
 
