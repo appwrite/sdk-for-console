@@ -1166,6 +1166,7 @@ export class Admin {
                         teamId: '',
                         aggregationId: '',
                         plan: 'tier-0',
+                        items: [],
                         usage: [],
                         amount: 0,
                         tax: 0,
@@ -1181,9 +1182,19 @@ export class Admin {
                         to: '',
                     },
                     properties: {
+                        items: {
+                            items: 'invoiceItem',
+                        },
                         usage: {
                             items: 'usageResources',
                         },
+                    },
+                },
+                invoiceItem: {
+                    defaults: {
+                        type: '',
+                        description: '',
+                        amount: 0,
                     },
                 },
                 usageResources: {
@@ -1270,6 +1281,7 @@ export class Admin {
                         teamId: '',
                         aggregationId: '',
                         plan: 'tier-0',
+                        items: [],
                         usage: [],
                         amount: 0,
                         tax: 0,
@@ -1285,9 +1297,19 @@ export class Admin {
                         to: '',
                     },
                     properties: {
+                        items: {
+                            items: 'invoiceItem',
+                        },
                         usage: {
                             items: 'usageResources',
                         },
+                    },
+                },
+                invoiceItem: {
+                    defaults: {
+                        type: '',
+                        description: '',
+                        amount: 0,
                     },
                 },
                 usageResources: {

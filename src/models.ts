@@ -685,6 +685,7 @@ export namespace Models {
             | Models.PolicyDenyCorporateEmail
             | Models.PolicyDenyRealtimeGuests
             | Models.PolicyPasskey
+            | Models.PolicyAccountDevices
         )[];
     };
 
@@ -3827,6 +3828,10 @@ export namespace Models {
          */
         userId: string;
         /**
+         * Name of the user the session belongs to. Lets a client label the account, for example in an account switcher.
+         */
+        userName: string;
+        /**
          * Session expiration date in ISO 8601 format.
          */
         expire: string;
@@ -3926,6 +3931,40 @@ export namespace Models {
          * Most recent date in ISO 8601 format when the session successfully passed MFA challenge.
          */
         mfaUpdatedAt: string;
+    };
+
+    /**
+     * Device
+     */
+    export type Device = {
+        /**
+         * Device ID.
+         */
+        $id: string;
+        /**
+         * Device creation date in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Device update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * Device expiration date in ISO 8601 format.
+         */
+        expire: string;
+        /**
+         * ID of the session that is currently active on the device. Empty when no session is active, for example right after the active session was deleted.
+         */
+        activeSessionId: string;
+        /**
+         * List of sessions the device holds. Switch between them to change the active account.
+         */
+        sessions: Session[];
+        /**
+         * Secret used to authenticate the device. Carried by the device cookie; only included in the response if the request was made with an API key.
+         */
+        secret: string;
     };
 
     /**
@@ -7612,6 +7651,20 @@ export namespace Models {
     };
 
     /**
+     * Policy Account Devices
+     */
+    export type PolicyAccountDevices = {
+        /**
+         * Policy ID.
+         */
+        $id: string;
+        /**
+         * Whether account devices are enabled. When disabled, new account devices can no longer be created.
+         */
+        enabled: boolean;
+    };
+
+    /**
      * Platform Web
      */
     export type PlatformWeb = {
@@ -8283,6 +8336,14 @@ export namespace Models {
          * Certificate auto-renewal date in ISO 8601 format.
          */
         renewAt: string;
+        /**
+         * Certificate expiry date in ISO 8601 format. Empty when unknown or not checked yet.
+         */
+        expireAt: string;
+        /**
+         * Certificate status, as last reported by the certificate provider. Possible values are "pending", "processing", "issued", "renewing", "expiring", "blocked", "failed", or "unknown". "expiring" means the certificate expires soon, or has already expired, and the provider has not renewed it yet, "blocked" means the provider waits on a DNS record from the domain owner, and "failed" means the provider stopped trying or the last issuance or renewal attempt failed. Empty until the certificate is next checked.
+         */
+        certificateStatus: string;
         /**
          * Ingress protocol for the rule.
          */
@@ -12242,6 +12303,10 @@ export namespace Models {
          */
         plan: string;
         /**
+         * Recorded invoice charges and adjustments. Amounts are integer currency minor units. Empty for invoices without a saved breakdown; never reconstructed from current prices.
+         */
+        items: InvoiceItem[];
+        /**
          * Usage breakdown per resource
          */
         usage: UsageResources[];
@@ -12305,6 +12370,48 @@ export namespace Models {
          * End date of the invoice
          */
         to: string;
+    };
+
+    /**
+     * InvoiceItem
+     */
+    export type InvoiceItem = {
+        /**
+         * Recorded line type: plan, usage, addon, discount, credit, rounding or legacy.
+         */
+        type: string;
+        /**
+         * Description recorded when the line was priced.
+         */
+        description: string;
+        /**
+         * Signed amount in currency minor units, including any recorded tax allocation.
+         */
+        amount: number;
+        /**
+         * Usage resource identifier.
+         */
+        resourceId?: string | null;
+        /**
+         * Project identifier; null for organization charges.
+         */
+        projectId?: string | null;
+        /**
+         * Plan used to price this line.
+         */
+        planId?: string | null;
+        /**
+         * Recorded usage quantity, when available.
+         */
+        quantity?: number | null;
+        /**
+         * Beginning of the service period for this line.
+         */
+        from?: string | null;
+        /**
+         * End of the service period for this line.
+         */
+        to?: string | null;
     };
 
     /**
