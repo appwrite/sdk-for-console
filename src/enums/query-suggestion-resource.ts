@@ -38,6 +38,7 @@ export enum QuerySuggestionResource {
     Authenticators = 'authenticators',
     Challenges = 'challenges',
     Sessions = 'sessions',
+    Devices = 'devices',
     Identities = 'identities',
     Memberships = 'memberships',
     Buckets = 'buckets',

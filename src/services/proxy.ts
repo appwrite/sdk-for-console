@@ -227,6 +227,8 @@ export class Proxy {
                         deploymentVcsProviderBranch: '',
                         status: 'unverified',
                         logs: '',
+                        expireAt: '',
+                        certificateStatus: '',
                         protocol: 'http',
                     },
                 },
@@ -311,6 +313,8 @@ export class Proxy {
                         deploymentVcsProviderBranch: '',
                         status: 'unverified',
                         logs: '',
+                        expireAt: '',
+                        certificateStatus: '',
                         protocol: 'http',
                     },
                 },
@@ -428,6 +432,8 @@ export class Proxy {
                         deploymentVcsProviderBranch: '',
                         status: 'unverified',
                         logs: '',
+                        expireAt: '',
+                        certificateStatus: '',
                         protocol: 'http',
                     },
                 },
@@ -591,6 +597,8 @@ export class Proxy {
                         deploymentVcsProviderBranch: '',
                         status: 'unverified',
                         logs: '',
+                        expireAt: '',
+                        certificateStatus: '',
                         protocol: 'http',
                     },
                 },
@@ -706,6 +714,8 @@ export class Proxy {
                         deploymentVcsProviderBranch: '',
                         status: 'unverified',
                         logs: '',
+                        expireAt: '',
+                        certificateStatus: '',
                         protocol: 'http',
                     },
                 },
@@ -819,6 +829,8 @@ export class Proxy {
                         deploymentVcsProviderBranch: '',
                         status: 'unverified',
                         logs: '',
+                        expireAt: '',
+                        certificateStatus: '',
                         protocol: 'http',
                     },
                 },
@@ -898,6 +910,8 @@ export class Proxy {
                         deploymentVcsProviderBranch: '',
                         status: 'unverified',
                         logs: '',
+                        expireAt: '',
+                        certificateStatus: '',
                         protocol: 'http',
                     },
                 },
@@ -1064,6 +1078,8 @@ export class Proxy {
                         deploymentVcsProviderBranch: '',
                         status: 'unverified',
                         logs: '',
+                        expireAt: '',
+                        certificateStatus: '',
                         protocol: 'http',
                     },
                 },
@@ -1223,6 +1239,8 @@ export class Proxy {
                         deploymentVcsProviderBranch: '',
                         status: 'unverified',
                         logs: '',
+                        expireAt: '',
+                        certificateStatus: '',
                         protocol: 'http',
                     },
                 },
@@ -1334,6 +1352,8 @@ export class Proxy {
                         deploymentVcsProviderBranch: '',
                         status: 'unverified',
                         logs: '',
+                        expireAt: '',
+                        certificateStatus: '',
                         protocol: 'http',
                     },
                 },
@@ -1344,7 +1364,7 @@ export class Proxy {
     }
 
     /**
-     * If not succeeded yet, retry verification process of a proxy rule domain. This endpoint triggers domain verification by checking DNS records. If verification is successful, a TLS certificate will be automatically provisioned for the domain asynchronously in the background.
+     * If not succeeded yet, retry verification process of a proxy rule domain. This endpoint triggers domain verification by checking DNS records. If verification is successful, a TLS certificate will be automatically provisioned for the domain asynchronously in the background. A verified rule whose certificate renewal failed or is blocked, or whose certificate expired, is checked the same way, and its certificate renewed in the background.
      *
      * @param {string} params.ruleId - Rule ID.
      * @throws {AppwriteException}
@@ -1352,7 +1372,7 @@ export class Proxy {
      */
     updateRuleStatus(params: { ruleId: string }): Promise<Models.ProxyRule>;
     /**
-     * If not succeeded yet, retry verification process of a proxy rule domain. This endpoint triggers domain verification by checking DNS records. If verification is successful, a TLS certificate will be automatically provisioned for the domain asynchronously in the background.
+     * If not succeeded yet, retry verification process of a proxy rule domain. This endpoint triggers domain verification by checking DNS records. If verification is successful, a TLS certificate will be automatically provisioned for the domain asynchronously in the background. A verified rule whose certificate renewal failed or is blocked, or whose certificate expired, is checked the same way, and its certificate renewed in the background.
      *
      * @param {string} ruleId - Rule ID.
      * @throws {AppwriteException}
@@ -1414,6 +1434,8 @@ export class Proxy {
                         deploymentVcsProviderBranch: '',
                         status: 'unverified',
                         logs: '',
+                        expireAt: '',
+                        certificateStatus: '',
                         protocol: 'http',
                     },
                 },

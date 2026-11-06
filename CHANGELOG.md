@@ -1,5 +1,13 @@
 # Change Log
 
+## 21.1.0
+
+* Added: typed saved `Invoice.items` with signed amounts, attribution and service periods.
+* Added: account device creation, lookup, session switching and deletion methods.
+* Added: account-device project policy and Vipps sandbox configuration methods.
+* Added: `Session.userName`, `ProxyRule.expireAt` and `ProxyRule.certificateStatus`.
+* Updated: response format to `2.7.1`.
+
 ## 21.0.0
 
 * Breaking: requests send `X-Appwrite-Response-Format: 2.7.0`; responses follow the 2.7 shapes
@@ -615,4 +623,5 @@ Fix bigint and float parsing in SDK.
 ## 1.5.0
 
 * Adds support for `databasesReadsTotal` and `databasesWritesTotal` attributes
+
 

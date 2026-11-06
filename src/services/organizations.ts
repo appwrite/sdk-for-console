@@ -2519,6 +2519,7 @@ export class Organizations {
                         teamId: '',
                         aggregationId: '',
                         plan: 'tier-0',
+                        items: [],
                         usage: [],
                         amount: 0,
                         tax: 0,
@@ -2534,9 +2535,19 @@ export class Organizations {
                         to: '',
                     },
                     properties: {
+                        items: {
+                            items: 'invoiceItem',
+                        },
                         usage: {
                             items: 'usageResources',
                         },
+                    },
+                },
+                invoiceItem: {
+                    defaults: {
+                        type: '',
+                        description: '',
+                        amount: 0,
                     },
                 },
                 usageResources: {
@@ -2971,6 +2982,7 @@ export class Organizations {
                         teamId: '',
                         aggregationId: '',
                         plan: 'tier-0',
+                        items: [],
                         usage: [],
                         amount: 0,
                         tax: 0,
@@ -2986,9 +2998,19 @@ export class Organizations {
                         to: '',
                     },
                     properties: {
+                        items: {
+                            items: 'invoiceItem',
+                        },
                         usage: {
                             items: 'usageResources',
                         },
+                    },
+                },
+                invoiceItem: {
+                    defaults: {
+                        type: '',
+                        description: '',
+                        amount: 0,
                     },
                 },
                 usageResources: {
@@ -3093,6 +3115,7 @@ export class Organizations {
                         teamId: '',
                         aggregationId: '',
                         plan: 'tier-0',
+                        items: [],
                         usage: [],
                         amount: 0,
                         tax: 0,
@@ -3108,9 +3131,19 @@ export class Organizations {
                         to: '',
                     },
                     properties: {
+                        items: {
+                            items: 'invoiceItem',
+                        },
                         usage: {
                             items: 'usageResources',
                         },
+                    },
+                },
+                invoiceItem: {
+                    defaults: {
+                        type: '',
+                        description: '',
+                        amount: 0,
                     },
                 },
                 usageResources: {
@@ -3316,6 +3349,7 @@ export class Organizations {
                         teamId: '',
                         aggregationId: '',
                         plan: 'tier-0',
+                        items: [],
                         usage: [],
                         amount: 0,
                         tax: 0,
@@ -3331,9 +3365,19 @@ export class Organizations {
                         to: '',
                     },
                     properties: {
+                        items: {
+                            items: 'invoiceItem',
+                        },
                         usage: {
                             items: 'usageResources',
                         },
+                    },
+                },
+                invoiceItem: {
+                    defaults: {
+                        type: '',
+                        description: '',
+                        amount: 0,
                     },
                 },
                 usageResources: {
@@ -3440,6 +3484,7 @@ export class Organizations {
                         teamId: '',
                         aggregationId: '',
                         plan: 'tier-0',
+                        items: [],
                         usage: [],
                         amount: 0,
                         tax: 0,
@@ -3455,9 +3500,19 @@ export class Organizations {
                         to: '',
                     },
                     properties: {
+                        items: {
+                            items: 'invoiceItem',
+                        },
                         usage: {
                             items: 'usageResources',
                         },
+                    },
+                },
+                invoiceItem: {
+                    defaults: {
+                        type: '',
+                        description: '',
+                        amount: 0,
                     },
                 },
                 usageResources: {

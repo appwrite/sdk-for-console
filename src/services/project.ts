@@ -7322,6 +7322,112 @@ export class Project {
     }
 
     /**
+     * Update the project OAuth2 Vipps MobilePay Sandbox configuration.
+     *
+     * @param {string | null} params.clientId - 'Client ID' of Vipps MobilePay Sandbox OAuth2 app. For example: 9a3a4b3e-0000-0000-0000-0f1a6d1c3b2e
+     * @param {string | null} params.clientSecret - 'Client Secret' of Vipps MobilePay Sandbox OAuth2 app. For example: Ay1jb000000000000000000000000000000Vx3k
+     * @param {boolean | null} params.enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.OAuth2Vipps>}
+     */
+    updateOAuth2VippsSandbox(params?: {
+        clientId?: string | null;
+        clientSecret?: string | null;
+        enabled?: boolean | null;
+    }): Promise<Models.OAuth2Vipps>;
+    /**
+     * Update the project OAuth2 Vipps MobilePay Sandbox configuration.
+     *
+     * @param {string | null} clientId - 'Client ID' of Vipps MobilePay Sandbox OAuth2 app. For example: 9a3a4b3e-0000-0000-0000-0f1a6d1c3b2e
+     * @param {string | null} clientSecret - 'Client Secret' of Vipps MobilePay Sandbox OAuth2 app. For example: Ay1jb000000000000000000000000000000Vx3k
+     * @param {boolean | null} enabled - OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.OAuth2Vipps>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateOAuth2VippsSandbox(
+        clientId?: string | null,
+        clientSecret?: string | null,
+        enabled?: boolean | null,
+    ): Promise<Models.OAuth2Vipps>;
+    updateOAuth2VippsSandbox(
+        paramsOrFirst?:
+            | {
+                  clientId?: string | null;
+                  clientSecret?: string | null;
+                  enabled?: boolean | null;
+              }
+            | string
+            | null,
+        ...rest: [(string | null)?, (boolean | null)?]
+    ): Promise<Models.OAuth2Vipps> {
+        let params: {
+            clientId?: string | null;
+            clientSecret?: string | null;
+            enabled?: boolean | null;
+        };
+
+        if (
+            (typeof paramsOrFirst === 'undefined' && rest.length === 0) ||
+            (paramsOrFirst &&
+                typeof paramsOrFirst === 'object' &&
+                !Array.isArray(paramsOrFirst))
+        ) {
+            params = (paramsOrFirst || {}) as {
+                clientId?: string | null;
+                clientSecret?: string | null;
+                enabled?: boolean | null;
+            };
+        } else {
+            params = {
+                clientId: paramsOrFirst as string | null,
+                clientSecret: rest[0] as string | null,
+                enabled: rest[1] as boolean | null,
+            };
+        }
+
+        const clientId = params.clientId;
+        const clientSecret = params.clientSecret;
+        const enabled = params.enabled;
+
+        const apiPath = '/project/oauth2/vippsSandbox';
+        const apiPayload: Payload = {};
+        if (typeof clientId !== 'undefined') {
+            apiPayload['clientId'] = clientId;
+        }
+        if (typeof clientSecret !== 'undefined') {
+            apiPayload['clientSecret'] = clientSecret;
+        }
+        if (typeof enabled !== 'undefined') {
+            apiPayload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'oAuth2Vipps',
+            models: {
+                oAuth2Vipps: {
+                    defaults: {
+                        $id: '',
+                        enabled: false,
+                        clientId: '',
+                        clientSecret: '',
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
      * Update the project OAuth2 Webflow configuration.
      *
      * @param {string | null} params.clientId - 'Client ID' of Webflow OAuth2 app. For example: 8bb20000000000000000000000000000000000000000000000000000000040dd
@@ -9741,6 +9847,143 @@ export class Project {
                     defaults: {
                         total: 0,
                         policies: [],
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
+     * Update whether account devices are enabled for the project. When enabled, a browser can create an account device that holds multiple sessions and switch between them. When disabled, account devices can no longer be created, so each browser is limited to a single active session.
+     *
+     * @param {boolean} params.enabled - Set to true to allow account devices, or false to disable them for this project.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project<Preferences>>}
+     */
+    updateAccountDevicesPolicy<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(params: { enabled: boolean }): Promise<Models.Project<Preferences>>;
+    /**
+     * Update whether account devices are enabled for the project. When enabled, a browser can create an account device that holds multiple sessions and switch between them. When disabled, account devices can no longer be created, so each browser is limited to a single active session.
+     *
+     * @param {boolean} enabled - Set to true to allow account devices, or false to disable them for this project.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Project<Preferences>>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateAccountDevicesPolicy<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(enabled: boolean): Promise<Models.Project<Preferences>>;
+    updateAccountDevicesPolicy<
+        Preferences extends Models.Preferences = Models.DefaultPreferences,
+    >(
+        paramsOrFirst: { enabled: boolean } | boolean,
+    ): Promise<Models.Project<Preferences>> {
+        let params: { enabled: boolean };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as { enabled: boolean };
+        } else {
+            params = {
+                enabled: paramsOrFirst as boolean,
+            };
+        }
+
+        const enabled = params.enabled;
+
+        if (typeof enabled === 'undefined') {
+            throw new AppwriteException(
+                'Missing required parameter: "enabled"',
+            );
+        }
+        const apiPath = '/project/policies/account-devices';
+        const apiPayload: Payload = {};
+        if (typeof enabled !== 'undefined') {
+            apiPayload['enabled'] = enabled;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'project',
+            models: {
+                project: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        teamId: '',
+                        region: 'fra',
+                        smtpEnabled: false,
+                        smtpSenderName: '',
+                        smtpSenderEmail: '',
+                        smtpReplyToName: '',
+                        smtpReplyToEmail: '',
+                        smtpHost: '',
+                        smtpPort: 0,
+                        smtpUsername: '',
+                        smtpPassword: '',
+                        smtpSecure: '',
+                        pingCount: 0,
+                        pingedAt: '',
+                        labels: [],
+                        status: 'active',
+                        onboarding: {},
+                        authMethods: [],
+                        services: [],
+                        protocols: [],
+                        blocks: [],
+                        consoleAccessedAt: '',
+                    },
+                    properties: {
+                        authMethods: {
+                            items: 'projectAuthMethod',
+                        },
+                        services: {
+                            items: 'projectService',
+                        },
+                        protocols: {
+                            items: 'projectProtocol',
+                        },
+                        blocks: {
+                            items: 'block',
+                        },
+                    },
+                },
+                projectAuthMethod: {
+                    defaults: {
+                        enabled: true,
+                    },
+                },
+                projectService: {
+                    defaults: {
+                        enabled: true,
+                    },
+                },
+                projectProtocol: {
+                    defaults: {
+                        enabled: true,
+                    },
+                },
+                block: {
+                    defaults: {
+                        $createdAt: '',
+                        resourceType: '',
+                        resourceId: '',
+                        mode: 'full',
                     },
                 },
             },
@@ -12540,9 +12783,9 @@ export class Project {
     /**
      * Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
      *
-     * @param {ProjectPolicyId} params.policyId - Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, password-pwned, password-rotation, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email, deny-realtime-guests, passkey.
+     * @param {ProjectPolicyId} params.policyId - Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, password-pwned, password-rotation, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email, deny-realtime-guests, passkey, account-devices.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicyPasswordPwned | Models.PolicyPasswordRotation | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyMfaFactors | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail | Models.PolicyDenyRealtimeGuests | Models.PolicyPasskey>}
+     * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicyPasswordPwned | Models.PolicyPasswordRotation | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyMfaFactors | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail | Models.PolicyDenyRealtimeGuests | Models.PolicyPasskey | Models.PolicyAccountDevices>}
      */
     getPolicy(params: {
         policyId: ProjectPolicyId;
@@ -12566,13 +12809,14 @@ export class Project {
         | Models.PolicyDenyCorporateEmail
         | Models.PolicyDenyRealtimeGuests
         | Models.PolicyPasskey
+        | Models.PolicyAccountDevices
     >;
     /**
      * Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.
      *
-     * @param {ProjectPolicyId} policyId - Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, password-pwned, password-rotation, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email, deny-realtime-guests, passkey.
+     * @param {ProjectPolicyId} policyId - Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, password-pwned, password-rotation, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email, deny-realtime-guests, passkey, account-devices.
      * @throws {AppwriteException}
-     * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicyPasswordPwned | Models.PolicyPasswordRotation | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyMfaFactors | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail | Models.PolicyDenyRealtimeGuests | Models.PolicyPasskey>}
+     * @returns {Promise<Models.PolicyPasswordDictionary | Models.PolicyPasswordHistory | Models.PolicyPasswordStrength | Models.PolicyPasswordPersonalData | Models.PolicyPasswordPwned | Models.PolicyPasswordRotation | Models.PolicySessionAlert | Models.PolicySessionDuration | Models.PolicySessionInvalidation | Models.PolicySessionLimit | Models.PolicyUserLimit | Models.PolicyMembershipPrivacy | Models.PolicyMfaFactors | Models.PolicyDenyAliasedEmail | Models.PolicyDenyDisposableEmail | Models.PolicyDenyFreeEmail | Models.PolicyDenyCorporateEmail | Models.PolicyDenyRealtimeGuests | Models.PolicyPasskey | Models.PolicyAccountDevices>}
      * @deprecated Use the object parameter style method for a better developer experience.
      */
     getPolicy(
@@ -12597,6 +12841,7 @@ export class Project {
         | Models.PolicyDenyCorporateEmail
         | Models.PolicyDenyRealtimeGuests
         | Models.PolicyPasskey
+        | Models.PolicyAccountDevices
     >;
     getPolicy(
         paramsOrFirst: { policyId: ProjectPolicyId } | ProjectPolicyId,
@@ -12620,6 +12865,7 @@ export class Project {
         | Models.PolicyDenyCorporateEmail
         | Models.PolicyDenyRealtimeGuests
         | Models.PolicyPasskey
+        | Models.PolicyAccountDevices
     > {
         let params: { policyId: ProjectPolicyId };
 

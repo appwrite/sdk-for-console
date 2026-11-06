@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "version": "2.7.0",
+        "version": "2.7.1",
         "title": "Appwrite",
         "description": "Appwrite backend as a service cuts up to 70% of the time and costs required for building a modern application. We abstract and simplify common development tasks behind a REST APIs, to help you develop your app in a fast and secure way. For full API documentation and tutorials go to [https:\/\/appwrite.io\/docs](https:\/\/appwrite.io\/docs)",
         "termsOfService": "https:\/\/appwrite.io\/policy\/terms",
@@ -1027,6 +1027,247 @@
                         "in": "path"
                     }
                 ]
+            }
+        },
+        "\/account\/devices": {
+            "post": {
+                "summary": "Create device",
+                "operationId": "accountCreateDevice",
+                "tags": [
+                    "account"
+                ],
+                "description": "Create an account switching device. A device is a container, scoped to one browser or app install, that holds multiple sessions and tracks which one is active. Once a device exists, session creation endpoints attach the new session to it automatically, so a single browser can stay signed in to several accounts and switch between them. A device holds at most one session per user: signing in again as a user it already holds replaces that user's session. The device lives as long as its newest session.\n\nThe device secret is returned in a cookie. Run this on app start: if the browser already has a valid device, the existing one is returned with the same status code instead of an error, so it is always safe to call.",
+                "responses": {
+                    "201": {
+                        "description": "Device",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/device"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "devices",
+                    "demo": "account\/create-device.md",
+                    "rate-limit": 50,
+                    "rate-time": 3600,
+                    "rate-key": "ip:{ip}",
+                    "scope": "sessions.write",
+                    "platforms": [
+                        "console",
+                        "client",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Session": [],
+                        "JWT": []
+                    }
+                ]
+            }
+        },
+        "\/account\/devices\/{deviceId}": {
+            "get": {
+                "summary": "Get device",
+                "operationId": "accountGetDevice",
+                "tags": [
+                    "account"
+                ],
+                "description": "Get the account switching device for the current browser, including every session it holds, the name of the user each session belongs to, and the ID of the active session. Use the string 'current' to reference the current browser's device.",
+                "responses": {
+                    "200": {
+                        "description": "Device",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/device"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "devices",
+                    "demo": "account\/get-device.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "sessions.write",
+                    "platforms": [
+                        "console",
+                        "client",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Session": [],
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "deviceId",
+                        "description": "Device ID. Use the string 'current' to reference the device of the current browser.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<DEVICE_ID>",
+                            "default": "current"
+                        },
+                        "in": "path"
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Delete device",
+                "operationId": "accountDeleteDevice",
+                "tags": [
+                    "account"
+                ],
+                "description": "Delete the account switching device for the current browser. Every session the device holds is signed out, each firing its own session delete event, the device is removed, and both the device and session cookies are cleared. Use the string 'current' to reference the current browser's device.",
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "devices",
+                    "demo": "account\/delete-device.md",
+                    "rate-limit": 100,
+                    "rate-time": 3600,
+                    "rate-key": "ip:{ip}",
+                    "scope": "sessions.write",
+                    "platforms": [
+                        "console",
+                        "client",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Session": [],
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "deviceId",
+                        "description": "Device ID. Use the string 'current' to reference the device of the current browser.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<DEVICE_ID>",
+                            "default": "current"
+                        },
+                        "in": "path"
+                    }
+                ]
+            }
+        },
+        "\/account\/devices\/{deviceId}\/session": {
+            "patch": {
+                "summary": "Update device session",
+                "operationId": "accountUpdateDeviceSession",
+                "tags": [
+                    "account"
+                ],
+                "description": "Switch the active account on an account switching device to one of the sessions it holds. The chosen session becomes active and its secret is written to the browser's session cookie, so subsequent requests authenticate as that account. Use the string 'current' to reference the current browser's device.\n\nSwitching rotates the chosen session's secret. Any other holder of that session, such as a copy kept elsewhere, stops working, so a session should not be shared across devices.",
+                "responses": {
+                    "200": {
+                        "description": "Session",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/session"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "devices",
+                    "demo": "account\/update-device-session.md",
+                    "rate-limit": 100,
+                    "rate-time": 3600,
+                    "rate-key": "ip:{ip}",
+                    "scope": "sessions.write",
+                    "platforms": [
+                        "console",
+                        "client",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Session": [],
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "deviceId",
+                        "description": "Device ID. Use the string 'current' to reference the device of the current browser.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "<DEVICE_ID>",
+                            "default": "current"
+                        },
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "sessionId": {
+                                        "description": "ID of the session, held by the device, to make active.",
+                                        "type": "string",
+                                        "example": "<SESSION_ID>"
+                                    }
+                                },
+                                "required": [
+                                    "sessionId"
+                                ]
+                            }
+                        }
+                    }
+                }
             }
         },
         "\/account\/email": {
@@ -4942,7 +5183,7 @@
                 "parameters": [
                     {
                         "name": "provider",
-                        "description": "OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, vipps, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.",
+                        "description": "OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, vipps, vippsSandbox, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -5249,6 +5490,13 @@
                                         "vipps"
                                     ],
                                     "title": "vipps"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "vippsSandbox"
+                                    ],
+                                    "title": "vippsSandbox"
                                 },
                                 {
                                     "type": "string",
@@ -6187,7 +6435,7 @@
                 "parameters": [
                     {
                         "name": "provider",
-                        "description": "OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, vipps, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.",
+                        "description": "OAuth2 Provider. Currently, supported providers are: amazon, apple, appwrite, auth0, authentik, autodesk, bitbucket, bitly, box, cloudflare, dailymotion, discord, disqus, dropbox, etsy, facebook, figma, fusionauth, github, gitlab, google, huggingface, kakao, keycloak, kick, linkedin, microsoft, notion, oidc, okta, paypal, paypalSandbox, podio, resend, salesforce, slack, spotify, stripe, tiktok, tradeshift, tradeshiftBox, twitch, vipps, vippsSandbox, webflow, wordpress, x, yahoo, yammer, yandex, zoho, zoom.",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -6494,6 +6742,13 @@
                                         "vipps"
                                     ],
                                     "title": "vipps"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "vippsSandbox"
+                                    ],
+                                    "title": "vippsSandbox"
                                 },
                                 {
                                     "type": "string",
@@ -21894,6 +22149,13 @@
                                         "sessions"
                                     ],
                                     "title": "sessions"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "devices"
+                                    ],
+                                    "title": "devices"
                                 },
                                 {
                                     "type": "string",
@@ -48367,8 +48629,7 @@
                                     ],
                                     "title": "tor"
                                 }
-                            ],
-                            "default": "fra"
+                            ]
                         },
                         "in": "query"
                     },
@@ -66095,7 +66356,6 @@
                                     "region": {
                                         "description": "Project Region.",
                                         "type": "string",
-                                        "default": "fra",
                                         "example": "fra",
                                         "title": "Region",
                                         "oneOf": [
@@ -85444,6 +85704,81 @@
                 }
             }
         },
+        "\/project\/oauth2\/vippsSandbox": {
+            "patch": {
+                "summary": "Update project OAuth2 Vipps MobilePay Sandbox",
+                "operationId": "projectUpdateOAuth2VippsSandbox",
+                "tags": [
+                    "project"
+                ],
+                "description": "Update the project OAuth2 Vipps MobilePay Sandbox configuration.",
+                "responses": {
+                    "200": {
+                        "description": "OAuth2Vipps",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/oAuth2Vipps"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "oauth2",
+                    "demo": "project\/update-o-auth-2-vipps-sandbox.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": "project.oauth2.write",
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "clientId": {
+                                        "description": "'Client ID' of Vipps MobilePay Sandbox OAuth2 app. For example: 9a3a4b3e-0000-0000-0000-0f1a6d1c3b2e",
+                                        "type": "string",
+                                        "example": "<CLIENT_ID>",
+                                        "nullable": true
+                                    },
+                                    "clientSecret": {
+                                        "description": "'Client Secret' of Vipps MobilePay Sandbox OAuth2 app. For example: Ay1jb000000000000000000000000000000Vx3k",
+                                        "type": "string",
+                                        "example": "<CLIENT_SECRET>",
+                                        "nullable": true
+                                    },
+                                    "enabled": {
+                                        "description": "OAuth2 sign-in method status. Set to true to enable new session creation. Setting to true will trigger end-to-end credentials validation, and will throw if the credentials are invalid.",
+                                        "type": "boolean",
+                                        "example": false,
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "\/project\/oauth2\/webflow": {
             "patch": {
                 "summary": "Update project OAuth2 Webflow",
@@ -86195,7 +86530,8 @@
                                             "microsoft": "#\/components\/schemas\/oAuth2Microsoft",
                                             "tiktok": "#\/components\/schemas\/oAuth2TikTok",
                                             "kakao": "#\/components\/schemas\/oAuth2Kakao",
-                                            "vipps": "#\/components\/schemas\/oAuth2Vipps"
+                                            "vipps": "#\/components\/schemas\/oAuth2Vipps",
+                                            "vippsSandbox": "#\/components\/schemas\/oAuth2Vipps"
                                         }
                                     }
                                 }
@@ -86537,6 +86873,13 @@
                                         "vipps"
                                     ],
                                     "title": "vipps"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "vippsSandbox"
+                                    ],
+                                    "title": "vippsSandbox"
                                 },
                                 {
                                     "type": "string",
@@ -87695,6 +88038,74 @@
                         "in": "query"
                     }
                 ]
+            }
+        },
+        "\/project\/policies\/account-devices": {
+            "patch": {
+                "summary": "Update account devices policy",
+                "operationId": "projectUpdateAccountDevicesPolicy",
+                "tags": [
+                    "project"
+                ],
+                "description": "Update whether account devices are enabled for the project. When enabled, a browser can create an account device that holds multiple sessions and switch between them. When disabled, account devices can no longer be created, so each browser is limited to a single active session.",
+                "responses": {
+                    "200": {
+                        "description": "Project",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/project"
+                                }
+                            }
+                        }
+                    }
+                },
+                "deprecated": false,
+                "x-appwrite": {
+                    "group": "policies",
+                    "demo": "project\/update-account-devices-policy.md",
+                    "rate-limit": 0,
+                    "rate-time": 3600,
+                    "rate-key": "url:{url},ip:{ip}",
+                    "scope": [
+                        "policies.write",
+                        "project.policies.write"
+                    ],
+                    "platforms": [
+                        "console",
+                        "server"
+                    ],
+                    "packaging": false,
+                    "public": true,
+                    "auth": {
+                        "Project": []
+                    }
+                },
+                "security": [
+                    {
+                        "Project": [],
+                        "Key": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "enabled": {
+                                        "description": "Set to true to allow account devices, or false to disable them for this project.",
+                                        "type": "boolean",
+                                        "example": false
+                                    }
+                                },
+                                "required": [
+                                    "enabled"
+                                ]
+                            }
+                        }
+                    }
+                }
             }
         },
         "\/project\/policies\/deny-aliased-email": {
@@ -89083,7 +89494,7 @@
                 "description": "Get a policy by its unique ID. This endpoint returns the current configuration for the requested project policy.",
                 "responses": {
                     "200": {
-                        "description": "Policy Password Dictionary, or Policy Password History, or Policy Password Strength, or Policy Password Personal Data, or Policy Password Pwned, or Policy Password Rotation, or Policy Session Alert, or Policy Session Duration, or Policy Session Invalidation, or Policy Session Limit, or Policy User Limit, or Policy Membership Privacy, or Policy MFA Factors, or Policy Deny Aliased Email, or Policy Deny Disposable Email, or Policy Deny Free Email, or Policy Deny Corporate Email, or Policy Deny Realtime Guests, or Policy Passkey",
+                        "description": "Policy Password Dictionary, or Policy Password History, or Policy Password Strength, or Policy Password Personal Data, or Policy Password Pwned, or Policy Password Rotation, or Policy Session Alert, or Policy Session Duration, or Policy Session Invalidation, or Policy Session Limit, or Policy User Limit, or Policy Membership Privacy, or Policy MFA Factors, or Policy Deny Aliased Email, or Policy Deny Disposable Email, or Policy Deny Free Email, or Policy Deny Corporate Email, or Policy Deny Realtime Guests, or Policy Passkey, or Policy Account Devices",
                         "content": {
                             "application\/json": {
                                 "schema": {
@@ -89144,6 +89555,9 @@
                                         },
                                         {
                                             "$ref": "#\/components\/schemas\/policyPasskey"
+                                        },
+                                        {
+                                            "$ref": "#\/components\/schemas\/policyAccountDevices"
                                         }
                                     ],
                                     "discriminator": {
@@ -89167,7 +89581,8 @@
                                             "deny-free-email": "#\/components\/schemas\/policyDenyFreeEmail",
                                             "deny-corporate-email": "#\/components\/schemas\/policyDenyCorporateEmail",
                                             "deny-realtime-guests": "#\/components\/schemas\/policyDenyRealtimeGuests",
-                                            "passkey": "#\/components\/schemas\/policyPasskey"
+                                            "passkey": "#\/components\/schemas\/policyPasskey",
+                                            "account-devices": "#\/components\/schemas\/policyAccountDevices"
                                         }
                                     }
                                 }
@@ -89205,7 +89620,7 @@
                 "parameters": [
                     {
                         "name": "policyId",
-                        "description": "Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, password-pwned, password-rotation, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email, deny-realtime-guests, passkey.",
+                        "description": "Policy ID. Can be one of: password-dictionary, password-history, password-strength, password-personal-data, password-pwned, password-rotation, session-alert, session-duration, session-invalidation, session-limit, user-limit, membership-privacy, mfa-factors, deny-aliased-email, deny-disposable-email, deny-free-email, deny-corporate-email, deny-realtime-guests, passkey, account-devices.",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -89344,6 +89759,13 @@
                                         "passkey"
                                     ],
                                     "title": "passkey"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "account-devices"
+                                    ],
+                                    "title": "account-devices"
                                 }
                             ]
                         },
@@ -94629,7 +95051,7 @@
                 "tags": [
                     "proxy"
                 ],
-                "description": "If not succeeded yet, retry verification process of a proxy rule domain. This endpoint triggers domain verification by checking DNS records. If verification is successful, a TLS certificate will be automatically provisioned for the domain asynchronously in the background.",
+                "description": "If not succeeded yet, retry verification process of a proxy rule domain. This endpoint triggers domain verification by checking DNS records. If verification is successful, a TLS certificate will be automatically provisioned for the domain asynchronously in the background. A verified rule whose certificate renewal failed or is blocked, or whose certificate expired, is checked the same way, and its certificate renewed in the background.",
                 "responses": {
                     "200": {
                         "description": "Rule",
@@ -127269,6 +127691,9 @@
                                 },
                                 {
                                     "$ref": "#\/components\/schemas\/policyPasskey"
+                                },
+                                {
+                                    "$ref": "#\/components\/schemas\/policyAccountDevices"
                                 }
                             ],
                             "discriminator": {
@@ -127292,7 +127717,8 @@
                                     "deny-free-email": "#\/components\/schemas\/policyDenyFreeEmail",
                                     "deny-corporate-email": "#\/components\/schemas\/policyDenyCorporateEmail",
                                     "deny-realtime-guests": "#\/components\/schemas\/policyDenyRealtimeGuests",
-                                    "passkey": "#\/components\/schemas\/policyPasskey"
+                                    "passkey": "#\/components\/schemas\/policyPasskey",
+                                    "account-devices": "#\/components\/schemas\/policyAccountDevices"
                                 }
                             }
                         },
@@ -136769,6 +137195,12 @@
                         "example": "5e5bb8c16897e",
                         "default": ""
                     },
+                    "userName": {
+                        "type": "string",
+                        "description": "Name of the user the session belongs to. Lets a client label the account, for example in an account switcher.",
+                        "example": "John Doe",
+                        "default": ""
+                    },
                     "expire": {
                         "type": "string",
                         "description": "Session expiration date in ISO 8601 format.",
@@ -136930,6 +137362,7 @@
                     "$createdAt",
                     "$updatedAt",
                     "userId",
+                    "userName",
                     "expire",
                     "provider",
                     "providerUid",
@@ -136961,6 +137394,7 @@
                     "$createdAt": "2020-10-15T06:38:00.000+00:00",
                     "$updatedAt": "2020-10-15T06:38:00.000+00:00",
                     "userId": "5e5bb8c16897e",
+                    "userName": "John Doe",
                     "expire": "2020-10-15T06:38:00.000+00:00",
                     "provider": "email",
                     "providerUid": "user@example.com",
@@ -136988,6 +137422,74 @@
                     ],
                     "secret": "5e5bb8c16897e",
                     "mfaUpdatedAt": "2020-10-15T06:38:00.000+00:00"
+                }
+            },
+            "device": {
+                "description": "Device",
+                "type": "object",
+                "properties": {
+                    "$id": {
+                        "type": "string",
+                        "description": "Device ID.",
+                        "example": "5e5ea5c16897e",
+                        "default": ""
+                    },
+                    "$createdAt": {
+                        "type": "string",
+                        "description": "Device creation date in ISO 8601 format.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "default": ""
+                    },
+                    "$updatedAt": {
+                        "type": "string",
+                        "description": "Device update date in ISO 8601 format.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "default": ""
+                    },
+                    "expire": {
+                        "type": "string",
+                        "description": "Device expiration date in ISO 8601 format.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "default": ""
+                    },
+                    "activeSessionId": {
+                        "type": "string",
+                        "description": "ID of the session that is currently active on the device. Empty when no session is active, for example right after the active session was deleted.",
+                        "example": "5e5bb8c16897e",
+                        "default": ""
+                    },
+                    "sessions": {
+                        "type": "array",
+                        "description": "List of sessions the device holds. Switch between them to change the active account.",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/session"
+                        },
+                        "example": []
+                    },
+                    "secret": {
+                        "type": "string",
+                        "description": "Secret used to authenticate the device. Carried by the device cookie; only included in the response if the request was made with an API key.",
+                        "example": "5e5bb8c16897e",
+                        "default": ""
+                    }
+                },
+                "required": [
+                    "$id",
+                    "$createdAt",
+                    "$updatedAt",
+                    "expire",
+                    "activeSessionId",
+                    "sessions",
+                    "secret"
+                ],
+                "example": {
+                    "$id": "5e5ea5c16897e",
+                    "$createdAt": "2020-10-15T06:38:00.000+00:00",
+                    "$updatedAt": "2020-10-15T06:38:00.000+00:00",
+                    "expire": "2020-10-15T06:38:00.000+00:00",
+                    "activeSessionId": "5e5bb8c16897e",
+                    "sessions": [],
+                    "secret": "5e5bb8c16897e"
                 }
             },
             "identity": {
@@ -145293,7 +145795,8 @@
                                     "cloudflare": "#\/components\/schemas\/oAuth2Cloudflare",
                                     "tiktok": "#\/components\/schemas\/oAuth2TikTok",
                                     "kakao": "#\/components\/schemas\/oAuth2Kakao",
-                                    "vipps": "#\/components\/schemas\/oAuth2Vipps"
+                                    "vipps": "#\/components\/schemas\/oAuth2Vipps",
+                                    "vippsSandbox": "#\/components\/schemas\/oAuth2Vipps"
                                 }
                             }
                         },
@@ -145965,6 +146468,32 @@
                         "description": "Whether guests are stopped from subscribing to realtime channels.",
                         "example": true,
                         "default": false
+                    }
+                },
+                "required": [
+                    "$id",
+                    "enabled"
+                ],
+                "example": {
+                    "$id": "password-dictionary",
+                    "enabled": true
+                }
+            },
+            "policyAccountDevices": {
+                "description": "Policy Account Devices",
+                "type": "object",
+                "properties": {
+                    "$id": {
+                        "type": "string",
+                        "description": "Policy ID.",
+                        "example": "password-dictionary",
+                        "default": ""
+                    },
+                    "enabled": {
+                        "type": "boolean",
+                        "description": "Whether account devices are enabled. When disabled, new account devices can no longer be created.",
+                        "example": true,
+                        "default": true
                     }
                 },
                 "required": [
@@ -147481,6 +148010,18 @@
                         "description": "Certificate auto-renewal date in ISO 8601 format.",
                         "example": "datetime"
                     },
+                    "expireAt": {
+                        "type": "string",
+                        "description": "Certificate expiry date in ISO 8601 format. Empty when unknown or not checked yet.",
+                        "example": "2020-10-15T06:38:00.000+00:00",
+                        "default": ""
+                    },
+                    "certificateStatus": {
+                        "type": "string",
+                        "description": "Certificate status, as last reported by the certificate provider. Possible values are \"pending\", \"processing\", \"issued\", \"renewing\", \"expiring\", \"blocked\", \"failed\", or \"unknown\". \"expiring\" means the certificate expires soon, or has already expired, and the provider has not renewed it yet, \"blocked\" means the provider waits on a DNS record from the domain owner, and \"failed\" means the provider stopped trying or the last issuance or renewal attempt failed. Empty until the certificate is next checked.",
+                        "example": "issued",
+                        "default": ""
+                    },
                     "protocol": {
                         "description": "Ingress protocol for the rule.",
                         "example": "http",
@@ -147519,6 +148060,8 @@
                     "status",
                     "logs",
                     "renewAt",
+                    "expireAt",
+                    "certificateStatus",
                     "protocol"
                 ],
                 "example": {
@@ -147537,6 +148080,8 @@
                     "status": "verified",
                     "logs": "Verification of DNS records failed with DNS resolver 8.8.8.8. Domain stage.myapp.com does not have DNS record.",
                     "renewAt": "datetime",
+                    "expireAt": "2020-10-15T06:38:00.000+00:00",
+                    "certificateStatus": "issued",
                     "protocol": "http"
                 }
             },
@@ -156120,6 +156665,14 @@
                         "example": "tier-1",
                         "default": "tier-0"
                     },
+                    "items": {
+                        "type": "array",
+                        "description": "Recorded invoice charges and adjustments. Amounts are integer currency minor units. Empty for invoices without a saved breakdown; never reconstructed from current prices.",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/invoiceItem"
+                        },
+                        "example": []
+                    },
                     "usage": {
                         "type": "array",
                         "description": "Usage breakdown per resource",
@@ -156233,6 +156786,7 @@
                     "teamId",
                     "aggregationId",
                     "plan",
+                    "items",
                     "usage",
                     "amount",
                     "tax",
@@ -156258,6 +156812,7 @@
                     "teamId": "5e5ea5c16897e",
                     "aggregationId": "5e5ea5c16897e",
                     "plan": "tier-1",
+                    "items": [],
                     "usage": [],
                     "amount": 50,
                     "tax": 17,
@@ -156274,6 +156829,78 @@
                     "dueAt": "2020-10-15T06:38:00.000+00:00",
                     "from": "2020-10-15T06:38:00.000+00:00",
                     "to": "2020-10-15T06:38:00.000+00:00"
+                }
+            },
+            "invoiceItem": {
+                "description": "InvoiceItem",
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Recorded line type: plan, usage, addon, discount, credit, rounding or legacy.",
+                        "example": "usage",
+                        "default": ""
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description recorded when the line was priced.",
+                        "example": "Bandwidth",
+                        "default": ""
+                    },
+                    "amount": {
+                        "type": "integer",
+                        "description": "Signed amount in currency minor units, including any recorded tax allocation.",
+                        "format": "int32",
+                        "example": 100,
+                        "default": 0
+                    },
+                    "resourceId": {
+                        "type": "string",
+                        "description": "Usage resource identifier.",
+                        "nullable": true
+                    },
+                    "projectId": {
+                        "type": "string",
+                        "description": "Project identifier; null for organization charges.",
+                        "nullable": true
+                    },
+                    "planId": {
+                        "type": "string",
+                        "description": "Plan used to price this line.",
+                        "nullable": true
+                    },
+                    "quantity": {
+                        "type": "number",
+                        "description": "Recorded usage quantity, when available.",
+                        "format": "double",
+                        "nullable": true
+                    },
+                    "from": {
+                        "type": "string",
+                        "description": "Beginning of the service period for this line.",
+                        "nullable": true
+                    },
+                    "to": {
+                        "type": "string",
+                        "description": "End of the service period for this line.",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "type",
+                    "description",
+                    "amount"
+                ],
+                "example": {
+                    "type": "usage",
+                    "description": "Bandwidth",
+                    "amount": 100,
+                    "resourceId": null,
+                    "projectId": null,
+                    "planId": null,
+                    "quantity": null,
+                    "from": null,
+                    "to": null
                 }
             },
             "managerBlock": {
