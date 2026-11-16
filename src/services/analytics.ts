@@ -391,7 +391,7 @@ export class Analytics {
      * @param {string | null} params.name - Human-readable name for this property.
      * @param {string | null} params.domain - Primary domain to track (e.g. example.com). Pass an empty string to clear it.
      * @param {boolean | null} params.enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
-     * @param {string[] | null} params.allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
+     * @param {string[] | null} params.allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all. On a property linked to a site, Appwrite manages this list: it is rewritten from the site's production domains whenever they change.
      * @param {boolean | null} params.identifyUsers - Record the signed-in user's ID on events sent from a client session, so traffic can be broken down and counted by user.
      * @param {AnalyticsPropertyType | null} params.type - Kind of product this property tracks. Only changes which panels the dashboard shows; stored events are kept.
      * @throws {AppwriteException}
@@ -413,7 +413,7 @@ export class Analytics {
      * @param {string | null} name - Human-readable name for this property.
      * @param {string | null} domain - Primary domain to track (e.g. example.com). Pass an empty string to clear it.
      * @param {boolean | null} enabled - Whether the property accepts events. Events sent to a disabled property are rejected as not found.
-     * @param {string[] | null} allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all.
+     * @param {string[] | null} allowedOrigins - Allowed origins for tracking. Use ["*"] to allow all. On a property linked to a site, Appwrite manages this list: it is rewritten from the site's production domains whenever they change.
      * @param {boolean | null} identifyUsers - Record the signed-in user's ID on events sent from a client session, so traffic can be broken down and counted by user.
      * @param {AnalyticsPropertyType | null} type - Kind of product this property tracks. Only changes which panels the dashboard shows; stored events are kept.
      * @throws {AppwriteException}

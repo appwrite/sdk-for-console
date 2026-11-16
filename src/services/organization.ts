@@ -1711,6 +1711,22 @@ export class Organization {
                         smtpUsername: '',
                         smtpPassword: '',
                         smtpSecure: '',
+                        ldapEnabled: false,
+                        ldapHosts: [],
+                        ldapPort: 636,
+                        ldapEncryption: 'ldaps',
+                        ldapVerification: true,
+                        ldapCertificate: '',
+                        ldapTimeout: 10,
+                        ldapBaseDn: '',
+                        ldapBindDn: '',
+                        ldapBindPassword: '',
+                        ldapUserFilter: '(uid={username})',
+                        ldapRequiredGroupDn: '',
+                        ldapIdAttribute: 'entryUUID',
+                        ldapEmailAttribute: 'mail',
+                        ldapNameAttribute: 'cn',
+                        ldapPhoneAttribute: '',
                         pingCount: 0,
                         pingedAt: '',
                         labels: [],
@@ -1879,6 +1895,22 @@ export class Organization {
                         smtpUsername: '',
                         smtpPassword: '',
                         smtpSecure: '',
+                        ldapEnabled: false,
+                        ldapHosts: [],
+                        ldapPort: 636,
+                        ldapEncryption: 'ldaps',
+                        ldapVerification: true,
+                        ldapCertificate: '',
+                        ldapTimeout: 10,
+                        ldapBaseDn: '',
+                        ldapBindDn: '',
+                        ldapBindPassword: '',
+                        ldapUserFilter: '(uid={username})',
+                        ldapRequiredGroupDn: '',
+                        ldapIdAttribute: 'entryUUID',
+                        ldapEmailAttribute: 'mail',
+                        ldapNameAttribute: 'cn',
+                        ldapPhoneAttribute: '',
                         pingCount: 0,
                         pingedAt: '',
                         labels: [],
@@ -2015,6 +2047,22 @@ export class Organization {
                         smtpUsername: '',
                         smtpPassword: '',
                         smtpSecure: '',
+                        ldapEnabled: false,
+                        ldapHosts: [],
+                        ldapPort: 636,
+                        ldapEncryption: 'ldaps',
+                        ldapVerification: true,
+                        ldapCertificate: '',
+                        ldapTimeout: 10,
+                        ldapBaseDn: '',
+                        ldapBindDn: '',
+                        ldapBindPassword: '',
+                        ldapUserFilter: '(uid={username})',
+                        ldapRequiredGroupDn: '',
+                        ldapIdAttribute: 'entryUUID',
+                        ldapEmailAttribute: 'mail',
+                        ldapNameAttribute: 'cn',
+                        ldapPhoneAttribute: '',
                         pingCount: 0,
                         pingedAt: '',
                         labels: [],
@@ -2169,6 +2217,22 @@ export class Organization {
                         smtpUsername: '',
                         smtpPassword: '',
                         smtpSecure: '',
+                        ldapEnabled: false,
+                        ldapHosts: [],
+                        ldapPort: 636,
+                        ldapEncryption: 'ldaps',
+                        ldapVerification: true,
+                        ldapCertificate: '',
+                        ldapTimeout: 10,
+                        ldapBaseDn: '',
+                        ldapBindDn: '',
+                        ldapBindPassword: '',
+                        ldapUserFilter: '(uid={username})',
+                        ldapRequiredGroupDn: '',
+                        ldapIdAttribute: 'entryUUID',
+                        ldapEmailAttribute: 'mail',
+                        ldapNameAttribute: 'cn',
+                        ldapPhoneAttribute: '',
                         pingCount: 0,
                         pingedAt: '',
                         labels: [],
@@ -3013,7 +3077,7 @@ export class Organization {
     }
 
     /**
-     * Get a list of the pending transfers of projects in your organization, with their secrets so their links can be shared again.
+     * Get a list of the pending transfers of projects in your organization. An owner of the organization also gets their secrets, so their links can be shared again.
      *
      * @param {string} params.projectId - Only list the transfers of this project.
      * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: recipientId, expire
@@ -3027,7 +3091,7 @@ export class Organization {
         total?: boolean;
     }): Promise<Models.TransferList>;
     /**
-     * Get a list of the pending transfers of projects in your organization, with their secrets so their links can be shared again.
+     * Get a list of the pending transfers of projects in your organization. An owner of the organization also gets their secrets, so their links can be shared again.
      *
      * @param {string} projectId - Only list the transfers of this project.
      * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: recipientId, expire
@@ -3255,6 +3319,8 @@ export class Organization {
     /**
      * Get a project transfer by its unique ID. The organization that owns the project can get it without a secret. Any other organization needs the transfer secret, so it can see which project it is about to claim and which organizations are involved.
      *
+     * Only an owner of the organization that owns the project reads the secret back.
+     *
      * @param {string} params.transferId - Transfer ID.
      * @param {string} params.secret - Transfer secret. Required unless the project belongs to your organization.
      * @throws {AppwriteException}
@@ -3266,6 +3332,8 @@ export class Organization {
     }): Promise<Models.Transfer>;
     /**
      * Get a project transfer by its unique ID. The organization that owns the project can get it without a secret. Any other organization needs the transfer secret, so it can see which project it is about to claim and which organizations are involved.
+     *
+     * Only an owner of the organization that owns the project reads the secret back.
      *
      * @param {string} transferId - Transfer ID.
      * @param {string} secret - Transfer secret. Required unless the project belongs to your organization.
@@ -3506,6 +3574,22 @@ export class Organization {
                         smtpUsername: '',
                         smtpPassword: '',
                         smtpSecure: '',
+                        ldapEnabled: false,
+                        ldapHosts: [],
+                        ldapPort: 636,
+                        ldapEncryption: 'ldaps',
+                        ldapVerification: true,
+                        ldapCertificate: '',
+                        ldapTimeout: 10,
+                        ldapBaseDn: '',
+                        ldapBindDn: '',
+                        ldapBindPassword: '',
+                        ldapUserFilter: '(uid={username})',
+                        ldapRequiredGroupDn: '',
+                        ldapIdAttribute: 'entryUUID',
+                        ldapEmailAttribute: 'mail',
+                        ldapNameAttribute: 'cn',
+                        ldapPhoneAttribute: '',
                         pingCount: 0,
                         pingedAt: '',
                         labels: [],
