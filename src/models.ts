@@ -11,6 +11,12 @@ import { ExecutionStatus } from './enums/execution-status';
 import { ProjectAuthMethodId } from './enums/project-auth-method-id';
 import { ProjectServiceId } from './enums/project-service-id';
 import { ProjectProtocolId } from './enums/project-protocol-id';
+import { AlertStatus } from './enums/alert-status';
+import { AlertSeverity } from './enums/alert-severity';
+import { AlertMetric } from './enums/alert-metric';
+import { AlertComparator } from './enums/alert-comparator';
+import { MonitorType } from './enums/monitor-type';
+import { MonitorResourceType } from './enums/monitor-resource-type';
 import { OAuth2GithubPrompt } from './enums/o-auth-2-github-prompt';
 import { OAuth2DiscordPrompt } from './enums/o-auth-2-discord-prompt';
 import { OAuth2GooglePrompt } from './enums/o-auth-2-google-prompt';
@@ -3464,7 +3470,7 @@ export namespace Models {
         /**
          * Presence metadata.
          */
-        metadata?: object;
+        metadata?: object | null;
     };
 
     /**
@@ -4639,6 +4645,14 @@ export namespace Models {
          * Name of fallback file to use instead of 404 page. If null, Appwrite 404 page will be displayed.
          */
         fallbackFile: string;
+        /**
+         * Whether the analytics tracker is injected into pages served on the site's production domains.
+         */
+        analyticsEnabled: boolean;
+        /**
+         * ID of the analytics property the site reports to. Kept when analytics is turned off, so turning it back on resumes the same property.
+         */
+        analyticsPropertyId: string;
     };
 
     /**
@@ -5656,6 +5670,70 @@ export namespace Models {
          */
         smtpSecure: string;
         /**
+         * Status for LDAP sign-in
+         */
+        ldapEnabled: boolean;
+        /**
+         * LDAP directory hosts, tried in order.
+         */
+        ldapHosts: string[];
+        /**
+         * LDAP directory port.
+         */
+        ldapPort: number;
+        /**
+         * LDAP transport encryption: none, ldaps or starttls.
+         */
+        ldapEncryption: string;
+        /**
+         * Whether the LDAP directory certificate is verified.
+         */
+        ldapVerification: boolean;
+        /**
+         * Certificate in PEM format of the authority that signed the LDAP directory certificate, or the directory certificate itself when it is self-signed. Empty for the system trust store.
+         */
+        ldapCertificate: string;
+        /**
+         * Seconds to wait for the LDAP directory to connect and answer.
+         */
+        ldapTimeout: number;
+        /**
+         * LDAP subtree the user search starts from.
+         */
+        ldapBaseDn: string;
+        /**
+         * LDAP service account used to search for users, empty for anonymous search.
+         */
+        ldapBindDn: string;
+        /**
+         * LDAP service account password. This property is write-only and always returned empty.
+         */
+        ldapBindPassword: string;
+        /**
+         * LDAP filter that finds the user signing in, with {username} where the username they enter goes.
+         */
+        ldapUserFilter: string;
+        /**
+         * LDAP group a user must belong to in order to sign in, empty to allow every user.
+         */
+        ldapRequiredGroupDn: string;
+        /**
+         * LDAP attribute holding the identifier that stays the same when an entry is renamed or moved.
+         */
+        ldapIdAttribute: string;
+        /**
+         * LDAP attribute holding the email address.
+         */
+        ldapEmailAttribute: string;
+        /**
+         * LDAP attribute holding the display name.
+         */
+        ldapNameAttribute: string;
+        /**
+         * LDAP attribute holding the phone number, empty when unmapped.
+         */
+        ldapPhoneAttribute: string;
+        /**
          * Number of times the ping was received for this project.
          */
         pingCount: number;
@@ -5895,6 +5973,100 @@ export namespace Models {
          * Number of consecutive failed webhook attempts.
          */
         attempts: number;
+    };
+
+    /**
+     * Alert
+     */
+    export type Alert = {
+        /**
+         * Alert ID.
+         */
+        $id: string;
+        /**
+         * Date the alert started firing, in ISO 8601 format.
+         */
+        $createdAt: string;
+        /**
+         * Alert update date in ISO 8601 format.
+         */
+        $updatedAt: string;
+        /**
+         * ID of the monitor that raised the alert.
+         */
+        monitorId: string;
+        /**
+         * Name of the monitor when the alert fired.
+         */
+        name: string;
+        /**
+         * Whether the alert is still firing or has resolved.
+         */
+        status: AlertStatus;
+        /**
+         * Date the alert resolved, in ISO 8601 format. Empty while it fires.
+         */
+        resolvedAt?: string | null;
+        /**
+         * Date a member acknowledged the alert, in ISO 8601 format. Empty while nobody has.
+         */
+        acknowledgedAt?: string | null;
+        /**
+         * ID of the user who acknowledged the alert. Empty while nobody has, or when it was acknowledged with an API key.
+         */
+        acknowledgedBy: string;
+        /**
+         * Name of the user who acknowledged the alert, when they did.
+         */
+        acknowledgedByName: string;
+        /**
+         * The monitor's rules when the alert fired, as query strings.
+         */
+        rules: string[];
+        /**
+         * The monitor's severity when the alert fired: `info`, `warning`, `error` or `critical`.
+         */
+        severity: AlertSeverity;
+        /**
+         * Deprecated: use `severity`. Whether the monitor was critical when the alert fired.
+         */
+        critical: boolean;
+        /**
+         * Metric the alert fired on.
+         */
+        metric: AlertMetric;
+        /**
+         * How the metric was compared with the threshold.
+         */
+        comparator: AlertComparator;
+        /**
+         * Threshold the metric crossed, in the metric's unit.
+         */
+        threshold: number;
+        /**
+         * Latest reading while the alert fired.
+         */
+        value: number;
+        /**
+         * Reading furthest past the threshold while the alert fired.
+         */
+        peak: number;
+        /**
+         * Type of the monitor that raised the alert.
+         */
+        type: MonitorType;
+        /**
+         * Type of the resource the alert fired on: the project, or one database, bucket, function or site.
+         */
+        resourceType: MonitorResourceType;
+        /**
+         * ID of the resource the alert fired on. The project ID for a project-wide monitor.
+         */
+        resourceId: string;
+        /**
+         * How many times the alert was announced as firing: once when it fired, and again after each cooldown while it kept firing.
+         */
+        notifications: number;
     };
 
     /**
@@ -7250,6 +7422,28 @@ export namespace Models {
     };
 
     /**
+     * OAuth2Naver
+     */
+    export type OAuth2Naver = {
+        /**
+         * OAuth2 provider ID.
+         */
+        $id: string;
+        /**
+         * OAuth2 provider is active and can be used to create sessions.
+         */
+        enabled: boolean;
+        /**
+         * Naver OAuth2 client ID.
+         */
+        clientId: string;
+        /**
+         * Naver OAuth2 client secret.
+         */
+        clientSecret: string;
+    };
+
+    /**
      * OAuth2 Providers List
      */
     export type OAuth2ProviderList = {
@@ -7308,6 +7502,7 @@ export namespace Models {
             | Models.OAuth2Cloudflare
             | Models.OAuth2TikTok
             | Models.OAuth2Kakao
+            | Models.OAuth2Naver
             | Models.OAuth2Vipps
         )[];
     };
@@ -10063,7 +10258,7 @@ export namespace Models {
          */
         enabled: boolean;
         /**
-         * List of origins allowed to send tracking events. Use ["*"] to allow all.
+         * List of origins allowed to send tracking events. Use ["*"] to allow all. Managed by Appwrite for a property linked to a site, following the site's production domains.
          */
         allowedOrigins: string[];
         /**
@@ -11810,6 +12005,10 @@ export namespace Models {
          * Renewal price period in years.
          */
         renewalPeriodYears: number;
+        /**
+         * Why the domain was not priced for the requested registration type, for example a transfer of an unregistered domain. Empty otherwise.
+         */
+        reason?: string | null;
     };
 
     /**
@@ -14495,7 +14694,7 @@ export namespace Models {
         /**
          * When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
          */
-        schedule?: object;
+        schedule?: object | null;
     };
 
     /**
@@ -14561,7 +14760,7 @@ export namespace Models {
         /**
          * When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
          */
-        schedule?: object;
+        schedule?: object | null;
     };
 
     /**
@@ -14627,7 +14826,7 @@ export namespace Models {
         /**
          * When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
          */
-        schedule?: object;
+        schedule?: object | null;
         /**
          * Challenge type enforced when the rule matches.
          */
@@ -14705,7 +14904,7 @@ export namespace Models {
         /**
          * When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
          */
-        schedule?: object;
+        schedule?: object | null;
         /**
          * Maximum number of matching requests allowed for the given interval.
          */
@@ -14791,7 +14990,7 @@ export namespace Models {
         /**
          * When the rule is active: mode, days, interval, anchor, startTime, endTime and timezone. Null when the rule is always active.
          */
-        schedule?: object;
+        schedule?: object | null;
         /**
          * Target location for the redirect.
          */

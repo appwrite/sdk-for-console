@@ -1511,6 +1511,133 @@ export class Organizations {
     }
 
     /**
+     * Acknowledge one of the organization's firing alerts, or undo that. Everyone who can read the alert sees who acknowledged it and when; it keeps firing until its monitor recovers. You can acknowledge the alerts you can read: a project's when your role reads that project's alerts, and budget alerts when it reads billing.
+     *
+     * @param {string} params.organizationId - Organization ID.
+     * @param {string} params.alertId - Alert ID.
+     * @param {boolean} params.acknowledged - Whether the alert is acknowledged. False undoes an acknowledgement.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Alert>}
+     */
+    updateAlert(params: {
+        organizationId: string;
+        alertId: string;
+        acknowledged: boolean;
+    }): Promise<Models.Alert>;
+    /**
+     * Acknowledge one of the organization's firing alerts, or undo that. Everyone who can read the alert sees who acknowledged it and when; it keeps firing until its monitor recovers. You can acknowledge the alerts you can read: a project's when your role reads that project's alerts, and budget alerts when it reads billing.
+     *
+     * @param {string} organizationId - Organization ID.
+     * @param {string} alertId - Alert ID.
+     * @param {boolean} acknowledged - Whether the alert is acknowledged. False undoes an acknowledgement.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Alert>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    updateAlert(
+        organizationId: string,
+        alertId: string,
+        acknowledged: boolean,
+    ): Promise<Models.Alert>;
+    updateAlert(
+        paramsOrFirst:
+            | { organizationId: string; alertId: string; acknowledged: boolean }
+            | string,
+        ...rest: [string?, boolean?]
+    ): Promise<Models.Alert> {
+        let params: {
+            organizationId: string;
+            alertId: string;
+            acknowledged: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                alertId: string;
+                acknowledged: boolean;
+            };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                alertId: rest[0] as string,
+                acknowledged: rest[1] as boolean,
+            };
+        }
+
+        const organizationId = params.organizationId;
+        const alertId = params.alertId;
+        const acknowledged = params.acknowledged;
+
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
+        }
+        if (typeof alertId === 'undefined' || alertId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "alertId"',
+            );
+        }
+        if (typeof acknowledged === 'undefined') {
+            throw new AppwriteException(
+                'Missing required parameter: "acknowledged"',
+            );
+        }
+        const apiPath = '/organizations/{organizationId}/alerts/{alertId}'
+            .replace('{organizationId}', encodePath(organizationId))
+            .replace('{alertId}', encodePath(alertId));
+        const apiPayload: Payload = {};
+        if (typeof acknowledged !== 'undefined') {
+            apiPayload['acknowledged'] = acknowledged;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            'content-type': 'application/json',
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('patch', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'alert',
+            models: {
+                alert: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        monitorId: '',
+                        name: '',
+                        status: 'firing',
+                        acknowledgedBy: '',
+                        acknowledgedByName: '',
+                        rules: [],
+                        severity: 'warning',
+                        critical: false,
+                        metric: 'network.requests',
+                        comparator: 'greaterThan',
+                        threshold: 0,
+                        value: 0,
+                        peak: 0,
+                        type: 'usage',
+                        resourceType: 'project',
+                        resourceId: '',
+                        notifications: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
      * Set a billing address for an organization.
      *
      * @param {string} params.organizationId - Organization ID
