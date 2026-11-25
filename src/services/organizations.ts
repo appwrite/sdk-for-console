@@ -1511,7 +1511,240 @@ export class Organizations {
     }
 
     /**
-     * Acknowledge one of the organization's firing alerts, or undo that. Everyone who can read the alert sees who acknowledged it and when; it keeps firing until its monitor recovers. You can acknowledge the alerts you can read: a project's when your role reads that project's alerts, and budget alerts when it reads billing.
+     * List the alerts raised across the organization, open and resolved: its projects' monitors and its budget monitors. You see a project's alerts when your role reads that project's alerts, and budget alerts when it reads billing. Use queries to filter by monitor or status, and order by `$createdAt` for the latest first.
+     *
+     * @param {string} params.organizationId - Organization ID.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: monitorId, name, status, type, resourceType, resourceId, metric, resolvedAt, search
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AlertList>}
+     */
+    listAlerts(params: {
+        organizationId: string;
+        queries?: string[];
+        total?: boolean;
+    }): Promise<Models.AlertList>;
+    /**
+     * List the alerts raised across the organization, open and resolved: its projects' monitors and its budget monitors. You see a project's alerts when your role reads that project's alerts, and budget alerts when it reads billing. Use queries to filter by monitor or status, and order by `$createdAt` for the latest first.
+     *
+     * @param {string} organizationId - Organization ID.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: monitorId, name, status, type, resourceType, resourceId, metric, resolvedAt, search
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.AlertList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listAlerts(
+        organizationId: string,
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.AlertList>;
+    listAlerts(
+        paramsOrFirst:
+            | { organizationId: string; queries?: string[]; total?: boolean }
+            | string,
+        ...rest: [string[]?, boolean?]
+    ): Promise<Models.AlertList> {
+        let params: {
+            organizationId: string;
+            queries?: string[];
+            total?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                queries?: string[];
+                total?: boolean;
+            };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                queries: rest[0] as string[],
+                total: rest[1] as boolean,
+            };
+        }
+
+        const organizationId = params.organizationId;
+        const queries = params.queries;
+        const total = params.total;
+
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
+        }
+        const apiPath = '/organizations/{organizationId}/alerts'.replace(
+            '{organizationId}',
+            encodePath(organizationId),
+        );
+        const apiPayload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'alertList',
+            models: {
+                alertList: {
+                    defaults: {
+                        total: 0,
+                        alerts: [],
+                    },
+                    properties: {
+                        alerts: {
+                            items: 'alert',
+                        },
+                    },
+                },
+                alert: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        monitorId: '',
+                        name: '',
+                        status: 'firing',
+                        acknowledgedBy: '',
+                        acknowledgedByName: '',
+                        escalationId: '',
+                        escalationStep: 0,
+                        escalationRound: 0,
+                        rules: [],
+                        severity: 'warning',
+                        threshold: 0,
+                        value: 0,
+                        peak: 0,
+                        type: 'usage',
+                        resourceType: 'project',
+                        resourceId: '',
+                        notifications: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
+     * Get one of the alerts raised across the organization by its unique ID: when it fired, its peak, and when it resolved.
+     *
+     * @param {string} params.organizationId - Organization ID.
+     * @param {string} params.alertId - Alert ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Alert>}
+     */
+    getAlert(params: {
+        organizationId: string;
+        alertId: string;
+    }): Promise<Models.Alert>;
+    /**
+     * Get one of the alerts raised across the organization by its unique ID: when it fired, its peak, and when it resolved.
+     *
+     * @param {string} organizationId - Organization ID.
+     * @param {string} alertId - Alert ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Alert>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getAlert(organizationId: string, alertId: string): Promise<Models.Alert>;
+    getAlert(
+        paramsOrFirst: { organizationId: string; alertId: string } | string,
+        ...rest: [string?]
+    ): Promise<Models.Alert> {
+        let params: { organizationId: string; alertId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                alertId: string;
+            };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                alertId: rest[0] as string,
+            };
+        }
+
+        const organizationId = params.organizationId;
+        const alertId = params.alertId;
+
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
+        }
+        if (typeof alertId === 'undefined' || alertId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "alertId"',
+            );
+        }
+        const apiPath = '/organizations/{organizationId}/alerts/{alertId}'
+            .replace('{organizationId}', encodePath(organizationId))
+            .replace('{alertId}', encodePath(alertId));
+        const apiPayload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'alert',
+            models: {
+                alert: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        monitorId: '',
+                        name: '',
+                        status: 'firing',
+                        acknowledgedBy: '',
+                        acknowledgedByName: '',
+                        escalationId: '',
+                        escalationStep: 0,
+                        escalationRound: 0,
+                        rules: [],
+                        severity: 'warning',
+                        threshold: 0,
+                        value: 0,
+                        peak: 0,
+                        type: 'usage',
+                        resourceType: 'project',
+                        resourceId: '',
+                        notifications: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
+     * Acknowledge one of the organization's firing alerts, or undo that. Everyone who can read the alert sees who acknowledged it and when; it keeps firing until its monitor recovers. You can acknowledge the alerts you can read: a project's when your role reads that project's alerts, and budget alerts when it reads billing. A credential acting for you, such as an OAuth2 app's access token, also needs the `alerts.write` scope.
      *
      * @param {string} params.organizationId - Organization ID.
      * @param {string} params.alertId - Alert ID.
@@ -1525,7 +1758,7 @@ export class Organizations {
         acknowledged: boolean;
     }): Promise<Models.Alert>;
     /**
-     * Acknowledge one of the organization's firing alerts, or undo that. Everyone who can read the alert sees who acknowledged it and when; it keeps firing until its monitor recovers. You can acknowledge the alerts you can read: a project's when your role reads that project's alerts, and budget alerts when it reads billing.
+     * Acknowledge one of the organization's firing alerts, or undo that. Everyone who can read the alert sees who acknowledged it and when; it keeps firing until its monitor recovers. You can acknowledge the alerts you can read: a project's when your role reads that project's alerts, and budget alerts when it reads billing. A credential acting for you, such as an OAuth2 app's access token, also needs the `alerts.write` scope.
      *
      * @param {string} organizationId - Organization ID.
      * @param {string} alertId - Alert ID.
@@ -1617,11 +1850,11 @@ export class Organizations {
                         status: 'firing',
                         acknowledgedBy: '',
                         acknowledgedByName: '',
+                        escalationId: '',
+                        escalationStep: 0,
+                        escalationRound: 0,
                         rules: [],
                         severity: 'warning',
-                        critical: false,
-                        metric: 'network.requests',
-                        comparator: 'greaterThan',
                         threshold: 0,
                         value: 0,
                         peak: 0,
@@ -3732,6 +3965,252 @@ export class Organizations {
         }
 
         return uri.toString();
+    }
+
+    /**
+     * List the monitors across the organization: its projects' monitors and the budget monitors its budget settings create. You see a project's monitors when your role reads that project's monitors, and budget monitors when it reads billing. Use queries to filter by type, for example `Query.equal('type', ['budget'])`.
+     *
+     * @param {string} params.organizationId - Organization ID.
+     * @param {string[]} params.queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, type, resourceType, resourceId, metric, enabled, severity, escalationId, status, evaluatedAt, triggeredAt, search
+     * @param {boolean} params.total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.MonitorList>}
+     */
+    listMonitors(params: {
+        organizationId: string;
+        queries?: string[];
+        total?: boolean;
+    }): Promise<Models.MonitorList>;
+    /**
+     * List the monitors across the organization: its projects' monitors and the budget monitors its budget settings create. You see a project's monitors when your role reads that project's monitors, and budget monitors when it reads billing. Use queries to filter by type, for example `Query.equal('type', ['budget'])`.
+     *
+     * @param {string} organizationId - Organization ID.
+     * @param {string[]} queries - Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/queries). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, type, resourceType, resourceId, metric, enabled, severity, escalationId, status, evaluatedAt, triggeredAt, search
+     * @param {boolean} total - When set to false, the total count returned will be 0 and will not be calculated.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.MonitorList>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    listMonitors(
+        organizationId: string,
+        queries?: string[],
+        total?: boolean,
+    ): Promise<Models.MonitorList>;
+    listMonitors(
+        paramsOrFirst:
+            | { organizationId: string; queries?: string[]; total?: boolean }
+            | string,
+        ...rest: [string[]?, boolean?]
+    ): Promise<Models.MonitorList> {
+        let params: {
+            organizationId: string;
+            queries?: string[];
+            total?: boolean;
+        };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                queries?: string[];
+                total?: boolean;
+            };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                queries: rest[0] as string[],
+                total: rest[1] as boolean,
+            };
+        }
+
+        const organizationId = params.organizationId;
+        const queries = params.queries;
+        const total = params.total;
+
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
+        }
+        const apiPath = '/organizations/{organizationId}/monitors'.replace(
+            '{organizationId}',
+            encodePath(organizationId),
+        );
+        const apiPayload: Payload = {};
+        if (typeof queries !== 'undefined') {
+            apiPayload['queries'] = queries;
+        }
+        if (typeof total !== 'undefined') {
+            apiPayload['total'] = total;
+        }
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'monitorList',
+            models: {
+                monitorList: {
+                    defaults: {
+                        total: 0,
+                        monitors: [],
+                    },
+                    properties: {
+                        monitors: {
+                            items: 'monitor',
+                        },
+                    },
+                },
+                monitor: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        projectId: '',
+                        rules: [],
+                        type: 'usage',
+                        resourceType: 'project',
+                        resourceId: '',
+                        window: 3600,
+                        cooldown: 3600,
+                        enabled: true,
+                        notify: ['owner'],
+                        escalationId: '',
+                        severity: 'warning',
+                        status: 'ok',
+                        alertId: '',
+                        interval: 0,
+                        timeout: 0,
+                        url: '',
+                        body: '',
+                        domain: '',
+                        resolver: '',
+                        host: '',
+                        port: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
+    }
+
+    /**
+     * Get one of the organization's monitors by its unique ID, with its state as of its last evaluation.
+     *
+     * @param {string} params.organizationId - Organization ID.
+     * @param {string} params.monitorId - Monitor ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Monitor>}
+     */
+    getMonitor(params: {
+        organizationId: string;
+        monitorId: string;
+    }): Promise<Models.Monitor>;
+    /**
+     * Get one of the organization's monitors by its unique ID, with its state as of its last evaluation.
+     *
+     * @param {string} organizationId - Organization ID.
+     * @param {string} monitorId - Monitor ID.
+     * @throws {AppwriteException}
+     * @returns {Promise<Models.Monitor>}
+     * @deprecated Use the object parameter style method for a better developer experience.
+     */
+    getMonitor(
+        organizationId: string,
+        monitorId: string,
+    ): Promise<Models.Monitor>;
+    getMonitor(
+        paramsOrFirst: { organizationId: string; monitorId: string } | string,
+        ...rest: [string?]
+    ): Promise<Models.Monitor> {
+        let params: { organizationId: string; monitorId: string };
+
+        if (
+            paramsOrFirst &&
+            typeof paramsOrFirst === 'object' &&
+            !Array.isArray(paramsOrFirst)
+        ) {
+            params = (paramsOrFirst || {}) as {
+                organizationId: string;
+                monitorId: string;
+            };
+        } else {
+            params = {
+                organizationId: paramsOrFirst as string,
+                monitorId: rest[0] as string,
+            };
+        }
+
+        const organizationId = params.organizationId;
+        const monitorId = params.monitorId;
+
+        if (typeof organizationId === 'undefined' || organizationId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "organizationId"',
+            );
+        }
+        if (typeof monitorId === 'undefined' || monitorId === '') {
+            throw new AppwriteException(
+                'Missing required parameter: "monitorId"',
+            );
+        }
+        const apiPath = '/organizations/{organizationId}/monitors/{monitorId}'
+            .replace('{organizationId}', encodePath(organizationId))
+            .replace('{monitorId}', encodePath(monitorId));
+        const apiPayload: Payload = {};
+        const uri = new URL(this.client.config.endpoint + apiPath);
+
+        const apiHeaders: { [header: string]: string } = {
+            'X-Appwrite-Project': this.client.config.project,
+            accept: 'application/json',
+        };
+
+        const request = this.client.call('get', uri, apiHeaders, apiPayload);
+        const defaults = {
+            root: 'monitor',
+            models: {
+                monitor: {
+                    defaults: {
+                        $id: '',
+                        $createdAt: '',
+                        $updatedAt: '',
+                        name: '',
+                        projectId: '',
+                        rules: [],
+                        type: 'usage',
+                        resourceType: 'project',
+                        resourceId: '',
+                        window: 3600,
+                        cooldown: 3600,
+                        enabled: true,
+                        notify: ['owner'],
+                        escalationId: '',
+                        severity: 'warning',
+                        status: 'ok',
+                        alertId: '',
+                        interval: 0,
+                        timeout: 0,
+                        url: '',
+                        body: '',
+                        domain: '',
+                        resolver: '',
+                        host: '',
+                        port: 0,
+                    },
+                },
+            },
+        };
+
+        return request.then((response) => applyDefaults(response, defaults));
     }
 
     /**
