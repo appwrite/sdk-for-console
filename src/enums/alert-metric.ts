@@ -26,5 +26,7 @@ export enum AlertMetric {
     DedicatedDatabasesQps = 'dedicatedDatabases.qps',
     DedicatedDatabasesIopsRead = 'dedicatedDatabases.iopsRead',
     DedicatedDatabasesIopsWrite = 'dedicatedDatabases.iopsWrite',
+    AnalyticsEvents = 'analytics.events',
+    AnalyticsPageviews = 'analytics.pageviews',
     BillingBudgetUsed = 'billing.budgetUsed',
 }
